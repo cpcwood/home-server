@@ -14,7 +14,7 @@ General CV style website and a place to prototype new rails features I find inte
 
 ### Technology
 
-- Ruby 2.7.0
+- Ruby 2.6.5
 - Ruby on Rails 6.0
 
 ### Progress
