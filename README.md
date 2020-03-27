@@ -20,7 +20,19 @@ General CV style website and a place to prototype new rails features I find inte
 
 ### Progress
 
+Complete:
 - Setting up RPi
+
+
+In progress:
+- Set up puma
+- Setting up nginix
+- Setting up port fowarding
+- Database
+- HTTPS (SSL Certificates Lets Encrpyt)
+- CI
+- Develop app
+- Puma manager to auto restart app upon reboot
 
 ### How to install
 
