@@ -20,7 +20,7 @@ preload_app!
 bind "unix://#{shared_dir}/sockets/puma.sock"
 
 # Debugging
-debug true
+debug
 
 # Logging
 stdout_redirect "#{shared_dir}/log/puma.stdout.log", "#{shared_dir}/log/puma.stderr.log", true
