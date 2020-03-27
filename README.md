@@ -24,9 +24,9 @@ Complete:
 - Setting up RPi
 - Set up puma
 - Setting up nginx
+- Setting up port fowarding
 
 In progress:
-- Setting up port fowarding
 - Database
 - HTTPS (SSL Certificates Lets Encrpyt)
 - CI

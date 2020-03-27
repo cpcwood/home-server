@@ -36,6 +36,9 @@ yarn-debug.log*
 .yarn-integrity
 
 # Puma shared files
-/shared/log/*
-/shared/pid/*
-/shared/sockets/*
+shared/log/*
+!shared/log/.gitkeep
+shared/pid/*
+!shared/pid/.gitkeep
+shared/sockets/*
+!shared/sockets/.gitkeep
