@@ -8,7 +8,7 @@ My home server website built with rails and hosted locally on a RPi.
 
 General CV style website and a place to prototype new rails features I find interesting. Other learning objectives are:
 - Learning network setup and security (NAT tables, firewalls, etc)
-- Nginix reverse proxy
+- Nginx reverse proxy
 - HTTPS Certificates
 - Securing Rails
 - CSS and HTML
@@ -22,11 +22,10 @@ General CV style website and a place to prototype new rails features I find inte
 
 Complete:
 - Setting up RPi
-
+- Set up puma
+- Setting up nginx
 
 In progress:
-- Set up puma
-- Setting up nginix
 - Setting up port fowarding
 - Database
 - HTTPS (SSL Certificates Lets Encrpyt)
@@ -42,5 +41,7 @@ In progress:
 - NodeJS
 - Yarn
 - Run yarn
+- Install nginx reverse proxy repo 
 - rails assets:precompile
 - rails s
+
