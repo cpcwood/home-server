@@ -35,10 +35,14 @@
 yarn-debug.log*
 .yarn-integrity
 
+# Coverage files
+/coverage
+
 # Puma shared files
-shared/log/**
-!shared/log/.gitkeep
-shared/pid/**
-!shared/pid/.gitkeep
-shared/sockets/**
-!shared/sockets/.gitkeep
+/shared/log/**
+/shared/pids/**
+/shared/sockets/**
+
+# Keep empty directories
+!*.keep
+
