@@ -1,10 +1,10 @@
 # Home Server
 
-### Overview
+## Overview
 
 My home server website built with rails and hosted locally on a RPi.
 
-### Purpose
+## Purpose
 
 General CV style website and a place to prototype new rails features I find interesting. Other learning objectives are:
 - Learning network setup and security (NAT tables, firewalls, etc)
@@ -13,27 +13,29 @@ General CV style website and a place to prototype new rails features I find inte
 - Securing Rails
 - CSS and HTML
 
-### Technology
+## Technology
 
 - Ruby 2.6.5
 - Ruby on Rails 6.0
 
-### Progress
+## Progress
 
 Complete:
 - Setting up RPi
 - Set up puma
 - Setting up nginx
-- Setting up port fowarding
+- Setting up port forwarding
+- HTTPS (SSL Certificates LetsEncrypt)
 
 In progress:
+- Test suite
+- Coverage badges
 - Database
-- HTTPS (SSL Certificates Lets Encrpyt)
 - CI
 - Develop app
 - Puma manager to auto restart app upon reboot
 
-### How to install
+## How to install
 
 - Ruby
 - Bundler
@@ -45,3 +47,6 @@ In progress:
 - rails assets:precompile
 - rails s
 
+## LICENSE
+
+This software is distributed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License.
