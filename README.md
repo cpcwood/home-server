@@ -1,5 +1,8 @@
 # Home Server
 
+![Coverage Status](https://coveralls.io/github/cpcwood/home-server?branch=master)
+![Build Status](https://api.travis-ci.com/cpcwood/home-server.svg?branch=master&status=started)
+
 ## Overview
 
 My home server website built with rails and hosted locally on a RPi.
