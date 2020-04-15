@@ -21,3 +21,6 @@ services:
   - postgresql
 addons:
   postgresql: "12.1"
+env:
+  global:
+  - PGPORT=5432
