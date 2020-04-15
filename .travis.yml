@@ -7,7 +7,6 @@ before_install:
   - sudo cp /etc/postgresql/{9.6,12}/main/pg_hba.conf
   - sudo service postgresql restart 12
 before_script:
-  - cp config/database.yml.travis config/database.yml
   - bundle exec rake db:create
   - bundle exec rake db:migrate
 script:
