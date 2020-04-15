@@ -27,3 +27,4 @@ addons:
 env:
   global:
   - PGPORT=5433
+repo_token: $COVERALLS_TOKEN
