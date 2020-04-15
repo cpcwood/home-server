@@ -9,8 +9,6 @@ AllCops:
     - 'bin/{rails,rake}'
     - 'node_modules/**/*'
     - !ruby/regexp /old_and_unused\.rb$/
-
-
   
 Bundler/OrderedGems:
   Enabled: false
@@ -26,6 +24,8 @@ Layout/SpaceBeforeBlockBraces:
   Enabled: false
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: compact
+Layout/TrailingEmptyLines:
+  Enabled: false
 
 Style/SymbolArray:
   Enabled: false
