@@ -19,7 +19,7 @@ before_script:
   - bundle exec rails webpacker:compile
 script:
   - bundle exec rspec
-  - bundle exec rubocop
+  - bundle exec rubocop -c .rubocop.yml
 services:
   - postgresql
 addons:
