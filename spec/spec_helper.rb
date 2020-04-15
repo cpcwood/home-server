@@ -9,7 +9,8 @@ require 'webdrivers'
 Capybara.default_driver = :rack_test
 Capybara.javascript_driver = :selenium_chrome_headless
 
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::Console])
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::Console, Coveralls::SimpleCov::Formatter])
+
 SimpleCov.start 'rails' do
   add_filter 'bin/'
   add_filter 'db/'
@@ -25,7 +26,7 @@ end
 
 RSpec.configure do |config|
   config.before(:suite) do
-    `bin/webpack`
+    `./bin/webpack`
   end
 
   config.before(:all) do

@@ -6,6 +6,7 @@ before_install:
   - sudo apt-get install -y postgresql-12 postgresql-client-12
   - sudo cp /etc/postgresql/{9.6,12}/main/pg_hba.conf
   - sudo service postgresql restart 12
+  - nvm install 12
 before_script:
   - bundle exec rake db:create
   - bundle exec rake db:migrate
