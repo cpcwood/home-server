@@ -13,7 +13,6 @@ before_install:
 cache:
   yarn: true
 before_script:
-  - bundle install
   - yarn install
   - bundle exec rake db:create
   - bundle exec rake db:migrate
