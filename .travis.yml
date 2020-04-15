@@ -1,0 +1,17 @@
+language: ruby
+rvm:
+- 2.6.5
+services:
+- postgresql
+install:
+- bundle install
+- yarn install
+before_script:
+- bundle exec rake db:create
+- bundle exec rake db:migrate
+script:
+- bundle exec rspec
+- bundle exec rubocop
+branches:
+  only:
+  - master
