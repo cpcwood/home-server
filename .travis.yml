@@ -1,6 +1,8 @@
 language: ruby
 rvm:
 - 2.6.5
+services:
+  - postgresql
 addons:
   postgresql: "12.1"
   apt:
