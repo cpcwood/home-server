@@ -24,6 +24,10 @@ SimpleCov.start 'rails' do
 end
 
 RSpec.configure do |config|
+  config.before(:suite) do
+    `bin/webpack`
+  end
+
   config.before(:all) do
   end
 
