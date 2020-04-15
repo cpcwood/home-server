@@ -1,9 +1,9 @@
 # vars
-app_dir = File.expand_path("../..", __FILE__)
+app_dir = File.expand_path('..', __dir__)
 shared_dir = "#{app_dir}/shared"
 
 # Specifies the `environment` that Puma will run in.
-environment ENV.fetch("RAILS_ENV") { "development" }
+environment ENV.fetch('RAILS_ENV') { 'development' }
 
 # pidfile and state
 pidfile "#{shared_dir}/pids/puma.pid"
@@ -13,7 +13,7 @@ state_path "#{shared_dir}/pids/puma.state"
 threads 1, 16
 
 # Workers (cpu cores)
-workers ENV.fetch("WEB_CONCURRENCY") { 1 }
+workers ENV.fetch('WEB_CONCURRENCY') { 1 }
 preload_app!
 
 # Unix socket to for nginix reverse proxy

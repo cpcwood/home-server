@@ -36,7 +36,10 @@ group :development, :test do
   # Coverage with simplecov
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
+  # Coverage badge with coveralls
   gem 'coveralls', require: false
+  # Code policing with rubocop
+  gem 'rubocop-rails', require: false
 end
 
 group :development do
