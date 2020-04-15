@@ -1,3 +1,6 @@
+require 'coveralls'
+Coveralls.wear!('rails')
+
 require 'simplecov'
 require 'simplecov-console'
 require 'rails_helper'
