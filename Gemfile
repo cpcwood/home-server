@@ -24,15 +24,15 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Testing backend with RSpec
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 4.0'
   gem 'rails-controller-testing'
   # Coverage with simplecov
-  gem 'simplecov', require: false
-  gem 'simplecov-console', require: false
+  gem 'simplecov', '~> 0.16.1', require: false
+  gem 'simplecov-console', '~> 0.7.2', require: false
   # Coverage badge with coveralls
-  gem 'coveralls', require: false
+  gem 'coveralls', '~> 0.8.23', require: false
   # Code policing with rubocop
-  gem 'rubocop-rails', require: false
+  gem 'rubocop-rails', '~> 2.5.2', require: false
 end
 
 group :development do
