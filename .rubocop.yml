@@ -2,14 +2,15 @@ require: rubocop-rails
 
 AllCops:
   TargetRubyVersion: 2.6.5
-  Exclude:
-    - 'db/**/*'
-    - 'config/**/*'
-    - 'script/**/*'
-    - 'bin/**/*'
-    - 'tmp/**/*'
-    - 'bin/{rails,rake}'
-    - 'node_modules/**/*'
+  Include:
+    - 'app/channels/**/*'
+    - 'app/controllers/**/*'
+    - 'app/helpers/**/*'
+    - 'app/mailers/**/*'
+    - 'app/models/**/*'
+    - 'spec/**/*'
+    - 'Gemfile'
+    - 'Rakefile'
   
 Bundler/OrderedGems:
   Enabled: false
