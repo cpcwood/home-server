@@ -1,6 +1,6 @@
 # Home Server
 
-![Coverage Status](https://coveralls.io/github/cpcwood/home-server?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/cpcwood/home-server/badge.svg?branch=master)](https://coveralls.io/github/cpcwood/home-server?branch=master)
 ![Build Status](https://api.travis-ci.com/cpcwood/home-server.svg?branch=master&status=started)
 
 ## Overview

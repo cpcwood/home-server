@@ -1,3 +1,5 @@
+require: rubocop-rails
+
 AllCops:
   TargetRubyVersion: 2.6.5
   Exclude:
@@ -8,7 +10,6 @@ AllCops:
     - 'tmp/**/*'
     - 'bin/{rails,rake}'
     - 'node_modules/**/*'
-    - !ruby/regexp /old_and_unused\.rb$/
   
 Bundler/OrderedGems:
   Enabled: false
