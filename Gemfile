@@ -32,7 +32,8 @@ group :development, :test do
   # Coverage badge with coveralls
   gem 'coveralls', '~> 0.8.23', require: false
   # Code policing with rubocop
-  gem 'rubocop', '~> 0.81'
+  gem 'rubocop', '~> 0.81', require: false
+  gem 'rubocop-performance', '~> 1.5.2', require: false
 end
 
 group :development do
