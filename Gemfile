@@ -33,6 +33,7 @@ group :development, :test do
   gem 'coveralls', '~> 0.8.23', require: false
   # Code policing with rubocop
   gem 'rubocop-rails', '~> 2.5.2', require: false
+  gem 'rubocop-performance', '~> 1.5.2', require: false
 end
 
 group :development do
