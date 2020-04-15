@@ -3,14 +3,6 @@ rvm:
 - 2.6.5
 services:
   - postgresql
-addons:
-  postgresql: "12.1"
-  apt:
-  packages:
-  - postgresql-12
-env:
-  global:
-  - PGPORT=5433
 before_script:
 - bundle exec rake db:create
 - bundle exec rake db:migrate
