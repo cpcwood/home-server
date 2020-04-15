@@ -29,14 +29,14 @@ Complete:
 - Setting up nginx
 - Setting up port forwarding
 - HTTPS (SSL Certificates LetsEncrypt)
+- Puma application server service with systemd
 - Test suite
 - Database
 - CI
+- Coverage and build badges
 
 In progress:
-- Coverage badges
 - Develop app
-- Puma manager to auto restart app upon reboot
 
 -----------
 ## How to Install
