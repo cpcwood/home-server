@@ -65,6 +65,9 @@ Complete:
 
 In progress:
 - Develop app
+  - Responsive screen size @media
+  - Static fonts (ttf and browser support)
+  - Variable fonts
   - Create responsive navbar
   - Create homepage
 
