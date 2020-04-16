@@ -1,3 +1,24 @@
+@font-face {
+  font-family: 'RobotoTitle';
+  src: font-url('RobotoSlab-Medium.ttf');
+  src: font-url('RobotoSlab-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'RobotoBody';
+  src: font-url('Roboto-Medium.ttf');
+  src: font-url('Roboto-Medium.ttf') format('truetype');
+}
+
+h1 {
+  font-family: 'RobotoTitle', Fallback, sans-serif;
+}
+
+body {
+  font-family: 'RobotoBody', Fallback, sans-serif;
+}
+
+
 $p-font-sizes: (
   null  : 15px,
   small : 16px,

@@ -3,15 +3,17 @@
 .nav_title {
   font-weight: 100;
   font-size: 15px;
-  @include respond-to(small) {
+}
+
+@include respond-to(small) {
+  .nav_title {
     font-weight: 200;
     font-size: 18px;
   }
-  @include respond-to(medium) {
-    font-weight: 300;
-    font-size: 20px;
-  }
-  @include respond-to(large) {
+}
+
+@include respond-to(large) {
+  .nav_title {
     font-weight: 400;
     font-size: 22px;
   }
