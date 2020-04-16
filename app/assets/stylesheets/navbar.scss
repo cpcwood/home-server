@@ -1,0 +1,18 @@
+@import 'main';
+
+.nav_title {
+  font-weight: 100;
+  font-size: 15px;
+  @include respond-to(small) {
+    font-weight: 200;
+    font-size: 18px;
+  }
+  @include respond-to(medium) {
+    font-weight: 300;
+    font-size: 20px;
+  }
+  @include respond-to(large) {
+    font-weight: 400;
+    font-size: 22px;
+  }
+}

@@ -9,7 +9,7 @@ My home server website built with rails and hosted locally on a RPi.
 
 ## Purpose
 
-General CV style website and a place to prototype new rails features I find interesting. Other learning objectives are:
+General portfolio style website and a place to prototype new rails features I find interesting. Other learning objectives are:
 - Learning network setup and security (NAT tables, firewalls, etc)
 - Nginx reverse proxy
 - HTTPS Certificates
@@ -20,6 +20,34 @@ General CV style website and a place to prototype new rails features I find inte
 
 - Ruby 2.6.5
 - Ruby on Rails 6.0
+
+## Design
+
+Portfolio sections:
+- Homepage
+  - Reactive hexagon link tiles with photo and name of each website section
+- About me
+  - CV / Github CV
+- Projects
+  - Projects with details, stack, and screenshots
+- Blog
+  - General blog
+- Say Hello
+  - A place for visitors to post hello 
+  - Email confirmation
+  - Email administrator for review and posting
+- Contact
+  - Contact information
+  - Contact box
+  - Email confirmation for contactor
+  - Email administrator
+
+Admin area:
+- Login
+- Edit about me section
+- Add new project
+- Add new blog post
+- Manage and confirm say hello posts
 
 ## Progress
 
@@ -37,6 +65,8 @@ Complete:
 
 In progress:
 - Develop app
+  - Create responsive navbar
+  - Create homepage
 
 -----------
 ## How to Install
