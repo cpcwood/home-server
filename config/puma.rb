@@ -17,7 +17,8 @@ workers ENV.fetch('WEB_CONCURRENCY') { 1 }
 preload_app!
 
 # Unix socket to for nginix reverse proxy
-bind "unix://#{shared_dir}/sockets/puma.sock"
+# bind "unix://#{shared_dir}/sockets/puma.sock"
+port 3000
 
 # Debugging
 debug
