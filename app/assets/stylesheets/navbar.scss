@@ -1,20 +1,21 @@
 @import 'main';
 
 .nav_title {
-  font-weight: 100;
-  font-size: 15px;
+  font-family: 'RobotoTitle', Fallback, sans-serif;
+  color: white;
+  font-size: 25px;
+  font-weight: 450;
+  letter-spacing: 0.06em;
 }
 
 @include respond-to(small) {
   .nav_title {
-    font-weight: 200;
-    font-size: 18px;
+    font-size: 28px;
   }
 }
 
 @include respond-to(large) {
   .nav_title {
-    font-weight: 400;
-    font-size: 22px;
+    font-size: 30px;
   }
 }
