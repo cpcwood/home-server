@@ -1,3 +1,10 @@
 @import 'partials/_base';
 @import 'partials/_buttons';
 @import 'partials/_typography';
+
+.page_container {
+  position: absolute;
+  top: 100px;
+  left: 0px;
+  width: 100%;
+}
