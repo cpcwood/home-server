@@ -13,9 +13,5 @@
  *= require_tree .
  *= require_self
  */
-
-@import 'partials/_normalize';
-
-@import 'navbar';
-
-@import 'homepage';
+@import 'partials/normalize';
+@import 'navbar/navbar';
