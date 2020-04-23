@@ -15,3 +15,11 @@ require("channels")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+import hamburgerAnimation from './navbar/hamburger.js'
+import navMenuClick from './navbar/navMenu.js'
+
+window.addEventListener('load', function(){
+  hamburgerAnimation()
+  navMenuClick()
+})
