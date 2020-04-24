@@ -3,12 +3,3 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 @import 'main';
 
-.page_container {
-  position: absolute;
-  top: 60px;
-  left: 0px;
-  width: 100%;
-  height: calc(100% - 60px);
-  background-color: lightgray;
-  overflow: hidden;
-}
