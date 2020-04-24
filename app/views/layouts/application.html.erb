@@ -12,6 +12,10 @@
 
   <body>
     <%= render 'layouts/navigation'%>
-    <%= yield %>
+    <div class='page_container'>
+      <div class='page_content'>
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>

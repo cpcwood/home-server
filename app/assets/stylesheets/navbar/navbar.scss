@@ -15,6 +15,7 @@
   height: 60px;
   z-index: 1;
   background-color: white;
+  border-bottom: 2px solid lightgray;
 }
 
 .nav_title_container {
@@ -53,13 +54,14 @@
 .nav_item_container {
   display: flex;
   position: fixed;
-  top: 60px;
+  top: 62px;
   right: 0px;
   flex-direction: column;
   transition: width 0.25s ease-in-out 0s;
   width: 0px;
   height: 100%;
   background-color: white;
+  border-left: 1px solid lightgray;
 }
 
 .nav_item_container.sidebar_open {
