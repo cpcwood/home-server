@@ -30,35 +30,35 @@
 
 @-webkit-keyframes hamburger_crown_rotate {
   0% {-webkit-transform: rotate(0deg) scaleX(1);}
-  100% {-webkit-transform: rotate(45deg) scaleX(0.97);}
+  100% {-webkit-transform: rotate(45deg) scaleX(0.95);}
 }
 @-moz-keyframes hamburger_crown_rotate {
-  0% {-moz-transform: rotate(0deg);}
-  100% {-moz-transform: rotate(45deg);}
+  0% {-moz-transform: rotate(0deg) scaleX(1);}
+  100% {-moz-transform: rotate(45deg) scaleX(0.95);}
 }
 @-o-keyframes hamburger_crown_rotate {
-  0% {-o-transform: rotate(0deg);}
-  100% {-o-transform: rotate(45deg);}
+  0% {-o-transform: rotate(0deg) scaleX(1);}
+  100% {-o-transform: rotate(45deg) scaleX(0.95);}
 }
 @keyframes hamburger_crown_rotate {
   0% {transform: rotate(0deg) scaleX(1);}
-  100% {transform: rotate(45deg) scaleX(0.97);}
+  100% {transform: rotate(45deg) scaleX(0.95);}
 }
 
 @-webkit-keyframes hamburger_crown_rotate_reverse {
-  0% {-webkit-transform: rotate(45deg) scaleX(0.97);}
+  0% {-webkit-transform: rotate(45deg) scaleX(0.95);}
   100% {-webkit-transform: rotate(0deg) scaleX(1);}
 }
 @-moz-keyframes hamburger_crown_rotate_reverse {
-  0% {-moz-transform: rotate(45deg) scaleX(0.97);}
+  0% {-moz-transform: rotate(45deg) scaleX(0.95);}
   100% {-moz-transform: rotate(0deg) scaleX(1);}
 }
 @-o-keyframes hamburger_crown_rotate_reverse {
-  0% {-o-transform: rotate(0deg) scaleX(0.97);}
-  100% {-o-transform: rotate(45deg) scaleX(1);}
+  0% {-o-transform: rotate(45deg) scaleX(0.95);}
+  100% {-o-transform: rotate(0deg) scaleX(1);}
 }
 @keyframes hamburger_crown_rotate_reverse {
-  0% {transform: rotate(45deg) scaleX(0.97);}
+  0% {transform: rotate(45deg) scaleX(0.95);}
   100% {transform: rotate(0deg) scaleX(1);}
 }
 
@@ -102,35 +102,35 @@
 
 @-webkit-keyframes hamburger_heel_rotate {
   0% {-webkit-transform: rotate(0deg) scaleX(1);}
-  100% {-webkit-transform: rotate(-45deg) scaleX(0.97);}
+  100% {-webkit-transform: rotate(-45deg) scaleX(0.95);}
 }
 @-moz-keyframes hamburger_heel_rotate {
-  0% {-moz-transform: rotate(0deg);}
-  100% {-moz-transform: rotate(-45deg);}
+  0% {-moz-transform: rotate(0deg) scaleX(1);}
+  100% {-moz-transform: rotate(-45deg) scaleX(0.95);}
 }
 @-o-keyframes hamburger_heel_rotate {
-  0% {-o-transform: rotate(0deg);}
-  100% {-o-transform: rotate(-45deg);}
+  0% {-o-transform: rotate(0deg) scaleX(1);}
+  100% {-o-transform: rotate(-45deg) scaleX(0.95);}
 }
 @keyframes hamburger_heel_rotate {
   0% {transform: rotate(0deg) scaleX(1);}
-  100% {transform: rotate(-45deg) scaleX(0.97);}
+  100% {transform: rotate(-45deg) scaleX(0.95);}
 }
 
 @-webkit-keyframes hamburger_heel_rotate_reverse {
-  0% {-webkit-transform: rotate(-45deg) scaleX(0.97);}
+  0% {-webkit-transform: rotate(-45deg) scaleX(0.95);}
   100% {-webkit-transform: rotate(0deg) scaleX(1);}
 }
 @-moz-keyframes hamburger_heel_rotate_reverse {
-  0% {-moz-transform: rotate(-45deg) scaleX(0.97);}
+  0% {-moz-transform: rotate(-45deg) scaleX(0.95);}
   100% {-moz-transform: rotate(0deg) scaleX(1);}
 }
 @-o-keyframes hamburger_heel_rotate_reverse {
-  0% {-o-transform: rotate(0deg) scaleX(0.97);}
+  0% {-o-transform: rotate(-45deg) scaleX(0.95);}
   100% {-o-transform: rotate(-45deg) scaleX(1);}
 }
 @keyframes hamburger_heel_rotate_reverse {
-  0% {transform: rotate(-45deg) scaleX(0.97);}
+  0% {transform: rotate(-45deg) scaleX(0.95);}
   100% {transform: rotate(0deg) scaleX(1);}
 }
 
