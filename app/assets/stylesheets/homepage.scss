@@ -10,40 +10,39 @@
   width: 100%;
   background-color: white;
   box-sizing: border-box;
-  padding: 20px 0px 0px 0px;
+  padding: 50px 5px 0px 5px;
   overflow-y: scroll;
-
 }
 
 .homepage_item {
+  position: relative;
   box-sizing: border-box;
-  padding: 20px 20px;
   flex-grow: 1;
   min-width: 100%;
-  height: 300px;
+  height: 350px;
+  border: 5px solid white;
   @include respond-to(tablet) {
     min-width: 50%;
     max-width: 50%;
   }
   @include respond-to(desktop) {
-    min-width: 33.3%;
+    min-width: 50%;
     max-width: 50%;
+  }
+
+  img {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
   }
 }
 
-
-#about {
-  background-color: lightblue;
+#projects_image {
+  object-position: 0% 50%;
 }
 
-#projects {
-  background-color: lightgreen;
-}
-
-#blog {
-  background-color: lightpink;
-}
-
-#contact {
-  background-color: lightsalmon;
+#say_hello_image {
+  object-position: 50% 0%;
 }
