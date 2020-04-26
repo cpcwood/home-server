@@ -16,6 +16,11 @@
   z-index: 2;
   background-color: white;
   border-bottom: 2px solid lightgray;
+
+  a, a:link, a:visited, a:focus, a:hover, a:active {
+    color: black;
+    text-decoration: none; 
+  }
 }
 
 .nav_title_container {
@@ -24,10 +29,6 @@
   font-weight: 500;
   letter-spacing: 0.06em;
   margin: 0px 10px;
-  a, a:link, a:visited, a:focus, a:hover, a:active {
-    color: black;
-    text-decoration: none; 
-  }
 }
 
 @include respond-to(tablet) {
@@ -72,21 +73,28 @@
   position: relative;
   width: 100%;
   height: auto;
-  overflow: hidden;
-  text-align: center;
-  vertical-align: middle;
-  color: black;
-  font-size: 16px;
-  font-weight: 450;
   padding: 10px 0px;
   transition: all 0.1s ease 0s;
   -webkit-transition: all 0.1s ease 0s;
   -moz-transition: all 0.1s ease 0s;
   -o-transition: all 0.1s ease 0s;
+  display: flex;
+  align-items: center;
+
+  span {
+    width: inherit;
+    text-align: center;
+    color: black;
+    font-size: 16px;
+    font-weight: 450;
+  }
 
   &:hover {
     background-color: rgb(94, 94, 94);
-    color: white;
+
+    span {
+      color: white;
+    }
   }
 }
 
