@@ -29,17 +29,11 @@
   font-weight: 500;
   letter-spacing: 0.06em;
   margin: 0px 10px;
-}
-
-@include respond-to(tablet) {
-  .nav_title_container {
+  @include respond-to(tablet) {
     font-size: 28px;
     margin: 0px 15px;
   }
-}
-
-@include respond-to(desktop) {
-  .nav_title_container {
+  @include respond-to(desktop) {
     font-size: 32px;
     margin: 0px 20px;
   }
