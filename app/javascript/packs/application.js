@@ -10,11 +10,14 @@ require("channels")
 
 require('packs/navbar/hamburger')
 require('packs/navbar/navMenu')
+require('packs/touch/touchHover')
 
 import hamburgerAnimation from './navbar/hamburger.js'
 import navMenuClick from './navbar/navMenu.js'
+import touchHover from './touch/touchHover.js'
 
 window.addEventListener('load', function(){
   hamburgerAnimation()
   navMenuClick()
+  touchHover()
 })
