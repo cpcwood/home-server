@@ -20,7 +20,7 @@ before_script:
 script:
   - bundle exec rspec
   - pwd
-  - bundle exec rubocop -c ./.rubocop.yml
+  - bundle exec rubocop -a -c ./.rubocop.yml
 services:
   - postgresql
 addons:
