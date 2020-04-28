@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/about', to: 'about#index'
 
   get '/login', to: 'session#login'
+  post '/login', to: 'session#new'
 
   get '/admin', to: 'admin#index'
 
