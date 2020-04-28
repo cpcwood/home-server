@@ -25,17 +25,25 @@ General portfolio style website and a place to prototype new rails features I fi
 
 Portfolio sections:
 - Homepage
-  - Reactive hexagon link tiles with photo and name of each website section
+  - Reactive link tiles with photo and name of each website section
 - About me
-  - CV / Github CV
+  - CV / Github CV / Headshot (updatable from admin page)
 - Projects
   - Projects with details, stack, and screenshots
+    - overview of all
+    - click to enter detail view
 - Blog
-  - General blog
+  - General blog (admin can add/delete/update posts)
+    - overview of all
+    - click to enter post, comments section at bottom (admin review of comments before public)
 - Say Hello
   - A place for visitors to post hello 
   - Email confirmation
   - Email administrator for review and posting
+- Gallery
+  - General gallery for admin to post photos
+  - Optional folders
+  - Metadata remover on upload
 - Contact
   - Contact information
   - Contact box
@@ -44,10 +52,13 @@ Portfolio sections:
 
 Admin area:
 - Login
-- Edit about me section
+- Edit about me section/profile picture
 - Add new project
 - Add new blog post
 - Manage and confirm say hello posts
+- Manage and respond to contact box requests
+- Manage and confirm comments on blog
+
 
 ## Progress
 
@@ -62,14 +73,29 @@ Complete:
 - Database
 - CI
 - Coverage and build badges
-
-In progress:
-- Develop app
+- Develop Homepage
   - Responsive screen size @media
   - Static fonts (ttf and browser support)
   - Variable fonts
   - Create responsive navbar
   - Create homepage
+  - Hover effects for link titles (mobile and desktop)
+
+In progress:
+- Develop Admin Zone / Session
+  - Admin page
+  - Secure login
+    - 2fa (mobile)
+    - Prevent login attacks
+    - Captcha
+  - Logout
+  - Update details
+    - Name
+    - Password
+    - Email
+    - Phone number
+  - Analytics
+    - Page visits
 
 -----------
 ## How to Install
