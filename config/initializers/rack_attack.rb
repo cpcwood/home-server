@@ -6,5 +6,5 @@ end
 # Using 503 because it may make attacker think that they have successfully
 # DOSed the site. Rack::Attack returns 429 for throttling by default
 Rack::Attack.throttled_response = lambda do |request|
-  [ 503, {}, ["Server Error\n"]]
+  [503, {}, ["Server Error\n"]]
 end
