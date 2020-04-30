@@ -13,11 +13,14 @@
       <%= label_tag(:password, 'Password') %>
       <br>
       <%= password_field_tag(:password) %>
-      <br>
+      <br><br>
       <div id='recaptcha'></div>
       <br>
       <%= submit_tag("Login") %>
     <% end %>
   </div>
 </div>
-<%= javascript_pack_tag 'recaptcha/recaptcha' %>
+
+<% unless ENV['RAILS_ENV'] == 'test' %>
+  <%= javascript_pack_tag 'recaptcha/recaptcha' %>
+<% end %>
