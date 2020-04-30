@@ -3,7 +3,7 @@ class AdminController < ApplicationController
 
   def index; end
 
-  private 
+  private
 
   def check_admin
     redirect_to '/' unless @user

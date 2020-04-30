@@ -6,11 +6,9 @@ class ApplicationController < ActionController::Base
   private
 
   def assign_user
-    begin
-      @user = User.find(session[:user_id]) if session[:user_id]
-    rescue
-      reset_session
-      redirect_to('/')
-    end
+    @user = User.find(session[:user_id]) if session[:user_id]
+  rescue StandardError
+    reset_session
+    redirect_to('/')
   end
 end

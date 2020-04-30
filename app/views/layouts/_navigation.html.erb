@@ -11,48 +11,40 @@
       </div>
     </div>
     <div class='nav_item_container'>
-      <a href='/'>
-        <span class='nav_item'>
-          <span>HOME</span>
-        </span>
+      <a href='/' class='nav_item'>
+        HOME
       </a>
       <div class='nav_item_separator'></div>
-      <a href='/about'>
-        <span class='nav_item'>
-          <span>ABOUT</span>
-        </span>
+      <a href='/about' class='nav_item'>
+        ABOUT
       </a>
       <div class='nav_item_separator'></div>
-      <a href='/projects'>
-        <span class='nav_item'>
-          <span>PROJECTS</span>
-        </span>
+      <a href='/projects' class='nav_item'>
+        PROJECTS
       </a>
       <div class='nav_item_separator'></div>
-      <a href='/blog'>
-        <span class='nav_item'>
-          <span>BLOG</span>
-        </span>
+      <a href='/blog' class='nav_item'>
+        BLOG
       </a>
       <div class='nav_item_separator'></div>
-      <a href='/say-hello'>
-        <span class='nav_item'>
-          <span>SAY HELLO</span>
-        </span>
+      <a href='/say-hello' class='nav_item'>
+        SAY HELLO
       </a>
       <div class='nav_item_separator'></div>
-      <a href='/gallery'>
-        <span class='nav_item'>
-          <span>GALLERY</span>
-        </span>
+      <a href='/gallery' class='nav_item'>
+        GALLERY
       </a>
       <div class='nav_item_separator'></div>
-      <a href='/contact'>
-        <span class='nav_item'>
-          <span>CONTACT</span>
-        </span>
+      <a href='/contact' class='nav_item'>
+        CONTACT
       </a>
       <div class='nav_item_separator'></div>
+      <% if @user %>
+      <%= form_with(url: "/login", method: "delete") do %>
+        <%= submit_tag("LOGOUT", id: 'logout-button', class: 'nav_item') %>
+      <% end %>
+      <div class='nav_item_separator'></div>
+      <% end %>
     </div>
   </div>
 </nav>

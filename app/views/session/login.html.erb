@@ -20,7 +20,4 @@
     <% end %>
   </div>
 </div>
-
-<% unless ENV['RAILS_ENV'] == 'test' %>
-  <%= javascript_pack_tag 'recaptcha/recaptcha' %>
-<% end %>
+<%= javascript_pack_tag 'recaptcha/recaptcha' %>
