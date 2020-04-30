@@ -1,0 +1,28 @@
+.login_container {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+}
+
+.login_form_container {
+  flex: 1 1 50%;
+  max-width: 500px;
+  max-height: 300px;
+  border: 3px solid white;
+  background-color: lightgrey;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_form {
+  flex: 1 1 50%;
+  max-width: 50%;
+  border-radius: 10px;
+}

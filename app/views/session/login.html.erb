@@ -1,0 +1,23 @@
+<div class='login_container'>
+  <div class='login_form_container'>
+    <%= form_with(url: "/login", method: "post", class: 'login_form') do %>
+      <% flash.each do |type, msg| %>
+      <div class="alert">
+        <%= msg %>
+      </div>
+      <% end %>
+      <%= label_tag(:user, 'Username or Email') %>
+      <br>
+      <%= text_field_tag(:user) %>
+      <br>
+      <%= label_tag(:password, 'Password') %>
+      <br>
+      <%= password_field_tag(:password) %>
+      <br><br>
+      <div id='recaptcha'></div>
+      <br>
+      <%= submit_tag("Login") %>
+    <% end %>
+  </div>
+</div>
+<%= javascript_pack_tag 'recaptcha/recaptcha' %>
