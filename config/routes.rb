@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get '/login', to: 'session#login'
   post '/login', to: 'session#new'
+  delete '/login', to: 'session#destroy'
 
   get '/admin', to: 'admin#index'
 
