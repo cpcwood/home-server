@@ -21,6 +21,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt', '~> 3.1.7'
 # Throttle excessive requests
 gem 'rack-attack', '~> 6.3.0'
+# Send HTTP Requests
+gem 'faraday', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -36,6 +38,8 @@ group :development, :test do
   # Code policing with rubocop
   gem 'rubocop-rails', '~> 2.5.2', require: false
   gem 'rubocop-performance', '~> 1.5.2', require: false
+  # Mock HTTP Requests
+  gem 'webmock', '~> 3.8.3', require: false
 end
 
 group :development do
