@@ -19,7 +19,7 @@ RSpec.describe 'Sessions', type: :request do
 
     it 'sends verify request to twilio' do
       block_twilio_external_requests
-      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create)
+      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create).with(to: @test_user.mobile_number, channel: 'sms')
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       get '/2fa'
     end
