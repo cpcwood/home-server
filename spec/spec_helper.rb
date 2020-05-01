@@ -19,7 +19,10 @@ SimpleCov.start 'rails' do
 end
 
 require 'webmock/rspec'
-WebMock.disable_net_connect!(allow_localhost: true)
+WebMock.disable_net_connect!(
+  allow_localhost: true,
+  allow: 'chromedriver.storage.googleapis.com'
+)
 
 require 'web_helpers'
 
