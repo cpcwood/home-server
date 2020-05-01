@@ -1,3 +1,5 @@
+require 'helpers/feature_helpers'
+
 feature 'Admin Login Logout' do
   scenario 'Admin can login and logout' do
     login

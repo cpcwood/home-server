@@ -1,1 +1,1 @@
-User.create(username: 'admin', email: 'admin@example.com', password: 'password')
+User.create(username: 'admin', email: 'admin@example.com', password: 'password', mobile_number: Rails.application.credentials.twilio[:dev_number])
