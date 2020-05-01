@@ -5,15 +5,6 @@ require 'twilio-ruby'
 class SessionController < ApplicationController
   def login; end
 
-  def two_factor_auth
-    client_verify_number = User.find_by(id: session[:two_factor_auth_id]).mobile_number
-    client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
-    client.verify
-          .services(Rails.application.credentials.twilio[:verify_service_sid])
-          .verifications
-          .create(to: client_verify_number, channel: 'sms')
-  end
-
   def new
     if recaptcha_confirmation(params['g-recaptcha-response'])
       user = User.find_by(email: params[:user])
@@ -26,6 +17,20 @@ class SessionController < ApplicationController
       end
     else
       redirect_to :login, alert: 'reCaptcha failed, please try again'
+    end
+  end
+
+  def two_factor_auth
+    if session[:two_factor_auth_id]
+      client_verify_number = User.find_by(id: session[:two_factor_auth_id]).mobile_number
+      client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
+      client.verify
+            .services(Rails.application.credentials.twilio[:verify_service_sid])
+            .verifications
+            .create(to: client_verify_number, channel: 'sms')
+      render :two_factor_auth
+    else
+      redirect_to(:login)
     end
   end
 

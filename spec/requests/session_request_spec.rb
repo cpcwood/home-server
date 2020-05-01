@@ -9,22 +9,6 @@ RSpec.describe 'Sessions', type: :request do
     end
   end
 
-  describe 'GET #two_factor_auth /2fa' do
-    it 'renders login page' do
-      block_twilio_verification_requests
-      password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
-      get('/2fa')
-      expect(response).to render_template(:two_factor_auth)
-    end
-
-    it 'sends verify request to twilio' do
-      block_twilio_verification_requests
-      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create).with(to: @test_user.mobile_number, channel: 'sms')
-      password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
-      get '/2fa'
-    end
-  end
-
   describe 'POST #new /login' do
     it 'allows inital login with username' do
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
@@ -49,6 +33,27 @@ RSpec.describe 'Sessions', type: :request do
       expect(response).to redirect_to login_path
       follow_redirect!
       expect(response.body).to include('reCaptcha failed, please try again')
+    end
+  end
+
+  describe 'GET #two_factor_auth /2fa' do
+    it 'renders login page' do
+      block_twilio_verification_requests
+      password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
+      get('/2fa')
+      expect(response).to render_template(:two_factor_auth)
+    end
+
+    it 'sends verify request to twilio' do
+      block_twilio_verification_requests
+      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create).with(to: @test_user.mobile_number, channel: 'sms')
+      password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
+      get '/2fa'
+    end
+
+    it 'block unauthorised access' do
+      get '/2fa'
+      expect(response).to redirect_to('/login')
     end
   end
 
