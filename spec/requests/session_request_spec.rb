@@ -11,14 +11,14 @@ RSpec.describe 'Sessions', type: :request do
 
   describe 'GET #two_factor_auth /2fa' do
     it 'renders login page' do
-      block_twilio_external_requests
+      block_twilio_verification_requests
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       get('/2fa')
       expect(response).to render_template(:two_factor_auth)
     end
 
     it 'sends verify request to twilio' do
-      block_twilio_external_requests
+      block_twilio_verification_requests
       expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create).with(to: @test_user.mobile_number, channel: 'sms')
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       get '/2fa'
@@ -61,6 +61,13 @@ RSpec.describe 'Sessions', type: :request do
     #   follow_redirect!
     #   expect(response.body).to include('admin welcome back to your home-server!')
     # end
+    it 'sends verification check request to twilio' do
+      block_twilio_verification_checks
+      password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
+      auth_code = '1234'
+      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).with(to: @test_user.mobile_number, code: auth_code)
+      post '/2fa', params: {auth_code: auth_code}
+    end
   end
 
   describe 'DELETE #destroy /login' do

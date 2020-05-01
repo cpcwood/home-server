@@ -7,11 +7,11 @@ class SessionController < ApplicationController
 
   def two_factor_auth
     client_verify_number = User.find_by(id: session[:two_factor_auth_id]).mobile_number
-    @client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
-    verification = @client.verify
-                          .services(Rails.application.credentials.twilio[:verify_service_sid])
-                          .verifications
-                          .create(to: client_verify_number, channel: 'sms')
+    client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
+    client.verify
+          .services(Rails.application.credentials.twilio[:verify_service_sid])
+          .verifications
+          .create(to: client_verify_number, channel: 'sms')
   end
 
   def new
@@ -30,10 +30,16 @@ class SessionController < ApplicationController
   end
 
   def two_factor_auth_verify
-    user = User.find_by(id: params[:two_factor_auth_id])
-    reset_session # reduce risk of session fixation
-    session[:user_id] = user.id
-    redirect_to :admin, notice: "#{user.username} welcome back to your home-server!"
+    user = User.find_by(id: session[:two_factor_auth_id])
+    client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
+    verification_check = client.verify
+                               .services(Rails.application.credentials.twilio[:verify_service_sid])
+                               .verification_checks
+                               .create(to: user.mobile_number, code: params[:auth_code])
+    p verification_check
+    # reset_session # reduce risk of session fixation
+    # session[:user_id] = user.id
+    # redirect_to :admin, notice: "#{user.username} welcome back to your home-server!"
   end
 
   def destroy
