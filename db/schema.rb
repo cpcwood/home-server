@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2020_05_01_155113) do
     t.text "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "mobile_number"
+    t.text "mobile_number"
   end
 
 end
