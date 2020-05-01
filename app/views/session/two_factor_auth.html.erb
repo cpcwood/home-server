@@ -1,0 +1,11 @@
+<div class='login_container'>
+  <div class='login_form_container'>
+    <%= form_with(url: "/2fa", method: "post", class: 'login_form') do %>
+      <%= label_tag(:auth_code, 'Please enter 2fa auth code send to your mobile number:') %>
+      <br>
+      <%= text_field_tag(:auth_code) %>
+      <br><br>
+      <%= submit_tag("Login") %>
+    <% end %>
+  </div>
+</div>
