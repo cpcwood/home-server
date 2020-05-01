@@ -86,6 +86,8 @@ RSpec.describe 'Sessions', type: :request do
     end
 
     it 'block unauthorised access' do
+      post '/2fa', params: { auth_code: '1234' }
+      expect(response).to redirect_to('/login')
     end
   end
 
