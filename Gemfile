@@ -23,6 +23,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'rack-attack', '~> 6.3.0'
 # Send HTTP Requests
 gem 'faraday', require: false
+# Verify 2FA using twilio
+gem 'twilio-ruby', '~> 5.34', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

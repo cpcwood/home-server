@@ -8,31 +8,29 @@ RSpec.describe 'Sessions', type: :request do
     end
   end
 
+  describe 'GET #two_factor_auth /2fa' do
+    it 'renders login page' do
+      get '/2fa'
+      expect(response).to render_template(:two_factor_auth)
+    end
+  end
+
   describe 'POST #new /login' do
-    it 'allows sucessful login with username' do
+    it 'allows inital login with username' do
       allow(Faraday).to receive(:post).and_return(
         double('response', body: '{"success": true}', params: { secret: '', response: '' })
       )
       post '/login', params: { user: 'admin', password: 'Securepass1', 'g-recaptcha-response' => true }
-      expect(response).to redirect_to admin_path
-      expect(session[:user_id]).not_to eq(nil)
+      expect(response).to redirect_to('/2fa')
+      expect(session[:two_factor_auth_id]).not_to eq(nil)
     end
 
-    it 'allows sucessful login with email' do
+    it 'allows inital login with email' do
       allow(Faraday).to receive(:post).and_return(
         double('response', body: '{"success": true}', params: { secret: '', response: '' })
       )
       post '/login', params: { user: 'admin@example.com', password: 'Securepass1', 'g-recaptcha-response' => true }
-      expect(response).to redirect_to admin_path
-    end
-
-    it 'allows sucessful login and gives user notice' do
-      allow(Faraday).to receive(:post).and_return(
-        double('response', body: '{"success": true}', params: { secret: '', response: '' })
-      )
-      post '/login', params: { user: 'admin', password: 'Securepass1', 'g-recaptcha-response' => true }
-      follow_redirect!
-      expect(response.body).to include('admin welcome back to your home-server!')
+      expect(response).to redirect_to('/2fa')
     end
 
     it 'blocks login if user not found' do
@@ -61,6 +59,17 @@ RSpec.describe 'Sessions', type: :request do
       follow_redirect!
       expect(response.body).to include('reCaptcha failed, please try again')
     end
+  end
+
+  describe 'POST #two_factor_auth_verify /2fa' do
+    # it 'allows sucessful login and gives user notice' do
+    #   allow(Faraday).to receive(:post).and_return(
+    #     double('response', body: '{"success": true}', params: { secret: '', response: '' })
+    #   )
+    #   post '/login', params: { user: 'admin', password: 'Securepass1', 'g-recaptcha-response' => true }
+    #   follow_redirect!
+    #   expect(response.body).to include('admin welcome back to your home-server!')
+    # end
   end
 
   describe 'DELETE #destroy /login' do
