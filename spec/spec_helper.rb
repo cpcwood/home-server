@@ -23,8 +23,6 @@ WebMock.disable_net_connect!(
   allow_localhost: true
 )
 
-require 'web_helpers'
-
 RSpec.configure do |config|
   config.before(:suite) do
     `./bin/webpack`
