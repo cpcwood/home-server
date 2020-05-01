@@ -36,10 +36,13 @@ class SessionController < ApplicationController
                                .services(Rails.application.credentials.twilio[:verify_service_sid])
                                .verification_checks
                                .create(to: user.mobile_number, code: params[:auth_code])
-    p verification_check
-    # reset_session # reduce risk of session fixation
-    # session[:user_id] = user.id
-    # redirect_to :admin, notice: "#{user.username} welcome back to your home-server!"
+    reset_session
+    if verification_check.status == 'approved'
+      session[:user_id] = user.id
+      redirect_to :admin, notice: "#{user.username} welcome back to your home-server!"
+    else
+      redirect_to :login, notice: '2fa code incorrect, please try again'
+    end
   end
 
   def destroy

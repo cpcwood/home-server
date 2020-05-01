@@ -53,20 +53,39 @@ RSpec.describe 'Sessions', type: :request do
   end
 
   describe 'POST #two_factor_auth_verify /2fa' do
-    # it 'allows sucessful login and gives user notice' do
-    #   allow(Faraday).to receive(:post).and_return(
-    #     double('response', body: '{"success": true}', params: { secret: '', response: '' })
-    #   )
-    #   post '/login', params: { user: 'admin', password: 'Securepass1', 'g-recaptcha-response' => true }
-    #   follow_redirect!
-    #   expect(response.body).to include('admin welcome back to your home-server!')
-    # end
     it 'sends verification check request to twilio' do
       block_twilio_verification_checks
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       auth_code = '1234'
-      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).with(to: @test_user.mobile_number, code: auth_code)
-      post '/2fa', params: {auth_code: auth_code}
+      verification_double = double('verification', status: 'approved')
+      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).with(to: @test_user.mobile_number, code: auth_code).and_return(verification_double)
+      post '/2fa', params: { auth_code: auth_code }
+    end
+
+    it 'allows sucessful login and gives user notice' do
+      block_twilio_verification_checks
+      password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
+      auth_code = '1234'
+      verification_double = double('verification', status: 'approved')
+      allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
+      post '/2fa', params: { auth_code: auth_code }
+      follow_redirect!
+      expect(response.body).to include('admin welcome back to your home-server!')
+    end
+
+    it 'blocks unsucessful login' do
+      block_twilio_verification_checks
+      password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
+      auth_code = '1235'
+      verification_double = double('verification', status: 'failed')
+      allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
+      post '/2fa', params: { auth_code: auth_code }
+      expect(response).to redirect_to('/login')
+      follow_redirect!
+      expect(response.body).to include('2fa code incorrect, please try again')
+    end
+
+    it 'block unauthorised access' do
     end
   end
 
