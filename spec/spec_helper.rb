@@ -19,7 +19,9 @@ SimpleCov.start 'rails' do
 end
 
 require 'webmock/rspec'
-WebMock.disable_net_connect!(allow_localhost: true)
+WebMock.disable_net_connect!(
+  allow_localhost: true
+)
 
 require 'web_helpers'
 
@@ -29,7 +31,7 @@ RSpec.configure do |config|
   end
 
   config.before(:all) do
-    User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1')
+    @test_user = User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1', mobile_number: '+15005550006')
   end
 
   config.after(:all) do

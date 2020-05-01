@@ -1,10 +1,18 @@
 require 'faraday'
 require 'json'
+require 'twilio-ruby'
 
 class SessionController < ApplicationController
   def login; end
 
-  def two_factor_auth; end
+  def two_factor_auth
+    client_verify_number = User.find_by(id: session[:two_factor_auth_id]).mobile_number
+    @client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
+    verification = @client.verify
+                          .services(Rails.application.credentials.twilio[:verify_service_sid])
+                          .verifications
+                          .create(to: client_verify_number, channel: 'sms')
+  end
 
   def new
     if recaptcha_confirmation(params['g-recaptcha-response'])
