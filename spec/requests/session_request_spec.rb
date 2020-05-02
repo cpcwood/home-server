@@ -68,13 +68,7 @@ RSpec.describe 'Sessions', type: :request do
     end
 
     it 'allows sucessful login and gives user notice' do
-      block_twilio_verification_checks
-      password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
-      auth_code = '1234'
-      verification_double = double('verification', status: 'approved')
-      allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
-      post '/2fa', params: { auth_code: auth_code }
-      follow_redirect!
+      login_admin
       expect(response.body).to include('admin welcome back to your home-server!')
     end
 
@@ -98,12 +92,21 @@ RSpec.describe 'Sessions', type: :request do
 
   describe 'DELETE #destroy /login' do
     it 'resets session' do
-      allow(Faraday).to receive(:post).and_return(
-        double('response', body: '{"success": true}', params: { secret: '', response: '' })
-      )
-      post '/login', params: { user: 'admin', password: 'Securepass1', 'g-recaptcha-response' => true }
+      login_admin
+      expect(session[:user_id]).not_to eq(nil)
       delete '/login'
       expect(response).to redirect_to root_path
+      expect(session[:user_id]).to eq(nil)
+    end
+  end
+
+  describe 'Session expiry' do
+    it 'resets session after 60 minutes of inactivity' do
+      travel_to Time.zone.local(2020, 04, 20, 00, 00, 00)
+      login_admin
+      expect(session[:user_id]).not_to eq(nil)
+      travel_to Time.zone.local(2020, 04, 20, 01, 00, 01)
+      get '/'
       expect(session[:user_id]).to eq(nil)
     end
   end
