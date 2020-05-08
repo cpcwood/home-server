@@ -1,6 +1,6 @@
 <div class='login_container'>
-  <h1> Login </h1>
   <div class='login_form_container'>
+    <h1> Login </h1>
     <%= form_with(url: "/login", method: "post", class: 'login_form') do %>
       <% flash.each do |type, msg| %>
       <div class="alert">
@@ -19,6 +19,7 @@
       <br>
       <%= submit_tag("Login") %>
     <% end %>
+    <%= link_to "Forgotten Password", "/forgotten-password" %>
   </div>
 </div>
 <%= javascript_pack_tag 'recaptcha/recaptcha' %>

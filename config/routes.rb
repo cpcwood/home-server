@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   delete '/login', to: 'session#destroy'
 
   get '/forgotten-password', to: 'password#forgotten_password'
+  post '/forgotten-password', to: 'password#send_reset_link'
 
   get '/admin', to: 'admin#index'
 

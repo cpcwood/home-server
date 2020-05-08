@@ -1,6 +1,6 @@
 <div class='login_container'>
-  <h1> Two Factor Authentication </h1>
   <div class='login_form_container'>
+    <h1> Two Factor Authentication </h1>
     <%= form_with(url: "/2fa", method: :post, class: 'login_form') do %>
       <% flash.each do |type, msg| %>
       <div class="alert">
