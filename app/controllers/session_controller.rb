@@ -25,12 +25,15 @@ class SessionController < ApplicationController
 
   def two_factor_auth
     if session[:two_factor_auth_id]
-      client_verify_number = User.find_by(id: session[:two_factor_auth_id]).mobile_number
-      client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
-      client.verify
-            .services(Rails.application.credentials.twilio[:verify_service_sid])
-            .verifications
-            .create(to: client_verify_number, channel: 'sms')
+      unless session[:auth_code_sent] == true
+        client_verify_number = User.find_by(id: session[:two_factor_auth_id]).mobile_number
+        client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
+        client.verify
+              .services(Rails.application.credentials.twilio[:verify_service_sid])
+              .verifications
+              .create(to: client_verify_number, channel: 'sms')
+        session[:auth_code_sent] = true
+      end
       render :two_factor_auth
     else
       redirect_to(:login)
@@ -45,9 +48,9 @@ class SessionController < ApplicationController
         user = User.find_by(id: session[:two_factor_auth_id])
         client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
         verification_check = client.verify
-                                  .services(Rails.application.credentials.twilio[:verify_service_sid])
-                                  .verification_checks
-                                  .create(to: user.mobile_number, code: params[:auth_code])
+                                   .services(Rails.application.credentials.twilio[:verify_service_sid])
+                                   .verification_checks
+                                   .create(to: user.mobile_number, code: params[:auth_code])
         if verification_check.status == 'approved'
           reset_session
           session[:user_id] = user.id
