@@ -43,8 +43,12 @@
       <%= form_with(url: "/login", method: "delete") do %>
         <%= submit_tag("LOGOUT", id: 'logout-button', class: 'nav_item') %>
       <% end %>
-      <div class='nav_item_separator'></div>
+      <% else %>
+      <a href='/login' class='nav_item' id='login-button'>
+        LOGIN
+      </a>
       <% end %>
+      <div class='nav_item_separator'></div>
     </div>
   </div>
 </nav>
