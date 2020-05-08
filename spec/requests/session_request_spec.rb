@@ -7,6 +7,12 @@ RSpec.describe 'Sessions', type: :request do
       get '/login'
       expect(response).to render_template(:login)
     end
+
+    it 'if already logged in, redirect to admin page' do
+      login
+      get '/login'
+      expect(response).to redirect_to(:admin)
+    end
   end
 
   describe 'POST #new /login' do
@@ -68,13 +74,7 @@ RSpec.describe 'Sessions', type: :request do
     end
 
     it 'allows sucessful login and gives user notice' do
-      block_twilio_verification_checks
-      password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
-      auth_code = '1234'
-      verification_double = double('verification', status: 'approved')
-      allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
-      post '/2fa', params: { auth_code: auth_code }
-      follow_redirect!
+      login
       expect(response.body).to include('admin welcome back to your home-server!')
     end
 

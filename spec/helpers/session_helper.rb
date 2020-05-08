@@ -13,3 +13,12 @@ def block_twilio_verification_checks
   stub_request(:post, 'https://verify.twilio.com/v2/Services/VAbe124f2ff38bc35c1de5c4f5f3fb14c8/VerificationCheck')
     .to_return(status: 200, body: '', headers: {})
 end
+
+def login
+  block_twilio_verification_checks
+  password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
+  verification_double = double('verification', status: 'approved')
+  allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
+  post '/2fa', params: { auth_code: '1234' }
+  follow_redirect!
+end
