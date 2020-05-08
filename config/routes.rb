@@ -5,8 +5,9 @@ Rails.application.routes.draw do
 
   get '/login', to: 'session#login'
   post '/login', to: 'session#new'
-  get '/2fa', to: 'session#two_factor_auth'
-  post '/2fa', to: 'session#two_factor_auth_verify'
+  get '/2fa', to: 'session#send_2fa'
+  post '/2fa', to: 'session#verify_2fa'
+  put '/2fa', to: 'session#reset_2fa'
   delete '/login', to: 'session#destroy'
 
   get '/admin', to: 'admin#index'
