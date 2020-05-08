@@ -3,7 +3,9 @@ require 'json'
 require 'twilio-ruby'
 
 class SessionController < ApplicationController
-  def login; end
+  def login
+    redirect_to(:admin) if session[:user_id]
+  end
 
   def new
     if recaptcha_confirmation(params['g-recaptcha-response'])
