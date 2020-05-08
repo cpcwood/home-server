@@ -4,6 +4,8 @@ class PasswordController < ApplicationController
   def send_reset_link
     if recaptcha_confirmation(params['g-recaptcha-response'])
       redirect_to(:login, notice: 'If the submitted email is associated with an account, a password reset link will be sent')
+      user = User.find_by(email: params[:email])
+      user&.generate_password_reset_token!
     else
       redirect_to(:forgotten_password, alert: 'reCaptcha failed, please try again')
     end

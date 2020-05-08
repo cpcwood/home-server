@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'helpers/password_helpers'
 
 RSpec.describe 'Passwords', type: :request do
   describe 'GET /forgotten-password #forgotten_password' do
@@ -10,23 +11,27 @@ RSpec.describe 'Passwords', type: :request do
 
   describe 'POST /forgotten-password #send_reset_link' do
     it 'Redirects user back to login page, with notice of reset' do
-      captcha_success = true
-      stub_request(:post, "https://www.google.com/recaptcha/api/siteverify?response=#{captcha_success}&secret=test")
-        .to_return(status: 200, body: "{\"success\": #{captcha_success}}", headers: {})
-      post '/forgotten-password', params: { user: 'admin', 'g-recaptcha-response' => captcha_success }
+      submit_forgotten_password(email: 'admin@example.com', captcha_success: true)
       expect(response).to redirect_to(:login)
       follow_redirect!
       expect(response.body).to include('If the submitted email is associated with an account, a password reset link will be sent')
     end
 
     it 'Notifies user if reCaptcha is incorrect' do
-      captcha_success = false
-      stub_request(:post, "https://www.google.com/recaptcha/api/siteverify?response=#{captcha_success}&secret=test")
-        .to_return(status: 200, body: "{\"success\": #{captcha_success}}", headers: {})
-      post '/forgotten-password', params: { user: 'admin', 'g-recaptcha-response' => captcha_success }
+      submit_forgotten_password(email: 'admin@example.com', captcha_success: false)
       expect(response).to redirect_to(:forgotten_password)
       follow_redirect!
       expect(response.body).to include('reCaptcha failed, please try again')
+    end
+
+    it 'If user exists, password reset token generated' do
+      expect_any_instance_of(User).to receive(:generate_password_reset_token!)
+      submit_forgotten_password(email: 'admin@example.com', captcha_success: true)
+    end
+
+    it 'If user does not exist, password reset token not generated' do
+      expect_any_instance_of(User).not_to receive(:generate_password_reset_token!)
+      submit_forgotten_password(email: 'idontexist@example.com', captcha_success: true)
     end
   end
 end
