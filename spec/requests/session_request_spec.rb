@@ -70,10 +70,19 @@ RSpec.describe 'Sessions', type: :request do
   end
 
   describe 'POST #two_factor_auth_verify /2fa' do
+    it 'sends notice if verification code length incorrect' do
+      block_twilio_verification_checks
+      password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
+      post '/2fa', params: { auth_code: '1234' }
+      expect(response).to redirect_to('/2fa')
+      follow_redirect!
+      expect(response.body).to include('Verification code must be 6 digits long')
+    end
+
     it 'sends verification check request to twilio' do
       block_twilio_verification_checks
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
-      auth_code = '1234'
+      auth_code = '123456'
       verification_double = double('verification', status: 'approved')
       expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).with(to: @test_user.mobile_number, code: auth_code).and_return(verification_double)
       post '/2fa', params: { auth_code: auth_code }
@@ -87,15 +96,26 @@ RSpec.describe 'Sessions', type: :request do
     it 'blocks wrong code entered and displays message' do
       block_twilio_verification_checks
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
-      auth_code = '1235'
+      auth_code = '123457'
       verification_double = double('verification', status: 'failed')
       allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
       post '/2fa', params: { auth_code: auth_code }
       expect(response).to redirect_to('/2fa')
       follow_redirect!
-      follow_redirect!
       expect(response.body).to include('2fa code incorrect, please try again')
     end
+
+    # it 'blocks wrong code entered and displays message' do
+    #   block_twilio_verification_checks
+    #   password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
+    #   auth_code = '123457'
+    #   verification_double = double('verification', status: 'failed')
+    #   allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
+    #   post '/2fa', params: { auth_code: auth_code }
+    #   expect(response).to redirect_to('/2fa')
+    #   follow_redirect!
+    #   expect(response.body).to include('2fa code incorrect, please try again')
+    # end
 
     it 'block unauthorised access' do
       post '/2fa', params: { auth_code: '1234' }

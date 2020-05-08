@@ -39,18 +39,22 @@ class SessionController < ApplicationController
 
   def two_factor_auth_verify
     if session[:two_factor_auth_id]
-      user = User.find_by(id: session[:two_factor_auth_id])
-      client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
-      verification_check = client.verify
-                                 .services(Rails.application.credentials.twilio[:verify_service_sid])
-                                 .verification_checks
-                                 .create(to: user.mobile_number, code: params[:auth_code])
-      reset_session
-      if verification_check.status == 'approved'
-        session[:user_id] = user.id
-        redirect_to :admin, notice: "#{user.username} welcome back to your home-server!"
+      if params[:auth_code].length != 6
+        redirect_to '/2fa', notice: 'Verification code must be 6 digits long'
       else
-        redirect_to '/2fa', notice: '2fa code incorrect, please try again'
+        user = User.find_by(id: session[:two_factor_auth_id])
+        client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
+        verification_check = client.verify
+                                  .services(Rails.application.credentials.twilio[:verify_service_sid])
+                                  .verification_checks
+                                  .create(to: user.mobile_number, code: params[:auth_code])
+        if verification_check.status == 'approved'
+          reset_session
+          session[:user_id] = user.id
+          redirect_to :admin, notice: "#{user.username} welcome back to your home-server!"
+        else
+          redirect_to '/2fa', notice: '2fa code incorrect, please try again'
+        end
       end
     else
       redirect_to(:login)
