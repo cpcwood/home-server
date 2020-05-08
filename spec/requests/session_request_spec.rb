@@ -101,10 +101,10 @@ RSpec.describe 'Sessions', type: :request do
     end
 
     it 'resets session after 60 minutes of inactivity' do
-      travel_to Time.zone.local(2020, 04, 20, 00, 00, 00)
+      travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
       login
       expect(session[:user_id]).not_to eq(nil)
-      travel_to Time.zone.local(2020, 04, 20, 01, 00, 01)
+      travel_to Time.zone.local(2020, 04, 19, 01, 00, 01)
       get '/'
       expect(session[:user_id]).to eq(nil)
     end
