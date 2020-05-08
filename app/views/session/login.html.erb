@@ -3,9 +3,9 @@
     <h1> Login </h1>
     <%= form_with(url: "/login", method: "post", class: 'login_form') do %>
       <% flash.each do |type, msg| %>
-      <div class="alert">
-        <%= msg %>
-      </div>
+        <div class="alert">
+          <%= msg %>
+        </div>
       <% end %>
       <%= label_tag(:user, 'Username or Email') %>
       <br>
