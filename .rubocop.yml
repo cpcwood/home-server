@@ -47,7 +47,9 @@ Style/HashTransformKeys:
   Enabled: true
 Style/HashTransformValues:
   Enabled: true
-
+Style/NumericLiteralPrefix:
+  Enabled: false
+  
 Metrics/BlockLength:
   Enabled: false
 Metrics/MethodLength:
