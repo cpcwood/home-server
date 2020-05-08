@@ -10,7 +10,10 @@ RSpec.describe 'Passwords', type: :request do
 
   describe 'POST /forgotten-password #send_reset_link' do
     it 'Redirects user back to login page, with notice of reset' do
-      post '/forgotten-password', params: { user: 'admin' }
+      captcha_success = true
+      stub_request(:post, "https://www.google.com/recaptcha/api/siteverify?response=#{captcha_success}&secret=test")
+        .to_return(status: 200, body: "{\"success\": #{captcha_success}}", headers: {})
+      post '/forgotten-password', params: { user: 'admin', 'g-recaptcha-response' => captcha_success }
       expect(response).to redirect_to(:login)
       follow_redirect!
       expect(response.body).to include('If the submitted email is associated with an account, a password reset link will be sent')
