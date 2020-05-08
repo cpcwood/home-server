@@ -6,7 +6,7 @@ RSpec.describe 'Sessions', type: :request do
     block_twilio_verification_checks
   end
 
-  describe 'GET #login /login' do
+  describe 'GET /login #login ' do
     it 'renders login page' do
       get '/login'
       expect(response).to render_template(:login)
@@ -19,7 +19,7 @@ RSpec.describe 'Sessions', type: :request do
     end
   end
 
-  describe 'POST #new /login' do
+  describe 'POST /login #new' do
     it 'allows inital login with username' do
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       expect(response).to redirect_to('/2fa')
@@ -46,7 +46,7 @@ RSpec.describe 'Sessions', type: :request do
     end
   end
 
-  describe 'GET #send_2fa /2fa' do
+  describe 'GET /2fa #send_2fa' do
     it 'renders login page' do
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       get('/2fa')
@@ -78,7 +78,7 @@ RSpec.describe 'Sessions', type: :request do
     end
   end
 
-  describe 'POST #verify_2fa /2fa' do
+  describe 'POST /2fa #verify_2fa' do
     it 'sends notice if verification code length incorrect' do
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       post '/2fa', params: { auth_code: '1234' }
@@ -100,6 +100,15 @@ RSpec.describe 'Sessions', type: :request do
       expect(response.body).to include('admin welcome back to your home-server!')
     end
 
+    it 'resets session after 60 minutes of inactivity' do
+      travel_to Time.zone.local(2020, 04, 20, 00, 00, 00)
+      login
+      expect(session[:user_id]).not_to eq(nil)
+      travel_to Time.zone.local(2020, 04, 20, 01, 00, 01)
+      get '/'
+      expect(session[:user_id]).to eq(nil)
+    end
+
     it 'blocks wrong code entered and displays message' do
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       auth_code = '123457'
@@ -117,7 +126,7 @@ RSpec.describe 'Sessions', type: :request do
     end
   end
 
-  describe 'PUT #reset_2fa /2fa' do
+  describe 'PUT /2fa #reset_2fa' do
     it 'resends 2fa code' do
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       get '/2fa'
@@ -130,23 +139,12 @@ RSpec.describe 'Sessions', type: :request do
     end
   end
 
-  describe 'DELETE #destroy /login' do
+  describe 'DELETE /login #destroy' do
     it 'resets session' do
       login
       expect(session[:user_id]).not_to eq(nil)
       delete '/login'
       expect(response).to redirect_to root_path
-      expect(session[:user_id]).to eq(nil)
-    end
-  end
-
-  describe 'Session expiry' do
-    it 'resets session after 60 minutes of inactivity' do
-      travel_to Time.zone.local(2020, 04, 20, 00, 00, 00)
-      login
-      expect(session[:user_id]).not_to eq(nil)
-      travel_to Time.zone.local(2020, 04, 20, 01, 00, 01)
-      get '/'
       expect(session[:user_id]).to eq(nil)
     end
   end
