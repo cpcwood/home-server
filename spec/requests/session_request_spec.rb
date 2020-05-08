@@ -57,6 +57,14 @@ RSpec.describe 'Sessions', type: :request do
       get '/2fa'
     end
 
+    it 'blocks resend of 2fa code on incorrect code being entered or page refresh' do
+      block_twilio_verification_requests
+      password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
+      get '/2fa'
+      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).not_to receive(:create)
+      get '/2fa'
+    end
+
     it 'block unauthorised access' do
       get '/2fa'
       expect(response).to redirect_to('/login')
@@ -104,18 +112,6 @@ RSpec.describe 'Sessions', type: :request do
       follow_redirect!
       expect(response.body).to include('2fa code incorrect, please try again')
     end
-
-    # it 'blocks wrong code entered and displays message' do
-    #   block_twilio_verification_checks
-    #   password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
-    #   auth_code = '123457'
-    #   verification_double = double('verification', status: 'failed')
-    #   allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
-    #   post '/2fa', params: { auth_code: auth_code }
-    #   expect(response).to redirect_to('/2fa')
-    #   follow_redirect!
-    #   expect(response.body).to include('2fa code incorrect, please try again')
-    # end
 
     it 'block unauthorised access' do
       post '/2fa', params: { auth_code: '1234' }
