@@ -8,5 +8,11 @@ RSpec.describe User, type: :model do
       @test_user.generate_password_reset_token!
       expect(BCrypt::Password.new(@test_user.password_reset_token) == 'testtoken').to eq(true)
     end
+
+    it 'adds a password reset expiry to user' do
+      travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
+      @test_user.generate_password_reset_token!
+      expect(@test_user.password_reset_expiry).to eq(Time.zone.now + 1.hour)
+    end
   end
 end
