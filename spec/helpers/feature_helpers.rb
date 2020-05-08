@@ -12,6 +12,6 @@ def login_feature
   fill_in('user', with: 'admin')
   fill_in('password', with: 'Securepass1')
   click_button('Login')
-  fill_in('auth_code', with: '1234')
+  fill_in('auth_code', with: '123456')
   click_button('Login')
 end
