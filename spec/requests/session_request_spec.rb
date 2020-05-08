@@ -132,7 +132,7 @@ RSpec.describe 'Sessions', type: :request do
 
   describe 'DELETE #destroy /login' do
     it 'resets session' do
-      login_admin
+      login
       expect(session[:user_id]).not_to eq(nil)
       delete '/login'
       expect(response).to redirect_to root_path
