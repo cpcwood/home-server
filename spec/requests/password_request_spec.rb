@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Passwords", type: :request do
+RSpec.describe 'Passwords', type: :request do
   describe 'GET /forgotten-password #forgotten_password' do
     it 'Renders the forgotten password page' do
       get '/forgotten-password'
