@@ -78,14 +78,15 @@ RSpec.describe 'Sessions', type: :request do
       expect(response.body).to include('admin welcome back to your home-server!')
     end
 
-    it 'blocks unsucessful login' do
+    it 'blocks wrong code entered and displays message' do
       block_twilio_verification_checks
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       auth_code = '1235'
       verification_double = double('verification', status: 'failed')
       allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
       post '/2fa', params: { auth_code: auth_code }
-      expect(response).to redirect_to('/login')
+      expect(response).to redirect_to('/2fa')
+      follow_redirect!
       follow_redirect!
       expect(response.body).to include('2fa code incorrect, please try again')
     end

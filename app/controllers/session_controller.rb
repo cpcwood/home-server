@@ -47,7 +47,7 @@ class SessionController < ApplicationController
         session[:user_id] = user.id
         redirect_to :admin, notice: "#{user.username} welcome back to your home-server!"
       else
-        redirect_to :login, notice: '2fa code incorrect, please try again'
+        redirect_to '/2fa', notice: '2fa code incorrect, please try again'
       end
     else
       redirect_to(:login)
