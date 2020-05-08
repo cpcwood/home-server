@@ -1,5 +1,7 @@
 feature 'Password Reset' do
   scenario 'Filling in password reset form' do
+    stub_request(:post, 'https://www.google.com/recaptcha/api/siteverify?response&secret=test')
+      .to_return(status: 200, body: '{"success": true}', headers: {})
     visit('/login')
     click_on('Forgotten Password')
     fill_in('user', with: 'admin')
