@@ -3,9 +3,10 @@ require 'json'
 require 'twilio-ruby'
 
 class SessionController < ApplicationController
-  def login
-    redirect_to(:admin) if session[:user_id]
-  end
+  before_action :already_logged_in
+  skip_before_action :already_logged_in, only: [:destroy]
+
+  def login; end
 
   def new
     if recaptcha_confirmation(params['g-recaptcha-response'])
@@ -62,6 +63,10 @@ class SessionController < ApplicationController
   end
 
   private
+
+  def already_logged_in
+    redirect_to(:admin) if session[:user_id]
+  end
 
   def recaptcha_confirmation(recaptcha_response)
     response = Faraday.post('https://www.google.com/recaptcha/api/siteverify') do |request|

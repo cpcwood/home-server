@@ -61,6 +61,12 @@ RSpec.describe 'Sessions', type: :request do
       get '/2fa'
       expect(response).to redirect_to('/login')
     end
+
+    it 'if already logged in, redirect to admin page' do
+      login
+      get '/login'
+      expect(response).to redirect_to(:admin)
+    end
   end
 
   describe 'POST #two_factor_auth_verify /2fa' do
