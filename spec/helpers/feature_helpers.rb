@@ -7,7 +7,8 @@ def login_feature
   block_twilio_verification_checks
   verification_double = double('verification', status: 'approved')
   allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
-  visit('/login')
+  visit('/')
+  page.find(:css, '#login-button').click
   fill_in('user', with: 'admin')
   fill_in('password', with: 'Securepass1')
   click_button('Login')
