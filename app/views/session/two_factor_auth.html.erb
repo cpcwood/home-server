@@ -1,6 +1,6 @@
 <div class='login_container'>
   <div class='login_form_container'>
-    <%= form_with(url: "/2fa", method: "post", class: 'login_form') do %>
+    <%= form_with(url: "/2fa", method: :post, class: 'login_form') do %>
       <% flash.each do |type, msg| %>
       <div class="alert">
         <%= msg %>
@@ -11,6 +11,9 @@
       <%= text_field_tag(:auth_code) %>
       <br><br>
       <%= submit_tag("Login") %>
+    <% end %>
+    <%= form_tag('/2fa', method: :put) do %>
+      <%= submit_tag("Resend 2fa code") %>
     <% end %>
   </div>
 </div>

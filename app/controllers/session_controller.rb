@@ -23,7 +23,7 @@ class SessionController < ApplicationController
     end
   end
 
-  def two_factor_auth
+  def send_2fa
     if session[:two_factor_auth_id]
       unless session[:auth_code_sent] == true
         client_verify_number = User.find_by(id: session[:two_factor_auth_id]).mobile_number
@@ -40,7 +40,7 @@ class SessionController < ApplicationController
     end
   end
 
-  def two_factor_auth_verify
+  def verify_2fa
     if session[:two_factor_auth_id]
       if params[:auth_code].length != 6
         redirect_to '/2fa', notice: 'Verification code must be 6 digits long'
@@ -62,6 +62,11 @@ class SessionController < ApplicationController
     else
       redirect_to(:login)
     end
+  end
+
+  def reset_2fa
+    session[:auth_code_sent] = nil
+    redirect_to '/2fa', notice: '2fa code resent'
   end
 
   def destroy
