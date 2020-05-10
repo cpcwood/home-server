@@ -24,14 +24,9 @@ RSpec.describe 'Passwords', type: :request do
       expect(response.body).to include('reCaptcha failed, please try again')
     end
 
-    it 'If user exists, password reset token generated' do
-      expect_any_instance_of(User).to receive(:generate_password_reset_token!)
+    it 'Password reset job created if reCaptcha sucess' do
+      expect(PasswordResetJob).to receive(:perform_later).with(email: 'admin@example.com')
       submit_forgotten_password(email: 'admin@example.com', captcha_success: true)
-    end
-
-    it 'If user does not exist, password reset token not generated' do
-      expect_any_instance_of(User).not_to receive(:generate_password_reset_token!)
-      submit_forgotten_password(email: 'idontexist@example.com', captcha_success: true)
     end
   end
 end

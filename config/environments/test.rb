@@ -39,5 +39,5 @@ Rails.application.configure do
    config.action_mailer.perform_caching = false
 
    # Active Job Settings
-   Rails.application.config.active_job.queue_adapter = :test
+   Rails.application.config.active_job.queue_adapter = :sidekiq
 end
