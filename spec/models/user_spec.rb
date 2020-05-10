@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'bcrypt'
 
 RSpec.describe User, type: :model do
   describe '#send_password_reset_email!' do
@@ -7,7 +6,7 @@ RSpec.describe User, type: :model do
       allow(PasswordMailer).to receive_message_chain(:with, :password_reset_email, :deliver_now)
       allow(SecureRandom).to receive(:urlsafe_base64).and_return('testtoken')
       @test_user.send_password_reset_email!
-      expect(BCrypt::Password.new(@test_user.password_reset_token) == 'testtoken').to eq(true)
+      expect(@test_user.password_reset_token == 'testtoken').to eq(true)
     end
 
     it 'adds a password reset expiry to user' do

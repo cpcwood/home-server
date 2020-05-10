@@ -19,5 +19,10 @@ RSpec.describe PasswordMailer, type: :mailer do
     it 'assigns greeting in email' do
       expect(mail.body.encoded).to match("Hi #{@test_user.username},")
     end
+
+    it 'assigns adds password reset url' do
+      @test_user.password_reset_token = 'hashed-token'
+      expect(mail.body.encoded).to include(reset_password_url(reset_token: 'hashed-token'))
+    end
   end
 end

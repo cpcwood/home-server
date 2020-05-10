@@ -12,6 +12,8 @@ class PasswordController < ApplicationController
     end
   end
 
+  def reset_password; end
+
   private
 
   def recaptcha_confirmation(recaptcha_response)
