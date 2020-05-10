@@ -67,6 +67,4 @@ Rails.application.configure do
 
   # Active Job Settings
   config.active_job.queue_adapter = :sidekiq
-  config.active_job.queue_name_prefix = "home_server_development"
-  config.active_job.queue_name_delimiter = "_"
 end

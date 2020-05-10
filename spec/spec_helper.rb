@@ -5,17 +5,15 @@ require 'simplecov'
 require 'simplecov-console'
 require 'rails_helper'
 require 'webdrivers'
+require 'sidekiq/testing'
 
 Capybara.default_driver = :rack_test
 Capybara.javascript_driver = :selenium_chrome_headless
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::Console, Coveralls::SimpleCov::Formatter])
-
 SimpleCov.start 'rails' do
-  add_filter 'app/mailers'
   add_filter 'app/channels'
   add_filter 'app/helpers'
-  add_filter 'app/jobs'
 end
 
 require 'webmock/rspec'
