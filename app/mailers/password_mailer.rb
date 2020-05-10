@@ -5,6 +5,6 @@ class PasswordMailer < ApplicationMailer
 
   def password_reset_email
     @user = params[:user]
-    mail(to: @user.email)
+    mail(to: @user.email, subject: "Password Reset: #{@user.email}")
   end
 end

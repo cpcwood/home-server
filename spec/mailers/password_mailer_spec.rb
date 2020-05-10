@@ -7,5 +7,9 @@ RSpec.describe PasswordMailer, type: :mailer do
     it 'renders the receiver email' do
       expect(mail.to).to eql([@test_user.email])
     end
+
+    it 'renders the subject' do
+      expect(mail.subject).to eql("Password Reset: #{@test_user.email}")
+    end
   end
 end
