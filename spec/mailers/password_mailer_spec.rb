@@ -15,5 +15,9 @@ RSpec.describe PasswordMailer, type: :mailer do
     it 'renders the subject' do
       expect(mail.subject).to eql("Password Reset: #{@test_user.email}")
     end
+
+    it 'assigns greeting in email' do
+      expect(mail.body.encoded).to match("Hi #{@test_user.username},")
+    end
   end
 end
