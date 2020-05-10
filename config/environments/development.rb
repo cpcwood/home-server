@@ -31,11 +31,6 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
-
-  config.action_mailer.perform_caching = false
-
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -59,4 +54,19 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  # Active Mailer Settings
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: Rails.application.credentials.email[:smtp_server_address],
+    port: Rails.application.credentials.email[:smtp_server_port],
+    user_name: Rails.application.credentials.email[:smtp_username],
+    password: Rails.application.credentials.email[:smtp_password]
+  }
+  config.action_mailer.perform_caching = false
+
+  # Active Job Settings
+  config.active_job.queue_adapter = :sidekiq
+  config.active_job.queue_name_prefix = "home_server_development"
+  config.active_job.queue_name_delimiter = "_"
 end

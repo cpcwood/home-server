@@ -1,0 +1,8 @@
+---
+:concurrency: 1
+:queues:
+  - default
+  - mailers
+  - home_server_development_mailers
+  - home_server_production_mailers
+
