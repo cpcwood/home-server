@@ -11,7 +11,8 @@ module HomeServer
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
     config.middleware.use Rack::Attack
-
+    config.action_mailer.default_url_options = { host: Rails.application.credentials.email[:host] }
+	  config.action_mailer.asset_host = Rails.application.credentials.email[:asset_host]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
