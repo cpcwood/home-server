@@ -35,6 +35,8 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
    # Active Mailer Settings
+   config.action_mailer.default_url_options = { host: Rails.application.credentials.email[:host] }
+   config.action_mailer.asset_host = Rails.application.credentials.email[:asset_host]
    config.action_mailer.delivery_method = :test
    config.action_mailer.perform_caching = false
 
