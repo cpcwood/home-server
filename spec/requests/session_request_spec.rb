@@ -7,12 +7,12 @@ RSpec.describe 'Sessions', type: :request do
   end
 
   describe 'GET /login #login ' do
-    it 'renders login page' do
+    it 'Renders login page' do
       get '/login'
       expect(response).to render_template(:login)
     end
 
-    it 'if already logged in, redirect to admin page' do
+    it 'If already logged in, redirect to admin page' do
       login
       get '/login'
       expect(response).to redirect_to(:admin)
@@ -20,25 +20,25 @@ RSpec.describe 'Sessions', type: :request do
   end
 
   describe 'POST /login #new' do
-    it 'allows inital login with username' do
+    it 'Allows inital login with username' do
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       expect(response).to redirect_to('/2fa')
       expect(session[:two_factor_auth_id]).not_to eq(nil)
     end
 
-    it 'allows inital login with email' do
+    it 'Allows inital login with email' do
       password_athenticate_admin(user: 'admin@example.com', password: 'Securepass1', captcha_success: true)
       expect(response).to redirect_to('/2fa')
     end
 
-    it 'blocks login if user not found' do
+    it 'Blocks login if user not found' do
       password_athenticate_admin(user: 'admin', password: 'nopass', captcha_success: true)
       expect(response).to redirect_to login_path
       follow_redirect!
       expect(response.body).to include('User not found')
     end
 
-    it 'blocks login if captcha incorrect' do
+    it 'Blocks login if captcha incorrect' do
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: false)
       expect(response).to redirect_to login_path
       follow_redirect!
@@ -47,31 +47,31 @@ RSpec.describe 'Sessions', type: :request do
   end
 
   describe 'GET /2fa #send_2fa' do
-    it 'renders login page' do
+    it 'Renders login page' do
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       get('/2fa')
       expect(response).to render_template(:two_factor_auth)
     end
 
-    it 'sends verify request to twilio' do
+    it 'Sends verify request to twilio' do
       expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create).with(to: @test_user.mobile_number, channel: 'sms')
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       get '/2fa'
     end
 
-    it 'blocks resend of 2fa code on incorrect code being entered or page refresh' do
+    it 'Blocks resend of 2fa code on incorrect code being entered or page refresh' do
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       get '/2fa'
       expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).not_to receive(:create)
       get '/2fa'
     end
 
-    it 'block unauthorised access' do
+    it 'Block unauthorised access' do
       get '/2fa'
       expect(response).to redirect_to('/login')
     end
 
-    it 'if already logged in, redirect to admin page' do
+    it 'If already logged in, redirect to admin page' do
       login
       get '/login'
       expect(response).to redirect_to(:admin)
@@ -79,7 +79,7 @@ RSpec.describe 'Sessions', type: :request do
   end
 
   describe 'POST /2fa #verify_2fa' do
-    it 'sends notice if verification code length incorrect' do
+    it 'Sends notice if verification code length incorrect' do
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       post '/2fa', params: { auth_code: '1234' }
       expect(response).to redirect_to('/2fa')
@@ -87,7 +87,7 @@ RSpec.describe 'Sessions', type: :request do
       expect(response.body).to include('Verification code must be 6 digits long')
     end
 
-    it 'sends verification check request to twilio' do
+    it 'Sends verification check request to twilio' do
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       auth_code = '123456'
       verification_double = double('verification', status: 'approved')
@@ -95,12 +95,12 @@ RSpec.describe 'Sessions', type: :request do
       post '/2fa', params: { auth_code: auth_code }
     end
 
-    it 'allows sucessful login and gives user notice' do
+    it 'Allows sucessful login and gives user notice' do
       login
       expect(response.body).to include('admin welcome back to your home-server!')
     end
 
-    it 'resets session after 60 minutes of inactivity' do
+    it 'Resets session after 60 minutes of inactivity' do
       travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
       login
       expect(session[:user_id]).not_to eq(nil)
@@ -109,7 +109,7 @@ RSpec.describe 'Sessions', type: :request do
       expect(session[:user_id]).to eq(nil)
     end
 
-    it 'blocks wrong code entered and displays message' do
+    it 'Blocks wrong code entered and displays message' do
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       auth_code = '123457'
       verification_double = double('verification', status: 'failed')
@@ -120,14 +120,14 @@ RSpec.describe 'Sessions', type: :request do
       expect(response.body).to include('2fa code incorrect, please try again')
     end
 
-    it 'block unauthorised access' do
+    it 'Block unauthorised access' do
       post '/2fa', params: { auth_code: '1234' }
       expect(response).to redirect_to('/login')
     end
   end
 
   describe 'PUT /2fa #reset_2fa' do
-    it 'resends 2fa code' do
+    it 'Resends 2fa code' do
       password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
       get '/2fa'
       expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create)
@@ -140,7 +140,7 @@ RSpec.describe 'Sessions', type: :request do
   end
 
   describe 'DELETE /login #destroy' do
-    it 'resets session' do
+    it 'Resets session' do
       login
       expect(session[:user_id]).not_to eq(nil)
       delete '/login'
