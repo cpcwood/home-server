@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   before(:each) do
     allow(PasswordMailer).to receive_message_chain(:with, :password_reset_email, :deliver_now)
-    # @test_user.update(password_reset_token: nil)
-    # @test_user.update(password_reset_expiry: nil)
   end
 
   describe '#send_password_reset_email!' do
@@ -26,7 +24,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#user_from_password_reset_token' do
+  describe '.user_from_password_reset_token' do
     it 'returns user if reset token matches and in date' do
       travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
       @test_user.update(password_reset_token: 'test-token')
@@ -50,6 +48,27 @@ RSpec.describe User, type: :model do
 
     it 'returns nil if reset token no present' do
       expect(User.user_from_password_reset_token(nil)).to eq(nil)
+    end
+  end
+
+  describe '#update_password!' do
+    it 'updates password' do
+      @test_user.update_password!('new_password')
+      expect(@test_user.password).to eq('new_password')
+    end
+
+    it 'removes password reset token' do
+      @test_user.send_password_reset_email!
+      expect(@test_user.password_reset_token).not_to eq(nil)
+      @test_user.update_password!('new_password')
+      expect(@test_user.password_reset_token).to eq(nil)
+    end
+
+    it 'removes password reset expiry' do
+      @test_user.send_password_reset_email!
+      expect(@test_user.password_reset_expiry).not_to eq(nil)
+      @test_user.update_password!('new_password')
+      expect(@test_user.password_reset_expiry).to eq(nil)
     end
   end
 end
