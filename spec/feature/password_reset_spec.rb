@@ -9,5 +9,6 @@ feature 'Password Reset' do
     expect(page).to have_content('If the submitted email is associated with an account, a password reset link will be sent')
     expect(current_path).to eq('/login')
     expect(PasswordResetJob).to have_been_enqueued.exactly(:once)
+    p @test_user.password_reset_token
   end
 end
