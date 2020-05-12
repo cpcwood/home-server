@@ -9,7 +9,7 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'renders the from email correctly' do
-      expect(mail.from).to eql([Rails.application.credentials.email[:default_email]])
+      expect(mail.from).to eql([Rails.application.credentials.email[:no_reply_email]])
     end
 
     it 'renders the subject' do

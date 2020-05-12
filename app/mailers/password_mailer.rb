@@ -1,4 +1,6 @@
 class PasswordMailer < ApplicationMailer
+  default from: Rails.application.credentials.email[:no_reply_email]
+
   rescue_from ActiveJob::DeserializationError do |exception|
     # user deleted before email could be sent
   end
