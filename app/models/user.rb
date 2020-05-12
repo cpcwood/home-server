@@ -12,10 +12,19 @@ class User < ApplicationRecord
     reset_user if reset_user.password_reset_expiry > Time.zone.now
   end
 
+  def update_password!(password)
+    remove_password_reset! if update(password: password)
+  end
+
   private
 
   def generate_hashed_token
     update(password_reset_token: SecureRandom.urlsafe_base64(32))
     update(password_reset_expiry: Time.zone.now + 1.hour)
+  end
+
+  def remove_password_reset!
+    update(password_reset_token: nil)
+    update(password_reset_expiry: nil)
   end
 end
