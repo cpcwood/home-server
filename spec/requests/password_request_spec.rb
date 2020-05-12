@@ -30,12 +30,12 @@ RSpec.describe 'Passwords', type: :request do
     end
   end
 
-  describe 'GET /reset-password #reset_passwrails roord_form' do
+  describe 'GET /reset-password #reset_password' do
     it 'Renders the reset password page if token valid' do
       allow(PasswordMailer).to receive_message_chain(:with, :password_reset_email, :deliver_now).and_return(nil)
       @test_user.send_password_reset_email!
       get '/reset-password', params: { reset_token: @test_user.password_reset_token }
-      expect(response).to render_template(:reset_password_form)
+      expect(response).to render_template(:reset_password)
     end
 
     it 'Redirects requests without valid reset token' do
@@ -55,7 +55,7 @@ RSpec.describe 'Passwords', type: :request do
       @test_user.send_password_reset_email!
       get '/reset-password', params: { reset_token: @test_user.password_reset_token }
       get '/reset-password'
-      expect(response).to render_template(:reset_password_form)
+      expect(response).to render_template(:reset_password)
     end
   end
 
@@ -65,6 +65,15 @@ RSpec.describe 'Passwords', type: :request do
       expect(response).to redirect_to(:login)
       follow_redirect!
       expect(response.body).to include('Password reset token expired')
+    end
+
+    it 'Alerts user and redirects back to password reset form if password and confirmation do not match' do
+      @test_user.send_password_reset_email!
+      get '/reset-password', params: { reset_token: @test_user.password_reset_token }
+      post '/reset-password', params: { password: 'Securepassword1', password_confirmation: 'not-the-same-password' }
+      expect(response).to redirect_to(:reset_password)
+      follow_redirect!
+      expect(response.body).to include('Passwords do not match')
     end
   end
 end
