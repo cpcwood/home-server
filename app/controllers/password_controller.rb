@@ -1,6 +1,8 @@
 require 'faraday'
 
 class PasswordController < ApplicationController
+  before_action :already_logged_in
+
   def forgotten_password; end
 
   def send_reset_link
@@ -32,6 +34,10 @@ class PasswordController < ApplicationController
   end
 
   private
+
+  def already_logged_in
+    redirect_to(:admin) if session[:user_id]
+  end
 
   def recaptcha_confirmation(recaptcha_response)
     response = Faraday.post('https://www.google.com/recaptcha/api/siteverify') do |request|

@@ -1,7 +1,16 @@
 require 'rails_helper'
 require 'helpers/password_helpers'
+require 'helpers/session_helper'
 
 RSpec.describe 'Passwords', type: :request do
+  describe 'Before action' do
+    it 'If already logged in, redirect all actions to admin page' do
+      login
+      get '/forgotten-password'
+      expect(response).to redirect_to(:admin)
+    end
+  end
+
   describe 'GET /forgotten-password #forgotten_password' do
     it 'Renders the forgotten password page' do
       get '/forgotten-password'
