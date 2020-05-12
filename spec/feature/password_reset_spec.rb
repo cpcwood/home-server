@@ -13,7 +13,7 @@ feature 'Password Reset' do
     expect(current_path).to eq('/login')
     expect(PasswordResetJob).to have_been_enqueued.exactly(:once)
   end
-  
+
   scenario 'Submitting new password' do
     # Reset password
     @test_user.send_password_reset_email!
@@ -32,7 +32,7 @@ feature 'Password Reset' do
 
     # Login with new password
     stub_request(:post, 'https://www.google.com/recaptcha/api/siteverify?response&secret=test')
-    .to_return(status: 200, body: '{"success": true}', headers: {})
+      .to_return(status: 200, body: '{"success": true}', headers: {})
     block_twilio_verification_checks
     verification_double = double('verification', status: 'approved')
     allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
