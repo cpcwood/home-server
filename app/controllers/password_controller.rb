@@ -12,7 +12,10 @@ class PasswordController < ApplicationController
     end
   end
 
-  def reset_password; end
+  def reset_password
+    @user = User.user_from_password_reset_token(params[:reset_token])
+    redirect_to(:login, alert: 'Password reset token expired') unless @user
+  end
 
   private
 

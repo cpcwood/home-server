@@ -31,9 +31,18 @@ RSpec.describe 'Passwords', type: :request do
   end
 
   describe 'GET /reset-password #reset_password' do
-    it 'Renders the reset password page' do
-      get '/reset-password'
+    it 'Renders the reset password page if token valid' do
+      allow(PasswordMailer).to receive_message_chain(:with, :password_reset_email, :deliver_now).and_return(nil)
+      @test_user.send_password_reset_email!
+      get '/reset-password', params: { reset_token: @test_user.password_reset_token }
       expect(response).to render_template(:reset_password)
+    end
+
+    it 'Redirects requests without valid reset token' do
+      get '/reset-password', params: { reset_token: 'invalid-token' }
+      expect(response).to redirect_to(:login)
+      follow_redirect!
+      expect(response.body).to include('Password reset token expired')
     end
   end
 end
