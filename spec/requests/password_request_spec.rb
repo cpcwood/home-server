@@ -29,4 +29,11 @@ RSpec.describe 'Passwords', type: :request do
       submit_forgotten_password(email: 'admin@example.com', captcha_success: true)
     end
   end
+
+  describe 'GET /reset-password #reset_password' do
+    it 'Renders the reset password page' do
+      get '/reset-password'
+      expect(response).to render_template(:reset_password)
+    end
+  end
 end
