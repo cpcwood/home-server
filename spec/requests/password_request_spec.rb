@@ -75,5 +75,14 @@ RSpec.describe 'Passwords', type: :request do
       follow_redirect!
       expect(response.body).to include('Passwords do not match')
     end
+
+    it 'if reset token valid and passwords match, password updated' do
+      @test_user.send_password_reset_email!
+      get '/reset-password', params: { reset_token: @test_user.password_reset_token }
+      post '/reset-password', params: { password: 'Securepassword2', password_confirmation: 'Securepassword2' }
+      expect(response).to redirect_to(:login)
+      follow_redirect!
+      expect(response.body).to include('Password updated')
+    end
   end
 end
