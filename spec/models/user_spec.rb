@@ -47,5 +47,9 @@ RSpec.describe User, type: :model do
       @test_user.update(password_reset_token: 'test-token')
       expect(User.user_from_password_reset_token('not_valid')).to eq(nil)
     end
+
+    it 'returns nil if reset token no present' do
+      expect(User.user_from_password_reset_token(nil)).to eq(nil)
+    end
   end
 end

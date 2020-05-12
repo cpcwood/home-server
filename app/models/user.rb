@@ -7,6 +7,7 @@ class User < ApplicationRecord
   end
 
   def self.user_from_password_reset_token(token)
+    return unless token
     return unless (reset_user = User.find_by(password_reset_token: token))
     reset_user if reset_user.password_reset_expiry > Time.zone.now
   end
