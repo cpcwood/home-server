@@ -50,6 +50,13 @@ RSpec.describe 'Passwords', type: :request do
       get '/reset-password', params: { reset_token: @test_user.password_reset_token }
       expect(session[:reset_token] = @test_user.password_reset_token)
     end
+
+    it 'Redirects from with session[:reset_token] instead of querystring are allowed' do
+      @test_user.send_password_reset_email!
+      get '/reset-password', params: { reset_token: @test_user.password_reset_token }
+      get '/reset-password'
+      expect(response).to render_template(:reset_password_form)
+    end
   end
 
   describe 'POST /reset-password #update_password' do
