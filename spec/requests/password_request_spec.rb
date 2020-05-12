@@ -51,4 +51,13 @@ RSpec.describe 'Passwords', type: :request do
       expect(session[:reset_token] = @test_user.password_reset_token)
     end
   end
+
+  describe 'POST /reset-password #update_password' do
+    it 'Redirects requests without valid reset token in session' do
+      post '/reset-password', params: { password: 'unauthorized-password', password_confirmation: 'unauthorized-password' }
+      expect(response).to redirect_to(:login)
+      follow_redirect!
+      expect(response.body).to include('Password reset token expired')
+    end
+  end
 end

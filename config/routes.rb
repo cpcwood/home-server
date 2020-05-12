@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/forgotten-password', to: 'password#forgotten_password'
   post '/forgotten-password', to: 'password#send_reset_link'
   get '/reset-password', to: 'password#reset_password_form'
+  post '/reset-password', to: 'password#update_password'
 
   get '/admin', to: 'admin#index'
 
