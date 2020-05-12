@@ -23,9 +23,12 @@ class PasswordController < ApplicationController
     @user = User.user_from_password_reset_token(session[:reset_token])
     return redirect_to(:login, alert: 'Password reset token expired') unless @user
     return redirect_to(:reset_password, alert: 'Passwords do not match') unless params[:password] == params[:password_confirmation]
-    @user.update_password!(params[:password])
-    session[:reset_token] = nil
-    redirect_to(:login, alert: 'Password updated')
+    if @user.update_password!(params[:password])
+      session[:reset_token] = nil
+      redirect_to(:login, notice: 'Password updated')
+    else
+      redirect_to(:reset_password, alert: 'Password reset failed, please try again')
+    end
   end
 
   private
