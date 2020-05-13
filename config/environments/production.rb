@@ -57,10 +57,6 @@ Rails.application.configure do
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
-  # Use a real queuing backend for Active Job (and separate queues per environment).
-  # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "home_server_production"
-
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
@@ -110,4 +106,19 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
+  # Active Mailer Settings
+  config.action_mailer.default_url_options = { host: Rails.application.credentials.email[:host] }
+  config.action_mailer.asset_host = Rails.application.credentials.email[:asset_host]
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: Rails.application.credentials.email[:smtp_server_address],
+    port: Rails.application.credentials.email[:smtp_server_port],
+    user_name: Rails.application.credentials.email[:smtp_username],
+    password: Rails.application.credentials.email[:smtp_password],
+    domain: Rails.application.credentials.email[:helo_domain]
+  }
+
+  # Active Job Settings
+  config.active_job.queue_adapter = :sidekiq
 end
