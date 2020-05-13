@@ -9,9 +9,9 @@ class SessionController < ApplicationController
   def login; end
 
   def new
-    return redirect_to(:login, alert: 'reCaptcha failed, please try again') unless recaptcha_confirmation(params['g-recaptcha-response'])
+    return redirect_to(:login, alert: 'reCaptcha failed, please try again') unless recaptcha_confirmation(sanitize(params['g-recaptcha-response']))
     # Active Model automatically sanitises input for where queries
-    user = User.find_by(email: params[:user])                 
+    user = User.find_by(email: params[:user])
     user ||= User.find_by(username: params[:user])
     return redirect_to(:login, alert: 'User not found') unless user&.authenticate(params[:password])
     session[:two_factor_auth_id] = user.id
@@ -41,8 +41,8 @@ class SessionController < ApplicationController
     verification_check = client.verify
                                .services(Rails.application.credentials.twilio[:verify_service_sid])
                                .verification_checks
-                               .create(to: user.mobile_number, code: auth_code)    
-    return redirect_to('/2fa', notice: '2fa code incorrect, please try again') unless verification_check.status == 'approved'        
+                               .create(to: user.mobile_number, code: auth_code)
+    return redirect_to('/2fa', notice: '2fa code incorrect, please try again') unless verification_check.status == 'approved'
     reset_session
     session[:user_id] = user.id
     redirect_to(:admin, notice: "#{user.username} welcome back to your home-server!")
@@ -65,7 +65,7 @@ class SessionController < ApplicationController
   end
 
   def sanitize(string)
-    ActiveRecord::Base::sanitize_sql(string) unless string == nil
+    ActiveRecord::Base.sanitize_sql(string) unless string.nil?
   end
 
   def recaptcha_confirmation(recaptcha_response)
