@@ -9,7 +9,14 @@ RSpec.describe User, type: :model do
     it 'adds a password reset token to user' do
       allow(SecureRandom).to receive(:urlsafe_base64).and_return('testtoken')
       @test_user.send_password_reset_email!
-      expect(@test_user.password_reset_token == 'testtoken').to eq(true)
+      expect(@test_user.password_reset_token).to eq('testtoken')
+    end
+
+    it 'password reset token is unique user' do
+      User.create!(username: 'another_user', password: 'password', email: 'email', password_reset_token: 'not_unique_token')
+      allow(SecureRandom).to receive(:urlsafe_base64).and_return('not_unique_token', 'unique_token')
+      @test_user.send_password_reset_email!
+      expect(@test_user.password_reset_token).to eq('unique_token')
     end
 
     it 'adds a password reset expiry to user' do
