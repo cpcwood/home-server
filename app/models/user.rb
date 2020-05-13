@@ -19,7 +19,11 @@ class User < ApplicationRecord
   private
 
   def generate_hashed_token
-    update(password_reset_token: SecureRandom.urlsafe_base64(32))
+    unique_token = loop do
+      token = SecureRandom.urlsafe_base64(32)
+      break token unless User.exists?(password_reset_token: token)
+    end
+    update(password_reset_token: unique_token)
     update(password_reset_expiry: Time.zone.now + 1.hour)
   end
 
