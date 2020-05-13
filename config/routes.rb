@@ -10,6 +10,11 @@ Rails.application.routes.draw do
   put '/2fa', to: 'session#reset_2fa'
   delete '/login', to: 'session#destroy'
 
+  get '/forgotten-password', to: 'password#forgotten_password'
+  post '/forgotten-password', to: 'password#send_reset_link'
+  get '/reset-password', to: 'password#reset_password'
+  post '/reset-password', to: 'password#update_password'
+
   get '/admin', to: 'admin#index'
 
   get '/say-hello', to: 'homepage#index'

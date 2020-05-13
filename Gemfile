@@ -25,6 +25,8 @@ gem 'rack-attack', '~> 6.3.0'
 gem 'faraday', require: false
 # Verify 2FA using twilio
 gem 'twilio-ruby', '~> 5.34', require: false
+# Action Mailer and Action Job Backend - Sidekiq (Requires redis and start upon server launch)
+gem 'sidekiq', '~> 6.0.7'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
