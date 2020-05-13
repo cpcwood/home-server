@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe 'rendering reset password' do
-  it 'displays username' do
+describe 'Rendering reset password' do
+  it 'Displays username' do
     assign(:user, @test_user)
 
     render template: 'password/reset_password.html.erb'

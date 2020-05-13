@@ -85,6 +85,15 @@ RSpec.describe 'Passwords', type: :request do
       expect(response.body).to include('Passwords do not match')
     end
 
+    it 'Alerts user if password less than 8 charaters' do
+      @test_user.send_password_reset_email!
+      get '/reset-password', params: { reset_token: @test_user.password_reset_token }
+      post '/reset-password', params: { password: 'passwor', password_confirmation: 'passwor' }
+      expect(response).to redirect_to(:reset_password)
+      follow_redirect!
+      expect(response.body).to include('Password must be 8 or more charaters')
+    end
+
     it 'if reset token valid and passwords match, password updated' do
       @test_user.send_password_reset_email!
       get '/reset-password', params: { reset_token: @test_user.password_reset_token }

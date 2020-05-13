@@ -1,7 +1,7 @@
 <div class='login_container'>
   <div class='login_form_container'>
     <h1> Login </h1>
-    <%= form_with(url: "/login", method: "post", class: 'login_form') do %>
+    <%= form_with(url: "/login", method: "post", class: 'login_form') do |f| %>
       <% flash.each do |type, msg| %>
         <div class="alert">
           <%= msg %>
@@ -9,15 +9,15 @@
       <% end %>
       <%= label_tag(:user, 'Username or Email') %>
       <br>
-      <%= text_field_tag(:user) %>
+      <%= f.text_field(:user, required: true) %>
       <br>
       <%= label_tag(:password, 'Password') %>
       <br>
-      <%= password_field_tag(:password) %>
+      <%= f.password_field(:password, required: true) %>
       <br><br>
       <div id='recaptcha'></div>
       <br>
-      <%= submit_tag("Login") %>
+      <%= f.submit("Login") %>
     <% end %>
     <%= link_to "Forgotten Password", "/forgotten-password" %>
   </div>
