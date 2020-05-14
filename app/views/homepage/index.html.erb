@@ -1,65 +1,59 @@
-<div class='header_image'>
-  <%= image_tag('homepage/header.jpg', id: 'header_image')%>
-</div>
-<div class='homepage_container'>
-  <div class='homepage_title'>
-    Full Stack Developer  
-    <div class='subtitle'>
-      London
-    </div>
-  </div>
-  <div class="notice">
-  <% flash.each do |type, msg| %>
-    <%= msg %>   
-  <% end %>
-  </div>
-  <div class='homepage_item' id='about'>
-    <%= image_tag('homepage/about.jpg', id: 'about_image') %>
-    <a href='/about'>
-      <span class='cover_title'>
-        <span>ABOUT</span>
-      </span>
-    </a>
-  </div>
-  <div class='homepage_item' id='projects'>
-    <%= image_tag('homepage/projects.png', id: 'projects_image') %>
-    <a href='/projects'>
-      <span class='cover_title'>
-        <span>PROJECTS</span>
-      </span>
-    </a>
-  </div>
-  <div class='homepage_item' id='blog'>
-    <%= image_tag('homepage/blog.jpg', id: 'blog_image') %>
-    <a href='/blog'>
-      <span class='cover_title'>
-        <span>BLOG</span>
-      </span>
-    </a>
-  </div>
-  <div class='homepage_item' id='say_hello'>
-    <%= image_tag('homepage/say-hello.png', id: 'say_hello_image') %>
-    <a href='/say-hello'>
-      <span class='cover_title'>
-        <span>SAY HELLO</span>
-      </span>
-    </a>
-  </div>
-  <div class='homepage_item' id='gallery'>
-    <%= image_tag('homepage/gallery.jpg', id: 'gallery_image') %>
-    <a href='/gallery'>
-      <span class='cover_title'>
-        <span>GALLERY</span>
-      </span>
-    </a>
-  </div>
-  <div class='homepage_item' id='contact'>
-    <%= image_tag('homepage/contact.jpg', id: 'contact_image') %>
-    <a href='/contact'>
-      <span class='cover_title'>
-        <span>CONTACT</span>
-      </span>
-    </a>
+<div class='homepage_title'>
+  Full Stack Developer  
+  <div class='subtitle'>
+    London
   </div>
 </div>
-<%= javascript_pack_tag 'homepage/headerImageScroll' %>
+<div class="notice">
+<% flash.each do |type, msg| %>
+  <%= msg %>   
+<% end %>
+</div>
+<div class='homepage_item' id='about'>
+  <%= image_tag('homepage/about.jpg', id: 'about_image') %>
+  <a href='/about'>
+    <span class='cover_title'>
+      <span>ABOUT</span>
+    </span>
+  </a>
+</div>
+<div class='homepage_item' id='projects'>
+  <%= image_tag('homepage/projects.png', id: 'projects_image') %>
+  <a href='/projects'>
+    <span class='cover_title'>
+      <span>PROJECTS</span>
+    </span>
+  </a>
+</div>
+<div class='homepage_item' id='blog'>
+  <%= image_tag('homepage/blog.jpg', id: 'blog_image') %>
+  <a href='/blog'>
+    <span class='cover_title'>
+      <span>BLOG</span>
+    </span>
+  </a>
+</div>
+<div class='homepage_item' id='say_hello'>
+  <%= image_tag('homepage/say-hello.png', id: 'say_hello_image') %>
+  <a href='/say-hello'>
+    <span class='cover_title'>
+      <span>SAY HELLO</span>
+    </span>
+  </a>
+</div>
+<div class='homepage_item' id='gallery'>
+  <%= image_tag('homepage/gallery.jpg', id: 'gallery_image') %>
+  <a href='/gallery'>
+    <span class='cover_title'>
+      <span>GALLERY</span>
+    </span>
+  </a>
+</div>
+<div class='homepage_item' id='contact'>
+  <%= image_tag('homepage/contact.jpg', id: 'contact_image') %>
+  <a href='/contact'>
+    <span class='cover_title'>
+      <span>CONTACT</span>
+    </span>
+  </a>
+</div>

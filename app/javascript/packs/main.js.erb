@@ -1,8 +1,10 @@
 import navMenuClick from './navbar/navMenu.js'
 import touchHover from './touch/touchHover.js'
+import headerImageScroll from './header/headerImageScroll.js'
 
 document.addEventListener('turbolinks:load', function(){
   navMenuClick()
   touchHover()
+  headerImageScroll()
   console.log('Welcome to <%= Rails.application.credentials.email[:host] %> :)')
 })
