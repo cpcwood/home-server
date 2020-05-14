@@ -7,8 +7,7 @@ $nav_font_color: rgb(0, 0, 0);
 
 .navbar {
   width: 100%;
-  min-width: 150px;
-  max-width: 1280px;
+  min-width: 200px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -46,20 +45,27 @@ $nav-transition: 0.3s;
 
 .nav_menu {
   align-self: end;
-  margin: 5px 10px;
+  margin: 5px 10px 0px 0px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  box-sizing: border-box;
 }
 
 .nav_item_container {
   display: flex;
   position: relative;
   flex-direction: column;
-  transition: all $nav-transition ease 0s;
+  box-sizing: border-box;
   width: 0px;
   bottom: 0px;
   background-color: white;
+  height: 0px;
+
+  transition: width $nav-transition ease 0s, height 0s ease $nav-transition;
+  -webkit-transition: width $nav-transition ease 0s, height 0s ease $nav-transition;
+  -moz-transition: width $nav-transition ease 0s, height 0s ease $nav-transition;
+  -o-transition: width $nav-transition ease 0s, height 0s ease $nav-transition;
 }
 
 .nav_item {
@@ -90,12 +96,6 @@ $nav-transition: 0.3s;
   -webkit-transition: color $nav-transition ease 0s, visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
   -moz-transition: color $nav-transition ease 0s, visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
   -o-transition: color $nav-transition ease 0s, visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
-
-  &:hover {
-    background-color: rgb(94, 94, 94);
-    color: white;
-    cursor: pointer;
-  }
 }
 
 .nav_item_separator {
@@ -112,6 +112,7 @@ $nav-transition: 0.3s;
 }
 
 .nav_item_container.sidebar_open {
+  height: calc(100vh - 48px);
   width: 180px;
   @include respond-to(tablet) {
     width: 210px;
@@ -119,6 +120,11 @@ $nav-transition: 0.3s;
   @include respond-to(desktop) {
     width: 250px;
   }
+
+  transition: width $nav-transition ease 0s;
+  -webkit-transition: width $nav-transition ease 0s;
+  -moz-transition: width $nav-transition ease 0s;
+  -o-transition: width $nav-transition ease 0s;
 
   .nav_item {
     visibility: visible;
@@ -129,6 +135,12 @@ $nav-transition: 0.3s;
     -webkit-transition: color $nav-transition ease 0s;
     -moz-transition: color $nav-transition ease 0s;
     -o-transition: color $nav-transition ease 0s;
+
+    &:hover {
+      background-color: rgb(94, 94, 94);
+      color: white;
+      cursor: pointer;
+    }
   }
 
   .nav_item_separator {
