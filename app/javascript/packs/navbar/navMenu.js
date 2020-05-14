@@ -1,19 +1,24 @@
 export default function navMenuClick() {
-  var hamburger_container = document.querySelector('.hamburger_container')
+  var hamburgerContainer = document.querySelector('.hamburger_container')
+  var screenCover = document.querySelector('.nav_screen_cover')
+  var navSidebar = document.querySelector('.nav_sidebar')
 
   function openMenu() {
-    let navMenu = this.parentElement
-    navMenu.querySelector('.nav_item_container').classList.add('sidebar_open')
-    this.removeEventListener('click', openMenu)
-    this.addEventListener('click', closeMenu)
+    navSidebar.classList.add('sidebar_open')
+    hamburgerContainer.classList.remove('reset_animation')
+    hamburgerContainer.classList.add('clicked')
+    hamburgerContainer.removeEventListener('click', openMenu)
+    hamburgerContainer.addEventListener('click', closeMenu)
   }
 
   function closeMenu() {
-    let navMenu = this.parentElement
-    navMenu.querySelector('.nav_item_container').classList.remove('sidebar_open')
-    this.removeEventListener('click', closeMenu)
-    this.addEventListener('click', openMenu)
+    navSidebar.classList.remove('sidebar_open')
+    hamburgerContainer.classList.remove('clicked')
+    hamburgerContainer.classList.add('reset_animation')
+    hamburgerContainer.removeEventListener('click', closeMenu)
+    hamburgerContainer.addEventListener('click', openMenu)
   }
 
-  hamburger_container.addEventListener('click', openMenu)
+  hamburgerContainer.addEventListener('click', openMenu)
+  screenCover.addEventListener('click', closeMenu)
 }
