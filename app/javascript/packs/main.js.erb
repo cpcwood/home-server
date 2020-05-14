@@ -4,4 +4,5 @@ import touchHover from './touch/touchHover.js'
 document.addEventListener('turbolinks:load', function(){
   navMenuClick()
   touchHover()
+  console.log('Welcome to <%= Rails.application.credentials.email[:host] %> :)')
 })
