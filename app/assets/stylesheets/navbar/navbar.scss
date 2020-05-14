@@ -42,6 +42,8 @@ $nav_font_color: rgb(0, 0, 0);
 }
 
 // Nav sidebar
+$nav-transition: 0.3s;
+
 .nav_menu {
   align-self: end;
   margin: 5px 10px;
@@ -54,7 +56,7 @@ $nav_font_color: rgb(0, 0, 0);
   display: flex;
   position: relative;
   flex-direction: column;
-  transition: all 0.25s ease-in-out 0s;
+  transition: all $nav-transition ease 0s;
   width: 0px;
   bottom: 0px;
   background-color: white;
@@ -64,18 +66,18 @@ $nav_font_color: rgb(0, 0, 0);
   position: relative;
   box-sizing: border-box;
   width: 100%;
+  height: 0px;
+  padding: 0px 0px;
   text-align: center;
   vertical-align: middle;
-  color: black;
   text-decoration: none; 
   border: none;
-  color: rgb(255, 255, 255);
   font-size: 16px;
   font-weight: 450;
+  color: black;
   white-space: nowrap;
   overflow: hidden;
-  height: 40px;
-  padding: 10px 0px;
+  visibility: hidden;
 
   @include respond-to(tablet) {
     font-size: 18px;
@@ -84,16 +86,29 @@ $nav_font_color: rgb(0, 0, 0);
     font-size: 20px;
   }
 
-  transition: color 0.25s ease-in-out 0s;
-  -webkit-transition: color 0.25s ease-in-out 0s;
-  -moz-transition: color 0.25s ease-in-out 0s;
-  -o-transition: color 0.25s ease-in-out 0s;
+  transition: color $nav-transition ease 0s, visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
+  -webkit-transition: color $nav-transition ease 0s, visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
+  -moz-transition: color $nav-transition ease 0s, visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
+  -o-transition: color $nav-transition ease 0s, visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
 
   &:hover {
     background-color: rgb(94, 94, 94);
     color: white;
     cursor: pointer;
   }
+}
+
+.nav_item_separator {
+  position: relative;
+  background-color: lightgrey;
+  border-radius: 100%;
+  width: 100%;
+  height: 0px;
+  visibility: hidden;
+  transition: visibility 0s ease $nav-transition, height 0s ease $nav-transition;
+  -webkit-transition: visibility 0s ease $nav-transition, height 0s ease $nav-transition;
+  -moz-transition: visibility 0s ease $nav-transition, height 0s ease $nav-transition;
+  -o-transition: visibility 0s ease $nav-transition, height 0s ease $nav-transition;
 }
 
 .nav_item_container.sidebar_open {
@@ -105,21 +120,23 @@ $nav_font_color: rgb(0, 0, 0);
     width: 250px;
   }
 
-  .nav_item,.nav_item_separator {
+  .nav_item {
     visibility: visible;
     color: rgb(31, 29, 29);
-    transition: all 0.25s ease-in-out 0s, visibility 0.25s ease 0s;
-    -webkit-transition: color 0.25s ease-in-out 0s, visibility 0.25s ease-in-out 0s;
-    -moz-transition: color 0.25s ease-in-out 0s, visibility 0.25s ease-in-out 0s;
-    -o-transition: color 0.25s ease-in-out 0s, visibility 0.25s ease-in-out 0s;
+    height: 40px;
+    padding: 10px 0px;
+    transition: color $nav-transition ease 0s;
+    -webkit-transition: color $nav-transition ease 0s;
+    -moz-transition: color $nav-transition ease 0s;
+    -o-transition: color $nav-transition ease 0s;
   }
-}
 
-.nav_item_separator {
-  position: relative;
-  background-color: lightgrey;
-  border-radius: 100%;
-  width: 100%;
-  height: 2px;
-  visibility: hidden;
+  .nav_item_separator {
+    visibility: visible;
+    height: 2px;
+    transition: all 0s ease 0s;
+    -webkit-transition: all 0s ease 0s;
+    -moz-transition: all 0s ease 0s;
+    -o-transition: all 0s ease 0s;
+  }
 }
