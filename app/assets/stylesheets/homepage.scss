@@ -1,14 +1,35 @@
 @import 'main';
 
+.header_image {
+  position: fixed;
+  box-sizing: border-box;
+  top: 60px;
+  width: 100%;
+  height: 300px;
+  z-index: -1;
+  background-color: rgba(0, 0, 0, 1);
+  overflow: hidden;
+  img {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    object-fit: none;
+    object-position: 0% 50%;
+    opacity: 0.6;
+  }
+}
+
 .homepage_container {
   position: relative;
+  flex: 1 1 100%;
+  min-width: 200px;
+  max-width: 1280px;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
   background-color: rgba(255, 255, 255, 0);
-  box-sizing: border-box;
-  padding: 50px 5px 0px 5px;
-  overflow-y: scroll;
+  padding: 70px 5px 0px 5px;
 }
 
 .notice {
@@ -23,14 +44,15 @@
   box-sizing: border-box;
   width: 100%;
   height: auto;
-  padding: 10px;
-  font-size: 35px;
+  padding: 50px 10px 170px 10px;
+  font-size: 40px;
   font-weight: 400;
+  color: white;
   @include respond-to(tablet) {
-    font-size: 40px;
+    font-size: 50px;
   }
   @include respond-to(desktop) {
-    font-size: 50px;
+    font-size: 60px;
   }
 
   .subtitle {
@@ -50,7 +72,8 @@
   flex-grow: 1;
   min-width: 100%;
   height: 350px;
-  border: 10px solid rgba(255, 255, 255, 0);
+  border: 5px solid rgba(0, 0, 0, 0);
+
   @include respond-to(tablet) {
     min-width: 50%;
     max-width: 50%;
