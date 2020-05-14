@@ -3,7 +3,7 @@
 
 // Navbar
 
-$nav_font_color: rgb(255, 255, 255);
+$nav_font_color: rgb(240, 240, 240);
 
 .navbar {
   width: 100%;
@@ -14,15 +14,15 @@ $nav_font_color: rgb(255, 255, 255);
   position: fixed;
   top: 0px;
   height: 60px;
-  z-index: 2;
+  z-index: 3;
 }
 
 .nav_title_container {
   font-family: $header-font;
   font-size: 25px;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.06em;
-  margin: 0px 10px;
+  margin: 0px 20px;
 
   a, a:link, a:visited, a:focus, a:hover, a:active {
     color: $nav_font_color;
@@ -31,11 +31,11 @@ $nav_font_color: rgb(255, 255, 255);
 
   @include respond-to(tablet) {
     font-size: 28px;
-    margin: 0px 15px;
+    // margin: 0px 15px;
   }
   @include respond-to(desktop) {
     font-size: 32px;
-    margin: 0px 20px;
+    // margin: 0px 20px;
   }
 }
 
@@ -55,7 +55,7 @@ $hover-animation: 0.2s;
   position: relative;
   height: 48px;
   width: 48px;
-  z-index: 5;
+  z-index: 6;
 }
 
 .nav_sidebar {
@@ -69,7 +69,7 @@ $hover-animation: 0.2s;
   bottom: 0px;
   padding-top: 60px;
   background-color: white;
-  z-index: 4;
+  z-index: 5;
 
   transition: width $nav-transition ease 0s, height 0s ease $nav-transition;
   -webkit-transition: width $nav-transition ease 0s, height 0s ease $nav-transition;
@@ -177,7 +177,7 @@ $hover-animation: 0.2s;
 
   +.nav_screen_cover {
     visibility: visible;
-    z-index: 3;
+    z-index: 4;
     background-color: rgba(0, 0, 0, 0.5);
   
     transition: background-color $nav-transition ease 0s;
