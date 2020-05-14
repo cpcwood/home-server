@@ -19,7 +19,7 @@ $nav_font_color: rgb(0, 0, 0);
 }
 
 .nav_title_container {
-  font-family: 'RobotoTitle', Fallback, sans-serif;
+  font-family: $header-font;
   font-size: 25px;
   font-weight: 400;
   letter-spacing: 0.06em;
