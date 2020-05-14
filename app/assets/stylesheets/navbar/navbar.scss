@@ -3,7 +3,7 @@
 
 // Navbar
 
-$nav_font_color: rgb(0, 0, 0);
+$nav_font_color: rgb(255, 255, 255);
 
 .navbar {
   width: 100%;
@@ -15,7 +15,7 @@ $nav_font_color: rgb(0, 0, 0);
   top: 0px;
   height: 60px;
   z-index: 2;
-  background-color: white;
+  // background-color: white;
 }
 
 .nav_title_container {
@@ -65,10 +65,10 @@ $hover-animation: 0.2s;
   flex-direction: column;
   box-sizing: border-box;
   width: 0px;
-  top: 0px;
+  top: 60px;
   right: 0px;
   bottom: 0px;
-  padding-top: 60px;
+  padding-top: 00px;
   background-color: white;
   z-index: 4;
 
