@@ -42,25 +42,34 @@ $nav_font_color: rgb(0, 0, 0);
 
 // Nav sidebar
 $nav-transition: 0.3s;
+$hover-animation: 0.2s;
 
 .nav_menu {
-  align-self: end;
-  margin: 5px 10px 0px 0px;
+  padding: 5px 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   box-sizing: border-box;
 }
 
-.nav_item_container {
-  display: flex;
+.hamburger_container {
   position: relative;
+  height: 48px;
+  width: 48px;
+  z-index: 5;
+}
+
+.nav_sidebar {
+  display: flex;
+  position: fixed;
   flex-direction: column;
   box-sizing: border-box;
   width: 0px;
+  top: 0px;
   bottom: 0px;
+  padding-top: 60px;
   background-color: white;
-  height: 0px;
+  z-index: 4;
 
   transition: width $nav-transition ease 0s, height 0s ease $nav-transition;
   -webkit-transition: width $nav-transition ease 0s, height 0s ease $nav-transition;
@@ -92,10 +101,10 @@ $nav-transition: 0.3s;
     font-size: 20px;
   }
 
-  transition: color $nav-transition ease 0s, visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
-  -webkit-transition: color $nav-transition ease 0s, visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
-  -moz-transition: color $nav-transition ease 0s, visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
-  -o-transition: color $nav-transition ease 0s, visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
+  transition: visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
+  -webkit-transition: visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
+  -moz-transition: visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
+  -o-transition: visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
 }
 
 .nav_item_separator {
@@ -111,8 +120,22 @@ $nav-transition: 0.3s;
   -o-transition: visibility 0s ease $nav-transition, height 0s ease $nav-transition;
 }
 
-.nav_item_container.sidebar_open {
-  height: calc(100vh - 48px);
+.nav_screen_cover {
+  visibility: hidden;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: rgba(0, 0, 0, 0.0);
+
+  transition: background-color $nav-transition ease 0s, visibility 0s ease $nav-transition;
+  -webkit-transition: background-color $nav-transition ease 0s, visibility 0s ease $nav-transition;
+  -moz-transition: background-color $nav-transition ease 0s, visibility 0s ease $nav-transition;
+  -o-transition: background-color $nav-transition ease 0s, visibility 0s ease $nav-transition;
+}
+
+.nav_sidebar.sidebar_open {
   width: 180px;
   @include respond-to(tablet) {
     width: 210px;
@@ -131,10 +154,10 @@ $nav-transition: 0.3s;
     color: rgb(31, 29, 29);
     height: 40px;
     padding: 10px 0px;
-    transition: color $nav-transition ease 0s;
-    -webkit-transition: color $nav-transition ease 0s;
-    -moz-transition: color $nav-transition ease 0s;
-    -o-transition: color $nav-transition ease 0s;
+    transition: color $hover-animation ease 0s, background-color $hover-animation ease 0s;
+    -webkit-transition: color $hover-animation ease 0s, background-color $hover-animation ease 0s;
+    -moz-transition: color $hover-animation ease 0s, background-color $hover-animation ease 0s;
+    -o-transition: color $hover-animation ease 0s, background-color $hover-animation ease 0s;
 
     &:hover {
       background-color: rgb(94, 94, 94);
@@ -151,4 +174,16 @@ $nav-transition: 0.3s;
     -moz-transition: all 0s ease 0s;
     -o-transition: all 0s ease 0s;
   }
+
+  +.nav_screen_cover {
+    visibility: visible;
+    z-index: 3;
+    background-color: rgba(0, 0, 0, 0.5);
+  
+    transition: background-color $nav-transition ease 0s;
+    -webkit-transition: background-color $nav-transition ease 0s;
+    -moz-transition: background-color $nav-transition ease 0s;
+    -o-transition: background-color $nav-transition ease 0s;
+  }
 }
+
