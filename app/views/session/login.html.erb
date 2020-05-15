@@ -1,30 +1,27 @@
 <h1> Login </h1>
 <div class='login_container'>
+
   <div class='login_form_container'>
-    <div>
-      <%= form_with(url: "/login", method: "post", class: 'login_form') do |f| %>
+    <%= form_with(url: "/login", method: "post", class: 'login_form') do |f| %>
+      <div class="messages">
         <% flash.each do |type, msg| %>
-          <div class="alert">
-            <%= msg %>
-          </div>
+          <% if type == 'alert'%>
+            <div class='alert'><%= msg %></div> 
+          <% else %>
+            <div class='notice'><%= msg %></div>
+          <% end %>
         <% end %>
-        <%= label_tag(:user, 'Username or Email') %>
-        <br>
-        <%= f.text_field(:user, required: true) %>
-        <br>
-        <%= label_tag(:password, 'Password') %>
-        <br>
-        <%= f.password_field(:password, required: true) %>
-        <br><br>
-        <div id='recaptcha'></div>
-        <br>
-        <%= f.submit("Login") %>
-      <% end %>
-    </div>
-    <br>
-    <div>
-      <%= link_to "Forgotten Password", "/forgotten-password" %>
-    </div>
+      </div>
+      <%= f.text_field(:user, required: true, class: 'input_box', placeholder: 'Username or Email') %>
+      <div class='input_seperator'></div>
+      <%= f.password_field(:password, required: true, class: 'input_box', placeholder: 'Password') %>
+      <div class='input_seperator'></div>
+      <div class='forgotten_password'>
+        <%= link_to "Forgotten Password", "/forgotten-password", class: 'forgotten_password' %>
+      </div>
+      <div class='recaptcha' id='recaptcha'></div>
+      <%= f.submit("Login", class: 'input_submit') %>
+    <% end %>
   </div>
 </div>
 <%= javascript_pack_tag 'recaptcha/recaptcha' %>
