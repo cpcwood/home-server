@@ -135,7 +135,7 @@ RSpec.describe 'Sessions', type: :request do
       expect(session[:auth_code_sent]).to eq(nil)
       expect(response).to redirect_to('/2fa')
       follow_redirect!
-      expect(response.body).to include('2fa code resent')
+      expect(response.body).to include('Two factor authentication code resent')
     end
   end
 
