@@ -15,7 +15,7 @@ class SessionController < ApplicationController
     user ||= User.find_by(username: params[:user])
     return redirect_to(:login, alert: 'User not found') unless user&.authenticate(params[:password])
     session[:two_factor_auth_id] = user.id
-    redirect_to('/2fa')
+    redirect_to('/2fa', notice: 'Please enter the 6 digit code sent to mobile number assoicated with this account')
   end
 
   def send_2fa
@@ -50,12 +50,12 @@ class SessionController < ApplicationController
 
   def reset_2fa
     session[:auth_code_sent] = nil
-    redirect_to '/2fa', notice: '2fa code resent'
+    redirect_to '/2fa', notice: 'Two factor authentication code resent'
   end
 
   def destroy
     reset_session
-    redirect_to root_path, notice: 'You have been logged out'
+    redirect_to root_path
   end
 
   private

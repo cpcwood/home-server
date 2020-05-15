@@ -63,12 +63,6 @@ h1 {
 .login_form {
   color: black;
 
-  .input_label {
-    color: black;
-    font-size: 22px;
-    font-weight: 400;
-  }
-
   .input_box {
     box-sizing: border-box;
     margin: 15px 0px 0px 0px;
@@ -93,24 +87,6 @@ h1 {
     border-radius: 1px;
   }
 
-  div.forgotten_password {
-    box-sizing: border-box;
-    width: 100%;
-    overflow: hidden;
-    margin: -10px 0px 0px 0px;
-  }
-
-  a.forgotten_password {
-    font-size: 16px;
-    font-weight: 300;
-    float: right;
-    color: black;
-    text-decoration: none; 
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
   .recaptcha {
     box-sizing: border-box;
     width: 100%;
@@ -129,6 +105,32 @@ h1 {
     background-image: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(112, 112, 112));
     &:hover {
       cursor: pointer;
+    }
+  }
+}
+
+.options {
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  margin: 25px 0px 0px 0px;
+  &.login {
+    margin-top: -10px;
+  }
+  .option {
+    font-size: 18px;
+    font-weight: 300;
+    color: black;
+    text-decoration: none; 
+    border: none;
+    &:hover {
+      cursor: pointer;
+    }
+    &.left {
+      float: left;
+    }
+    &.right {
+      float: right;
     }
   }
 }
