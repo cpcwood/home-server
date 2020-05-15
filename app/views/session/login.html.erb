@@ -1,25 +1,30 @@
+<h1> Login </h1>
 <div class='login_container'>
   <div class='login_form_container'>
-    <h1> Login </h1>
-    <%= form_with(url: "/login", method: "post", class: 'login_form') do |f| %>
-      <% flash.each do |type, msg| %>
-        <div class="alert">
-          <%= msg %>
-        </div>
+    <div>
+      <%= form_with(url: "/login", method: "post", class: 'login_form') do |f| %>
+        <% flash.each do |type, msg| %>
+          <div class="alert">
+            <%= msg %>
+          </div>
+        <% end %>
+        <%= label_tag(:user, 'Username or Email') %>
+        <br>
+        <%= f.text_field(:user, required: true) %>
+        <br>
+        <%= label_tag(:password, 'Password') %>
+        <br>
+        <%= f.password_field(:password, required: true) %>
+        <br><br>
+        <div id='recaptcha'></div>
+        <br>
+        <%= f.submit("Login") %>
       <% end %>
-      <%= label_tag(:user, 'Username or Email') %>
-      <br>
-      <%= f.text_field(:user, required: true) %>
-      <br>
-      <%= label_tag(:password, 'Password') %>
-      <br>
-      <%= f.password_field(:password, required: true) %>
-      <br><br>
-      <div id='recaptcha'></div>
-      <br>
-      <%= f.submit("Login") %>
-    <% end %>
-    <%= link_to "Forgotten Password", "/forgotten-password" %>
+    </div>
+    <br>
+    <div>
+      <%= link_to "Forgotten Password", "/forgotten-password" %>
+    </div>
   </div>
 </div>
 <%= javascript_pack_tag 'recaptcha/recaptcha' %>
