@@ -8,7 +8,7 @@ feature 'Password Reset' do
     visit('/login')
     click_on('Forgotten Password')
     fill_in('email', with: 'admin@example.com')
-    click_button('Request Password Reset')
+    click_button('Reset Password')
     expect(page).to have_content('If the submitted email is associated with an account, a password reset link will be sent')
     expect(current_path).to eq('/login')
     expect(PasswordResetJob).to have_been_enqueued.exactly(:once)

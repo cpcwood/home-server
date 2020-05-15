@@ -1,20 +1,27 @@
-<div class='login_container'>
-  <div class='login_form_container'>
-    <h1> Two Factor Authentication </h1>
-    <%= form_with(url: "/2fa", method: :post, class: 'login_form') do %>
-      <% flash.each do |type, msg| %>
-      <div class="alert">
-        <%= msg %>
+<h1> Two Factor Authentication </h1>
+<div class='centered_container'>
+  <div class='floating_form_container'>
+    <%= form_with(url: "/2fa", method: :post, class: 'floating_form') do |f| %>
+      <div class="messages">
+        <% flash.each do |type, msg| %>
+          <% if type == 'alert'%>
+            <div class='alert'><%= msg %></div> 
+          <% else %>
+            <div class='notice'><%= msg %></div>
+          <% end %>
+        <% end %>
       </div>
+      <%= f.text_field(:auth_code, required: true, class: 'input_box', placeholder: '2FA Code') %>
+      <div class='input_seperator'></div>
+      <%= f.submit("Login", class: 'input_submit') %>
+    <% end %>
+    <div class='options'>
+      <%= form_tag('/2fa', method: :put) do %>
+        <%= submit_tag("Resend 2fa code", class: 'option left') %>
       <% end %>
-      <%= label_tag(:auth_code, 'Please enter 6 digit 2fa auth code send to your mobile number:') %>
-      <br>
-      <%= text_field_tag(:auth_code) %>
-      <br><br>
-      <%= submit_tag("Login") %>
-    <% end %>
-    <%= form_tag('/2fa', method: :put) do %>
-      <%= submit_tag("Resend 2fa code") %>
-    <% end %>
+      <%= form_with(url: "/login", method: "delete") do %>
+        <%= submit_tag("Cancel Login", class: 'option right') %>
+      <% end %>
+    </div>
   </div>
 </div>

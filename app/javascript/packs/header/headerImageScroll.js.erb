@@ -1,0 +1,14 @@
+export default function headerImageScroll(){
+  var headerImage = document.querySelector('.header_image')
+  var contentContainer = document.querySelector('.content_container')
+
+  contentContainer.addEventListener('scroll', function() {
+    if (contentContainer.scrollTop < 240) {
+      headerImage.style.height = `${300 - contentContainer.scrollTop}px`
+      headerImage.style.zIndex = '-1'
+    } else {
+      headerImage.style.height = '60px'
+      headerImage.style.zIndex = '2'
+    }
+  })
+}

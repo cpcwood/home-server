@@ -12,11 +12,15 @@
   </head>
 
   <body>
-    <%= render 'layouts/navigation'%>
     <div class='page_container'>
-      <div class='page_content'>
+      <%= render 'layouts/navigation'%>
+      <div class='header_image'>
+        <%= image_tag('header.jpg', id: 'header_image')%>
+      </div>
+      <div class='content_container'>
         <%= yield %>
       </div>
     </div>
+    <div id='background'></div>
   </body>
 </html>

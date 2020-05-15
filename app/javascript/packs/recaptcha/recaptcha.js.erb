@@ -1,7 +1,11 @@
 document.addEventListener('turbolinks:load', function(){
   var reCaptchaScript = document.createElement('script')
   window.reCaptchaOnload = function() {
-    grecaptcha.render('recaptcha', {'sitekey' : '<%= Rails.application.credentials.recaptcha[:site_key] %>'})
+    grecaptcha.render('recaptcha', {
+      'sitekey' : '<%= Rails.application.credentials.recaptcha[:site_key] %>',
+      'theme': 'light',
+      'size': 'normal'  
+    })
   }
   reCaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=reCaptchaOnload&render=explicit'
   document.head.appendChild(reCaptchaScript)
