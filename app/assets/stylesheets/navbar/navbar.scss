@@ -66,6 +66,7 @@ $hover-animation: 0.2s;
   display: flex;
   position: fixed;
   flex-direction: column;
+  justify-content: space-between;
   box-sizing: border-box;
   width: 0px;
   top: 0px;
@@ -79,6 +80,15 @@ $hover-animation: 0.2s;
   -webkit-transition: width $nav-transition ease 0s, height 0s ease $nav-transition;
   -moz-transition: width $nav-transition ease 0s, height 0s ease $nav-transition;
   -o-transition: width $nav-transition ease 0s, height 0s ease $nav-transition;
+
+  .upper, .lower {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-self: flex-start;
+    width: 100%;
+  }
 }
 
 .nav_item {
