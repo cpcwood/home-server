@@ -11,45 +11,50 @@
       </div>
     </div>
     <div class='nav_sidebar'>
-      <div class='nav_item_separator'></div>
-      <a href='/' class='nav_item'>
-        HOME
-      </a>
-      <div class='nav_item_separator'></div>
-      <a href='/about' class='nav_item'>
-        ABOUT
-      </a>
-      <div class='nav_item_separator'></div>
-      <a href='/projects' class='nav_item'>
-        PROJECTS
-      </a>
-      <div class='nav_item_separator'></div>
-      <a href='/blog' class='nav_item'>
-        BLOG
-      </a>
-      <div class='nav_item_separator'></div>
-      <a href='/say-hello' class='nav_item'>
-        SAY HELLO
-      </a>
-      <div class='nav_item_separator'></div>
-      <a href='/gallery' class='nav_item'>
-        GALLERY
-      </a>
-      <div class='nav_item_separator'></div>
-      <a href='/contact' class='nav_item'>
-        CONTACT
-      </a>
-      <div class='nav_item_separator'></div>
-      <% if @user %>
-      <%= form_with(url: "/login", method: "delete") do %>
-        <%= submit_tag("LOGOUT", id: 'logout-button', class: 'nav_item') %>
-      <% end %>
-      <% else %>
-      <a href='/login' class='nav_item' id='login-button'>
-        LOGIN
-      </a>
-      <% end %>
-      <div class='nav_item_separator'></div>
+      <div class='upper'>
+        <div class='nav_item_separator'></div>
+        <a href='/' class='nav_item'>
+          HOME
+        </a>
+        <div class='nav_item_separator'></div>
+        <a href='/about' class='nav_item'>
+          ABOUT
+        </a>
+        <div class='nav_item_separator'></div>
+        <a href='/projects' class='nav_item'>
+          PROJECTS
+        </a>
+        <div class='nav_item_separator'></div>
+        <a href='/blog' class='nav_item'>
+          BLOG
+        </a>
+        <div class='nav_item_separator'></div>
+        <a href='/say-hello' class='nav_item'>
+          SAY HELLO
+        </a>
+        <div class='nav_item_separator'></div>
+        <a href='/gallery' class='nav_item'>
+          GALLERY
+        </a>
+        <div class='nav_item_separator'></div>
+        <a href='/contact' class='nav_item'>
+          CONTACT
+        </a>
+        <div class='nav_item_separator'></div>
+      </div>
+      <div class='lower'>
+        <div class='nav_item_separator'></div>
+        <% if @user %>
+        <%= form_with(url: "/login", method: "delete") do %>
+          <%= submit_tag("LOGOUT", id: 'logout-button', class: 'nav_item') %>
+        <% end %>
+        <% else %>
+        <a href='/login' class='nav_item' id='login-button'>
+          LOGIN
+        </a>
+        <% end %>
+        <div class='nav_item_separator'></div>
+      </div>
     </div>
     <div class='nav_screen_cover'></div>
   </div>
