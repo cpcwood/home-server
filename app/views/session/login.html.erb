@@ -15,8 +15,8 @@
       <div class='input_seperator'></div>
       <%= f.password_field(:password, required: true, class: 'input_box', placeholder: 'Password') %>
       <div class='input_seperator'></div>
-      <div class='forgotten_password'>
-        <%= link_to "Forgotten Password", "/forgotten-password", class: 'forgotten_password' %>
+      <div class='options login'>
+        <%= link_to "Forgotten Password", "/forgotten-password", class: 'option right' %>
       </div>
       <div class='recaptcha' id='recaptcha'></div>
       <%= f.submit("Login", class: 'input_submit') %>
