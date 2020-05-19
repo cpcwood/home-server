@@ -103,6 +103,13 @@ RSpec.describe 'Passwords', type: :request do
       expect(response.body).to include('Password updated')
     end
 
+    it 'Password reset job created if password updated' do
+      expect(PasswordUpdatedJob).to receive(:perform_later).with(user: @test_user)
+      @test_user.send_password_reset_email!
+      get '/reset-password', params: { reset_token: @test_user.password_reset_token }
+      post '/reset-password', params: { password: 'Securepassword2', password_confirmation: 'Securepassword2' }
+    end
+
     it 'if password update fails, client notified' do
       allow_any_instance_of(User).to receive(:update_password!).and_return(nil)
       @test_user.send_password_reset_email!

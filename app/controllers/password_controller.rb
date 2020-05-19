@@ -27,6 +27,7 @@ class PasswordController < ApplicationController
     return redirect_to(:reset_password, alert: 'Passwords do not match') unless password == password_confirmation
     return redirect_to(:reset_password, alert: 'Password reset failed, please try again') unless @user.update_password!(password)
     session[:reset_token] = nil
+    PasswordUpdatedJob.perform_later(user: @user)
     redirect_to(:login, notice: 'Password updated')
   end
 
