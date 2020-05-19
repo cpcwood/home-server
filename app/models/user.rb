@@ -17,7 +17,7 @@ class User < ApplicationRecord
   end
 
   def send_password_updated_email!
-    # PasswordMailer.with(user: self).password_updated_email.deliver_now
+    PasswordMailer.with(user: self).password_updated_email.deliver_now
   end
 
   private
