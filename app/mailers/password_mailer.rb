@@ -5,4 +5,9 @@ class PasswordMailer < ApplicationMailer
     @user = params[:user]
     mail(to: @user.email, subject: "Password Reset: #{@user.email}")
   end
+
+  def password_updated_email
+    @user = params[:user]
+    mail(to: @user.email)
+  end
 end
