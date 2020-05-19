@@ -1,7 +1,7 @@
 class PasswordUpdatedJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
-    # Do something later
+  def perform(user:)
+    user.send_password_updated_email!
   end
 end

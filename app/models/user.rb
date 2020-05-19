@@ -16,6 +16,10 @@ class User < ApplicationRecord
     remove_password_reset! if update(password: password)
   end
 
+  def send_password_updated_email!
+    # PasswordMailer.with(user: self).password_updated_email.deliver_now
+  end
+
   private
 
   def generate_hashed_token
