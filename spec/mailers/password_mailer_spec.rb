@@ -8,7 +8,7 @@ RSpec.describe PasswordMailer, type: :mailer do
       expect(mail.to).to eql([@test_user.email])
     end
 
-    it 'Renders the from email correctly' do
+    it 'Renders the sender email correctly' do
       expect(mail.from).to eql([Rails.application.credentials.email[:no_reply_email]])
     end
 
@@ -31,6 +31,10 @@ RSpec.describe PasswordMailer, type: :mailer do
 
     it 'Renders the receivers email' do
       expect(mail.to).to eql([@test_user.email])
+    end
+
+    it 'Renders the sender email correctly' do
+      expect(mail.from).to eql([Rails.application.credentials.email[:no_reply_email]])
     end
 
     it 'Renders the subject' do
