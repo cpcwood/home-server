@@ -4,7 +4,7 @@ RSpec.describe PasswordMailer, type: :mailer do
   describe '#password_reset_email' do
     let(:mail) { PasswordMailer.with(user: @test_user).password_reset_email }
 
-    it 'Renders the receiver email' do
+    it 'Renders the receivers email' do
       expect(mail.to).to eql([@test_user.email])
     end
 
@@ -23,6 +23,14 @@ RSpec.describe PasswordMailer, type: :mailer do
     it 'Assigns adds password reset url' do
       @test_user.password_reset_token = 'hashed-token'
       expect(mail.body.encoded).to include(reset_password_url(reset_token: 'hashed-token'))
+    end
+  end
+
+  describe '#password_updated_email' do
+    let(:mail) { PasswordMailer.with(user: @test_user).password_updated_email }
+
+    it 'Renders the receivers email' do
+      expect(mail.to).to eql([@test_user.email])
     end
   end
 end
