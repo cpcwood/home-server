@@ -78,4 +78,11 @@ RSpec.describe User, type: :model do
       expect(@test_user.password_reset_expiry).to eq(nil)
     end
   end
+
+  describe '#send_password_updated_email!' do
+    it 'Password updated email sent to user' do
+      expect(PasswordMailer).to receive_message_chain(:with, :password_updated_email, :deliver_now)
+      @test_user.send_password_updated_email!
+    end
+  end
 end
