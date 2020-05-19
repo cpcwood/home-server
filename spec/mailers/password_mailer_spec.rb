@@ -29,7 +29,7 @@ RSpec.describe PasswordMailer, type: :mailer do
       expect(mail.body.encoded).to match("please contact #{Rails.application.credentials.email[:default_email]}")
     end
 
-    it 'Redners signoff with company name' do
+    it 'Renders signoff with company name' do
       expect(mail.body.encoded).to match("Thanks,\r\n                        <br>\r\n                        <br>\r\n                        #{Rails.application.credentials.email[:company_name]}")
     end
   end
@@ -57,8 +57,15 @@ RSpec.describe PasswordMailer, type: :mailer do
       expect(mail.body.encoded).to match("please contact #{Rails.application.credentials.email[:default_email]}")
     end
 
-    it 'Redners signoff with company name' do
+    it 'Renders signoff with company name' do
       expect(mail.body.encoded).to match("Thanks,\r\n\r\n#{Rails.application.credentials.email[:company_name]}")
+    end
+
+    it 'Renders time at which acount was updated' do
+      travel_to Time.zone.local(2020, 04, 19, 12, 10, 00)
+      @another_user = User.create(username: 'another_user', password: 'password', email: 'another_user@example.com')
+      mail = PasswordMailer.with(user: @another_user).password_updated_email
+      expect(mail.body.encoded).to match('Your password was updated on: 12:10 19-04-2020')
     end
   end
 end
