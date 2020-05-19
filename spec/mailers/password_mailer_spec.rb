@@ -24,6 +24,10 @@ RSpec.describe PasswordMailer, type: :mailer do
       @test_user.password_reset_token = 'hashed-token'
       expect(mail.body.encoded).to include(reset_password_url(reset_token: 'hashed-token'))
     end
+    
+    it 'Provides contact email' do
+      expect(mail.body.encoded).to match("please contact #{Rails.application.credentials.email[:default_email]}")
+    end
   end
 
   describe '#password_updated_email' do
@@ -43,6 +47,10 @@ RSpec.describe PasswordMailer, type: :mailer do
 
     it 'Assigns greeting in email' do
       expect(mail.body.encoded).to match("Hi #{@test_user.username},")
+    end
+
+    it 'Provides contact email' do
+      expect(mail.body.encoded).to match("please contact #{Rails.application.credentials.email[:default_email]}")
     end
   end
 end
