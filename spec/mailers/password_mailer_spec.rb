@@ -32,5 +32,9 @@ RSpec.describe PasswordMailer, type: :mailer do
     it 'Renders the receivers email' do
       expect(mail.to).to eql([@test_user.email])
     end
+
+    it 'Renders the subject' do
+      expect(mail.subject).to eql("Your Password Has Been Updated: #{@test_user.email}")
+    end
   end
 end

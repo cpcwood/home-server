@@ -8,6 +8,6 @@ class PasswordMailer < ApplicationMailer
 
   def password_updated_email
     @user = params[:user]
-    mail(to: @user.email)
+    mail(to: @user.email, subject: "Your Password Has Been Updated: #{@user.email}")
   end
 end
