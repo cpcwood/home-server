@@ -24,9 +24,13 @@ RSpec.describe PasswordMailer, type: :mailer do
       @test_user.password_reset_token = 'hashed-token'
       expect(mail.body.encoded).to include(reset_password_url(reset_token: 'hashed-token'))
     end
-    
+
     it 'Provides contact email' do
       expect(mail.body.encoded).to match("please contact #{Rails.application.credentials.email[:default_email]}")
+    end
+
+    it 'Redners signoff with company name' do
+      expect(mail.body.encoded).to match("Thanks,\r\n                        <br>\r\n                        <br>\r\n                        #{Rails.application.credentials.email[:company_name]}")
     end
   end
 
@@ -51,6 +55,10 @@ RSpec.describe PasswordMailer, type: :mailer do
 
     it 'Provides contact email' do
       expect(mail.body.encoded).to match("please contact #{Rails.application.credentials.email[:default_email]}")
+    end
+
+    it 'Redners signoff with company name' do
+      expect(mail.body.encoded).to match("Thanks,\r\n\r\n#{Rails.application.credentials.email[:company_name]}")
     end
   end
 end
