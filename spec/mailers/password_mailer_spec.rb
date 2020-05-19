@@ -58,7 +58,7 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Renders signoff with company name' do
-      expect(mail.body.encoded).to match("Thanks,\r\n\r\n#{Rails.application.credentials.email[:company_name]}")
+      expect(mail.body.encoded).to match("Thanks,\r\n                        <br>\r\n                        <br>\r\n                        #{Rails.application.credentials.email[:company_name]}")
     end
 
     it 'Renders time at which acount was updated' do
