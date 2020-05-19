@@ -40,5 +40,9 @@ RSpec.describe PasswordMailer, type: :mailer do
     it 'Renders the subject' do
       expect(mail.subject).to eql("Your Password Has Been Updated: #{@test_user.email}")
     end
+
+    it 'Assigns greeting in email' do
+      expect(mail.body.encoded).to match("Hi #{@test_user.username},")
+    end
   end
 end
