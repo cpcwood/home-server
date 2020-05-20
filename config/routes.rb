@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get '/reset-password', to: 'password#reset_password'
   post '/reset-password', to: 'password#update_password'
 
-  get '/admin', to: 'admin#index'
+  get '/admin', to: 'admin#general'
 
   get '/say-hello', to: 'homepage#index'
 end
