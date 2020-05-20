@@ -121,6 +121,10 @@ $hover-animation: 0.2s;
   -o-transition: visibility 0s ease $nav-transition, height 0s ease $nav-transition, padding 0s ease $nav-transition;
 }
 
+.logout_form {
+  width: 100%;
+}
+
 .nav_item_separator {
   position: relative;
   background-color: lightgrey;
