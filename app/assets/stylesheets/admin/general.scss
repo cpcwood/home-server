@@ -1,0 +1,14 @@
+@import 'main';
+
+.messages {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.notice {
+  color: black;
+  + .no_messages {
+    display: none;
+  }
+}
+
