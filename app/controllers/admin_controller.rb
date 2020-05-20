@@ -1,11 +1,11 @@
 class AdminController < ApplicationController
-  before_action :check_admin
+  before_action :check_admin_logged_in
 
   def index; end
 
   private
 
-  def check_admin
+  def check_admin_logged_in
     redirect_to '/' unless @user
   end
 end
