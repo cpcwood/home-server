@@ -1,9 +1,12 @@
 <h1>
   Admin Zone
+  <div class='subtitle'>
+      General
+  </div>
 </h1>
 
 <div class='admin_zone_container'>
-  Test
+  <%= render 'admin/sections' %>
   <% flash.each do |type, msg| %>
     <div class="notice">
       <%= msg %>
