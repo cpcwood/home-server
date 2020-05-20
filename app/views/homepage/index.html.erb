@@ -1,14 +1,16 @@
-<div class='homepage_title'>
+<h1>
   Full Stack Developer  
   <div class='subtitle'>
     London
   </div>
-</div>
+</h1>
+
 <div class="notice">
-<% flash.each do |type, msg| %>
-  <%= msg %>   
-<% end %>
+  <% flash.each do |type, msg| %>
+    <%= msg %>   
+  <% end %>
 </div>
+
 <div class='homepage_item' id='about'>
   <%= image_tag('homepage/about.jpg', id: 'about_image') %>
   <a href='/about'>
