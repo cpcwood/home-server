@@ -17,6 +17,10 @@ General portfolio style website and a place to prototype new rails features I fi
 
 - Ruby 2.6.5
 - Ruby on Rails 6.0
+- PostgreSQL v12.1
+- Google reCaptcha
+- Twilio SMS Verification
+- Email client
 
 ## Design
 
