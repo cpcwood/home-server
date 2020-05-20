@@ -5,15 +5,12 @@
 
 ## Overview
 
-My home server website built with rails and hosted locally on a RPi.
-
-## Purpose
-
 General portfolio style website and a place to prototype new rails features I find interesting. Other learning objectives are:
 - Learning network setup and security (NAT tables, firewalls, etc)
 - Nginx reverse proxy
 - HTTPS Certificates
 - Securing Rails
+- General Rails processes
 - CSS and HTML
 
 ## Technology
@@ -23,7 +20,7 @@ General portfolio style website and a place to prototype new rails features I fi
 
 ## Design
 
-Portfolio sections:
+Public sections:
 - Homepage
   - Reactive link tiles with photo and name of each website section
 - About me
@@ -50,55 +47,16 @@ Portfolio sections:
   - Email confirmation for contactor
   - Email administrator
 
-Admin area:
-- Login
-- Edit about me section/profile picture
+Admin sections:
+- Login, 2FA, Password Reset
+- Edit sections
 - Add new project
 - Add new blog post
-- Manage and confirm say hello posts
-- Manage and respond to contact box requests
-- Manage and confirm comments on blog
-
-
-## Progress
-
-Complete:
-- Setting up RPi
-- Set up puma
-- Setting up nginx
-- Setting up port forwarding
-- HTTPS (SSL Certificates LetsEncrypt)
-- Puma application server service with systemd
-- Test suite
-- Database
-- CI
-- Coverage and build badges
-- Develop Homepage
-  - Responsive screen size @media
-  - Static fonts (ttf and browser support)
-  - Variable fonts
-  - Create responsive navbar
-  - Create homepage
-  - Hover effects for link titles (mobile and desktop)
-
-In progress:
-- Develop Admin Zone / Session
-  - Admin page
-  - Secure login
-    - 2fa (mobile)
-    - Prevent login attacks
-    - Captcha
-  - Logout
-  - Update details
-    - Name
-    - Password
-    - Email
-    - Phone number
-  - Analytics
-    - Page visits
+- Notifications to confirm say hello posts and comments on blog
+- Website analytics
 
 -----------
-## How to Install
+## How to Install and Setup
 
 #### Prerequisites and Dependencies
 
@@ -115,20 +73,32 @@ bundle install
 yarn install
 ```
 
+The following services should be running before the start of the server:
+- [Sidekiq](https://github.com/mperham/sidekiq) v6.0.7 - should be running before start of server (already installed via Gemfile, started using ```bundle exec sidekiq -C config/sidekiq.yml``` either automatically using systemd (or other process manager) or in terminal window)
+- [Redis](https://redislabs.com/get-started-with-redis/) v5.0.7 - required for persistent jobs with sidekiq in case of server shutdown (can be installed from the terminal using homebrew ```brew install redis```, then started using ```brew services start redis```)
+
 #### Setup Credentials and Database
 
 The application is set up to have three different environments, if you are developing the application further, please set up credentials for all three, however if you are only installing production, perform all commands with the environment variable ```RAILS_ENV=production```.
 
-Credentials:
+Global Credentials:
 - Fill in the template for the global credentials, which be found in ```config/credentials.yml.enc.template```
 - Open the rails credentials in your editor of choice ```EDITOR=vim rails credentials:edit``` (if this if your first time opening the credentials, a new rails master key ```config/master.key``` to encrypt the credentials will be generated, do not check this into your version control)
+- Add the filled template to the credentials list, then save and exit
+
+Test Credentials:
+- Fill in the template for the global credentials, which be found in ```config/credentials/test.yml.enc.template```
+- Open the rails credentials in your editor of choice ```EDITOR=vim rails credentials:edit --environment test```
 - Add the filled template to the credentials list, then save and exit
 
 To setup the database tables with the correct schema run the following in the command line:
 ```bash
 rails db:create
 rails db:migrate
+rails db:seed
 ```
+
+Note: For your personal admin login details, edit the database seed in ```db/seeds.rb``` or manually add admin profile to the database
 
 #### Server Configuration
 
@@ -136,15 +106,47 @@ The application uses Ruby on Rails default application server: Puma. The configu
 
 #### Running Tests
 
-To check everything is setup correctly, run the application tests below.
+To check everything is setup correctly, RSpec and Capybara are used to run unit and feature tests respectively. 
 
-Testing Suites: 
-- Backend - RSpec, Capybara (to run the backend tests run `rspec` in the command line)
-- Frontend - 
+To run tests run `rspec` in the command line
 
 #### How to Start the Server
 
 To start the server run ```rails server``` in the relevant RAILS_ENV environment.
+
+#### Adding Personal Details and Images
+
+Head to the homepage, click on the hamburger icon, and click on login.
+
+Login with your seeded admin credentials.
+
+Click on the site settings tab and add the values or upload:
+- website name
+- images for the homepage tiles 
+- images for the header
+
+-----------
+## How to Use
+
+Login in as admin then head to the section of the site you wish to add content:
+
+#### About
+
+Click edit header open options for adding markdown content and changing the profile image
+
+#### Projects
+
+Click edit header open options for adding new projects
+
+To edit a project, enter the project by clicking on view more, then click edit header open options for editing
+
+#### Blog
+
+#### Say Hello
+
+#### Gallery
+
+#### Contact
 
 -----------
 ## LICENSE
