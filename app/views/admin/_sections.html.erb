@@ -17,18 +17,17 @@
   <a href='/admin/site-settings' class='section_item'>
     Site Settings
   </a>
-  <div class='open_sections'>
-    <div> > </div>
-    <div> > </div>
-    <div class='tab_title'> Open Dashboard </div>
-    <div> > </div>
-    <div> > </div>
-  </div>
-  <div class='close_sections'>
-    <div> < </div>
-    <div> < </div>
-    <div class='tab_title'> Close Dashboard </div>
-    <div> < </div>
-    <div> < </div>
+  <div class='toggle_sections'>
+    <div class='closed'> > </div>
+    <div class='closed'> > </div>
+    <div class='closed tab_title'> Open Dashboard </div>
+    <div class='closed'> > </div>
+    <div class='closed'> > </div>
+    <div class='open'> < </div>
+    <div class='open'> < </div>
+    <div class='open tab_title'> Close Dashboard </div>
+    <div class='open'> < </div>
+    <div class='open'> < </div>
   </div>
 </div>
+<%= javascript_pack_tag 'admin/sectionsMobileSidebar' %>
