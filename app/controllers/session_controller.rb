@@ -15,6 +15,7 @@ class SessionController < ApplicationController
     user ||= User.find_by(username: params[:user])
     return redirect_to(:login, alert: 'User not found') unless user&.authenticate(params[:password])
     session[:two_factor_auth_id] = user.id
+    return log_user_in(user) if Rails.env == 'development'
     redirect_to('/2fa', notice: 'Please enter the 6 digit code sent to mobile number assoicated with this account')
   end
 
@@ -43,9 +44,7 @@ class SessionController < ApplicationController
                                .verification_checks
                                .create(to: user.mobile_number, code: auth_code)
     return redirect_to('/2fa', notice: '2fa code incorrect, please try again') unless verification_check.status == 'approved'
-    reset_session
-    session[:user_id] = user.id
-    redirect_to(:admin, notice: "#{user.username} welcome back to your home-server!")
+    log_user_in(user)
   end
 
   def reset_2fa
@@ -74,5 +73,11 @@ class SessionController < ApplicationController
       request.params['response'] = recaptcha_response
     end
     JSON.parse(response.body)['success'] == true
+  end
+
+  def log_user_in(user)
+    reset_session
+    session[:user_id] = user.id
+    redirect_to(:admin, notice: "#{user.username} welcome back to your home-server!")
   end
 end
