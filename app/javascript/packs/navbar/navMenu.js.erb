@@ -3,7 +3,7 @@ export default function navMenuClick() {
   var screenCover = document.querySelector('.nav_screen_cover')
   var navSidebar = document.querySelector('.nav_sidebar')
 
-  var toggleNavMenu = () => {
+  function toggleNavMenu() {
     if (navSidebar.classList.contains('sidebar_open')) {
       navSidebar.classList.remove('sidebar_open')
       hamburgerContainer.classList.remove('clicked')

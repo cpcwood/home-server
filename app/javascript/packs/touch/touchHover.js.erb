@@ -8,7 +8,7 @@ export default function touchHover() {
   
   function addHoverEffect(e) {
     var diff = new Date() - touchTime
-    if (diff < 300) {
+    if (diff < 250) {
       var coverTitle = this.querySelector('.cover_title')
       if (!coverTitle.classList.contains('hover')) {
         var otherHover = document.querySelector('.hover')

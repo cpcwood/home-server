@@ -1,4 +1,4 @@
-(() => {
+export default function loadReCaptcha() {
   var reCaptchaScript = document.createElement('script')
   window.reCaptchaOnload = () => {
     grecaptcha.render('recaptcha', {
@@ -10,8 +10,12 @@
   reCaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=reCaptchaOnload&render=explicit'
   document.head.appendChild(reCaptchaScript)
 
-  document.addEventListener('turbolinks:before-cache', () => {
+  function cleanUpReCaptcha() {
     document.head.removeChild(reCaptchaScript)
-  })
-})()
+    document.removeEventListener('turbolinks:before-cache', cleanUpReCaptcha)
+  }
+  document.addEventListener('turbolinks:before-cache', cleanUpReCaptcha)
+}
+  
+
 

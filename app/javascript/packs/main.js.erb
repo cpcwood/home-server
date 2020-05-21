@@ -1,6 +1,12 @@
+// Application
 import navMenuClick from './navbar/navMenu.js'
 import touchHover from './touch/touchHover.js'
 import headerImageScroll from './header/headerImageScroll.js'
+
+// Session & Password
+import loadReCaptcha from './recaptcha/loadReCaptcha.js'
+
+// Admin Zone
 import adminDashboardToggle from './admin/adminDashboardToggle.js'
 
 
@@ -11,6 +17,9 @@ document.addEventListener('turbolinks:load', () => {
 
   if (document.querySelector('.admin_dashboard')) {
     adminDashboardToggle()
+  }
+  if (document.querySelector('.recaptcha')) {
+    loadReCaptcha()
   }
 })
 
