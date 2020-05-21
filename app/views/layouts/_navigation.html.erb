@@ -45,6 +45,10 @@
       <div class='lower'>
         <div class='nav_item_separator'></div>
         <% if @user %>
+        <a href='/admin' class='nav_item'>
+          ADMIN
+        </a>
+        <div class='nav_item_separator'></div>
         <%= form_with(url: "/login", method: "delete", class: 'logout_form') do %>
           <%= submit_tag("LOGOUT", class: 'nav_item', id: 'logout-button') %>
         <% end %>
