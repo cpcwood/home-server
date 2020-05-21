@@ -7,6 +7,8 @@ $animation-duration: 0.3s;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  
 
   &:hover {
     cursor: pointer;
@@ -14,9 +16,11 @@ $animation-duration: 0.3s;
 }
 
 .hamburger {
+  box-sizing: border-box;
   position: absolute;
-  height: 80%;
-  width: 80%;
+  height: 100%;
+  width: 100%;
+  padding: 6px 6px;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -25,7 +29,7 @@ $animation-duration: 0.3s;
 
 .hamburger_bar {
   display: block;
-  height: 4.5px;
+  height: 5px;
   width: 100%;
   border-radius: 999px;
   background-color: rgb(240, 240, 240);
