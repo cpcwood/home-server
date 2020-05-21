@@ -1,19 +1,19 @@
-document.addEventListener('turbolinks:load', function(){
-  var toggleSections = document.querySelector('.toggle_sections')
+(() => {
+  var toggleSectionsElement = document.querySelector('.toggle_sections')
 
-  function openSections() {
-    this.classList.add('open')
-    this.parentElement.classList.add('open')
-    this.removeEventListener('click', openSections)
-    this.addEventListener('click', closeSections)
+  function toggleSections() {
+    if (this.classList.contains('open')) {
+      this.classList.remove('open')
+      this.parentElement.classList.remove('open')
+    } else {
+      this.classList.add('open')
+      this.parentElement.classList.add('open')
+    }
   }
 
-  function closeSections() {
-    this.classList.remove('open')
-    this.parentElement.classList.remove('open')
-    this.removeEventListener('click', closeSections)
-    this.addEventListener('click', openSections)
-  }
+  toggleSectionsElement.addEventListener('click', toggleSections)
 
-  toggleSections.addEventListener('click', openSections)
-})
+  document.addEventListener('turbolinks:before-cache', () => {
+    toggleSectionsElement.removeEventListener('click', toggleSections)
+  })
+})()
