@@ -1,11 +1,17 @@
 import navMenuClick from './navbar/navMenu.js'
 import touchHover from './touch/touchHover.js'
 import headerImageScroll from './header/headerImageScroll.js'
+import adminDashboardToggle from './admin/adminDashboardToggle.js'
+
 
 document.addEventListener('turbolinks:load', () => {
   navMenuClick()
   touchHover()
   headerImageScroll()
+
+  if (document.querySelector('.admin_dashboard')) {
+    adminDashboardToggle()
+  }
 })
 
 console.log('Welcome to <%= Rails.application.credentials.email[:host] %> :)')

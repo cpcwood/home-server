@@ -3,7 +3,7 @@ export default function navMenuClick() {
   var screenCover = document.querySelector('.nav_screen_cover')
   var navSidebar = document.querySelector('.nav_sidebar')
 
-  var toggleMenu = () => {
+  var toggleNavMenu = () => {
     if (navSidebar.classList.contains('sidebar_open')) {
       navSidebar.classList.remove('sidebar_open')
       hamburgerContainer.classList.remove('clicked')
@@ -15,11 +15,17 @@ export default function navMenuClick() {
     }
   }
 
-  hamburgerContainer.addEventListener('click', toggleMenu)
-  screenCover.addEventListener('click', toggleMenu)
+  hamburgerContainer.addEventListener('click', toggleNavMenu)
+  screenCover.addEventListener('click', toggleNavMenu)
 
-  document.addEventListener('turbolinks:before-cache', () => {
-    hamburgerContainer.removeEventListener('click', toggleMenu)
-    screenCover.removeEventListener('click', toggleMenu)
-  })
+  function cleanUpToggleNavMenu() {
+    if (navSidebar.classList.contains('sidebar_open')) {
+      navSidebar.classList.remove('sidebar_open')
+      hamburgerContainer.classList.remove('clicked')
+    }
+    hamburgerContainer.removeEventListener('click', toggleNavMenu)
+    screenCover.removeEventListener('click', toggleNavMenu)
+    document.removeEventListener('turbolinks:before-cache', cleanUpToggleNavMenu)
+  }
+  document.addEventListener('turbolinks:before-cache', cleanUpToggleNavMenu)
 }
