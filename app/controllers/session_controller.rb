@@ -15,7 +15,7 @@ class SessionController < ApplicationController
     user ||= User.find_by(username: params[:user])
     return redirect_to(:login, alert: 'User not found') unless user&.authenticate(params[:password])
     session[:two_factor_auth_id] = user.id
-    return log_user_in(user) if Rails.env == 'development'
+    return log_user_in(user) if Rails.env.development?
     redirect_to('/2fa', notice: 'Please enter the 6 digit code sent to mobile number assoicated with this account')
   end
 
