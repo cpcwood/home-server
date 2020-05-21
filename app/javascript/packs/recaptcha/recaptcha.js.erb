@@ -1,6 +1,6 @@
-document.addEventListener('turbolinks:load', function(){
+(() => {
   var reCaptchaScript = document.createElement('script')
-  window.reCaptchaOnload = function() {
+  window.reCaptchaOnload = () => {
     grecaptcha.render('recaptcha', {
       'sitekey' : '<%= Rails.application.credentials.recaptcha[:site_key] %>',
       'theme': 'light',
@@ -9,4 +9,9 @@ document.addEventListener('turbolinks:load', function(){
   }
   reCaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=reCaptchaOnload&render=explicit'
   document.head.appendChild(reCaptchaScript)
-})
+
+  document.addEventListener('turbolinks:before-cache', () => {
+    document.head.removeChild(reCaptchaScript)
+  })
+})()
+
