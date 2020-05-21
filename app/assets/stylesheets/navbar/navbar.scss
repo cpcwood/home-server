@@ -176,6 +176,7 @@ $hover-animation: 0.2s;
     -webkit-transition: color $hover-animation ease 0s, background-color $hover-animation ease 0s;
     -moz-transition: color $hover-animation ease 0s, background-color $hover-animation ease 0s;
     -o-transition: color $hover-animation ease 0s, background-color $hover-animation ease 0s;
+    background-color: rgb(255, 255, 255);
 
     &:hover {
       background-color: rgb(94, 94, 94);
