@@ -21,7 +21,7 @@
   }
 }
 
-.sections {
+.admin_dashboard {
   box-sizing: border-box;
   position: relative;
   top: 0px;
@@ -37,7 +37,7 @@
     min-width: 236px;
     max-width: 300px;
     border-right: 2px solid lightgrey;
-    .toggle_sections {
+    .admin_dashboard_toggle {
       display: none;
     }
   }
@@ -45,7 +45,7 @@
     min-width: 240px;
     max-width: 350px;
     border-right: 2px solid lightgrey;
-    .toggle_sections {
+    .admin_dashboard_toggle {
       display: none;
     }
   }
@@ -59,7 +59,7 @@
     h2 {
       display: block;
     }
-    .section_selector {
+    .admin_dashboard_button {
       display: block;
     }
   }
@@ -89,7 +89,7 @@
   }
 }
 
-.section_selector {
+.admin_dashboard_button {
   position: relative;
   box-sizing: border-box;
   width: 100%;
@@ -119,7 +119,7 @@
   }
 }
 
-.toggle_sections {
+.admin_dashboard_toggle {
   box-sizing: border-box;
   position: absolute;
   top: 0px;

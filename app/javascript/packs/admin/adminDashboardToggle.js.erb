@@ -1,0 +1,26 @@
+export default function adminDashboardToggle() {
+  var dashboardToggleDiv = document.querySelector('.admin_dashboard_toggle')
+
+  function toggleDashboard() {
+    if (dashboardToggleDiv.classList.contains('open')) {
+      dashboardToggleDiv.classList.remove('open')
+      dashboardToggleDiv.parentElement.classList.remove('open')
+    } else {
+      dashboardToggleDiv.classList.add('open')
+      dashboardToggleDiv.parentElement.classList.add('open')
+    }
+  }
+
+  dashboardToggleDiv.addEventListener('click', toggleDashboard)
+
+  function cleanUpToggleDashboard() {
+    if (dashboardToggleDiv.classList.contains('open')) {
+      dashboardToggleDiv.classList.remove('open')
+      dashboardToggleDiv.parentElement.classList.remove('open')
+    }
+    dashboardToggleDiv.removeEventListener('click', toggleDashboard)
+    document.removeEventListener('turbolinks:before-cache', cleanUpToggleDashboard)
+  }
+  
+  document.addEventListener('turbolinks:before-cache', cleanUpToggleDashboard)
+}
