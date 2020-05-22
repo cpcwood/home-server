@@ -9,6 +9,10 @@ class AdminController < ApplicationController
 
   def analytics; end
 
+  def user_settings
+    @user
+  end
+
   private
 
   def check_admin_logged_in

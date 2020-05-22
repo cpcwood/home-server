@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get '/admin', to: 'admin#general'
   get '/admin/notifications', to: 'admin#notifications'
   get '/admin/analytics', to: 'admin#analytics'
+  get '/admin/user-settings', to: 'admin#user_settings'
 
   get '/say-hello', to: 'homepage#index'
 end
