@@ -2,6 +2,10 @@ class User < ApplicationRecord
   has_secure_password
   after_initialize :add_defaults
 
+  validates :password,
+            presence: true,
+            length: { minimum: 8, too_short: 'The password must have at least 8 characters' }
+
   def send_password_reset_email!
     generate_hashed_token
     PasswordMailer.with(user: self).password_reset_email.deliver_now

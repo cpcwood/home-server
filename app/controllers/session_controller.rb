@@ -78,8 +78,8 @@ class SessionController < ApplicationController
   def log_user_in(user)
     reset_session
     session[:user_id] = user.id
-    user.update(last_login_time: Time.zone.now)
-    user.update(last_login_ip: request.remote_ip)
+    user.update_attribute(:last_login_time, Time.zone.now)
+    user.update_attribute(:last_login_ip, request.remote_ip)
     redirect_to(:admin, notice: "#{user.username} welcome back to your home-server!")
   end
 end
