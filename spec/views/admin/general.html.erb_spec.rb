@@ -29,4 +29,12 @@ describe 'Rendering admin general section' do
     expect(rendered).to match(%r{Email Address:</strong> admin@example.com})
     expect(rendered).to match(%r{Mobile Number:</strong> \+15005550006})
   end
+
+  it 'Displays overview of notifications' do
+    assign(:user, @test_user)
+
+    render template: 'admin/general.html.erb'
+
+    expect(rendered).to match(/Notifications/)
+  end
 end
