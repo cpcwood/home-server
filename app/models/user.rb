@@ -4,8 +4,9 @@ class User < ApplicationRecord
 
   validates :password,
             presence: true,
-            length: { minimum: 8, too_short: 'The password must have at least 8 characters' }
-
+            length: { minimum: 8, too_short: 'The password must have at least 8 characters' },
+            confirmation: { message: 'Passwords do not match' }  
+  
   def send_password_reset_email!
     generate_hashed_token
     PasswordMailer.with(user: self).password_reset_email.deliver_now
@@ -17,8 +18,9 @@ class User < ApplicationRecord
     reset_user if reset_user.password_reset_expiry > Time.zone.now
   end
 
-  def update_password!(password)
-    remove_password_reset! if update(password: password)
+  def remove_password_reset!
+    update(password_reset_token: nil)
+    update(password_reset_expiry: nil)
   end
 
   def send_password_updated_email!
@@ -39,10 +41,5 @@ class User < ApplicationRecord
     end
     update(password_reset_token: unique_token)
     update(password_reset_expiry: Time.zone.now + 1.hour)
-  end
-
-  def remove_password_reset!
-    update(password_reset_token: nil)
-    update(password_reset_expiry: nil)
   end
 end
