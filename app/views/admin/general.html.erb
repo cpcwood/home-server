@@ -33,14 +33,7 @@
     </div>
     <div class='item_separator'></div>
     <div class='item_container'>
-      <h3>
-        User Details
-      </h3>
-      <strong>Username:</strong> <%= @user.username %>
-      <br><br>
-      <strong>Email Address:</strong> <%= @user.email %>
-      <br><br>
-      <strong>Mobile Number:</strong> <%= @user.mobile_number %>
+      <%= render 'admin/current_user_details'%>
     </div>
     <div class='item_separator'></div>
         <div class='item_container'>
