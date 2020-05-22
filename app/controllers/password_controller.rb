@@ -23,9 +23,8 @@ class PasswordController < ApplicationController
     return redirect_to(:login, alert: 'Password reset token expired') unless @user
     password = sanitize(params[:password])
     password_confirmation = sanitize(params[:password_confirmation])
-    return redirect_to(:reset_password, alert: 'Password must be 8 or more charaters') unless password.length >= 8
-    return redirect_to(:reset_password, alert: 'Passwords do not match') unless password == password_confirmation
-    return redirect_to(:reset_password, alert: 'Password reset failed, please try again') unless @user.update_password!(password)
+    return redirect_to(:reset_password, alert: @user.errors.values.flatten.last) unless @user.update(password: password, password_confirmation: password_confirmation)
+    @user.remove_password_reset!
     session[:reset_token] = nil
     PasswordUpdatedJob.perform_later(user: @user)
     redirect_to(:login, notice: 'Password updated')
