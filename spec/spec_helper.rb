@@ -30,11 +30,11 @@ RSpec.configure do |config|
     `./bin/webpack`
   end
 
-  config.before(:all) do
+  config.before(:each) do
     @test_user = User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1', mobile_number: '+15005550006')
   end
 
-  config.after(:all) do
+  config.after(:each) do
     User.destroy_all
   end
 

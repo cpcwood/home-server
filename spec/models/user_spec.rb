@@ -5,6 +5,19 @@ RSpec.describe User, type: :model do
     allow(PasswordMailer).to receive_message_chain(:with, :password_reset_email, :deliver_now)
   end
 
+  describe 'Password validations' do
+    it 'Rejects passwords less than 8 charaters ' do
+      @test_user.password = 'passwor'
+      expect(@test_user).to_not be_valid
+      expect(@test_user.errors.messages[:password]).to eq ['The password must have at least 8 characters']
+    end
+
+    it 'Accepts passwords with 8 or more charaters' do
+      @test_user.password = 'password'
+      expect(@test_user).to be_valid
+    end
+  end
+
   describe '#send_password_reset_email!' do
     it 'Adds a password reset token to user' do
       allow(SecureRandom).to receive(:urlsafe_base64).and_return('testtoken')
