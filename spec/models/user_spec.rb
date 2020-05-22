@@ -31,6 +31,15 @@ RSpec.describe User, type: :model do
       user = User.create(username: '', password: 'password', email: 'example@example.com')
       expect(user).to_not be_valid
     end
+
+    it 'Rejects invalid username formats' do
+      user = User.create(username: ' example', password: 'password', email: 'example@example.com')
+      expect(user).to_not be_valid
+      user = User.create(username: 'example ', password: 'password', email: 'example@example.com')
+      expect(user).to_not be_valid
+      user = User.create(username: 'e@xample', password: 'password', email: 'example@example.com')
+      expect(user).to_not be_valid
+    end
   end
 
   describe '#send_password_reset_email!' do
