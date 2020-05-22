@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'Password validations' do
-    it 'Rejects passwords less than 8 charaters ' do
+    it 'Rejects passwords less than 8 charaters' do
       @test_user.password = 'passwor'
       @test_user.password_confirmation = 'passwor'
       expect(@test_user).to_not be_valid
@@ -26,6 +26,13 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'Username validations' do
+    it 'Rejects blank usernames' do
+      user = User.create(username: '', password: 'password', email: 'example@example.com')
+      expect(user).to_not be_valid
+    end
+  end
+
   describe '#send_password_reset_email!' do
     it 'Adds a password reset token to user' do
       allow(SecureRandom).to receive(:urlsafe_base64).and_return('testtoken')
@@ -34,7 +41,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'Password reset token is unique user' do
-      User.create(username: 'another_user', password: 'password', password_confirmation: 'password', email: 'email', password_reset_token: 'not_unique_token')
+      User.create(username: 'another_user', password: 'password', email: 'email', password_reset_token: 'not_unique_token')
       allow(SecureRandom).to receive(:urlsafe_base64).and_return('not_unique_token', 'unique_token')
       @test_user.send_password_reset_email!
       expect(@test_user.password_reset_token).to eq('unique_token')
