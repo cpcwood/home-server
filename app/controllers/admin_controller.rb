@@ -5,6 +5,10 @@ class AdminController < ApplicationController
     @user
   end
 
+  def notifications
+    @user
+  end
+
   private
 
   def check_admin_logged_in
