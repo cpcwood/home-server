@@ -28,7 +28,8 @@
         Last Login
       </h3>
       Time and Date: <%= @user.last_login_time.strftime("%H:%M %d-%m-%Y") %>
-      IP Address:
+      IP Address: <%= @user.last_login_ip %>
     </div>
+    <div class='item_separator'></div>
   </div>
 </div>

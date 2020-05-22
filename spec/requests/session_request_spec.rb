@@ -104,6 +104,7 @@ RSpec.describe 'Sessions', type: :request do
       travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
       login
       expect(@test_user.reload.last_login_time).to eq(Time.zone.now)
+      expect(@test_user.reload.last_login_ip).to eq('127.0.0.1')
     end
 
     it 'Resets session after 60 minutes of inactivity' do
