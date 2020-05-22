@@ -97,7 +97,13 @@ RSpec.describe 'Sessions', type: :request do
 
     it 'Allows sucessful login and gives user notice' do
       login
-      expect(response.body).to include('admin welcome back to your home-server!')
+      expect(response.body).to include("#{@test_user.username} welcome back to your home-server!")
+    end
+
+    it 'Last login details updated on sucessful login' do
+      travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
+      login
+      expect(@test_user.reload.last_login_time).to eq(Time.zone.now)
     end
 
     it 'Resets session after 60 minutes of inactivity' do
