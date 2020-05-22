@@ -1,7 +1,9 @@
 class AdminController < ApplicationController
   before_action :check_admin_logged_in
 
-  def general; end
+  def general
+    @user
+  end
 
   private
 
