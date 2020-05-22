@@ -31,10 +31,20 @@ describe 'Rendering admin general section' do
   end
 
   it 'Displays overview of notifications' do
+    # Placeholder spec
     assign(:user, @test_user)
 
     render template: 'admin/general.html.erb'
 
     expect(rendered).to match(/Notifications/)
+  end
+
+  it 'Displays overview of notifications' do
+    # Placeholder spec
+    assign(:user, @test_user)
+
+    render template: 'admin/general.html.erb'
+
+    expect(rendered).to match(/Analytics/)
   end
 end
