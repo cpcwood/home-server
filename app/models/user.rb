@@ -5,8 +5,8 @@ class User < ApplicationRecord
   validates :password,
             presence: true,
             length: { minimum: 8, too_short: 'The password must have at least 8 characters' },
-            confirmation: { message: 'Passwords do not match' }  
-  
+            confirmation: { message: 'Passwords do not match' }
+
   def send_password_reset_email!
     generate_hashed_token
     PasswordMailer.with(user: self).password_reset_email.deliver_now
