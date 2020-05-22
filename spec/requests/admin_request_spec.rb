@@ -22,4 +22,12 @@ RSpec.describe 'Admins', type: :request do
       expect(response).to render_template(:notifications)
     end
   end
+
+  describe 'GET /admin/analytics #analytics' do
+    it 'Displays notifications page' do
+      login
+      get '/admin/analytics'
+      expect(response).to render_template(:analytics)
+    end
+  end
 end
