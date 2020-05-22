@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Rendering admin general section' do
+describe 'Rendering admin notifications section' do
   it 'Displays new contact emails' do
     # Placeholder spec
     assign(:user, @test_user)
