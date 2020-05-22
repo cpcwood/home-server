@@ -27,8 +27,20 @@
       <h3>
         Last Login
       </h3>
-      Time and Date: <%= @user.last_login_time.strftime("%H:%M %d-%m-%Y") %>
-      IP Address: <%= @user.last_login_ip %>
+      <strong>Time and Date:</strong> <%= @user.last_login_time.strftime("%H:%M %d-%m-%Y") %>
+      <br><br>
+      <strong>IP Address:</strong> <%= @user.last_login_ip %>
+    </div>
+    <div class='item_separator'></div>
+    <div class='item_container'>
+      <h3>
+        User Details
+      </h3>
+      <strong>Username:</strong> <%= @user.username %>
+      <br><br>
+      <strong>Email Address:</strong> <%= @user.email %>
+      <br><br>
+      <strong>Mobile Number:</strong> <%= @user.mobile_number %>
     </div>
     <div class='item_separator'></div>
   </div>

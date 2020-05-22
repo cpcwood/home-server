@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  after_initialize :add_defaults
 
   def send_password_reset_email!
     generate_hashed_token
@@ -21,6 +22,11 @@ class User < ApplicationRecord
   end
 
   private
+
+  def add_defaults
+    self.last_login_time ||= Time.zone.now
+    self.last_login_ip ||= '127.0.0.1'
+  end
 
   def generate_hashed_token
     unique_token = loop do
