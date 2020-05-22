@@ -5,9 +5,9 @@ class AdminController < ApplicationController
     @user
   end
 
-  def notifications
-    @user
-  end
+  def notifications; end
+
+  def analytics; end
 
   private
 
