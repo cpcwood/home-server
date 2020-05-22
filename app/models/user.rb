@@ -9,7 +9,8 @@ class User < ApplicationRecord
 
   validates :username,
             presence: true,
-            format: { with: /\A[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*\z/, message: 'Only standard charaters and [ _-] are allowed' }
+            format: { with: /\A[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*\z/, message: 'Only standard charaters and [ _-] are allowed' },
+            confirmation: { message: 'Usernames do not match' }
 
   def send_password_reset_email!
     generate_hashed_token

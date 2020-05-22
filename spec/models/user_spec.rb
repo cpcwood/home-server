@@ -40,6 +40,23 @@ RSpec.describe User, type: :model do
       user = User.create(username: 'e@xample', password: 'password', email: 'example@example.com')
       expect(user).to_not be_valid
     end
+
+    it 'Accepts valid username formats' do
+      user = User.create(username: 'e', password: 'password', email: 'example@example.com')
+      expect(user).to be_valid
+      user = User.create(username: 'exa mple', password: 'password', email: 'example@example.com')
+      expect(user).to be_valid
+      user = User.create(username: 'exa-mple example', password: 'password', email: 'example@example.com')
+      expect(user).to be_valid
+    end
+
+    it 'Requires confirmation for change' do
+      @test_user.username = 'new-username'
+      @test_user.username_confirmation = ''
+      expect(@test_user).to_not be_valid
+      @test_user.username_confirmation = 'new-username'
+      expect(@test_user).to be_valid
+    end
   end
 
   describe '#send_password_reset_email!' do
