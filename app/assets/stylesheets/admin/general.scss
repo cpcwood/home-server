@@ -5,7 +5,7 @@
   width: 100%;
 }
 
-.notice {
+.notice, .alert {
   color: black;
   + .no_messages {
     display: none;
