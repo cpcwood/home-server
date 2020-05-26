@@ -1,21 +1,16 @@
+// Modules
+@use '../base/globals';
+@use '../base/functions';
+@use '../base/mixins' as *;
+@use '../base/typography';
+
+
 // Variables
-@use 'base/typography';
 $general-font: typography.$general-font;
 
 
-// Mixins
-@use 'base/mixins' as *;
-
-
 // Styles
-.notice {
-  position: relative;
-  width: 100%;
-  font-size: 18px;
-  height: 25px;
-}
-
-.homepage_item {
+.flex_image_tile {
   position: relative;
   box-sizing: border-box;
   flex-grow: 1;
@@ -33,22 +28,21 @@ $general-font: typography.$general-font;
     max-width: 50%;
     height: 350px;
   }
+}
 
-  img {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    object-position: 50% 50%;
+.cover_image {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+
+  &.middle_left {
+    object-position: 0% 50%;
   }
-}
-
-#projects_image {
-  object-position: 0% 50%;
-}
-
-#say_hello_image {
-  object-position: 0% 0%;
+  &.top_left {
+    object-position: 0% 0%;
+  }
 }
 
 .cover_title {
@@ -81,8 +75,8 @@ $general-font: typography.$general-font;
   &:hover {
     opacity: 1.0;
   }
-}
 
-.hover {
-  opacity: 1.0;
+  &.hover {
+    opacity: 1.0;
+  }
 }
