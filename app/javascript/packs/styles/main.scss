@@ -7,10 +7,14 @@
 
 // Application Components
 @use 'components/page';
+@use 'components/buttons';
+@use 'components/comments';
+@use 'components/forms';
+@use 'components/messages';
 @use 'components/navbar';
+@use 'components/dashboard';
 
 // Page specific files - To be converted into feature specific styles
-@use 'admin';
 @use 'floating_form';
 @use 'homepage';
 @use 'password';
