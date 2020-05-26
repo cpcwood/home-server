@@ -1,8 +1,8 @@
 // Modules
-@use '../base/globals';
-@use '../base/functions';
-@use '../base/mixins' as *;
-@use '../base/typography';
+@use 'globals';
+@use 'functions';
+@use 'mixins' as *;
+@use 'typography';
 
 
 // Variables
@@ -44,7 +44,7 @@ $background-color: globals.$background-color;
   display: flex;
   flex-wrap: wrap;
   background-color: rgba(255, 255, 255, 0);
-  padding: 0px 5px 0px 5px;
+  padding: 5px 15px 0px 15px;
   overflow-y: scroll;
 
   &::-webkit-scrollbar {

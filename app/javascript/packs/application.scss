@@ -1,7 +1,6 @@
 /*
 Sass Styles
 ┬
-|
 |– application.scss
 |   
 |– styles/
@@ -14,14 +13,15 @@ Sass Styles
 |   |   |– _globals.scss      # Sass variables
 |   |   |– _functions.scss    # Sass functions
 |   |   |– _mixins.scss       # Sass mixins
+|   |   |– _page.scss         # General page structure
 |   |
 |   |– components/
-|   |   |– _page.scss         # General page structure
-|   |   |– _navbar.scss       # Navbar - top and side
 |   |   |– _buttons.scss      # Buttons
 |   |   |– _messages.scss     # Messages
 |   |   |– _forms.scss        # Forms
 |   |   |– _comments.scss     # Comments
+|   |   |– _navbar.scss       # Navbar - top and side
+|   |   |– _dashboard.scss    # Dashboard
 |   |
 |   |– vendor/
 |   |   |– hamburger.scss     # Hamburger icon for navbar
