@@ -14,6 +14,7 @@ Sass Styles
 |   |   |– _functions.scss    # Sass functions
 |   |   |– _mixins.scss       # Sass mixins
 |   |   |– _page.scss         # General page structure
+|   |   ┴
 |   |
 |   |– components/
 |   |   |– _buttons.scss      # Buttons
@@ -22,10 +23,12 @@ Sass Styles
 |   |   |– _comments.scss     # Comments
 |   |   |– _navbar.scss       # Navbar - top and side
 |   |   |– _dashboard.scss    # Dashboard
+|   |   ┴
 |   |
 |   |– vendor/
 |   |   |– hamburger.scss     # Hamburger icon for navbar
 |   |   |– normalize.css      # Normalize.css https://github.com/necolas/normalize.css
+|   |   ┴
 |   |
 |   |– ./                     # Page specific style
 |   |
