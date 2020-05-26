@@ -1,0 +1,35 @@
+/*
+stylesheets/
+|
+|– base/
+|   |– _normalize.scss    # Normalize import from vendor
+|   |– _typography.scss   # Typography rules
+|   |– _globals.scss      # Sass Variables
+|   |– _functions.scss    # Sass Functions
+|   |– _mixins.scss       # Sass Mixins
+|
+|– components/
+|   |– _navbar.scss       # Navbar - top and side
+|   |– _buttons.scss      # Buttons
+|   |– _messages.scss     # Messages
+|   |– _forms.scss        # Forms
+|   |– _comments.scss     # Comments
+|
+|– vendor/
+|   |– hamburger.scss     # Hamburger icon for navbar
+|   |– normalize/         # github.com/JohnAlbin/normalize-scss  
+|
+|– ./ # Page specific styles auto imported by rails
+|
+`– main.scss              # Primary Site Sass file
+*/
+@use 'main';
+
+// Page specific files - To be converted into feature specific styles
+@use 'about';
+@use 'admin';
+@use 'floating_form';
+@use 'homepage';
+@use 'password';
+@use 'session';
+@use 'admin/general.scss'

@@ -1,0 +1,15 @@
+$header-font: 'RobotoTitle', Fallback, sans-serif;
+$general-font: 'RobotoBody', Fallback, sans-serif;
+$general-font-color: rgb(0, 0, 0);
+$inverse-font-color: rgb(240, 240, 240);
+
+html {
+  font-family: $general-font;
+  color: $general-font-color;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+strong {
+  font-weight: 600;
+}
