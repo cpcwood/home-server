@@ -1,27 +1,32 @@
 /*
-stylesheets/
+Sass Styles
 |
-|– base/
-|   |– _normalize.scss    # Normalize import from vendor
-|   |– _typography.scss   # Typography rules
-|   |– _globals.scss      # Sass Variables
-|   |– _functions.scss    # Sass Functions
-|   |– _mixins.scss       # Sass Mixins
-|
-|– components/
-|   |– _navbar.scss       # Navbar - top and side
-|   |– _buttons.scss      # Buttons
-|   |– _messages.scss     # Messages
-|   |– _forms.scss        # Forms
-|   |– _comments.scss     # Comments
-|
-|– vendor/
-|   |– hamburger.scss     # Hamburger icon for navbar
-|   |– normalize/         # github.com/JohnAlbin/normalize-scss  
-|
-|– ./ # Page specific styles auto imported by rails
-|
-`– main.scss              # Primary Site Sass file
+|– application.scss
+|   
+|– styles/
+|   |
+|   |– main.scss              # Primary Site Sass file
+|   |
+|   |– base/
+|   |   |– _normalize.scss    # Import vendor normalize.css
+|   |   |– _typography.scss   # Typography rules
+|   |   |– _globals.scss      # Sass Variables
+|   |   |– _functions.scss    # Sass Functions
+|   |   |– _mixins.scss       # Sass Mixins
+|   |
+|   |– components/
+|   |   |– _navbar.scss       # Navbar - top and side
+|   |   |– _buttons.scss      # Buttons
+|   |   |– _messages.scss     # Messages
+|   |   |– _forms.scss        # Forms
+|   |   |– _comments.scss     # Comments
+|   |
+|   |– vendor/
+|   |   |– hamburger.scss     # Hamburger icon for navbar
+|   |   |– normalize.css      # Normalize.css https://github.com/necolas/normalize.css
+|   |
+|   |– ./                     # Page specific style
+|   |
 */
 @use 'styles/main';
 
