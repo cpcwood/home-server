@@ -1,12 +1,15 @@
+// Modules
+@use '../base/globals';
+@use '../base/functions';
+@use '../base/mixins' as *;
+@use '../base/typography';
+
+
 // Variables
 
 
-// Mixins
-@use 'base/_mixins.scss';
-
-
 // Styles
-.admin_zone_container {
+.dashboard_container {
   background-color: white;
   box-sizing: border-box;
   display: flex;
@@ -17,17 +20,17 @@
   font-size: 14px;
 
   min-height: 350px;
-  @include mixins.respond-to(tablet) {
+  @include respond-to(tablet) {
     min-height: 500px;
     font-size: 18px;
   }
-  @include mixins.respond-to(desktop) {
+  @include respond-to(desktop) {
     min-height: 500px;
     font-size: 22px;
   }
 }
 
-.admin_dashboard {
+.dashboard_sidebar {
   box-sizing: border-box;
   position: relative;
   top: 0px;
@@ -39,19 +42,19 @@
   background-color: rgb(34, 37, 42);
 
   max-width: 20px;
-  @include mixins.respond-to(tablet) {
+  @include respond-to(tablet) {
     min-width: 236px;
     max-width: 300px;
     border-right: 2px solid lightgrey;
-    .admin_dashboard_toggle {
+    .dashboard_sidebar_toggle {
       display: none;
     }
   }
-  @include mixins.respond-to(desktop) {
+  @include respond-to(desktop) {
     min-width: 240px;
     max-width: 350px;
     border-right: 2px solid lightgrey;
-    .admin_dashboard_toggle {
+    .dashboard_sidebar_toggle {
       display: none;
     }
   }
@@ -65,7 +68,7 @@
     h2 {
       display: block;
     }
-    .admin_dashboard_button {
+    .dashboard_button {
       display: block;
     }
   }
@@ -82,12 +85,12 @@
     margin: 0px;
 
     display: none;
-    @include mixins.respond-to(tablet) {
+    @include respond-to(tablet) {
       display: block;
       padding: 25px 40px;
       font-size: 30px;
     }
-    @include mixins.respond-to(desktop) {
+    @include respond-to(desktop) {
       display: block;
       padding: 25px 40px;
       font-size: 34px;
@@ -95,24 +98,19 @@
   }
 }
 
-.admin_dashboard_button {
-  position: relative;
-  box-sizing: border-box;
-  width: 100%;
+.dashboard_button {
   padding: 10px 10px;
-  text-decoration: none; 
-  border: none;
   font-size: 16px;
   font-weight: 300;
   color: rgb(151, 156, 172);
-  
   display: none;
-  @include mixins.respond-to(tablet) {
+
+  @include respond-to(tablet) {
     display: block;
     padding: 15px 40px;
     font-size: 22px;
   }
-  @include mixins.respond-to(desktop) {
+  @include respond-to(desktop) {
     display: block;
     padding: 20px 40px;
     font-size: 24px;
@@ -121,11 +119,10 @@
   &:hover {
     background-color: rgb(15, 16, 19);
     color: rgb(250, 250, 250);
-    cursor: pointer;
   }
 }
 
-.admin_dashboard_toggle {
+.dashboard_sidebar_toggle {
   box-sizing: border-box;
   position: absolute;
   top: 0px;
@@ -175,7 +172,7 @@
   }
 }
 
-.admin_section {
+.dashboard_content {
   box-sizing: border-box;
   position: relative;
   top: 0px;
@@ -189,12 +186,12 @@
   margin: 0 5% 5% 5%;
 }
 
-.item_container {
+.dashboard_item_container {
   box-sizing: border-box;
   width: 100%;
 }
 
-.item_separator {
+.dashboard_item_separator {
   width: 100%;
   height: 4px;
   border-radius: 20%;
@@ -208,11 +205,11 @@ h3 {
   margin: 0px;
   padding: 25px 0px;
 
-  @include mixins.respond-to(tablet) {
+  @include respond-to(tablet) {
     padding: 25px 0px;
     font-size: 30px;
   }
-  @include mixins.respond-to(desktop) {
+  @include respond-to(desktop) {
     padding: 25px 0px;
     font-size: 34px;
   }

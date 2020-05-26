@@ -1,0 +1,11 @@
+.menu_button {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  text-decoration: none; 
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
