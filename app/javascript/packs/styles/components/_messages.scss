@@ -3,3 +3,27 @@
 @use '../base/functions';
 @use '../base/mixins' as *;
 @use '../base/typography';
+
+
+// Notice and Alerts
+.system_messages {
+  box-sizing: border-box;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.notice, .alert {
+  box-sizing: border-box;
+  width: 100%;
+  + .no_messages {
+    display: none;
+  }
+}
+
+.alert {
+  color: red;
+}
+.notice {
+  color: rgb(0, 90, 0);
+}
+
