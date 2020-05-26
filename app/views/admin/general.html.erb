@@ -11,11 +11,9 @@
       <h3>
         System Messages
       </h3>
-      <div class='messages'>
+      <div class="system_messages">
         <% flash.each do |type, msg| %>
-          <div class="notice">
-            <%= msg %>
-          </div>
+          <div class='<%= type %>'><%= msg %></div> 
         <% end %>
         <div class='no_messages'>You have no messages</div>
       </div>

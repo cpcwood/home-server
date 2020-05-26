@@ -2,13 +2,9 @@
 <div class='centered_container'>
   <div class='floating_form_container'>
     <%= form_with(url: "/login", method: "post", class: 'floating_form') do |f| %>
-      <div class="messages">
+      <div class="system_messages">
         <% flash.each do |type, msg| %>
-          <% if type == 'alert'%>
-            <div class='alert'><%= msg %></div> 
-          <% else %>
-            <div class='notice'><%= msg %></div>
-          <% end %>
+          <div class='<%= type %>'><%= msg %></div> 
         <% end %>
       </div>
       <%= f.text_field(:user, required: true, class: 'input_box', placeholder: 'Username or Email') %>
