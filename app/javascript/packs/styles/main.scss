@@ -1,7 +1,19 @@
-@import 'partials/base';
-@import 'partials/buttons';
-@import 'partials/typography';
+// Application Partials
+@use 'base/normalize';
+@use 'base/globals';
+@use 'base/functions';
+@use 'base/mixins' as *;
+@use 'base/font_face';
+@use 'base/typography';
+@use 'components/navbar';
 
+
+// Variables
+$header-font: typography.$header-font;
+$background-color: globals.$background-color;
+
+
+// Styles
 #background {
   position: fixed;
   top: 0px;
@@ -9,7 +21,7 @@
   left: 0px;
   right: 0px;
   z-index: -10;
-  background-color: rgb(245, 245, 245);
+  background-color: $background-color;
 }
 
 .page_container {
@@ -96,3 +108,5 @@ h1 {
     z-index: inherit;
   }
 }
+
+

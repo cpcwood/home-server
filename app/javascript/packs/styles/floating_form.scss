@@ -1,5 +1,11 @@
-@import 'main';
+// Variables
 
+
+// Mixins
+@use 'base/mixins' as *;
+
+
+// Styles
 .content_container {
   flex-wrap: wrap;
   align-items: flex-start;

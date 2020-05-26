@@ -1,5 +1,13 @@
-@import 'main';
+// Variables
+@use 'base/typography';
+$general-font: typography.$general-font;
 
+
+// Mixins
+@use 'base/mixins' as *;
+
+
+// Styles
 .notice {
   position: relative;
   width: 100%;
@@ -61,7 +69,7 @@
   -o-transition: opacity 0.2s ease-in-out 0s;
 
   span {
-    font-family: $text-font;
+    font-family: $general-font;
     color: white;
     text-align: center;
     font-size: 45px;
