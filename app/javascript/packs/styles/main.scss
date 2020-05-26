@@ -15,8 +15,5 @@
 @use 'components/dashboard';
 
 // Page specific files - To be converted into feature specific styles
-@use 'floating_form';
 @use 'homepage';
-@use 'password';
-@use 'session';
 @use 'admin/general.scss'

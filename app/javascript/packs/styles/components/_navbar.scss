@@ -1,16 +1,15 @@
-// Variables
+// Modules
+@use '../base/globals';
+@use '../base/functions';
+@use '../base/mixins' as *;
 @use '../base/typography';
+
+// Variables
 $header-font: typography.$header-font;
 $nav-font-color: typography.$inverse-font-color;
 $inverse-font-color: typography.$general-font-color;
-
 $sidebar-transition: 0.3s;
 $btn-hover-animation: 0.2s;
-
-
-// Mixins
-@use '../base/mixins' as *;
-
 
 // Vendor
 @use '../vendor/hamburger' with(

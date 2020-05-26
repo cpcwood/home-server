@@ -1,3 +1,9 @@
+// Modules
+@use '../base/globals';
+@use '../base/functions';
+@use '../base/mixins' as *;
+@use '../base/typography';
+
 .menu_button {
   position: relative;
   box-sizing: border-box;

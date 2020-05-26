@@ -36,16 +36,19 @@ $background-color: globals.$background-color;
   position: absolute;
   top: 60px;
   flex: 1 1 100%;
+  box-sizing: border-box;
   min-width: 200px;
   max-width: 1280px;
   height: calc(100vh - 70px);
   overflow-wrap: break-word;
-  box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
+  overflow-y: scroll;
   background-color: rgba(255, 255, 255, 0);
   padding: 5px 15px 0px 15px;
-  overflow-y: scroll;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: 100%;
 
   &::-webkit-scrollbar {
     display: none;

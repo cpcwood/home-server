@@ -32,7 +32,7 @@ h1 {
   margin: 0px 0px;
   font-size: 45px;
   font-weight: 300;
-  color: rgb(240, 240, 240);
+  color: $inverse-font-color;
   font-family: $header-font;
   
   @include respond-to(tablet) {
