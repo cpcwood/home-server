@@ -1,5 +1,6 @@
 /*
 Sass Styles
+┬
 |
 |– application.scss
 |   
@@ -15,6 +16,7 @@ Sass Styles
 |   |   |– _mixins.scss       # Sass Mixins
 |   |
 |   |– components/
+|   |   |– _page.scss         # General Page Structure
 |   |   |– _navbar.scss       # Navbar - top and side
 |   |   |– _buttons.scss      # Buttons
 |   |   |– _messages.scss     # Messages
@@ -27,14 +29,6 @@ Sass Styles
 |   |
 |   |– ./                     # Page specific style
 |   |
+┴   ┴
 */
 @use 'styles/main';
-
-// Page specific files - To be converted into feature specific styles
-@use 'styles/about';
-@use 'styles/admin';
-@use 'styles/floating_form';
-@use 'styles/homepage';
-@use 'styles/password';
-@use 'styles/session';
-@use 'styles/admin/general.scss'
