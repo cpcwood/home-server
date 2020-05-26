@@ -44,7 +44,7 @@ h1 {
 
   .subtitle {
     font-family: $header-font;
-    padding-top: 10px;
+    padding-top: 15px;
     font-size: 25px;
     @include respond-to(tablet) {
       font-size: 30px;

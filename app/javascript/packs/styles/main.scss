@@ -4,9 +4,9 @@
 @use 'base/functions';
 @use 'base/mixins' as *;
 @use 'base/typography';
+@use 'base/page';
 
 // Application Components
-@use 'components/page';
 @use 'components/buttons';
 @use 'components/comments';
 @use 'components/forms';
