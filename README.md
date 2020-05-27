@@ -12,11 +12,13 @@ General portfolio style website and a place to prototype new rails features I fi
 - Securing Rails
 - General Rails processes
 - CSS and HTML
+- Stimulus JavaScript Framework
 
 ## Technology
 
 - Ruby 2.6.5
 - Ruby on Rails 6.0
+- StimulusJS
 - PostgreSQL v12.1
 - Google reCaptcha
 - Twilio SMS Verification
