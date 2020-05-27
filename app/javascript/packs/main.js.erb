@@ -1,5 +1,5 @@
 // Application
-import headerImageScroll from './header/headerImageScroll.js'
+
 
 // Session & Password
 import loadReCaptcha from './recaptcha/loadReCaptcha.js'
@@ -9,7 +9,7 @@ import adminDashboardToggle from './admin/adminDashboardToggle.js'
 
 
 document.addEventListener('turbolinks:load', () => {
-  headerImageScroll()
+
 
   if (document.querySelector('.dashboard_sidebar_toggle')) {
     adminDashboardToggle()
