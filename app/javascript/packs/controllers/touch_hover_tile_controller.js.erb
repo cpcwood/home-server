@@ -1,0 +1,25 @@
+import { Controller } from "stimulus"
+
+export default class extends Controller {
+  static targets = ['coverTitle']
+
+  checkTouch() {
+    this.touchTime = new Date()
+  }
+  
+  addHover() {
+    let diff = new Date() - this.touchTime
+    if (diff < 250) {
+      if (!this.coverTitleTarget.classList.contains('hover')) {
+        let otherHover = document.querySelector('.hover')
+        if (otherHover) otherHover.classList.remove('hover')
+        this.coverTitleTarget.classList.add('hover')
+        event.preventDefault()
+      }
+    }
+  }
+
+  disconnect() {
+    this.coverTitleTarget.classList.remove('hover')
+  }
+}

@@ -1,6 +1,4 @@
 // Application
-// import navMenuClick from './navbar/navMenu.js'
-import touchHover from './touch/touchHover.js'
 import headerImageScroll from './header/headerImageScroll.js'
 
 // Session & Password
@@ -11,8 +9,6 @@ import adminDashboardToggle from './admin/adminDashboardToggle.js'
 
 
 document.addEventListener('turbolinks:load', () => {
-  // navMenuClick()
-  touchHover()
   headerImageScroll()
 
   if (document.querySelector('.dashboard_sidebar_toggle')) {
