@@ -27,7 +27,7 @@ WebMock.disable_net_connect!(
 
 RSpec.configure do |config|
   config.before(:suite) do
-    `./bin/webpack`
+    `bin/webpack`
   end
 
   config.before(:each) do
