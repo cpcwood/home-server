@@ -1,4 +1,4 @@
-<div class='dashboard_sidebar'>
+<div class='dashboard_sidebar' data-controller='dashboard-sidebar' data-target='dashboard-sidebar.sidebar' data-dashboard-sidebar-open='false'>
   <h2>
     Dashboard
   </h2>
@@ -17,7 +17,7 @@
   <a href='/admin/site-settings' class='dashboard_button menu_button'>
     Site Settings
   </a>
-  <div class='dashboard_sidebar_toggle'>
+  <div class='dashboard_sidebar_toggle' data-action='click->dashboard-sidebar#sidebarToggle' data-target='dashboard-sidebar.sidebarToggle'>
     <div class='closed'> > </div>
     <div class='closed'> > </div>
     <div class='closed tab_title'> Open Options </div>
