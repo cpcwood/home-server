@@ -14,7 +14,7 @@
       <div class='options login'>
         <%= link_to "Forgotten Password", "/forgotten-password", class: 'option right' %>
       </div>
-      <div class='recaptcha' id='recaptcha'></div>
+      <div class='recaptcha' id='recaptcha' data-controller='recaptcha'></div>
       <%= f.submit("Login", class: 'input_submit') %>
     <% end %>
   </div>
