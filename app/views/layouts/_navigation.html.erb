@@ -2,15 +2,15 @@
   <div class='nav_title_container'>
     <a href='/'>Chris Wood</a>
   </div>
-  <div class='nav_menu'>
-    <div class='hamburger_container'>
+  <div class='nav_menu' data-controller='nav-menu' data-nav-menu-open='false'>
+    <div class='hamburger_container' data-action='click->nav-menu#menuToggle' data-target='nav-menu.navHamburger'>
       <div class='hamburger'>
         <div class='hamburger_bar' id='hamburger_crown'></div>
         <div class='hamburger_bar' id='hamburger_patty'></div>
         <div class='hamburger_bar' id='hamburger_heel'></div>
       </div>
     </div>
-    <div class='nav_sidebar'>
+    <div class='nav_sidebar' data-target='nav-menu.navSidebar'>
       <div class='upper'>
         <div class='nav_item_separator'></div>
         <a href='/' class='nav_item'>
@@ -60,6 +60,6 @@
         <div class='nav_item_separator'></div>
       </div>
     </div>
-    <div class='nav_screen_cover'></div>
+    <div class='nav_screen_cover' data-action='click->nav-menu#closeMenu'></div>
   </div>
 </nav>
