@@ -15,7 +15,6 @@ AllCops:
     - 'vendor/**/*'
     - '*.js.erb'
 
-  
 Bundler/OrderedGems:
   Enabled: false
 
@@ -61,6 +60,10 @@ Style/ExponentialNotation:
   Enabled: true
 Style/SlicingWithRange:
   Enabled: true
+Style/RedundantRegexpCharacterClass:
+  Enabled: true
+Style/RedundantRegexpEscape:
+  Enabled: true
 
 Metrics/BlockLength:
   Enabled: false
@@ -74,6 +77,8 @@ Lint/RaiseException:
 Lint/StructNewOverride:
   Enabled: true
 Lint/DeprecatedOpenSSLConstant:
+  Enabled: true
+Lint/MixedRegexpCaptureTypes:
   Enabled: true
 
 Rails/SkipsModelValidations:
