@@ -1,16 +1,20 @@
 require: rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 2.6.5
-  Include:
-    - 'app/channels/**/*'
-    - 'app/controllers/**/*'
-    - 'app/helpers/**/*'
-    - 'app/mailers/**/*'
-    - 'app/models/**/*'
-    - 'spec/**/*'
-    - 'Gemfile'
-    - 'Rakefile'
+  TargetRubyVersion: 2.7.0
+  Exclude:
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'coverage/**/*'
+    - 'db/**/*'
+    - 'lib/**/*'
+    - 'log/**/*'
+    - 'node_modules/**/*'
+    - 'shared/**/*'
+    - 'storage/**/*'
+    - 'vendor/**/*'
+    - '*.js.erb'
+
   
 Bundler/OrderedGems:
   Enabled: false
@@ -27,6 +31,10 @@ Layout/SpaceBeforeBlockBraces:
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: compact
 Layout/TrailingEmptyLines:
+  Enabled: false
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: false
+Layout/SpaceAroundMethodCallOperator:
   Enabled: false
 
 Style/SymbolArray:
@@ -49,7 +57,11 @@ Style/HashTransformValues:
   Enabled: true
 Style/NumericLiteralPrefix:
   Enabled: false
-  
+Style/ExponentialNotation:
+  Enabled: true
+Style/SlicingWithRange:
+  Enabled: true
+
 Metrics/BlockLength:
   Enabled: false
 Metrics/MethodLength:
@@ -60,6 +72,8 @@ Metrics/AbcSize:
 Lint/RaiseException:
   Enabled: true
 Lint/StructNewOverride:
+  Enabled: true
+Lint/DeprecatedOpenSSLConstant:
   Enabled: true
 
 Rails/SkipsModelValidations:
