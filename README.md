@@ -16,7 +16,7 @@ General portfolio style website and a place to prototype new rails features I fi
 
 ## Technology
 
-- Ruby 2.6.5
+- Ruby 2.7.0
 - Ruby on Rails 6.0
 - StimulusJS
 - PostgreSQL v12.1

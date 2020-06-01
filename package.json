@@ -6,6 +6,7 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "^5.0.1",
+    "jest-erb-transformer": "^0.1.0",
     "rails-erb-loader": "^5.5.2",
     "resolve-url-loader": "^3.1.1",
     "sass": "^1.26.5",
@@ -35,6 +36,14 @@
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/spec/javascript/__mocks__/fileMock.js",
       "\\.(css|less)$": "<rootDir>/spec/javascript/__mocks__/styleMock.js"
+    },
+    "transform": {
+      "\\.js.erb$": [
+        "jest-erb-transformer",
+        {
+          "engine": "erb"
+        }
+      ]
     }
   }
 }
