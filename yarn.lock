@@ -4893,10 +4893,10 @@ jest-environment-node@^26.0.1:
     jest-mock "^26.0.1"
     jest-util "^26.0.1"
 
-jest-erb-transformer@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/jest-erb-transformer/-/jest-erb-transformer-0.5.0.tgz#0707507d8d3ae5f00c6a613cdd5bfffdb1d8dd3d"
-  integrity sha512-K1ZpJ8lTX5Ax79DoH+CBLsYxyM1DCTl2iPNcNw+v9xIufgJD2FeC5PAIM3XpBtL42RidnbIvCWEWTQ0mS79Tsg==
+jest-erb-transformer@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/jest-erb-transformer/-/jest-erb-transformer-1.0.0.tgz#c26645360dce60f06ff55f0ee65c4c21d35ab29d"
+  integrity sha512-Jmk4v6vu8Wjpn7TRWhcrRE3e7ipkpD7nAxAqoALckLDDScmOm6//0r7nlmxvpo5dXd209nqaZPSn93ZTrIckdw==
 
 jest-get-type@^26.0.0:
   version "26.0.0"
