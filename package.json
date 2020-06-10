@@ -15,11 +15,14 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "babel-jest": "^26.0.1",
     "jest": "^26.0.1",
     "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest --no-cache --coverage"
   },
   "jest": {
     "roots": [
@@ -38,6 +41,7 @@
       "\\.(css|less)$": "<rootDir>/spec/javascript/__mocks__/styleMock.js"
     },
     "transform": {
+      "^.+\\.js(?:\\.erb)?$": "babel-jest",
       "\\.js\\.erb$": [
         "jest-erb-transformer",
         {
