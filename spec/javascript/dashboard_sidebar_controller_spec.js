@@ -2,8 +2,8 @@ import { Application } from 'stimulus'
 import dashboardSidebarController from 'controllers/dashboard_sidebar_controller'
 
 describe("dashboard_sidebar_controller", () => {
-  var dashboardSidebar;
-  var dashboardSidebarToggle;
+  let dashboardSidebar;
+  let dashboardSidebarToggle;
 
   beforeAll(() => {
     const application = Application.start()
