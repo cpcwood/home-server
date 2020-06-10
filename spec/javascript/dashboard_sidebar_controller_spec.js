@@ -21,24 +21,16 @@ describe("dashboard_sidebar_controller", () => {
   })
 
   describe("#sidebarToggle", () => {
-    it("on toggle click - adds 'open' class to sidebarToggleTarget", () => {
+    it("on toggle click - adds and removes 'open' class to sidebarToggleTarget", () => {
       dashboardSidebarToggle.click()
       expect(dashboardSidebarToggle.classList).toContain('open')
-    })
-
-    it("on toggle click - adds 'open' class to sidebarTarget", () => {
-      dashboardSidebarToggle.click()
-      expect(dashboardSidebar.classList).toContain('open')
-    })
-
-    it("on double toggle click - removes 'open' class from sidebarToggleTarget", () => {
-      dashboardSidebarToggle.click()
       dashboardSidebarToggle.click()
       expect(dashboardSidebarToggle.classList).not.toContain('open')
     })
 
-    it("on double toggle click - removes 'open' class from sidebarTarget", () => {
+    it("on toggle click - adds and removes 'open' class to sidebarTarget", () => {
       dashboardSidebarToggle.click()
+      expect(dashboardSidebar.classList).toContain('open')
       dashboardSidebarToggle.click()
       expect(dashboardSidebar.classList).not.toContain('open')
     })
