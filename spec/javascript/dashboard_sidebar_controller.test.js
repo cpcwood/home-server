@@ -2,26 +2,53 @@ import { Application } from 'stimulus'
 import dashboardSidebarController from 'controllers/dashboard_sidebar_controller'
 
 describe("dashboard_sidebar_controller", () => {
-  beforeEach(() => {
-    document.body.innerHTML = `
-      <div id='dashboard_sidebar' data-controller='dashboard-sidebar' data-target='dashboard-sidebar.sidebar' data-dashboard-sidebar-open='false'>
-        <div id='dashboard_sidebar_toggle' data-action='click->dashboard-sidebar#sidebarToggle' data-target='dashboard-sidebar.sidebarToggle'></div>
-      </div>
-    `
+  var dashboardSidebar;
+  var dashboardSidebarToggle;
+
+  beforeAll(() => {
     const application = Application.start()
     application.register("dashboard-sidebar", dashboardSidebarController)
   })
 
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <div class='dashboard_sidebar' data-controller='dashboard-sidebar' data-target='dashboard-sidebar.sidebar' data-dashboard-sidebar-open='false'>
+        <div class='dashboard_sidebar_toggle' data-action='click->dashboard-sidebar#sidebarToggle' data-target='dashboard-sidebar.sidebarToggle'></div>
+      </div>
+    `
+    dashboardSidebar = document.querySelector(".dashboard_sidebar")
+    dashboardSidebarToggle = document.querySelector(".dashboard_sidebar_toggle")
+  })
+
   describe("#sidebarToggle", () => {
-    it("click when closed opens sidebar", () => {
-      const dashboardSidebar = document.getElementById("dashboard_sidebar")
-      const dashboardSidebarToggle = document.getElementById("dashboard_sidebar_toggle")
-
-      expect(dashboardSidebar.getAttribute('data-dashboard-sidebar-open')).toEqual('false')
-
+    it("on toggle click - adds 'open' class to sidebarToggleTarget", () => {
       dashboardSidebarToggle.click()
-
-      expect(dashboardSidebar.getAttribute('data-dashboard-sidebar-open')).toEqual('true')
+      expect(dashboardSidebarToggle.classList).toContain('open')
     })
-  });
-});
+
+    it("on toggle click - adds 'open' class to sidebarTarget", () => {
+      dashboardSidebarToggle.click()
+      expect(dashboardSidebar.classList).toContain('open')
+    })
+
+    it("on double toggle click - removes 'open' class from sidebarToggleTarget", () => {
+      dashboardSidebarToggle.click()
+      dashboardSidebarToggle.click()
+      expect(dashboardSidebarToggle.classList).not.toContain('open')
+    })
+
+    it("on double toggle click - removes 'open' class from sidebarTarget", () => {
+      dashboardSidebarToggle.click()
+      dashboardSidebarToggle.click()
+      expect(dashboardSidebar.classList).not.toContain('open')
+    })
+
+    it("on toggle click - sidebar open state added to controller element", () => {
+      expect(dashboardSidebar.getAttribute('data-dashboard-sidebar-open')).toEqual('false')
+      dashboardSidebarToggle.click()
+      expect(dashboardSidebar.getAttribute('data-dashboard-sidebar-open')).toEqual('true')
+      dashboardSidebarToggle.click()
+      expect(dashboardSidebar.getAttribute('data-dashboard-sidebar-open')).toEqual('false')
+    })
+  })
+})
