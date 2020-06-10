@@ -1,21 +1,23 @@
 import { Application } from 'stimulus'
 import dashboardSidebarController from 'controllers/dashboard_sidebar_controller'
+const fs = require('fs')
 
 describe("dashboard_sidebar_controller", () => {
-  let dashboardSidebar;
-  let dashboardSidebarToggle;
+  let dashboardSidebar
+  let dashboardSidebarToggle
+  let applicationHTML
 
-  beforeAll(() => {
+  beforeAll(done => {
     const application = Application.start()
     application.register("dashboard-sidebar", dashboardSidebarController)
+    fs.readFile("app/views/admin/_dashboard_sidebar.html.erb", 'utf8', (err, data) => {
+      applicationHTML = data
+      done()
+    })
   })
 
   beforeEach(() => {
-    document.body.innerHTML = `
-      <div class='dashboard_sidebar' data-controller='dashboard-sidebar' data-target='dashboard-sidebar.sidebar' data-dashboard-sidebar-open='false'>
-        <div class='dashboard_sidebar_toggle' data-action='click->dashboard-sidebar#sidebarToggle' data-target='dashboard-sidebar.sidebarToggle'></div>
-      </div>
-    `
+    document.body.innerHTML = applicationHTML
     dashboardSidebar = document.querySelector(".dashboard_sidebar")
     dashboardSidebarToggle = document.querySelector(".dashboard_sidebar_toggle")
   })

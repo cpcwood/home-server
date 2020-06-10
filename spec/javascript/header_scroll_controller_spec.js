@@ -1,22 +1,23 @@
 import { Application } from 'stimulus'
 import headerScrollController from 'controllers/header_scroll_controller'
+const fs = require('fs')
 
 describe("dashboard_sidebar_controller", () => {
-  let headerImage;
-  let contentContainer;
+  let headerImage
+  let contentContainer
+  let applicationHTML
 
-  beforeAll(() => {
+  beforeAll(done => {
     const application = Application.start()
     application.register("header-scroll", headerScrollController)
+    fs.readFile("app/views/layouts/application.html.erb", 'utf8', (err, data) => {
+      applicationHTML = data
+      done()
+    })
   })
 
   beforeEach(() => {
-    document.body.innerHTML = `
-    <div class='page_container' data-controller='header-scroll'>
-      <div class='header_image' data-target='header-scroll.headerImage'></div>
-      <div class='content_container' data-action='scroll->header-scroll#scrollHeaderImage' data-target='header-scroll.contentContainer'></div>
-    </div>
-    `
+    document.body.innerHTML = applicationHTML
     headerImage = document.querySelector(".header_image")
     contentContainer = document.querySelector(".content_container")
   })
