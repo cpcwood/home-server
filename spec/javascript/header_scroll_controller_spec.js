@@ -2,7 +2,7 @@ import { Application } from 'stimulus'
 import headerScrollController from 'controllers/header_scroll_controller'
 const fs = require('fs')
 
-describe("dashboard_sidebar_controller", () => {
+describe("header_scroll_controller", () => {
   let headerImage
   let contentContainer
   let applicationHTML
