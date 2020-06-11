@@ -1,17 +1,17 @@
-import { Controller } from "stimulus"
+import { Controller } from 'stimulus'
 
 export default class extends Controller {
   static targets = ['coverTitle']
 
-  checkTouch() {
+  checkTouch () {
     this.touchTime = new Date(Date.now())
   }
-  
-  addHover(event) {
-    let diff = new Date(Date.now()) - this.touchTime
+
+  addHover (event) {
+    const diff = new Date(Date.now()) - this.touchTime
     if (diff < 250) {
       if (!this.coverTitleTarget.classList.contains('hover')) {
-        let otherHover = document.querySelector('.hover')
+        const otherHover = document.querySelector('.hover')
         if (otherHover) otherHover.classList.remove('hover')
         this.coverTitleTarget.classList.add('hover')
         event.preventDefault()
@@ -19,7 +19,7 @@ export default class extends Controller {
     }
   }
 
-  disconnect() {
+  disconnect () {
     this.coverTitleTarget.classList.remove('hover')
   }
 }
