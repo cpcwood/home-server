@@ -11,10 +11,12 @@ export default class extends Controller {
       })
     }
     reCaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=reCaptchaOnload&render=explicit'
+    reCaptchaScript.className = "recaptcha_script"
     document.head.appendChild(reCaptchaScript)
   }
 
   disconnect() {
+    var reCaptchaScript = document.head.querySelector(".recaptcha_script")
     document.head.removeChild(reCaptchaScript)
   }
 }
