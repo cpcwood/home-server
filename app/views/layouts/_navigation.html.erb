@@ -2,6 +2,13 @@
   <div class='nav_title_container'>
     <a href='/'>Chris Wood</a>
   </div>
+  <% if @user %>
+    <div class='username'>
+      <a href='/admin'>
+        <%= @user.username %>
+      </a>
+    </div>
+  <% end %>
   <div class='nav_menu' data-controller='nav-menu' data-nav-menu-open='false'>
     <div class='hamburger_container' data-action='click->nav-menu#menuToggle' data-target='nav-menu.navHamburger'>
       <div class='hamburger'>
