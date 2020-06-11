@@ -17,7 +17,9 @@
         <%= image_tag('header.jpg', id: 'header_image')%>
       </div>
       <div class='content_container' data-action='scroll->header-scroll#scrollHeaderImage' data-target='header-scroll.contentContainer'>
-        <%= yield %>
+        <div class='content'>
+          <%= yield %>
+        </div>
       </div>
     </div>
     <div id='background'></div>
