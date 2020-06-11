@@ -8,11 +8,11 @@ describe("dashboard_sidebar_controller", () => {
   let navScreenCover
   let navMenu
   let applicationHTML
-  
 
   beforeAll(done => {
     const application = Application.start()
     application.register("nav-menu", navMenuController)
+    console.log(application)
     fs.readFile("app/views/layouts/_navigation.html.erb", 'utf8', (err, data) => {
       applicationHTML = data
       done()
