@@ -2,7 +2,7 @@ import { Application } from 'stimulus'
 import navMenuController from 'controllers/nav_menu_controller'
 const fs = require('fs')
 
-describe("dashboard_sidebar_controller", () => {
+describe("nav_menu_controller", () => {
   let navHamburger
   let navSidebar
   let navScreenCover
@@ -12,7 +12,6 @@ describe("dashboard_sidebar_controller", () => {
   beforeAll(done => {
     const application = Application.start()
     application.register("nav-menu", navMenuController)
-    console.log(application)
     fs.readFile("app/views/layouts/_navigation.html.erb", 'utf8', (err, data) => {
       applicationHTML = data
       done()

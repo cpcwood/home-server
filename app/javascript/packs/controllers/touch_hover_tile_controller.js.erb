@@ -4,11 +4,11 @@ export default class extends Controller {
   static targets = ['coverTitle']
 
   checkTouch() {
-    this.touchTime = new Date()
+    this.touchTime = new Date(Date.now())
   }
   
-  addHover() {
-    let diff = new Date() - this.touchTime
+  addHover(event) {
+    let diff = new Date(Date.now()) - this.touchTime
     if (diff < 250) {
       if (!this.coverTitleTarget.classList.contains('hover')) {
         let otherHover = document.querySelector('.hover')

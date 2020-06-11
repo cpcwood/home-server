@@ -1,7 +1,7 @@
 import { Application } from 'stimulus'
 import reCaptchaController from 'controllers/recaptcha_controller'
 
-describe("dashboard_sidebar_controller", () => {
+describe("recaptcha_controller", () => {
   let application
   let mock
   let createElementSpy
