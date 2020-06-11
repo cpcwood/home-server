@@ -2,7 +2,7 @@ import { Application } from 'stimulus'
 import navMenuController from 'controllers/nav_menu_controller'
 const fs = require('fs')
 
-describe("nav_menu_controller", () => {
+describe('nav_menu_controller', () => {
   let navHamburger
   let navSidebar
   let navScreenCover
@@ -11,8 +11,9 @@ describe("nav_menu_controller", () => {
 
   beforeAll(done => {
     const application = Application.start()
-    application.register("nav-menu", navMenuController)
-    fs.readFile("app/views/layouts/_navigation.html.erb", 'utf8', (err, data) => {
+    application.register('nav-menu', navMenuController)
+    fs.readFile('app/views/layouts/_navigation.html.erb', 'utf8', (err, data) => {
+      if (err) throw new Error(err)
       applicationHTML = data
       done()
     })
@@ -20,14 +21,14 @@ describe("nav_menu_controller", () => {
 
   beforeEach(() => {
     document.body.innerHTML = applicationHTML
-    navMenu = document.querySelector(".nav_menu")
-    navHamburger = document.querySelector(".hamburger_container")
-    navSidebar = document.querySelector(".nav_sidebar")
-    navScreenCover = document.querySelector(".nav_screen_cover")
+    navMenu = document.querySelector('.nav_menu')
+    navHamburger = document.querySelector('.hamburger_container')
+    navSidebar = document.querySelector('.nav_sidebar')
+    navScreenCover = document.querySelector('.nav_screen_cover')
   })
 
-  describe("#menuToggle - navHamburger click", () => {
-    it("toggles menu open status", () => {
+  describe('#menuToggle - navHamburger click', () => {
+    it('toggles menu open status', () => {
       expect(navMenu.getAttribute('data-nav-menu-open')).toEqual('false')
       navHamburger.click()
       expect(navMenu.getAttribute('data-nav-menu-open')).toEqual('true')
@@ -57,8 +58,8 @@ describe("nav_menu_controller", () => {
     })
   })
 
-  describe("#menuToggle - navScreenCover click", () => { 
-    it("sets menu open status to false", () => { 
+  describe('#menuToggle - navScreenCover click', () => {
+    it('sets menu open status to false', () => {
       navMenu.setAttribute('data-nav-menu-open', 'true')
       navScreenCover.click()
       expect(navMenu.getAttribute('data-nav-menu-open')).toEqual('false')
