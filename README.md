@@ -1,6 +1,6 @@
 # Home Server
 
-[![Coverage Status](https://coveralls.io/repos/github/cpcwood/home-server/badge.svg?branch=master)](https://coveralls.io/github/cpcwood/home-server?branch=master) [![Build Status](https://api.travis-ci.com/cpcwood/home-server.svg?branch=master&status=started)](https://travis-ci.com/github/cpcwood/home-server) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](https://standardjs.com)
+[![Coverage Status](https://coveralls.io/repos/github/cpcwood/home-server/badge.svg?branch=master&style=flat-square)](https://coveralls.io/github/cpcwood/home-server?branch=master) [![Build Status](https://api.travis-ci.com/cpcwood/home-server.svg?branch=master&status=started&style=flat-square)](https://travis-ci.com/github/cpcwood/home-server) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](https://standardjs.com)
 
 ## Overview
 
