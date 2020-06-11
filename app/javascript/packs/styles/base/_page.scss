@@ -33,27 +33,36 @@ $background-color: globals.$background-color;
 }
 
 .content_container {
+  box-sizing: border-box;
   position: absolute;
   top: 60px;
-  flex: 1 1 100%;
-  box-sizing: border-box;
-  min-width: 200px;
-  max-width: 1280px;
-  height: calc(100vh - 70px);
-  overflow-wrap: break-word;
-  overflow-y: scroll;
-  background-color: rgba(255, 255, 255, 0);
-  padding: 5px 15px 0px 15px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  align-content: flex-start;
   width: 100%;
+  height: calc(100vh - 70px);
+  overflow-y: scroll;
+  display: flex;
+  width: 100%;
+  justify-content: center;
 
   &::-webkit-scrollbar {
     display: none;
   }
   -ms-overflow-style: none;
+}
+
+.content {
+  position: absolute;
+  flex: 1 1 100%;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 200px;
+  max-width: 1280px;
+  height: calc(100vh - 70px);
+  overflow-wrap: break-word;
+  padding: 5px 15px 0px 15px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 
 .header_image {
