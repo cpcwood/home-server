@@ -64,6 +64,17 @@ $btn-hover-animation: 0.2s;
   }
 }
 
+.username {
+  margin-left: auto;
+  a, a:link, a:visited, a:focus, a:hover, a:active {
+    color: $nav-font-color;
+    text-decoration: none; 
+    font-family: $header-font;
+    font-size: 22px;
+    font-weight: 300;
+  }
+}
+
 // Side Navbar Styles
 
 .nav_menu {
