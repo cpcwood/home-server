@@ -12,6 +12,10 @@ class User < ApplicationRecord
             format: { with: /\A[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*\z/, message: 'Only standard charaters and [ _-] are allowed' },
             confirmation: { message: 'Usernames do not match' }
 
+  validates :email,
+            presence: true,
+            format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Email must be valid format' }
+
   def send_password_reset_email!
     generate_hashed_token
     PasswordMailer.with(user: self).password_reset_email.deliver_now
