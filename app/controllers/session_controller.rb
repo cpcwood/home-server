@@ -11,11 +11,11 @@ class SessionController < ApplicationController
   def new
     return redirect_to(:login, alert: 'reCaptcha failed, please try again') unless recaptcha_confirmation(sanitize(params['g-recaptcha-response']))
     # Active Model automatically sanitises input for where queries
-    user = User.find_by(email: params[:user])
-    user ||= User.find_by(username: params[:user])
-    return redirect_to(:login, alert: 'User not found') unless user&.authenticate(params[:password])
-    session[:two_factor_auth_id] = user.id
-    return log_user_in(user) if Rails.env.development?
+    @user = User.find_by(email: params[:user])
+    @user ||= User.find_by(username: params[:user])
+    return redirect_to(:login, alert: 'User not found') unless @user&.authenticate(params[:password])
+    session[:two_factor_auth_id] = @user.id
+    return log_user_in if Rails.env.development?
     redirect_to('/2fa', notice: 'Please enter the 6 digit code sent to mobile number assoicated with this account')
   end
 
@@ -37,14 +37,14 @@ class SessionController < ApplicationController
     return redirect_to(:login) unless session[:two_factor_auth_id]
     auth_code = sanitize(params[:auth_code])
     return redirect_to('/2fa', notice: 'Verification code must be 6 digits long') if auth_code.length != 6
-    user = User.find_by(id: session[:two_factor_auth_id])
+    @user = User.find_by(id: session[:two_factor_auth_id])
     client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
     verification_check = client.verify
                                .services(Rails.application.credentials.twilio[:verify_service_sid])
                                .verification_checks
-                               .create(to: user.mobile_number, code: auth_code)
+                               .create(to: @user.mobile_number, code: auth_code)
     return redirect_to('/2fa', notice: '2fa code incorrect, please try again') unless verification_check.status == 'approved'
-    log_user_in(user)
+    log_user_in
   end
 
   def reset_2fa
@@ -75,11 +75,17 @@ class SessionController < ApplicationController
     JSON.parse(response.body)['success'] == true
   end
 
-  def log_user_in(user)
+  def log_user_in
     reset_session
-    session[:user_id] = user.id
-    user.update_attribute(:last_login_time, Time.zone.now)
-    user.update_attribute(:last_login_ip, request.remote_ip)
-    redirect_to(:admin, notice: "#{user.username} welcome back to your home-server!")
+    session[:user_id] = @user.id
+    record_user_ip
+    redirect_to(:admin, notice: "#{@user.username} welcome back to your home-server!")
+  end
+
+  def record_user_ip
+    @user.update_attribute(:last_login_time, @user.current_login_time)
+    @user.update_attribute(:last_login_ip, @user.current_login_ip)
+    @user.update_attribute(:current_login_time, Time.zone.now)
+    @user.update_attribute(:current_login_ip, request.remote_ip)
   end
 end
