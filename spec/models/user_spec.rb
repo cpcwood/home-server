@@ -35,19 +35,26 @@ RSpec.describe User, type: :model do
     it 'Rejects invalid username formats' do
       user = User.create(username: ' example', password: 'password', email: 'example@example.com')
       expect(user).to_not be_valid
-      user = User.create(username: 'example ', password: 'password', email: 'example@example.com')
+      user = User.create(username: 'example ', password: 'password', email: 'example2@example.com')
       expect(user).to_not be_valid
-      user = User.create(username: 'e@xample', password: 'password', email: 'example@example.com')
+      user = User.create(username: 'e@xample', password: 'password', email: 'example3example.com')
       expect(user).to_not be_valid
     end
 
     it 'Accepts valid username formats' do
       user = User.create(username: 'e', password: 'password', email: 'example@example.com')
       expect(user).to be_valid
-      user = User.create(username: 'exa mple', password: 'password', email: 'example@example.com')
+      user = User.create(username: 'exa mple', password: 'password', email: 'example2@example.com')
       expect(user).to be_valid
-      user = User.create(username: 'exa-mple example', password: 'password', email: 'example@example.com')
+      user = User.create(username: 'exa-mple example', password: 'password', email: 'example3@example.com')
       expect(user).to be_valid
+    end
+
+    it 'Username must be unique' do
+      user = User.create(username: 'example', password: 'password', email: 'example@example.com')
+      expect(user).to be_valid
+      user = User.create(username: 'example', password: 'password', email: 'example2@example.com')
+      expect(user).to_not be_valid
     end
 
     it 'Requires confirmation for change' do
@@ -61,7 +68,7 @@ RSpec.describe User, type: :model do
 
   describe 'Email validations' do
     it 'Accepts valid emails' do
-      @test_user.email = 'admin@example.com'
+      @test_user.email = 'new@example.com'
       expect(@test_user).to be_valid
       @test_user.email = 'ad_m.in@exam-ple.co.uk'
       expect(@test_user).to be_valid
@@ -82,6 +89,21 @@ RSpec.describe User, type: :model do
       @test_user.email = '\#@example.com'
       expect(@test_user).to_not be_valid
       expect(@test_user.errors.messages[:email]).to eq ['Email must be valid format']
+    end
+
+    it 'Email must be unique' do
+      user = User.create(email: 'example@example.com', username: 'example', password: 'password')
+      expect(user).to be_valid
+      user = User.create(email: 'example@example.com', username: 'example2', password: 'password')
+      expect(user).to_not be_valid
+    end
+
+    it 'Requires confirmation for change' do
+      @test_user.email = 'new@example.com'
+      @test_user.email_confirmation = ''
+      expect(@test_user).to_not be_valid
+      @test_user.email_confirmation = 'new@example.com'
+      expect(@test_user).to be_valid
     end
   end
 
