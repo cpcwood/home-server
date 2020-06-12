@@ -19,3 +19,7 @@ def login
   post '/2fa', params: { auth_code: '123456' }
   follow_redirect!
 end
+
+def logout
+  delete '/login'
+end

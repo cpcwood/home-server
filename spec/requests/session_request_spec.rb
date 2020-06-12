@@ -100,10 +100,22 @@ RSpec.describe 'Sessions', type: :request do
       expect(response.body).to include("#{@test_user.username} welcome back to your home-server!")
     end
 
+    it 'Current login details updated on sucessful login' do
+      travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
+      login
+      expect(@test_user.reload.current_login_time).to eq(Time.zone.now)
+      expect(@test_user.reload.current_login_ip).to eq('127.0.0.1')
+    end
+
     it 'Last login details updated on sucessful login' do
       travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
       login
-      expect(@test_user.reload.last_login_time).to eq(Time.zone.now)
+      logout
+      travel_to Time.zone.local(2020, 04, 19, 01, 00, 00)
+      login
+      expect(@test_user.reload.current_login_time).to eq(Time.zone.now)
+      expect(@test_user.reload.current_login_ip).to eq('127.0.0.1')
+      expect(@test_user.reload.last_login_time).to eq(Time.zone.local(2020, 04, 19, 00, 00, 00))
       expect(@test_user.reload.last_login_ip).to eq('127.0.0.1')
     end
 
@@ -150,7 +162,7 @@ RSpec.describe 'Sessions', type: :request do
     it 'Resets session' do
       login
       expect(session[:user_id]).not_to eq(nil)
-      delete '/login'
+      logout
       expect(response).to redirect_to root_path
       expect(session[:user_id]).to eq(nil)
     end
