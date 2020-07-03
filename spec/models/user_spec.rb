@@ -113,6 +113,12 @@ RSpec.describe User, type: :model do
       user = User.create(username: 'example', password: 'password', email: 'example@example.com', mobile_number: used_mobile_number)
       expect(user).to_not be_valid
     end
+
+    it 'Rejct invalid UK mobile numbers with message' do
+      @test_user.mobile_number = '01234567'
+      expect(@test_user).to_not be_valid
+      expect(@test_user.errors.messages[:mobile_number]).to eq ['Please enter valid UK mobile phone number']
+    end
   end
 
   describe '#send_password_reset_email!' do
