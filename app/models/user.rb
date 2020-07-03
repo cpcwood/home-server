@@ -19,6 +19,10 @@ class User < ApplicationRecord
             format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Email must be valid format' },
             confirmation: { message: 'Emails do not match' }
 
+  validates :mobile_number,
+            uniqueness: true
+
+
   def send_password_reset_email!
     generate_hashed_token
     PasswordMailer.with(user: self).password_reset_email.deliver_now

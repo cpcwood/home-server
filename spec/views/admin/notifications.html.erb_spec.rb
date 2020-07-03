@@ -1,39 +1,41 @@
 require 'spec_helper'
 
-describe 'Rendering admin notifications section' do
-  it 'Displays new contact emails' do
-    # Placeholder spec
-    assign(:user, @test_user)
+describe 'Views' do
+  describe 'admin/notifications rendering' do
+    it 'Displays new contact emails' do
+      # Placeholder spec
+      assign(:user, @test_user)
 
-    render template: 'admin/notifications.html.erb'
+      render template: 'admin/notifications.html.erb'
 
-    expect(rendered).to match(/Contact Emails/)
-  end
+      expect(rendered).to match(/Contact Emails/)
+    end
 
-  it 'Displays new blog comment notifications' do
-    # Placeholder spec
-    assign(:user, @test_user)
+    it 'Displays new blog comment notifications' do
+      # Placeholder spec
+      assign(:user, @test_user)
 
-    render template: 'admin/notifications.html.erb'
+      render template: 'admin/notifications.html.erb'
 
-    expect(rendered).to match(/Blog Comments/)
-  end
+      expect(rendered).to match(/Blog Comments/)
+    end
 
-  it 'Displays new blog comment notifications' do
-    # Placeholder spec
-    assign(:user, @test_user)
+    it 'Displays new blog comment notifications' do
+      # Placeholder spec
+      assign(:user, @test_user)
 
-    render template: 'admin/notifications.html.erb'
+      render template: 'admin/notifications.html.erb'
 
-    expect(rendered).to match(/Blog Comments/)
-  end
+      expect(rendered).to match(/Blog Comments/)
+    end
 
-  it 'Displays new say hello notifications' do
-    # Placeholder spec
-    assign(:user, @test_user)
+    it 'Displays new say hello notifications' do
+      # Placeholder spec
+      assign(:user, @test_user)
 
-    render template: 'admin/notifications.html.erb'
+      render template: 'admin/notifications.html.erb'
 
-    expect(rendered).to match(/Say Hellos/)
+      expect(rendered).to match(/Say Hellos/)
+    end
   end
 end

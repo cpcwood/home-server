@@ -1,13 +1,15 @@
 require 'spec_helper'
 
-describe 'Rendering admin user settings section' do
-  it 'Displays current user details' do
-    assign(:user, @test_user)
+describe 'Views' do
+  describe 'admin/user_settings rendering' do
+    it 'Displays current user details' do
+      assign(:user, @test_user)
 
-    render template: 'admin/general.html.erb'
+      render template: 'admin/general.html.erb'
 
-    expect(rendered).to match(%r{Username:</strong> admin})
-    expect(rendered).to match(%r{Email Address:</strong> admin@example.com})
-    expect(rendered).to match(%r{Mobile Number:</strong> \+15005550006})
+      expect(rendered).to match(Regexp.escape("Username:</strong> #{@test_user.username}"))
+      expect(rendered).to match(Regexp.escape("Email Address:</strong> #{@test_user.email}"))
+      expect(rendered).to match(Regexp.escape("Mobile Number:</strong> #{@test_user.mobile_number}"))
+    end
   end
 end
