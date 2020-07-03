@@ -31,7 +31,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    @test_user = User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1', mobile_number: '+15005550006')
+    @test_user = User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1', mobile_number: '+447123456789')
   end
 
   config.after(:each) do

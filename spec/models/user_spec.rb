@@ -28,32 +28,32 @@ RSpec.describe User, type: :model do
 
   describe 'Username validations' do
     it 'Rejects blank usernames' do
-      user = User.create(username: '', password: 'password', email: 'example@example.com')
+      user = User.create(username: '', password: 'password', email: 'example@example.com', mobile_number: '+447234567890')
       expect(user).to_not be_valid
     end
 
     it 'Rejects invalid username formats' do
-      user = User.create(username: ' example', password: 'password', email: 'example@example.com')
+      user = User.create(username: ' example', password: 'password', email: 'example@example.com', mobile_number: '+447234567890')
       expect(user).to_not be_valid
-      user = User.create(username: 'example ', password: 'password', email: 'example2@example.com')
+      user = User.create(username: 'example ', password: 'password', email: 'example2@example.com', mobile_number: '+447234567891')
       expect(user).to_not be_valid
-      user = User.create(username: 'e@xample', password: 'password', email: 'example3example.com')
+      user = User.create(username: 'e@xample', password: 'password', email: 'example3example.com', mobile_number: '+447234567892')
       expect(user).to_not be_valid
     end
 
     it 'Accepts valid username formats' do
-      user = User.create(username: 'e', password: 'password', email: 'example@example.com')
+      user = User.create(username: 'e', password: 'password', email: 'example@example.com', mobile_number: '+447234567890')
       expect(user).to be_valid
-      user = User.create(username: 'exa mple', password: 'password', email: 'example2@example.com')
+      user = User.create(username: 'exa mple', password: 'password', email: 'example2@example.com', mobile_number: '+447234567891')
       expect(user).to be_valid
-      user = User.create(username: 'exa-mple example', password: 'password', email: 'example3@example.com')
+      user = User.create(username: 'exa-mple example', password: 'password', email: 'example3@example.com', mobile_number: '+447234567892')
       expect(user).to be_valid
     end
 
     it 'Username must be unique' do
-      user = User.create(username: 'example', password: 'password', email: 'example@example.com')
+      user = User.create(username: 'example', password: 'password', email: 'example@example.com', mobile_number: '+447234567890')
       expect(user).to be_valid
-      user = User.create(username: 'example', password: 'password', email: 'example2@example.com')
+      user = User.create(username: 'example', password: 'password', email: 'example2@example.com', mobile_number: '+447234567891')
       expect(user).to_not be_valid
     end
 
@@ -92,9 +92,9 @@ RSpec.describe User, type: :model do
     end
 
     it 'Email must be unique' do
-      user = User.create(email: 'example@example.com', username: 'example', password: 'password')
+      user = User.create(email: 'example@example.com', username: 'example', password: 'password', mobile_number: '+447234567890')
       expect(user).to be_valid
-      user = User.create(email: 'example@example.com', username: 'example2', password: 'password')
+      user = User.create(email: 'example@example.com', username: 'example2', password: 'password', mobile_number: '+447234567891')
       expect(user).to_not be_valid
     end
 
@@ -107,6 +107,14 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'Password validations' do
+    it 'Rejects non-unique mobile numbers' do
+      used_mobile_number = @test_user.mobile_number
+      user = User.create(username: 'example', password: 'password', email: 'example@example.com', mobile_number: used_mobile_number)
+      expect(user).to_not be_valid
+    end
+  end
+
   describe '#send_password_reset_email!' do
     it 'Adds a password reset token to user' do
       allow(SecureRandom).to receive(:urlsafe_base64).and_return('testtoken')
@@ -115,7 +123,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'Password reset token is unique user' do
-      User.create(username: 'another_user', password: 'password', email: 'email@example.com', password_reset_token: 'not_unique_token')
+      User.create(username: 'another_user', password: 'password', email: 'email@example.com', password_reset_token: 'not_unique_token', mobile_number: '+447234567890')
       allow(SecureRandom).to receive(:urlsafe_base64).and_return('not_unique_token', 'unique_token')
       @test_user.send_password_reset_email!
       expect(@test_user.password_reset_token).to eq('unique_token')

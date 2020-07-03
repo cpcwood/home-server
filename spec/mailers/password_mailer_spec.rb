@@ -63,7 +63,7 @@ RSpec.describe PasswordMailer, type: :mailer do
 
     it 'Renders time at which acount was updated' do
       travel_to Time.zone.local(2020, 04, 19, 12, 10, 00)
-      @another_user = User.create(username: 'another_user', password: 'password', email: 'another_user@example.com')
+      @another_user = User.create(username: 'another_user', password: 'password', email: 'another_user@example.com', mobile_number: '+447234567890')
       mail = PasswordMailer.with(user: @another_user).password_updated_email
       expect(mail.body.encoded).to match('Your password was updated on: 12:10 19-04-2020')
     end
