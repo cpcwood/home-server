@@ -23,6 +23,9 @@ RSpec.describe User, type: :model do
       @test_user.password = 'newpassw'
       @test_user.password_confirmation = ''
       expect(@test_user).to_not be_valid
+      expect(@test_user.errors.messages[:password_confirmation].last).to eq 'Passwords do not match'
+      @test_user.password_confirmation = 'newpassw'
+      expect(@test_user).to be_valid
     end
   end
 
@@ -61,6 +64,7 @@ RSpec.describe User, type: :model do
       @test_user.username = 'new-username'
       @test_user.username_confirmation = ''
       expect(@test_user).to_not be_valid
+      expect(@test_user.errors.messages[:username_confirmation]).to eq ['Usernames do not match']
       @test_user.username_confirmation = 'new-username'
       expect(@test_user).to be_valid
     end
@@ -102,22 +106,32 @@ RSpec.describe User, type: :model do
       @test_user.email = 'new@example.com'
       @test_user.email_confirmation = ''
       expect(@test_user).to_not be_valid
+      expect(@test_user.errors.messages[:email_confirmation]).to eq ['Emails do not match']
       @test_user.email_confirmation = 'new@example.com'
       expect(@test_user).to be_valid
     end
   end
 
-  describe 'Password validations' do
+  describe 'Mobile number validations' do
     it 'Rejects non-unique mobile numbers' do
       used_mobile_number = @test_user.mobile_number
       user = User.create(username: 'example', password: 'password', email: 'example@example.com', mobile_number: used_mobile_number)
       expect(user).to_not be_valid
     end
 
-    it 'Rejct invalid UK mobile numbers with message' do
+    it 'Rejects invalid UK mobile numbers with message' do
       @test_user.mobile_number = '01234567'
       expect(@test_user).to_not be_valid
       expect(@test_user.errors.messages[:mobile_number]).to eq ['Please enter valid UK mobile phone number']
+    end
+
+    it 'Requires confirmation for change' do
+      @test_user.mobile_number = '+447345678901'
+      @test_user.mobile_number_confirmation = ''
+      expect(@test_user).to_not be_valid
+      expect(@test_user.errors.messages[:mobile_number_confirmation]).to eq ['Mobile phone numbers do not match']
+      @test_user.mobile_number_confirmation = '+447345678901'
+      expect(@test_user).to be_valid
     end
   end
 

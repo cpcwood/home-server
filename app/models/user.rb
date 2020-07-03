@@ -21,7 +21,8 @@ class User < ApplicationRecord
 
   validates :mobile_number,
             uniqueness: true,
-            format: { with: /(\+44|0)7\d{9}/, message: 'Please enter valid UK mobile phone number' }
+            format: { with: /(\+44|0)7\d{9}/, message: 'Please enter valid UK mobile phone number' },
+            confirmation: { message: 'Mobile phone numbers do not match' }
 
   def send_password_reset_email!
     generate_hashed_token
