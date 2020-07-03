@@ -4,8 +4,10 @@ Coveralls.wear!('rails')
 require 'simplecov'
 require 'simplecov-console'
 require 'rails_helper'
+require 'capybara'
 require 'webdrivers'
 require 'sidekiq/testing'
+require 'database_cleaner/active_record'
 
 Capybara.default_driver = :rack_test
 Capybara.javascript_driver = :selenium_chrome_headless
@@ -26,16 +28,29 @@ WebMock.disable_net_connect!(
 )
 
 RSpec.configure do |config|
+  config.use_transactional_fixtures = false
+
   config.before(:suite) do
     `bin/webpack`
+    DatabaseCleaner.clean_with(:truncation)
   end
 
   config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, type: :feature) do
+    driver_shares_db_connection_with_specs = Capybara.current_driver == :rack_test
+    DatabaseCleaner.strategy = :truncation unless driver_shares_db_connection_with_specs
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
     @test_user = User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1', mobile_number: '+447123456789')
   end
 
-  config.after(:each) do
-    User.destroy_all
+  config.append_after(:each) do
+    DatabaseCleaner.clean
   end
 
   config.expect_with :rspec do |expectations|
