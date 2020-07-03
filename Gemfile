@@ -29,19 +29,9 @@ gem 'sidekiq', '~> 6.0.7'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  # Testing backend with RSpec
-  gem 'rspec-rails', '~> 4.0'
-  gem 'rails-controller-testing'
-  # Coverage with simplecov
-  gem 'simplecov', '~> 0.16.1', require: false
-  gem 'simplecov-console', '~> 0.7.2', require: false
-  # Coverage badge with coveralls
-  gem 'coveralls', '~> 0.8.23', require: false
   # Code policing with rubocop
   gem 'rubocop-rails', '~> 2.5.2', require: false
   gem 'rubocop-performance', '~> 1.5.2', require: false
-  # Mock HTTP Requests
-  gem 'webmock', '~> 3.8.3', require: false
 end
 
 group :development do
@@ -54,8 +44,20 @@ group :development do
 end
 
 group :test do
+  # Testing backend with RSpec
+  gem 'rspec-rails', '~> 4.0', require: false
+  gem 'rails-controller-testing'
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
+  gem 'capybara', '>= 2.15', require: false
   # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers', '~> 4.3'
+  gem 'webdrivers', '~> 4.3', require: false
+  # Coverage with simplecov
+  gem 'simplecov', '~> 0.16.1', require: false
+  gem 'simplecov-console', '~> 0.7.2', require: false
+  # Coverage badge with coveralls
+  gem 'coveralls', '~> 0.8.23', require: false
+  # Mock HTTP Requests
+  gem 'webmock', '~> 3.8.3', require: false
+  # Clean up the messy database during tests
+  gem 'database_cleaner-active_record', '>= 1.8.0', require: false
 end
