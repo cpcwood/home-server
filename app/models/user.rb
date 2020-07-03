@@ -20,8 +20,8 @@ class User < ApplicationRecord
             confirmation: { message: 'Emails do not match' }
 
   validates :mobile_number,
-            uniqueness: true
-
+            uniqueness: true,
+            format: { with: /(\+44|0)7\d{9}/, message: 'Please enter valid UK mobile phone number' }
 
   def send_password_reset_email!
     generate_hashed_token
