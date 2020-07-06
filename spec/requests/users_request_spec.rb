@@ -3,10 +3,9 @@ require 'helpers/session_helper'
 
 RSpec.describe 'Users', type: :request do
   describe 'PUT /user.id #update' do
-
     before(:each) do
-      @blank_username_params = {username: '', username_confirmation: ''}
-      @blank_email_params = {email: '', email_confirmation: ''}
+      @blank_username_params = { username: '', username_confirmation: '' }
+      @blank_email_params = { email: '', email_confirmation: '' }
       @default_current_password_params = { password: @test_user_password }
     end
 
@@ -17,14 +16,14 @@ RSpec.describe 'Users', type: :request do
 
     it 'Original password must be present to update section' do
       login
-      put "/users.#{@test_user.id}", params: { 
-        username: { 
-          username: 'new_username', 
-          username_confirmation: 'new_username' 
-        }, 
+      put "/users.#{@test_user.id}", params: {
+        username: {
+          username: 'new_username',
+          username_confirmation: 'new_username'
+        },
         email: @blank_email_params,
-        current_password: { 
-          password: '' 
+        current_password: {
+          password: ''
         }
       }
       follow_redirect!
@@ -34,9 +33,9 @@ RSpec.describe 'Users', type: :request do
     it 'Username can be updated' do
       login
       put "/users.#{@test_user.id}", params: {
-        username: { 
+        username: {
           username: 'new_username',
-          username_confirmation: 'new_username' 
+          username_confirmation: 'new_username'
         },
         email: @blank_email_params,
         current_password: @default_current_password_params
@@ -52,9 +51,9 @@ RSpec.describe 'Users', type: :request do
       login
       put "/users.#{@test_user.id}", params: {
         username: {
-          username: '', 
-          username_confirmation: '' 
-        }, 
+          username: '',
+          username_confirmation: ''
+        },
         email: @blank_email_params,
         current_password: @default_current_password_params
       }
@@ -64,13 +63,12 @@ RSpec.describe 'Users', type: :request do
     end
 
     it 'Username update validation errors get displayed' do
-      other_params = {current_password: { password: @test_user_password }, email: {}}
       login
-      put "/users.#{@test_user.id}", params: { 
-        username: { 
-          username: 'new_username', 
-          username_confirmation: '' 
-        }, 
+      put "/users.#{@test_user.id}", params: {
+        username: {
+          username: 'new_username',
+          username_confirmation: ''
+        },
         email: @blank_email_params,
         current_password: @default_current_password_params
       }
@@ -80,11 +78,11 @@ RSpec.describe 'Users', type: :request do
 
     it 'Email can be updated' do
       login
-      put "/users.#{@test_user.id}", params: { 
-        email: { 
-          email: 'new@example.com', 
-          email_confirmation: 'new@example.com' 
-        }, 
+      put "/users.#{@test_user.id}", params: {
+        email: {
+          email: 'new@example.com',
+          email_confirmation: 'new@example.com'
+        },
         username: @blank_username_params,
         current_password: @default_current_password_params
       }
