@@ -1,5 +1,5 @@
 // Modules
-@use '../base/globals';
+@use '../base/globals' as *;
 @use '../base/functions';
 @use '../base/mixins' as *;
 @use '../base/typography';
@@ -102,7 +102,7 @@
 .input_submit {
   box-sizing: border-box;
   width: 100%;
-  padding: 20px 0px;
+  padding: 20px 40px;
   font-size: 25px;
   font-weight: 250;
   border: none;
@@ -148,5 +148,91 @@
     &.right {
       float: right;
     }
+  }
+}
+
+// Embedded Forms
+
+.embedded_form_entry_container {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-content: flex-start;
+  justify-content: flex-start;
+  height: max-content;
+  margin: 10px 0px;
+
+  @include respond-to(tablet) {
+    flex-direction: row;
+    align-items: center;
+  }
+  @include respond-to(desktop) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.embedded_label {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  margin: 10px 0;
+  padding: 0 0;
+  height: inherit;
+  font-size: inherit;
+
+  @include respond-to(tablet) {
+    width: 33%;
+    margin: 0 0;
+    padding: 0 2% 0 0;
+  }
+  @include respond-to(desktop) {
+    width: 33%;
+    margin: 0 0;
+    padding: 0 2% 0 0;
+  }
+}
+
+.embedded_input_box {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  margin: 0 0;
+  padding: 3px 10px;
+  height: inherit;
+  border: $box_border_color 1px solid;
+  border-radius: 0;
+  background-color: $background-color;
+  font-size: inherit;
+
+  @include respond-to(tablet) {
+    width: 65%;
+  }
+  @include respond-to(desktop) {
+    width: 65%;
+  }
+}
+
+.form_submit_container {
+  box-sizing: border-box;
+  position: relative;
+  flex: 1 1 auto;
+  width: fit-content;
+  max-width: 300px;
+  input {
+    font-size: inherit;
+  }
+}
+
+.embedded_input_seperator {
+  margin: 20px 0;
+  @include respond-to(tablet) {
+    margin: 30px 0;
+  }
+  @include respond-to(desktop) {
+    margin: 30px 0;
   }
 }
