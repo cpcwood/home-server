@@ -24,4 +24,16 @@ feature 'Admin update details' do
     @test_user.reload
     expect(@test_user.email).to eq('new@example.com')
   end
+
+  scenario 'Admin can change password' do
+    login_feature
+    visit('admin/user-settings')
+    fill_in('password[password]', with: 'newpassword')
+    fill_in('password[password_confirmation]', with: 'newpassword')
+    fill_in('current_password[password]', with: @test_user_password)
+    click_button('Update details')
+    expect(page).to have_content('User updated!')
+    @test_user.reload
+    expect(@test_user.authenticate('newpassword')).to eq(@test_user)
+  end
 end

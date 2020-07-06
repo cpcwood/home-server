@@ -26,6 +26,15 @@
   </div>
   <div class='input_seperator embedded_input_seperator'></div>
   <div class="embedded_form_entry_container">
+    <%= label(:password, :password, 'Password:', class: 'input_label embedded_label') %>
+    <%= password_field(:password, :password, {class: 'input_box embedded_input_box', placeholder: 'new password'}) %>
+  </div>
+  <div class="embedded_form_entry_container">
+    <%= label(:password, :password_confirmation, 'Password confirmation:', class: 'input_label embedded_label') %>
+    <%= password_field(:password, :password_confirmation, class: 'input_box embedded_input_box', placeholder: 'password confirmation') %>
+  </div>
+  <div class='input_seperator embedded_input_seperator'></div>
+  <div class="embedded_form_entry_container">
     <%= label(:current_password, :password, 'Enter current password to confirm changes:', class: 'input_label embedded_label') %>
     <%= password_field(:current_password, :password, class: 'input_box embedded_input_box', placeholder: 'current password') %>
   </div>
