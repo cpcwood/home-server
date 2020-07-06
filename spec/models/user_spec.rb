@@ -8,18 +8,16 @@ RSpec.describe User, type: :model do
   describe 'Password validations' do
     it 'Rejects passwords less than 8 charaters' do
       @test_user.password = 'passwor'
-      @test_user.password_confirmation = 'passwor'
       expect(@test_user).to_not be_valid
       expect(@test_user.errors.messages[:password]).to eq ['The password must have at least 8 characters']
     end
 
     it 'Accepts passwords with 8 or more charaters' do
       @test_user.password = 'newpassw'
-      @test_user.password_confirmation = 'newpassw'
       expect(@test_user).to be_valid
     end
 
-    it 'Requires a password confirmation' do
+    it 'Requires a password confirmation if present' do
       @test_user.password = 'newpassw'
       @test_user.password_confirmation = ''
       expect(@test_user).to_not be_valid
@@ -31,32 +29,32 @@ RSpec.describe User, type: :model do
 
   describe 'Username validations' do
     it 'Rejects blank usernames' do
-      user = User.create(username: '', password: 'password', email: 'example@example.com', mobile_number: '+447234567890')
-      expect(user).to_not be_valid
+      @test_user.username = ''
+      expect(@test_user).to_not be_valid
     end
 
     it 'Rejects invalid username formats' do
-      user = User.create(username: ' example', password: 'password', email: 'example@example.com', mobile_number: '+447234567890')
-      expect(user).to_not be_valid
-      user = User.create(username: 'example ', password: 'password', email: 'example2@example.com', mobile_number: '+447234567891')
-      expect(user).to_not be_valid
-      user = User.create(username: 'e@xample', password: 'password', email: 'example3example.com', mobile_number: '+447234567892')
-      expect(user).to_not be_valid
+      @test_user.username = ' example'
+      expect(@test_user).to_not be_valid
+      @test_user.username = 'example '
+      expect(@test_user).to_not be_valid
+      @test_user.username = 'e@xample'
+      expect(@test_user).to_not be_valid
     end
 
     it 'Accepts valid username formats' do
-      user = User.create(username: 'e', password: 'password', email: 'example@example.com', mobile_number: '+447234567890')
-      expect(user).to be_valid
-      user = User.create(username: 'exa mple', password: 'password', email: 'example2@example.com', mobile_number: '+447234567891')
-      expect(user).to be_valid
-      user = User.create(username: 'exa-mple example', password: 'password', email: 'example3@example.com', mobile_number: '+447234567892')
-      expect(user).to be_valid
+      @test_user.username = 'e'
+      expect(@test_user).to be_valid
+      @test_user.username = 'exa mple'
+      expect(@test_user).to be_valid
+      @test_user.username = 'exa-mple example'
+      expect(@test_user).to be_valid
     end
 
     it 'Username must be unique' do
-      user = User.create(username: 'example', password: 'password', email: 'example@example.com', mobile_number: '+447234567890')
+      user = User.create(username: 'example', password: 'password', email: 'example@example.com')
       expect(user).to be_valid
-      user = User.create(username: 'example', password: 'password', email: 'example2@example.com', mobile_number: '+447234567891')
+      user = User.create(username: 'example', password: 'password', email: 'example2@example.com')
       expect(user).to_not be_valid
     end
 

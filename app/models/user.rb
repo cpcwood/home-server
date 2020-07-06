@@ -5,24 +5,28 @@ class User < ApplicationRecord
   validates :password,
             presence: true,
             length: { minimum: 8, too_short: 'The password must have at least 8 characters' },
-            confirmation: { message: 'Passwords do not match' }
+            confirmation: { message: 'Passwords do not match' },
+            if: lambda { new_record? || !password.nil? }
 
   validates :username,
             presence: true,
             uniqueness: true,
             format: { with: /\A[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*\z/, message: 'Only standard charaters and [ _-] are allowed' },
-            confirmation: { message: 'Usernames do not match' }
+            confirmation: { message: 'Usernames do not match' },
+            if: lambda { new_record? || !username.nil? }
 
   validates :email,
             presence: true,
             uniqueness: true,
             format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Email must be valid format' },
-            confirmation: { message: 'Emails do not match' }
+            confirmation: { message: 'Emails do not match' },
+            if: lambda { new_record? || !email.nil? }
 
   validates :mobile_number,
             uniqueness: true,
             format: { with: /(\+44|0)7\d{9}/, message: 'Please enter valid UK mobile phone number' },
-            confirmation: { message: 'Mobile phone numbers do not match' }
+            confirmation: { message: 'Mobile phone numbers do not match' },
+            if: lambda { !mobile_number.nil? }
 
   def send_password_reset_email!
     generate_hashed_token
