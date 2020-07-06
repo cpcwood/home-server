@@ -1,10 +1,16 @@
 class UsersController < ApplicationController
+  before_action :check_logged_in
+
   def update
     return redirect_to(admin_user_settings_path, alert: @user.errors.values.flatten.last) unless update_username
     redirect_to(admin_user_settings_path, notice: 'User updated')
   end
 
   private
+
+  def check_logged_in
+    render(json: {}, status: :unauthorized) unless @user
+  end
 
   def update_section?(permitted_params)
     permitted_params.values.any?(&:present?)

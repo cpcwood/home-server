@@ -3,6 +3,11 @@ require 'helpers/session_helper'
 
 RSpec.describe 'Users', type: :request do
   describe 'PUT /user.id #update' do
+    it 'Redirects to homepage if user not logged in' do
+      put "/users.#{@test_user.id}"
+      expect(response.status).to eq(401)
+    end
+
     it 'Username can be update' do
       login
       put "/users.#{@test_user.id}", params: { username: { username: 'new_username', username_confirmation: 'new_username' }}
