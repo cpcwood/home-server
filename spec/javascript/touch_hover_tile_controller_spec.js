@@ -10,7 +10,7 @@ describe('touch_hover_tile_controller', () => {
   beforeAll(done => {
     const application = Application.start()
     application.register('touch-hover-tile', touchHoverTileController)
-    fs.readFile('app/views/homepage/index.html.erb', 'utf8', (err, data) => {
+    fs.readFile('app/views/homepages/index.html.erb', 'utf8', (err, data) => {
       if (err) throw new Error(err)
       applicationHTML = data
       done()
