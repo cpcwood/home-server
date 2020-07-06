@@ -19,7 +19,7 @@ RSpec.describe 'Users', type: :request do
       login
       put "/users.#{@test_user.id}", params: { username: { username: 'new_username', username_confirmation: 'new_username' }, current_password: { password: @test_user_password }}
       follow_redirect!
-      expect(response.body).to include('User updated')
+      expect(response.body).to include('User updated!')
       @test_user.reload
       expect(@test_user.username).to eq('new_username')
     end

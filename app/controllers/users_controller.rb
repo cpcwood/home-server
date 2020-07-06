@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def update
     return redirect_to(admin_user_settings_path, alert: 'Enter current password to update details') unless verify_current_password
     return redirect_to(admin_user_settings_path, alert: @user.errors.values.flatten.last) unless update_username
-    redirect_to(admin_user_settings_path, notice: 'User updated')
+    redirect_to(admin_user_settings_path, notice: 'User updated!')
   end
 
   private
