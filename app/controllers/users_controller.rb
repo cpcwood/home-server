@@ -1,21 +1,17 @@
 class UsersController < ApplicationController
   def update
-    update_username
+    return redirect_to(admin_user_settings_path, alert: @user.errors.values.flatten.last) unless update_username
     redirect_to(admin_user_settings_path, notice: 'User updated')
   end
 
   private
 
   def update_section?(permitted_params)
-    permitted_params.values.all?{|v| !v.blank?}
+    permitted_params.values.any?(&:present?)
   end
 
   def update_username
-    if update_section?(username_update_params)
-      @user.update(username_update_params) 
-    else
-      true
-    end
+    update_section?(username_update_params) ? @user.update(username_update_params) : true
   end
 
   def username_update_params

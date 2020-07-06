@@ -20,5 +20,12 @@ RSpec.describe 'Users', type: :request do
       @test_user.reload
       expect(@test_user.username).to eq(original_username)
     end
+
+    it 'Username update validation errors get displayed' do
+      login
+      put "/users.#{@test_user.id}", params: { username: { username: 'new_username', username_confirmation: '' }}
+      follow_redirect!
+      expect(response.body).to include('Usernames do not match')
+    end
   end
 end
