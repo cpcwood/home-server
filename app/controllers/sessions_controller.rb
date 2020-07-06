@@ -2,7 +2,7 @@ require 'faraday'
 require 'json'
 require 'twilio-ruby'
 
-class SessionController < ApplicationController
+class SessionsController < ApplicationController
   before_action :already_logged_in
   skip_before_action :already_logged_in, only: [:destroy]
 

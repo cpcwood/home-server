@@ -1,6 +1,6 @@
 require 'faraday'
 
-class PasswordController < ApplicationController
+class PasswordsController < ApplicationController
   before_action :already_logged_in
 
   def forgotten_password; end
