@@ -35,6 +35,15 @@
   </div>
   <div class='input_seperator embedded_input_seperator'></div>
   <div class="embedded_form_entry_container">
+    <%= label(:mobile_number, :mobile_number, 'UK mobile number:', class: 'input_label embedded_label') %>
+    <%= password_field(:mobile_number, :mobile_number, {class: 'input_box embedded_input_box', placeholder: 'new mobile number'}) %>
+  </div>
+  <div class="embedded_form_entry_container">
+    <%= label(:mobile_number, :mobile_numberconfirmation, 'UK mobile number confirmation:', class: 'input_label embedded_label') %>
+    <%= password_field(:mobile_number, :mobile_number_confirmation, class: 'input_box embedded_input_box', placeholder: 'mobile number confirmation') %>
+  </div>
+  <div class='input_seperator embedded_input_seperator'></div>
+  <div class="embedded_form_entry_container">
     <%= label(:current_password, :password, 'Enter current password to confirm changes:', class: 'input_label embedded_label') %>
     <%= password_field(:current_password, :password, class: 'input_box embedded_input_box', placeholder: 'current password') %>
   </div>

@@ -133,6 +133,15 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'Before_save: mobile_number' do
+    it 'Adds area code to standard UK mobile number' do
+      @test_user.mobile_number = '07345678902'
+      @test_user.mobile_number_confirmation = '07345678902'
+      @test_user.save
+      expect(@test_user.mobile_number).to eq('+447345678902')
+    end
+  end
+
   describe '#send_password_reset_email!' do
     it 'Adds a password reset token to user' do
       allow(SecureRandom).to receive(:urlsafe_base64).and_return('testtoken')

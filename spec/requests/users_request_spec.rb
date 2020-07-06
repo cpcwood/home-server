@@ -144,5 +144,23 @@ RSpec.describe 'Users', type: :request do
       follow_redirect!
       expect(response.body).to include('Passwords do not match')
     end
+
+    it 'Mobile number can be updated' do
+      login
+      put "/users.#{@test_user.id}", params: {
+        mobile_number: {
+          mobile_number: '07123456789',
+          mobile_number_confirmation: '07123456789'
+        },
+        password: @blank_password_params,
+        email: @blank_email_params,
+        username: @blank_username_params,
+        current_password: @default_current_password_params
+      }
+      follow_redirect!
+      expect(response.body).to include('User updated!')
+      @test_user.reload
+      expect(@test_user.mobile_number).to eq('+447123456789')
+    end
   end
 end

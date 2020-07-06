@@ -36,4 +36,16 @@ feature 'Admin update details' do
     @test_user.reload
     expect(@test_user.authenticate('newpassword')).to eq(@test_user)
   end
+
+  scenario 'Admin can change mobile number' do
+    login_feature
+    visit('admin/user-settings')
+    fill_in('mobile_number[mobile_number]', with: '07123456789')
+    fill_in('mobile_number[mobile_number_confirmation]', with: '07123456789')
+    fill_in('current_password[password]', with: @test_user_password)
+    click_button('Update details')
+    expect(page).to have_content('User updated!')
+    @test_user.reload
+    expect(@test_user.mobile_number).to eq('+447123456789')
+  end
 end
