@@ -133,7 +133,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'Before_save: mobile_number' do
+  describe 'Before_validation: mobile_number' do
     it 'Adds area code to standard UK mobile number' do
       @test_user.mobile_number = '07345678902'
       @test_user.mobile_number_confirmation = '07345678902'

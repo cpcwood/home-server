@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_secure_password validations: false
   after_initialize :add_defaults
-  before_save :convert_mobile_number, if: :mobile_number_changed?
+  before_validation :convert_mobile_number, if: :mobile_number_changed?
 
   validates :password,
             presence: true,
@@ -11,20 +11,20 @@ class User < ApplicationRecord
 
   validates :username,
             presence: true,
-            uniqueness: true,
+            uniqueness: { message: 'Username already taken' },
             format: { with: /\A[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*\z/, message: 'Only standard charaters and [ _-] are allowed' },
             confirmation: { message: 'Usernames do not match' },
             if: -> { new_record? || !username.nil? }
 
   validates :email,
             presence: true,
-            uniqueness: true,
+            uniqueness: { message: 'Email address already taken' },
             format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Email must be valid format' },
             confirmation: { message: 'Emails do not match' },
             if: -> { new_record? || !email.nil? }
 
   validates :mobile_number,
-            uniqueness: true,
+            uniqueness: { message: 'Mobile phone numbers already taken' },
             format: { with: /\A(\+44|0)7\d{9}\z/, message: 'Please enter valid UK mobile phone number' },
             confirmation: { message: 'Mobile phone numbers do not match' },
             if: -> { !mobile_number.nil? }
@@ -51,6 +51,7 @@ class User < ApplicationRecord
 
   def convert_mobile_number
     self.mobile_number = mobile_number.sub(/\A(0)(7\d{9})\z/, '+44\2')
+    self.mobile_number_confirmation = mobile_number_confirmation.sub(/\A(0)(7\d{9})\z/, '+44\2') if mobile_number_confirmation
   end
 
   private

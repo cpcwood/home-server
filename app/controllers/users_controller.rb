@@ -3,11 +3,13 @@ class UsersController < ApplicationController
 
   def update
     return redirect_to(admin_user_settings_path, alert: 'Enter current password to update details') unless verify_current_password
+    @notices = []
+    @alerts = []
     update_section(username_update_params, 'Username')
     update_section(email_update_params, 'Email address')
     update_section(password_update_params, 'Password')
     update_section(mobile_number_update_params, 'Mobile number')
-    redirect_to(admin_user_settings_path)
+    redirect_to(admin_user_settings_path, notice: @notices, alert: @alerts)
   end
 
   private
@@ -30,7 +32,12 @@ class UsersController < ApplicationController
   end
 
   def update_message(result, section_name)
-    result ? flash.notice = "#{section_name} updated!" : flash.alert = @user.errors.values.flatten.last
+    if result
+      @notices.push("#{section_name} updated!")
+    else
+      @alerts.push(@user.errors.values.flatten.last)
+      @user.reload
+    end
   end
 
   def current_password_params

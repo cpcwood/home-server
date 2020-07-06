@@ -4,7 +4,13 @@
 <%= form_with(model: User.new,  :url => users_path(@user), method: "put") do |f| %>
   <div class="system_messages">
     <% flash.each do |type, msg| %>
-      <div class='<%= type %>'><%= msg %></div><br>
+      <% if msg.kind_of?(Array) %>
+        <% msg.each do |i| %>
+          <div class='<%= type %>'><%= i %></div><br>
+        <% end %>
+      <% else %>
+        <div class='<%= type %>'><%= msg %></div><br>
+      <% end %>
     <% end %>
   </div>
   <div class="embedded_form_entry_container">
@@ -36,11 +42,11 @@
   <div class='input_seperator embedded_input_seperator'></div>
   <div class="embedded_form_entry_container">
     <%= label(:mobile_number, :mobile_number, 'UK mobile number:', class: 'input_label embedded_label') %>
-    <%= password_field(:mobile_number, :mobile_number, {class: 'input_box embedded_input_box', placeholder: 'new mobile number'}) %>
+    <%= text_field(:mobile_number, :mobile_number, {class: 'input_box embedded_input_box', placeholder: 'new mobile number'}) %>
   </div>
   <div class="embedded_form_entry_container">
     <%= label(:mobile_number, :mobile_numberconfirmation, 'UK mobile number confirmation:', class: 'input_label embedded_label') %>
-    <%= password_field(:mobile_number, :mobile_number_confirmation, class: 'input_box embedded_input_box', placeholder: 'mobile number confirmation') %>
+    <%= text_field(:mobile_number, :mobile_number_confirmation, class: 'input_box embedded_input_box', placeholder: 'mobile number confirmation') %>
   </div>
   <div class='input_seperator embedded_input_seperator'></div>
   <div class="embedded_form_entry_container">
