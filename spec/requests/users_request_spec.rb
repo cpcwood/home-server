@@ -47,7 +47,7 @@ RSpec.describe 'Users', type: :request do
         current_password: @default_current_password_params
       }
       follow_redirect!
-      expect(response.body).to include('User updated!')
+      expect(response.body).to include('Username updated!')
       @test_user.reload
       expect(@test_user.username).to eq('new_username')
     end
@@ -99,7 +99,7 @@ RSpec.describe 'Users', type: :request do
         current_password: @default_current_password_params
       }
       follow_redirect!
-      expect(response.body).to include('User updated!')
+      expect(response.body).to include('Email address updated!')
       @test_user.reload
       expect(@test_user.email).to eq('new@example.com')
     end
@@ -133,7 +133,7 @@ RSpec.describe 'Users', type: :request do
         current_password: @default_current_password_params
       }
       follow_redirect!
-      expect(response.body).to include('User updated!')
+      expect(response.body).to include('Password updated!')
       @test_user.reload
       expect(@test_user.authenticate('newpassword')).to eq(@test_user)
     end
@@ -167,7 +167,7 @@ RSpec.describe 'Users', type: :request do
         current_password: @default_current_password_params
       }
       follow_redirect!
-      expect(response.body).to include('User updated!')
+      expect(response.body).to include('Mobile number updated!')
       @test_user.reload
       expect(@test_user.mobile_number).to eq('+447123456789')
     end
