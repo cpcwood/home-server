@@ -21,4 +21,6 @@ Rails.application.routes.draw do
   get '/admin/user-settings', to: 'admin#user_settings'
 
   get '/say-hello', to: 'homepage#index'
+
+  resource :users, only: [:update]
 end
