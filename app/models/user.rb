@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_secure_password validations: false
   after_initialize :add_defaults
+  before_save :convert_mobile_number, :if => :mobile_number_changed?
 
   validates :password,
             presence: true,
@@ -24,7 +25,7 @@ class User < ApplicationRecord
 
   validates :mobile_number,
             uniqueness: true,
-            format: { with: /(\+44|0)7\d{9}/, message: 'Please enter valid UK mobile phone number' },
+            format: { with: /\A(\+44|0)7\d{9}\z/, message: 'Please enter valid UK mobile phone number' },
             confirmation: { message: 'Mobile phone numbers do not match' },
             if: -> { !mobile_number.nil? }
 
@@ -46,6 +47,10 @@ class User < ApplicationRecord
 
   def send_password_updated_email!
     PasswordMailer.with(user: self).password_updated_email.deliver_now
+  end
+
+  def convert_mobile_number
+    self.mobile_number = self.mobile_number.sub(/\A(0)(7\d{9})\z/, '+44\2')
   end
 
   private
