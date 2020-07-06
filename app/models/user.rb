@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_secure_password validations: false
   after_initialize :add_defaults
-  before_save :convert_mobile_number, :if => :mobile_number_changed?
+  before_save :convert_mobile_number, if: :mobile_number_changed?
 
   validates :password,
             presence: true,
@@ -50,7 +50,7 @@ class User < ApplicationRecord
   end
 
   def convert_mobile_number
-    self.mobile_number = self.mobile_number.sub(/\A(0)(7\d{9})\z/, '+44\2')
+    self.mobile_number = mobile_number.sub(/\A(0)(7\d{9})\z/, '+44\2')
   end
 
   private

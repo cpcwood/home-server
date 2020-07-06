@@ -7,6 +7,7 @@ RSpec.describe 'Users', type: :request do
       @blank_username_params = { username: '', username_confirmation: '' }
       @blank_email_params = { email: '', email_confirmation: '' }
       @blank_password_params = { password: '', password_confirmation: '' }
+      @blank_mobile_number_params = { mobile_number: '', mobile_number_confirmation: '' }
       @default_current_password_params = { password: @test_user_password }
     end
 
@@ -24,6 +25,7 @@ RSpec.describe 'Users', type: :request do
         },
         email: @blank_email_params,
         password: @blank_password_params,
+        mobile_number: @blank_mobile_number_params,
         current_password: {
           password: ''
         }
@@ -41,6 +43,7 @@ RSpec.describe 'Users', type: :request do
         },
         email: @blank_email_params,
         password: @blank_password_params,
+        mobile_number: @blank_mobile_number_params,
         current_password: @default_current_password_params
       }
       follow_redirect!
@@ -59,6 +62,7 @@ RSpec.describe 'Users', type: :request do
         },
         email: @blank_email_params,
         password: @blank_password_params,
+        mobile_number: @blank_mobile_number_params,
         current_password: @default_current_password_params
       }
       expect(response).to redirect_to(admin_user_settings_path)
@@ -75,6 +79,7 @@ RSpec.describe 'Users', type: :request do
         },
         email: @blank_email_params,
         password: @blank_password_params,
+        mobile_number: @blank_mobile_number_params,
         current_password: @default_current_password_params
       }
       follow_redirect!
@@ -90,6 +95,7 @@ RSpec.describe 'Users', type: :request do
         },
         username: @blank_username_params,
         password: @blank_password_params,
+        mobile_number: @blank_mobile_number_params,
         current_password: @default_current_password_params
       }
       follow_redirect!
@@ -107,6 +113,7 @@ RSpec.describe 'Users', type: :request do
         },
         username: @blank_username_params,
         password: @blank_password_params,
+        mobile_number: @blank_mobile_number_params,
         current_password: @default_current_password_params
       }
       follow_redirect!
@@ -122,6 +129,7 @@ RSpec.describe 'Users', type: :request do
         },
         email: @blank_email_params,
         username: @blank_username_params,
+        mobile_number: @blank_mobile_number_params,
         current_password: @default_current_password_params
       }
       follow_redirect!
@@ -139,6 +147,7 @@ RSpec.describe 'Users', type: :request do
         },
         email: @blank_email_params,
         username: @blank_username_params,
+        mobile_number: @blank_mobile_number_params,
         current_password: @default_current_password_params
       }
       follow_redirect!
