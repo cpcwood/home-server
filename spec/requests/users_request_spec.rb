@@ -91,5 +91,19 @@ RSpec.describe 'Users', type: :request do
       @test_user.reload
       expect(@test_user.email).to eq('new@example.com')
     end
+
+    it 'Email update validation errors get displayed' do
+      login
+      put "/users.#{@test_user.id}", params: {
+        email: {
+          email: 'example.com',
+          email_confirmation: 'example.com'
+        },
+        username: @blank_username_params,
+        current_password: @default_current_password_params
+      }
+      follow_redirect!
+      expect(response.body).to include('Email must be valid format')
+    end
   end
 end
