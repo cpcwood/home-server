@@ -6,6 +6,7 @@ RSpec.describe 'Users', type: :request do
     before(:each) do
       @blank_username_params = { username: '', username_confirmation: '' }
       @blank_email_params = { email: '', email_confirmation: '' }
+      @blank_password_params = { password: '', password_confirmation: '' }
       @default_current_password_params = { password: @test_user_password }
     end
 
@@ -22,6 +23,7 @@ RSpec.describe 'Users', type: :request do
           username_confirmation: 'new_username'
         },
         email: @blank_email_params,
+        password: @blank_password_params,
         current_password: {
           password: ''
         }
@@ -38,6 +40,7 @@ RSpec.describe 'Users', type: :request do
           username_confirmation: 'new_username'
         },
         email: @blank_email_params,
+        password: @blank_password_params,
         current_password: @default_current_password_params
       }
       follow_redirect!
@@ -55,6 +58,7 @@ RSpec.describe 'Users', type: :request do
           username_confirmation: ''
         },
         email: @blank_email_params,
+        password: @blank_password_params,
         current_password: @default_current_password_params
       }
       expect(response).to redirect_to(admin_user_settings_path)
@@ -70,6 +74,7 @@ RSpec.describe 'Users', type: :request do
           username_confirmation: ''
         },
         email: @blank_email_params,
+        password: @blank_password_params,
         current_password: @default_current_password_params
       }
       follow_redirect!
@@ -84,6 +89,7 @@ RSpec.describe 'Users', type: :request do
           email_confirmation: 'new@example.com'
         },
         username: @blank_username_params,
+        password: @blank_password_params,
         current_password: @default_current_password_params
       }
       follow_redirect!
@@ -100,10 +106,43 @@ RSpec.describe 'Users', type: :request do
           email_confirmation: 'example.com'
         },
         username: @blank_username_params,
+        password: @blank_password_params,
         current_password: @default_current_password_params
       }
       follow_redirect!
       expect(response.body).to include('Email must be valid format')
+    end
+
+    it 'Password can be updated' do
+      login
+      put "/users.#{@test_user.id}", params: {
+        password: {
+          password: 'newpassword',
+          password_confirmation: 'newpassword'
+        },
+        email: @blank_email_params,
+        username: @blank_username_params,
+        current_password: @default_current_password_params
+      }
+      follow_redirect!
+      expect(response.body).to include('User updated!')
+      @test_user.reload
+      expect(@test_user.authenticate('newpassword')).to eq(@test_user)
+    end
+
+    it 'Password update validation errors get displayed' do
+      login
+      put "/users.#{@test_user.id}", params: {
+        password: {
+          password: 'badpassword',
+          password_confirmation: 'newpassword'
+        },
+        email: @blank_email_params,
+        username: @blank_username_params,
+        current_password: @default_current_password_params
+      }
+      follow_redirect!
+      expect(response.body).to include('Passwords do not match')
     end
   end
 end

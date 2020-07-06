@@ -5,6 +5,7 @@ class UsersController < ApplicationController
     return redirect_to(admin_user_settings_path, alert: 'Enter current password to update details') unless verify_current_password
     return redirect_to(admin_user_settings_path, alert: @user.errors.values.flatten.last) unless update_username
     return redirect_to(admin_user_settings_path, alert: @user.errors.values.flatten.last) unless update_email
+    return redirect_to(admin_user_settings_path, alert: @user.errors.values.flatten.last) unless update_password
     redirect_to(admin_user_settings_path, notice: 'User updated!')
   end
 
@@ -41,5 +42,13 @@ class UsersController < ApplicationController
 
   def email_update_params
     params.require(:email).permit(:email, :email_confirmation)
+  end
+
+  def update_password
+    update_section?(password_update_params) ? @user.update(password_update_params) : true
+  end
+
+  def password_update_params
+    params.require(:password).permit(:password, :password_confirmation)
   end
 end
