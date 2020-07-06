@@ -6,6 +6,7 @@ class UsersController < ApplicationController
     return redirect_to(admin_user_settings_path, alert: @user.errors.values.flatten.last) unless update_username
     return redirect_to(admin_user_settings_path, alert: @user.errors.values.flatten.last) unless update_email
     return redirect_to(admin_user_settings_path, alert: @user.errors.values.flatten.last) unless update_password
+    return redirect_to(admin_user_settings_path, alert: @user.errors.values.flatten.last) unless update_mobile_number
     redirect_to(admin_user_settings_path, notice: 'User updated!')
   end
 
@@ -50,5 +51,13 @@ class UsersController < ApplicationController
 
   def password_update_params
     params.require(:password).permit(:password, :password_confirmation)
+  end
+
+  def update_mobile_number
+    update_section?(mobile_number_update_params) ? @user.update(mobile_number_update_params) : true
+  end
+
+  def mobile_number_update_params
+    params.require(:mobile_number).permit(:mobile_number, :mobile_number_confirmation)
   end
 end
