@@ -9,8 +9,8 @@ def login_feature
   allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
   visit('/')
   page.find(:css, '#login-button').click
-  fill_in('user', with: 'admin')
-  fill_in('password', with: 'Securepass1')
+  fill_in('user', with: @test_user.username)
+  fill_in('password', with: @test_user_password)
   click_button('Login')
   fill_in('auth_code', with: '123456')
   click_button('Login')

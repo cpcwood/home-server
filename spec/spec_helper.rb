@@ -46,7 +46,8 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.start
-    @test_user = User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1', mobile_number: '+447123456789')
+    @test_user_password = 'Securepass1'
+    @test_user = User.create(username: 'admin', email: 'admin@example.com', password: @test_user_password, mobile_number: '+447123456789')
   end
 
   config.append_after(:each) do
