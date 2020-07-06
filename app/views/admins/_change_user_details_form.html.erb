@@ -17,6 +17,15 @@
   </div>
   <div class='input_seperator embedded_input_seperator'></div>
   <div class="embedded_form_entry_container">
+    <%= label(:email, :email, 'Email:', class: 'input_label embedded_label') %>
+    <%= text_field(:email, :email, {class: 'input_box embedded_input_box', placeholder: 'new email'}) %>
+  </div>
+  <div class="embedded_form_entry_container">
+    <%= label(:email, :email_confirmation, 'Email confirmation:', class: 'input_label embedded_label') %>
+    <%= text_field(:email, :email_confirmation, class: 'input_box embedded_input_box', placeholder: 'email confirmation') %>
+  </div>
+  <div class='input_seperator embedded_input_seperator'></div>
+  <div class="embedded_form_entry_container">
     <%= label(:current_password, :password, 'Enter current password to confirm changes:', class: 'input_label embedded_label') %>
     <%= password_field(:current_password, :password, class: 'input_box embedded_input_box', placeholder: 'current password') %>
   </div>
