@@ -6,7 +6,7 @@ feature 'Admin update site settings' do
     visit('admin/site_settings')
     fill_in('site_setting[name]', with: 'new_site_name')
     click_button('Update site settings')
-    expect(page).to have_content('Name updated!')
+    expect(page).to have_content('Site name updated!')
     visit('/')
     expect(page).to have_content('new_site_name')
   end
