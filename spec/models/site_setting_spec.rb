@@ -30,4 +30,16 @@ RSpec.describe SiteSetting, type: :model do
       expect(site_setting.cover_image.attached?).to eq(true)
     end
   end
+
+  describe '#update_required?' do
+    it 'No update required' do
+      original_name = site_setting.name
+      expect(site_setting.update_required?('name', original_name)).to eq(false)
+    end
+
+    it 'Update required' do
+      new_name = 'new_name'
+      expect(site_setting.update_required?('name', new_name)).to eq(true)
+    end
+  end
 end
