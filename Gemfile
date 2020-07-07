@@ -26,6 +26,11 @@ gem 'twilio-ruby', '~> 5.34', require: false
 # Action Mailer and Action Job Backend - Sidekiq (Requires redis and start upon server launch)
 gem 'sidekiq', '~> 6.0.7'
 
+group :production do
+  # AWS S3 for production storage
+  gem 'aws-sdk-s3', require: 'false'
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
