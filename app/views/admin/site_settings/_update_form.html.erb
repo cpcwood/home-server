@@ -6,7 +6,12 @@
 
   <div class="embedded_form_entry_container">
     <%= label(:name, 'Site name:', class: 'input_label embedded_label') %>
-    <%= f.text_field(:name, {class: 'input_box embedded_input_box', placeholder: 'new site name'} ) %>
+    <%= f.text_field(:name, class: 'input_box embedded_input_box', placeholder: 'new site name') %>
+  </div>
+
+   <div class="embedded_form_entry_container">
+    <%= label(:cover_image, 'Cover image:', class: 'input_label embedded_label') %>
+    <%= f.file_field(:cover_image, class: 'input_box embedded_file_field', accept: 'image/png,image/jpeg') %>
   </div>
 
   <br>

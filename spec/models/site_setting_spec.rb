@@ -23,4 +23,11 @@ RSpec.describe SiteSetting, type: :model do
       expect(site_setting).to be_valid
     end
   end
+
+  describe 'cover_image upload' do
+    it 'Upload sucessful' do
+      site_setting.cover_image.attach(io: File.open(Rails.root.join('spec/files/sample_image_low.jpg')), filename: 'cover_image.jpg', content_type: 'image/jpg')
+      expect(site_setting.cover_image.attached?).to eq(true)
+    end
+  end
 end

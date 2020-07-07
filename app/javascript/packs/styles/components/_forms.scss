@@ -216,6 +216,25 @@
   }
 }
 
+.embedded_file_field {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  margin: 0 0;
+  padding: 3px 0px;
+  height: inherit;
+  border-radius: 0;
+  font-size: inherit;
+
+  @include respond-to(tablet) {
+    width: 65%;
+  }
+  @include respond-to(desktop) {
+    width: 65%;
+  }
+}
+
 .form_submit_container {
   box-sizing: border-box;
   position: relative;
