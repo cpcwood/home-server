@@ -1,7 +1,5 @@
 module Admin
   class SiteSettingsController < ApplicationController
-    before_action :assign_site_setings
-
     def update
       @notices = []
       @alerts = []
@@ -10,10 +8,6 @@ module Admin
     end
 
     private
-
-    def assign_site_setings
-      @site_settings = SiteSetting.first
-    end
 
     def update_settings(permitted_params)
       permitted_params.each do |key, value|
