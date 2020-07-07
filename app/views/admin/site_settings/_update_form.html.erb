@@ -1,0 +1,18 @@
+<h3>
+  System Settings
+</h3>
+<%= form_with(model: @site_settings,  :url => admin_site_settings_path(@site_settings), method: "put") do |f| %>
+  <%= render 'layouts/system_messages'%>
+
+  <div class="embedded_form_entry_container">
+    <%= label(:name, 'Site name:', class: 'input_label embedded_label') %>
+    <%= f.text_field(:name, {class: 'input_box embedded_input_box', placeholder: 'new site name'} ) %>
+  </div>
+
+  <div class='input_seperator embedded_input_seperator'></div>
+
+  <div class="form_submit_container">
+    <%= f.submit('Update details', class: 'input_submit') %>
+  </div>
+
+<% end %>

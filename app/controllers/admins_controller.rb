@@ -13,6 +13,10 @@ class AdminsController < ApplicationController
     @user
   end
 
+  def site_settings
+    @site_settings = SiteSetting.first
+  end
+
   private
 
   def check_admin_logged_in

@@ -5,11 +5,7 @@
   </div>
 </h1>
 
-<div class="system_messages">
-  <% flash.each do |type, msg| %>
-    <div class='<%= type %>'><%= msg %></div><br> 
-  <% end %>
-</div>
+<%= render 'layouts/system_messages'%>
 
 <div class='flex_image_tile' id='about' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
   <%= image_tag('homepage/about.jpg', id: 'about_image', class: 'cover_image') %>
