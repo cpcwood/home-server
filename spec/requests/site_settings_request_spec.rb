@@ -3,7 +3,9 @@ require 'helpers/session_helper'
 
 RSpec.describe 'SiteSettings', type: :request do
   describe 'PUT /admin/site_setting.id #update' do
-    context 'Name' do
+    let(:cover_image_path) {Rails.root.join('spec/files/sample_image_low.jpg')}
+
+    context 'name' do
       it 'Update sucessful' do
         login
         put "/admin/site_settings.#{@site_settings.id}", params: {
