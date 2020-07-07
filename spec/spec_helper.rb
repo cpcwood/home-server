@@ -48,6 +48,7 @@ RSpec.configure do |config|
     DatabaseCleaner.start
     @test_user_password = 'Securepass1'
     @test_user = User.create(username: 'admin', email: 'admin@example.com', password: @test_user_password, mobile_number: '+447123456789')
+    @site_settings = SiteSetting.create(name: 'test_name')
   end
 
   config.append_after(:each) do
