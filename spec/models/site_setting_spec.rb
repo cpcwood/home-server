@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SiteSetting, type: :model do
-  let(:site_setting) { SiteSetting.create(name: 'test_name') }
+  let(:site_setting) { @site_settings }
 
   describe 'Name validations' do
     it 'Rejects too short' do
