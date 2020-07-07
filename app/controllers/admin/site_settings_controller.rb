@@ -4,8 +4,9 @@ module Admin
 
     def update
       @notices = []
+      @alerts = []
       update_settings(site_settings_update_params)
-      redirect_to(admin_site_settings_path, notice: @notices)
+      redirect_to(admin_site_settings_path, notice: @notices, alert: @alerts)
     end
 
     private
