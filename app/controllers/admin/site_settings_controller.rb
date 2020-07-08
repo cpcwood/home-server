@@ -4,6 +4,7 @@ module Admin
       @notices = []
       @alerts = []
       update_settings(site_settings_update_params)
+      upload_images(site_settings_images_params) if params[:image_upload].present?
       redirect_to(admin_site_settings_path, notice: @notices, alert: @alerts)
     end
 
@@ -11,9 +12,7 @@ module Admin
 
     def update_settings(permitted_params)
       permitted_params.each do |key, value|
-        if @site_settings.update_required?(key, value)
-          update_message(@site_settings.update(key.to_sym => value), key)
-        end
+        update_message(@site_settings.update(key.to_sym => value), key) if @site_settings.update_required?(key, value)
       end
     end
 
@@ -28,6 +27,14 @@ module Admin
 
     def site_settings_update_params
       params.require(:site_setting).permit(:name)
+    end
+
+    def upload_images(permitted_params)
+      update_message(@site_settings.cover_image.attach(permitted_params[:cover_image]), 'cover_image') if permitted_params[:cover_image].present?
+    end
+
+    def site_settings_images_params
+      params.require(:image_upload).permit(:cover_image)
     end
   end
 end
