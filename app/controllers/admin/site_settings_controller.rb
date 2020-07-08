@@ -30,7 +30,16 @@ module Admin
     end
 
     def upload_images(permitted_params)
-      update_message(@site_settings.header_image.attach(permitted_params[:header_image]), 'header_image') if permitted_params[:header_image].present?
+      return if permitted_params[:header_image].blank?
+      modified_image = SiteSetting.resize_header_image(image_path: permitted_params[:header_image].tempfile.path, x_dim: 2560, y_dim: 300)
+      filename = permitted_params[:header_image].original_filename
+      content_type = permitted_params[:header_image].content_type
+      result = @site_settings.header_image.attach(
+        io: File.open(modified_image),
+        filename: filename,
+        content_type: content_type
+      )
+      update_message(result, 'header_image')
     end
 
     def site_settings_images_params

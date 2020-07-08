@@ -25,6 +25,8 @@ gem 'faraday', require: false
 gem 'twilio-ruby', '~> 5.34', require: false
 # Action Mailer and Action Job Backend - Sidekiq (Requires redis and start upon server launch)
 gem 'sidekiq', '~> 6.0.7'
+# Transform uploaded images
+gem 'image_processing'
 
 group :production do
   # AWS S3 for production storage

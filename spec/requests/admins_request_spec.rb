@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'helpers/session_helper'
+require 'spec_helpers/session_helper'
 
 RSpec.describe 'Admins', type: :request do
   describe 'GET /admin #general' do

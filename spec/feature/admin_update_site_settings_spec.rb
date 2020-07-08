@@ -1,4 +1,4 @@
-require 'helpers/feature_helpers'
+require 'spec_helpers/feature_helpers'
 
 feature 'Admin update site settings' do
   scenario 'Update site name' do
