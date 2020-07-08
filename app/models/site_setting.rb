@@ -1,4 +1,6 @@
 class SiteSetting < ApplicationRecord
+  include DefaultImageHelper
+
   has_one_attached :cover_image
 
   validates :name,
@@ -6,5 +8,9 @@ class SiteSetting < ApplicationRecord
 
   def update_required?(key, value)
     self[key] != value
+  end
+
+  def cover_image_path
+    cover_image.attached? ? cover_image : default_cover_image_path
   end
 end
