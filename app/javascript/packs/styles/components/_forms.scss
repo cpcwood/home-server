@@ -1,8 +1,13 @@
 // Modules
-@use '../base/globals' as *;
+@use '../base/globals';
 @use '../base/functions';
 @use '../base/mixins' as *;
 @use '../base/typography';
+
+
+// Variables
+$box_border_color: globals.$box_border_color;
+$background-color: globals.$background-color;
 
 // Containers
 .centered_container {
