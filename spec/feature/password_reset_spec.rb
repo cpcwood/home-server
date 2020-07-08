@@ -1,4 +1,4 @@
-require 'helpers/session_helper'
+require 'spec_helpers/session_helper'
 require 'twilio-ruby'
 
 feature 'Password reset' do

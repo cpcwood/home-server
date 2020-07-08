@@ -1,4 +1,4 @@
-require 'helpers/feature_helpers'
+require 'spec_helpers/feature_helpers'
 
 feature 'Admin update details' do
   scenario 'Update username' do

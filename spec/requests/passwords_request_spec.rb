@@ -1,6 +1,6 @@
 require 'rails_helper'
-require 'helpers/password_helpers'
-require 'helpers/session_helper'
+require 'spec_helpers/password_helpers'
+require 'spec_helpers/session_helper'
 
 RSpec.describe 'Passwords', type: :request do
   describe 'Before action' do
