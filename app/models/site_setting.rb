@@ -1,7 +1,7 @@
 class SiteSetting < ApplicationRecord
   include DefaultImageHelper
 
-  has_one_attached :cover_image
+  has_one_attached :header_image
 
   validates :name,
             length: { in: 1..255, too_short: 'Site name cannot be blank', too_long: 'Site name cannot be longer than 255 charaters' }
@@ -10,7 +10,7 @@ class SiteSetting < ApplicationRecord
     self[key] != value
   end
 
-  def cover_image_path
-    cover_image.attached? ? cover_image : default_cover_image_path
+  def header_image_path
+    header_image.attached? ? header_image : default_header_image_path
   end
 end
