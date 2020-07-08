@@ -3,7 +3,7 @@ require 'helpers/session_helper'
 
 RSpec.describe 'SiteSettings', type: :request do
   describe 'PUT /admin/site_setting.id #update' do
-    let(:cover_image_path) { Rails.root.join('spec/files/sample_image_low.jpg') }
+    let(:header_image_path) { Rails.root.join('spec/files/sample_image_low.jpg') }
 
     context 'name' do
       it 'Update sucessful' do
@@ -13,7 +13,7 @@ RSpec.describe 'SiteSettings', type: :request do
             name: 'new_site_name'
           },
           image_upload: {
-            cover_image: ''
+            header_image: ''
           }
         }
         follow_redirect!
@@ -29,7 +29,7 @@ RSpec.describe 'SiteSettings', type: :request do
             name: ''
           },
           image_upload: {
-            cover_image: ''
+            header_image: ''
           }
         }
         follow_redirect!
@@ -37,22 +37,22 @@ RSpec.describe 'SiteSettings', type: :request do
       end
     end
 
-    context 'cover_image' do
+    context 'header_image' do
       it 'Update sucessful' do
-        cover_image = fixture_file_upload(cover_image_path, 'image/png')
+        header_image = fixture_file_upload(header_image_path, 'image/png')
         login
         put "/admin/site_settings.#{@site_settings.id}", params: {
           site_setting: {
             name: ''
           },
           image_upload: {
-            cover_image: cover_image
+            header_image: header_image
           }
         }
         follow_redirect!
-        expect(response.body).to include('Site cover_image updated!')
+        expect(response.body).to include('Site header_image updated!')
         @site_settings.reload
-        expect(@site_settings.cover_image.attached?).to eq(true)
+        expect(@site_settings.header_image.attached?).to eq(true)
       end
     end
   end

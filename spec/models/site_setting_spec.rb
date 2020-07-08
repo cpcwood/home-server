@@ -24,10 +24,10 @@ RSpec.describe SiteSetting, type: :model do
     end
   end
 
-  describe 'cover_image upload' do
+  describe 'header_image upload' do
     it 'Upload sucessful' do
-      site_setting.cover_image.attach(io: File.open(Rails.root.join('spec/files/sample_image_low.jpg')), filename: 'cover_image.jpg', content_type: 'image/jpg')
-      expect(site_setting.cover_image.attached?).to eq(true)
+      site_setting.header_image.attach(io: File.open(Rails.root.join('spec/files/sample_image_low.jpg')), filename: 'header_image.jpg', content_type: 'image/jpg')
+      expect(site_setting.header_image.attached?).to eq(true)
     end
   end
 
@@ -43,15 +43,15 @@ RSpec.describe SiteSetting, type: :model do
     end
   end
 
-  describe '#cover_image_path' do
+  describe '#header_image_path' do
     it 'cover image attached' do
-      site_setting.cover_image.attach(io: File.open(Rails.root.join('spec/files/sample_image_low.jpg')), filename: 'cover_image.jpg', content_type: 'image/jpg')
-      expect(site_setting.cover_image_path).to eq(site_setting.cover_image)
+      site_setting.header_image.attach(io: File.open(Rails.root.join('spec/files/sample_image_low.jpg')), filename: 'header_image.jpg', content_type: 'image/jpg')
+      expect(site_setting.header_image_path).to eq(site_setting.header_image)
     end
 
     it 'cover image not attached' do
-      allow(site_setting).to receive(:default_cover_image_path).and_return('test_path')
-      expect(site_setting.cover_image_path).to eq('test_path')
+      allow(site_setting).to receive(:default_header_image_path).and_return('test_path')
+      expect(site_setting.header_image_path).to eq('test_path')
     end
   end
 end

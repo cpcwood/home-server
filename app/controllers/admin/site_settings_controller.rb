@@ -30,11 +30,11 @@ module Admin
     end
 
     def upload_images(permitted_params)
-      update_message(@site_settings.cover_image.attach(permitted_params[:cover_image]), 'cover_image') if permitted_params[:cover_image].present?
+      update_message(@site_settings.header_image.attach(permitted_params[:header_image]), 'header_image') if permitted_params[:header_image].present?
     end
 
     def site_settings_images_params
-      params.require(:image_upload).permit(:cover_image)
+      params.require(:image_upload).permit(:header_image)
     end
   end
 end
