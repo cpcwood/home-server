@@ -1,17 +1,17 @@
 <h3>
   Update Site Settings
 </h3>
-<%= form_with(model: @site_settings,  :url => admin_site_settings_path(@site_settings), method: "put") do |f| %>
+<%= form_with(model: @site_settings,  :url => admin_site_settings_path(@site_settings), method: "put", multipart: true ) do |f| %>
   <%= render 'layouts/system_messages'%>
 
   <div class="embedded_form_entry_container">
-    <%= label(:name, 'Site name:', class: 'input_label embedded_label') %>
-    <%= f.text_field(:name, class: 'input_box embedded_input_box', placeholder: 'new site name') %>
+    <%= label(:site_setting, :name, 'Site name:', class: 'input_label embedded_label') %>
+    <%= text_field(:site_setting, :name, class: 'input_box embedded_input_box', placeholder: 'new site name', value: @site_settings.name) %>
   </div>
 
-   <div class="embedded_form_entry_container">
-    <%= label(:cover_image, 'Cover image:', class: 'input_label embedded_label') %>
-    <%= f.file_field(:cover_image, class: 'input_box embedded_file_field', accept: 'image/png,image/jpeg') %>
+  <div class="embedded_form_entry_container">
+    <%= label(:image_upload, :cover_image, 'Cover image:', class: 'input_label embedded_label') %>
+    <%= file_field(:image_upload, :cover_image, class: 'input_box embedded_file_field', accept: 'image/png,image/jpeg') %>
   </div>
 
   <br>
