@@ -42,4 +42,16 @@ RSpec.describe SiteSetting, type: :model do
       expect(site_setting.update_required?('name', new_name)).to eq(true)
     end
   end
+
+  describe '#cover_image_path' do
+    it 'cover image attached' do
+      site_setting.cover_image.attach(io: File.open(Rails.root.join('spec/files/sample_image_low.jpg')), filename: 'cover_image.jpg', content_type: 'image/jpg')
+      expect(site_setting.cover_image_path).to eq(site_setting.cover_image)
+    end
+
+    it 'cover image not attached' do
+      allow(site_setting).to receive(:default_cover_image_path).and_return('test_path')
+      expect(site_setting.cover_image_path).to eq('test_path')
+    end
+  end
 end
