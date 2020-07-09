@@ -1,8 +1,6 @@
 class SiteSetting < ApplicationRecord
   require 'mini_magick'
 
-  include DefaultImageHelper
-
   has_one_attached :header_image
   has_one_attached :about_image
 
@@ -11,10 +9,6 @@ class SiteSetting < ApplicationRecord
 
   def update_required?(key, value)
     self[key] != value
-  end
-
-  def image_path(image)
-    image.attached? ? image : default_image_path(image.name)
   end
 
   def self.resize_image(image_path:, x_dim:, y_dim:)

@@ -49,18 +49,6 @@ RSpec.describe SiteSetting, type: :model do
     end
   end
 
-  describe '#image_path' do
-    it 'image attached' do
-      site_setting.header_image.attach(image_file_upload)
-      expect(site_setting.image_path(site_setting.header_image)).to eq(site_setting.header_image)
-    end
-
-    it 'image not attached' do
-      expect(site_setting).to receive(:default_image_path).with(site_setting.header_image.name).and_return('test_path')
-      expect(site_setting.image_path(site_setting.header_image)).to eq('test_path')
-    end
-  end
-
   describe '.resize_image' do
     it 'resizes image to target dimensions' do
       target_dimensions = [2560, 300]

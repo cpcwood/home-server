@@ -15,7 +15,6 @@ Capybara.javascript_driver = :selenium_chrome_headless
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::Console, Coveralls::SimpleCov::Formatter])
 SimpleCov.start 'rails' do
   add_filter 'app/channels'
-  add_filter 'app/helpers'
 end
 
 require 'webmock/rspec'
@@ -24,8 +23,7 @@ whitelist = ['chromedriver.storage.googleapis.com', 'github.com', 'amazonaws.com
 allowed_sites = ->(uri){ uri.host.match?(Regexp.union(whitelist)) }
 WebMock.disable_net_connect!(
   allow_localhost: true,
-  allow: allowed_sites
-)
+  allow: allowed_sites)
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
