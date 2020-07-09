@@ -4,14 +4,28 @@
 <%= form_with(model: @site_settings,  :url => admin_site_settings_path(@site_settings), method: "put", multipart: true ) do |f| %>
   <%= render 'layouts/system_messages'%>
 
+  <h4> Site Name </h4>
+
   <div class="embedded_form_entry_container">
-    <%= label(:site_setting, :name, 'Site name:', class: 'input_label embedded_label') %>
-    <%= text_field(:site_setting, :name, class: 'input_box embedded_input_box', placeholder: 'new site name', value: @site_settings.name) %>
+    <div class="input_label embedded_label">
+      Current site name:
+    </div>
+    <div class="embedded_current_value">
+      <%= @site_settings.name %>
+    </div>
   </div>
 
   <div class="embedded_form_entry_container">
-    <%= label(:image_upload, :header_image, 'Header image:', class: 'input_label embedded_label') %>
-    <%= file_field(:image_upload, :header_image, class: 'input_box embedded_file_field', accept: 'image/png,image/jpeg') %>
+    <%= label(:site_setting, :name, 'Update site name:', class: 'input_label embedded_label') %>
+    <%= text_field(:site_setting, :name, class: 'input_box embedded_input_box', placeholder: 'new site name', value: @site_settings.name) %>
+  </div>
+
+  <br>
+  <h4> Header Image </h4>
+
+  <div class="embedded_form_entry_container">
+    <%= label(:image_upload, :header_image, 'Update image:', class: 'input_label embedded_label') %>
+    <%= file_field(:image_upload, :header_image, class: 'input_box embedded_no_border', accept: 'image/png,image/jpeg') %>
   </div>
   
   <br>
