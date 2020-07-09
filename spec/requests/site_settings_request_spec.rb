@@ -3,7 +3,7 @@ require 'spec_helpers/session_helper'
 
 RSpec.describe 'SiteSettings', type: :request do
   describe 'PUT /admin/site_setting.id #update' do
-    let(:header_image_path) { Rails.root.join('spec/files/sample_image_low.jpg') }
+    let(:header_image_path) { Rails.root.join('spec/files/sample_image.jpg') }
 
     context 'name' do
       it 'Update sucessful' do

@@ -20,6 +20,17 @@ class SiteSetting < ApplicationRecord
     remove_exif_data(resized_image.path)
   end
 
+  def self.image_valid?(image_path)
+    image = MiniMagick::Image.new(image_path)
+    if image.valid?
+      image.mime_type.match?(/\Aimage\/(png|jpeg)\z/i)
+    else
+      false
+    end
+  end
+
+  private
+
   def self.expand_image(image_path:, x_dim: nil, y_dim: nil)
     ImageProcessing::MiniMagick.source(image_path).resize_to_fit(x_dim, y_dim).call
   end
