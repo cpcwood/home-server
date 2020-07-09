@@ -32,7 +32,7 @@
   </a>
 </div>
 <div class='flex_image_tile' id='say_hello' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
-  <%= image_tag('homepage/say-hello.png', id: 'say_hello_image', class: 'cover_image top_left') %>
+  <%= image_tag(image_path(@site_settings.say_hello_image), id: 'say_hello_image', class: 'cover_image top_left') %>
   <a href='/say-hello'>
     <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
       <span>SAY HELLO</span>
