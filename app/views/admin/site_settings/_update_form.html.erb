@@ -28,7 +28,7 @@
       Current image:
     </div>
     <div class="embedded_current_value">
-      <%= @site_settings.header_image.attachment.blob.filename %>
+      <%= @site_settings.header_image.attached? ? @site_settings.header_image.attachment.blob.filename : 'default' %>
     </div>
   </div>
 
@@ -45,6 +45,11 @@
   <div class="embedded_form_entry_container">
     <%= label(:image_upload, :header_image, 'Update image:', class: 'input_label embedded_label') %>
     <%= file_field(:image_upload, :header_image, class: 'input_box embedded_no_border', accept: 'image/png,image/jpeg') %>
+  </div>
+
+  <div class="embedded_form_entry_container">
+    <%= label(:image_upload, :header_image_reset, 'Reset to default:', class: 'input_label embedded_label') %>
+    <%= check_box(:image_upload, :header_image_reset, class: 'input_check_box') %>
   </div>
 
 

@@ -1,5 +1,5 @@
 class SiteSetting < ApplicationRecord
-  require "mini_magick"
+  require 'mini_magick'
 
   include DefaultImageHelper
 
