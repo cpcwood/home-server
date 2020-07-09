@@ -4,7 +4,7 @@ module Admin
       @notices = []
       @alerts = []
       update_settings(site_settings_update_params)
-      upload_images(site_settings_images_params) if params[:image_upload].present?
+      upload_images(site_settings_images_params)
       redirect_to(admin_site_settings_path, notice: @notices, alert: @alerts)
     end
 
@@ -30,6 +30,7 @@ module Admin
     end
 
     def upload_images(permitted_params)
+      return reset_header_image if permitted_params[:header_image_reset] == '1'
       return if permitted_params[:header_image].blank?
       image_path = permitted_params[:header_image].tempfile.path
       return @alerts.push('Header image invalid, please upload a jpeg or png file!') unless SiteSetting.image_valid?(image_path)
@@ -45,7 +46,13 @@ module Admin
     end
 
     def site_settings_images_params
-      params.require(:image_upload).permit(:header_image)
+      params.require(:image_upload).permit(:header_image, :header_image_reset)
+    end
+
+    def reset_header_image
+      @site_settings.header_image.purge
+      @site_settings.header_image.destroy
+      @notices.push('Header image reset!')
     end
   end
 end

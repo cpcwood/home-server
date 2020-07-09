@@ -6,9 +6,12 @@ RSpec.describe 'SiteSettings', type: :request do
     let(:header_image_path) { Rails.root.join('spec/files/sample_image.jpg') }
     let(:header_image_invalid_path) { Rails.root.join('spec/files/sample_image_invalid.jpg') }
 
+    before(:each) do
+      login
+    end
+
     context 'name' do
       it 'Update sucessful' do
-        login
         put "/admin/site_settings.#{@site_settings.id}", params: {
           site_setting: {
             name: 'new_site_name'
@@ -24,7 +27,6 @@ RSpec.describe 'SiteSettings', type: :request do
       end
 
       it 'Update fails' do
-        login
         put "/admin/site_settings.#{@site_settings.id}", params: {
           site_setting: {
             name: ''
@@ -41,7 +43,6 @@ RSpec.describe 'SiteSettings', type: :request do
     context 'header_image' do
       it 'Update sucessful' do
         header_image = fixture_file_upload(header_image_path, 'image/png')
-        login
         put "/admin/site_settings.#{@site_settings.id}", params: {
           site_setting: {
             name: ''
@@ -58,7 +59,6 @@ RSpec.describe 'SiteSettings', type: :request do
 
       it 'Update unsucessful' do
         header_image = fixture_file_upload(header_image_invalid_path, 'image/png')
-        login
         put "/admin/site_settings.#{@site_settings.id}", params: {
           site_setting: {
             name: ''
@@ -69,6 +69,23 @@ RSpec.describe 'SiteSettings', type: :request do
         }
         follow_redirect!
         expect(response.body).to include('Header image invalid, please upload a jpeg or png file!')
+        @site_settings.reload
+        expect(@site_settings.header_image.attached?).to eq(false)
+      end
+
+      it 'Reset to default' do
+        header_image = fixture_file_upload(header_image_path, 'image/png')
+        put "/admin/site_settings.#{@site_settings.id}", params: {
+          site_setting: {
+            name: ''
+          },
+          image_upload: {
+            header_image: header_image,
+            header_image_reset: '1'
+          }
+        }
+        follow_redirect!
+        expect(response.body).to include('Header image reset!')
         @site_settings.reload
         expect(@site_settings.header_image.attached?).to eq(false)
       end
