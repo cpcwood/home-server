@@ -20,37 +20,8 @@
     <%= text_field(:site_setting, :name, class: 'input_box embedded_input_box', placeholder: 'new site name', value: @site_settings.name) %>
   </div>
 
-  <br>
-  <h4> Header Image </h4>
-
-  <div class="embedded_form_entry_container">
-    <div class="input_label embedded_label">
-      Current image:
-    </div>
-    <div class="embedded_current_value">
-      <%= @site_settings.header_image.attached? ? @site_settings.header_image.attachment.blob.filename : 'default' %>
-    </div>
-  </div>
-
-  <div class="embedded_form_entry_container">
-    <%= image_tag(@site_settings.header_image_path, class: 'embedded_full_width')%>
-  </div>
-
-  <div class="embedded_form_entry_container">
-    <div class="embedded_full_width embedded_form_note small-font">
-      <strong>Note:</strong> Images will be resized to 2560px wide and cropped to 300px high. Accepted image formats are jpeg and png.
-    </div>
-  </div>
-
-  <div class="embedded_form_entry_container">
-    <%= label(:image_upload, :header_image, 'Update image:', class: 'input_label embedded_label') %>
-    <%= file_field(:image_upload, :header_image, class: 'input_box embedded_no_border', accept: 'image/png,image/jpeg') %>
-  </div>
-
-  <div class="embedded_form_entry_container">
-    <%= label(:image_upload, :header_image_reset, 'Reset to default:', class: 'input_label embedded_label') %>
-    <%= check_box(:image_upload, :header_image_reset, class: 'input_check_box') %>
-  </div>
+  <%= render partial: "admin/site_settings/edit_image_form_entry", locals: {image_object: @site_settings.header_image, image_path: @site_settings.header_image_path, image_name: 'Header', x_dim: 2560, y_dim: 300} %>
+  
 
   <br>
   <br>
