@@ -7,6 +7,7 @@ class SiteSetting < ApplicationRecord
   has_one_attached :blog_image
   has_one_attached :say_hello_image
   has_one_attached :gallery_image
+  has_one_attached :contact_image
 
   validates :name,
             length: { in: 1..255, too_short: 'Site name cannot be blank', too_long: 'Site name cannot be longer than 255 charaters' }
