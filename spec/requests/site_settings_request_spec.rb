@@ -4,6 +4,7 @@ require 'spec_helpers/session_helper'
 RSpec.describe 'SiteSettings', type: :request do
   describe 'PUT /admin/site_setting.id #update' do
     let(:header_image_path) { Rails.root.join('spec/files/sample_image.jpg') }
+    let(:header_image_invalid_path) { Rails.root.join('spec/files/sample_image_invalid.jpg') }
 
     context 'name' do
       it 'Update sucessful' do
@@ -53,6 +54,23 @@ RSpec.describe 'SiteSettings', type: :request do
         expect(response.body).to include('Site header_image updated!')
         @site_settings.reload
         expect(@site_settings.header_image.attached?).to eq(true)
+      end
+
+      it 'Update unsucessful' do
+        header_image = fixture_file_upload(header_image_invalid_path, 'image/png')
+        login
+        put "/admin/site_settings.#{@site_settings.id}", params: {
+          site_setting: {
+            name: ''
+          },
+          image_upload: {
+            header_image: header_image
+          }
+        }
+        follow_redirect!
+        expect(response.body).to include('Header image invalid, please upload a jpeg or png file!')
+        @site_settings.reload
+        expect(@site_settings.header_image.attached?).to eq(false)
       end
     end
   end

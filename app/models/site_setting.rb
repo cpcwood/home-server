@@ -1,4 +1,6 @@
 class SiteSetting < ApplicationRecord
+  require "mini_magick"
+
   include DefaultImageHelper
 
   has_one_attached :header_image
@@ -22,14 +24,8 @@ class SiteSetting < ApplicationRecord
 
   def self.image_valid?(image_path)
     image = MiniMagick::Image.new(image_path)
-    if image.valid?
-      image.mime_type.match?(/\Aimage\/(png|jpeg)\z/i)
-    else
-      false
-    end
+    image.valid? ? image.mime_type.match?(%r{\Aimage/(png|jpeg)\z}i) : false
   end
-
-  private
 
   def self.expand_image(image_path:, x_dim: nil, y_dim: nil)
     ImageProcessing::MiniMagick.source(image_path).resize_to_fit(x_dim, y_dim).call

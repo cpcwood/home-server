@@ -31,7 +31,9 @@ module Admin
 
     def upload_images(permitted_params)
       return if permitted_params[:header_image].blank?
-      modified_image = SiteSetting.resize_header_image(image_path: permitted_params[:header_image].tempfile.path, x_dim: 2560, y_dim: 300)
+      image_path = permitted_params[:header_image].tempfile.path
+      return @alerts.push('Header image invalid, please upload a jpeg or png file!') unless SiteSetting.image_valid?(image_path)
+      modified_image = SiteSetting.resize_header_image(image_path: image_path, x_dim: 2560, y_dim: 300)
       filename = permitted_params[:header_image].original_filename
       content_type = permitted_params[:header_image].content_type
       result = @site_settings.header_image.attach(
