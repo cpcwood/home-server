@@ -4,6 +4,7 @@ class SiteSetting < ApplicationRecord
   has_one_attached :header_image
   has_one_attached :about_image
   has_one_attached :projects_image
+  has_one_attached :blog_image
 
   validates :name,
             length: { in: 1..255, too_short: 'Site name cannot be blank', too_long: 'Site name cannot be longer than 255 charaters' }
