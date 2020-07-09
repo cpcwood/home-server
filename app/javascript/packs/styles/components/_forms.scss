@@ -183,20 +183,42 @@ $background-color: globals.$background-color;
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  margin: 10px 0;
+  margin-bottom: 10px;
   padding: 0 0;
   height: inherit;
   font-size: inherit;
+  font-weight: 600;
 
   @include respond-to(tablet) {
     width: 33%;
     margin: 0 0;
     padding: 0 2% 0 0;
+    font-weight: 500;
   }
   @include respond-to(desktop) {
     width: 33%;
     margin: 0 0;
     padding: 0 2% 0 0;
+    font-weight: 500;
+  }
+}
+
+.embedded_title {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  padding: 0 0;
+  height: inherit;
+  font-size: inherit;
+  font-weight: 600;
+
+  @include respond-to(tablet) {
+    padding: 0 2% 0 0;
+    font-weight: 500;
+  }
+  @include respond-to(desktop) {
+    padding: 0 2% 0 0;
+    font-weight: 500;
   }
 }
 
@@ -255,9 +277,11 @@ $background-color: globals.$background-color;
   font-weight: 500;
 
   @include respond-to(tablet) {
+    padding: 3px 5px;
     width: 65%;
   }
   @include respond-to(desktop) {
+    padding: 3px 5px;
     width: 65%;
   }
 }
@@ -267,7 +291,6 @@ $background-color: globals.$background-color;
   position: relative;
   width: 100%;
   height: auto;
-  border: $box_border_color 1px solid;
 }
 
 .form_submit_container {
