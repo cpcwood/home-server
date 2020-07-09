@@ -4,7 +4,8 @@ module DefaultImageHelper
     'about_image' => 'default_images/default_cover_image.jpg',
     'projects_image' => 'default_images/default_cover_image.jpg',
     'blog_image' => 'default_images/default_cover_image.jpg',
-    'say_hello_image' => 'default_images/default_cover_image.jpg'
+    'say_hello_image' => 'default_images/default_cover_image.jpg',
+    'gallery_image' => 'default_images/default_cover_image.jpg'
   }.freeze
 
   def image_path(image)

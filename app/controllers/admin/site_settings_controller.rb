@@ -25,7 +25,9 @@ module Admin
         :blog_image,
         :blog_image_reset,
         :say_hello_image,
-        :say_hello_image_reset)
+        :say_hello_image_reset,
+        :gallery_image,
+        :gallery_image_reset)
     end
 
     def update_settings(permitted_params)
@@ -49,6 +51,7 @@ module Admin
       update_image(image_name: 'projects_image', x_dim: 1450, y_dim: 680, permitted_params: permitted_params)
       update_image(image_name: 'blog_image', x_dim: 1450, y_dim: 680, permitted_params: permitted_params)
       update_image(image_name: 'say_hello_image', x_dim: 1450, y_dim: 680, permitted_params: permitted_params)
+      update_image(image_name: 'gallery_image', x_dim: 1450, y_dim: 680, permitted_params: permitted_params)
     end
 
     def update_image(image_name:, x_dim:, y_dim:, permitted_params:)
