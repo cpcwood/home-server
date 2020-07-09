@@ -4,6 +4,10 @@ module DefaultImageHelper
     'about_image' => 'default_images/default_cover_image.jpg'
   }.freeze
 
+  def image_path(image)
+    image.attached? ? image : default_image_path(image.name)
+  end
+
   def default_image_path(image_name)
     DEFAULT_IMAGE_PATHS[image_name]
   end

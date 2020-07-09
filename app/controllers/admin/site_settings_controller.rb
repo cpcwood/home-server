@@ -19,8 +19,7 @@ module Admin
         :header_image,
         :header_image_reset,
         :about_image,
-        :about_image_reset
-      )
+        :about_image_reset)
     end
 
     def update_settings(permitted_params)
@@ -65,8 +64,7 @@ module Admin
                     .attach(
                       io: File.open(image_path),
                       filename: filename,
-                      content_type: content_type
-                    )
+                      content_type: content_type)
     end
   end
 end

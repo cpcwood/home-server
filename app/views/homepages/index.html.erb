@@ -8,7 +8,7 @@
 <%= render 'layouts/system_messages'%>
 
 <div class='flex_image_tile' id='about' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
-  <%= image_tag('homepage/about.jpg', id: 'about_image', class: 'cover_image') %>
+  <%= image_tag(image_path(@site_settings.about_image), id: 'about_image', class: 'cover_image') %>
   <a href='/about'>
     <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
       <span>ABOUT</span>
