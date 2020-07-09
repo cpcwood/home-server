@@ -5,7 +5,7 @@ describe 'Views' do
     it 'Displays current user details' do
       assign(:user, @test_user)
 
-      render template: 'admins/general.html.erb'
+      render template: 'admins/user_settings.html.erb'
 
       expect(rendered).to match(Regexp.escape("Username:</strong> #{@test_user.username}"))
       expect(rendered).to match(Regexp.escape("Email Address:</strong> #{@test_user.email}"))
