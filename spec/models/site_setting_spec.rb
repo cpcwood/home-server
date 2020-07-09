@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe SiteSetting, type: :model do
   let(:site_setting) { @site_settings }
-  let(:image_path_valid) {Rails.root.join('spec/files/sample_image.jpg')}
-  let(:image_path_invalid) {Rails.root.join('spec/files/sample_image_invalid.jpg')}
-  let(:text_file_path) {Rails.root.join('spec/files/sample_text.txt')}
-  let(:image_gif_path) {Rails.root.join('spec/files/sample_image_gif.gif')}
-  let(:image_png_path) {Rails.root.join('spec/files/sample_image_png.png')}
+  let(:image_path_valid) { Rails.root.join('spec/files/sample_image.jpg') }
+  let(:image_path_invalid) { Rails.root.join('spec/files/sample_image_invalid.jpg') }
+  let(:text_file_path) { Rails.root.join('spec/files/sample_text.txt') }
+  let(:image_gif_path) { Rails.root.join('spec/files/sample_image_gif.gif') }
+  let(:image_png_path) { Rails.root.join('spec/files/sample_image_png.png') }
 
   describe 'Name validations' do
     it 'Rejects too short' do
