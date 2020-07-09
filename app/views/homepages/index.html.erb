@@ -24,7 +24,7 @@
   </a>
 </div>
 <div class='flex_image_tile' id='blog' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
-  <%= image_tag('homepage/blog.jpg', id: 'blog_image', class: 'cover_image') %>
+  <%= image_tag(image_path(@site_settings.blog_image), id: 'blog_image', class: 'cover_image') %>
   <a href='/blog'>
     <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
       <span>BLOG</span>

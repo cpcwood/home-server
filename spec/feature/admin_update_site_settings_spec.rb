@@ -40,4 +40,14 @@ feature 'Admin update site settings' do
     visit('/')
     expect(page).to have_css("img[src*='sample_image.jpg']")
   end
+
+  scenario 'Update blog image' do
+    login_feature
+    visit('admin/site_settings')
+    find('#image_upload_blog_image').set(Rails.root.join('spec/files/sample_image.jpg'))
+    click_button('Update site settings')
+    expect(page).to have_content('Blog image updated!')
+    visit('/')
+    expect(page).to have_css("img[src*='sample_image.jpg']")
+  end
 end
