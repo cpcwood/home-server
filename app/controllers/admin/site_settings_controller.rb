@@ -19,7 +19,9 @@ module Admin
         :header_image,
         :header_image_reset,
         :about_image,
-        :about_image_reset)
+        :about_image_reset,
+        :projects_image,
+        :projects_image_reset)
     end
 
     def update_settings(permitted_params)
@@ -40,6 +42,7 @@ module Admin
     def upload_images(permitted_params)
       update_image(image_name: 'header_image', x_dim: 2560, y_dim: 300, permitted_params: permitted_params)
       update_image(image_name: 'about_image', x_dim: 1450, y_dim: 680, permitted_params: permitted_params)
+      update_image(image_name: 'projects_image', x_dim: 1450, y_dim: 680, permitted_params: permitted_params)
     end
 
     def update_image(image_name:, x_dim:, y_dim:, permitted_params:)
