@@ -84,6 +84,7 @@ $background-color: globals.$background-color;
     object-position: 50% 50%;
     opacity: 0.6;
     z-index: inherit;
+    
     @include respond-to(extra-wide) {
       object-fit: cover;
     }
