@@ -7,6 +7,7 @@ RSpec.describe SiteSetting, type: :model do
   let(:text_file_path) { Rails.root.join('spec/files/sample_text.txt') }
   let(:image_gif_path) { Rails.root.join('spec/files/sample_image_gif.gif') }
   let(:image_png_path) { Rails.root.join('spec/files/sample_image_png.png') }
+  let(:image_file_upload) { fixture_file_upload(image_path_valid, 'image/jpg') }
 
   describe 'Name validations' do
     it 'Rejects too short' do
@@ -31,7 +32,7 @@ RSpec.describe SiteSetting, type: :model do
 
   describe 'header_image upload' do
     it 'Upload sucessful' do
-      site_setting.header_image.attach(io: File.open(image_path_valid), filename: 'header_image.jpg', content_type: 'image/jpg')
+      site_setting.header_image.attach(image_file_upload)
       expect(site_setting.header_image.attached?).to eq(true)
     end
   end
@@ -48,15 +49,15 @@ RSpec.describe SiteSetting, type: :model do
     end
   end
 
-  describe '#header_image_path' do
-    it 'cover image attached' do
-      site_setting.header_image.attach(io: File.open(image_path_valid), filename: 'header_image.jpg', content_type: 'image/jpg')
-      expect(site_setting.header_image_path).to eq(site_setting.header_image)
+  describe '#image_path' do
+    it 'image attached' do
+      site_setting.header_image.attach(image_file_upload)
+      expect(site_setting.image_path(site_setting.header_image)).to eq(site_setting.header_image)
     end
 
-    it 'cover image not attached' do
-      allow(site_setting).to receive(:default_header_image_path).and_return('test_path')
-      expect(site_setting.header_image_path).to eq('test_path')
+    it 'image not attached' do
+      expect(site_setting).to receive(:default_image_path).with(site_setting.header_image.name).and_return('test_path')
+      expect(site_setting.image_path(site_setting.header_image)).to eq('test_path')
     end
   end
 
