@@ -4,7 +4,6 @@
 @use '../base/mixins' as *;
 @use '../base/typography';
 
-
 // Variables
 $box_border_color: globals.$box_border_color;
 $background-color: globals.$background-color;
@@ -78,7 +77,12 @@ $background-color: globals.$background-color;
 .input_check_box {
   box-sizing: border-box;
   position: relative;
-  height: 100%
+}
+
+input[type=checkbox] {
+  -moz-transform: scale(1.5);
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
 }
 
 .input_seperator {
@@ -307,6 +311,9 @@ $background-color: globals.$background-color;
   max-width: 300px;
   input {
     font-size: inherit;
+  }
+  &:active + .default_loader {
+    visibility: visible;
   }
 }
 

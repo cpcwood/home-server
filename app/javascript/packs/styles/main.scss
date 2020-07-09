@@ -14,3 +14,6 @@
 @use 'components/navbar';
 @use 'components/dashboard';
 @use 'components/image_tile';
+
+// Site Wide Vendor
+@use 'vendor/loaders';

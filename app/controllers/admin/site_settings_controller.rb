@@ -51,7 +51,6 @@ module Admin
 
     def reset_header_image
       @site_settings.header_image.purge
-      @site_settings.header_image.destroy
       @notices.push('Header image reset!')
     end
   end
