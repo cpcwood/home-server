@@ -12,8 +12,8 @@ class SiteSetting < ApplicationRecord
     self[key] != value
   end
 
-  def header_image_path
-    header_image.attached? ? header_image : default_header_image_path
+  def image_path(image)
+    image.attached? ? image : default_image_path(image.name)
   end
 
   def self.resize_header_image(image_path:, x_dim:, y_dim:)
