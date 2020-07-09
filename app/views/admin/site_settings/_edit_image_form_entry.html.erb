@@ -1,14 +1,14 @@
-<%# {image_object: @site_settings.about_image, image_name: 'About', x_dim: 800, y_dim: 340}  %>
+<%# {image_object: @site_settings.about_image, x_dim: 800, y_dim: 340}  %>
 
 <br>
-<h4> <%= image_name %> Image </h4>
+<h4> <%= image_object.name.humanize %> </h4>
 
 <div class="embedded_form_entry_container">
   <div class="input_label embedded_label">
     Current image:
   </div>
   <div class="embedded_current_value">
-    <%= image_object.attached? ? image_object.attachment.blob.filename : 'default image' %>
+    <%= image_object.attached? ? image_object.attachment.blob.filename : "default #{image_object.name.humanize(capitalize: false)}" %>
   </div>
 </div>
 

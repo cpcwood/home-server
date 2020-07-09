@@ -4,6 +4,7 @@ class SiteSetting < ApplicationRecord
   include DefaultImageHelper
 
   has_one_attached :header_image
+  has_one_attached :about_image
 
   validates :name,
             length: { in: 1..255, too_short: 'Site name cannot be blank', too_long: 'Site name cannot be longer than 255 charaters' }
@@ -16,7 +17,7 @@ class SiteSetting < ApplicationRecord
     image.attached? ? image : default_image_path(image.name)
   end
 
-  def self.resize_header_image(image_path:, x_dim:, y_dim:)
+  def self.resize_image(image_path:, x_dim:, y_dim:)
     expanded_image = expand_image(image_path: image_path, x_dim: x_dim)
     resized_image = vertical_center_crop_image(image_path: expanded_image.path, y_dim: y_dim)
     remove_exif_data(resized_image.path)

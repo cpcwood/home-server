@@ -61,10 +61,10 @@ RSpec.describe SiteSetting, type: :model do
     end
   end
 
-  describe '.resize_header_image' do
+  describe '.resize_image' do
     it 'resizes image to target dimensions' do
       target_dimensions = [2560, 300]
-      processed_image = SiteSetting.resize_header_image(image_path: image_path_valid, x_dim: target_dimensions[0], y_dim: target_dimensions[1])
+      processed_image = SiteSetting.resize_image(image_path: image_path_valid, x_dim: target_dimensions[0], y_dim: target_dimensions[1])
       expect(MiniMagick::Image.new(processed_image.path).dimensions).to eq(target_dimensions)
     end
   end

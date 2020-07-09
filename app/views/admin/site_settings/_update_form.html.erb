@@ -20,7 +20,8 @@
     <%= text_field(:site_setting, :name, class: 'input_box embedded_input_box', placeholder: 'new site name', value: @site_settings.name) %>
   </div>
 
-  <%= render partial: "admin/site_settings/edit_image_form_entry", locals: {image_object: @site_settings.header_image, image_name: 'Header', x_dim: 2560, y_dim: 300} %>
+  <%= render partial: "admin/site_settings/edit_image_form_entry", locals: {image_object: @site_settings.header_image, x_dim: 2560, y_dim: 300} %>
+  <%= render partial: "admin/site_settings/edit_image_form_entry", locals: {image_object: @site_settings.about_image, x_dim: 1450, y_dim: 680} %>
   
 
   <br>
