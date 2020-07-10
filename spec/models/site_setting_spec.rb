@@ -30,13 +30,6 @@ RSpec.describe SiteSetting, type: :model do
     end
   end
 
-  describe 'header_image upload' do
-    it 'Upload sucessful' do
-      site_setting.header_image.attach(image_file_upload)
-      expect(site_setting.header_image.attached?).to eq(true)
-    end
-  end
-
   describe '#update_required?' do
     it 'No update required' do
       original_name = site_setting.name
@@ -49,7 +42,7 @@ RSpec.describe SiteSetting, type: :model do
     end
   end
 
-  describe '.resize_image' do
+  describe '.resize_image', slow: true do
     it 'resizes image to target dimensions' do
       target_dimensions = [2560, 300]
       processed_image = SiteSetting.resize_image(image_path: image_path_valid, x_dim: target_dimensions[0], y_dim: target_dimensions[1])
@@ -57,7 +50,7 @@ RSpec.describe SiteSetting, type: :model do
     end
   end
 
-  describe '.image_valid?' do
+  describe '.image_valid?', slow: true do
     it 'image is valid jpeg' do
       expect(SiteSetting.image_valid?(image_path_valid)).to eq(true)
     end

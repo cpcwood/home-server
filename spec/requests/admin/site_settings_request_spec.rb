@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'spec_helpers/session_helper'
 
-RSpec.describe 'SiteSettings', type: :request do
+RSpec.describe 'SiteSettings', type: :request, slow: true do
   describe 'PUT /admin/site_setting.id #update' do
     let(:image_path) { Rails.root.join('spec/files/sample_image.jpg') }
     let(:image_invalid_path) { Rails.root.join('spec/files/sample_image_invalid.jpg') }

@@ -1,6 +1,6 @@
 require 'spec_helpers/feature_helpers'
 
-feature 'Admin update site settings' do
+feature 'Admin update site settings', feature: true, slow: true do
   scenario 'Update site name' do
     login_feature
     visit('admin/site_settings')

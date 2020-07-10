@@ -1,6 +1,6 @@
 require 'spec_helpers/feature_helpers'
 
-feature 'Admin login logout' do
+feature 'Admin login logout', feature: true do
   scenario 'Admin can login and logout' do
     login_feature
     expect(page).to have_content('admin welcome back to your home-server!')
