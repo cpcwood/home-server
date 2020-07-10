@@ -62,7 +62,7 @@ module Admin
       return if permitted_params[image_name].blank?
       image_path = permitted_params[image_name].tempfile.path
       return @alerts.push("#{image_name.humanize} invalid, please upload a jpeg or png file!") unless SiteSetting.image_valid?(image_path)
-      modified_image = SiteSetting.resize_image(image_path: image_path, x_dim: x_dim, y_dim: y_dim)
+      modified_image = Image.resize(image_path: image_path, x_dim: x_dim, y_dim: y_dim)
       result = attach_image(image_path: modified_image.path, image_name: image_name, permitted_params: permitted_params)
       update_message(result, image_name)
     end

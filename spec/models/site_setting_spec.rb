@@ -42,14 +42,6 @@ RSpec.describe SiteSetting, type: :model do
     end
   end
 
-  describe '.resize_image', slow: true do
-    it 'resizes image to target dimensions' do
-      target_dimensions = [2560, 300]
-      processed_image = SiteSetting.resize_image(image_path: image_path_valid, x_dim: target_dimensions[0], y_dim: target_dimensions[1])
-      expect(MiniMagick::Image.new(processed_image.path).dimensions).to eq(target_dimensions)
-    end
-  end
-
   describe '.image_valid?', slow: true do
     it 'image is valid jpeg' do
       expect(SiteSetting.image_valid?(image_path_valid)).to eq(true)
