@@ -6,6 +6,11 @@ class Image < ApplicationRecord
   validates :name,
             length: { in: 1..255, too_short: 'Image name cannot be blank', too_long: 'Image name cannot be longer than 255 charaters' }
 
+  def self.is_valid?(image_path)
+    image = MiniMagick::Image.new(image_path)
+    image.valid? ? image.mime_type.match?(%r{\Aimage/(png|jpeg)\z}i) : false
+  end
+
   def self.resize(image_path:, x_dim:, y_dim:)
     expanded_image = expand_image(image_path: image_path, x_dim: x_dim)
     resized_image = vertical_center_crop_image(image_path: expanded_image.path, y_dim: y_dim)

@@ -17,9 +17,4 @@ class SiteSetting < ApplicationRecord
   def update_required?(key, value)
     self[key] != value
   end
-
-  def self.image_valid?(image_path)
-    image = MiniMagick::Image.new(image_path)
-    image.valid? ? image.mime_type.match?(%r{\Aimage/(png|jpeg)\z}i) : false
-  end
 end
