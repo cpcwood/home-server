@@ -1,6 +1,8 @@
 class SiteSetting < ApplicationRecord
   require 'mini_magick'
 
+  has_many :images, dependent: :destroy
+
   has_one_attached :header_image
   has_one_attached :about_image
   has_one_attached :projects_image
@@ -27,17 +29,17 @@ class SiteSetting < ApplicationRecord
     image.valid? ? image.mime_type.match?(%r{\Aimage/(png|jpeg)\z}i) : false
   end
 
-  def self.expand_image(image_path:, x_dim: nil, y_dim: nil)
+  private_class_method def self.expand_image(image_path:, x_dim: nil, y_dim: nil)
     ImageProcessing::MiniMagick.source(image_path).resize_to_fit(x_dim, y_dim).call
   end
 
-  def self.vertical_center_crop_image(image_path:, x_dim: nil, y_dim: nil)
+  private_class_method def self.vertical_center_crop_image(image_path:, x_dim: nil, y_dim: nil)
     dimensions = MiniMagick::Image.new(image_path).dimensions
     v_crop_start = (dimensions[1] - y_dim) / 2
     ImageProcessing::MiniMagick.source(image_path).crop(0, v_crop_start, x_dim, y_dim).call
   end
 
-  def self.remove_exif_data(image_path)
+  private_class_method def self.remove_exif_data(image_path)
     ImageProcessing::MiniMagick.source(image_path).strip.call
   end
 end
