@@ -1,18 +1,8 @@
 <h3>
   Update Details
 </h3>
-<%= form_with(model: User.new,  :url => users_path(@user), method: "put") do |f| %>
-  <div class="system_messages">
-    <% flash.each do |type, msg| %>
-      <% if msg.kind_of?(Array) %>
-        <% msg.each do |i| %>
-          <div class='<%= type %>'><%= i %></div><br>
-        <% end %>
-      <% else %>
-        <div class='<%= type %>'><%= msg %></div><br>
-      <% end %>
-    <% end %>
-  </div>
+<%= form_with(model: @user,  :url => users_path(@user), method: "put") do |f| %>
+  <%= render 'layouts/system_messages'%>
   <div class="embedded_form_entry_container">
     <%= label(:username, :username, 'Username:', class: 'input_label embedded_label') %>
     <%= text_field(:username, :username, {class: 'input_box embedded_input_box', placeholder: 'new username'}) %>

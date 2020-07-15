@@ -1,0 +1,45 @@
+<br>
+<h4> <%= image.name.humanize %> </h4>
+
+<%= form_with(model: image,  :url => admin_image_path(image), method: "put") do |f| %>
+
+  <div class="embedded_form_entry_container">
+    <div class="input_label embedded_label">
+      Current image:
+    </div>
+    <div class="embedded_current_value">
+      <%= image.image_file.attached? ? image.image_file.attachment.blob.filename : "default #{image.name.humanize(capitalize: false)}" %>
+    </div>
+  </div>
+
+  <div class="embedded_form_entry_container">
+    <%= image_tag(image_path(image), class: 'embedded_full_width embedded_cover_image')%>
+  </div>
+
+  <div class="embedded_form_entry_container">
+    <div class="embedded_full_width embedded_form_note small-font">
+      <strong>Note:</strong> Images will be resized to <%= image.x_dim %>px wide and cropped to <%= image.y_dim %>px tall. Accepted image formats are jpeg and png.
+    </div>
+  </div>
+
+  <div class="embedded_form_entry_container">
+    <%= f.label(:update, 'Update image:', class: 'input_label embedded_label') %>
+    <%= f.file_field(:update, accept: 'image/png,image/jpeg', class: 'input_box embedded_no_border', id: "image_update_#{image.name}") %>
+  </div>
+
+  <div class="embedded_form_entry_container">
+    <%= f.label(:reset, 'Reset to default:', class: 'input_label embedded_label') %>
+    <%= f.check_box(:reset, class: 'input_check_box', id: "image_reset_#{image.name}") %>
+  </div>
+
+  <br>
+  <br>
+
+  <div class="embedded_form_entry_container">
+    <div class="form_submit_container">
+      <%= f.submit("Update #{image.name.humanize(capitalize: false)}", class: 'input_submit') %>
+    </div>
+    <div class="default_loader"></div>
+  </div>
+
+<% end %>

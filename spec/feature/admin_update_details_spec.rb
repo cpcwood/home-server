@@ -1,9 +1,9 @@
-require 'helpers/feature_helpers'
+require 'spec_helpers/feature_helpers'
 
-feature 'Admin update details' do
-  scenario 'Admin can update username' do
+feature 'Admin update details', feature: true do
+  scenario 'Update username' do
     login_feature
-    visit('admin/user-settings')
+    visit('admin/user_settings')
     fill_in('username[username]', with: 'new_username')
     fill_in('username[username_confirmation]', with: 'new_username')
     fill_in('current_password[password]', with: @test_user_password)
@@ -13,9 +13,9 @@ feature 'Admin update details' do
     expect(@test_user.username).to eq('new_username')
   end
 
-  scenario 'Admin can update email' do
+  scenario 'Update email' do
     login_feature
-    visit('admin/user-settings')
+    visit('admin/user_settings')
     fill_in('email[email]', with: 'new@example.com')
     fill_in('email[email_confirmation]', with: 'new@example.com')
     fill_in('current_password[password]', with: @test_user_password)
@@ -25,9 +25,9 @@ feature 'Admin update details' do
     expect(@test_user.email).to eq('new@example.com')
   end
 
-  scenario 'Admin can update password' do
+  scenario 'Update password' do
     login_feature
-    visit('admin/user-settings')
+    visit('admin/user_settings')
     fill_in('password[password]', with: 'newpassword')
     fill_in('password[password_confirmation]', with: 'newpassword')
     fill_in('current_password[password]', with: @test_user_password)
@@ -37,9 +37,9 @@ feature 'Admin update details' do
     expect(@test_user.authenticate('newpassword')).to eq(@test_user)
   end
 
-  scenario 'Admin can update mobile number' do
+  scenario 'Update mobile number' do
     login_feature
-    visit('admin/user-settings')
+    visit('admin/user_settings')
     fill_in('mobile_number[mobile_number]', with: '07123456789')
     fill_in('mobile_number[mobile_number_confirmation]', with: '07123456789')
     fill_in('current_password[password]', with: @test_user_password)

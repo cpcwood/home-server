@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'helpers/session_helper'
+require 'spec_helpers/session_helper'
 
 RSpec.describe 'Admins', type: :request do
   describe 'GET /admin #general' do
@@ -31,10 +31,10 @@ RSpec.describe 'Admins', type: :request do
     end
   end
 
-  describe 'GET /admin/user-settings #user_settings' do
+  describe 'GET /admin/user_settings #user_settings' do
     it 'Displays user settings page' do
       login
-      get '/admin/user-settings'
+      get '/admin/user_settings'
       expect(response).to render_template(:user_settings)
     end
   end

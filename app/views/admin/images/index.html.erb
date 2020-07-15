@@ -1,0 +1,23 @@
+<h1>
+  Admin Zone
+  <div class='subtitle'>
+    Images
+  </div>
+</h1>
+<div class='dashboard_container'>
+  <%= render 'admins/dashboard_sidebar' %>
+  <div class='dashboard_content'>
+    <div class='dashboard_item_container'>
+      <h3> 
+        Update site images
+      </h3>
+    </div>
+    <%= render 'layouts/system_messages'%>
+    <% @images.each do |image| %>
+      <div class='dashboard_item_container'>
+        <%= render partial: "admin/images/edit_image_form_entry", locals: {image: image} %>
+      </div>
+      <div class='dashboard_item_separator'></div>
+    <% end %>
+  </div>
+</div>

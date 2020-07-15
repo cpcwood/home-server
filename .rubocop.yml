@@ -22,7 +22,7 @@ Gemspec/OrderedDependencies:
   Enabled: false
 
 Layout/LineLength:
-  Max: 250
+  Max: 200
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
 Layout/SpaceBeforeBlockBraces:
@@ -35,6 +35,8 @@ Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: false
 Layout/SpaceAroundMethodCallOperator:
   Enabled: false
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: same_line
 
 Style/SymbolArray:
   Enabled: false
@@ -64,6 +66,7 @@ Style/RedundantRegexpCharacterClass:
   Enabled: true
 Style/RedundantRegexpEscape:
   Enabled: true
+
 
 Metrics/BlockLength:
   Enabled: false
