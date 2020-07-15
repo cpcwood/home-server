@@ -1,41 +1,28 @@
-<h3>
-  Update Site Settings
-</h3>
-<%= form_with(model: @site_settings,  :url => admin_site_settings_path(@site_settings), method: "put", multipart: true ) do |f| %>
-  <%= render 'layouts/system_messages'%>
-
-  <h4> Site Name </h4>
-
-  <div class="embedded_form_entry_container">
-    <div class="input_label embedded_label">
-      Current site name:
+<%= form_with(model: @site_settings, :url => admin_site_setting_path(@site_settings), method: "put") do |f| %>
+    
+    <h4> Site Name </h4>
+    <div class="embedded_form_entry_container">
+      <div class="input_label embedded_label">
+        Current site name:
+      </div>
+      <div class="embedded_current_value">
+        <%= @site_settings.name %>
+      </div>
     </div>
-    <div class="embedded_current_value">
-      <%= @site_settings.name %>
+
+    <div class="embedded_form_entry_container">
+      <%= f.label(:name, 'Update site name:', class: 'input_label embedded_label') %>
+      <%= f.text_field(:name, class: 'input_box embedded_input_box', placeholder: 'new site name', value: @site_settings.name) %>
     </div>
-  </div>
 
-  <div class="embedded_form_entry_container">
-    <%= label(:site_setting, :name, 'Update site name:', class: 'input_label embedded_label') %>
-    <%= text_field(:site_setting, :name, class: 'input_box embedded_input_box', placeholder: 'new site name', value: @site_settings.name) %>
-  </div>
+    <br>
+    <br>
 
-  <%= render partial: "admin/site_settings/edit_image_form_entry", locals: {image_object: @site_settings.header_image, x_dim: 2560, y_dim: 300} %>
-  <%= render partial: "admin/site_settings/edit_image_form_entry", locals: {image_object: @site_settings.about_image, x_dim: 1450, y_dim: 680} %>
-  <%= render partial: "admin/site_settings/edit_image_form_entry", locals: {image_object: @site_settings.projects_image, x_dim: 1450, y_dim: 680} %>
-  <%= render partial: "admin/site_settings/edit_image_form_entry", locals: {image_object: @site_settings.blog_image, x_dim: 1450, y_dim: 680} %>
-  <%= render partial: "admin/site_settings/edit_image_form_entry", locals: {image_object: @site_settings.say_hello_image, x_dim: 1450, y_dim: 680} %>
-  <%= render partial: "admin/site_settings/edit_image_form_entry", locals: {image_object: @site_settings.gallery_image, x_dim: 1450, y_dim: 680} %>
-  <%= render partial: "admin/site_settings/edit_image_form_entry", locals: {image_object: @site_settings.contact_image, x_dim: 1450, y_dim: 680} %>
-
-  <br>
-  <br>
-
-  <div class="embedded_form_entry_container">
-    <div class="form_submit_container">
-      <%= f.submit('Update site settings', class: 'input_submit') %>
+    <div class="embedded_form_entry_container">
+      <div class="form_submit_container">
+        <%= f.submit('Update site settings', class: 'input_submit') %>
+      </div>
+      <div class="default_loader"></div>
     </div>
-    <div class="default_loader"></div>
-  </div>
 
-<% end %>
+  <% end %>

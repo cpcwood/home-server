@@ -1,12 +1,22 @@
 class Image < ApplicationRecord
-  require 'mini_magick'
+  require 'image_processing'
 
   belongs_to :site_setting
+
+  has_one_attached :image_file
 
   validates :name,
             length: { in: 1..255, too_short: 'Image name cannot be blank', too_long: 'Image name cannot be longer than 255 charaters' }
 
-  def self.is_valid?(image_path)
+  validates :x_dim,
+            presence: true,
+            numericality: { only_integer: true, greater_than: 0 }
+
+  validates :y_dim,
+            presence: true,
+            numericality: { only_integer: true, greater_than: 0 }
+
+  def self.valid?(image_path)
     image = MiniMagick::Image.new(image_path)
     image.valid? ? image.mime_type.match?(%r{\Aimage/(png|jpeg)\z}i) : false
   end

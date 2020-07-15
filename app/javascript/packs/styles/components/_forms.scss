@@ -326,3 +326,8 @@ input[type=checkbox] {
     margin: 30px 0;
   }
 }
+
+.embedded_cover_image {
+  max-height: 300px;
+  object-fit: contain;
+}
