@@ -1,0 +1,50 @@
+<h1>
+  Admin Zone
+  <div class='subtitle'>
+    General
+  </div>
+</h1>
+<div class='dashboard_container'>
+  <%= render 'admins/dashboard_sidebar' %>
+  <div class='dashboard_content'>
+    <div class='dashboard_item_container'>
+      <h3>
+        System Messages
+      </h3>
+      <div class="system_messages">
+        <% flash.each do |type, msg| %>
+          <div class='<%= type %>'><%= msg %></div><br>
+        <% end %>
+        <div class='no_messages'>You have no messages</div>
+      </div>
+    </div>
+    <div class='dashboard_item_separator'></div>
+    <div class='dashboard_item_container'>
+      <h3>
+        Last Login
+      </h3>
+      <strong>Time and Date:</strong> <%= @user.last_login_time.strftime("%H:%M %d-%m-%Y") %>
+      <br><br>
+      <strong>IP Address:</strong> <%= @user.last_login_ip %>
+    </div>
+    <div class='dashboard_item_separator'></div>
+    <div class='dashboard_item_container'>
+      <%= render 'admins/current_user_details'%>
+    </div>
+    <div class='dashboard_item_separator'></div>
+        <div class='dashboard_item_container'>
+      <h3>
+        Notifications
+      </h3>
+      Placeholder
+    </div>
+    <div class='dashboard_item_separator'></div>
+    <div class='dashboard_item_container'>
+      <h3>
+        Analytics
+      </h3>
+      Placeholder
+    </div>
+    <div class='dashboard_item_separator'></div>
+  </div>
+</div>

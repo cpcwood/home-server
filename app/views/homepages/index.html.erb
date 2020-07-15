@@ -1,0 +1,61 @@
+<h1>
+  Full Stack Developer  
+  <div class='subtitle'>
+    London
+  </div>
+</h1>
+
+<div class="system_messages">
+  <% flash.each do |type, msg| %>
+    <div class='<%= type %>'><%= msg %></div><br> 
+  <% end %>
+</div>
+
+<div class='flex_image_tile' id='about' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
+  <%= image_tag('homepage/about.jpg', id: 'about_image', class: 'cover_image') %>
+  <a href='/about'>
+    <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
+      <span>ABOUT</span>
+    </span>
+  </a>
+</div>
+<div class='flex_image_tile' id='projects' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
+  <%= image_tag('homepage/projects.png', id: 'projects_image', class: 'cover_image middle_left') %>
+  <a href='/projects'>
+    <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
+      <span>PROJECTS</span>
+    </span>
+  </a>
+</div>
+<div class='flex_image_tile' id='blog' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
+  <%= image_tag('homepage/blog.jpg', id: 'blog_image', class: 'cover_image') %>
+  <a href='/blog'>
+    <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
+      <span>BLOG</span>
+    </span>
+  </a>
+</div>
+<div class='flex_image_tile' id='say_hello' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
+  <%= image_tag('homepage/say-hello.png', id: 'say_hello_image', class: 'cover_image top_left') %>
+  <a href='/say-hello'>
+    <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
+      <span>SAY HELLO</span>
+    </span>
+  </a>
+</div>
+<div class='flex_image_tile' id='gallery' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
+  <%= image_tag('homepage/gallery.jpg', id: 'gallery_image', class: 'cover_image') %>
+  <a href='/gallery'>
+    <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
+      <span>GALLERY</span>
+    </span>
+  </a>
+</div>
+<div class='flex_image_tile' id='contact' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
+  <%= image_tag('homepage/contact.jpg', id: 'contact_image', class: 'cover_image') %>
+  <a href='/contact'>
+    <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
+      <span>CONTACT</span>
+    </span>
+  </a>
+</div>

@@ -1,7 +1,7 @@
 require 'helpers/session_helper'
 require 'twilio-ruby'
 
-feature 'Password Reset' do
+feature 'Password reset' do
   scenario 'Filling in password reset form' do
     stub_request(:post, 'https://www.google.com/recaptcha/api/siteverify?response&secret=test')
       .to_return(status: 200, body: '{"success": true}', headers: {})
