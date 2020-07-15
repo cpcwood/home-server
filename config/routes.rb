@@ -19,10 +19,10 @@ Rails.application.routes.draw do
   get '/admin/notifications', to: 'admins#notifications'
   get '/admin/analytics', to: 'admins#analytics'
   get '/admin/user_settings', to: 'admins#user_settings'
-  get '/admin/site_settings', to: 'admins#site_settings'
 
   namespace :admin do
-    resource :site_settings, only: [:update]
+    resources :site_settings, only: [:index, :update]
+    resources :images, only: [:index, :update]
   end
 
   get '/say-hello', to: 'homepages#index'

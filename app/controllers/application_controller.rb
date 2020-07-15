@@ -12,5 +12,6 @@ class ApplicationController < ActionController::Base
 
   def assign_site_setings
     @site_settings = SiteSetting.first
+    @site_images = @site_settings.images_hash
   end
 end
