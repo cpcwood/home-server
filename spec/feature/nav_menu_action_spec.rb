@@ -1,4 +1,4 @@
-feature 'Nav menu action', js: true do
+feature 'Nav menu action', feature: true, js: true do
   scenario 'Clicking hamburger opens and closes navbar menu' do
     visit('/')
     page.find(:css, '.hamburger_container').click

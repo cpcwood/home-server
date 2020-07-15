@@ -15,6 +15,7 @@
 $header-font: 'RobotoTitle', Fallback, sans-serif;
 $general-font: 'RobotoBody', Fallback, sans-serif;
 $general-font-color: rgb(0, 0, 0);
+$light-font-color: rgb(22, 22, 22);
 $inverse-font-color: rgb(240, 240, 240);
 
 html {
@@ -59,6 +60,35 @@ h2 {
   font-family: $general-font;
 }
 
+h4 {
+  margin: 0px 0px;
+  font-size: 18px;
+  font-weight: 600;
+
+  @include respond-to(tablet) {
+    margin: 15px 0px;
+    font-size: 22px;
+  }
+  @include respond-to(desktop) {
+    margin: 20px 0px;
+    font-size: 24px;
+  }
+}
+
 b, strong {
   font-weight: 600;
+}
+
+.small-font {
+  font-size: 12px;
+  font-weight: 300;
+  color: $light-font-color;
+
+  @include respond-to(tablet) {
+    font-size: 14px;
+  }
+
+  @include respond-to(desktop) {
+    font-size: 16px;
+  }
 }

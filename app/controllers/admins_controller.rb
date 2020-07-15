@@ -1,17 +1,13 @@
 class AdminsController < ApplicationController
   before_action :check_admin_logged_in
 
-  def general
-    @user
-  end
+  def general; end
 
   def notifications; end
 
   def analytics; end
 
-  def user_settings
-    @user
-  end
+  def user_settings; end
 
   private
 

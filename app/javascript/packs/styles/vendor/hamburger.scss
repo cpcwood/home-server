@@ -64,10 +64,6 @@ $length_scale: 0.96 !default;
   0% {-moz-transform: rotate(0deg) scaleX(1);}
   100% {-moz-transform: rotate(45deg) scaleX($length_scale);}
 }
-@-o-keyframes hamburger_crown_rotate {
-  0% {-o-transform: rotate(0deg) scaleX(1);}
-  100% {-o-transform: rotate(45deg) scaleX($length_scale);}
-}
 @keyframes hamburger_crown_rotate {
   0% {transform: rotate(0deg) scaleX(1);}
   100% {transform: rotate(45deg) scaleX($length_scale);}
@@ -80,10 +76,6 @@ $length_scale: 0.96 !default;
 @-moz-keyframes hamburger_crown_rotate_reverse {
   0% {-moz-transform: rotate(45deg) scaleX($length_scale);}
   100% {-moz-transform: rotate(0deg) scaleX(1);}
-}
-@-o-keyframes hamburger_crown_rotate_reverse {
-  0% {-o-transform: rotate(45deg) scaleX($length_scale);}
-  100% {-o-transform: rotate(0deg) scaleX(1);}
 }
 @keyframes hamburger_crown_rotate_reverse {
   0% {transform: rotate(45deg) scaleX($length_scale);}
@@ -100,10 +92,6 @@ $length_scale: 0.96 !default;
   0% {-moz-transform: scale(1,1);}
   100% {-moz-transform: scale(0,0);}
 }
-@-o-keyframes hamburger_patty_hide {
-  0% {-o-transform: scale(1,1);}
-  100% {-o-transform: scale(0,0);}
-}
 @keyframes hamburger_patty_hide {
   0% {transform: scale(1,1);}
   100% {transform: scale(0,0);}
@@ -116,10 +104,6 @@ $length_scale: 0.96 !default;
 @-moz-keyframes hamburger_patty_show {
   0% {-moz-transform: scale(0,0);}
   100% {-moz-transform: scale(1,1);}
-}
-@-o-keyframes hamburger_patty_show {
-  0% {-o-transform: scale(0,0);}
-  100% {-o-transform: scale(1,1);}
 }
 @keyframes hamburger_patty_show {
   0% {transform: scale(0,0);}
@@ -136,10 +120,6 @@ $length_scale: 0.96 !default;
   0% {-moz-transform: rotate(0deg) scaleX(1);}
   100% {-moz-transform: rotate(-45deg) scaleX($length_scale);}
 }
-@-o-keyframes hamburger_heel_rotate {
-  0% {-o-transform: rotate(0deg) scaleX(1);}
-  100% {-o-transform: rotate(-45deg) scaleX($length_scale);}
-}
 @keyframes hamburger_heel_rotate {
   0% {transform: rotate(0deg) scaleX(1);}
   100% {transform: rotate(-45deg) scaleX($length_scale);}
@@ -152,10 +132,6 @@ $length_scale: 0.96 !default;
 @-moz-keyframes hamburger_heel_rotate_reverse {
   0% {-moz-transform: rotate(-45deg) scaleX($length_scale);}
   100% {-moz-transform: rotate(0deg) scaleX(1);}
-}
-@-o-keyframes hamburger_heel_rotate_reverse {
-  0% {-o-transform: rotate(-45deg) scaleX($length_scale);}
-  100% {-o-transform: rotate(-45deg) scaleX(1);}
 }
 @keyframes hamburger_heel_rotate_reverse {
   0% {transform: rotate(-45deg) scaleX($length_scale);}

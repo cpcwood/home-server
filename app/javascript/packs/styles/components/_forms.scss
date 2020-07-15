@@ -1,8 +1,12 @@
 // Modules
-@use '../base/globals' as *;
+@use '../base/globals';
 @use '../base/functions';
 @use '../base/mixins' as *;
 @use '../base/typography';
+
+// Variables
+$box_border_color: globals.$box_border_color;
+$background-color: globals.$background-color;
 
 // Containers
 .centered_container {
@@ -68,6 +72,17 @@
     height: 35px;
     margin: 15px 0px 0px 0px;
   }
+}
+
+.input_check_box {
+  box-sizing: border-box;
+  position: relative;
+}
+
+input[type=checkbox] {
+  -moz-transform: scale(1.5);
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
 }
 
 .input_seperator {
@@ -178,20 +193,42 @@
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  margin: 10px 0;
+  margin-bottom: 10px;
   padding: 0 0;
   height: inherit;
   font-size: inherit;
+  font-weight: 600;
 
   @include respond-to(tablet) {
     width: 33%;
     margin: 0 0;
     padding: 0 2% 0 0;
+    font-weight: 500;
   }
   @include respond-to(desktop) {
     width: 33%;
     margin: 0 0;
     padding: 0 2% 0 0;
+    font-weight: 500;
+  }
+}
+
+.embedded_title {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  padding: 0 0;
+  height: inherit;
+  font-size: inherit;
+  font-weight: 600;
+
+  @include respond-to(tablet) {
+    padding: 0 2% 0 0;
+    font-weight: 500;
+  }
+  @include respond-to(desktop) {
+    padding: 0 2% 0 0;
+    font-weight: 500;
   }
 }
 
@@ -201,7 +238,7 @@
   width: 100%;
   max-width: 450px;
   margin: 0 0;
-  padding: 3px 10px;
+  padding: 3px 3px;
   height: inherit;
   border: $box_border_color 1px solid;
   border-radius: 0;
@@ -210,10 +247,60 @@
 
   @include respond-to(tablet) {
     width: 65%;
+    padding: 3px 10px;
+  }
+  @include respond-to(desktop) {
+    width: 65%;
+    padding: 3px 10px;
+  }
+}
+
+.embedded_no_border {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  margin: 0 0;
+  padding: 3px 0px;
+  height: inherit;
+  border-radius: 0;
+  font-size: inherit;
+
+  @include respond-to(tablet) {
+    width: 65%;
   }
   @include respond-to(desktop) {
     width: 65%;
   }
+}
+
+.embedded_current_value {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  margin: 0 0;
+  padding: 3px 0px;
+  height: inherit;
+  border-radius: 0;
+  font-size: inherit;
+  font-weight: 500;
+
+  @include respond-to(tablet) {
+    padding: 3px 5px;
+    width: 65%;
+  }
+  @include respond-to(desktop) {
+    padding: 3px 5px;
+    width: 65%;
+  }
+}
+
+.embedded_full_width {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  height: auto;
 }
 
 .form_submit_container {
@@ -225,6 +312,9 @@
   input {
     font-size: inherit;
   }
+  &:active + .default_loader {
+    visibility: visible;
+  }
 }
 
 .embedded_input_seperator {
@@ -235,4 +325,9 @@
   @include respond-to(desktop) {
     margin: 30px 0;
   }
+}
+
+.embedded_cover_image {
+  max-height: 300px;
+  object-fit: contain;
 }

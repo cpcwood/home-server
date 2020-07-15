@@ -98,6 +98,7 @@ $btn-hover-animation: 0.2s;
   padding-top: 60px;
   background-color: white;
   z-index: 5;
+  overflow-y: scroll;
 
   transition: width $sidebar-transition ease 0s, height 0s ease $sidebar-transition;
   -webkit-transition: width $sidebar-transition ease 0s, height 0s ease $sidebar-transition;

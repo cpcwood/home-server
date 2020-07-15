@@ -1,0 +1,28 @@
+<%= form_with(model: @site_settings, :url => admin_site_setting_path(@site_settings), method: "put") do |f| %>
+    
+    <h4> Site Name </h4>
+    <div class="embedded_form_entry_container">
+      <div class="input_label embedded_label">
+        Current site name:
+      </div>
+      <div class="embedded_current_value">
+        <%= @site_settings.name %>
+      </div>
+    </div>
+
+    <div class="embedded_form_entry_container">
+      <%= f.label(:name, 'Update site name:', class: 'input_label embedded_label') %>
+      <%= f.text_field(:name, class: 'input_box embedded_input_box', placeholder: 'new site name', value: @site_settings.name) %>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="embedded_form_entry_container">
+      <div class="form_submit_container">
+        <%= f.submit('Update site settings', class: 'input_submit') %>
+      </div>
+      <div class="default_loader"></div>
+    </div>
+
+  <% end %>
