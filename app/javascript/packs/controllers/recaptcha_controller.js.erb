@@ -1,0 +1,22 @@
+import { Controller } from 'stimulus'
+
+export default class extends Controller {
+  connect () {
+    var reCaptchaScript = document.createElement('script')
+    window.reCaptchaOnload = () => {
+      window.grecaptcha.render('recaptcha', {
+        sitekey: '<%= Rails.application.credentials.recaptcha[:site_key] %>',
+        theme: 'light',
+        size: 'normal'
+      })
+    }
+    reCaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=reCaptchaOnload&render=explicit'
+    reCaptchaScript.className = 'recaptcha_script'
+    document.head.appendChild(reCaptchaScript)
+  }
+
+  disconnect () {
+    var reCaptchaScript = document.head.querySelector('.recaptcha_script')
+    document.head.removeChild(reCaptchaScript)
+  }
+}

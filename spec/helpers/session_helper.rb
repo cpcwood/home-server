@@ -13,9 +13,13 @@ end
 
 def login
   block_twilio_verification_checks
-  password_athenticate_admin(user: 'admin', password: 'Securepass1', captcha_success: true)
+  password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
   verification_double = double('verification', status: 'approved')
   allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
   post '/2fa', params: { auth_code: '123456' }
   follow_redirect!
+end
+
+def logout
+  delete '/login'
 end

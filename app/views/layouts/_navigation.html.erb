@@ -2,15 +2,22 @@
   <div class='nav_title_container'>
     <a href='/'>Chris Wood</a>
   </div>
-  <div class='nav_menu'>
-    <div class='hamburger_container'>
+  <% if @user %>
+    <div class='username'>
+      <a href='/admin'>
+        <%= @user.username %>
+      </a>
+    </div>
+  <% end %>
+  <div class='nav_menu' data-controller='nav-menu' data-nav-menu-open='false'>
+    <div class='hamburger_container' data-action='click->nav-menu#menuToggle' data-target='nav-menu.navHamburger'>
       <div class='hamburger'>
         <div class='hamburger_bar' id='hamburger_crown'></div>
         <div class='hamburger_bar' id='hamburger_patty'></div>
         <div class='hamburger_bar' id='hamburger_heel'></div>
       </div>
     </div>
-    <div class='nav_sidebar'>
+    <div class='nav_sidebar' data-target='nav-menu.navSidebar'>
       <div class='upper'>
         <div class='nav_item_separator'></div>
         <a href='/' class='nav_item'>
@@ -45,8 +52,12 @@
       <div class='lower'>
         <div class='nav_item_separator'></div>
         <% if @user %>
-        <%= form_with(url: "/login", method: "delete") do %>
-          <%= submit_tag("LOGOUT", id: 'logout-button', class: 'nav_item') %>
+        <a href='/admin' class='nav_item'>
+          ADMIN
+        </a>
+        <div class='nav_item_separator'></div>
+        <%= form_with(url: "/login", method: "delete", class: 'logout_form') do %>
+          <%= submit_tag("LOGOUT", class: 'nav_item', id: 'logout-button') %>
         <% end %>
         <% else %>
         <a href='/login' class='nav_item' id='login-button'>
@@ -56,6 +67,6 @@
         <div class='nav_item_separator'></div>
       </div>
     </div>
-    <div class='nav_screen_cover'></div>
+    <div class='nav_screen_cover' data-action='click->nav-menu#closeMenu'></div>
   </div>
 </nav>

@@ -1,7 +1,6 @@
 # Home Server
 
-[![Coverage Status](https://coveralls.io/repos/github/cpcwood/home-server/badge.svg?branch=master)](https://coveralls.io/github/cpcwood/home-server?branch=master)
-![Build Status](https://api.travis-ci.com/cpcwood/home-server.svg?branch=master&status=started)
+[![Coverage Status](https://img.shields.io/coveralls/github/cpcwood/home-server?style=flat-square&color=sucess)](https://coveralls.io/github/cpcwood/home-server?branch=master) [![Build Status](https://img.shields.io/travis/com/cpcwood/home-server?style=flat-square&color=sucess)](https://travis-ci.com/github/cpcwood/home-server) [![JavaScript Style Guide](https://img.shields.io/badge/JS_code_style-standard-informational.svg?style=flat-square)](https://standardjs.com)
 
 ## Overview
 
@@ -12,11 +11,13 @@ General portfolio style website and a place to prototype new rails features I fi
 - Securing Rails
 - General Rails processes
 - CSS and HTML
+- Stimulus JavaScript Framework
 
 ## Technology
 
-- Ruby 2.6.5
+- Ruby 2.7.0
 - Ruby on Rails 6.0
+- StimulusJS
 - PostgreSQL v12.1
 - Google reCaptcha
 - Twilio SMS Verification

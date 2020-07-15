@@ -1,21 +1,26 @@
 Rails.application.routes.draw do
-  root to: 'homepage#index'
+  root to: 'homepages#index'
   
-  get '/about', to: 'about#index'
+  get '/about', to: 'abouts#index'
 
-  get '/login', to: 'session#login'
-  post '/login', to: 'session#new'
-  get '/2fa', to: 'session#send_2fa'
-  post '/2fa', to: 'session#verify_2fa'
-  put '/2fa', to: 'session#reset_2fa'
-  delete '/login', to: 'session#destroy'
+  get '/login', to: 'sessions#login'
+  post '/login', to: 'sessions#new'
+  get '/2fa', to: 'sessions#send_2fa'
+  post '/2fa', to: 'sessions#verify_2fa'
+  put '/2fa', to: 'sessions#reset_2fa'
+  delete '/login', to: 'sessions#destroy'
 
-  get '/forgotten-password', to: 'password#forgotten_password'
-  post '/forgotten-password', to: 'password#send_reset_link'
-  get '/reset-password', to: 'password#reset_password'
-  post '/reset-password', to: 'password#update_password'
+  get '/forgotten-password', to: 'passwords#forgotten_password'
+  post '/forgotten-password', to: 'passwords#send_reset_link'
+  get '/reset-password', to: 'passwords#reset_password'
+  post '/reset-password', to: 'passwords#update_password'
 
-  get '/admin', to: 'admin#index'
+  get '/admin', to: 'admins#general'
+  get '/admin/notifications', to: 'admins#notifications'
+  get '/admin/analytics', to: 'admins#analytics'
+  get '/admin/user-settings', to: 'admins#user_settings'
 
-  get '/say-hello', to: 'homepage#index'
+  get '/say-hello', to: 'homepages#index'
+
+  resource :users, only: [:update]
 end

@@ -3,22 +3,23 @@
   <head>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-
     <title>HomeServer</title>
     <%= favicon_link_tag %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
   </head>
 
   <body>
-    <div class='page_container'>
+    <div class='page_container' data-controller='header-scroll'>
       <%= render 'layouts/navigation'%>
-      <div class='header_image'>
+      <div class='header_image' data-target='header-scroll.headerImage'>
         <%= image_tag('header.jpg', id: 'header_image')%>
       </div>
-      <div class='content_container'>
-        <%= yield %>
+      <div class='content_container' data-action='scroll->header-scroll#scrollHeaderImage' data-target='header-scroll.contentContainer'>
+        <div class='content'>
+          <%= yield %>
+        </div>
       </div>
     </div>
     <div id='background'></div>

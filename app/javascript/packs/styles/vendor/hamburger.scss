@@ -1,0 +1,207 @@
+// Default Variables
+$container_position: relative !default;
+$container_height: 55px !default;
+$container_width: 55px !default;
+$container_z_index: 1 !default;
+$container_color: none !default;
+$hamburger_padding: 6px 6px !default;
+$bar_height: 5px !default;
+$bar_color_normal: rgb(0, 0, 0) !default;
+$bar_color_clicked: rgb(0, 0, 0) !default;
+$animation_duration: 0.3s !default;
+$length_scale: 0.96 !default;
+
+// Location and Dimensions
+.hamburger_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  position: $container_position;
+  height: $container_height;
+  width: $container_width;
+  z-index: $container_z_index;
+  background-color: $container_color;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.hamburger {
+  box-sizing: border-box;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  padding: $hamburger_padding;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.hamburger_bar {
+  display: block;
+  height: $bar_height;
+  width: 100%;
+  border-radius: 999px;
+  background-color: $bar_color_normal;
+  transition: background-color 0.1s ease 0.1s;
+}
+
+.clicked .hamburger_bar {
+  transition: background-color 0.1s ease 0s;
+  background-color: $bar_color_clicked;
+}
+
+// Crown Animation
+
+@-webkit-keyframes hamburger_crown_rotate {
+  0% {-webkit-transform: rotate(0deg) scaleX(1);}
+  100% {-webkit-transform: rotate(45deg) scaleX($length_scale);}
+}
+@-moz-keyframes hamburger_crown_rotate {
+  0% {-moz-transform: rotate(0deg) scaleX(1);}
+  100% {-moz-transform: rotate(45deg) scaleX($length_scale);}
+}
+@-o-keyframes hamburger_crown_rotate {
+  0% {-o-transform: rotate(0deg) scaleX(1);}
+  100% {-o-transform: rotate(45deg) scaleX($length_scale);}
+}
+@keyframes hamburger_crown_rotate {
+  0% {transform: rotate(0deg) scaleX(1);}
+  100% {transform: rotate(45deg) scaleX($length_scale);}
+}
+
+@-webkit-keyframes hamburger_crown_rotate_reverse {
+  0% {-webkit-transform: rotate(45deg) scaleX($length_scale);}
+  100% {-webkit-transform: rotate(0deg) scaleX(1);}
+}
+@-moz-keyframes hamburger_crown_rotate_reverse {
+  0% {-moz-transform: rotate(45deg) scaleX($length_scale);}
+  100% {-moz-transform: rotate(0deg) scaleX(1);}
+}
+@-o-keyframes hamburger_crown_rotate_reverse {
+  0% {-o-transform: rotate(45deg) scaleX($length_scale);}
+  100% {-o-transform: rotate(0deg) scaleX(1);}
+}
+@keyframes hamburger_crown_rotate_reverse {
+  0% {transform: rotate(45deg) scaleX($length_scale);}
+  100% {transform: rotate(0deg) scaleX(1);}
+}
+
+// Patty Animation
+
+@-webkit-keyframes hamburger_patty_hide {
+  0% {-webkit-transform: scale(1,1);}
+  100% {-webkit-transform: scale(0,0);}
+}
+@-moz-keyframes hamburger_patty_hide {
+  0% {-moz-transform: scale(1,1);}
+  100% {-moz-transform: scale(0,0);}
+}
+@-o-keyframes hamburger_patty_hide {
+  0% {-o-transform: scale(1,1);}
+  100% {-o-transform: scale(0,0);}
+}
+@keyframes hamburger_patty_hide {
+  0% {transform: scale(1,1);}
+  100% {transform: scale(0,0);}
+}
+
+@-webkit-keyframes hamburger_patty_show {
+  0% {-webkit-transform: scale(0,0);}
+  100% {-webkit-transform: scale(1,1);}
+}
+@-moz-keyframes hamburger_patty_show {
+  0% {-moz-transform: scale(0,0);}
+  100% {-moz-transform: scale(1,1);}
+}
+@-o-keyframes hamburger_patty_show {
+  0% {-o-transform: scale(0,0);}
+  100% {-o-transform: scale(1,1);}
+}
+@keyframes hamburger_patty_show {
+  0% {transform: scale(0,0);}
+  100% {transform: scale(1,1);}
+}
+
+// Heel Animation
+
+@-webkit-keyframes hamburger_heel_rotate {
+  0% {-webkit-transform: rotate(0deg) scaleX(1);}
+  100% {-webkit-transform: rotate(-45deg) scaleX($length_scale);}
+}
+@-moz-keyframes hamburger_heel_rotate {
+  0% {-moz-transform: rotate(0deg) scaleX(1);}
+  100% {-moz-transform: rotate(-45deg) scaleX($length_scale);}
+}
+@-o-keyframes hamburger_heel_rotate {
+  0% {-o-transform: rotate(0deg) scaleX(1);}
+  100% {-o-transform: rotate(-45deg) scaleX($length_scale);}
+}
+@keyframes hamburger_heel_rotate {
+  0% {transform: rotate(0deg) scaleX(1);}
+  100% {transform: rotate(-45deg) scaleX($length_scale);}
+}
+
+@-webkit-keyframes hamburger_heel_rotate_reverse {
+  0% {-webkit-transform: rotate(-45deg) scaleX($length_scale);}
+  100% {-webkit-transform: rotate(0deg) scaleX(1);}
+}
+@-moz-keyframes hamburger_heel_rotate_reverse {
+  0% {-moz-transform: rotate(-45deg) scaleX($length_scale);}
+  100% {-moz-transform: rotate(0deg) scaleX(1);}
+}
+@-o-keyframes hamburger_heel_rotate_reverse {
+  0% {-o-transform: rotate(-45deg) scaleX($length_scale);}
+  100% {-o-transform: rotate(-45deg) scaleX(1);}
+}
+@keyframes hamburger_heel_rotate_reverse {
+  0% {transform: rotate(-45deg) scaleX($length_scale);}
+  100% {transform: rotate(0deg) scaleX(1);}
+}
+
+// Hover Event
+
+.clicked #hamburger_crown {
+  animation: hamburger_crown_rotate $animation_duration ease-in-out 0s 1 normal forwards;
+  -webkit-animation: hamburger_crown_rotate $animation_duration ease-in-out 0s 1 normal forwards;
+  -moz-animation: hamburger_crown_rotate $animation_duration ease-in-out 0s 1 normal forwards;
+  transform-origin: 9%;
+}
+
+.clicked #hamburger_patty {
+  animation: hamburger_patty_hide $animation_duration ease-in-out 0s 1 normal forwards;
+  -webkit-animation: hamburger_patty_hide $animation_duration ease-in-out 0s 1 normal forwards;
+  -moz-animation: hamburger_patty_hide $animation_duration ease-in-out 0s 1 normal forwards;
+}
+
+.clicked #hamburger_heel {
+  animation: hamburger_heel_rotate $animation_duration ease-in-out 0s 1 normal forwards;
+  -webkit-animation: hamburger_heel_rotate $animation_duration ease-in-out 0s 1 normal forwards;
+  -moz-animation: hamburger_heel_rotate $animation_duration ease-in-out 0s 1 normal forwards;
+  transform-origin: 9%;
+}
+
+// Hover Off Event
+
+.reset_animation #hamburger_crown{
+  animation: hamburger_crown_rotate_reverse $animation_duration ease-in-out 0s 1 normal backwards;
+  -webkit-animation: hamburger_crown_rotate_reverse $animation_duration ease-in-out 0s 1 normal backwards;
+  -moz-animation: hamburger_crown_rotate_reverse $animation_duration ease-in-out 0s 1 normal backwards;
+  transform-origin: 9%;
+}
+
+.reset_animation #hamburger_patty{
+  animation: hamburger_patty_show $animation_duration ease-in-out 0s 1 normal backwards;
+  -webkit-animation: hamburger_patty_show $animation_duration ease-in-out 0s 1 normal backwards;
+  -moz-animation: hamburger_patty_show $animation_duration ease-in-out 0s 1 normal backwards;
+}
+
+.reset_animation #hamburger_heel{
+  animation: hamburger_heel_rotate_reverse $animation_duration ease-in-out 0s 1 normal backwards;
+  -webkit-animation: hamburger_heel_rotate_reverse $animation_duration ease-in-out 0s 1 normal backwards;
+  -moz-animation: hamburger_heel_rotate_reverse $animation_duration ease-in-out 0s 1 normal backwards;
+  transform-origin: 9%;
+}

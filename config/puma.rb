@@ -10,7 +10,7 @@ pidfile "#{shared_dir}/pids/puma.pid"
 state_path "#{shared_dir}/pids/puma.state"
 
 # Threads for serving requests
-threads 1, 16
+threads 1, 1
 
 # Workers (cpu cores)
 workers ENV.fetch('WEB_CONCURRENCY') { 1 }
