@@ -32,6 +32,22 @@
     <%= f.check_box(:reset, class: 'input_check_box', id: "image_reset_#{image.name}") %>
   </div>
 
+  <div class="embedded_form_entry_container" data-controller="slider">
+    <%= f.label(:x_loc, "x location:", class: 'input_label embedded_label') %>
+    <%= f.range_field(:x_loc, min: 0, max: 100, value: image.x_loc, class: "slider", data: { action: "input->slider#update", target: 'slider.input' }) %>
+    <span class="slider_value" data-target="slider.value">
+      <%= image.x_loc %>
+    </span>
+  </div>
+
+  <div class="embedded_form_entry_container" data-controller="slider">
+    <%= f.label(:y_loc, "y location:", class: 'input_label embedded_label') %>
+    <%= f.range_field(:y_loc, min: 0, max: 100, value: image.y_loc, class: "slider", data: { action: "input->slider#update", target: 'slider.input' }) %>
+    <span class="slider_value" data-target="slider.value">
+      <%= image.y_loc %>
+    </span>
+  </div>
+
   <br>
   <br>
 
