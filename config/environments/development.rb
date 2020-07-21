@@ -67,6 +67,12 @@ Rails.application.configure do
     domain: Rails.application.credentials.email[:helo_domain]
   }
   config.action_mailer.perform_caching = false
+  config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
+
+  Rails.application.routes.default_url_options = { 
+    host: 'localhost:3000', 
+    protocol: 'http' 
+  }
 
   # Active Job Settings
   config.active_job.queue_adapter = :sidekiq
