@@ -10,7 +10,7 @@ module DefaultImageHelper
     'image_not_found' => 'default_images/image_not_found.png'
   }.freeze
 
-  def image_path(image)
+  def image_path_helper(image)
     if image&.image_file
       image.image_file.attached? ? image.image_file : default_image_path(image.name)
     else
