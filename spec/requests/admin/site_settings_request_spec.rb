@@ -65,5 +65,19 @@ RSpec.describe 'SiteSettings', type: :request, slow: true do
         expect(@site_settings.subtitle_text).to eq('New subtitle text')
       end
     end
+
+    context 'typed_header_enabled' do
+      it 'Update sucessful' do
+        put "/admin/site_settings/#{@site_settings.id}", params: {
+          site_setting: {
+            typed_header_enabled: '0'
+          }
+        }
+        follow_redirect!
+        expect(response.body).to include('Typed header enabled updated!')
+        @site_settings.reload
+        expect(@site_settings.typed_header_enabled).to eq(false)
+      end
+    end
   end
 end
