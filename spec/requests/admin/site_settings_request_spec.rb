@@ -51,5 +51,19 @@ RSpec.describe 'SiteSettings', type: :request, slow: true do
         expect(@site_settings.header_text).to eq('New header text')
       end
     end
+
+    context 'subtitle_text' do
+      it 'Update sucessful' do
+        put "/admin/site_settings/#{@site_settings.id}", params: {
+          site_setting: {
+            subtitle_text: 'New subtitle text'
+          }
+        }
+        follow_redirect!
+        expect(response.body).to include('Subtitle text updated!')
+        @site_settings.reload
+        expect(@site_settings.subtitle_text).to eq('New subtitle text')
+      end
+    end
   end
 end
