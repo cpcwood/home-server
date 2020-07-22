@@ -21,16 +21,23 @@ class Image < ApplicationRecord
 
   validates :x_loc,
             presence: true,
-            numericality: { only_integer: true, greater_than: -1, less_than: 101 }
+            numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
 
   validates :y_loc,
             presence: true,
-            numericality: { only_integer: true, greater_than: -1, less_than: 101 }
+            numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
+
+  validates :image_type,
+            presence: true
 
   def reset_to_default
     image_file.purge
     update(x_loc: DEFAULT_X_LOC)
     update(y_loc: DEFAULT_Y_LOC)
+  end
+
+  def custom_style
+    "object-position: #{x_loc}% #{y_loc}%;" if x_loc != DEFAULT_X_LOC || y_loc != DEFAULT_Y_LOC
   end
 
   def self.valid?(image_path)

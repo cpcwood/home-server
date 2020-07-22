@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Image, type: :model do
   let(:site_setting) { SiteSetting.new }
-  let(:image) { Image.new(name: 'test_image', site_setting: site_setting, x_dim: 1, y_dim: 1) }
+  let(:image) { Image.new(name: 'test_image', site_setting: site_setting, x_dim: 1, y_dim: 1, image_type: 'cover_image') }
 
   let(:image_path_valid) { Rails.root.join('spec/files/sample_image.jpg') }
   let(:image_path_invalid) { Rails.root.join('spec/files/sample_image_invalid.jpg') }
@@ -80,13 +80,6 @@ RSpec.describe Image, type: :model do
       expect(image).to_not be_valid
     end
 
-    it 'Numericality' do
-      image.x_loc = 0.124
-      expect(image).to_not be_valid
-      image.x_loc = 'test'
-      expect(image).to_not be_valid
-    end
-
     it 'Value' do
       image.x_loc = -1
       expect(image).to_not be_valid
@@ -105,13 +98,6 @@ RSpec.describe Image, type: :model do
       expect(image).to_not be_valid
     end
 
-    it 'Numericality' do
-      image.y_loc = 0.124
-      expect(image).to_not be_valid
-      image.y_loc = 'test'
-      expect(image).to_not be_valid
-    end
-
     it 'Value' do
       image.y_loc = -1
       expect(image).to_not be_valid
@@ -121,6 +107,13 @@ RSpec.describe Image, type: :model do
       expect(image).to_not be_valid
       image.y_loc = 100
       expect(image).to be_valid
+    end
+  end
+
+  describe 'image_type validations' do
+    it 'Presence' do
+      image.image_type = nil
+      expect(image).to_not be_valid
     end
   end
 
@@ -138,6 +131,28 @@ RSpec.describe Image, type: :model do
       image.reset_to_default
       expect(image.x_loc).to eq(50)
       expect(image.y_loc).to eq(50)
+    end
+  end
+
+  describe '#custom_style' do
+    it 'locations are default' do
+      expect(image.custom_style).to eq(nil)
+    end
+
+    it 'x_loc custom' do
+      image.update(x_loc: 10)
+      expect(image.custom_style).to eq('object-position: 10% 50%;')
+    end
+
+    it 'y_loc custom' do
+      image.update(y_loc: 10)
+      expect(image.custom_style).to eq('object-position: 50% 10%;')
+    end
+
+    it 'x_loc and y_loc custom' do
+      image.update(x_loc: 10)
+      image.update(y_loc: 90)
+      expect(image.custom_style).to eq('object-position: 10% 90%;')
     end
   end
 
