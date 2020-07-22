@@ -31,7 +31,7 @@ module Admin
     end
 
     def image_reset(image)
-      image.image_file.purge
+      image.reset_to_default
       @notices.push("#{image.name.humanize} reset!")
     end
 

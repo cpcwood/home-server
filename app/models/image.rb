@@ -24,6 +24,10 @@ class Image < ApplicationRecord
             presence: true,
             numericality: { only_integer: true, greater_than: -1, less_than: 101 }
 
+  def reset_to_default
+    self.image_file.purge
+  end
+
   def self.valid?(image_path)
     image = MiniMagick::Image.new(image_path)
     image.valid? ? image.mime_type.match?(%r{\Aimage/(png|jpeg)\z}i) : false
