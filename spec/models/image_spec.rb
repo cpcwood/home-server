@@ -74,6 +74,31 @@ RSpec.describe Image, type: :model do
     end
   end
 
+  describe 'x_loc validations' do
+    it 'Presence' do
+      image.x_dim = nil
+      expect(image).to_not be_valid
+    end
+
+    it 'Numericality' do
+      image.x_loc = 0.124
+      expect(image).to_not be_valid
+      image.x_loc = 'test'
+      expect(image).to_not be_valid
+    end
+
+    it 'Value' do
+      image.x_loc = -1
+      expect(image).to_not be_valid
+      image.x_loc = 0
+      expect(image).to be_valid
+      image.x_loc = 101
+      expect(image).to_not be_valid
+      image.x_loc = 100
+      expect(image).to be_valid
+    end
+  end
+
   describe '.valid?', slow: true do
     it 'image is valid jpeg' do
       expect(Image.valid?(image_path_valid)).to eq(true)
