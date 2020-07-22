@@ -7,7 +7,19 @@ RSpec.describe 'Images', type: :request do
   let(:image_fixture) { fixture_file_upload(image_path, 'image/png') }
   let(:image_fixture_invalid) { fixture_file_upload(image_invalid_path, 'image/png') }
   let(:image_file_error) { double :image_file, attach: false }
-  let(:image_attach_error) { double :image, image_file: image_file_error, errors: { error: 'Image attach error' }, name: 'header_image', x_dim: 2560, y_dim: 300, update: nil }
+  let(:image_attach_error) do
+    double :image, {
+      image_file: image_file_error,
+      errors: { error: 'Image attach error' },
+      name: 'header_image',
+      x_dim: 2560,
+      y_dim: 300,
+      update: nil,
+      :x_loc= => 50,
+      :y_loc= => 50,
+      changed?: false
+    }
+  end
 
   before(:each) do
     login

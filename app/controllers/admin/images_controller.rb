@@ -39,8 +39,10 @@ module Admin
     end
 
     def update_image_positon(image:, permitted_params:)
-      result = image.update(x_loc: permitted_params[:x_loc], y_loc: permitted_params[:y_loc])
-      update_message(result: result, image: image)
+      image.x_loc = permitted_params[:x_loc]
+      image.y_loc = permitted_params[:y_loc]
+      return unless image.changed?
+      update_message(result: image.save, image: image, attribute: 'location')
     end
 
     def attach_new_image(new_image_path:, image:, permitted_params:)
@@ -52,9 +54,9 @@ module Admin
         content_type: content_type)
     end
 
-    def update_message(result:, image:)
+    def update_message(result:, image:, attribute: nil)
       if result
-        @notices.push("#{image.name.humanize} updated!")
+        @notices.push("#{image.name.humanize}#{" #{attribute}" if attribute} updated!")
       else
         @alerts.push(image.errors.values.flatten.last)
       end

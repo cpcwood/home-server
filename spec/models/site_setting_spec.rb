@@ -36,14 +36,13 @@ RSpec.describe SiteSetting, type: :model do
     end
   end
 
-  describe '#images_hash' do
+  describe '#cover_images' do
     before(:each) do
-      @cover_image = Image.create(site_setting: site_setting, name: 'cover_image', x_dim: 1, y_dim: 1)
-      @header_image = Image.create(site_setting: site_setting, name: 'header_image', x_dim: 1, y_dim: 1)
+      @cover_image2 = Image.create(site_setting: site_setting, name: 'cover_image2', x_dim: 1, y_dim: 1, image_type: 'cover_image')
     end
 
     it 'multiple images' do
-      expect(site_setting.images_hash).to eq({ @cover_image.name.to_sym => @cover_image, @header_image.name.to_sym => @header_image })
+      expect(site_setting.cover_images).to eq([@cover_image, @cover_image2])
     end
   end
 end

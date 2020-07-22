@@ -47,8 +47,8 @@ RSpec.configure do |config|
     @test_user_password = 'Securepass1'
     @test_user = User.create(username: 'admin', email: 'admin@example.com', password: @test_user_password, mobile_number: '+447123456789')
     @site_settings = SiteSetting.create(name: 'test_name')
-    @header_image = Image.create(site_setting: @site_settings, name: 'header_image', x_dim: 2560, y_dim: 300)
-    @cover_image = Image.create(site_setting: @site_settings, name: 'cover_image', x_dim: 1450, y_dim: 680)
+    @header_image = Image.create(site_setting: @site_settings, name: 'header_image', x_dim: 2560, y_dim: 300, image_type: 'header_image')
+    @cover_image = Image.create(site_setting: @site_settings, name: 'cover_image', x_dim: 1450, y_dim: 680, image_type: 'cover_image')
   end
 
   config.append_after(:each) do
