@@ -8,21 +8,21 @@ describe DefaultImageHelper do
   describe '#image_path' do
     it 'image attached' do
       allow(mock_image_file).to receive(:attached?).and_return(true)
-      expect(helper.image_path(header_image)).to eq(mock_image_file)
+      expect(helper.image_path_helper(header_image)).to eq(mock_image_file)
     end
 
     it 'image not attached' do
       allow(mock_image_file).to receive(:attached?).and_return(false)
-      expect(helper.image_path(header_image)).to eq(DefaultImageHelper::DEFAULT_IMAGE_PATHS['header_image'])
+      expect(helper.image_path_helper(header_image)).to eq(DefaultImageHelper::DEFAULT_IMAGE_PATHS['header_image'])
     end
 
     it 'image not passed' do
-      expect(helper.image_path(nil)).to eq(DefaultImageHelper::DEFAULT_IMAGE_PATHS['image_not_found'])
+      expect(helper.image_path_helper(nil)).to eq(DefaultImageHelper::DEFAULT_IMAGE_PATHS['image_not_found'])
     end
 
     it 'unknown image name' do
       allow(mock_image_file).to receive(:attached?).and_return(false)
-      expect(helper.image_path(unknown_image_name)).to eq(DefaultImageHelper::DEFAULT_IMAGE_PATHS['image_not_found'])
+      expect(helper.image_path_helper(unknown_image_name)).to eq(DefaultImageHelper::DEFAULT_IMAGE_PATHS['image_not_found'])
     end
   end
 end

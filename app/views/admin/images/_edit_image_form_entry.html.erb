@@ -13,7 +13,7 @@
   </div>
 
   <div class="embedded_form_entry_container">
-    <%= image_tag(image_path(image), class: 'embedded_full_width embedded_cover_image')%>
+    <%= image_tag(image_path_helper(image), class: 'embedded_full_width embedded_cover_image')%>
   </div>
 
   <div class="embedded_form_entry_container">
@@ -27,12 +27,31 @@
     <%= f.file_field(:update, accept: 'image/png,image/jpeg', class: 'input_box embedded_no_border', id: "image_update_#{image.name}") %>
   </div>
 
-  <div class="embedded_form_entry_container">
-    <%= f.label(:reset, 'Reset to default:', class: 'input_label embedded_label') %>
-    <%= f.check_box(:reset, class: 'input_check_box', id: "image_reset_#{image.name}") %>
+  <div class="embedded_form_entry_container" data-controller="slider">
+    <label class="input_label embedded_label" for="image_x_loc">
+      x location:
+      <span class="slider_value" data-target="slider.value">
+        <%= image.x_loc %>
+      </span>
+    </label>
+    <%= f.range_field(:x_loc, min: 0, max: 100, value: image.x_loc, class: "slider embedded_input_box", step: "1", data: { action: "input->slider#update", target: 'slider.input' }) %>
   </div>
 
-  <br>
+  <div class="embedded_form_entry_container" data-controller="slider">
+    <label class="input_label embedded_label" for="image_y_loc">
+      y location:
+      <span class="slider_value" data-target="slider.value">
+        <%= image.y_loc %>
+      </span>
+    </label>
+    <%= f.range_field(:y_loc, min: 0, max: 100, value: image.y_loc, class: "slider embedded_input_box", step: "1", data: { action: "input->slider#update", target: 'slider.input' }) %>
+  </div>
+
+  <div class="embedded_form_entry_container">
+    <%= f.label(:reset, 'Reset to defaults:', class: 'input_label embedded_label') %>
+    <%= f.check_box(:reset, class: 'input_check_box', id: "image_reset_#{image.name}") %>
+  </div>
+  
   <br>
 
   <div class="embedded_form_entry_container">

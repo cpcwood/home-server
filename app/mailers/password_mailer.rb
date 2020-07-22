@@ -1,17 +1,27 @@
 class PasswordMailer < ApplicationMailer
-  add_template_helper(DefaultImageHelper)
+  include DefaultImageHelper
 
   default from: Rails.application.credentials.email[:no_reply_email]
 
   def password_reset_email
-    @user = params[:user]
-    @site_images = SiteSetting.first.images_hash
+    assign_default_variables
     mail(to: @user.email, subject: "Password Reset: #{@user.email}")
   end
 
   def password_updated_email
-    @user = params[:user]
-    @site_images = SiteSetting.first.images_hash
+    assign_default_variables
     mail(to: @user.email, subject: "Your Password Has Been Updated: #{@user.email}")
+  end
+
+  private
+
+  def assign_default_variables
+    @user = params[:user]
+    header_image = SiteSetting.first.images.find_by(name: 'header_image')
+    @header_image_url = if header_image.image_file.attached?
+                          Rails.application.routes.url_helpers.rails_blob_path(header_image.image_file)
+                        else
+                          image_path_helper(header_image)
+                        end
   end
 end
