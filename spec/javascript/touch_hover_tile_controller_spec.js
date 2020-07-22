@@ -1,24 +1,34 @@
 import { Application } from 'stimulus'
 import touchHoverTileController from 'controllers/touch_hover_tile_controller'
-const fs = require('fs')
 
 describe('touch_hover_tile_controller', () => {
-  let applicationHTML
   let flexImageTileOne
   let flexImageTileTwo
 
-  beforeAll(done => {
+  beforeAll(() => {
     const application = Application.start()
     application.register('touch-hover-tile', touchHoverTileController)
-    fs.readFile('app/views/homepages/index.html.erb', 'utf8', (err, data) => {
-      if (err) throw new Error(err)
-      applicationHTML = data
-      done()
-    })
   })
 
   beforeEach(() => {
-    document.body.innerHTML = applicationHTML
+    document.body.innerHTML = `
+      <div class="flex_image_tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
+        <img class="cover_image">
+        <a href="/one">
+          <span class="cover_title" data-target="touch-hover-tile.coverTitle">
+            <span>flexTileOne</span>
+          </span>
+        </a>
+      </div>
+      <div class="flex_image_tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
+        <img class="cover_image">
+        <a href="/two">
+          <span class="cover_title" data-target="touch-hover-tile.coverTitle">
+            <span>flexTileTwo</span>
+          </span>
+        </a>
+      </div>
+    `
     const flexImageTiles = document.getElementsByClassName('flex_image_tile')
     flexImageTileOne = flexImageTiles[0]
     flexImageTileTwo = flexImageTiles[1]

@@ -2,10 +2,10 @@
   <% flash.each do |type, msg| %>
     <% if msg.kind_of?(Array) %>
       <% msg.each do |i| %>
-        <div class='<%= type %>'><%= i %></div><br>
+        <div class='<%= type %>'><%= i %></div>
       <% end %>
     <% else %>
-      <div class='<%= type %>'><%= msg %></div><br>
+      <div class='<%= type %>'><%= msg %></div>
     <% end %>
   <% end %>
 </div>

@@ -7,51 +7,13 @@
 
 <%= render 'layouts/system_messages'%>
 
-<div class='flex_image_tile' id='about' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
-  <%= image_tag(image_path(@site_images[:about_image]), id: 'about_image', class: 'cover_image') %>
-  <a href='/about'>
-    <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
-      <span>ABOUT</span>
-    </span>
-  </a>
-</div>
-<div class='flex_image_tile' id='projects' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
-  <%= image_tag(image_path(@site_images[:projects_image]), id: 'projects_image', class: 'cover_image middle_left') %>
-  <a href='/projects'>
-    <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
-      <span>PROJECTS</span>
-    </span>
-  </a>
-</div>
-<div class='flex_image_tile' id='blog' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
-  <%= image_tag(image_path(@site_images[:blog_image]), id: 'blog_image', class: 'cover_image') %>
-  <a href='/blog'>
-    <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
-      <span>BLOG</span>
-    </span>
-  </a>
-</div>
-<div class='flex_image_tile' id='say_hello' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
-  <%= image_tag(image_path(@site_images[:say_hello_image]), id: 'say_hello_image', class: 'cover_image top_left') %>
-  <a href='/say-hello'>
-    <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
-      <span>SAY HELLO</span>
-    </span>
-  </a>
-</div>
-<div class='flex_image_tile' id='gallery' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
-  <%= image_tag(image_path(@site_images[:gallery_image]), id: 'gallery_image', class: 'cover_image') %>
-  <a href='/gallery'>
-    <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
-      <span>GALLERY</span>
-    </span>
-  </a>
-</div>
-<div class='flex_image_tile' id='contact' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
-  <%= image_tag(image_path(@site_images[:contact_image]), id: 'contact_image', class: 'cover_image') %>
-  <a href='/contact'>
-    <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
-      <span>CONTACT</span>
-    </span>
-  </a>
-</div>
+<% @cover_images.each do |image| %>
+  <div class='flex_image_tile' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
+    <%= image_tag(image_path_helper(image), class: image.image_type, style: image.custom_style ) %>
+    <a href='<%= image.link %>'>
+      <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
+        <span><%= image.description %></span>
+      </span>
+    </a>
+  </div>
+<% end %>

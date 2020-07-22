@@ -119,6 +119,11 @@ Rails.application.configure do
     domain: Rails.application.credentials.email[:helo_domain]
   }
 
+  Rails.application.routes.default_url_options = { 
+    host: Rails.application.credentials.site[:domain], 
+    protocol: 'https' 
+  }
+
   # Active Job Settings
   config.active_job.queue_adapter = :sidekiq
 end

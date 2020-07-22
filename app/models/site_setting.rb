@@ -10,9 +10,7 @@ class SiteSetting < ApplicationRecord
     self[key] != value
   end
 
-  def images_hash
-    images.index_by do |image|
-      image.name.to_sym
-    end
+  def cover_images
+    images.where(image_type: 'cover_image').to_a
   end
 end
