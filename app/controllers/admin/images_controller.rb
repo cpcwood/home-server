@@ -17,11 +17,14 @@ module Admin
     def image_params
       params.require(:image).permit(
         :update,
-        :reset)
+        :reset,
+        :x_loc,
+        :y_loc)
     end
 
     def update_image(image:, permitted_params:)
       return image_reset(image) if permitted_params[:reset] == '1'
+      update_image_positon(image: image, permitted_params: permitted_params)
       return if permitted_params[:update].blank?
       image_file_path = permitted_params[:update].tempfile.path
       return @alerts.push("#{image.name.humanize} invalid, please upload a jpeg or png file!") unless Image.valid?(image_file_path)
@@ -33,6 +36,11 @@ module Admin
     def image_reset(image)
       image.reset_to_default
       @notices.push("#{image.name.humanize} reset!")
+    end
+
+    def update_image_positon(image:, permitted_params:)
+      result = image.update(x_loc: permitted_params[:x_loc], y_loc: permitted_params[:y_loc])
+      update_message(result: result, image: image)
     end
 
     def attach_new_image(new_image_path:, image:, permitted_params:)

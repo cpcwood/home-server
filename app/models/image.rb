@@ -1,6 +1,9 @@
 class Image < ApplicationRecord
   require 'image_processing'
 
+  DEFAULT_X_LOC = 50
+  DEFAULT_Y_LOC = 50
+
   belongs_to :site_setting
 
   has_one_attached :image_file
@@ -26,8 +29,8 @@ class Image < ApplicationRecord
 
   def reset_to_default
     image_file.purge
-    update(x_loc: 50)
-    update(y_loc: 50)
+    update(x_loc: DEFAULT_X_LOC)
+    update(y_loc: DEFAULT_Y_LOC)
   end
 
   def self.valid?(image_path)

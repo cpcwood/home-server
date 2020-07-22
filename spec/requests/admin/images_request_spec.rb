@@ -7,7 +7,7 @@ RSpec.describe 'Images', type: :request do
   let(:image_fixture) { fixture_file_upload(image_path, 'image/png') }
   let(:image_fixture_invalid) { fixture_file_upload(image_invalid_path, 'image/png') }
   let(:image_file_error) { double :image_file, attach: false }
-  let(:image_attach_error) { double :image, image_file: image_file_error, errors: { error: 'Image attach error' }, name: 'header_image', x_dim: 2560, y_dim: 300 }
+  let(:image_attach_error) { double :image, image_file: image_file_error, errors: { error: 'Image attach error' }, name: 'header_image', x_dim: 2560, y_dim: 300, update: nil }
 
   before(:each) do
     login
@@ -25,19 +25,25 @@ RSpec.describe 'Images', type: :request do
       it 'Update sucessful' do
         put "/admin/images/#{@header_image.id}", params: {
           image: {
-            update: image_fixture
+            update: image_fixture,
+            x_loc: 10,
+            y_loc: 15
           }
         }
         follow_redirect!
         expect(response.body).to include('Header image updated!')
         @header_image.reload
         expect(@header_image.image_file.attached?).to eq(true)
+        expect(@header_image.x_loc).to eq(10)
+        expect(@header_image.y_loc).to eq(15)
       end
 
       it 'Update unsucessful - invalid image' do
         put "/admin/images/#{@header_image.id}", params: {
           image: {
-            update: image_fixture_invalid
+            update: image_fixture_invalid,
+            x_loc: 50,
+            y_loc: 50
           }
         }
         follow_redirect!
@@ -50,7 +56,9 @@ RSpec.describe 'Images', type: :request do
         allow(Image).to receive(:find_by).and_return(image_attach_error)
         put "/admin/images/#{@header_image.id}", params: {
           image: {
-            update: image_fixture
+            update: image_fixture,
+            x_loc: 50,
+            y_loc: 50
           }
         }
         follow_redirect!
@@ -61,7 +69,9 @@ RSpec.describe 'Images', type: :request do
         put "/admin/images/#{@header_image.id}", params: {
           image: {
             update: image_fixture,
-            reset: '1'
+            reset: '1',
+            x_loc: 50,
+            y_loc: 50
           }
         }
         follow_redirect!
@@ -75,7 +85,9 @@ RSpec.describe 'Images', type: :request do
       it 'Update sucessful' do
         put "/admin/images/#{@cover_image.id}", params: {
           image: {
-            update: image_fixture
+            update: image_fixture,
+            x_loc: 50,
+            y_loc: 50
           }
         }
         follow_redirect!
