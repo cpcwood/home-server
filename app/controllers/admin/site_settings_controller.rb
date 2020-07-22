@@ -12,16 +12,20 @@ module Admin
     private
 
     def site_settings_params
-      params.require(:site_setting).permit(:name)
+      params.require(:site_setting).permit(
+        :name,
+        :header_text,
+        :subtitle_text,
+        :typed_header_enabled)
     end
 
     def update_settings(permitted_params)
       permitted_params.each do |key, value|
-        update_message(@site_settings.update(key.to_sym => value), key) if @site_settings.update_required?(key, value)
+        update_message(result: @site_settings.update(key.to_sym => value), key: key) if @site_settings.update_required?(attribute: key, value: value)
       end
     end
 
-    def update_message(result, key)
+    def update_message(result:, key:)
       if result
         @notices.push("#{key.humanize} updated!")
       else

@@ -37,5 +37,19 @@ RSpec.describe 'SiteSettings', type: :request, slow: true do
         expect(response.body).to include('Site name cannot be blank')
       end
     end
+
+    context 'header_text' do
+      it 'Update sucessful' do
+        put "/admin/site_settings/#{@site_settings.id}", params: {
+          site_setting: {
+            header_text: 'New header text'
+          }
+        }
+        follow_redirect!
+        expect(response.body).to include('Header text updated!')
+        @site_settings.reload
+        expect(@site_settings.header_text).to eq('New header text')
+      end
+    end
   end
 end
