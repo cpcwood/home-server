@@ -76,7 +76,7 @@ RSpec.describe Image, type: :model do
 
   describe 'x_loc validations' do
     it 'Presence' do
-      image.x_dim = nil
+      image.x_loc = nil
       expect(image).to_not be_valid
     end
 
@@ -95,6 +95,31 @@ RSpec.describe Image, type: :model do
       image.x_loc = 101
       expect(image).to_not be_valid
       image.x_loc = 100
+      expect(image).to be_valid
+    end
+  end
+
+  describe 'y_loc validations' do
+    it 'Presence' do
+      image.y_loc = nil
+      expect(image).to_not be_valid
+    end
+
+    it 'Numericality' do
+      image.y_loc = 0.124
+      expect(image).to_not be_valid
+      image.y_loc = 'test'
+      expect(image).to_not be_valid
+    end
+
+    it 'Value' do
+      image.y_loc = -1
+      expect(image).to_not be_valid
+      image.y_loc = 0
+      expect(image).to be_valid
+      image.y_loc = 101
+      expect(image).to_not be_valid
+      image.y_loc = 100
       expect(image).to be_valid
     end
   end
