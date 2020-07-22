@@ -24,6 +24,15 @@ RSpec.describe SiteSetting, type: :model do
     end
   end
 
+  describe 'Typed_header_enabled validations' do
+    it 'Data type' do
+      site_setting.typed_header_enabled = nil
+      expect(site_setting).to_not be_valid
+      site_setting.typed_header_enabled = true
+      expect(site_setting).to be_valid
+    end
+  end
+
   describe '#update_required?' do
     it 'No update required' do
       original_name = site_setting.name
