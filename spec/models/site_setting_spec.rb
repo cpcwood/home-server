@@ -56,12 +56,12 @@ RSpec.describe SiteSetting, type: :model do
   describe '#update_required?' do
     it 'No update required' do
       original_name = site_setting.name
-      expect(site_setting.update_required?('name', original_name)).to eq(false)
+      expect(site_setting.update_required?(attribute: 'name', value: original_name)).to eq(false)
     end
 
     it 'Update required' do
       new_name = 'new_name'
-      expect(site_setting.update_required?('name', new_name)).to eq(true)
+      expect(site_setting.update_required?(attribute: 'name', value: new_name)).to eq(true)
     end
   end
 

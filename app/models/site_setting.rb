@@ -11,12 +11,12 @@ class SiteSetting < ApplicationRecord
 
   validates :header_text,
             length: { maximum: 255, too_long: 'Header text cannot be longer than 255 charaters' }
-  
+
   validates :subtitle_text,
             length: { maximum: 255, too_long: 'Subtitle text cannot be longer than 255 charaters' }
 
-  def update_required?(key, value)
-    self[key] != value
+  def update_required?(attribute:, value:)
+    self[attribute] != value
   end
 
   def cover_images
