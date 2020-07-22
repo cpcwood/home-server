@@ -129,6 +129,16 @@ RSpec.describe Image, type: :model do
       expect(image.image_file).to receive(:purge)
       image.reset_to_default
     end
+
+    it 'reset x_loc and y_loc' do
+      image.x_loc = 10
+      image.y_loc = 10
+      image.save
+      allow(image.image_file).to receive(:purge)
+      image.reset_to_default
+      expect(image.x_loc).to eq(50)
+      expect(image.y_loc).to eq(50)
+    end
   end
 
   describe '.valid?', slow: true do

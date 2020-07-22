@@ -25,7 +25,9 @@ class Image < ApplicationRecord
             numericality: { only_integer: true, greater_than: -1, less_than: 101 }
 
   def reset_to_default
-    self.image_file.purge
+    image_file.purge
+    update(x_loc: 50)
+    update(y_loc: 50)
   end
 
   def self.valid?(image_path)
