@@ -1,5 +1,5 @@
 module Admin
-  class ImagesController < ApplicationController
+  class ImagesController < AdminBaseController
     def index
       @images = @site_settings.images
     end

@@ -1,5 +1,5 @@
 module Admin
-  class SiteSettingsController < ApplicationController
+  class SiteSettingsController < AdminBaseController
     def index; end
 
     def update
