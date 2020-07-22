@@ -5,7 +5,10 @@ User.create(
   mobile_number: Rails.application.credentials.twilio[:number])
 
 site_settings = SiteSetting.create(
-  name: 'home-server')
+  name: 'home-server',
+  typed_header_enabled: true,
+  header_text: 'Welcome to your...',
+  subtitle_text: 'home-server')
 
 #=============
 header_image_x_dim = 2560
