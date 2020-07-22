@@ -124,6 +124,13 @@ RSpec.describe Image, type: :model do
     end
   end
 
+  describe '#reset_to_default' do
+    it 'reset image_file' do
+      expect(image.image_file).to receive(:purge)
+      image.reset_to_default
+    end
+  end
+
   describe '.valid?', slow: true do
     it 'image is valid jpeg' do
       expect(Image.valid?(image_path_valid)).to eq(true)
