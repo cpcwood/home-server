@@ -26,6 +26,10 @@ export default class extends Controller {
   }
 
   disconnect () {
-    this.closeMenu()
+    if (this.data.get('open') === 'true') {
+      this.data.set('open', 'false')
+      this.navSidebarTarget.classList.remove('sidebar_open')
+      this.navHamburgerTarget.classList.remove('clicked')
+    }
   }
 }
