@@ -27,11 +27,6 @@
     <%= f.file_field(:update, accept: 'image/png,image/jpeg', class: 'input_box embedded_no_border', id: "image_update_#{image.name}") %>
   </div>
 
-  <div class="embedded_form_entry_container">
-    <%= f.label(:reset, 'Reset to default:', class: 'input_label embedded_label') %>
-    <%= f.check_box(:reset, class: 'input_check_box', id: "image_reset_#{image.name}") %>
-  </div>
-
   <div class="embedded_form_entry_container" data-controller="slider">
     <label class="input_label embedded_label" for="image_x_loc">
       x location:
@@ -52,7 +47,11 @@
     <%= f.range_field(:y_loc, min: 0, max: 100, value: image.y_loc, class: "slider embedded_input_box", data: { action: "input->slider#update", target: 'slider.input' }) %>
   </div>
 
-  <br>
+  <div class="embedded_form_entry_container">
+    <%= f.label(:reset, 'Reset to defaults:', class: 'input_label embedded_label') %>
+    <%= f.check_box(:reset, class: 'input_check_box', id: "image_reset_#{image.name}") %>
+  </div>
+  
   <br>
 
   <div class="embedded_form_entry_container">
