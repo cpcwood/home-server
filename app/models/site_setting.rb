@@ -17,7 +17,7 @@ class SiteSetting < ApplicationRecord
 
   def update_required?(attribute:, value:)
     self[attribute] = value
-    self.changed?
+    changed?
   end
 
   def cover_images
