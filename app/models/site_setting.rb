@@ -9,6 +9,9 @@ class SiteSetting < ApplicationRecord
   validates :typed_header_enabled,
             inclusion: { in: [true, false] }
 
+  validates :header_text,
+            length: { maximum: 255, too_long: 'Header text cannot be longer than 255 charaters' }
+
   def update_required?(key, value)
     self[key] != value
   end

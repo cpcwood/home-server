@@ -33,6 +33,16 @@ RSpec.describe SiteSetting, type: :model do
     end
   end
 
+  describe 'Header_text validations' do
+    it 'Max length' do
+      site_setting.header_text = '0' * 256
+      expect(site_setting).to_not be_valid
+      expect(site_setting.errors.messages[:header_text]).to eq(['Header text cannot be longer than 255 charaters'])
+      site_setting.header_text = '0' * 255
+      expect(site_setting).to be_valid
+    end
+  end
+
   describe '#update_required?' do
     it 'No update required' do
       original_name = site_setting.name
