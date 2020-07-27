@@ -11,10 +11,25 @@
     </div>
 
     <div class="embedded_form_entry_container">
-      <%= f.label(:name, 'Update site name:', class: 'input_label embedded_label') %>
+      <%= f.label(:name, 'Site name:', class: 'input_label embedded_label') %>
       <%= f.text_field(:name, class: 'input_box embedded_input_box', placeholder: 'new site name', value: @site_settings.name) %>
     </div>
 
+    <div class="embedded_form_entry_container">
+      <%= f.label(:header_text, 'Homepage header:', class: 'input_label embedded_label') %>
+      <%= f.text_field(:header_text, class: 'input_box embedded_input_box', placeholder: 'new homepage header', value: @site_settings.header_text) %>
+    </div>
+
+    <div class="embedded_form_entry_container">
+      <%= f.label(:subtitle_text, 'Homepage subtitle:', class: 'input_label embedded_label') %>
+      <%= f.text_field(:subtitle_text, class: 'input_box embedded_input_box', placeholder: 'new homepage subtitle', value: @site_settings.subtitle_text) %>
+    </div>
+
+    <div class="embedded_form_entry_container">
+      <%= f.label(:typed_header_enabled, 'Enable typed header:', class: 'input_label embedded_label') %>
+      <%= f.check_box(:typed_header_enabled, {class: 'input_check_box'}) %>
+    </div>
+  
     <br>
     <br>
 
