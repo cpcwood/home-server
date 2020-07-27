@@ -77,6 +77,14 @@ $background-color: globals.$background-color;
 .input_check_box {
   box-sizing: border-box;
   position: relative;
+  margin: 0px 0px 0px 5px;
+
+  @include respond-to(tablet) {
+    margin: 0 0;
+  }
+  @include respond-to(desktop) {
+    margin: 0 0;
+  }
 }
 
 input[type=checkbox] {
@@ -177,7 +185,7 @@ input[type=checkbox] {
   align-content: flex-start;
   justify-content: flex-start;
   height: max-content;
-  margin: 15px 0px;
+  margin: 20px 0px;
 
   @include respond-to(tablet) {
     flex-direction: row;

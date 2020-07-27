@@ -1,17 +1,35 @@
-<h1>
-  Full Stack Developer  
-  <div class='subtitle'>
-    London
-  </div>
-</h1>
+<% if @site_settings.typed_header_enabled %>
+  <h1 data-controller="typed-header">
+    <div class="hidden" id="typed-strings-header" >
+      <p> 
+        <%= @site_settings.header_text %>
+      </p>
+    </div>
+    <span id="typed-header" data-target="typed-header.typedHeader"></span>
+    <br>
+    <div class="hidden" id="typed-strings-subtitle">
+      <p> 
+        <%= @site_settings.subtitle_text %>
+      </p>
+    </div>
+    <span class="subtitle" id="typed-subtitle" data-target="typed-header.typedSubtitle"></span>
+  </h1>
+<% else %>
+  <h1>
+    <%= @site_settings.header_text %>
+    <div class='subtitle'>
+      <%= @site_settings.subtitle_text %>
+    </div>
+  </h1>  
+<% end %>
 
 <%= render 'layouts/system_messages'%>
 
 <% @cover_images.each do |image| %>
-  <div class='flex_image_tile' data-controller='touch-hover-tile' data-action='touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover'>
+  <div class="flex_image_tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
     <%= image_tag(image_path_helper(image), class: image.image_type, style: image.custom_style ) %>
-    <a href='<%= image.link %>'>
-      <span class='cover_title' data-target='touch-hover-tile.coverTitle'>
+    <a href="<%= image.link %>">
+      <span class="cover_title" data-target="touch-hover-tile.coverTitle">
         <span><%= image.description %></span>
       </span>
     </a>

@@ -37,5 +37,47 @@ RSpec.describe 'SiteSettings', type: :request, slow: true do
         expect(response.body).to include('Site name cannot be blank')
       end
     end
+
+    context 'header_text' do
+      it 'Update sucessful' do
+        put "/admin/site_settings/#{@site_settings.id}", params: {
+          site_setting: {
+            header_text: 'New header text'
+          }
+        }
+        follow_redirect!
+        expect(response.body).to include('Header text updated!')
+        @site_settings.reload
+        expect(@site_settings.header_text).to eq('New header text')
+      end
+    end
+
+    context 'subtitle_text' do
+      it 'Update sucessful' do
+        put "/admin/site_settings/#{@site_settings.id}", params: {
+          site_setting: {
+            subtitle_text: 'New subtitle text'
+          }
+        }
+        follow_redirect!
+        expect(response.body).to include('Subtitle text updated!')
+        @site_settings.reload
+        expect(@site_settings.subtitle_text).to eq('New subtitle text')
+      end
+    end
+
+    context 'typed_header_enabled' do
+      it 'Update sucessful' do
+        put "/admin/site_settings/#{@site_settings.id}", params: {
+          site_setting: {
+            typed_header_enabled: '1'
+          }
+        }
+        follow_redirect!
+        expect(response.body).to include('Typed header enabled updated!')
+        @site_settings.reload
+        expect(@site_settings.typed_header_enabled).to eq(true)
+      end
+    end
   end
 end
