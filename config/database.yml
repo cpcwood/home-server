@@ -1,22 +1,21 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: postgres
+  username: <%= Rails.application.credentials.psql[:user] %>
+  password: <%= Rails.application.credentials.psql[:password] %>
   host: localhost
 
 development:
   <<: *default
-  database: home_server_development
+  database: <%= Rails.application.credentials.psql[:dbname_development] %>
 
 test:
   <<: *default
-  database: home_server_test
+  database: <%= Rails.application.credentials.psql[:dbname_test] %>
 
 production:
   adapter: postgresql
   encoding: unicode
-  username: <%= Rails.application.credentials.psql[:user] %>
-  password: <%= Rails.application.credentials.psql[:password] %>
   pool: 5
   timeout: 5000
   host: <%= Rails.application.credentials.psql[:host] %>
