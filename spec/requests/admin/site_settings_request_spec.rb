@@ -70,13 +70,13 @@ RSpec.describe 'SiteSettings', type: :request, slow: true do
       it 'Update sucessful' do
         put "/admin/site_settings/#{@site_settings.id}", params: {
           site_setting: {
-            typed_header_enabled: '0'
+            typed_header_enabled: '1'
           }
         }
         follow_redirect!
         expect(response.body).to include('Typed header enabled updated!')
         @site_settings.reload
-        expect(@site_settings.typed_header_enabled).to eq(false)
+        expect(@site_settings.typed_header_enabled).to eq(true)
       end
     end
   end
