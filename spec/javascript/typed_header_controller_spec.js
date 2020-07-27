@@ -1,7 +1,7 @@
 import { Application } from 'stimulus'
-import Typed from 'typed.js';
-jest.mock('typed.js')
+import Typed from 'typed.js'
 import typedHeaderController from 'controllers/typed_header_controller'
+jest.mock('typed.js')
 
 describe('typed_header_controller', () => {
   let application
@@ -37,17 +37,17 @@ describe('typed_header_controller', () => {
   })
 
   describe('#connect', () => {
-    it("typed object initialized", () => {
+    it('typed object initialized', () => {
       expect(Typed).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('#disconnect', () => {
-    beforeEach(() => { 
-      document.body.innerHTML = "test"
+    beforeEach(() => {
+      document.body.innerHTML = 'test'
     })
-    
-    it("typed object removed", () => {
+
+    it('typed object removed', () => {
       expect(Typed.mock.instances[0].destroy).toHaveBeenCalledTimes(1)
     })
   })
