@@ -25,8 +25,10 @@
 
 <%= render 'layouts/system_messages'%>
 
+<% fade_delay_num = 1%>
 <% @cover_images.each do |image| %>
   <div class="flex_image_tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
+    <div class="fade_cover fade_out animation_delay_<%= fade_delay_num %>"></div>
     <%= image_tag(image_path_helper(image), class: image.image_type, style: image.custom_style ) %>
     <a href="<%= image.link %>">
       <span class="cover_title" data-target="touch-hover-tile.coverTitle">
@@ -34,4 +36,5 @@
       </span>
     </a>
   </div>
+  <% fade_delay_num += 1 %>
 <% end %>
