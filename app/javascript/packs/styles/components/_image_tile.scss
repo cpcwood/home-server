@@ -9,6 +9,7 @@
 $general-font: typography.$general-font;
 
 
+
 // Styles
 .flex_image_tile {
   position: relative;
@@ -87,22 +88,22 @@ $general-font: typography.$general-font;
   left: 0px;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 1);
+  background: globals.$background_color;
   z-index: 999;
   opacity: 1;
 }
 
 // Animations
 .fade_out {
-  animation: 1.5s ease 0s 1 normal forwards running fade_out; 
-  -webkit-animation:  1.5s ease 0s 1 normal forwards running fade_out; 
-  -moz-animation: 1.5s ease 0s 1 normal forwards running fade_out; 
+  animation: 1.2s ease-out 0s 1 normal forwards running fade_out; 
+  -webkit-animation:  1.2s ease-out 0s 1 normal forwards running fade_out; 
+  -moz-animation: 1.2s ease-out 0s 1 normal forwards running fade_out; 
 }
 
 .animation_delay_1 {
-  animation-delay: 0.3s;
-  -webkit-animation-delay: 0.3s;
-  -moz-animation-delay: 0.3s;
+  animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  -moz-animation-delay: 0.4s;
 }
 
 .animation_delay_2 {
@@ -112,50 +113,47 @@ $general-font: typography.$general-font;
 }
 
 .animation_delay_3 {
+  animation-delay: 0.6s;
+  -webkit-animation-delay: 0.6s;
+  -moz-animation-delay: 0.6s;
+}
+
+.animation_delay_4 {
   animation-delay: 0.7s;
   -webkit-animation-delay: 0.7s;
   -moz-animation-delay: 0.7s;
 }
 
-.animation_delay_4 {
-  animation-delay: 0.9s;
-  -webkit-animation-delay: 0.9s;
-  -moz-animation-delay: 0.9s;
-}
-
 .animation_delay_5 {
-  animation-delay: 1.1s;
-  -webkit-animation-delay: 1.1s;
-  -moz-animation-delay: 1.1s;
+  animation-delay: 0.8s;
+  -webkit-animation-delay: 0.8s;
+  -moz-animation-delay: 0.8s;
 }
 
 .animation_delay_6 {
-  animation-delay: 1.3s;
-  -webkit-animation-delay: 1.3s;
-  -moz-animation-delay: 1.3s;
+  animation-delay: 0.9s;
+  -webkit-animation-delay: 0.9s;
+  -moz-animation-delay: 0.9s;
 }
 
 @keyframes fade_out { 
   0% { opacity: 1; } 
   100% { 
     opacity: 0;
-    display: none; 
-    z-index: -1;
+    z-index: -99;
   } 
 }
 @-webkit-keyframes fade_out { 
   0% { opacity: 1; } 
   100% { 
     opacity: 0;
-    display: none;
-    z-index: -1;
+    z-index: -99;
   } 
 }
 @-moz-keyframes fade_out { 
   0% { opacity: 1; } 
   100% { 
     opacity: 0;
-    display: none;
-    z-index: -1;
+    z-index: -99;
   } 
 }
