@@ -80,3 +80,82 @@ $general-font: typography.$general-font;
     opacity: 1.0;
   }
 }
+
+.fade_cover {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 1);
+  z-index: 999;
+  opacity: 1;
+}
+
+// Animations
+.fade_out {
+  animation: 1.5s ease 0s 1 normal forwards running fade_out; 
+  -webkit-animation:  1.5s ease 0s 1 normal forwards running fade_out; 
+  -moz-animation: 1.5s ease 0s 1 normal forwards running fade_out; 
+}
+
+.animation_delay_1 {
+  animation-delay: 0.3s;
+  -webkit-animation-delay: 0.3s;
+  -moz-animation-delay: 0.3s;
+}
+
+.animation_delay_2 {
+  animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  -moz-animation-delay: 0.5s;
+}
+
+.animation_delay_3 {
+  animation-delay: 0.7s;
+  -webkit-animation-delay: 0.7s;
+  -moz-animation-delay: 0.7s;
+}
+
+.animation_delay_4 {
+  animation-delay: 0.9s;
+  -webkit-animation-delay: 0.9s;
+  -moz-animation-delay: 0.9s;
+}
+
+.animation_delay_5 {
+  animation-delay: 1.1s;
+  -webkit-animation-delay: 1.1s;
+  -moz-animation-delay: 1.1s;
+}
+
+.animation_delay_6 {
+  animation-delay: 1.3s;
+  -webkit-animation-delay: 1.3s;
+  -moz-animation-delay: 1.3s;
+}
+
+@keyframes fade_out { 
+  0% { opacity: 1; } 
+  100% { 
+    opacity: 0;
+    display: none; 
+    z-index: -1;
+  } 
+}
+@-webkit-keyframes fade_out { 
+  0% { opacity: 1; } 
+  100% { 
+    opacity: 0;
+    display: none;
+    z-index: -1;
+  } 
+}
+@-moz-keyframes fade_out { 
+  0% { opacity: 1; } 
+  100% { 
+    opacity: 0;
+    display: none;
+    z-index: -1;
+  } 
+}
