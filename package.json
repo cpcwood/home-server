@@ -8,6 +8,7 @@
     "@rails/webpacker": "^5.0.1",
     "@testing-library/dom": "^7.21.4",
     "jest-erb-transformer": "1.0.1",
+    "node-forge": "0.10.0",
     "rails-erb-loader": "^5.5.2",
     "resolve-url-loader": "^3.1.1",
     "sass": "^1.26.5",
