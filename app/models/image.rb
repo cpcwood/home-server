@@ -34,6 +34,19 @@ class Image < ApplicationRecord
     "object-position: #{x_loc}% #{y_loc}%;" if x_loc != DEFAULT_X_LOC || y_loc != DEFAULT_Y_LOC
   end
 
+  def attach_image(upload_params)
+    image_file_path = upload_params.tempfile.path
+    unless Image.valid?(image_file_path)
+      self.errors[:base].push("#{self.description.humanize} invalid, please upload a jpeg or png file!")
+      return false
+    end
+    modified_image = Image.resize(image_path: image_file_path, x_dim: self.x_dim, y_dim: self.y_dim)
+    self.image_file.attach(
+      io: File.open(modified_image),
+      filename: upload_params.original_filename,
+      content_type: upload_params.content_type)
+  end
+
   def self.valid?(image_path)
     image = MiniMagick::Image.new(image_path)
     image.valid? ? image.mime_type.match?(%r{\Aimage/(png|jpeg)\z}i) : false
