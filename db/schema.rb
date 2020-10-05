@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_05_161305) do
+ActiveRecord::Schema.define(version: 2020_10_05_163945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,17 +20,6 @@ ActiveRecord::Schema.define(version: 2020_10_05_161305) do
     t.text "about_me"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "abouts_images", force: :cascade do |t|
-    t.string "link"
-    t.string "description"
-    t.integer "x_loc", default: 50
-    t.integer "y_loc", default: 50
-    t.integer "x_dim"
-    t.integer "y_dim"
-    t.bigint "about_id"
-    t.index ["about_id"], name: "index_abouts_images_on_about_id"
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -54,19 +43,41 @@ ActiveRecord::Schema.define(version: 2020_10_05_161305) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "images", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "name"
-    t.bigint "site_setting_id"
-    t.integer "x_dim"
-    t.integer "y_dim"
-    t.integer "x_loc", default: 50
-    t.integer "y_loc", default: 50
-    t.string "image_type"
+  create_table "cover_images", force: :cascade do |t|
     t.string "link"
     t.string "description"
-    t.index ["site_setting_id"], name: "index_images_on_site_setting_id"
+    t.integer "x_loc", default: 50
+    t.integer "y_loc", default: 50
+    t.integer "x_dim"
+    t.integer "y_dim"
+    t.bigint "site_setting_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["site_setting_id"], name: "index_cover_images_on_site_setting_id"
+  end
+
+  create_table "header_images", force: :cascade do |t|
+    t.string "description"
+    t.integer "x_loc", default: 50
+    t.integer "y_loc", default: 50
+    t.integer "x_dim"
+    t.integer "y_dim"
+    t.bigint "site_setting_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["site_setting_id"], name: "index_header_images_on_site_setting_id"
+  end
+
+  create_table "profile_images", force: :cascade do |t|
+    t.string "description"
+    t.integer "x_loc", default: 50
+    t.integer "y_loc", default: 50
+    t.integer "x_dim"
+    t.integer "y_dim"
+    t.bigint "about_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["about_id"], name: "index_profile_images_on_about_id"
   end
 
   create_table "site_settings", force: :cascade do |t|
@@ -96,7 +107,8 @@ ActiveRecord::Schema.define(version: 2020_10_05_161305) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "abouts_images", "abouts"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "images", "site_settings"
+  add_foreign_key "cover_images", "site_settings"
+  add_foreign_key "header_images", "site_settings"
+  add_foreign_key "profile_images", "abouts"
 end

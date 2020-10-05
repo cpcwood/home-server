@@ -1,15 +1,12 @@
 class Image < ApplicationRecord
+  self.abstract_class = true
+  
   require 'image_processing'
 
   DEFAULT_X_LOC = 50
   DEFAULT_Y_LOC = 50
 
-  belongs_to :site_setting, optional: true
-
   has_one_attached :image_file
-
-  validates :name,
-            length: { in: 1..255, too_short: 'Image name cannot be blank', too_long: 'Image name cannot be longer than 255 charaters' }
 
   validates :x_dim,
             presence: true,
@@ -26,9 +23,6 @@ class Image < ApplicationRecord
   validates :y_loc,
             presence: true,
             numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
-
-  validates :image_type,
-            presence: true
 
   def reset_to_default
     image_file.purge
