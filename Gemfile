@@ -39,6 +39,8 @@ group :development, :test do
   # Code policing with rubocop
   gem 'rubocop-rails', '~> 2.5.2', require: false
   gem 'rubocop-performance', '~> 1.5.2', require: false
+  # Some real nice printing
+  gem "amazing_print", "~> 1.2"
 end
 
 group :development do
