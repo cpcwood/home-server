@@ -1,14 +1,14 @@
 <br>
-<h4> <%= image.name.humanize %> </h4>
+<h4> <%= image.description.humanize %> </h4>
 
-<%= form_with(model: image,  :url => admin_image_path(image), method: "put") do |f| %>
+<%= form_with(model: [:admin, image], method: "put") do |f| %>
 
   <div class="embedded_form_entry_container">
     <div class="input_label embedded_label">
       Current image:
     </div>
     <div class="embedded_current_value">
-      <%= image.image_file.attached? ? image.image_file.attachment.blob.filename : "default #{image.name.humanize(capitalize: false)}" %>
+      <%= image.image_file.attached? ? image.image_file.attachment.blob.filename : "default #{image.description.humanize(capitalize: false)}" %>
     </div>
   </div>
 
@@ -24,7 +24,7 @@
 
   <div class="embedded_form_entry_container">
     <%= f.label(:update, 'Update image:', class: 'input_label embedded_label') %>
-    <%= f.file_field(:update, accept: 'image/png,image/jpeg', class: 'input_box embedded_no_border', id: "image_update_#{image.name}") %>
+    <%= f.file_field(:update, accept: 'image/png,image/jpeg', class: 'input_box embedded_no_border', id: "image_update_#{image.description}") %>
   </div>
 
   <div class="embedded_form_entry_container" data-controller="slider">
@@ -49,14 +49,14 @@
 
   <div class="embedded_form_entry_container">
     <%= f.label(:reset, 'Reset to defaults:', class: 'input_label embedded_label') %>
-    <%= f.check_box(:reset, class: 'input_check_box', id: "image_reset_#{image.name}") %>
+    <%= f.check_box(:reset, class: 'input_check_box', id: "image_reset_#{image.description}") %>
   </div>
   
   <br>
 
   <div class="embedded_form_entry_container">
     <div class="form_submit_container">
-      <%= f.submit("Update #{image.name.humanize(capitalize: false)}", class: 'input_submit') %>
+      <%= f.submit("Update #{image.description.humanize(capitalize: false)}", class: 'input_submit') %>
     </div>
     <div class="default_loader"></div>
   </div>

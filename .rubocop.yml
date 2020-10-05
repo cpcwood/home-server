@@ -14,6 +14,7 @@ AllCops:
     - 'storage/**/*'
     - 'vendor/**/*'
     - '*.js.erb'
+  NewCops: enable
 
 Bundler/OrderedGems:
   Enabled: false
