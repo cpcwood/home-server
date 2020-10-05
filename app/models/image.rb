@@ -37,11 +37,11 @@ class Image < ApplicationRecord
   def attach_image(upload_params)
     image_file_path = upload_params.tempfile.path
     unless Image.valid?(image_file_path)
-      self.errors[:base].push("#{self.description.humanize} invalid, please upload a jpeg or png file!")
+      errors[:base].push("#{description.humanize} invalid, please upload a jpeg or png file!")
       return false
     end
-    modified_image = Image.resize(image_path: image_file_path, x_dim: self.x_dim, y_dim: self.y_dim)
-    self.image_file.attach(
+    modified_image = Image.resize(image_path: image_file_path, x_dim: x_dim, y_dim: y_dim)
+    image_file.attach(
       io: File.open(modified_image),
       filename: upload_params.original_filename,
       content_type: upload_params.content_type)
