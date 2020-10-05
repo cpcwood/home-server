@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Image, type: :model do
-  let(:site_setting) { SiteSetting.new }
-  let(:image) { Image.new(name: 'test_image', site_setting: site_setting, x_dim: 1, y_dim: 1, image_type: 'cover_image') }
+  let(:image) { Image.new(name: 'test_image', x_dim: 1, y_dim: 1) }
 
   let(:image_path_valid) { Rails.root.join('spec/files/sample_image.jpg') }
   let(:image_path_invalid) { Rails.root.join('spec/files/sample_image_invalid.jpg') }
@@ -10,27 +9,6 @@ RSpec.describe Image, type: :model do
   let(:image_gif_path) { Rails.root.join('spec/files/sample_image_gif.gif') }
   let(:image_png_path) { Rails.root.join('spec/files/sample_image_png.png') }
   let(:image_file_upload) { fixture_file_upload(image_path_valid, 'image/jpg') }
-
-  describe 'Name validations' do
-    it 'Length minimum' do
-      image.name = ''
-      expect(image).to_not be_valid
-      expect(image.errors.messages[:name]).to eq(['Image name cannot be blank'])
-    end
-
-    it 'Length maximum' do
-      image.name = '0' * 256
-      expect(image).to_not be_valid
-      expect(image.errors.messages[:name]).to eq(['Image name cannot be longer than 255 charaters'])
-    end
-
-    it 'Length correct' do
-      image.name = '0'
-      expect(image).to be_valid
-      image.name = '0' * 255
-      expect(image).to be_valid
-    end
-  end
 
   describe 'x_dim validations' do
     it 'Presence' do
@@ -107,30 +85,6 @@ RSpec.describe Image, type: :model do
       expect(image).to_not be_valid
       image.y_loc = 100
       expect(image).to be_valid
-    end
-  end
-
-  describe 'image_type validations' do
-    it 'Presence' do
-      image.image_type = nil
-      expect(image).to_not be_valid
-    end
-  end
-
-  describe '#reset_to_default' do
-    it 'reset image_file' do
-      expect(image.image_file).to receive(:purge)
-      image.reset_to_default
-    end
-
-    it 'reset x_loc and y_loc' do
-      image.x_loc = 10
-      image.y_loc = 10
-      image.save
-      allow(image.image_file).to receive(:purge)
-      image.reset_to_default
-      expect(image.x_loc).to eq(50)
-      expect(image.y_loc).to eq(50)
     end
   end
 
