@@ -1,3 +1,3 @@
 class About < ApplicationRecord
-  has_one :images, dependent: :destroy
+  has_one :image, dependent: :destroy
 end

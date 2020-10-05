@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_05_153956) do
+ActiveRecord::Schema.define(version: 2020_10_05_155552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 2020_10_05_153956) do
     t.string "image_type"
     t.string "link"
     t.string "description"
-    t.bigint "abouts_id"
-    t.index ["abouts_id"], name: "index_images_on_abouts_id"
+    t.bigint "about_id"
+    t.index ["about_id"], name: "index_images_on_about_id"
     t.index ["site_setting_id"], name: "index_images_on_site_setting_id"
   end
 
@@ -88,6 +88,6 @@ ActiveRecord::Schema.define(version: 2020_10_05_153956) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "images", "abouts", column: "abouts_id"
+  add_foreign_key "images", "abouts"
   add_foreign_key "images", "site_settings"
 end
