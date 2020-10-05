@@ -51,23 +51,8 @@ Style/NumericPredicate:
   Enabled: false
 Style/ZeroLengthPredicate:
   Enabled: false
-Style/HashEachMethods:
-  Enabled: true
-Style/HashTransformKeys:
-  Enabled: true
-Style/HashTransformValues:
-  Enabled: true
 Style/NumericLiteralPrefix:
   Enabled: false
-Style/ExponentialNotation:
-  Enabled: true
-Style/SlicingWithRange:
-  Enabled: true
-Style/RedundantRegexpCharacterClass:
-  Enabled: true
-Style/RedundantRegexpEscape:
-  Enabled: true
-
 
 Metrics/BlockLength:
   Enabled: false
@@ -75,15 +60,6 @@ Metrics/MethodLength:
   Enabled: false
 Metrics/AbcSize:
   Enabled: false
-
-Lint/RaiseException:
-  Enabled: true
-Lint/StructNewOverride:
-  Enabled: true
-Lint/DeprecatedOpenSSLConstant:
-  Enabled: true
-Lint/MixedRegexpCaptureTypes:
-  Enabled: true
 
 Rails/SkipsModelValidations:
   Enabled: false
