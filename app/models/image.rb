@@ -5,6 +5,7 @@ class Image < ApplicationRecord
   DEFAULT_Y_LOC = 50
 
   belongs_to :site_setting
+  belongs_to :about
 
   has_one_attached :image_file
 
