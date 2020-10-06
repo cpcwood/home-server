@@ -21,7 +21,7 @@ $background-color: globals.$background-color;
   background-color: $background-color;
 }
 
-.page_container {
+.page-container {
   position: relative;
   top: 0px;
   left: 0px;
@@ -32,7 +32,7 @@ $background-color: globals.$background-color;
   justify-content: center;
 }
 
-.content_container {
+.content-container {
   box-sizing: border-box;
   position: absolute;
   top: 60px;
@@ -65,7 +65,7 @@ $background-color: globals.$background-color;
   align-content: flex-start;
 }
 
-.header_image {
+.header-image {
   position: fixed;
   box-sizing: border-box;
   top: 0px;

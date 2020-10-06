@@ -13,17 +13,17 @@ $btn-hover-animation: 0.2s;
 
 // Vendor
 @use '../vendor/hamburger' with(
-  $container_position: relative,
-  $container_height: 55px,
-  $container_width: 55px,
-  $container_z_index: 7,
-  $container_color: none,
-  $hamburger_padding: 6px 6px,
-  $bar_height: 5px,
-  $bar_color_normal: $nav-font-color,
-  $bar_color_clicked: $inverse-font-color,
-  $animation_duration: $sidebar-transition,
-  $length_scale: 0.96,
+  $container-position: relative,
+  $container-height: 55px,
+  $container-width: 55px,
+  $container-z-index: 7,
+  $container-color: none,
+  $hamburger-padding: 6px 6px,
+  $bar-height: 5px,
+  $bar-color-normal: $nav-font-color,
+  $bar-color-clicked: $inverse-font-color,
+  $animation-duration: $sidebar-transition,
+  $length-scale: 0.96,
 );
 
 
@@ -40,7 +40,7 @@ $btn-hover-animation: 0.2s;
   z-index: 3;
 }
 
-.nav_title_container {
+.nav-title-container {
   font-family: $header-font;
   font-size: 25px;
   font-weight: 300;
@@ -77,7 +77,7 @@ $btn-hover-animation: 0.2s;
 
 // Side Navbar Styles
 
-.nav_menu {
+.nav-menu {
   padding: 5px 10px;
   display: flex;
   flex-direction: column;
@@ -85,7 +85,7 @@ $btn-hover-animation: 0.2s;
   box-sizing: border-box;
 }
 
-.nav_sidebar {
+.nav-sidebar {
   display: flex;
   position: fixed;
   flex-direction: column;
@@ -115,7 +115,7 @@ $btn-hover-animation: 0.2s;
   }
 }
 
-.nav_item {
+.nav-item {
   position: relative;
   box-sizing: border-box;
   width: 100%;
@@ -145,11 +145,11 @@ $btn-hover-animation: 0.2s;
   -o-transition: visibility 0s ease $sidebar-transition, height 0s ease $sidebar-transition, padding 0s ease $sidebar-transition;
 }
 
-.logout_form {
+.logout-form {
   width: 100%;
 }
 
-.nav_item_separator {
+.nav-item-separator {
   position: relative;
   background-color: lightgrey;
   border-radius: 60%;
@@ -162,7 +162,7 @@ $btn-hover-animation: 0.2s;
   -o-transition: visibility 0s ease $sidebar-transition, height 0s ease $sidebar-transition;
 }
 
-.nav_screen_cover {
+.nav-screen-cover {
   visibility: hidden;
   position: fixed;
   top: 0px;
@@ -177,7 +177,7 @@ $btn-hover-animation: 0.2s;
   -o-transition: background-color $sidebar-transition ease 0s, visibility 0s ease $sidebar-transition;
 }
 
-.nav_sidebar.sidebar_open {
+.nav-sidebar.sidebar-open {
   width: 180px;
   @include respond-to(tablet) {
     width: 210px;
@@ -191,7 +191,7 @@ $btn-hover-animation: 0.2s;
   -moz-transition: width $sidebar-transition ease 0s;
   -o-transition: width $sidebar-transition ease 0s;
 
-  .nav_item {
+  .nav-item {
     visibility: visible;
     color: rgb(31, 29, 29);
     height: 40px;
@@ -209,7 +209,7 @@ $btn-hover-animation: 0.2s;
     }
   }
 
-  .nav_item_separator {
+  .nav-item-separator {
     visibility: visible;
     height: 2px;
     transition: all 0s ease 0s;
@@ -218,7 +218,7 @@ $btn-hover-animation: 0.2s;
     -o-transition: all 0s ease 0s;
   }
 
-  +.nav_screen_cover {
+  +.nav-screen-cover {
     visibility: visible;
     z-index: 4;
     background-color: rgba(0, 0, 0, 0.5);

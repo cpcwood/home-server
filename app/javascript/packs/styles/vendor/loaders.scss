@@ -4,7 +4,7 @@ $loader-background: rgba(0, 0, 0, 0.3);
 $loader-color:rgba(0, 0, 0, 0.7);
 
 
-.default_loader {
+.default-loader {
   visibility: hidden;
   border-radius: 50%;
   width: $loader-size;
@@ -13,7 +13,7 @@ $loader-color:rgba(0, 0, 0, 0.7);
   margin: 0px 10px;
 }
 
-.default_loader {
+.default-loader {
   box-sizing: border-box;
   position: relative;
   font-size: 10px;

@@ -6,7 +6,7 @@
 
 
 // Notice and Alerts
-.system_messages {
+.system-messages {
   box-sizing: border-box;
   width: 100%;
   word-wrap: break-word;
@@ -15,7 +15,7 @@
 .notice, .alert {
   box-sizing: border-box;
   width: 100%;
-  + .no_messages {
+  + .no-messages {
     display: none;
   }
 }

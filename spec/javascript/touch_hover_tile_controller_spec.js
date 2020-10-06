@@ -12,24 +12,24 @@ describe('touch_hover_tile_controller', () => {
 
   beforeEach(() => {
     document.body.innerHTML = `
-      <div class="flex_image_tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
-        <img class="cover_image">
+      <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
+        <img class="cover-image">
         <a href="/one">
-          <span class="cover_title" data-target="touch-hover-tile.coverTitle">
+          <span class="cover-title" data-target="touch-hover-tile.coverTitle">
             <span>flexTileOne</span>
           </span>
         </a>
       </div>
-      <div class="flex_image_tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
-        <img class="cover_image">
+      <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
+        <img class="cover-image">
         <a href="/two">
-          <span class="cover_title" data-target="touch-hover-tile.coverTitle">
+          <span class="cover-title" data-target="touch-hover-tile.coverTitle">
             <span>flexTileTwo</span>
           </span>
         </a>
       </div>
     `
-    const flexImageTiles = document.getElementsByClassName('flex_image_tile')
+    const flexImageTiles = document.getElementsByClassName('flex-image-tile')
     flexImageTileOne = flexImageTiles[0]
     flexImageTileTwo = flexImageTiles[1]
   })
@@ -44,7 +44,7 @@ describe('touch_hover_tile_controller', () => {
       flexImageTileOne.dispatchEvent(new Event('touchstart'))
       flexImageTileOne.dispatchEvent(new Event('touchend'))
 
-      expect(flexImageTileOne.querySelector('.cover_title').classList).toContain('hover')
+      expect(flexImageTileOne.querySelector('.cover-title').classList).toContain('hover')
     })
 
     it('touch >= 250ms performs default', () => {
@@ -52,7 +52,7 @@ describe('touch_hover_tile_controller', () => {
       flexImageTileOne.dispatchEvent(new Event('touchstart'))
       flexImageTileOne.dispatchEvent(new Event('touchend'))
 
-      expect(flexImageTileOne.querySelector('.cover_title').classList).not.toContain('hover')
+      expect(flexImageTileOne.querySelector('.cover-title').classList).not.toContain('hover')
     })
 
     it("if another tile contains class 'hover' it is removed, and added to tile clicked", () => {
@@ -65,8 +65,8 @@ describe('touch_hover_tile_controller', () => {
       flexImageTileTwo.dispatchEvent(new Event('touchstart'))
       flexImageTileTwo.dispatchEvent(new Event('touchend'))
 
-      expect(flexImageTileTwo.querySelector('.cover_title').classList).toContain('hover')
-      expect(flexImageTileOne.querySelector('.cover_title').classList).not.toContain('hover')
+      expect(flexImageTileTwo.querySelector('.cover-title').classList).toContain('hover')
+      expect(flexImageTileOne.querySelector('.cover-title').classList).not.toContain('hover')
     })
   })
 })

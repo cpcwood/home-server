@@ -21,10 +21,10 @@ describe('nav_menu_controller', () => {
 
   beforeEach(() => {
     document.body.innerHTML = applicationHTML
-    navMenu = document.querySelector('.nav_menu')
-    navHamburger = document.querySelector('.hamburger_container')
-    navSidebar = document.querySelector('.nav_sidebar')
-    navScreenCover = document.querySelector('.nav_screen_cover')
+    navMenu = document.querySelector('.nav-menu')
+    navHamburger = document.querySelector('.hamburger-container')
+    navSidebar = document.querySelector('.nav-sidebar')
+    navScreenCover = document.querySelector('.nav-screen-cover')
   })
 
   describe('#menuToggle - navHamburger click', () => {
@@ -36,11 +36,11 @@ describe('nav_menu_controller', () => {
       expect(navMenu.getAttribute('data-nav-menu-open')).toEqual('false')
     })
 
-    it("adds and removes navSidebar 'sidebar_open' class", () => {
+    it("adds and removes navSidebar 'sidebar-open' class", () => {
       navHamburger.click()
-      expect(navSidebar.classList).toContain('sidebar_open')
+      expect(navSidebar.classList).toContain('sidebar-open')
       navHamburger.click()
-      expect(navSidebar.classList).not.toContain('sidebar_open')
+      expect(navSidebar.classList).not.toContain('sidebar-open')
     })
 
     it("adds and removes navHamburger 'clicked' class", () => {
@@ -50,11 +50,11 @@ describe('nav_menu_controller', () => {
       expect(navHamburger.classList).not.toContain('clicked')
     })
 
-    it("removes and adds navHamburger 'reset_animation' class", () => {
+    it("removes and adds navHamburger 'reset-animation' class", () => {
       navHamburger.click()
-      expect(navHamburger.classList).not.toContain('reset_animation')
+      expect(navHamburger.classList).not.toContain('reset-animation')
       navHamburger.click()
-      expect(navHamburger.classList).toContain('reset_animation')
+      expect(navHamburger.classList).toContain('reset-animation')
     })
   })
 
