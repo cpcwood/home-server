@@ -37,7 +37,7 @@ RSpec.describe PasswordMailer, type: :mailer do
 
     it 'Renders attached header image path' do
       image_name = 'image_mock.jpg'
-      header_image = SiteSetting.first.images.find_by(name: 'header_image')
+      header_image = SiteSetting.first.header_image
       header_image.image_file.attach(
         io: File.open(image_mock_path),
         filename: 'image_mock.jpg')
@@ -85,7 +85,7 @@ RSpec.describe PasswordMailer, type: :mailer do
 
     it 'Renders attached header image path' do
       image_name = 'image_mock.jpg'
-      header_image = SiteSetting.first.images.find_by(name: 'header_image')
+      header_image = SiteSetting.first.header_image
       header_image.image_file.attach(
         io: File.open(image_mock_path),
         filename: 'image_mock.jpg')
