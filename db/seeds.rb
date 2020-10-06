@@ -31,7 +31,7 @@ CoverImage.create(
   x_dim: cover_image_x_dim,
   y_dim: cover_image_y_dim,
   link: '/about',
-  description: 'About')
+  description: 'ABOUT')
 
 CoverImage.create(
   site_setting: site_settings,

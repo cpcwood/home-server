@@ -46,6 +46,18 @@ RSpec.describe CoverImage, type: :model do
     end
   end
 
+  describe 'description validations' do
+    it 'Presence' do
+      image.description = nil
+      expect(image).to_not be_valid
+    end
+
+    it 'Value' do
+      image.description = ''
+      expect(image).to_not be_valid
+    end
+  end
+
   describe '#custom_style' do
     it 'locations are default' do
       expect(image.custom_style).to eq(nil)

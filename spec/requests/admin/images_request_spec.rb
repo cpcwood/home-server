@@ -52,7 +52,7 @@ RSpec.describe 'Request Admin:Images', type: :request do
       end
 
       it 'Update unsucessful - invalid image id' do
-        put "/admin/header-images/not-a-valid-id", params: {
+        put '/admin/header-images/not-a-valid-id', params: {
           header_image: {
             update: image_fixture,
             x_loc: 50,
