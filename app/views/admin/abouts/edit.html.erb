@@ -1,6 +1,6 @@
 <%= render partial: "layouts/section_title", locals: {title: 'About', subtitle: 'Admin edit'} %>
 
-<%= form_with(model: [:admin, @about], method: "put") do |f| %>
+<%= form_with(model: [:admin, @about], method: "put", class: 'admin-section-form') do |f| %>
   <% image = @about.profile_image %>
 
   <div class="embedded-form-entry-container">
@@ -44,7 +44,7 @@
     <%= f.text_area(:name, class: 'input-box embedded-input-box embedded-text-area', placeholder: 'Add about me text (you can use markdown)...', value: @about.about_me) %>
   </div>
 
-  <div class="embedded-form-entry-container">
+  <div class="embedded-form-entry-container submit-right">
   <div class="form-submit-container">
     <%= f.submit("Update About", class: 'input-submit') %>
   </div>
