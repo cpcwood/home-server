@@ -1,5 +1,5 @@
 module DefaultImageHelper
-  DEFAULT_IMAGE_PATH = 'default_images/image_not_found.png'
+  DEFAULT_IMAGE_PATH = 'default_images/image_not_found.png'.freeze
 
   def image_path_helper(image)
     if image&.image_file

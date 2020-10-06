@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'spec_helpers/session_helper'
 
-RSpec.describe 'Sessions', type: :request do
+RSpec.describe 'Request Sessions', type: :request do
   before(:each) do
     block_twilio_verification_checks
   end

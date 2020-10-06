@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'spec_helpers/session_helper'
 
-RSpec.describe 'Users', type: :request do
+RSpec.describe 'Request Users', type: :request do
   describe 'PUT /user.id #update' do
     before(:each) do
       @blank_username_params = { username: '', username_confirmation: '' }

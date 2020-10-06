@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'spec_helpers/session_helper'
 
-RSpec.describe 'Admins', type: :request do
+RSpec.describe 'Request Admins', type: :request do
   describe 'GET /admin #general' do
     it 'Redirects to homepage if user not logged in' do
       get '/admin'
