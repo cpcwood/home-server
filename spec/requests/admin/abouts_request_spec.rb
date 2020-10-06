@@ -14,11 +14,12 @@ RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
   end
 
   describe 'PUT /admin/about #update' do
+    attribute_update = {
+      name: 'new section name',
+      about_me: 'new about me section'
+    }
+
     it 'Update sucessful' do
-      attribute_update = {
-        name: 'new section name',
-        about_me: 'new about me section'
-      }
       put '/admin/about', params: {
         about: attribute_update
       }
@@ -30,18 +31,23 @@ RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
       expect(@about.about_me).to eq(attribute_update[:about_me])
     end
 
-    it 'Validation error' do
+    it 'Save failure' do
       allow_any_instance_of(About).to receive(:save).and_return(false)
-      allow_any_instance_of(About).to receive(:errors).and_return({ error: 'test_error' })
-      attribute_update = {
-        name: 'new section name',
-        about_me: 'new about me section'
-      }
+      allow_any_instance_of(About).to receive(:errors).and_return({ error: 'save failure' })
       put '/admin/about', params: {
         about: attribute_update
       }
       follow_redirect!
-      expect(response.body).to include('test_error')
+      expect(response.body).to include('save failure')
+    end
+
+    it 'General error' do
+      allow_any_instance_of(About).to receive(:save).and_raise('general error')
+      put '/admin/about', params: {
+        about: attribute_update
+      }
+      follow_redirect!
+      expect(response.body).to include('general error')
     end
   end
 end
