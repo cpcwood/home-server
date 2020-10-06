@@ -49,6 +49,8 @@ RSpec.configure do |config|
     @site_settings = SiteSetting.create(name: 'test_name', typed_header_enabled: false, header_text: 'test header_text', subtitle_text: 'test subtitle_text')
     @header_image = HeaderImage.create(site_setting: @site_settings, x_dim: 2560, y_dim: 300, description: 'header_image')
     @cover_image = CoverImage.create(site_setting: @site_settings, x_dim: 1450, y_dim: 680, description: 'cover_image')
+    @about = About.create(name: 'test name', about_me: 'test about me text')
+    @profile_image = ProfileImage.create(about: @about, x_dim: 680, y_dim: 680, description: 'about me profile image')
   end
 
   config.append_after(:each) do
