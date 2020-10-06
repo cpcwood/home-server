@@ -3,6 +3,8 @@
 <%= form_with(model: [:admin, @about], method: "put", class: 'admin-section-form') do |f| %>
   <% image = @about.profile_image %>
 
+  <%= render 'layouts/system_messages'%>
+
   <div class="embedded-form-entry-container">
     <div class="input-label embedded-label">
       Current profile image:
@@ -25,13 +27,13 @@
   </div>
 
   <div class="embedded-form-entry-container">
-    <%= f.label(:update, 'Update image:', class: 'input-label embedded-label') %>
-    <%= f.file_field(:update, accept: 'image/png,image/jpeg', class: 'input-box embedded-no-border', id: "image-update-#{image.description}") %>
+    <%= label(:profile_image, :update, 'Update image:', class: 'input-label embedded-label') %>
+    <%= file_field(:profile_image, :update, accept: 'image/png,image/jpeg', class: 'input-box embedded-no-border', id: "image-update-#{image.description}") %>
   </div>
 
   <div class="embedded-form-entry-container">
-    <%= f.label(:reset, 'Remove image:', class: 'input-label embedded-label') %>
-    <%= f.check_box(:reset, class: 'input-check-box', id: "image-reset-#{image.description}") %>
+    <%= label(:profile_image, :reset, 'Remove image:', class: 'input-label embedded-label') %>
+    <%= check_box(:profile_image, :reset, class: 'input-check-box', id: "image-reset-#{image.description}") %>
   </div>
 
   <div class="embedded-form-entry-container">
@@ -41,7 +43,7 @@
 
   <div class="embedded-form-entry-container">
     <%= f.label(:about_me, 'About me:', class: 'input-label embedded-label') %>
-    <%= f.text_area(:name, class: 'input-box embedded-input-box embedded-text-area', placeholder: 'Add about me text (you can use markdown)...', value: @about.about_me) %>
+    <%= f.text_area(:about_me, class: 'input-box embedded-input-box embedded-text-area', placeholder: 'Add about me text (you can use markdown)...', value: @about.about_me) %>
   </div>
 
   <div class="embedded-form-entry-container submit-right">
