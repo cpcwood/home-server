@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Image, type: :model do
-  let(:image) { Image.new(name: 'test_image', x_dim: 1, y_dim: 1) }
+RSpec.describe CoverImage, type: :model do
+  let(:image) { CoverImage.new(site_setting: @site_settings, x_dim: 1, y_dim: 1, description: 'cover_image') }
 
   let(:image_path_valid) { Rails.root.join('spec/files/sample_image.jpg') }
   let(:image_path_invalid) { Rails.root.join('spec/files/sample_image_invalid.jpg') }
@@ -9,48 +9,6 @@ RSpec.describe Image, type: :model do
   let(:image_gif_path) { Rails.root.join('spec/files/sample_image_gif.gif') }
   let(:image_png_path) { Rails.root.join('spec/files/sample_image_png.png') }
   let(:image_file_upload) { fixture_file_upload(image_path_valid, 'image/jpg') }
-
-  describe 'x_dim validations' do
-    it 'Presence' do
-      image.x_dim = nil
-      expect(image).to_not be_valid
-    end
-
-    it 'Numericality' do
-      image.x_dim = 0.124
-      expect(image).to_not be_valid
-      image.x_dim = 'test'
-      expect(image).to_not be_valid
-    end
-
-    it 'Value' do
-      image.x_dim = 0
-      expect(image).to_not be_valid
-      image.x_dim = -1
-      expect(image).to_not be_valid
-    end
-  end
-
-  describe 'y_dim validations' do
-    it 'Presence' do
-      image.y_dim = nil
-      expect(image).to_not be_valid
-    end
-
-    it 'Numericality' do
-      image.y_dim = 0.124
-      expect(image).to_not be_valid
-      image.x_dim = 'test'
-      expect(image).to_not be_valid
-    end
-
-    it 'Value' do
-      image.y_dim = 0
-      expect(image).to_not be_valid
-      image.y_dim = -1
-      expect(image).to_not be_valid
-    end
-  end
 
   describe 'x_loc validations' do
     it 'Presence' do
