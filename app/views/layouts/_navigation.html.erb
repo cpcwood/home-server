@@ -1,5 +1,5 @@
 <nav class='navbar'>
-  <div class='nav_title_container'>
+  <div class='nav-title-container'>
     <a href='/'><%= @site_settings.name %></a>
   </div>
   <% if @user %>
@@ -9,64 +9,64 @@
       </a>
     </div>
   <% end %>
-  <div class='nav_menu' data-controller='nav-menu' data-nav-menu-open='false'>
-    <div class='hamburger_container' data-action='click->nav-menu#menuToggle' data-target='nav-menu.navHamburger'>
+  <div class='nav-menu' data-controller='nav-menu' data-nav-menu-open='false'>
+    <div class='hamburger-container' data-action='click->nav-menu#menuToggle' data-target='nav-menu.navHamburger'>
       <div class='hamburger'>
-        <div class='hamburger_bar' id='hamburger_crown'></div>
-        <div class='hamburger_bar' id='hamburger_patty'></div>
-        <div class='hamburger_bar' id='hamburger_heel'></div>
+        <div class='hamburger-bar' id='hamburger-crown'></div>
+        <div class='hamburger-bar' id='hamburger-patty'></div>
+        <div class='hamburger-bar' id='hamburger-heel'></div>
       </div>
     </div>
-    <div class='nav_sidebar' data-target='nav-menu.navSidebar'>
+    <div class='nav-sidebar' data-target='nav-menu.navSidebar'>
       <div class='upper'>
-        <div class='nav_item_separator'></div>
-        <a href='/' class='nav_item'>
+        <div class='nav-item-separator'></div>
+        <a href='/' class='nav-item'>
           HOME
         </a>
-        <div class='nav_item_separator'></div>
-        <a href='/about' class='nav_item'>
+        <div class='nav-item-separator'></div>
+        <a href='/about' class='nav-item'>
           ABOUT
         </a>
-        <div class='nav_item_separator'></div>
-        <a href='/projects' class='nav_item'>
+        <div class='nav-item-separator'></div>
+        <a href='/projects' class='nav-item'>
           PROJECTS
         </a>
-        <div class='nav_item_separator'></div>
-        <a href='/blog' class='nav_item'>
+        <div class='nav-item-separator'></div>
+        <a href='/blog' class='nav-item'>
           BLOG
         </a>
-        <div class='nav_item_separator'></div>
-        <a href='/say-hello' class='nav_item'>
+        <div class='nav-item-separator'></div>
+        <a href='/say-hello' class='nav-item'>
           SAY HELLO
         </a>
-        <div class='nav_item_separator'></div>
-        <a href='/gallery' class='nav_item'>
+        <div class='nav-item-separator'></div>
+        <a href='/gallery' class='nav-item'>
           GALLERY
         </a>
-        <div class='nav_item_separator'></div>
-        <a href='/contact' class='nav_item'>
+        <div class='nav-item-separator'></div>
+        <a href='/contact' class='nav-item'>
           CONTACT
         </a>
-        <div class='nav_item_separator'></div>
+        <div class='nav-item-separator'></div>
       </div>
       <div class='lower'>
-        <div class='nav_item_separator'></div>
+        <div class='nav-item-separator'></div>
         <% if @user %>
-        <a href='/admin' class='nav_item'>
+        <a href='/admin' class='nav-item'>
           ADMIN
         </a>
-        <div class='nav_item_separator'></div>
-        <%= form_with(url: "/login", method: "delete", class: 'logout_form') do %>
-          <%= submit_tag("LOGOUT", class: 'nav_item', id: 'logout-button') %>
+        <div class='nav-item-separator'></div>
+        <%= form_with(url: "/login", method: "delete", class: 'logout-form') do %>
+          <%= submit_tag("LOGOUT", class: 'nav-item', id: 'logout-button') %>
         <% end %>
         <% else %>
-        <a href='/login' class='nav_item' id='login-button'>
+        <a href='/login' class='nav-item' id='login-button'>
           LOGIN
         </a>
         <% end %>
-        <div class='nav_item_separator'></div>
+        <div class='nav-item-separator'></div>
       </div>
     </div>
-    <div class='nav_screen_cover' data-action='click->nav-menu#closeMenu'></div>
+    <div class='nav-screen-cover' data-action='click->nav-menu#closeMenu'></div>
   </div>
 </nav>

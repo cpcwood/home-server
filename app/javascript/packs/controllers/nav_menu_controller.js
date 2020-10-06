@@ -13,22 +13,22 @@ export default class extends Controller {
 
   openMenu () {
     this.data.set('open', 'true')
-    this.navSidebarTarget.classList.add('sidebar_open')
+    this.navSidebarTarget.classList.add('sidebar-open')
     this.navHamburgerTarget.classList.add('clicked')
-    this.navHamburgerTarget.classList.remove('reset_animation')
+    this.navHamburgerTarget.classList.remove('reset-animation')
   }
 
   closeMenu () {
     this.data.set('open', 'false')
-    this.navSidebarTarget.classList.remove('sidebar_open')
+    this.navSidebarTarget.classList.remove('sidebar-open')
     this.navHamburgerTarget.classList.remove('clicked')
-    this.navHamburgerTarget.classList.add('reset_animation')
+    this.navHamburgerTarget.classList.add('reset-animation')
   }
 
   disconnect () {
     if (this.data.get('open') === 'true') {
       this.data.set('open', 'false')
-      this.navSidebarTarget.classList.remove('sidebar_open')
+      this.navSidebarTarget.classList.remove('sidebar-open')
       this.navHamburgerTarget.classList.remove('clicked')
     }
   }

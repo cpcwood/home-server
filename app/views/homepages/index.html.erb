@@ -27,11 +27,11 @@
 
 <% fade_delay_num = 1%>
 <% @cover_images.each do |image| %>
-  <div class="flex_image_tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
-    <div class="fade_cover fade_out animation_delay_<%= fade_delay_num %>"></div>
-    <%= image_tag(image_path_helper(image), class: 'cover_image', style: image.custom_style ) %>
+  <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
+    <div class="fade-cover fade-out animation-delay-<%= fade_delay_num %>"></div>
+    <%= image_tag(image_path_helper(image), class: 'cover-image', style: image.custom_style ) %>
     <a href="<%= image.link %>">
-      <span class="cover_title" data-target="touch-hover-tile.coverTitle">
+      <span class="cover-title" data-target="touch-hover-tile.coverTitle">
         <span><%= image.description %></span>
       </span>
     </a>

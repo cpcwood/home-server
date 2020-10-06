@@ -19,8 +19,8 @@ describe('dashboard_sidebar_controller', () => {
 
   beforeEach(() => {
     document.body.innerHTML = applicationHTML
-    dashboardSidebar = document.querySelector('.dashboard_sidebar')
-    dashboardSidebarToggle = document.querySelector('.dashboard_sidebar_toggle')
+    dashboardSidebar = document.querySelector('.dashboard-sidebar')
+    dashboardSidebarToggle = document.querySelector('.dashboard-sidebar-toggle')
   })
 
   describe('#sidebarToggle', () => {

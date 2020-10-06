@@ -4,13 +4,13 @@ feature 'Admin update images', feature: true, slow: true do
   scenario 'Update header image' do
     login_feature
     visit('admin/images')
-    find('#image_update_header_image').set(Rails.root.join('spec/files/sample_image.jpg'))
+    find_field('header_image[update]').set(Rails.root.join('spec/files/sample_image.jpg'))
     click_button('Update header image')
     expect(page).to have_content('Header image updated!')
     visit('/')
     expect(page).to have_css("img[src*='sample_image.jpg']")
     visit('admin/images')
-    find('#image_reset_header_image').set(true)
+    find_field('header_image[reset]').set(true)
     click_button('Update header image')
     expect(page).to have_content('Header image reset!')
     visit('/')
@@ -24,7 +24,7 @@ feature 'Admin update images', feature: true, slow: true do
     click_button('Update header image')
     expect(page).to have_content('Header image location updated!')
     visit('/')
-    header_image = find('.header_image > img')
+    header_image = find('.header-image > img')
     expect(header_image[:style]).to match(/object-position: 10% 50%/)
   end
 end

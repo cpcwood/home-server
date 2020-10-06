@@ -13,12 +13,12 @@ export default class extends Controller {
       typeSpeed: 75,
       startDelay: 700,
       preStringTyped: () => {
-        this.typedSubtitleTarget.classList.add('typed_cursor')
-        this.typedHeaderTarget.classList.remove('typed_cursor')
+        this.typedSubtitleTarget.classList.add('typed-cursor')
+        this.typedHeaderTarget.classList.remove('typed-cursor')
       },
       onComplete: () => {
         setTimeout(() => {
-          this.typedSubtitleTarget.classList.remove('typed_cursor')
+          this.typedSubtitleTarget.classList.remove('typed-cursor')
         }, 1700)
       }
     }
@@ -29,7 +29,7 @@ export default class extends Controller {
       typeSpeed: 50,
       startDelay: 1700,
       preStringTyped: () => {
-        this.typedHeaderTarget.classList.add('typed_cursor')
+        this.typedHeaderTarget.classList.add('typed-cursor')
       },
       onComplete: () => {
         controller.typedSubtitle = new Typed('#typed-subtitle', subtitleOptions)

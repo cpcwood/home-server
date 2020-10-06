@@ -1,11 +1,11 @@
 <h1> Two Factor Authentication </h1>
-<div class='centered_container'>
-  <div class='floating_form_container'>
-    <%= form_with(url: "/2fa", method: :post, class: 'floating_form') do |f| %>
+<div class='centered-container'>
+  <div class='floating-form-container'>
+    <%= form_with(url: "/2fa", method: :post, class: 'floating-form') do |f| %>
       <%= render 'layouts/system_messages'%>
-      <%= f.text_field(:auth_code, required: true, class: 'input_box', placeholder: '2FA Code') %>
-      <div class='input_seperator'></div>
-      <%= f.submit("Login", class: 'input_submit') %>
+      <%= f.text_field(:auth_code, required: true, class: 'input-box', placeholder: '2FA Code') %>
+      <div class='input-seperator'></div>
+      <%= f.submit("Login", class: 'input-submit') %>
     <% end %>
     <div class='options'>
       <%= form_tag('/2fa', method: :put) do %>

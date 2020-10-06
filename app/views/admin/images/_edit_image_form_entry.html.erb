@@ -3,62 +3,62 @@
 
 <%= form_with(model: [:admin, image], method: "put") do |f| %>
 
-  <div class="embedded_form_entry_container">
-    <div class="input_label embedded_label">
+  <div class="embedded-form-entry-container">
+    <div class="input-label embedded-label">
       Current image:
     </div>
-    <div class="embedded_current_value">
+    <div class="embedded-current-value">
       <%= image.image_file.attached? ? image.image_file.attachment.blob.filename : "default #{image.description.humanize(capitalize: false)}" %>
     </div>
   </div>
 
-  <div class="embedded_form_entry_container">
-    <%= image_tag(image_path_helper(image), class: 'embedded_full_width embedded_cover_image')%>
+  <div class="embedded-form-entry-container">
+    <%= image_tag(image_path_helper(image), class: 'embedded-full-width embedded-cover-image')%>
   </div>
 
-  <div class="embedded_form_entry_container">
-    <div class="embedded_full_width embedded_form_note small-font">
+  <div class="embedded-form-entry-container">
+    <div class="embedded-full-width embedded-form-note small-font">
       <strong>Note:</strong> Images will be resized to <%= image.x_dim %>px wide and cropped to <%= image.y_dim %>px tall. Accepted image formats are jpeg and png.
     </div>
   </div>
 
-  <div class="embedded_form_entry_container">
-    <%= f.label(:update, 'Update image:', class: 'input_label embedded_label') %>
-    <%= f.file_field(:update, accept: 'image/png,image/jpeg', class: 'input_box embedded_no_border', id: "image_update_#{image.description}") %>
+  <div class="embedded-form-entry-container">
+    <%= f.label(:update, 'Update image:', class: 'input-label embedded-label') %>
+    <%= f.file_field(:update, accept: 'image/png,image/jpeg', class: 'input-box embedded-no-border') %>
   </div>
 
-  <div class="embedded_form_entry_container" data-controller="slider">
-    <label class="input_label embedded_label" for="image_x_loc">
+  <div class="embedded-form-entry-container" data-controller="slider">
+    <label class="input-label embedded-label" for="image_x_loc">
       x location:
-      <span class="slider_value" data-target="slider.value">
+      <span class="slider-value" data-target="slider.value">
         <%= image.x_loc %>
       </span>
     </label>
-    <%= f.range_field(:x_loc, min: 0, max: 100, value: image.x_loc, class: "slider embedded_input_box", step: "1", data: { action: "input->slider#update", target: 'slider.input' }) %>
+    <%= f.range_field(:x_loc, min: 0, max: 100, value: image.x_loc, class: "slider embedded-input-box", step: "1", data: { action: "input->slider#update", target: 'slider.input' }) %>
   </div>
 
-  <div class="embedded_form_entry_container" data-controller="slider">
-    <label class="input_label embedded_label" for="image_y_loc">
+  <div class="embedded-form-entry-container" data-controller="slider">
+    <label class="input-label embedded-label" for="image_y_loc">
       y location:
-      <span class="slider_value" data-target="slider.value">
+      <span class="slider-value" data-target="slider.value">
         <%= image.y_loc %>
       </span>
     </label>
-    <%= f.range_field(:y_loc, min: 0, max: 100, value: image.y_loc, class: "slider embedded_input_box", step: "1", data: { action: "input->slider#update", target: 'slider.input' }) %>
+    <%= f.range_field(:y_loc, min: 0, max: 100, value: image.y_loc, class: "slider embedded-input-box", step: "1", data: { action: "input->slider#update", target: 'slider.input' }) %>
   </div>
 
-  <div class="embedded_form_entry_container">
-    <%= f.label(:reset, 'Reset to defaults:', class: 'input_label embedded_label') %>
-    <%= f.check_box(:reset, class: 'input_check_box', id: "image_reset_#{image.description}") %>
+  <div class="embedded-form-entry-container">
+    <%= f.label(:reset, 'Reset to defaults:', class: 'input-label embedded-label') %>
+    <%= f.check_box(:reset, class: 'input-check-box', id: "image-reset-#{image.description}") %>
   </div>
   
   <br>
 
-  <div class="embedded_form_entry_container">
-    <div class="form_submit_container">
-      <%= f.submit("Update #{image.description.humanize(capitalize: false)}", class: 'input_submit') %>
+  <div class="embedded-form-entry-container">
+    <div class="form-submit-container">
+      <%= f.submit("Update #{image.description.humanize(capitalize: false)}", class: 'input-submit') %>
     </div>
-    <div class="default_loader"></div>
+    <div class="default-loader"></div>
   </div>
 
 <% end %>

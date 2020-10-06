@@ -9,7 +9,7 @@
 
 
 // Styles
-.dashboard_container {
+.dashboard-container {
   background-color: white;
   box-sizing: border-box;
   display: flex;
@@ -30,7 +30,7 @@
   }
 }
 
-.dashboard_sidebar {
+.dashboard-sidebar {
   box-sizing: border-box;
   position: relative;
   top: 0px;
@@ -46,7 +46,7 @@
     min-width: 236px;
     max-width: 300px;
     border-right: 2px solid lightgrey;
-    .dashboard_sidebar_toggle {
+    .dashboard-sidebar-toggle {
       display: none;
     }
   }
@@ -54,7 +54,7 @@
     min-width: 240px;
     max-width: 350px;
     border-right: 2px solid lightgrey;
-    .dashboard_sidebar_toggle {
+    .dashboard-sidebar-toggle {
       display: none;
     }
   }
@@ -68,7 +68,7 @@
     h2 {
       display: block;
     }
-    .dashboard_button {
+    .dashboard-button {
       display: block;
     }
   }
@@ -98,7 +98,7 @@
   }
 }
 
-.dashboard_button {
+.dashboard-button {
   padding: 10px 10px;
   font-size: 16px;
   font-weight: 300;
@@ -122,7 +122,7 @@
   }
 }
 
-.dashboard_sidebar_toggle {
+.dashboard-sidebar-toggle {
   box-sizing: border-box;
   position: absolute;
   top: 0px;
@@ -146,7 +146,7 @@
     font-size: 16px;
     font-weight: 400;
   }
-  .tab_title {
+  .tab-title {
     box-sizing: border-box;
     font-size: 14px;
     writing-mode: vertical-rl;
@@ -172,7 +172,7 @@
   }
 }
 
-.dashboard_content {
+.dashboard-content {
   box-sizing: border-box;
   position: relative;
   top: 0px;
@@ -186,12 +186,12 @@
   margin: 0 5% 5% 5%;
 }
 
-.dashboard_item_container {
+.dashboard-item-container {
   box-sizing: border-box;
   width: 100%;
 }
 
-.dashboard_item_separator {
+.dashboard-item-separator {
   width: 100%;
   height: 4px;
   border-radius: 20%;

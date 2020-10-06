@@ -11,7 +11,7 @@ $general-font: typography.$general-font;
 
 
 // Styles
-.flex_image_tile {
+.flex-image-tile {
   position: relative;
   box-sizing: border-box;
   flex-grow: 1;
@@ -31,22 +31,22 @@ $general-font: typography.$general-font;
   }
 }
 
-.cover_image {
+.cover-image {
   position: relative;
   height: 100%;
   width: 100%;
   object-fit: cover;
   object-position: 50% 50%;
 
-  &.middle_left {
+  &.middle-left {
     object-position: 0% 50%;
   }
-  &.top_left {
+  &.top-left {
     object-position: 0% 0%;
   }
 }
 
-.cover_title {
+.cover-title {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -82,75 +82,75 @@ $general-font: typography.$general-font;
   }
 }
 
-.fade_cover {
+.fade-cover {
   position: absolute;
   top: 0px;
   left: 0px;
   width: 100%;
   height: 100%;
-  background: globals.$background_color;
+  background: globals.$background-color;
   z-index: 999;
   opacity: 1;
 }
 
 // Animations
-.fade_out {
-  animation: 1.2s ease-out 0s 1 normal forwards running fade_out; 
-  -webkit-animation:  1.2s ease-out 0s 1 normal forwards running fade_out; 
-  -moz-animation: 1.2s ease-out 0s 1 normal forwards running fade_out; 
+.fade-out {
+  animation: 1.2s ease-out 0s 1 normal forwards running fade-out; 
+  -webkit-animation:  1.2s ease-out 0s 1 normal forwards running fade-out; 
+  -moz-animation: 1.2s ease-out 0s 1 normal forwards running fade-out; 
 }
 
-.animation_delay_1 {
+.animation-delay-1 {
   animation-delay: 0.4s;
   -webkit-animation-delay: 0.4s;
   -moz-animation-delay: 0.4s;
 }
 
-.animation_delay_2 {
+.animation-delay-2 {
   animation-delay: 0.5s;
   -webkit-animation-delay: 0.5s;
   -moz-animation-delay: 0.5s;
 }
 
-.animation_delay_3 {
+.animation-delay-3 {
   animation-delay: 0.6s;
   -webkit-animation-delay: 0.6s;
   -moz-animation-delay: 0.6s;
 }
 
-.animation_delay_4 {
+.animation-delay-4 {
   animation-delay: 0.7s;
   -webkit-animation-delay: 0.7s;
   -moz-animation-delay: 0.7s;
 }
 
-.animation_delay_5 {
+.animation-delay-5 {
   animation-delay: 0.8s;
   -webkit-animation-delay: 0.8s;
   -moz-animation-delay: 0.8s;
 }
 
-.animation_delay_6 {
+.animation-delay-6 {
   animation-delay: 0.9s;
   -webkit-animation-delay: 0.9s;
   -moz-animation-delay: 0.9s;
 }
 
-@keyframes fade_out { 
+@keyframes fade-out { 
   0% { opacity: 1; } 
   100% { 
     opacity: 0;
     z-index: -99;
   } 
 }
-@-webkit-keyframes fade_out { 
+@-webkit-keyframes fade-out { 
   0% { opacity: 1; } 
   100% { 
     opacity: 0;
     z-index: -99;
   } 
 }
-@-moz-keyframes fade_out { 
+@-moz-keyframes fade-out { 
   0% { opacity: 1; } 
   100% { 
     opacity: 0;
