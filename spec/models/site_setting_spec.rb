@@ -64,14 +64,4 @@ RSpec.describe SiteSetting, type: :model do
       expect(site_setting.update_required?(attribute: 'name', value: new_name)).to eq(true)
     end
   end
-
-  describe '#cover_images' do
-    before(:each) do
-      @cover_image2 = Image.create(site_setting: site_setting, name: 'cover_image2', x_dim: 1, y_dim: 1, image_type: 'cover_image')
-    end
-
-    it 'multiple images' do
-      expect(site_setting.cover_images).to eq([@cover_image, @cover_image2])
-    end
-  end
 end

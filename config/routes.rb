@@ -23,8 +23,8 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :site_settings, only: [:index, :update]
     resources :images, only: [:index]
-    resources :header_images, only: [:update]
-    resources :cover_images, only: [:update]
+    resources :header_images, only: [:update], :path => '/header-images'
+    resources :cover_images, only: [:update], :path => '/cover-images'
   end
 
   get '/say-hello', to: 'homepages#index'

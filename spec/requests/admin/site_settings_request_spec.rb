@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'spec_helpers/session_helper'
 
-RSpec.describe 'SiteSettings', type: :request, slow: true do
+RSpec.describe 'Request Admin:SiteSettings', type: :request, slow: true do
   before(:each) do
     login
   end

@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'spec_helpers/password_helpers'
 require 'spec_helpers/session_helper'
 
-RSpec.describe 'Passwords', type: :request do
+RSpec.describe 'Request Passwords', type: :request do
   describe 'Before action' do
     it 'If already logged in, redirect all actions to admin page' do
       login
