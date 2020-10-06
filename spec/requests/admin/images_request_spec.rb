@@ -51,6 +51,35 @@ RSpec.describe 'Request Admin:Images', type: :request do
         expect(@header_image.y_loc).to eq(15)
       end
 
+      it 'Update unsucessful - invalid image id' do
+        put "/admin/header-images/not-a-valid-id", params: {
+          header_image: {
+            update: image_fixture,
+            x_loc: 50,
+            y_loc: 50
+          }
+        }
+        follow_redirect!
+        expect(response.body).to include('Image not found')
+        @header_image.reload
+        expect(@header_image.image_file.attached?).to eq(false)
+      end
+
+      it 'Update unsucessful - general update error' do
+        allow(HeaderImage).to receive(:find_by).and_raise('Image lookup error')
+        put "/admin/header-images/#{@header_image.id}", params: {
+          header_image: {
+            update: image_fixture,
+            x_loc: 50,
+            y_loc: 50
+          }
+        }
+        follow_redirect!
+        expect(response.body).to include('Image lookup error')
+        @header_image.reload
+        expect(@header_image.image_file.attached?).to eq(false)
+      end
+
       it 'Update unsucessful - invalid image' do
         put "/admin/header-images/#{@header_image.id}", params: {
           header_image: {
@@ -66,7 +95,7 @@ RSpec.describe 'Request Admin:Images', type: :request do
       end
 
       it 'Update unsucessful - save error' do
-        allow(Image).to receive(:find_by).and_return(image_attach_error)
+        allow(HeaderImage).to receive(:find_by).and_return(image_attach_error)
         put "/admin/header-images/#{@header_image.id}", params: {
           header_image: {
             update: image_fixture,
@@ -107,6 +136,21 @@ RSpec.describe 'Request Admin:Images', type: :request do
         expect(response.body).to include('Cover image updated!')
         @cover_image.reload
         expect(@cover_image.image_file.attached?).to eq(true)
+      end
+
+      it 'Update unsucessful - general update error' do
+        allow(CoverImage).to receive(:find_by).and_raise('Image lookup error')
+        put "/admin/cover-images/#{@cover_image.id}", params: {
+          header_image: {
+            update: image_fixture,
+            x_loc: 50,
+            y_loc: 50
+          }
+        }
+        follow_redirect!
+        expect(response.body).to include('Image lookup error')
+        @cover_image.reload
+        expect(@cover_image.image_file.attached?).to eq(false)
       end
     end
   end
