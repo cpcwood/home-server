@@ -29,6 +29,20 @@ RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
       expect(@about.name).to eq(attribute_update[:name])
       expect(@about.about_me).to eq(attribute_update[:about_me])
     end
+
+    it 'Validation error' do
+      allow_any_instance_of(About).to receive(:save).and_return(false)
+      allow_any_instance_of(About).to receive(:errors).and_return({ error: 'test_error' })
+      attribute_update = {
+        name: 'new section name',
+        about_me: 'new about me section'
+      }
+      put '/admin/about', params: {
+        about: attribute_update
+      }
+      follow_redirect!
+      expect(response.body).to include('test_error')
+    end
   end
 end
 
