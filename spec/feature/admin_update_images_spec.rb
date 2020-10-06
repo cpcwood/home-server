@@ -20,7 +20,7 @@ feature 'Admin update images', feature: true, slow: true do
   scenario 'Update custom image location' do
     login_feature
     visit('admin/images')
-    fill_in('image_x_loc', match: :first, with: '10')
+    fill_in('header_image_x_loc', match: :first, with: '10')
     click_button('Update header image')
     expect(page).to have_content('Header image location updated!')
     visit('/')
