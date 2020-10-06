@@ -7,6 +7,7 @@ module Admin
     private
 
     def process_image_update
+      return @alerts.push('Image not found') unless @image
       return image_reset if attachment_params[:reset] == '1'
       update_image_attributes
       update_image_attachment
