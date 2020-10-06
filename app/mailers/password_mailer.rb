@@ -17,7 +17,7 @@ class PasswordMailer < ApplicationMailer
 
   def assign_default_variables
     @user = params[:user]
-    header_image = SiteSetting.first.images.find_by(name: 'header_image')
+    header_image = SiteSetting.first.header_image
     @header_image_url = if header_image.image_file.attached?
                           Rails.application.routes.url_helpers.rails_blob_path(header_image.image_file)
                         else
