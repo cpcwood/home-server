@@ -30,7 +30,7 @@
   </div>
 
   <div class="embedded_form_entry_container">
-    <%= f.label(:reset, 'Reset to defaults:', class: 'input_label embedded_label') %>
+    <%= f.label(:reset, 'Remove image:', class: 'input_label embedded_label') %>
     <%= f.check_box(:reset, class: 'input_check_box', id: "image_reset_#{image.description}") %>
   </div>
 
@@ -41,7 +41,7 @@
 
   <div class="embedded_form_entry_container">
     <%= f.label(:about_me, 'About me:', class: 'input_label embedded_label') %>
-    <%= f.text_area(:name, class: 'input_box embedded_input_box', placeholder: 'Add about me text (you can use markdown)...', value: @about.about_me) %>
+    <%= f.text_area(:name, class: 'input_box embedded_input_box embedded_text_area', placeholder: 'Add about me text (you can use markdown)...', value: @about.about_me) %>
   </div>
 
   <div class="embedded_form_entry_container">

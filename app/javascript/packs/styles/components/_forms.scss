@@ -263,6 +263,11 @@ input[type=checkbox] {
   }
 }
 
+.embedded_text_area {
+  max-width: 100%;
+  min-height: 200px;
+}
+
 .embedded_no_border {
   box-sizing: border-box;
   position: relative;
