@@ -18,7 +18,7 @@ describe DefaultImageHelper do
     end
 
     it 'no image attached' do
-      expect(helper.image_path_helper(nil)).to eq(DefaultImageHelper::DEFAULT_IMAGE_PATH)
+      expect(helper.image_path_helper(nil)).to eq(DefaultImageHelper::IMAGE_NOT_FOUND)
     end
   end
 end

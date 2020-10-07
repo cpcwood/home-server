@@ -76,4 +76,5 @@ Rails.application.configure do
 
   # Active Job Settings
   config.active_job.queue_adapter = :sidekiq
+  config.active_storage.queue = :default
 end
