@@ -8,14 +8,6 @@ class Image < ApplicationRecord
 
   has_one_attached :image_file
 
-  validates :x_dim,
-            presence: true,
-            numericality: { only_integer: true, greater_than: 0 }
-
-  validates :y_dim,
-            presence: true,
-            numericality: { only_integer: true, greater_than: 0 }
-
   validates :x_loc,
             presence: true,
             numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
