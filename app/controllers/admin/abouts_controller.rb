@@ -22,26 +22,28 @@ module Admin
       @about = About.first
     end
 
-    def attribute_params
+    def permitted_params
       params.require(:about).permit(
         :name,
-        :about_me)
-    end
-
-    def profile_image_params
-      params.require(:profile_image).permit(
-        :update,
-        :reset)
+        :about_me,
+        profile_image_attributes: [:id, :image_file, :_destroy, :name, :file])
     end
 
     def update_about
-      if @about.update(attribute_params)
+      if @about.update(permitted_params)
         changes = @about.previous_changes.keys - ['updated_at']
         changes.each{ |key| @notices.push("#{key.humanize} updated!") }
+        profile_image_messages
       else
         @alerts.push(@about.errors.values.flatten.last)
         @about.reload
       end
+    end
+
+    def profile_image_messages
+      return unless permitted_params[:profile_image_attributes]
+      return @notices.push('Profile image removed') if permitted_params[:profile_image_attributes][:_destroy] == '1'
+      @notices.push('Profile image updated') if @about.profile_image.previous_changes.any? || @about.profile_image.image_file.attachment.blob.previous_changes.any?
     end
   end
 end

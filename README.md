@@ -117,7 +117,11 @@ To run tests run `rspec` in the command line
 
 #### How to Start the Server
 
+```bundle exec sidekiq -C config/sidekiq.yml```
+```brew services start redis```
+
 To start the server run ```rails server``` in the relevant RAILS_ENV environment.
+
 
 #### Adding Personal Details and Images
 

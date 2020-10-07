@@ -46,5 +46,6 @@ Rails.application.configure do
   }
 
    # Active Job Settings
-   Rails.application.config.active_job.queue_adapter = :test
+   config.active_job.queue_adapter = :test
+   config.active_storage.queue = :default
 end

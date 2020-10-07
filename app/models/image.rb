@@ -49,22 +49,20 @@ class Image < ApplicationRecord
   end
 
   def self.resize(image_path:, x_dim:, y_dim:)
-    expanded_image = expand_image(image_path: image_path, x_dim: x_dim)
-    resized_image = vertical_center_crop_image(image_path: expanded_image.path, y_dim: y_dim)
-    remove_exif_data(resized_image.path)
+    manipulated_image = resize_and_crop(image: initalize_image(image_path), x_dim: x_dim, y_dim: y_dim)
+    image_to_process = remove_exif_data(manipulated_image)
+    image_to_process.call
   end
 
-  private_class_method def self.expand_image(image_path:, x_dim: nil, y_dim: nil)
-    ImageProcessing::MiniMagick.source(image_path).resize_to_fit(x_dim, y_dim).call
+  private_class_method def self.initalize_image(image_path)
+    ImageProcessing::MiniMagick.source(image_path)
   end
 
-  private_class_method def self.vertical_center_crop_image(image_path:, x_dim: nil, y_dim: nil)
-    dimensions = MiniMagick::Image.new(image_path).dimensions
-    v_crop_start = (dimensions[1] - y_dim) / 2
-    ImageProcessing::MiniMagick.source(image_path).crop(0, v_crop_start, x_dim, y_dim).call
+  private_class_method def self.resize_and_crop(image:, x_dim:, y_dim:)
+    image.resize_to_fill(x_dim, y_dim, gravity: 'north-west')
   end
 
-  private_class_method def self.remove_exif_data(image_path)
-    ImageProcessing::MiniMagick.source(image_path).strip.call
+  private_class_method def self.remove_exif_data(image)
+    image.strip
   end
 end

@@ -24,7 +24,7 @@ gem 'faraday', require: false
 # Verify 2FA using twilio
 gem 'twilio-ruby', '~> 5.34', require: false
 # Action Mailer and Action Job Backend - Sidekiq (Requires redis and start upon server launch)
-gem 'sidekiq', '~> 6.0.7'
+gem 'sidekiq', '< 7'
 # Transform uploaded images
 gem 'image_processing'
 
