@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CoverImage, type: :model do
-  let(:image) { CoverImage.new(site_setting: @site_settings, x_dim: 1, y_dim: 1, description: 'cover_image') }
+  let(:image) { CoverImage.new(site_setting: @site_settings, description: 'cover_image') }
 
   let(:image_path_valid) { Rails.root.join('spec/files/sample_image.jpg') }
   let(:image_path_invalid) { Rails.root.join('spec/files/sample_image_invalid.jpg') }
