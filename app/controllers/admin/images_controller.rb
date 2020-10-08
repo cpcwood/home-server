@@ -22,9 +22,7 @@ module Admin
 
     def image_updated?
       return false unless @image.update(permitted_params)
-      changes = @image.previous_changes.keys - ['updated_at']
-      changes.each{ |key| @notices.push("#{@image.description.humanize} #{key.humanize(capitalize: false)} updated!") }
-      @notices.push("#{@image.description.humanize} updated!") if @image.image_file.attachment&.blob&.previous_changes&.any?
+      @notices += @image.change_messages
       true
     end
   end

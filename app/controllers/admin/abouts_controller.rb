@@ -31,18 +31,16 @@ module Admin
 
     def update_about
       if @about.update(permitted_params)
-        changes = @about.previous_changes.keys - ['updated_at']
-        changes.each{ |key| @notices.push("#{key.humanize} updated!") }
-        profile_image_messages
+        update_messages
       else
         @alerts.push(@about.errors.values.flatten.last)
       end
     end
 
-    def profile_image_messages
+    def update_messages
+      @notices += @about.change_messages
       return unless permitted_params[:profile_image_attributes]
-      return @notices.push('Profile image removed') if permitted_params[:profile_image_attributes][:_destroy] == '1'
-      @notices.push('Profile image updated') if @about.profile_image.previous_changes.any? || @about.profile_image.image_file.attachment.blob.previous_changes.any?
+      @notices.push('Profile image removed') if permitted_params[:profile_image_attributes][:_destroy] == '1'
     end
   end
 end
