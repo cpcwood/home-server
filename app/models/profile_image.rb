@@ -10,10 +10,6 @@ class ProfileImage < Image
     self.description ||= 'about-me-profile-image'
   end
 
-  def default_image
-    'default_images/image_not_found.png'
-  end
-
   def x_dim
     X_DIM
   end
