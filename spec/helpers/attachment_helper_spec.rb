@@ -30,7 +30,7 @@ describe AttachmentHelper do
   describe '#image_file_name' do
     let(:image_path) { Rails.root.join('spec/files/sample_image.jpg') }
     let(:image_fixture) { fixture_file_upload(image_path, 'image/png') }
-    let(:image_file_attached) { ProfileImage.create(image_file: image_fixture)}
+    let(:image_file_attached) { ProfileImage.create(image_file: image_fixture) }
     let(:image_file_not_attached) {ProfileImage.create}
 
     it 'no image passed' do
