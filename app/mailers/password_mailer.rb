@@ -1,5 +1,5 @@
 class PasswordMailer < ApplicationMailer
-  include DefaultImageHelper
+  include AttachmentHelper
 
   default from: Rails.application.credentials.email[:no_reply_email]
 
