@@ -20,6 +20,8 @@ class Image < ApplicationRecord
             presence: true,
             length: { minimum: 1 }
 
+  before_save :process_image_attachment
+
   def reset_to_default
     image_file.purge
     update(x_loc: DEFAULT_X_LOC)
@@ -28,6 +30,24 @@ class Image < ApplicationRecord
 
   def custom_style
     "object-position: #{x_loc}% #{y_loc}%;" if x_loc != DEFAULT_X_LOC || y_loc != DEFAULT_Y_LOC
+  end
+
+  def self.valid?(image_path)
+    image = MiniMagick::Image.new(image_path)
+    image.valid? ? image.mime_type.match?(%r{\Aimage/(png|jpeg)\z}i) : false
+  end
+
+  def self.resize(image_path:, x_dim:, y_dim:)
+    manipulated_image = resize_and_crop(image: initalize_image(image_path), x_dim: x_dim, y_dim: y_dim)
+    image_to_process = remove_exif_data(manipulated_image)
+    image_to_process.call
+  end
+
+  private
+
+  def process_image_attachment
+    image_upload = attachment_changes['image_file']
+    attach_image(image_upload.attachable) if image_upload&.attachable.class == ActionDispatch::Http::UploadedFile
   end
 
   def attach_image(upload_params)
@@ -41,17 +61,6 @@ class Image < ApplicationRecord
       io: File.open(modified_image),
       filename: upload_params.original_filename,
       content_type: upload_params.content_type)
-  end
-
-  def self.valid?(image_path)
-    image = MiniMagick::Image.new(image_path)
-    image.valid? ? image.mime_type.match?(%r{\Aimage/(png|jpeg)\z}i) : false
-  end
-
-  def self.resize(image_path:, x_dim:, y_dim:)
-    manipulated_image = resize_and_crop(image: initalize_image(image_path), x_dim: x_dim, y_dim: y_dim)
-    image_to_process = remove_exif_data(manipulated_image)
-    image_to_process.call
   end
 
   private_class_method def self.initalize_image(image_path)
