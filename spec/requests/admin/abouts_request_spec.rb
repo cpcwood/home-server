@@ -63,9 +63,23 @@ RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
           profile_image_attributes: {
             image_file: image_fixture
           }
-        }
+        },
       }
       expect(@about.reload.profile_image.image_file.attached?).to be(true)
+    end
+
+    it 'remove image' do
+      @about.create_profile_image(image_file: image_fixture)   
+      expect(@about.profile_image.image_file.attached?).to be(true)
+      put '/admin/about', params: {
+        about: {
+          profile_image_attributes: {
+            id: @about.profile_image.id,
+            _destroy: '1'
+          }
+        },
+      }
+      expect(@about.reload.profile_image).to be_nil
     end
   end
 end

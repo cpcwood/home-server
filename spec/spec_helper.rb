@@ -50,7 +50,6 @@ RSpec.configure do |config|
     @header_image = HeaderImage.create(site_setting: @site_settings, description: 'header_image')
     @cover_image = CoverImage.create(site_setting: @site_settings, description: 'cover_image')
     @about = About.create(name: 'test name', about_me: 'test about me text')
-    @profile_image = ProfileImage.create(about: @about, description: 'about me profile image')
   end
 
   config.append_after(:each) do
