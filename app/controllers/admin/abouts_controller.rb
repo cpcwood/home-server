@@ -26,7 +26,7 @@ module Admin
       params.require(:about).permit(
         :name,
         :about_me,
-        profile_image_attributes: [:id, :image_file, :_destroy, :name, :file])
+        profile_image_attributes: [:id, :image_file, :_destroy])
     end
 
     def update_about
