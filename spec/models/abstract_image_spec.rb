@@ -87,13 +87,13 @@ RSpec.describe CoverImage, type: :model do
     it 'attribute change' do
       test_image = CoverImage.create(site_setting: @site_settings, description: 'cover_image')
       test_image.update(x_loc: 10, y_loc: 90)
-      expect(test_image.change_messages).to eq(["Cover image x loc updated!", "Cover image y loc updated!"])
+      expect(test_image.change_messages).to eq(['Cover image x loc updated!', 'Cover image y loc updated!'])
     end
 
     it 'image update' do
       test_image = CoverImage.create(site_setting: @site_settings, description: 'cover_image')
       test_image.update(image_file: image_file_upload)
-      expect(test_image.change_messages).to eq(["Cover image updated!"])
+      expect(test_image.change_messages).to eq(['Cover image updated!'])
     end
   end
 

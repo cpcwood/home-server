@@ -11,7 +11,7 @@ feature 'Admin update images', feature: true, slow: true do
     header_image = find('.header-image > img')
     expect(header_image[:style]).to match(/object-position: 10% 50%/)
   end
-  
+
   scenario 'Update header image' do
     login_feature
     visit('admin/images')

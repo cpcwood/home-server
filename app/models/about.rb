@@ -5,6 +5,8 @@ class About < ApplicationRecord
   def change_messages
     messages = []
     messages += (previous_changes.keys - ['updated_at'])
-    messages.map!{ |key| "About #{key.humanize(capitalize: false)} updated!" }
+    messages.map!{ |key| "#{key.humanize} updated!" }
+    messages.push('Profile image updated!') if profile_image&.change_messages&.any?
+    messages
   end
 end
