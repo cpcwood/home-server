@@ -6,36 +6,26 @@ module Admin
 
     private
 
-    def process_image_update
+    def update_image
       return @alerts.push('Image not found') unless @image
-      return image_reset if attachment_params[:reset] == '1'
-      update_image_attributes
-      update_image_attachment
+      return if image_reset?
+      return if image_updated?
+      @alerts.push(@image.errors.values.flatten.last)
     end
 
-    def image_reset
+    def image_reset?
+      return false unless reset_params[:reset] == '1'
       @image.reset_to_default
       @notices.push("#{@image.description.humanize} reset!")
+      true
     end
 
-    def update_image_attributes
-      @image.assign_attributes(model_params)
-      return unless @image.changed?
-      update_message(result: @image.save, attribute: 'location')
-    end
-
-    def update_image_attachment
-      return if attachment_params[:update].blank?
-      result = @image.attach_image(attachment_params[:update])
-      update_message(result: result)
-    end
-
-    def update_message(result:, attribute: nil)
-      if result
-        @notices.push("#{@image.description.humanize}#{" #{attribute}" if attribute} updated!")
-      else
-        @alerts.push(@image.errors.values.flatten.last)
-      end
+    def image_updated?
+      return false unless @image.update(permitted_params)
+      changes = @image.previous_changes.keys - ['updated_at']
+      changes.each{ |key| @notices.push("#{@image.description.humanize} #{key.humanize(capitalize: false)} updated!") }
+      @notices.push("#{@image.description.humanize} updated!") if @image.image_file.attachment&.blob&.previous_changes&.any?
+      true
     end
   end
 end

@@ -36,7 +36,6 @@ module Admin
         profile_image_messages
       else
         @alerts.push(@about.errors.values.flatten.last)
-        @about.reload
       end
     end
 

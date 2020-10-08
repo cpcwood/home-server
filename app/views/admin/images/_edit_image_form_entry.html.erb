@@ -23,8 +23,8 @@
   </div>
 
   <div class="embedded-form-entry-container">
-    <%= f.label(:update, 'Update image:', class: 'input-label embedded-label') %>
-    <%= f.file_field(:update, accept: 'image/png,image/jpeg', class: 'input-box embedded-no-border') %>
+    <%= f.label(:image_file, 'Update image:', class: 'input-label embedded-label') %>
+    <%= f.file_field(:image_file, accept: 'image/png,image/jpeg', class: 'input-box embedded-no-border') %>
   </div>
 
   <div class="embedded-form-entry-container" data-controller="slider">
@@ -48,8 +48,8 @@
   </div>
 
   <div class="embedded-form-entry-container">
-    <%= f.label(:reset, 'Reset to defaults:', class: 'input-label embedded-label') %>
-    <%= f.check_box(:reset, class: 'input-check-box', id: "image-reset-#{image.description}") %>
+    <%= label(:attachment, :reset, 'Reset to defaults:', class: 'input-label embedded-label') %>
+    <%= check_box(:attachment, :reset, class: 'input-check-box') %>
   </div>
   
   <br>

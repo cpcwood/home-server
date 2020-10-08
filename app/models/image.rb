@@ -23,9 +23,8 @@ class Image < ApplicationRecord
   before_save :process_image_attachment
 
   def reset_to_default
-    image_file.purge
-    update(x_loc: DEFAULT_X_LOC)
-    update(y_loc: DEFAULT_Y_LOC)
+    image_file.purge_later
+    update(x_loc: DEFAULT_X_LOC, y_loc: DEFAULT_Y_LOC)
   end
 
   def custom_style
@@ -54,7 +53,7 @@ class Image < ApplicationRecord
     image_file_path = upload_params.tempfile.path
     unless Image.valid?(image_file_path)
       errors[:base].push("#{description.humanize} invalid, please upload a jpeg or png file!")
-      return false
+      throw(:abort)
     end
     modified_image = Image.resize(image_path: image_file_path, x_dim: x_dim, y_dim: y_dim)
     image_file.attach(
