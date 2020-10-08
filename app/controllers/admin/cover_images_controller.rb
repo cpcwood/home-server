@@ -5,7 +5,7 @@ module Admin
       @alerts = []
       begin
         @image = CoverImage.find_by(id: params[:id])
-        process_image_update
+        update_image
       rescue StandardError => e
         @alerts.push('Sorry, something went wrong!')
         @alerts.push(e.message)
@@ -15,16 +15,15 @@ module Admin
 
     private
 
-    def model_params
+    def permitted_params
       params.require(:cover_image).permit(
         :x_loc,
-        :y_loc)
+        :y_loc,
+        :image_file)
     end
 
-    def attachment_params
-      params.require(:cover_image).permit(
-        :update,
-        :reset)
+    def reset_params
+      params.require(:attachment).permit(:reset)
     end
   end
 end
