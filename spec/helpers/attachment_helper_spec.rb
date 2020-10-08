@@ -46,6 +46,11 @@ describe AttachmentHelper do
       expect(helper.image_file_name(image: nil, default_name: default_name)).to eq(default_name)
     end
 
+    it 'model name' do
+      model_name = 'model with image attachement'
+      expect(helper.image_file_name(image: nil, model_name: model_name)).to eq("default #{model_name} image")
+    end
+
     it 'image file attached' do
       expect(helper.image_file_name(image: image_file_attached)).to eq('sample_image.jpg')
     end
