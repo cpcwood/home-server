@@ -55,7 +55,13 @@ RSpec.describe SiteSetting, type: :model do
 
   describe '#change_messages' do
     it 'no change' do
-      expect(site_setting.change_messages).to eq([])
+      expect(site_setting.reload.change_messages).to eq([])
+    end
+
+    it 'attribute changes' do
+      site_setting.reload
+      site_setting.update(name: 'new name', header_text: 'new header')
+      expect(site_setting.change_messages).to eq(['Name updated!', 'Header text updated!'])
     end
   end
 end
