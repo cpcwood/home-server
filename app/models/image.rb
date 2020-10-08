@@ -31,6 +31,14 @@ class Image < ApplicationRecord
     "object-position: #{x_loc}% #{y_loc}%;" if x_loc != DEFAULT_X_LOC || y_loc != DEFAULT_Y_LOC
   end
 
+  def change_messages
+    messages = []
+    messages += (previous_changes.keys - ['updated_at'])
+    messages.map!{ |key| "#{description.humanize} #{key.humanize(capitalize: false)} updated!" }
+    messages.push("#{description.humanize} updated!") if image_file&.attachment&.blob&.previous_changes&.any?
+    messages
+  end
+
   def self.valid?(image_path)
     image = MiniMagick::Image.new(image_path)
     image.valid? ? image.mime_type.match?(%r{\Aimage/(png|jpeg)\z}i) : false

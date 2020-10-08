@@ -74,9 +74,26 @@ RSpec.describe CoverImage, type: :model do
     end
 
     it 'x_loc and y_loc custom' do
-      image.update(x_loc: 10)
-      image.update(y_loc: 90)
+      image.update(x_loc: 10, y_loc: 90)
       expect(image.custom_style).to eq('object-position: 10% 90%;')
+    end
+  end
+
+  describe '#change_messages' do
+    it 'no changes' do
+      expect(image.change_messages).to eq([])
+    end
+
+    it 'attribute change' do
+      test_image = CoverImage.create(site_setting: @site_settings, description: 'cover_image')
+      test_image.update(x_loc: 10, y_loc: 90)
+      expect(test_image.change_messages).to eq(["Cover image x loc updated!", "Cover image y loc updated!"])
+    end
+
+    it 'image update' do
+      test_image = CoverImage.create(site_setting: @site_settings, description: 'cover_image')
+      test_image.update(image_file: image_file_upload)
+      expect(test_image.change_messages).to eq(["Cover image updated!"])
     end
   end
 
