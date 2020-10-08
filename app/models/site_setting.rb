@@ -17,6 +17,8 @@ class SiteSetting < ApplicationRecord
             length: { maximum: 255, too_long: 'Subtitle text cannot be longer than 255 charaters' }
 
   def change_messages
-    []
+    messages = []
+    messages += (previous_changes.keys - ['updated_at'])
+    messages.map!{ |key| "#{key.humanize} updated!" }
   end
 end
