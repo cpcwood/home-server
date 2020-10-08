@@ -26,4 +26,10 @@ describe AttachmentHelper do
       expect(helper.image_path_helper(nil)).to eq(AttachmentHelper::IMAGE_NOT_FOUND)
     end
   end
+
+  describe '#image_file_name' do
+    it 'no image passed' do
+      expect(helper.image_file_name(image: nil)).to eq('default image')
+    end
+  end
 end
