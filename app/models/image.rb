@@ -34,8 +34,8 @@ class Image < ApplicationRecord
   def change_messages
     messages = []
     messages += (previous_changes.keys - ['updated_at'])
-    messages.map!{ |key| "#{description.humanize} #{key.humanize(capitalize: false)} updated!" }
-    messages.push("#{description.humanize} updated!") if image_file&.attachment&.blob&.previous_changes&.any?
+    messages.map!{ |key| "#{description.humanize.gsub('-', ' ')} #{key.humanize(capitalize: false)} updated!" }
+    messages.push("#{description.humanize.gsub('-', ' ')} updated!") if image_file&.attachment&.blob&.previous_changes&.any?
     messages
   end
 
