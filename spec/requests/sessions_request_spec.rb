@@ -123,7 +123,10 @@ RSpec.describe 'Request Sessions', type: :request do
       travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
       login
       expect(session[:user_id]).not_to eq(nil)
-      travel_to Time.zone.local(2020, 04, 19, 01, 00, 01)
+      travel_to Time.zone.local(2020, 04, 25, 23, 59, 59)
+      get '/'
+      expect(session[:user_id]).not_to eq(nil)
+      travel_to Time.zone.local(2020, 05, 03, 00, 00, 00)
       get '/'
       expect(session[:user_id]).to eq(nil)
     end
