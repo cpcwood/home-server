@@ -40,5 +40,14 @@ describe AttachmentHelper do
     it 'image file not attached' do
       expect(helper.image_file_name(image: image_file_not_attached)).to eq('default image')
     end
+
+    it 'default name' do
+      default_name = 'default image name'
+      expect(helper.image_file_name(image: nil, default_name: default_name)).to eq(default_name)
+    end
+
+    it 'image file attached' do
+      expect(helper.image_file_name(image: image_file_attached)).to eq('sample_image.jpg')
+    end
   end
 end
