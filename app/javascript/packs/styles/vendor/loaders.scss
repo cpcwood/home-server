@@ -1,41 +1,41 @@
 $loader-size: 4em;
 $loader-width: 0.8em;
 $loader-background: rgba(0, 0, 0, 0.3);
-$loader-color:rgba(0, 0, 0, 0.7);
+$loader-color: rgba(0, 0, 0, 0.7);
 
 
 .default-loader {
-  visibility: hidden;
   border-radius: 50%;
-  width: $loader-size;
   height: $loader-size;
+  margin: 0 10px;
   transition: visibility 0.1s linear 0.1s;
-  margin: 0px 10px;
+  visibility: hidden;
+  width: $loader-size;
 }
 
 .default-loader {
-  box-sizing: border-box;
-  position: relative;
-  font-size: 10px;
-  border-top: $loader-width solid $loader-color;
-  border-right: $loader-width solid $loader-background;
+  animation: loading 1s infinite linear;
+  animation: loading 1s infinite linear;
+  animation: loading 1s infinite linear;
   border-bottom: $loader-width solid $loader-background;
   border-left: $loader-width solid $loader-background;
-  -webkit-transform: translateZ(0);
-  -moz-transform: translateZ(0);
+  border-right: $loader-width solid $loader-background;
+  border-top: $loader-width solid $loader-color;
+  box-sizing: border-box;
+  font-size: 10px;
+  position: relative;
   transform: translateZ(0);
-  -webkit-animation: loading 1s infinite linear;
-  -moz-animation: loading 1s infinite linear;
-  animation: loading 1s infinite linear;
+  transform: translateZ(0);
+  transform: translateZ(0);
 }
 
-@-webkit-keyframes loading {
-  0% {-webkit-transform: rotate(0deg);}
-  100% {-webkit-transform: rotate(360deg);}
+@keyframes loading {
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
 }
-@-moz-keyframes loading {
-  0% {-moz-transform: rotate(0deg);}
-  100% {-moz-transform: rotate(360deg);}
+@keyframes loading {
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
 }
 @keyframes loading {
   0% {transform: rotate(0deg);}

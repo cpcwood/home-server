@@ -1,15 +1,14 @@
 // Modules
-@use '../base/globals';
-@use '../base/functions';
+@use '../base/colors';
 @use '../base/mixins' as *;
 @use '../base/typography';
 
-.menu-button {
-  position: relative;
+.menu-button { 
+  border: unset;
   box-sizing: border-box;
+  position: relative;
+  text-decoration: none;
   width: 100%;
-  text-decoration: none; 
-  border: none;
 
   &:hover {
     cursor: pointer;

@@ -10,8 +10,7 @@ Sass Styles
 |   |– base/
 |   |   |– _normalize.scss    # Import vendor normalize.css
 |   |   |– _typography.scss   # Typography rules
-|   |   |– _globals.scss      # Sass variables
-|   |   |– _functions.scss    # Sass functions
+|   |   |– _colors.scss       # Theme colors
 |   |   |– _mixins.scss       # Sass mixins
 |   |   |– _page.scss         # General page structure
 |   |   ┴
@@ -20,7 +19,6 @@ Sass Styles
 |   |   |– _buttons.scss      # Buttons
 |   |   |– _messages.scss     # Messages
 |   |   |– _forms.scss        # Forms
-|   |   |– _comments.scss     # Comments
 |   |   |– _navbar.scss       # Navbar - top and side
 |   |   |– _dashboard.scss    # Dashboard
 |   |   |– _typed_header.scss # Typed header
@@ -36,4 +34,24 @@ Sass Styles
 |   |
 ┴   ┴
 */
-@use 'styles/main';
+
+
+
+// Application Partials
+@use 'styles/base/normalize';
+@use 'styles/base/colors';
+@use 'styles/base/mixins';
+@use 'styles/base/typography';
+@use 'styles/base/page';
+
+// Application Components
+@use 'styles/components/buttons';
+@use 'styles/components/forms';
+@use 'styles/components/messages';
+@use 'styles/components/navbar';
+@use 'styles/components/dashboard';
+@use 'styles/components/image_tile';
+@use 'styles/components/typed_header';
+
+// Site Wide Vendor
+@use 'styles/vendor/loaders';

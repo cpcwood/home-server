@@ -19,43 +19,33 @@
     </div>
     <div class='nav-sidebar' data-target='nav-menu.navSidebar'>
       <div class='upper'>
-        <div class='nav-item-separator'></div>
         <a href='/' class='nav-item'>
           HOME
         </a>
-        <div class='nav-item-separator'></div>
         <a href='/about' class='nav-item'>
           ABOUT
         </a>
-        <div class='nav-item-separator'></div>
         <a href='/projects' class='nav-item'>
           PROJECTS
         </a>
-        <div class='nav-item-separator'></div>
         <a href='/blog' class='nav-item'>
           BLOG
         </a>
-        <div class='nav-item-separator'></div>
         <a href='/say-hello' class='nav-item'>
           SAY HELLO
         </a>
-        <div class='nav-item-separator'></div>
         <a href='/gallery' class='nav-item'>
           GALLERY
         </a>
-        <div class='nav-item-separator'></div>
         <a href='/contact' class='nav-item'>
           CONTACT
         </a>
-        <div class='nav-item-separator'></div>
       </div>
       <div class='lower'>
-        <div class='nav-item-separator'></div>
         <% if @user %>
         <a href='/admin' class='nav-item'>
           ADMIN
         </a>
-        <div class='nav-item-separator'></div>
         <%= form_with(url: "/login", method: "delete", class: 'logout-form') do %>
           <%= submit_tag("LOGOUT", class: 'nav-item', id: 'logout-button') %>
         <% end %>
@@ -64,7 +54,6 @@
           LOGIN
         </a>
         <% end %>
-        <div class='nav-item-separator'></div>
       </div>
     </div>
     <div class='nav-screen-cover' data-action='click->nav-menu#closeMenu'></div>
