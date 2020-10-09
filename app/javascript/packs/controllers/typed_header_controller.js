@@ -11,7 +11,7 @@ export default class extends Controller {
       stringsElement: '#typed-strings-subtitle',
       showCursor: false,
       typeSpeed: 75,
-      startDelay: 700,
+      startDelay: 800,
       preStringTyped: () => {
         this.typedSubtitleTarget.classList.add('typed-cursor')
         this.typedHeaderTarget.classList.remove('typed-cursor')
