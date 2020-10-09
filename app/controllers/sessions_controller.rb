@@ -15,11 +15,11 @@ class SessionsController < ApplicationController
     return redirect_to(:login, alert: 'User not found') unless @user&.authenticate(sanitize(params[:password]))
     TwoFactorAuthService.start(session, @user)
     # return log_user_in if Rails.env.development?
-    redirect_to('/2fa', notice: 'Please enter the 6 digit code sent to mobile number assoicated with this account')
+    redirect_to('/2fa')
   end
 
   def send_2fa
-    return redirect_to(:login) unless session[:two_factor_auth_id]
+    return redirect_to(:login) unless TwoFactorAuthService.started?(session)
     unless session[:auth_code_sent] == true
       client_verify_number = User.find_by(id: session[:two_factor_auth_id]).mobile_number
       client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
             .create(to: client_verify_number, channel: 'sms')
       session[:auth_code_sent] = true
     end
-    render(:two_factor_auth)
+    render(:two_factor_auth, notice: 'Please enter the 6 digit code sent to mobile number assoicated with this account')
   end
 
   def verify_2fa
