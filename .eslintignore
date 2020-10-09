@@ -1,0 +1,4 @@
+/public
+/config
+/node_modules
+/app/javascript/packs/styles/**/*
