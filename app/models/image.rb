@@ -54,7 +54,7 @@ class Image < ApplicationRecord
 
   def process_image_attachment
     image_upload = attachment_changes['image_file']
-    attach_image(image_upload.attachable) if image_upload&.attachable.class == ActionDispatch::Http::UploadedFile
+    attach_image(image_upload.attachable) if image_upload&.attachable.instance_of?(ActionDispatch::Http::UploadedFile)
   end
 
   def attach_image(upload_params)

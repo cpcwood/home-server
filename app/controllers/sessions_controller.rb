@@ -10,12 +10,11 @@ class SessionsController < ApplicationController
 
   def new
     return redirect_to(:login, alert: 'reCaptcha failed, please try again') unless recaptcha_confirmation(sanitize(params['g-recaptcha-response']))
-    # Active Model automatically sanitises input for where queries
-    @user = User.find_by(email: params[:user])
-    @user ||= User.find_by(username: params[:user])
-    return redirect_to(:login, alert: 'User not found') unless @user&.authenticate(params[:password])
-    session[:two_factor_auth_id] = @user.id
-    return log_user_in if Rails.env.development?
+    @user = User.find_by(email: sanitize(params[:user]))
+    @user ||= User.find_by(username: sanitize(params[:user]))
+    return redirect_to(:login, alert: 'User not found') unless @user&.authenticate(sanitize(params[:password]))
+    TwoFactorAuthService.start(session, @user)
+    # return log_user_in if Rails.env.development?
     redirect_to('/2fa', notice: 'Please enter the 6 digit code sent to mobile number assoicated with this account')
   end
 
