@@ -43,5 +43,11 @@ describe TwoFactorAuthService do
       allow(Twilio::REST::Client).to receive(:new).and_raise('error')
       expect(subject.send_auth_code(@session)).to eq(false)
     end
+
+    it 'successful request' do
+      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create).with(to: @test_user.mobile_number, channel: 'sms')
+      expect(subject.send_auth_code(@session)).to eq(true)
+      expect(@session[:auth_code_sent]).to eq(true)
+    end
   end
 end
