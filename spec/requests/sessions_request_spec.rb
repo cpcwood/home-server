@@ -47,6 +47,17 @@ RSpec.describe 'Request Sessions', type: :request do
   end
 
   describe 'GET /2fa #send_2fa' do
+    it 'blocks unauthorised access' do
+      get '/2fa'
+      expect(response).to redirect_to('/login')
+    end
+
+    it 'If already logged in, redirect to admin page' do
+      login
+      get '/2fa'
+      expect(response).to redirect_to(:admin)
+    end
+
     it 'Renders login page' do
       password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
       get('/2fa')
@@ -54,27 +65,17 @@ RSpec.describe 'Request Sessions', type: :request do
     end
 
     it 'Sends verify request to twilio' do
-      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create).with(to: @test_user.mobile_number, channel: 'sms')
+      password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
+      expect(TwoFactorAuthService).to receive(:send_auth_code).and_return(true)
+      get '/2fa'
+      expect(response.body).to include('Please enter the 6 digit code sent to mobile number assoicated with this account')
+    end
+
+    it 'error sending auth code' do
+      allow(TwoFactorAuthService).to receive(:send_auth_code).and_return(false)
       password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
       get '/2fa'
-    end
-
-    it 'Blocks resend of 2fa code on incorrect code being entered or page refresh' do
-      password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
-      get '/2fa'
-      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).not_to receive(:create)
-      get '/2fa'
-    end
-
-    it 'Block unauthorised access' do
-      get '/2fa'
-      expect(response).to redirect_to('/login')
-    end
-
-    it 'If already logged in, redirect to admin page' do
-      login
-      get '/login'
-      expect(response).to redirect_to(:admin)
+      expect(response.body).to include('Sorry something went wrong')
     end
   end
 
@@ -152,7 +153,7 @@ RSpec.describe 'Request Sessions', type: :request do
     it 'Resends 2fa code' do
       password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
       get '/2fa'
-      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create)
+      expect(TwoFactorAuthService).to receive(:send_auth_code).and_return(true)
       put '/2fa'
       expect(session[:auth_code_sent]).to eq(nil)
       expect(response).to redirect_to('/2fa')

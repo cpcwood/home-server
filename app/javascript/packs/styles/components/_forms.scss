@@ -148,7 +148,8 @@
     }
   }
 
-  .option { 
+  .option {
+    background: rgba(0, 0, 0, 0);
     border: unset;
     color: colors.$dark;
     font-size: 18px;
