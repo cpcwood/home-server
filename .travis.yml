@@ -25,7 +25,7 @@ script:
   - bundle exec rspec
   - bundle exec rubocop -a -c ./.rubocop.yml
   - yarn test
-  - yarn eslint
+  - yarn lint
 services:
   - postgresql
 addons:
