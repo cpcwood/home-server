@@ -4,6 +4,7 @@ describe TwoFactorAuthService do
   before(:each) do
     @session = {}
   end
+  
   describe '.start' do
     it 'user start two factor auth flow' do
       subject.start(@session, @test_user)
