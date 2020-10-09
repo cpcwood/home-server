@@ -104,6 +104,7 @@
   font-weight: 300;
   color: rgb(151, 156, 172);
   display: none;
+  transition: all 0.25s ease;
 
   @include respond-to(tablet) {
     display: block;
