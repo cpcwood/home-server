@@ -1,88 +1,81 @@
 // Modules
-@use 'globals';
-@use 'functions';
+@use 'colors';
 @use 'mixins' as *;
 @use 'typography';
 
-
-// Variables
-$header-font: typography.$header-font;
-$background-color: globals.$background-color;
-
-
 // Styles
 #background {
+  background-color: colors.$background-color;
+  bottom: 0;
+  left: 0;
   position: fixed;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
+  right: 0;
+  top: 0;
   z-index: -10;
-  background-color: $background-color;
 }
 
 .page-container {
-  position: relative;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
   box-sizing: border-box;
   display: flex;
+  height: 100%;
   justify-content: center;
+  left: 0;
+  position: relative;
+  top: 0;
+  width: 100%;
 }
 
 .content-container {
   box-sizing: border-box;
+  display: flex;
+  height: calc(100vh - 70px);
+  justify-content: center;
+  -ms-overflow-style: none;
+  overflow-y: scroll;
   position: absolute;
   top: 60px;
   width: 100%;
-  height: calc(100vh - 70px);
-  overflow-y: scroll;
-  display: flex;
   width: 100%;
-  justify-content: center;
 
   &::-webkit-scrollbar {
     display: none;
   }
-  -ms-overflow-style: none;
 }
 
 .content {
-  position: absolute;
-  flex: 1 1 100%;
-  box-sizing: border-box;
-  width: 100%;
-  min-width: 200px;
-  max-width: 1280px;
-  height: calc(100vh - 70px);
-  overflow-wrap: break-word;
-  padding: 5px 15px 0px 15px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
   align-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  height: calc(100vh - 70px);
+  max-width: 1280px;
+  min-width: 200px;
+  overflow-wrap: break-word;
+  padding: 5px 15px 0;
+  position: absolute;
+  width: 100%;
 }
 
 .header-image {
-  position: fixed;
+  background-color: colors.$dark;
   box-sizing: border-box;
-  top: 0px;
-  left: 0px;
-  width: 100%;
   height: 300px;
-  z-index: -1;
-  background-color: rgba(0, 0, 0, 1);
+  left: 0;
   overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: -1;
   
   img {
-    position: relative;
     height: 100%;
-    width: 100%;
     object-fit: none;
     object-position: 50% 50%;
     opacity: 0.6;
+    position: relative;
+    width: 100%;
     z-index: inherit;
     
     @include respond-to(extra-wide) {

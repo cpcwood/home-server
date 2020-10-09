@@ -13,15 +13,15 @@ $length-scale: 0.96 !default;
 
 // Location and Dimensions
 .hamburger-container {
-  display: flex;
   align-items: center;
-  justify-content: center;
+  background-color: $container-color;
   box-sizing: border-box;
-  position: $container-position;
+  display: flex;
   height: $container-height;
+  justify-content: center;
+  position: $container-position;
   width: $container-width;
   z-index: $container-z-index;
-  background-color: $container-color;
 
   &:hover {
     cursor: pointer;
@@ -30,52 +30,35 @@ $length-scale: 0.96 !default;
 
 .hamburger {
   box-sizing: border-box;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  padding: $hamburger-padding;
-  margin: auto;
   display: flex;
   flex-direction: column;
+  height: 100%;
   justify-content: space-evenly;
+  margin: auto;
+  padding: $hamburger-padding;
+  position: absolute;
+  width: 100%;
 }
 
 .hamburger-bar {
+  background-color: $bar-color-normal;
+  border-radius: 999px;
   display: block;
   height: $bar-height;
-  width: 100%;
-  border-radius: 999px;
-  background-color: $bar-color-normal;
   transition: background-color 0.1s ease 0.1s;
+  width: 100%;
 }
 
 .clicked .hamburger-bar {
-  transition: background-color 0.1s ease 0s;
   background-color: $bar-color-clicked;
+  transition: background-color 0.1s ease 0s;
 }
 
 // Crown Animation
 
-@-webkit-keyframes hamburger-crown-rotate {
-  0% {-webkit-transform: rotate(0deg) scaleX(1);}
-  100% {-webkit-transform: rotate(45deg) scaleX($length-scale);}
-}
-@-moz-keyframes hamburger-crown-rotate {
-  0% {-moz-transform: rotate(0deg) scaleX(1);}
-  100% {-moz-transform: rotate(45deg) scaleX($length-scale);}
-}
 @keyframes hamburger-crown-rotate {
   0% {transform: rotate(0deg) scaleX(1);}
   100% {transform: rotate(45deg) scaleX($length-scale);}
-}
-
-@-webkit-keyframes hamburger-crown-rotate-reverse {
-  0% {-webkit-transform: rotate(45deg) scaleX($length-scale);}
-  100% {-webkit-transform: rotate(0deg) scaleX(1);}
-}
-@-moz-keyframes hamburger-crown-rotate-reverse {
-  0% {-moz-transform: rotate(45deg) scaleX($length-scale);}
-  100% {-moz-transform: rotate(0deg) scaleX(1);}
 }
 @keyframes hamburger-crown-rotate-reverse {
   0% {transform: rotate(45deg) scaleX($length-scale);}
@@ -84,54 +67,20 @@ $length-scale: 0.96 !default;
 
 // Patty Animation
 
-@-webkit-keyframes hamburger-patty-hide {
-  0% {-webkit-transform: scale(1,1);}
-  100% {-webkit-transform: scale(0,0);}
-}
-@-moz-keyframes hamburger-patty-hide {
-  0% {-moz-transform: scale(1,1);}
-  100% {-moz-transform: scale(0,0);}
-}
 @keyframes hamburger-patty-hide {
-  0% {transform: scale(1,1);}
-  100% {transform: scale(0,0);}
-}
-
-@-webkit-keyframes hamburger-patty-show {
-  0% {-webkit-transform: scale(0,0);}
-  100% {-webkit-transform: scale(1,1);}
-}
-@-moz-keyframes hamburger-patty-show {
-  0% {-moz-transform: scale(0,0);}
-  100% {-moz-transform: scale(1,1);}
+  0% {transform: scale(1, 1);}
+  100% {transform: scale(0, 0);}
 }
 @keyframes hamburger-patty-show {
-  0% {transform: scale(0,0);}
-  100% {transform: scale(1,1);}
+  0% {transform: scale(0, 0);}
+  100% {transform: scale(1, 1);}
 }
 
 // Heel Animation
 
-@-webkit-keyframes hamburger-heel-rotate {
-  0% {-webkit-transform: rotate(0deg) scaleX(1);}
-  100% {-webkit-transform: rotate(-45deg) scaleX($length-scale);}
-}
-@-moz-keyframes hamburger-heel-rotate {
-  0% {-moz-transform: rotate(0deg) scaleX(1);}
-  100% {-moz-transform: rotate(-45deg) scaleX($length-scale);}
-}
 @keyframes hamburger-heel-rotate {
   0% {transform: rotate(0deg) scaleX(1);}
   100% {transform: rotate(-45deg) scaleX($length-scale);}
-}
-
-@-webkit-keyframes hamburger-heel-rotate-reverse {
-  0% {-webkit-transform: rotate(-45deg) scaleX($length-scale);}
-  100% {-webkit-transform: rotate(0deg) scaleX(1);}
-}
-@-moz-keyframes hamburger-heel-rotate-reverse {
-  0% {-moz-transform: rotate(-45deg) scaleX($length-scale);}
-  100% {-moz-transform: rotate(0deg) scaleX(1);}
 }
 @keyframes hamburger-heel-rotate-reverse {
   0% {transform: rotate(-45deg) scaleX($length-scale);}
@@ -142,42 +91,30 @@ $length-scale: 0.96 !default;
 
 .clicked #hamburger-crown {
   animation: hamburger-crown-rotate $animation-duration ease-in-out 0s 1 normal forwards;
-  -webkit-animation: hamburger-crown-rotate $animation-duration ease-in-out 0s 1 normal forwards;
-  -moz-animation: hamburger-crown-rotate $animation-duration ease-in-out 0s 1 normal forwards;
   transform-origin: 9%;
 }
 
 .clicked #hamburger-patty {
   animation: hamburger-patty-hide $animation-duration ease-in-out 0s 1 normal forwards;
-  -webkit-animation: hamburger-patty-hide $animation-duration ease-in-out 0s 1 normal forwards;
-  -moz-animation: hamburger-patty-hide $animation-duration ease-in-out 0s 1 normal forwards;
 }
 
 .clicked #hamburger-heel {
   animation: hamburger-heel-rotate $animation-duration ease-in-out 0s 1 normal forwards;
-  -webkit-animation: hamburger-heel-rotate $animation-duration ease-in-out 0s 1 normal forwards;
-  -moz-animation: hamburger-heel-rotate $animation-duration ease-in-out 0s 1 normal forwards;
   transform-origin: 9%;
 }
 
 // Hover Off Event
 
-.reset-animation #hamburger-crown{
+.reset-animation #hamburger-crown {
   animation: hamburger-crown-rotate-reverse $animation-duration ease-in-out 0s 1 normal backwards;
-  -webkit-animation: hamburger-crown-rotate-reverse $animation-duration ease-in-out 0s 1 normal backwards;
-  -moz-animation: hamburger-crown-rotate-reverse $animation-duration ease-in-out 0s 1 normal backwards;
   transform-origin: 9%;
 }
 
-.reset-animation #hamburger-patty{
+.reset-animation #hamburger-patty {
   animation: hamburger-patty-show $animation-duration ease-in-out 0s 1 normal backwards;
-  -webkit-animation: hamburger-patty-show $animation-duration ease-in-out 0s 1 normal backwards;
-  -moz-animation: hamburger-patty-show $animation-duration ease-in-out 0s 1 normal backwards;
 }
 
-.reset-animation #hamburger-heel{
+.reset-animation #hamburger-heel {
   animation: hamburger-heel-rotate-reverse $animation-duration ease-in-out 0s 1 normal backwards;
-  -webkit-animation: hamburger-heel-rotate-reverse $animation-duration ease-in-out 0s 1 normal backwards;
-  -moz-animation: hamburger-heel-rotate-reverse $animation-duration ease-in-out 0s 1 normal backwards;
   transform-origin: 9%;
 }

@@ -1,59 +1,57 @@
 // Modules
-@use '../base/globals';
-@use '../base/functions';
+@use '../base/colors';
 @use '../base/mixins' as *;
 @use '../base/typography';
 
 
-// Variables
-
-
 // Styles
 .dashboard-container {
-  background-color: white;
+  background-color: colors.$light;
+  border: 2px solid colors.$box-border-light;
   box-sizing: border-box;
   display: flex;
-  position: relative;
-  width: 100%;
-  top: 20px;
-  border: 2px solid lightgrey;
   font-size: 14px;
 
   min-height: 350px;
+  position: relative;
+  top: 20px;
+  width: 100%;
   @include respond-to(tablet) {
-    min-height: 500px;
     font-size: 18px;
+    min-height: 500px;
   }
   @include respond-to(desktop) {
-    min-height: 500px;
     font-size: 22px;
+    min-height: 500px;
   }
 }
 
 .dashboard-sidebar {
+  background-color: colors.$sidebar-background;
+  bottom: 0;
   box-sizing: border-box;
-  position: relative;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  width: 35%;
   display: flex;
   flex-direction: column;
-  background-color: rgb(34, 37, 42);
+  left: 0;
 
   max-width: 20px;
+  position: relative;
+  top: 0;
+  width: 35%;
   @include respond-to(tablet) {
-    min-width: 236px;
+    border-right: 2px solid colors.$box-border-light;
     max-width: 300px;
-    border-right: 2px solid lightgrey;
+    min-width: 236px;
+
     .dashboard-sidebar-toggle {
       display: none;
     }
   }
   @include respond-to(desktop) {
-    min-width: 240px;
+    border-right: 2px solid colors.$box-border-light;
     max-width: 350px;
-    border-right: 2px solid lightgrey;
+    min-width: 240px;
+
     .dashboard-sidebar-toggle {
       display: none;
     }
@@ -61,112 +59,117 @@
 
   &.open {
     display: flex;
-    z-index: 2;
-    min-width: 150px;
     max-width: 300px;
+    min-width: 150px;
+    z-index: 2;
   
     h2 {
       display: block;
     }
+
     .dashboard-button {
       display: block;
     }
   }
 
   h2 {
-    position: relative;
+    border: unset;
     box-sizing: border-box;
-    width: 100%;
-    padding: 25px 10px;
-    color: rgb(250, 250, 250);
-    border: none;
-    font-size: 22px;
-    font-weight: 350;
-    margin: 0px;
+    color: colors.$background-color;
 
     display: none;
+    font-size: 22px;
+    font-weight: 350;
+    margin: 0;
+    padding: 25px 10px;
+    position: relative;
+    width: 100%;
     @include respond-to(tablet) {
       display: block;
-      padding: 25px 40px;
       font-size: 30px;
+      padding: 25px 40px;
     }
     @include respond-to(desktop) {
       display: block;
-      padding: 25px 40px;
       font-size: 34px;
+      padding: 25px 40px;
     }
   }
 }
 
 .dashboard-button {
-  padding: 10px 10px;
+  color: colors.$sidebar-text-unselected;
+  display: none;
   font-size: 16px;
   font-weight: 300;
-  color: rgb(151, 156, 172);
-  display: none;
+  padding: 10px;
   transition: all 0.25s ease;
 
   @include respond-to(tablet) {
     display: block;
-    padding: 15px 40px;
     font-size: 22px;
+    padding: 15px 40px;
   }
   @include respond-to(desktop) {
     display: block;
-    padding: 20px 40px;
     font-size: 24px;
+    padding: 20px 40px;
   }
 
   &:hover {
-    background-color: rgb(15, 16, 19);
-    color: rgb(250, 250, 250);
+    background-color: colors.$sidebar-highlight;
+    color: colors.$background-color;
   }
 }
 
 .dashboard-sidebar-toggle {
+  align-items: center;
+  bottom: 0;
   box-sizing: border-box;
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  width: 20px;
-  color: rgb(212, 211, 211);
+  color: colors.$sidebar-text;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  align-items: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 20px;
 
   &:hover {
-    color: rgb(248, 248, 248);
-    background-color: rgb(8, 8, 8);
+    background-color: colors.$background-dark;
+    color: colors.$background-color;
     cursor: pointer;
   }
 
   div {
-    text-align: center;
     font-size: 16px;
     font-weight: 400;
+    text-align: center;
   }
+
   .tab-title {
     box-sizing: border-box;
     font-size: 14px;
-    writing-mode: vertical-rl;
     font-weight: 300;
+    writing-mode: vertical-rl;
   }
 
   .closed {
     box-sizing: border-box;
   }
+
   .open {
     display: none;
   }
 
   &.open {
-    background-color: rgb(15, 16, 19);
-    border-left: 1px solid black;
+    background-color: colors.$sidebar-highlight;
+    border-left: 1px solid colors.$dark;
+
     .open {
       display: block;
     }
+
     .closed {
       display: none;
     }
@@ -174,17 +177,17 @@
 }
 
 .dashboard-content {
+  align-items: center;
+  bottom: 0;
   box-sizing: border-box;
-  position: relative;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  margin: 0 5% 5%;
+  position: relative;
+  right: 0;
+  top: 0;
   width: 90%;
-  margin: 0 5% 5% 5%;
 }
 
 .dashboard-item-container {
@@ -193,25 +196,25 @@
 }
 
 .dashboard-item-separator {
-  width: 100%;
-  height: 4px;
+  background-color: colors.$sidebar-highlight;
   border-radius: 20%;
-  background-color: rgb(15, 16, 19);
-  margin: 30px 0px;
+  height: 4px;
+  margin: 30px 0;
+  width: 100%;
 }
 
 h3 {
   font-size: 22px;
   font-weight: 350;
-  margin: 0px;
-  padding: 25px 0px;
+  margin: 0;
+  padding: 25px 0;
 
   @include respond-to(tablet) {
-    padding: 25px 0px;
     font-size: 30px;
+    padding: 25px 0;
   }
   @include respond-to(desktop) {
-    padding: 25px 0px;
     font-size: 34px;
+    padding: 25px 0;
   }
 }

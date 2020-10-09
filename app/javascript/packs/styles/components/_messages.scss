@@ -1,6 +1,5 @@
 // Modules
-@use '../base/globals';
-@use '../base/functions';
+@use '../base/colors';
 @use '../base/mixins' as *;
 @use '../base/typography';
 
@@ -12,18 +11,21 @@
   word-wrap: break-word;
 }
 
-.notice, .alert {
+.notice,
+.alert {
   box-sizing: border-box;
   width: 100%;
+
   + .no-messages {
     display: none;
   }
 }
 
 .alert {
-  color: red;
+  color: colors.$alerts;
 }
+
 .notice {
-  color: rgb(0, 90, 0);
+  color: colors.$notices;
 }
 

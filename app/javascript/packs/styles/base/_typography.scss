@@ -1,40 +1,38 @@
 @use 'mixins' as *;
+@use 'colors';
 
 @font-face {
   font-family: 'RobotoTitle';
-  src: url('../fonts/RobotoSlab-Variable.woff2') format('woff2'), url('../fonts/RobotoSlab-Regular.woff2') format('woff2');
   font-weight: 1 999;
+  src: url('../fonts/RobotoSlab-Variable.woff2') format('woff2'), url('../fonts/RobotoSlab-Regular.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'RobotoBody';
-  src: url('../fonts/Roboto-Variable.woff2') format('woff2'), url('../fonts/Roboto-Medium.woff2') format('woff2');
   font-weight: 1 999;
+  src: url('../fonts/Roboto-Variable.woff2') format('woff2'), url('../fonts/Roboto-Medium.woff2') format('woff2');
 }
 
 $header-font: 'RobotoTitle', Fallback, sans-serif;
 $general-font: 'RobotoBody', Fallback, sans-serif;
-$general-font-color: rgb(0, 0, 0);
-$light-font-color: rgb(22, 22, 22);
-$inverse-font-color: rgb(240, 240, 240);
 
 html {
+  color: colors.$general-font;
   font-family: $general-font;
-  color: $general-font-color;
   font-weight: 300;
   letter-spacing: 0.05em;
 }
 
 h1 {
   box-sizing: border-box;
-  width: 100%;
-  height: 250px;
-  padding: 20px 20px;
-  margin: 0px 0px;
+  color: colors.$inverse-font;
+  font-family: $header-font;
   font-size: 45px;
   font-weight: 300;
-  color: $inverse-font-color;
-  font-family: $header-font;
+  height: 250px;
+  margin: 0;
+  padding: 20px;
+  width: 100%;
   
   @include respond-to(tablet) {
     font-size: 55px;
@@ -45,8 +43,8 @@ h1 {
 
   .subtitle {
     font-family: $header-font;
-    padding-top: 15px;
     font-size: 25px;
+    padding-top: 15px;
     @include respond-to(tablet) {
       font-size: 30px;
     }
@@ -60,29 +58,34 @@ h2 {
   font-family: $general-font;
 }
 
+h3 {
+  font-family: $general-font;
+}
+
 h4 {
-  margin: 0px 0px;
   font-size: 18px;
   font-weight: 600;
+  margin: 0;
 
   @include respond-to(tablet) {
-    margin: 15px 0px;
     font-size: 22px;
+    margin: 15px 0;
   }
   @include respond-to(desktop) {
-    margin: 20px 0px;
     font-size: 24px;
+    margin: 20px 0;
   }
 }
 
-b, strong {
+b,
+strong {
   font-weight: 600;
 }
 
 .small-font {
+  color: colors.$darker-font;
   font-size: 12px;
   font-weight: 300;
-  color: $light-font-color;
 
   @include respond-to(tablet) {
     font-size: 14px;

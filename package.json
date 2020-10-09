@@ -30,11 +30,13 @@
     "eslint-plugin-standard": "^4.0.1",
     "html-loader-jest": "^0.2.1",
     "jest": "^26.0.1",
+    "stylelint": "^13.7.2",
+    "stylelint-config-sass-guidelines": "^7.1.0",
     "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
     "test": "jest --no-cache",
-    "lint": "eslint --fix ."
+    "lint": "eslint --fix . && stylelint --fix \"**/*.scss\""
   },
   "jest": {
     "testRegex": ".*_spec.js",

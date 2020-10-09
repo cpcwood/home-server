@@ -1,13 +1,9 @@
 // Modules
-@use '../base/globals';
-@use '../base/functions';
+@use '../base/colors';
 @use '../base/mixins' as *;
 @use '../base/typography';
 
 // Variables
-$header-font: typography.$header-font;
-$nav-font-color: typography.$inverse-font-color;
-$inverse-font-color: typography.$general-font-color;
 $sidebar-transition: 0.3s;
 $btn-hover-animation: 0.2s;
 
@@ -20,8 +16,8 @@ $btn-hover-animation: 0.2s;
   $container-color: none,
   $hamburger-padding: 6px 6px,
   $bar-height: 5px,
-  $bar-color-normal: $nav-font-color,
-  $bar-color-clicked: $inverse-font-color,
+  $bar-color-normal: colors.$inverse-font,
+  $bar-color-clicked: colors.$general-font,
   $animation-duration: $sidebar-transition,
   $length-scale: 0.96,
 );
@@ -29,32 +25,23 @@ $btn-hover-animation: 0.2s;
 
 // Top Navbar Styles
 .navbar {
-  width: 100%;
-  min-width: 200px;
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  position: fixed;
-  top: 0px;
+  display: flex;
   height: 60px;
+  justify-content: space-between;
+  min-width: 200px;
+  position: fixed;
+  top: 0;
+  width: 100%;
   z-index: 3;
 }
 
 .nav-title-container {
-  font-family: $header-font;
+  font-family: typography.$header-font;
   font-size: 25px;
   font-weight: 300;
   letter-spacing: 0.06em;
-  margin: 0px 20px;
-
-  a, a:link, a:visited, a:focus, a:hover, a:active {
-    color: $nav-font-color;
-    text-decoration: none; 
-  }
-
-  a:hover {
-    cursor: pointer;
-  }
+  margin: 0 20px;
 
   @include respond-to(tablet) {
     font-size: 28px;
@@ -62,75 +49,93 @@ $btn-hover-animation: 0.2s;
   @include respond-to(desktop) {
     font-size: 32px;
   }
+
+  a,
+  a:link,
+  a:visited,
+  a:focus,
+  a:hover,
+  a:active {
+    color: colors.$inverse-font;
+    text-decoration: none; 
+  }
+
+  a:hover {
+    cursor: pointer;
+  }
 }
 
 .username {
   margin-left: auto;
-  a, a:link, a:visited, a:focus, a:hover, a:active {
-    color: $nav-font-color;
-    text-decoration: none; 
-    font-family: $header-font;
+
+  a,
+  a:link,
+  a:visited,
+  a:focus,
+  a:hover,
+  a:active {
+    color: colors.$inverse-font;
+    font-family: typography.$header-font;
     font-size: 22px;
     font-weight: 300;
+    text-decoration: none;
   }
 }
 
-// Side Navbar Styles
+// Side Nav-ar Styles
 
 .nav-menu {
-  padding: 5px 10px;
-  display: flex;
-  flex-direction: column;
   align-items: flex-end;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 10px;
 }
 
 .nav-sidebar {
+  background-color: colors.$light;
+  bottom: 0;
+  box-sizing: border-box;
   display: flex;
-  position: fixed;
   flex-direction: column;
   justify-content: space-between;
-  box-sizing: border-box;
-  width: 0px;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  padding-top: 60px;
-  background-color: white;
-  z-index: 5;
   overflow-y: scroll;
-
+  padding-top: 60px;
+  position: fixed;
+  right: 0;
+  top: 0;
   transition: width $sidebar-transition ease 0s, height 0s ease $sidebar-transition;
-  -webkit-transition: width $sidebar-transition ease 0s, height 0s ease $sidebar-transition;
-  -moz-transition: width $sidebar-transition ease 0s, height 0s ease $sidebar-transition;
-  -o-transition: width $sidebar-transition ease 0s, height 0s ease $sidebar-transition;
+  width: 0;
+  z-index: 5;
 
-  .upper, .lower {
+  .upper,
+  .lower {
+    align-self: flex-start;
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    align-self: flex-start;
     width: 100%;
   }
 }
 
-.nav-item {
-  position: relative;
+.nav-item { 
+  border: unset;
   box-sizing: border-box;
-  width: 100%;
-  height: 0px;
-  padding: 0px 0px;
-  text-align: center;
-  vertical-align: middle;
-  text-decoration: none; 
-  border: none;
+  color: colors.$dark;
   font-size: 16px;
   font-weight: 450;
-  color: black;
-  white-space: nowrap;
+  height: 0;
   overflow: hidden;
+  padding: 0;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: visibility 0s ease $sidebar-transition, height 0s ease $sidebar-transition, padding 0s ease $sidebar-transition;
+  vertical-align: middle;
   visibility: hidden;
+  white-space: nowrap;
+  width: 100%;
 
   @include respond-to(tablet) {
     font-size: 18px;
@@ -138,46 +143,27 @@ $btn-hover-animation: 0.2s;
   @include respond-to(desktop) {
     font-size: 20px;
   }
-
-  transition: visibility 0s ease $sidebar-transition, height 0s ease $sidebar-transition, padding 0s ease $sidebar-transition;
-  -webkit-transition: visibility 0s ease $sidebar-transition, height 0s ease $sidebar-transition, padding 0s ease $sidebar-transition;
-  -moz-transition: visibility 0s ease $sidebar-transition, height 0s ease $sidebar-transition, padding 0s ease $sidebar-transition;
-  -o-transition: visibility 0s ease $sidebar-transition, height 0s ease $sidebar-transition, padding 0s ease $sidebar-transition;
 }
 
 .logout-form {
   width: 100%;
 }
 
-.nav-item-separator {
-  position: relative;
-  background-color: lightgrey;
-  border-radius: 60%;
-  width: 100%;
-  height: 0px;
-  visibility: hidden;
-  transition: visibility 0s ease $sidebar-transition, height 0s ease $sidebar-transition;
-  -webkit-transition: visibility 0s ease $sidebar-transition, height 0s ease $sidebar-transition;
-  -moz-transition: visibility 0s ease $sidebar-transition, height 0s ease $sidebar-transition;
-  -o-transition: visibility 0s ease $sidebar-transition, height 0s ease $sidebar-transition;
-}
-
 .nav-screen-cover {
-  visibility: hidden;
+  background-color: colors.$dark;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
   position: fixed;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  background-color: rgba(0, 0, 0, 0.0);
-
-  transition: background-color $sidebar-transition ease 0s, visibility 0s ease $sidebar-transition;
-  -webkit-transition: background-color $sidebar-transition ease 0s, visibility 0s ease $sidebar-transition;
-  -moz-transition: background-color $sidebar-transition ease 0s, visibility 0s ease $sidebar-transition;
-  -o-transition: background-color $sidebar-transition ease 0s, visibility 0s ease $sidebar-transition;
+  right: 0;
+  top: 0;
+  transition: opacity $sidebar-transition ease,
+    visibility $sidebar-transition step-end;
+  visibility: hidden;
 }
 
 .nav-sidebar.sidebar-open {
+  transition: width $sidebar-transition ease 0s;
   width: 180px;
   @include respond-to(tablet) {
     width: 210px;
@@ -186,47 +172,27 @@ $btn-hover-animation: 0.2s;
     width: 250px;
   }
 
-  transition: width $sidebar-transition ease 0s;
-  -webkit-transition: width $sidebar-transition ease 0s;
-  -moz-transition: width $sidebar-transition ease 0s;
-  -o-transition: width $sidebar-transition ease 0s;
-
   .nav-item {
-    visibility: visible;
-    color: rgb(31, 29, 29);
-    height: 40px;
-    padding: 10px 0px;
+    background-color: colors.$light;
+    color: colors.$darker-font;
+    height: fit-content;
+    line-height: 1;
+    padding: 15px 0;
     transition: color $btn-hover-animation ease 0s, background-color $btn-hover-animation ease 0s;
-    -webkit-transition: color $btn-hover-animation ease 0s, background-color $btn-hover-animation ease 0s;
-    -moz-transition: color $btn-hover-animation ease 0s, background-color $btn-hover-animation ease 0s;
-    -o-transition: color $btn-hover-animation ease 0s, background-color $btn-hover-animation ease 0s;
-    background-color: rgb(255, 255, 255);
+    visibility: visible;
 
     &:hover {
-      background-color: rgb(94, 94, 94);
-      color: white;
+      background-color: colors.$nav-button-hover;
+      color: colors.$light;
       cursor: pointer;
     }
   }
 
-  .nav-item-separator {
-    visibility: visible;
-    height: 2px;
-    transition: all 0s ease 0s;
-    -webkit-transition: all 0s ease 0s;
-    -moz-transition: all 0s ease 0s;
-    -o-transition: all 0s ease 0s;
-  }
-
   +.nav-screen-cover {
+    opacity: 0.5;
+    transition: background-color $sidebar-transition ease 0s;
     visibility: visible;
     z-index: 4;
-    background-color: rgba(0, 0, 0, 0.5);
-  
-    transition: background-color $sidebar-transition ease 0s;
-    -webkit-transition: background-color $sidebar-transition ease 0s;
-    -moz-transition: background-color $sidebar-transition ease 0s;
-    -o-transition: background-color $sidebar-transition ease 0s;
   }
 }
 
