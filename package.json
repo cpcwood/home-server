@@ -34,7 +34,7 @@
   },
   "scripts": {
     "test": "jest --no-cache",
-    "eslint": "eslint --fix \"app/javascript/packs/controllers/**/*\" \"spec/javascript/**/*\""
+    "lint": "eslint --fix ."
   },
   "jest": {
     "testRegex": ".*_spec.js",
