@@ -20,13 +20,12 @@ class SessionsController < ApplicationController
 
   def send_2fa
     return redirect_to(:login) unless TwoFactorAuthService.started?(session)
-    unless session[:auth_code_sent] == true
-    if TwoFactorAuthService.send_auth_code
-      notice = 'Please enter the 6 digit code sent to mobile number assoicated with this account'
+    if TwoFactorAuthService.send_auth_code(session)
+      flash[:notice] = 'Please enter the 6 digit code sent to mobile number assoicated with this account' unless flash[:notice]
     else
-      alert = 'Sorry something went wrong'
+      flash[:alert] = 'Sorry something went wrong'
     end
-    render(:two_factor_auth, notice: notice, alert: alert)
+    render(:two_factor_auth)
   end
 
   def verify_2fa
