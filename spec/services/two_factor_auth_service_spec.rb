@@ -44,10 +44,17 @@ describe TwoFactorAuthService do
       expect(subject.send_auth_code(@session)).to eq(false)
     end
 
-    it 'successful request' do
+    it 'successful send request' do
       expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create).with(to: @test_user.mobile_number, channel: 'sms')
       expect(subject.send_auth_code(@session)).to eq(true)
-      expect(@session[:auth_code_sent]).to eq(true)
+      expect(@session[:two_factor_auth_code_sent]).to eq(true)
+    end
+
+    it 'send request already made' do
+      allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create)
+      subject.send_auth_code(@session)
+      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).not_to receive(:create)
+      expect(subject.send_auth_code(@session)).to eq(true)
     end
   end
 end
