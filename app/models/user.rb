@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_secure_password validations: false
   after_initialize :add_defaults
-  before_validation :convert_mobile_number, if: :mobile_number_changed?
+  after_validation :convert_mobile_number, if: -> { :mobile_number_changed? && !mobile_number.nil? }
 
   validates :password,
             presence: true,
