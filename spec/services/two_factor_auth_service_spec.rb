@@ -24,10 +24,23 @@ describe TwoFactorAuthService do
   end
 
   describe '.send_auth_code' do
+    before(:each) do
+      subject.start(@session, @test_user)
+    end
+
+    it 'user does not exist' do
+      @test_user.destroy
+      expect(subject.send_auth_code(@session)).to eq(false)
+    end
+
     it 'user has no mobile number' do
       @test_user.mobile_number = nil
       @test_user.save
-      subject.start(@session, @test_user)
+      expect(subject.send_auth_code(@session)).to eq(false)
+    end
+
+    it 'twilio error' do
+      allow(Twilio::REST::Client).to receive(:new).and_raise('error')
       expect(subject.send_auth_code(@session)).to eq(false)
     end
   end
