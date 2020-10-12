@@ -30,15 +30,13 @@ RSpec.describe 'Request Sessions', type: :request do
     it 'Blocks login if user not found' do
       password_athenticate_admin(user: @test_user.username, password: 'nopass', captcha_success: true)
       expect(response).to redirect_to login_path
-      follow_redirect!
-      expect(response.body).to include('User not found')
+      expect(flash[:alert]).to eq('User not found')
     end
 
     it 'Blocks login if captcha incorrect' do
       password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: false)
       expect(response).to redirect_to login_path
-      follow_redirect!
-      expect(response.body).to include('reCaptcha failed, please try again')
+      expect(flash[:alert]).to eq('reCaptcha failed, please try again')
     end
   end
 
@@ -54,17 +52,12 @@ RSpec.describe 'Request Sessions', type: :request do
       expect(response).to redirect_to(:admin)
     end
 
-    it 'Renders login page' do
-      password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
-      get('/2fa')
-      expect(response).to render_template(:two_factor_auth)
-    end
-
     it 'Sends verify request to twilio' do
       password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
       expect(TwoFactorAuthService).to receive(:send_auth_code).and_return(true)
       get '/2fa'
-      expect(response.body).to include('Please enter the 6 digit code sent to mobile number assoicated with this account')
+      expect(response).to render_template(:two_factor_auth)
+      expect(flash[:notice]).to eq('Please enter the 6 digit code sent to mobile number assoicated with this account')
     end
 
     it 'error sending auth code' do
@@ -87,16 +80,14 @@ RSpec.describe 'Request Sessions', type: :request do
       allow(TwoFactorAuthService).to receive(:auth_code_format_valid?).and_return(false)
       post '/2fa', params: { auth_code: auth_code }
       expect(response).to redirect_to('/2fa')
-      follow_redirect!
-      expect(response.body).to include('Verification code must be 6 digits long')
+      expect(flash[:alert]).to eq('Verification code must be 6 digits long')
     end
 
     it 'invalid auth code' do
       password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
       allow(TwoFactorAuthService).to receive(:auth_code_valid?).and_return(false)
       post '/2fa', params: { auth_code: auth_code }
-      follow_redirect!
-      expect(response.body).to include('2fa code incorrect, please try again')
+      expect(flash[:alert]).to eq('2fa code incorrect, please try again')
     end
 
     it 'successful login' do
@@ -107,8 +98,9 @@ RSpec.describe 'Request Sessions', type: :request do
     it 'Current login details updated on sucessful login' do
       travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
       login
-      expect(@test_user.reload.current_login_time).to eq(Time.zone.now)
-      expect(@test_user.reload.current_login_ip).to eq('127.0.0.1')
+      @test_user.reload
+      expect(@test_user.current_login_time).to eq(Time.zone.now)
+      expect(@test_user.current_login_ip).to eq('127.0.0.1')
     end
 
     it 'Last login details updated on sucessful login' do
@@ -117,10 +109,11 @@ RSpec.describe 'Request Sessions', type: :request do
       logout
       travel_to Time.zone.local(2020, 04, 19, 01, 00, 00)
       login
-      expect(@test_user.reload.current_login_time).to eq(Time.zone.now)
-      expect(@test_user.reload.current_login_ip).to eq('127.0.0.1')
-      expect(@test_user.reload.last_login_time).to eq(Time.zone.local(2020, 04, 19, 00, 00, 00))
-      expect(@test_user.reload.last_login_ip).to eq('127.0.0.1')
+      @test_user.reload
+      expect(@test_user.current_login_time).to eq(Time.zone.now)
+      expect(@test_user.current_login_ip).to eq('127.0.0.1')
+      expect(@test_user.last_login_time).to eq(Time.zone.local(2020, 04, 19, 00, 00, 00))
+      expect(@test_user.last_login_ip).to eq('127.0.0.1')
     end
 
     it 'Resets session after 60 minutes of inactivity' do
@@ -136,7 +129,7 @@ RSpec.describe 'Request Sessions', type: :request do
     end
 
     it 'Block unauthorised access' do
-      post '/2fa', params: { auth_code: '1234' }
+      post '/2fa', params: { auth_code: auth_code }
       expect(response).to redirect_to('/login')
     end
   end
@@ -144,13 +137,12 @@ RSpec.describe 'Request Sessions', type: :request do
   describe 'PUT /2fa #reset_2fa' do
     it 'Resends 2fa code' do
       password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
+      allow(TwoFactorAuthService).to receive(:send_auth_code).and_return(true)
       get '/2fa'
-      expect(TwoFactorAuthService).to receive(:send_auth_code).and_return(true)
       put '/2fa'
       expect(session[:auth_code_sent]).to eq(nil)
       expect(response).to redirect_to('/2fa')
-      follow_redirect!
-      expect(response.body).to include('Two factor authentication code resent')
+      expect(flash[:notice]).to eq('Two factor authentication code resent')
     end
   end
 

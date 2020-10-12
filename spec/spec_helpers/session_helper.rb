@@ -6,6 +6,7 @@ end
 
 def login
   allow(TwoFactorAuthService).to receive(:auth_code_valid?).and_return(true)
+  allow(TwoFactorAuthService).to receive(:get_user).and_return(@test_user)
   password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
   post '/2fa', params: { auth_code: '123456' }
   follow_redirect!
