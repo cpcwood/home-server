@@ -25,16 +25,14 @@ RSpec.describe 'Request Passwords', type: :request do
     it 'Redirects user back to login page, with notice of reset' do
       post '/forgotten-password', params: { email: @test_user.email, 'g-recaptcha-response' => 'test' }
       expect(response).to redirect_to(:login)
-      follow_redirect!
-      expect(response.body).to include('If the submitted email is associated with an account, a password reset link will be sent')
+      expect(flash[:notice]).to eq('If the submitted email is associated with an account, a password reset link will be sent')
     end
 
     it 'Notifies user if reCaptcha is incorrect' do
       allow(ReCaptchaService).to receive(:recaptcha_valid?).and_return(false)
       post '/forgotten-password', params: { email: @test_user.email, 'g-recaptcha-response' => 'test' }
       expect(response).to redirect_to(:forgotten_password)
-      follow_redirect!
-      expect(response.body).to include('reCaptcha failed, please try again')
+      expect(flash[:alert]).to eq('reCaptcha failed, please try again')
     end
 
     it 'Password reset job created if reCaptcha sucess' do
@@ -54,8 +52,7 @@ RSpec.describe 'Request Passwords', type: :request do
     it 'Redirects requests without valid reset token' do
       get '/reset-password', params: { reset_token: 'invalid-token' }
       expect(response).to redirect_to(:login)
-      follow_redirect!
-      expect(response.body).to include('Password reset token expired')
+      expect(flash[:alert]).to eq('Password reset token expired')
     end
 
     it 'Adds reset token to session for post request' do
@@ -76,8 +73,7 @@ RSpec.describe 'Request Passwords', type: :request do
     it 'Redirects requests without valid reset token in session' do
       post '/reset-password', params: { password: 'unauthorized-password', password_confirmation: 'unauthorized-password' }
       expect(response).to redirect_to(:login)
-      follow_redirect!
-      expect(response.body).to include('Password reset token expired')
+      expect(flash[:alert]).to eq('Password reset token expired')
     end
 
     it 'Alerts user and redirects back to password reset form if password and confirmation do not match' do
@@ -85,8 +81,7 @@ RSpec.describe 'Request Passwords', type: :request do
       get '/reset-password', params: { reset_token: @test_user.password_reset_token }
       post '/reset-password', params: { password: 'Securepassword1', password_confirmation: 'not-the-same-password' }
       expect(response).to redirect_to(:reset_password)
-      follow_redirect!
-      expect(response.body).to include('Passwords do not match')
+      expect(flash[:alert]).to eq('Passwords do not match')
     end
 
     it 'Alerts user if password less than 8 charaters' do
@@ -94,8 +89,7 @@ RSpec.describe 'Request Passwords', type: :request do
       get '/reset-password', params: { reset_token: @test_user.password_reset_token }
       post '/reset-password', params: { password: 'passwor', password_confirmation: 'passwor' }
       expect(response).to redirect_to(:reset_password)
-      follow_redirect!
-      expect(response.body).to include('The password must have at least 8 characters')
+      expect(flash[:alert]).to eq('The password must have at least 8 characters')
     end
 
     it 'if reset token valid and passwords match, password updated' do
@@ -103,8 +97,7 @@ RSpec.describe 'Request Passwords', type: :request do
       get '/reset-password', params: { reset_token: @test_user.password_reset_token }
       post '/reset-password', params: { password: 'Securepassword2', password_confirmation: 'Securepassword2' }
       expect(response).to redirect_to(:login)
-      follow_redirect!
-      expect(response.body).to include('Password updated')
+      expect(flash[:notice]).to eq('Password updated')
     end
 
     it 'Password reset job created if password updated' do
