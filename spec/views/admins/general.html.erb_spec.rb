@@ -1,11 +1,13 @@
 require 'spec_helper'
 
 describe 'Views' do
+  let(:user) { User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1', mobile_number: '+447123456789') }
+
   describe 'admins/general section' do
     it 'Displays last login time' do
       travel_to Time.zone.local(2020, 04, 19, 15, 20, 00)
-      @test_user.update(last_login_time: Time.zone.now)
-      assign(:user, @test_user)
+      user.update(last_login_time: Time.zone.now)
+      assign(:user, user)
 
       render template: 'admins/general.html.erb'
 
@@ -13,8 +15,8 @@ describe 'Views' do
     end
 
     it 'Displays last login ip address' do
-      @test_user.update(last_login_ip: '127.0.0.1')
-      assign(:user, @test_user)
+      user.update(last_login_ip: '127.0.0.1')
+      assign(:user, user)
 
       render template: 'admins/general.html.erb'
 
@@ -22,18 +24,18 @@ describe 'Views' do
     end
 
     it 'Displays user details' do
-      assign(:user, @test_user)
+      assign(:user, user)
 
       render template: 'admins/general.html.erb'
 
-      expect(rendered).to match(Regexp.escape("Username:</strong> #{@test_user.username}"))
-      expect(rendered).to match(Regexp.escape("Email Address:</strong> #{@test_user.email}"))
-      expect(rendered).to match(Regexp.escape("Mobile Number:</strong> #{@test_user.mobile_number}"))
+      expect(rendered).to match(Regexp.escape("Username:</strong> #{user.username}"))
+      expect(rendered).to match(Regexp.escape("Email Address:</strong> #{user.email}"))
+      expect(rendered).to match(Regexp.escape("Mobile Number:</strong> #{user.mobile_number}"))
     end
 
     it 'Displays overview of notifications' do
       # Placeholder spec
-      assign(:user, @test_user)
+      assign(:user, user)
 
       render template: 'admins/general.html.erb'
 
@@ -42,7 +44,7 @@ describe 'Views' do
 
     it 'Displays overview of notifications' do
       # Placeholder spec
-      assign(:user, @test_user)
+      assign(:user, user)
 
       render template: 'admins/general.html.erb'
 

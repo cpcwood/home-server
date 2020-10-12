@@ -1,6 +1,10 @@
 require 'spec_helpers/feature_helpers'
 
 feature 'Admin update details', feature: true do
+  before(:each) do
+    seed_db
+  end
+
   scenario 'Update username' do
     login_feature
     visit('admin/user_settings')

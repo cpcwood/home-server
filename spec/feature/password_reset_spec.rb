@@ -2,13 +2,14 @@ require 'spec_helpers/session_helper'
 
 feature 'Password reset', feature: true do
   before(:each) do
+    seed_db
     stub_recaptcha_service
   end
 
   scenario 'Filling in password reset form' do
     visit('/login')
     click_on('Forgotten Password')
-    fill_in('email', with: 'admin@example.com')
+    fill_in('email', with: @test_user.email)
     click_button('Reset Password')
     expect(page).to have_content('If the submitted email is associated with an account, a password reset link will be sent')
     expect(current_path).to eq('/login')

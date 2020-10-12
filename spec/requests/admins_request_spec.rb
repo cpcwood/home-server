@@ -2,6 +2,10 @@ require 'rails_helper'
 require 'spec_helpers/session_helper'
 
 RSpec.describe 'Request Admins', type: :request do
+  before(:each) do
+    seed_db
+  end
+
   describe 'GET /admin #general' do
     it 'Redirects to homepage if user not logged in' do
       get '/admin'

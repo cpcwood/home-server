@@ -1,12 +1,13 @@
 require 'spec_helper'
 
 describe TwoFactorAuthService do
+  let(:user) { User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1', mobile_number: '+447123456789') }
   let(:session) { {} }
 
   describe '.start' do
     it 'user start two factor auth flow' do
-      subject.start(session, @test_user)
-      expect(session[:two_factor_auth_id]).to eq(@test_user.id)
+      subject.start(session, user)
+      expect(session[:two_factor_auth_id]).to eq(user.id)
     end
   end
 
@@ -16,24 +17,24 @@ describe TwoFactorAuthService do
     end
 
     it 'two factor started' do
-      subject.start(session, @test_user)
+      subject.start(session, user)
       expect(subject.started?(session)).to eq(true)
     end
   end
 
   describe '.send_auth_code' do
     before(:each) do
-      subject.start(session, @test_user)
+      subject.start(session, user)
     end
 
     it 'user does not exist' do
-      @test_user.destroy
+      user.destroy
       expect(subject.send_auth_code(session)).to eq(false)
     end
 
     it 'user has no mobile number' do
-      @test_user.mobile_number = nil
-      @test_user.save
+      user.mobile_number = nil
+      user.save
       expect(subject.send_auth_code(session)).to eq(false)
     end
 
@@ -43,7 +44,7 @@ describe TwoFactorAuthService do
     end
 
     it 'successful send request' do
-      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create).with(to: @test_user.mobile_number, channel: 'sms')
+      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create).with(to: user.mobile_number, channel: 'sms')
       expect(subject.send_auth_code(session)).to eq(true)
       expect(session[:two_factor_auth_code_sent]).to eq(true)
     end
@@ -76,19 +77,19 @@ describe TwoFactorAuthService do
     let(:auth_code) { '123456' }
 
     before(:each) do
-      subject.start(session, @test_user)
+      subject.start(session, user)
       allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create)
       subject.send_auth_code(session)
     end
 
     it 'auth code not yet sent' do
       new_session = {}
-      subject.start(new_session, @test_user)
+      subject.start(new_session, user)
       expect(subject.auth_code_valid?(session: new_session, auth_code: auth_code)).to eq(false)
     end
 
     it 'user does not exist' do
-      @test_user.destroy
+      user.destroy
       expect(subject.auth_code_valid?(session: session, auth_code: auth_code)).to eq(false)
     end
 
@@ -105,23 +106,23 @@ describe TwoFactorAuthService do
 
     it 'valid auth code' do
       verification_double = double('verification', status: 'approved')
-      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).with(to: @test_user.mobile_number, code: auth_code).and_return(verification_double)
+      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).with(to: user.mobile_number, code: auth_code).and_return(verification_double)
       expect(subject.auth_code_valid?(session: session, auth_code: auth_code)).to eq(true)
     end
   end
 
   describe '.get_user' do
     before(:each) do
-      subject.start(session, @test_user)
+      subject.start(session, user)
     end
 
     it 'user does not exist' do
-      @test_user.destroy
+      user.destroy
       expect(subject.get_user(session)).to eq(nil)
     end
 
     it 'user exists' do
-      expect(subject.get_user(session)).to eq(@test_user)
+      expect(subject.get_user(session)).to eq(user)
     end
   end
 end

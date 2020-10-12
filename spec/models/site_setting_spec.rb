@@ -13,67 +13,67 @@
 require 'rails_helper'
 
 RSpec.describe SiteSetting, type: :model do
-  let(:site_setting) { @site_settings }
+  subject { SiteSetting.create(name: 'test_name', typed_header_enabled: false, header_text: 'test header_text', subtitle_text: 'test subtitle_text') }
 
   describe 'name validations' do
     it 'rejects too short' do
-      site_setting.name = ''
-      expect(site_setting).to_not be_valid
-      expect(site_setting.errors.messages[:name]).to eq(['Site name cannot be blank'])
+      subject.name = ''
+      expect(subject).to_not be_valid
+      expect(subject.errors.messages[:name]).to eq(['Site name cannot be blank'])
     end
 
     it 'rejects too long' do
-      site_setting.name = '0' * 256
-      expect(site_setting).to_not be_valid
-      expect(site_setting.errors.messages[:name]).to eq(['Site name cannot be longer than 255 charaters'])
+      subject.name = '0' * 256
+      expect(subject).to_not be_valid
+      expect(subject.errors.messages[:name]).to eq(['Site name cannot be longer than 255 charaters'])
     end
 
     it 'accepts correct length' do
-      site_setting.name = '0'
-      expect(site_setting).to be_valid
-      site_setting.name = '0' * 255
-      expect(site_setting).to be_valid
+      subject.name = '0'
+      expect(subject).to be_valid
+      subject.name = '0' * 255
+      expect(subject).to be_valid
     end
   end
 
   describe 'typed_header_enabled validations' do
     it 'data type' do
-      site_setting.typed_header_enabled = nil
-      expect(site_setting).to_not be_valid
-      site_setting.typed_header_enabled = true
-      expect(site_setting).to be_valid
+      subject.typed_header_enabled = nil
+      expect(subject).to_not be_valid
+      subject.typed_header_enabled = true
+      expect(subject).to be_valid
     end
   end
 
   describe 'header_text validations' do
     it 'max length' do
-      site_setting.header_text = '0' * 256
-      expect(site_setting).to_not be_valid
-      expect(site_setting.errors.messages[:header_text]).to eq(['Header text cannot be longer than 255 charaters'])
-      site_setting.header_text = '0' * 255
-      expect(site_setting).to be_valid
+      subject.header_text = '0' * 256
+      expect(subject).to_not be_valid
+      expect(subject.errors.messages[:header_text]).to eq(['Header text cannot be longer than 255 charaters'])
+      subject.header_text = '0' * 255
+      expect(subject).to be_valid
     end
   end
 
   describe 'subtitle_text validations' do
     it 'max length' do
-      site_setting.subtitle_text = '0' * 256
-      expect(site_setting).to_not be_valid
-      expect(site_setting.errors.messages[:subtitle_text]).to eq(['Subtitle text cannot be longer than 255 charaters'])
-      site_setting.subtitle_text = '0' * 255
-      expect(site_setting).to be_valid
+      subject.subtitle_text = '0' * 256
+      expect(subject).to_not be_valid
+      expect(subject.errors.messages[:subtitle_text]).to eq(['Subtitle text cannot be longer than 255 charaters'])
+      subject.subtitle_text = '0' * 255
+      expect(subject).to be_valid
     end
   end
 
   describe '#change_messages' do
     it 'no change' do
-      expect(site_setting.reload.change_messages).to eq([])
+      expect(subject.reload.change_messages).to eq([])
     end
 
     it 'attribute changes' do
-      site_setting.reload
-      site_setting.update(name: 'new name', header_text: 'new header')
-      expect(site_setting.change_messages).to eq(['Name updated!', 'Header text updated!'])
+      subject.reload
+      subject.update(name: 'new name', header_text: 'new header')
+      expect(subject.change_messages).to eq(['Name updated!', 'Header text updated!'])
     end
   end
 end

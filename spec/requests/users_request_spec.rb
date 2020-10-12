@@ -2,6 +2,10 @@ require 'rails_helper'
 require 'spec_helpers/session_helper'
 
 RSpec.describe 'Request Users', type: :request do
+  before(:each) do
+    seed_db
+  end
+
   describe 'PUT /user.id #update' do
     let(:blank_username_params) { { username: '', username_confirmation: '' } }
     let(:blank_email_params) { { email: '', email_confirmation: '' } }

@@ -1,21 +1,23 @@
 require 'spec_helper'
 
 describe 'Views' do
+  let(:about) { About.create(name: 'test name', about_me: 'test about me text') }
+
   describe 'admin/about rendering' do
     it 'default view' do
       profile_image = ProfileImage.create
-      assign(:about, @about)
+      assign(:about, about)
 
       render template: 'admin/abouts/edit.html.erb'
 
-      expect(rendered).to match(@about.name)
-      expect(rendered).to match(@about.about_me)
+      expect(rendered).to match(about.name)
+      expect(rendered).to match(about.about_me)
       expect(rendered).to match("Images will be resized to #{profile_image.x_dim}")
       expect(rendered).to match(profile_image.y_dim.to_s)
     end
 
     it 'No image attached' do
-      assign(:about, @about)
+      assign(:about, about)
 
       render template: 'admin/abouts/edit.html.erb'
 
@@ -25,8 +27,8 @@ describe 'Views' do
     end
 
     it 'image attached' do
-      @about.create_profile_image
-      assign(:about, @about)
+      about.create_profile_image
+      assign(:about, about)
 
       render template: 'admin/abouts/edit.html.erb'
 
