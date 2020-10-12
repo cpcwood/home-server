@@ -2,10 +2,6 @@ require 'rails_helper'
 require 'spec_helpers/session_helper'
 
 RSpec.describe 'Request Sessions', type: :request do
-  before(:each) do
-    block_twilio_verification_checks
-  end
-
   describe 'GET /login #login ' do
     it 'Renders login page' do
       get '/login'
@@ -80,23 +76,30 @@ RSpec.describe 'Request Sessions', type: :request do
   end
 
   describe 'POST /2fa #verify_2fa' do
-    it 'Sends notice if verification code length incorrect' do
+    let(:auth_code) { '123456' }
+
+    before(:each) do
+      allow(TwoFactorAuthService).to receive(:auth_code_format_valid?).and_return(true)
+    end
+
+    it 'invalid auth code format' do
       password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
-      post '/2fa', params: { auth_code: '1234' }
+      allow(TwoFactorAuthService).to receive(:auth_code_format_valid?).and_return(false)
+      post '/2fa', params: { auth_code: auth_code }
       expect(response).to redirect_to('/2fa')
       follow_redirect!
       expect(response.body).to include('Verification code must be 6 digits long')
     end
 
-    it 'Sends verification check request to twilio' do
+    it 'invalid auth code' do
       password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
-      auth_code = '123456'
-      verification_double = double('verification', status: 'approved')
-      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).with(to: @test_user.mobile_number, code: auth_code).and_return(verification_double)
+      allow(TwoFactorAuthService).to receive(:auth_code_valid?).and_return(false)
       post '/2fa', params: { auth_code: auth_code }
+      follow_redirect!
+      expect(response.body).to include('2fa code incorrect, please try again')
     end
 
-    it 'Allows sucessful login and gives user notice' do
+    it 'successful login' do
       login
       expect(response.body).to include("#{@test_user.username} welcome back to your home-server!")
     end
@@ -130,17 +133,6 @@ RSpec.describe 'Request Sessions', type: :request do
       travel_to Time.zone.local(2020, 05, 03, 00, 00, 00)
       get '/'
       expect(session[:user_id]).to eq(nil)
-    end
-
-    it 'Blocks wrong code entered and displays message' do
-      password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
-      auth_code = '123457'
-      verification_double = double('verification', status: 'failed')
-      allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
-      post '/2fa', params: { auth_code: auth_code }
-      expect(response).to redirect_to('/2fa')
-      follow_redirect!
-      expect(response.body).to include('2fa code incorrect, please try again')
     end
 
     it 'Block unauthorised access' do

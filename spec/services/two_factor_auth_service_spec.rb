@@ -105,8 +105,23 @@ describe TwoFactorAuthService do
 
     it 'valid auth code' do
       verification_double = double('verification', status: 'approved')
-      allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
+      expect_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).with(to: @test_user.mobile_number, code: auth_code).and_return(verification_double)
       expect(subject.auth_code_valid?(session: session, auth_code: auth_code)).to eq(true)
+    end
+  end
+
+  describe '.get_user' do
+    before(:each) do
+      subject.start(session, @test_user)
+    end
+
+    it 'user does not exist' do
+      @test_user.destroy
+      expect(subject.get_user(session)).to eq(nil)
+    end
+
+    it 'user exists' do
+      expect(subject.get_user(session)).to eq(@test_user)
     end
   end
 end
