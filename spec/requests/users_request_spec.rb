@@ -30,8 +30,7 @@ RSpec.describe 'Request Users', type: :request do
           password: ''
         }
       }
-      follow_redirect!
-      expect(response.body).to include('Enter current password to update details')
+      expect(flash[:alert]).to eq('Enter current password to update details')
     end
 
     it 'Username can be updated' do
@@ -46,8 +45,7 @@ RSpec.describe 'Request Users', type: :request do
         mobile_number: @blank_mobile_number_params,
         current_password: @default_current_password_params
       }
-      follow_redirect!
-      expect(response.body).to include('Username updated!')
+      expect(flash[:notice]).to include('Username updated!')
       @test_user.reload
       expect(@test_user.username).to eq('new_username')
     end
@@ -82,8 +80,7 @@ RSpec.describe 'Request Users', type: :request do
         mobile_number: @blank_mobile_number_params,
         current_password: @default_current_password_params
       }
-      follow_redirect!
-      expect(response.body).to include('Usernames do not match')
+      expect(flash[:alert]).to include('Usernames do not match')
     end
 
     it 'Email can be updated' do
@@ -98,8 +95,7 @@ RSpec.describe 'Request Users', type: :request do
         mobile_number: @blank_mobile_number_params,
         current_password: @default_current_password_params
       }
-      follow_redirect!
-      expect(response.body).to include('Email address updated!')
+      expect(flash[:notice]).to include('Email address updated!')
       @test_user.reload
       expect(@test_user.email).to eq('new@example.com')
     end
@@ -116,8 +112,7 @@ RSpec.describe 'Request Users', type: :request do
         mobile_number: @blank_mobile_number_params,
         current_password: @default_current_password_params
       }
-      follow_redirect!
-      expect(response.body).to include('Email must be valid format')
+      expect(flash[:alert]).to include('Email must be valid format')
     end
 
     it 'Password can be updated' do
@@ -132,8 +127,7 @@ RSpec.describe 'Request Users', type: :request do
         mobile_number: @blank_mobile_number_params,
         current_password: @default_current_password_params
       }
-      follow_redirect!
-      expect(response.body).to include('Password updated!')
+      expect(flash[:notice]).to include('Password updated!')
       @test_user.reload
       expect(@test_user.authenticate('newpassword')).to eq(@test_user)
     end
@@ -150,8 +144,7 @@ RSpec.describe 'Request Users', type: :request do
         mobile_number: @blank_mobile_number_params,
         current_password: @default_current_password_params
       }
-      follow_redirect!
-      expect(response.body).to include('Passwords do not match')
+      expect(flash[:alert]).to include('Passwords do not match')
     end
 
     it 'Mobile number can be updated' do
@@ -166,8 +159,7 @@ RSpec.describe 'Request Users', type: :request do
         username: @blank_username_params,
         current_password: @default_current_password_params
       }
-      follow_redirect!
-      expect(response.body).to include('Mobile number updated!')
+      expect(flash[:notice]).to include('Mobile number updated!')
       @test_user.reload
       expect(@test_user.mobile_number).to eq('+447123456789')
     end
