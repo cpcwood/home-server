@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_secure_password validations: false
   after_initialize :add_defaults
   after_validation :convert_mobile_number, if: -> { :mobile_number_changed? && !mobile_number.nil? }
+  after_save :remove_password_reset
 
   validates :password,
             presence: true,
@@ -40,9 +41,8 @@ class User < ApplicationRecord
     reset_user if reset_user.password_reset_expiry > Time.zone.now
   end
 
-  def remove_password_reset!
-    update(password_reset_token: nil)
-    update(password_reset_expiry: nil)
+  def remove_password_reset
+    update(password_reset_token: nil, password_reset_expiry: nil) if previous_changes.keys.include?('password_digest') && password_reset_token
   end
 
   def send_password_updated_email!
