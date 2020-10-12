@@ -3,13 +3,12 @@ require 'spec_helpers/session_helper'
 
 RSpec.describe 'Request Users', type: :request do
   describe 'PUT /user.id #update' do
-    before(:each) do
-      @blank_username_params = { username: '', username_confirmation: '' }
-      @blank_email_params = { email: '', email_confirmation: '' }
-      @blank_password_params = { password: '', password_confirmation: '' }
-      @blank_mobile_number_params = { mobile_number: '', mobile_number_confirmation: '' }
-      @default_current_password_params = { password: @test_user_password }
-    end
+
+    let(:blank_username_params) { {username: '', username_confirmation: ''} }
+    let(:blank_email_params) {{ email: '', email_confirmation: '' }}
+    let(:blank_password_params) {{ password: '', password_confirmation: '' }}
+    let(:blank_mobile_number_params) {{ mobile_number: '', mobile_number_confirmation: '' }}
+    let(:default_current_password_params) {{ password: @test_user_password  }}
 
     it 'Redirects to homepage if user not logged in' do
       put "/users.#{@test_user.id}"
@@ -23,9 +22,9 @@ RSpec.describe 'Request Users', type: :request do
           username: 'new_username',
           username_confirmation: 'new_username'
         },
-        email: @blank_email_params,
-        password: @blank_password_params,
-        mobile_number: @blank_mobile_number_params,
+        email: blank_email_params,
+        password: blank_password_params,
+        mobile_number: blank_mobile_number_params,
         current_password: {
           password: ''
         }
@@ -40,10 +39,10 @@ RSpec.describe 'Request Users', type: :request do
           username: 'new_username',
           username_confirmation: 'new_username'
         },
-        email: @blank_email_params,
-        password: @blank_password_params,
-        mobile_number: @blank_mobile_number_params,
-        current_password: @default_current_password_params
+        email: blank_email_params,
+        password: blank_password_params,
+        mobile_number: blank_mobile_number_params,
+        current_password: default_current_password_params
       }
       expect(flash[:notice]).to include('Username updated!')
       @test_user.reload
@@ -58,10 +57,10 @@ RSpec.describe 'Request Users', type: :request do
           username: '',
           username_confirmation: ''
         },
-        email: @blank_email_params,
-        password: @blank_password_params,
-        mobile_number: @blank_mobile_number_params,
-        current_password: @default_current_password_params
+        email: blank_email_params,
+        password: blank_password_params,
+        mobile_number: blank_mobile_number_params,
+        current_password: default_current_password_params
       }
       expect(response).to redirect_to(admin_user_settings_path)
       @test_user.reload
@@ -75,10 +74,10 @@ RSpec.describe 'Request Users', type: :request do
           username: 'new_username',
           username_confirmation: ''
         },
-        email: @blank_email_params,
-        password: @blank_password_params,
-        mobile_number: @blank_mobile_number_params,
-        current_password: @default_current_password_params
+        email: blank_email_params,
+        password: blank_password_params,
+        mobile_number: blank_mobile_number_params,
+        current_password: default_current_password_params
       }
       expect(flash[:alert]).to include('Usernames do not match')
     end
@@ -90,10 +89,10 @@ RSpec.describe 'Request Users', type: :request do
           email: 'new@example.com',
           email_confirmation: 'new@example.com'
         },
-        username: @blank_username_params,
-        password: @blank_password_params,
-        mobile_number: @blank_mobile_number_params,
-        current_password: @default_current_password_params
+        username: blank_username_params,
+        password: blank_password_params,
+        mobile_number: blank_mobile_number_params,
+        current_password: default_current_password_params
       }
       expect(flash[:notice]).to include('Email address updated!')
       @test_user.reload
@@ -107,10 +106,10 @@ RSpec.describe 'Request Users', type: :request do
           email: 'example.com',
           email_confirmation: 'example.com'
         },
-        username: @blank_username_params,
-        password: @blank_password_params,
-        mobile_number: @blank_mobile_number_params,
-        current_password: @default_current_password_params
+        username: blank_username_params,
+        password: blank_password_params,
+        mobile_number: blank_mobile_number_params,
+        current_password: default_current_password_params
       }
       expect(flash[:alert]).to include('Email must be valid format')
     end
@@ -122,10 +121,10 @@ RSpec.describe 'Request Users', type: :request do
           password: 'newpassword',
           password_confirmation: 'newpassword'
         },
-        email: @blank_email_params,
-        username: @blank_username_params,
-        mobile_number: @blank_mobile_number_params,
-        current_password: @default_current_password_params
+        email: blank_email_params,
+        username: blank_username_params,
+        mobile_number: blank_mobile_number_params,
+        current_password: default_current_password_params
       }
       expect(flash[:notice]).to include('Password updated!')
       @test_user.reload
@@ -139,10 +138,10 @@ RSpec.describe 'Request Users', type: :request do
           password: 'badpassword',
           password_confirmation: 'newpassword'
         },
-        email: @blank_email_params,
-        username: @blank_username_params,
-        mobile_number: @blank_mobile_number_params,
-        current_password: @default_current_password_params
+        email: blank_email_params,
+        username: blank_username_params,
+        mobile_number: blank_mobile_number_params,
+        current_password: default_current_password_params
       }
       expect(flash[:alert]).to include('Passwords do not match')
     end
@@ -154,10 +153,10 @@ RSpec.describe 'Request Users', type: :request do
           mobile_number: '07123456789',
           mobile_number_confirmation: '07123456789'
         },
-        password: @blank_password_params,
-        email: @blank_email_params,
-        username: @blank_username_params,
-        current_password: @default_current_password_params
+        password: blank_password_params,
+        email: blank_email_params,
+        username: blank_username_params,
+        current_password: default_current_password_params
       }
       expect(flash[:notice]).to include('Mobile number updated!')
       @test_user.reload

@@ -20,8 +20,7 @@ RSpec.describe 'Request Admin:SiteSettings', type: :request, slow: true do
           name: ''
         }
       }
-      follow_redirect!
-      expect(response.body).to include('Site name cannot be blank')
+      expect(flash[:alert]).to include('Site name cannot be blank')
     end
 
     it 'update unsuccessful - general error' do
@@ -31,9 +30,8 @@ RSpec.describe 'Request Admin:SiteSettings', type: :request, slow: true do
           name: ''
         }
       }
-      follow_redirect!
-      expect(response.body).to include('Sorry, something went wrong!')
-      expect(response.body).to include('general error')
+      expect(flash[:alert]).to include('Sorry, something went wrong!')
+      expect(flash[:alert]).to include('general error')
     end
 
     it 'single attribute update' do
@@ -42,8 +40,7 @@ RSpec.describe 'Request Admin:SiteSettings', type: :request, slow: true do
           name: 'new_site_name'
         }
       }
-      follow_redirect!
-      expect(response.body).to include('Name updated!')
+      expect(flash[:notice]).to include('Name updated!')
       @site_settings.reload
       expect(@site_settings.name).to eq('new_site_name')
     end
@@ -56,10 +53,9 @@ RSpec.describe 'Request Admin:SiteSettings', type: :request, slow: true do
           typed_header_enabled: '1'
         }
       }
-      follow_redirect!
-      expect(response.body).to include('Header text updated!')
-      expect(response.body).to include('Typed header enabled updated!')
-      expect(response.body).to include('Subtitle text updated!')
+      expect(flash[:notice]).to include('Header text updated!')
+      expect(flash[:notice]).to include('Typed header enabled updated!')
+      expect(flash[:notice]).to include('Subtitle text updated!')
       @site_settings.reload
       expect(@site_settings.header_text).to eq('New header text')
       expect(@site_settings.subtitle_text).to eq('New subtitle text')
