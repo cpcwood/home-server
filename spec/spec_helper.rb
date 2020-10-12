@@ -44,12 +44,6 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.start
-    @test_user_password = 'Securepass1'
-    @test_user = User.create(username: 'admin', email: 'admin@example.com', password: @test_user_password, mobile_number: '+447123456789')
-    @site_settings = SiteSetting.create(name: 'test_name', typed_header_enabled: false, header_text: 'test header_text', subtitle_text: 'test subtitle_text')
-    @header_image = HeaderImage.create(site_setting: @site_settings, description: 'header_image')
-    @cover_image = CoverImage.create(site_setting: @site_settings, description: 'cover_image')
-    @about = About.create(name: 'test name', about_me: 'test about me text')
   end
 
   config.append_after(:each) do

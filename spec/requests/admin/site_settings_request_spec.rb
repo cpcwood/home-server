@@ -3,6 +3,7 @@ require 'spec_helpers/session_helper'
 
 RSpec.describe 'Request Admin:SiteSettings', type: :request, slow: true do
   before(:each) do
+    seed_db
     login
   end
 

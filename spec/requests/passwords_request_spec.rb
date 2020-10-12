@@ -1,7 +1,12 @@
 require 'rails_helper'
 require 'spec_helpers/session_helper'
+require 'spec_helpers/models_helper'
 
 RSpec.describe 'Request Passwords', type: :request do
+  before(:each) do
+    seed_db
+  end
+
   describe 'before_action' do
     it 'user logged in' do
       login

@@ -1,8 +1,12 @@
 require 'spec_helpers/feature_helpers'
 
 feature 'Admin update site settings', feature: true, slow: true do
-  scenario 'Update site settings' do
+  before(:each) do
+    seed_db
     login_feature
+  end
+
+  scenario 'Update site settings' do
     visit('admin/site_settings')
     fill_in('site_setting[name]', with: 'new_site_name')
     fill_in('site_setting[header_text]', with: 'new_header')

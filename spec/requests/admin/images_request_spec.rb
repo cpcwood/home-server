@@ -9,6 +9,7 @@ RSpec.describe 'Request Admin:Images', type: :request do
   let(:image_file_error) { double :image_file, attach: false }
 
   before(:each) do
+    seed_db
     login
   end
 

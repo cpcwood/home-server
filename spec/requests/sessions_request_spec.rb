@@ -2,6 +2,10 @@ require 'rails_helper'
 require 'spec_helpers/session_helper'
 
 RSpec.describe 'Request Sessions', type: :request do
+  before(:each) do
+    seed_db
+  end
+
   describe 'GET /login #login ' do
     it 'Renders login page' do
       get '/login'

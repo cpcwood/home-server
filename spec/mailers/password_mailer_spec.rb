@@ -1,13 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe PasswordMailer, type: :mailer do
+  let(:user) { User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1', mobile_number: '+447123456789') }
+  let(:site_setting) { SiteSetting.create(name: 'test_name', typed_header_enabled: false, header_text: 'test header_text', subtitle_text: 'test subtitle_text') }
+  let(:header_image) { HeaderImage.create(site_setting: site_setting, description: 'header_image') }
   let(:image_mock_path) { Rails.root.join('spec/files/image_mock.jpg') }
 
+  before(:each) do
+    header_image
+  end
+
   describe '#password_reset_email' do
-    let(:mail) { PasswordMailer.with(user: @test_user).password_reset_email }
+    let(:mail) { PasswordMailer.with(user: user).password_reset_email }
 
     it 'Renders the receivers email' do
-      expect(mail.to).to eql([@test_user.email])
+      expect(mail.to).to eql([user.email])
     end
 
     it 'Renders the sender email correctly' do
@@ -15,15 +22,15 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Renders the subject' do
-      expect(mail.subject).to eql("Password Reset: #{@test_user.email}")
+      expect(mail.subject).to eql("Password Reset: #{user.email}")
     end
 
     it 'Assigns greeting in email' do
-      expect(mail.body.encoded).to match("Hi #{@test_user.username},")
+      expect(mail.body.encoded).to match("Hi #{user.username},")
     end
 
     it 'Assigns adds password reset url' do
-      @test_user.password_reset_token = 'hashed-token'
+      user.password_reset_token = 'hashed-token'
       expect(mail.body.encoded).to include(reset_password_url(reset_token: 'hashed-token'))
     end
 
@@ -50,10 +57,10 @@ RSpec.describe PasswordMailer, type: :mailer do
   end
 
   describe '#password_updated_email' do
-    let(:mail) { PasswordMailer.with(user: @test_user).password_updated_email }
+    let(:mail) { PasswordMailer.with(user: user).password_updated_email }
 
     it 'Renders the receivers email' do
-      expect(mail.to).to eql([@test_user.email])
+      expect(mail.to).to eql([user.email])
     end
 
     it 'Renders the sender email correctly' do
@@ -61,11 +68,11 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Renders the subject' do
-      expect(mail.subject).to eql("Your Password Has Been Updated: #{@test_user.email}")
+      expect(mail.subject).to eql("Your Password Has Been Updated: #{user.email}")
     end
 
     it 'Assigns greeting in email' do
-      expect(mail.body.encoded).to match("Hi #{@test_user.username},")
+      expect(mail.body.encoded).to match("Hi #{user.username},")
     end
 
     it 'Provides contact email' do

@@ -1,4 +1,5 @@
 require 'spec_helpers/session_helper'
+require 'spec_helpers/models_helper'
 
 def login_feature
   stub_recaptcha_service
