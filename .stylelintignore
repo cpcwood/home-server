@@ -1,0 +1,15 @@
+/.vscode
+/bin
+/config
+/coverage
+/db
+/lib
+/log
+/node_modules
+/public
+/shared
+/storage
+/tmp
+/vendor
+
+
