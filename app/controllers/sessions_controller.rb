@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
   end
 
   def verify_2fa
-    return redirect_to(:login) unless session[:two_factor_auth_id]
+    return redirect_to(:login) unless TwoFactorAuthService.started?(session)
     auth_code = sanitize(params[:auth_code])
     return redirect_to('/2fa', notice: 'Verification code must be 6 digits long') if auth_code.length != 6
     @user = User.find_by(id: session[:two_factor_auth_id])
