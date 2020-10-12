@@ -21,9 +21,9 @@ describe 'Views' do
 
       render template: 'admin/abouts/edit.html.erb'
 
-      expect(rendered).to match('New image:')
-      expect(rendered).not_to match('Update image:')
-      expect(rendered).not_to match('Remove image:')
+      expect(rendered).to match('New image')
+      expect(rendered).not_to match('Update image')
+      expect(rendered).not_to match('Remove image')
     end
 
     it 'image attached' do
@@ -32,9 +32,9 @@ describe 'Views' do
 
       render template: 'admin/abouts/edit.html.erb'
 
-      expect(rendered).to match('Update image:')
-      expect(rendered).to match('Remove image:')
-      expect(rendered).not_to match('New image:')
+      expect(rendered).to match('Update image')
+      expect(rendered).to match('Remove image')
+      expect(rendered).not_to match('New image')
     end
   end
 end

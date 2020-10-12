@@ -14,7 +14,7 @@ describe 'Views' do
       render template: 'admin/images/index.html.erb'
 
       expect(rendered).to match('Header image')
-      expect(rendered).to match('Current image:')
+      expect(rendered).to match('Current image')
       expect(rendered).to match(Regexp.escape(site_images.first.description))
     end
   end
