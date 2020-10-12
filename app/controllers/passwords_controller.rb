@@ -22,7 +22,6 @@ class PasswordsController < ApplicationController
     @user = User.user_from_password_reset_token(session[:reset_token])
     return redirect_to(:login, alert: 'Password reset token expired') unless @user
     return redirect_to(:reset_password, alert: @user.errors.values.flatten.last) unless @user.update(password_params)
-    @user.remove_password_reset!
     session[:reset_token] = nil
     PasswordUpdatedJob.perform_later(user: @user)
     redirect_to(:login, notice: 'Password updated')
@@ -42,3 +41,5 @@ class PasswordsController < ApplicationController
     params.permit(:password, :password_confirmation)
   end
 end
+
+# @user.remove_password_reset!
