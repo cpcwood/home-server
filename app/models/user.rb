@@ -41,10 +41,6 @@ class User < ApplicationRecord
     reset_user if reset_user.password_reset_expiry > Time.zone.now
   end
 
-  def remove_password_reset
-    update(password_reset_token: nil, password_reset_expiry: nil) if previous_changes.keys.include?('password_digest') && password_reset_token
-  end
-
   def send_password_updated_email!
     PasswordMailer.with(user: self).password_updated_email.deliver_now
   end
@@ -61,12 +57,15 @@ class User < ApplicationRecord
     self.last_login_ip ||= '127.0.0.1'
   end
 
+  def remove_password_reset
+    update(password_reset_token: nil, password_reset_expiry: nil) if previous_changes.keys.include?('password_digest') && password_reset_token && password_reset_expiry
+  end
+
   def generate_hashed_token
     unique_token = loop do
       token = SecureRandom.urlsafe_base64(32)
       break token unless User.exists?(password_reset_token: token)
     end
-    update(password_reset_token: unique_token)
-    update(password_reset_expiry: Time.zone.now + 1.hour)
+    update(password_reset_token: unique_token, password_reset_expiry: Time.zone.now + 1.hour)
   end
 end
