@@ -3,12 +3,11 @@ require 'spec_helpers/session_helper'
 
 RSpec.describe 'Request Users', type: :request do
   describe 'PUT /user.id #update' do
-
-    let(:blank_username_params) { {username: '', username_confirmation: ''} }
-    let(:blank_email_params) {{ email: '', email_confirmation: '' }}
-    let(:blank_password_params) {{ password: '', password_confirmation: '' }}
-    let(:blank_mobile_number_params) {{ mobile_number: '', mobile_number_confirmation: '' }}
-    let(:default_current_password_params) {{ password: @test_user_password  }}
+    let(:blank_username_params) { { username: '', username_confirmation: '' } }
+    let(:blank_email_params) { { email: '', email_confirmation: '' } }
+    let(:blank_password_params) { { password: '', password_confirmation: '' } }
+    let(:blank_mobile_number_params) { { mobile_number: '', mobile_number_confirmation: '' } }
+    let(:default_current_password_params) { { password: @test_user_password } }
 
     it 'Redirects to homepage if user not logged in' do
       put "/users.#{@test_user.id}"
