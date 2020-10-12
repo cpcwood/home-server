@@ -29,6 +29,10 @@ module TwoFactorAuthService
       end
     end
 
+    def auth_code_format_valid?(auth_code)
+      auth_code.match?(/^\d{6}$/)
+    end
+
     def auth_code_valid?(session:, auth_code:)
       return false unless auth_code_sent?(session)
       user_mobile_number = get_user_mobile_number(session)
