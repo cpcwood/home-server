@@ -32,10 +32,17 @@ module TwoFactorAuthService
       end
     end
 
-    def verify_auth_code(session, _auth_code)
+    def verify_auth_code(session:, auth_code:)
       return false unless auth_code_sent?(session)
       user_mobile_number = get_user_mobile_number(session)
       return false unless user_mobile_number
+      verification_check = Twilio::REST::Client
+                           .new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
+                           .verify
+                           .services(Rails.application.credentials.twilio[:verify_service_sid])
+                           .verification_checks
+                           .create(to: user_mobile_number, code: auth_code)
+      verification_check.status == 'approved'
     end
 
     private
