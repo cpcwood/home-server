@@ -13,8 +13,6 @@ gem 'puma', '~> 4.1'
 gem 'webpacker', '~> 5.0.1'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
-# Dynamic creation of JSONs
-gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 # Throttle excessive requests
