@@ -76,10 +76,16 @@ describe TwoFactorAuthService do
       expect(subject.verify_auth_code(session: session, auth_code: auth_code)).to eq(false)
     end
 
-    it 'incorrect auth code' do
+    it 'invalid auth code' do
       verification_double = double('verification', status: 'failed')
       allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
       expect(subject.verify_auth_code(session: session, auth_code: auth_code)).to eq(false)
+    end
+
+    it 'valid auth code' do
+      verification_double = double('verification', status: 'approved')
+      allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
+      expect(subject.verify_auth_code(session: session, auth_code: auth_code)).to eq(true)
     end
   end
 end
