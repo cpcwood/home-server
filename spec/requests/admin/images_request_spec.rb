@@ -32,8 +32,7 @@ RSpec.describe 'Request Admin:Images', type: :request do
             reset: '0'
           }
         }
-        follow_redirect!
-        expect(response.body).to include('Header image updated!')
+        expect(flash[:notice]).to include('Header image updated!')
         @header_image.reload
         expect(@header_image.image_file.attached?).to eq(true)
         expect(@header_image.x_loc).to eq(10)
@@ -51,8 +50,7 @@ RSpec.describe 'Request Admin:Images', type: :request do
             reset: '0'
           }
         }
-        follow_redirect!
-        expect(response.body).to include('Image not found')
+        expect(flash[:alert]).to include('Image not found')
         @header_image.reload
         expect(@header_image.image_file.attached?).to eq(false)
       end
@@ -68,8 +66,7 @@ RSpec.describe 'Request Admin:Images', type: :request do
             reset: '0'
           }
         }
-        follow_redirect!
-        expect(response.body).to include('Header image invalid, please upload a jpeg or png file!')
+        expect(flash[:alert]).to include('Header image invalid, please upload a jpeg or png file!')
         @header_image.reload
         expect(@header_image.image_file.attached?).to eq(false)
       end
@@ -86,8 +83,7 @@ RSpec.describe 'Request Admin:Images', type: :request do
             reset: '0'
           }
         }
-        follow_redirect!
-        expect(response.body).to include('general error')
+        expect(flash[:alert]).to include('general error')
         @header_image.reload
         expect(@header_image.image_file.attached?).to eq(false)
       end
@@ -103,8 +99,7 @@ RSpec.describe 'Request Admin:Images', type: :request do
             reset: '1'
           }
         }
-        follow_redirect!
-        expect(response.body).to include('Header image reset!')
+        expect(flash[:notice]).to include('Header image reset!')
         @header_image.reload
         expect(@header_image.image_file.attached?).to eq(false)
       end
@@ -122,8 +117,7 @@ RSpec.describe 'Request Admin:Images', type: :request do
             reset: '0'
           }
         }
-        follow_redirect!
-        expect(response.body).to include('Cover image updated!')
+        expect(flash[:notice]).to include('Cover image updated!')
         @cover_image.reload
         expect(@cover_image.image_file.attached?).to eq(true)
       end
@@ -140,8 +134,7 @@ RSpec.describe 'Request Admin:Images', type: :request do
             reset: '0'
           }
         }
-        follow_redirect!
-        expect(response.body).to include('general error')
+        expect(flash[:alert]).to include('general error')
         @cover_image.reload
         expect(@cover_image.image_file.attached?).to eq(false)
       end
