@@ -48,10 +48,14 @@ module TwoFactorAuthService
       end
     end
 
+    def get_user(session)
+      User.find_by(id: session[:two_factor_auth_id])
+    end
+
     private
 
     def get_user_mobile_number(session)
-      User.find_by(id: session[:two_factor_auth_id])&.mobile_number
+      get_user(session)&.mobile_number
     end
 
     def twilio_client
