@@ -1,7 +1,3 @@
-require 'faraday'
-require 'json'
-require 'twilio-ruby'
-
 class SessionsController < ApplicationController
   before_action :already_logged_in
   skip_before_action :already_logged_in, only: [:destroy]
@@ -9,7 +5,7 @@ class SessionsController < ApplicationController
   def login; end
 
   def new
-    return redirect_to(:login, alert: 'reCaptcha failed, please try again') unless recaptcha_confirmation(sanitize(params['g-recaptcha-response']))
+    return redirect_to(:login, alert: 'reCaptcha failed, please try again') unless ReCaptchaService.recaptcha_valid?(sanitize(params['g-recaptcha-response']))
     @user = User.find_by(email: sanitize(params[:user]))
     @user ||= User.find_by(username: sanitize(params[:user]))
     return redirect_to(:login, alert: 'User not found') unless @user&.authenticate(sanitize(params[:password]))
@@ -54,14 +50,6 @@ class SessionsController < ApplicationController
 
   def sanitize(string)
     ActiveRecord::Base.sanitize_sql(string) unless string.nil?
-  end
-
-  def recaptcha_confirmation(recaptcha_response)
-    response = Faraday.post('https://www.google.com/recaptcha/api/siteverify') do |request|
-      request.params['secret'] = Rails.application.credentials.recaptcha[:site_secret]
-      request.params['response'] = recaptcha_response
-    end
-    JSON.parse(response.body)['success'] == true
   end
 
   def log_user_in

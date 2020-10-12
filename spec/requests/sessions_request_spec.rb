@@ -17,24 +17,25 @@ RSpec.describe 'Request Sessions', type: :request do
 
   describe 'POST /login #new' do
     it 'Allows inital login with username' do
-      password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
+      password_athenticate_admin(user: @test_user.username, password: @test_user_password)
       expect(response).to redirect_to('/2fa')
       expect(session[:two_factor_auth_id]).not_to eq(nil)
     end
 
     it 'Allows inital login with email' do
-      password_athenticate_admin(user: @test_user.email, password: @test_user_password, captcha_success: true)
+      password_athenticate_admin(user: @test_user.email, password: @test_user_password)
       expect(response).to redirect_to('/2fa')
     end
 
     it 'Blocks login if user not found' do
-      password_athenticate_admin(user: @test_user.username, password: 'nopass', captcha_success: true)
+      password_athenticate_admin(user: @test_user.username, password: 'nopass')
       expect(response).to redirect_to login_path
       expect(flash[:alert]).to eq('User not found')
     end
 
     it 'Blocks login if captcha incorrect' do
-      password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: false)
+      allow(ReCaptchaService).to receive(:recaptcha_valid?).and_return(false)
+      post '/login', params: { user: @test_user.username, password: @test_user_password, 'g-recaptcha-response': 'test' }
       expect(response).to redirect_to login_path
       expect(flash[:alert]).to eq('reCaptcha failed, please try again')
     end
@@ -53,7 +54,7 @@ RSpec.describe 'Request Sessions', type: :request do
     end
 
     it 'Sends verify request to twilio' do
-      password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
+      password_athenticate_admin(user: @test_user.username, password: @test_user_password)
       expect(TwoFactorAuthService).to receive(:send_auth_code).and_return(true)
       get '/2fa'
       expect(response).to render_template(:two_factor_auth)
@@ -62,7 +63,7 @@ RSpec.describe 'Request Sessions', type: :request do
 
     it 'error sending auth code' do
       allow(TwoFactorAuthService).to receive(:send_auth_code).and_return(false)
-      password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
+      password_athenticate_admin(user: @test_user.username, password: @test_user_password)
       get '/2fa'
       expect(response.body).to include('Sorry something went wrong')
     end
@@ -76,7 +77,7 @@ RSpec.describe 'Request Sessions', type: :request do
     end
 
     it 'invalid auth code format' do
-      password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
+      password_athenticate_admin(user: @test_user.username, password: @test_user_password)
       allow(TwoFactorAuthService).to receive(:auth_code_format_valid?).and_return(false)
       post '/2fa', params: { auth_code: auth_code }
       expect(response).to redirect_to('/2fa')
@@ -84,7 +85,7 @@ RSpec.describe 'Request Sessions', type: :request do
     end
 
     it 'invalid auth code' do
-      password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
+      password_athenticate_admin(user: @test_user.username, password: @test_user_password)
       allow(TwoFactorAuthService).to receive(:auth_code_valid?).and_return(false)
       post '/2fa', params: { auth_code: auth_code }
       expect(flash[:alert]).to eq('2fa code incorrect, please try again')
@@ -136,7 +137,7 @@ RSpec.describe 'Request Sessions', type: :request do
 
   describe 'PUT /2fa #reset_2fa' do
     it 'Resends 2fa code' do
-      password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
+      password_athenticate_admin(user: @test_user.username, password: @test_user_password)
       allow(TwoFactorAuthService).to receive(:send_auth_code).and_return(true)
       get '/2fa'
       put '/2fa'
