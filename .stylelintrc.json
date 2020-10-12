@@ -3,6 +3,7 @@
   "plugins": [
     "stylelint-scss"
   ],
+  "basedir": "app/javascript/packs/styles",
   "rules": {
     "selector-max-id": 1,
     "max-nesting-depth": 2
