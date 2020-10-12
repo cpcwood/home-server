@@ -32,13 +32,7 @@ class SessionsController < ApplicationController
     return redirect_to(:login) unless TwoFactorAuthService.started?(session)
     auth_code = sanitize(params[:auth_code])
     return redirect_to('/2fa', notice: 'Verification code must be 6 digits long') if auth_code.length != 6
-    @user = User.find_by(id: session[:two_factor_auth_id])
-    client = Twilio::REST::Client.new(Rails.application.credentials.twilio[:account_sid], Rails.application.credentials.twilio[:auth_token])
-    verification_check = client.verify
-                               .services(Rails.application.credentials.twilio[:verify_service_sid])
-                               .verification_checks
-                               .create(to: @user.mobile_number, code: auth_code)
-    return redirect_to('/2fa', notice: '2fa code incorrect, please try again') unless verification_check.status == 'approved'
+    return redirect_to('/2fa', notice: '2fa code incorrect, please try again') unless TwoFactorAuthService.auth_code_valid?(session: session, auth_code: auth_code)
     log_user_in
   end
 

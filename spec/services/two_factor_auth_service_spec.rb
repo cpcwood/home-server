@@ -38,7 +38,7 @@ describe TwoFactorAuthService do
     end
 
     it 'twilio error' do
-      allow(Twilio::REST::Client).to receive(:new).and_raise('error')
+      allow(subject).to receive(:twilio_client).and_raise('error')
       expect(subject.send_auth_code(session)).to eq(false)
     end
 
@@ -56,7 +56,7 @@ describe TwoFactorAuthService do
     end
   end
 
-  describe '.verify_auth_code' do
+  describe '.auth_code_valid?' do
     let(:auth_code) { '123456' }
 
     before(:each) do
@@ -68,24 +68,29 @@ describe TwoFactorAuthService do
     it 'auth code not yet sent' do
       new_session = {}
       subject.start(new_session, @test_user)
-      expect(subject.verify_auth_code(session: new_session, auth_code: auth_code)).to eq(false)
+      expect(subject.auth_code_valid?(session: new_session, auth_code: auth_code)).to eq(false)
     end
 
     it 'user does not exist' do
       @test_user.destroy
-      expect(subject.verify_auth_code(session: session, auth_code: auth_code)).to eq(false)
+      expect(subject.auth_code_valid?(session: session, auth_code: auth_code)).to eq(false)
+    end
+
+    it 'twilio error' do
+      allow(subject).to receive(:twilio_client).and_raise('error')
+      expect(subject.auth_code_valid?(session: session, auth_code: auth_code)).to eq(false)
     end
 
     it 'invalid auth code' do
       verification_double = double('verification', status: 'failed')
       allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
-      expect(subject.verify_auth_code(session: session, auth_code: auth_code)).to eq(false)
+      expect(subject.auth_code_valid?(session: session, auth_code: auth_code)).to eq(false)
     end
 
     it 'valid auth code' do
       verification_double = double('verification', status: 'approved')
       allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
-      expect(subject.verify_auth_code(session: session, auth_code: auth_code)).to eq(true)
+      expect(subject.auth_code_valid?(session: session, auth_code: auth_code)).to eq(true)
     end
   end
 end
