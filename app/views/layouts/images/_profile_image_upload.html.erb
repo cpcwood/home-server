@@ -2,7 +2,7 @@
 
   <div class="embedded-form-entry-container">
     <div class="input-label embedded-label">
-      Current profile image:
+      Current profile image
     </div>
     <div class="embedded-current-value">
       <%= image_file_name(image: image, default_name: 'no image') %>
@@ -17,12 +17,12 @@
 
   <%= form.fields_for :profile_image do |p| %>
     <div class="embedded-form-entry-container">
-      <%= p.label(:image_file, 'Update image:', class: 'input-label embedded-label') %>
+      <%= p.label(:image_file, 'Update image', class: 'input-label embedded-label') %>
       <%= p.file_field(:image_file, accept: 'image/png,image/jpeg', class: 'input-box embedded-no-border', id: "image-update-#{image.description}") %>
     </div>
 
     <div class="embedded-form-entry-container">
-      <%= p.label(:_destroy, 'Remove image:', class: 'input-label embedded-label') %>
+      <%= p.label(:_destroy, 'Remove image', class: 'input-label embedded-label') %>
       <%= p.check_box(:_destroy, {class: 'input-check-box', id: "image-reset-#{image.description}"}, 1, 0) %>
     </div>
   <% end %>
@@ -35,7 +35,7 @@
 
   <%= form.fields_for(:profile_image_attributes, image) do |p| %>
     <div class="embedded-form-entry-container">
-      <%= p.label(:image_file, 'New image:', class: 'input-label embedded-label') %>
+      <%= p.label(:image_file, 'New image', class: 'input-label embedded-label') %>
       <%= p.file_field(:image_file, accept: 'image/png,image/jpeg', class: 'input-box embedded-no-border', id: "image-update-#{image.description}") %>
     </div>
   <% end %>
