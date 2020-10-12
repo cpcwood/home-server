@@ -16,5 +16,5 @@ end
 def stub_two_factor_auth
   allow(TwoFactorAuthService).to receive(:send_auth_code).and_return(true)
   allow(TwoFactorAuthService).to receive(:auth_code_valid?).and_return(true)
-  allow(TwoFactorAuthService).to receive(:get_user).and_return(@test_user)
+  # allow(TwoFactorAuthService).to receive(:get_user).and_return(@test_user)
 end
