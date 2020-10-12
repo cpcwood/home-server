@@ -23,6 +23,7 @@ script:
   - bundle exec rspec
   - bundle exec rubocop -a -c ./.rubocop.yml
   - yarn test
+  - yarn lint
 services:
   - postgresql
 addons:
