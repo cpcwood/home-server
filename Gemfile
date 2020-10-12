@@ -52,6 +52,8 @@ group :development do
   gem 'annotate'
   # Catch and check mail in real time
   gem 'letter_opener'
+  # Static security testing
+  gem 'brakeman'
 end
 
 group :test do
