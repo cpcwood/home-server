@@ -14,7 +14,7 @@ module TwoFactorAuthService
     end
 
     def send_auth_code(session)
-      return true if session[:two_factor_auth_code_sent] == true
+      return true if auth_code_sent?(session)
       user_mobile_number = get_user_mobile_number(session)
       return false unless user_mobile_number
       begin
@@ -32,7 +32,8 @@ module TwoFactorAuthService
       end
     end
 
-    def verify_auth_code(session, auth_code)
+    def verify_auth_code(session, _auth_code)
+      return false unless auth_code_sent?(session)
       user_mobile_number = get_user_mobile_number(session)
       return false unless user_mobile_number
     end
@@ -41,6 +42,10 @@ module TwoFactorAuthService
 
     def get_user_mobile_number(session)
       User.find_by(id: session[:two_factor_auth_id])&.mobile_number
+    end
+
+    def auth_code_sent?(session)
+      session[:two_factor_auth_code_sent] == true
     end
   end
 end
