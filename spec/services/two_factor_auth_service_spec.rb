@@ -57,6 +57,8 @@ describe TwoFactorAuthService do
   end
 
   describe '.verify_auth_code' do
+    let(:auth_code) { '123456' }
+
     before(:each) do
       subject.start(session, @test_user)
       allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationList).to receive(:create)
@@ -66,14 +68,18 @@ describe TwoFactorAuthService do
     it 'auth code not yet sent' do
       new_session = {}
       subject.start(new_session, @test_user)
-      auth_code = 123_456
-      expect(subject.verify_auth_code(new_session, auth_code)).to eq(false)
+      expect(subject.verify_auth_code(session: new_session, auth_code: auth_code)).to eq(false)
     end
 
     it 'user does not exist' do
       @test_user.destroy
-      auth_code = 123_456
-      expect(subject.verify_auth_code(session, auth_code)).to eq(false)
+      expect(subject.verify_auth_code(session: session, auth_code: auth_code)).to eq(false)
+    end
+
+    it 'incorrect auth code' do
+      verification_double = double('verification', status: 'failed')
+      allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
+      expect(subject.verify_auth_code(session: session, auth_code: auth_code)).to eq(false)
     end
   end
 end
