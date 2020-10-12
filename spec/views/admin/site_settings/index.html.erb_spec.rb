@@ -9,16 +9,16 @@ describe 'Views' do
 
       render template: 'admin/site_settings/index.html.erb'
 
-      expect(rendered).to match('Current site name:')
+      expect(rendered).to match('Current site name')
       expect(rendered).to match(Regexp.escape(site_setting.name))
 
-      expect(rendered).to match('Homepage header:')
+      expect(rendered).to match('Homepage header')
       expect(rendered).to match(Regexp.escape(site_setting.header_text))
 
-      expect(rendered).to match('Homepage subtitle:')
+      expect(rendered).to match('Homepage subtitle')
       expect(rendered).to match(Regexp.escape(site_setting.subtitle_text))
 
-      expect(rendered).to match('Enable typed header:')
+      expect(rendered).to match('Enable typed header')
     end
   end
 end

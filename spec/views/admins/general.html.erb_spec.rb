@@ -28,9 +28,9 @@ describe 'Views' do
 
       render template: 'admins/general.html.erb'
 
-      expect(rendered).to match(Regexp.escape("Username:</strong> #{user.username}"))
-      expect(rendered).to match(Regexp.escape("Email Address:</strong> #{user.email}"))
-      expect(rendered).to match(Regexp.escape("Mobile Number:</strong> #{user.mobile_number}"))
+      expect(rendered).to match(Regexp.escape("Username</strong> #{user.username}"))
+      expect(rendered).to match(Regexp.escape("Email Address</strong> #{user.email}"))
+      expect(rendered).to match(Regexp.escape("Mobile Number</strong> #{user.mobile_number}"))
     end
 
     it 'Displays overview of notifications' do
