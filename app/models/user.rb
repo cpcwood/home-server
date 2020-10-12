@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                    :bigint           not null, primary key
+#  email                 :text
+#  username              :text
+#  password_digest       :text
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  mobile_number         :text
+#  password_reset_token  :string
+#  password_reset_expiry :datetime
+#  last_login_ip         :string
+#  last_login_time       :datetime
+#  current_login_ip      :string
+#  current_login_time    :datetime
+#
 class User < ApplicationRecord
   has_secure_password validations: false
   after_initialize :add_defaults

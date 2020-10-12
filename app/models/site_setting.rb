@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: site_settings
+#
+#  id                   :bigint           not null, primary key
+#  name                 :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  typed_header_enabled :boolean
+#  header_text          :string
+#  subtitle_text        :string
+#
 class SiteSetting < ApplicationRecord
   require 'mini_magick'
 

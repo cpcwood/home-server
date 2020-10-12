@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: profile_images
+#
+#  id          :bigint           not null, primary key
+#  description :string
+#  x_loc       :integer          default(50)
+#  y_loc       :integer          default(50)
+#  about_id    :bigint
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
 class ProfileImage < Image
   belongs_to :about
 

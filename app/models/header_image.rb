@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: header_images
+#
+#  id              :bigint           not null, primary key
+#  description     :string
+#  x_loc           :integer          default(50)
+#  y_loc           :integer          default(50)
+#  site_setting_id :bigint
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
 class HeaderImage < Image
   belongs_to :site_setting
 
