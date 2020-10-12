@@ -208,6 +208,9 @@
     margin: 0;
     padding: 0 2% 0 0;
     width: 33%;
+    &::after {
+      content: ':';
+    }
   }
   @include respond-to(desktop) {
     font-weight: 500;

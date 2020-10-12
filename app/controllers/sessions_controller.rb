@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     @user ||= User.find_by(username: sanitize(params[:user]))
     return redirect_to(:login, alert: 'User not found') unless @user&.authenticate(sanitize(params[:password]))
     TwoFactorAuthService.start(session, @user)
-    # return log_user_in if Rails.env.development?
+    return log_user_in if Rails.env.development?
     redirect_to('/2fa')
   end
 
