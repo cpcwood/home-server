@@ -56,6 +56,22 @@ describe TwoFactorAuthService do
     end
   end
 
+  describe '.auth_code_format_valid?' do
+    it 'format valid' do
+      auth_code = '1' * 6
+      expect(subject.auth_code_format_valid?(auth_code)).to eq(true)
+    end
+
+    it 'format invalid' do
+      auth_code = '1' * 5
+      expect(subject.auth_code_format_valid?(auth_code)).to eq(false)
+      auth_code = '1' * 7
+      expect(subject.auth_code_format_valid?(auth_code)).to eq(false)
+      auth_code = 'a' * 6
+      expect(subject.auth_code_format_valid?(auth_code)).to eq(false)
+    end
+  end
+
   describe '.auth_code_valid?' do
     let(:auth_code) { '123456' }
 
