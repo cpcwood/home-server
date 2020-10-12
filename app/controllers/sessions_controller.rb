@@ -31,8 +31,8 @@ class SessionsController < ApplicationController
   def verify_2fa
     return redirect_to(:login) unless TwoFactorAuthService.started?(session)
     auth_code = sanitize(params[:auth_code])
-    return redirect_to('/2fa', notice: 'Verification code must be 6 digits long') unless TwoFactorAuthService.auth_code_format_valid?(auth_code)
-    return redirect_to('/2fa', notice: '2fa code incorrect, please try again') unless TwoFactorAuthService.auth_code_valid?(session: session, auth_code: auth_code)
+    return redirect_to('/2fa', alert: 'Verification code must be 6 digits long') unless TwoFactorAuthService.auth_code_format_valid?(auth_code)
+    return redirect_to('/2fa', alert: '2fa code incorrect, please try again') unless TwoFactorAuthService.auth_code_valid?(session: session, auth_code: auth_code)
     log_user_in
   end
 
@@ -66,6 +66,7 @@ class SessionsController < ApplicationController
 
   def log_user_in
     reset_session
+    @user = TwoFactorAuthService.get_user(session)
     session[:user_id] = @user.id
     record_user_ip
     redirect_to(:admin, notice: "#{@user.username} welcome back to your home-server!")
