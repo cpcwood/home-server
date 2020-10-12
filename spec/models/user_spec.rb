@@ -142,6 +142,16 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'after_save: #remove_password_reset' do
+    it 'password updated after reset' do
+      @test_user.send_password_reset_email!
+      @test_user.update(password: 'new-password', password_confirmation: 'new-password')
+      @test_user.reload
+      expect(@test_user.password_reset_token).to eq(nil)
+      expect(@test_user.password_reset_expiry).to eq(nil)
+    end
+  end
+
   describe '#send_password_reset_email!' do
     it 'Adds a password reset token to user' do
       allow(SecureRandom).to receive(:urlsafe_base64).and_return('testtoken')
@@ -149,7 +159,7 @@ RSpec.describe User, type: :model do
       expect(@test_user.password_reset_token).to eq('testtoken')
     end
 
-    it 'Password reset token is unique user' do
+    it 'Password reset token is unique' do
       User.create(username: 'another_user', password: 'password', email: 'email@example.com', password_reset_token: 'not_unique_token', mobile_number: '+447234567890')
       allow(SecureRandom).to receive(:urlsafe_base64).and_return('not_unique_token', 'unique_token')
       @test_user.send_password_reset_email!
@@ -192,22 +202,6 @@ RSpec.describe User, type: :model do
 
     it 'Returns nil if reset token no present' do
       expect(User.user_from_password_reset_token(nil)).to eq(nil)
-    end
-  end
-
-  describe '#remove_password_reset!' do
-    it 'Removes password reset token' do
-      @test_user.send_password_reset_email!
-      expect(@test_user.password_reset_token).not_to eq(nil)
-      @test_user.remove_password_reset!
-      expect(@test_user.password_reset_token).to eq(nil)
-    end
-
-    it 'Removes password reset expiry' do
-      @test_user.send_password_reset_email!
-      expect(@test_user.password_reset_expiry).not_to eq(nil)
-      @test_user.remove_password_reset!
-      expect(@test_user.password_reset_expiry).to eq(nil)
     end
   end
 
