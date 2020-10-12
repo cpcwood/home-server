@@ -52,6 +52,8 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Annotate models for quick reference
   gem 'annotate'
+  # Catch and check mail in real time
+  gem 'letter_opener'
 end
 
 group :test do
