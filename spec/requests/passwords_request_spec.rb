@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'spec_helpers/password_helpers'
 require 'spec_helpers/session_helper'
 
 RSpec.describe 'Request Passwords', type: :request do
@@ -19,23 +18,28 @@ RSpec.describe 'Request Passwords', type: :request do
   end
 
   describe 'POST /forgotten-password #send_reset_link' do
+    before(:each) do
+      stub_recaptcha_service
+    end
+
     it 'Redirects user back to login page, with notice of reset' do
-      submit_forgotten_password(email: 'admin@example.com', captcha_success: true)
+      post '/forgotten-password', params: { email: @test_user.email, 'g-recaptcha-response' => 'test' }
       expect(response).to redirect_to(:login)
       follow_redirect!
       expect(response.body).to include('If the submitted email is associated with an account, a password reset link will be sent')
     end
 
     it 'Notifies user if reCaptcha is incorrect' do
-      submit_forgotten_password(email: 'admin@example.com', captcha_success: false)
+      allow(ReCaptchaService).to receive(:recaptcha_valid?).and_return(false)
+      post '/forgotten-password', params: { email: @test_user.email, 'g-recaptcha-response' => 'test' }
       expect(response).to redirect_to(:forgotten_password)
       follow_redirect!
       expect(response.body).to include('reCaptcha failed, please try again')
     end
 
     it 'Password reset job created if reCaptcha sucess' do
-      expect(PasswordResetJob).to receive(:perform_later).with(email: 'admin@example.com')
-      submit_forgotten_password(email: 'admin@example.com', captcha_success: true)
+      expect(PasswordResetJob).to receive(:perform_later).with(email: @test_user.email)
+      post '/forgotten-password', params: { email: @test_user.email, 'g-recaptcha-response' => 'test' }
     end
   end
 

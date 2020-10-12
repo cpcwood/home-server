@@ -1,9 +1,11 @@
 require 'spec_helpers/session_helper'
 
 feature 'Password reset', feature: true do
+  before(:each) do
+    stub_recaptcha_service
+  end
+
   scenario 'Filling in password reset form' do
-    stub_request(:post, 'https://www.google.com/recaptcha/api/siteverify?response&secret=test')
-      .to_return(status: 200, body: '{"success": true}', headers: {})
     visit('/login')
     click_on('Forgotten Password')
     fill_in('email', with: 'admin@example.com')
@@ -30,9 +32,7 @@ feature 'Password reset', feature: true do
     expect(page).to have_content('Password reset token expired')
 
     # Login with new password
-    stub_request(:post, 'https://www.google.com/recaptcha/api/siteverify?response&secret=test')
-      .to_return(status: 200, body: '{"success": true}', headers: {})
-    stub_two_factor_auth
+    stub_two_factor_auth_service
     fill_in('user', with: 'admin')
     fill_in('password', with: 'new_password')
     click_button('Login')
