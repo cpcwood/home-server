@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Views' do
   let(:about) { About.create(name: 'test name', about_me: 'test about me text') }
 

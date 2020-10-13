@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe AttachmentHelper do
   default_image_path = 'path-to-default-image'
   let(:mock_image_file) { double :image_file }

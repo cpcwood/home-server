@@ -39,6 +39,8 @@ group :development, :test do
   gem 'rubocop-performance', '~> 1.5.2', require: false
   # Some real nice printing
   gem 'amazing_print', '~> 1.2'
+  # Manage models in spec
+  gem 'factory_bot_rails'
 end
 
 group :development do

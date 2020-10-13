@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe 'Request Homepages', type: :request do
   before(:each) do
     seed_db

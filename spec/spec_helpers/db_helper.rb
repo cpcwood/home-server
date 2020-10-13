@@ -1,6 +1,6 @@
 def create_user
-  @test_user_password = 'Securepass1'
-  @test_user = User.create(username: 'admin', email: 'admin@example.com', password: @test_user_password, mobile_number: '+447123456789')
+  @user_password = 'Securepass1'
+  @user = create(:user, password: @user_password)
 end
 
 def create_site_settings

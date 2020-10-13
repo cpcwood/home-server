@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe CoverImage, type: :model do
   let(:site_setting) { SiteSetting.create(name: 'test_name', typed_header_enabled: false, header_text: 'test header_text', subtitle_text: 'test subtitle_text') }
   let(:image) { CoverImage.new(site_setting: site_setting, description: 'cover_image') }

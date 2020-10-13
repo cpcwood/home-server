@@ -1,6 +1,3 @@
-require 'rails_helper'
-require 'spec_helpers/session_helper'
-
 RSpec.describe 'Request Admin:Base', type: :request do
   before(:each) do
     seed_db

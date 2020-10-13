@@ -25,6 +25,10 @@ WebMock.disable_net_connect!(
   allow_localhost: true,
   allow: allowed_sites)
 
+# require helper methods
+Dir[Rails.root.join('spec/spec_helpers/**/*.rb')].each { |f| require f }
+
+
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
 

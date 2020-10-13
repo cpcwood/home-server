@@ -5,7 +5,7 @@ end
 
 def login
   stub_two_factor_auth_service
-  password_athenticate_admin(user: @test_user.username, password: @test_user_password)
+  password_athenticate_admin(user: @user.username, password: @user_password)
   post '/2fa', params: { auth_code: '123456' }
   follow_redirect!
 end
