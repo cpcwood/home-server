@@ -1,7 +1,8 @@
 RSpec.describe PasswordMailer, type: :mailer do
   let(:user) { build_stubbed(:user) }
   let(:header_image) { create(:header_image, site_setting: create(:site_setting)) }
-  let(:image_mock_path) { Rails.root.join('spec/files/image_mock.jpg') }
+  let(:image_name) { 'image_mock.jpg' }
+  let(:image_attachment) { fixture_file_upload(Rails.root.join("spec/files/#{image_name}"), 'image/png') }
 
   before(:each) do
     header_image
@@ -40,10 +41,7 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Renders attached header image path' do
-      image_name = 'image_mock.jpg'
-      header_image.image_file.attach(
-        io: File.open(image_mock_path),
-        filename: 'image_mock.jpg')
+      header_image.image_file.attach(image_attachment)
       expect(mail.body.encoded).to match(image_name)
     end
 
@@ -87,10 +85,7 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Renders attached header image path' do
-      image_name = 'image_mock.jpg'
-      header_image.image_file.attach(
-        io: File.open(image_mock_path),
-        filename: 'image_mock.jpg')
+      header_image.image_file.attach(image_attachment)
       expect(mail.body.encoded).to match(image_name)
     end
 
