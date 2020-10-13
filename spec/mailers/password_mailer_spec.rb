@@ -1,7 +1,6 @@
 RSpec.describe PasswordMailer, type: :mailer do
-  let(:user) { User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1', mobile_number: '+447123456789') }
-  let(:site_setting) { SiteSetting.create(name: 'test_name', typed_header_enabled: false, header_text: 'test header_text', subtitle_text: 'test subtitle_text') }
-  let(:header_image) { HeaderImage.create(site_setting: site_setting, description: 'header_image') }
+  let(:user) { build_stubbed(:user) }
+  let(:header_image) { create(:header_image, site_setting: create(:site_setting)) }
   let(:image_mock_path) { Rails.root.join('spec/files/image_mock.jpg') }
 
   before(:each) do
@@ -42,7 +41,6 @@ RSpec.describe PasswordMailer, type: :mailer do
 
     it 'Renders attached header image path' do
       image_name = 'image_mock.jpg'
-      header_image = SiteSetting.first.header_image
       header_image.image_file.attach(
         io: File.open(image_mock_path),
         filename: 'image_mock.jpg')
@@ -50,7 +48,7 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Renders default header image path' do
-      expect(mail.body.encoded).to match('http://localhost:3001/assets/default_images/default_header_image-5d68de84079940fdf808d15d80c7a75b462c5ef464ef25d88f358b65a984f8dc.jpg')
+      expect(mail.body.encoded).to match(/default_header_image-\w+.jpg/)
     end
   end
 
@@ -81,16 +79,15 @@ RSpec.describe PasswordMailer, type: :mailer do
       expect(mail.body.encoded).to match("Thanks,\r\n                        <br>\r\n                        <br>\r\n                        #{Rails.application.credentials.email[:company_name]}")
     end
 
-    it 'Renders time at which acount was updated' do
+    it 'Renders time at which account was updated' do
       travel_to Time.zone.local(2020, 04, 19, 12, 10, 00)
-      @another_user = User.create(username: 'another_user', password: 'password', email: 'another_user@example.com', mobile_number: '+447234567890')
-      mail = PasswordMailer.with(user: @another_user).password_updated_email
+      another_user = build_stubbed(:user)
+      mail = PasswordMailer.with(user: another_user).password_updated_email
       expect(mail.body.encoded).to match('Your password was updated on: 12:10 19-04-2020')
     end
 
     it 'Renders attached header image path' do
       image_name = 'image_mock.jpg'
-      header_image = SiteSetting.first.header_image
       header_image.image_file.attach(
         io: File.open(image_mock_path),
         filename: 'image_mock.jpg')
@@ -98,7 +95,7 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Renders default header image path' do
-      expect(mail.body.encoded).to match('http://localhost:3001/assets/default_images/default_header_image-5d68de84079940fdf808d15d80c7a75b462c5ef464ef25d88f358b65a984f8dc.jpg')
+      expect(mail.body.encoded).to match(/default_header_image-\w+.jpg/)
     end
   end
 end
