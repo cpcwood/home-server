@@ -1,20 +1,15 @@
-<% content_for :section_title do %>
-  Admin Zone
-<% end %>
 <% content_for :section_subtitle do %>
   User Settings
 <% end %>
 
-<div class='dashboard-container'>
-  <%= render 'admins/dashboard_sidebar' %>
-  <div class='dashboard-content'>
-    <div class='dashboard-item-container'>
-      <%= render 'admins/current_user_details'%>
-    </div>
-    <div class='dashboard-item-separator'></div>
-    <div class='dashboard-item-container'>
-      <%= render 'admins/update_user_details_form'%>
-    </div>
-    <div class='dashboard-item-separator'></div>
+<% content_for :dashboard_content do %>
+  <div class='dashboard-item-container'>
+    <%= render 'admins/current_user_details'%>
   </div>
-</div>
+  <div class='dashboard-item-separator'></div>
+  <div class='dashboard-item-container'>
+    <%= render 'admins/update_user_details_form'%>
+  </div>
+<% end %>
+
+<%= render template: "layouts/admin_dashboard" %>
