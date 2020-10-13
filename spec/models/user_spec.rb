@@ -18,7 +18,8 @@
 #
 
 RSpec.describe User, type: :model do
-  subject { User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1', mobile_number: '+447123456789') }
+  subject { create(:user) }
+  let(:user2) { create(:user2) }
 
   before(:each) do
     allow(PasswordMailer).to receive_message_chain(:with, :password_reset_email, :deliver_now)
@@ -71,10 +72,8 @@ RSpec.describe User, type: :model do
     end
 
     it 'Username must be unique' do
-      user = User.create(username: 'example', password: 'password', email: 'example@example.com')
-      expect(user).to be_valid
-      user = User.create(username: 'example', password: 'password', email: 'example2@example.com')
-      expect(user).to_not be_valid
+      user2 = build(:user2, username: subject.username)
+      expect(user2).to_not be_valid
     end
 
     it 'Requires confirmation for change' do
@@ -113,10 +112,8 @@ RSpec.describe User, type: :model do
     end
 
     it 'Email must be unique' do
-      user = User.create(email: 'example@example.com', username: 'example', password: 'password', mobile_number: '+447234567890')
-      expect(user).to be_valid
-      user = User.create(email: 'example@example.com', username: 'example2', password: 'password', mobile_number: '+447234567891')
-      expect(user).to_not be_valid
+      user2 = build(:user2, email: subject.email)
+      expect(user2).to_not be_valid
     end
 
     it 'Requires confirmation for change' do
@@ -131,9 +128,8 @@ RSpec.describe User, type: :model do
 
   describe 'Mobile number validations' do
     it 'Rejects non-unique mobile numbers' do
-      used_mobile_number = subject.mobile_number
-      user = User.create(username: 'example', password: 'password', email: 'example@example.com', mobile_number: used_mobile_number)
-      expect(user).to_not be_valid
+      user2 = build(:user2, mobile_number: subject.mobile_number)
+      expect(user2).to_not be_valid
     end
 
     it 'Rejects invalid UK mobile numbers with message' do
@@ -179,7 +175,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'Password reset token is unique' do
-      User.create(username: 'another_user', password: 'password', email: 'email@example.com', password_reset_token: 'not_unique_token', mobile_number: '+447234567890')
+      create(:user2, password_reset_token: 'not_unique_token')
       allow(SecureRandom).to receive(:urlsafe_base64).and_return('not_unique_token', 'unique_token')
       subject.send_password_reset_email!
       expect(subject.password_reset_token).to eq('unique_token')
