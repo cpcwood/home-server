@@ -24,7 +24,7 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Assigns greeting in email' do
-      expect(mail.body.encoded).to match("Hi #{user.username},")
+      expect(mail.body.encoded).to match(/Hi[\w\W]+test/)
     end
 
     it 'Assigns adds password reset url' do
@@ -66,7 +66,7 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Assigns greeting in email' do
-      expect(mail.body.encoded).to match("Hi #{user.username},")
+      expect(mail.body.encoded).to match(/Hi[\w\W]+test/)
     end
 
     it 'Provides contact email' do
