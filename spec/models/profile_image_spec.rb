@@ -15,8 +15,8 @@ RSpec.describe ProfileImage, type: :model do
   describe 'before validation' do
     describe '#set_defaults' do
       it 'no description' do
-        profile_image = ProfileImage.create
-        expect(profile_image.description).to eq('about-me-profile-image')
+        profile_image = create(:profile_image, description: nil)
+        expect(profile_image.description).to_not be_nil
       end
     end
   end
