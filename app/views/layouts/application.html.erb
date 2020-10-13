@@ -12,12 +12,13 @@
 
   <body>
     <div class='page-container' data-controller='header-scroll'>
-      <%= render 'layouts/navigation'%>
+      <%= render partial: 'application/navigation' %>
       <div class='header-image' data-target='header-scroll.headerImage'>
         <%= image_tag(image_path_helper(@header_image), id: 'header-image', style: @header_image.custom_style)%>
       </div>
       <div class='content-container' data-action='scroll->header-scroll#scrollHeaderImage' data-target='header-scroll.contentContainer'>
         <div class='content'>
+          <%= render partial: 'application/section_title' %>
           <%= yield %>
         </div>
       </div>

@@ -1,12 +1,14 @@
 describe 'Views' do
-  let(:site_setting) { SiteSetting.create(name: 'test_name', typed_header_enabled: false, header_text: 'test header_text', subtitle_text: 'test subtitle_text') }
+  let(:site_setting) { create(:site_setting) }
+  let(:header_image) { create(:header_image, site_setting: site_setting)}
 
   describe 'homepages/index rendering' do
     it 'Custom user titles' do
       assign(:site_settings, site_setting)
       assign(:cover_images, [])
+      assign(:header_image, header_image)
 
-      render template: 'homepages/index.html.erb'
+      render template: 'homepages/index.html.erb', layout: 'layouts/application'
 
       expect(rendered).to match(Regexp.escape(site_setting.header_text))
       expect(rendered).to match(Regexp.escape(site_setting.subtitle_text))
@@ -18,8 +20,9 @@ describe 'Views' do
       site_setting.update(typed_header_enabled: true)
       assign(:site_settings, site_setting)
       assign(:cover_images, [])
+      assign(:header_image, header_image)
 
-      render template: 'homepages/index.html.erb'
+      render template: 'homepages/index.html.erb', layout: 'layouts/application'
       expect(rendered).to match(/id="typed-strings-header"/)
       expect(rendered).to match(/id="typed-strings-header"/)
     end

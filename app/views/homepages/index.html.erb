@@ -1,29 +1,20 @@
 <% if @site_settings.typed_header_enabled %>
-  <h1 data-controller="typed-header">
-    <div class="hidden" id="typed-strings-header" >
-      <p> 
-        <%= @site_settings.header_text %>
-      </p>
-    </div>
-    <span id="typed-header" data-target="typed-header.typedHeader"></span>
-    <br>
-    <div class="hidden" id="typed-strings-subtitle">
-      <p> 
-        <%= @site_settings.subtitle_text %>
-      </p>
-    </div>
-    <span class="subtitle" id="typed-subtitle" data-target="typed-header.typedSubtitle"></span>
-  </h1>
-<% else %>
-  <h1>
+  <% content_for :typed_header do %>
     <%= @site_settings.header_text %>
-    <div class='subtitle'>
-      <%= @site_settings.subtitle_text %>
-    </div>
-  </h1>  
+  <% end %>
+  <% content_for :typed_header_sub do %>
+    <%= @site_settings.subtitle_text %>
+  <% end %>
+<% else %>
+  <% content_for :section_title do %>
+    <%= @site_settings.header_text %>
+  <% end %>
+  <% content_for :section_subtitle do %>
+    <%=  @site_settings.subtitle_text %>
+  <% end %> 
 <% end %>
 
-<%= render 'layouts/system_messages'%>
+<%= render partial: 'application/system_messages' %>
 
 <% fade_delay_num = 1%>
 <div class="image-tile-container" data-controller="image-loader" data-image-loader-num-images="<%= @cover_images.length %>">

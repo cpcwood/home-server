@@ -1,8 +1,11 @@
-<h1> Login </h1>
+<% content_for :section_title do %>
+  Login
+<% end %>
+
 <div class='centered-container'>
   <div class='floating-form-container'>
     <%= form_with(url: "/login", method: "post", class: 'floating-form') do |f| %>
-      <%= render 'layouts/system_messages'%>
+      <%= render partial: 'application/system_messages'%>
       <%= f.text_field(:user, required: true, class: 'input-box', placeholder: 'Username or Email', autocomplete: "on") %>
       <div class='input-seperator'></div>
       <%= f.password_field(:password, required: true, class: 'input-box', placeholder: 'Password', autocomplete: "on") %>
