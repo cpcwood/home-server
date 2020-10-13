@@ -1,5 +1,5 @@
 describe 'Views' do
-  let(:site_setting) { SiteSetting.create(name: 'test_name', typed_header_enabled: false, header_text: 'test header_text', subtitle_text: 'test subtitle_text') }
+  let(:site_setting) { build_stubbed(:site_setting) }
 
   describe 'admin/site_settings rendering' do
     it 'Displays current site name' do

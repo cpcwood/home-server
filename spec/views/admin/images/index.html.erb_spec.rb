@@ -1,10 +1,8 @@
 describe 'Views' do
-  let(:site_setting) { SiteSetting.create(name: 'test_name', typed_header_enabled: false, header_text: 'test header_text', subtitle_text: 'test subtitle_text') }
+  let(:site_setting) { build_stubbed(:site_setting_with_images) }
 
   describe 'admin/images rendering' do
     it 'Displays current site name' do
-      HeaderImage.create(site_setting: site_setting, description: 'header_image')
-      CoverImage.create(site_setting: site_setting, description: 'cover_image')
       site_images = ([site_setting.header_image] + site_setting.cover_images)
 
       assign(:images, site_images)

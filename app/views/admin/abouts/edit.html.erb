@@ -7,7 +7,7 @@
 
 <%= form_with(model: [:admin, @about], method: "put", class: 'admin-section-form') do |f| %>
 
-  <%= render partial: 'application/system_messages'%>
+  <%= render partial: 'partials/system_messages'%>
 
   <%= render partial: 'layouts/images/profile_image_upload', locals: {image: @about.profile_image, form: f} %>
 

@@ -1,5 +1,5 @@
 describe 'Views' do
-  let(:user) { User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1', mobile_number: '+447123456789') }
+  let(:user) { build_stubbed(:user) }
 
   describe 'admins/user_settings rendering' do
     it 'Displays current user details' do

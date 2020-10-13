@@ -1,6 +1,7 @@
 describe 'Views' do
-  let(:site_setting) { create(:site_setting) }
-  let(:header_image) { create(:header_image, site_setting: site_setting)}
+  let(:site_setting) { build_stubbed(:site_setting) }
+  let(:site_setting_header_enabled) { build_stubbed(:site_setting, typed_header_enabled: true) }
+  let(:header_image) { build_stubbed(:header_image, site_setting: site_setting) }
 
   describe 'homepages/index rendering' do
     it 'Custom user titles' do
@@ -17,8 +18,7 @@ describe 'Views' do
     end
 
     it 'Typed header enabled' do
-      site_setting.update(typed_header_enabled: true)
-      assign(:site_settings, site_setting)
+      assign(:site_settings, site_setting_header_enabled)
       assign(:cover_images, [])
       assign(:header_image, header_image)
 
