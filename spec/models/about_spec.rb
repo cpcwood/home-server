@@ -8,7 +8,6 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-require 'rails_helper'
 
 RSpec.describe About, type: :model do
   let(:image_path_valid) { Rails.root.join('spec/files/sample_image.jpg') }

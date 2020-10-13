@@ -16,7 +16,6 @@
 #  current_login_ip      :string
 #  current_login_time    :datetime
 #
-require 'rails_helper'
 
 RSpec.describe User, type: :model do
   subject { User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1', mobile_number: '+447123456789') }

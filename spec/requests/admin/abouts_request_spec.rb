@@ -1,6 +1,3 @@
-require 'rails_helper'
-require 'spec_helpers/session_helper'
-
 RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
   let(:image_path) { Rails.root.join('spec/files/sample_image.jpg') }
   let(:image_fixture) { fixture_file_upload(image_path, 'image/png') }

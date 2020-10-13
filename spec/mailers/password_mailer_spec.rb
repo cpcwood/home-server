@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe PasswordMailer, type: :mailer do
   let(:user) { User.create(username: 'admin', email: 'admin@example.com', password: 'Securepass1', mobile_number: '+447123456789') }
   let(:site_setting) { SiteSetting.create(name: 'test_name', typed_header_enabled: false, header_text: 'test header_text', subtitle_text: 'test subtitle_text') }

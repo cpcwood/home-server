@@ -10,7 +10,6 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
-require 'rails_helper'
 
 RSpec.describe ProfileImage, type: :model do
   describe 'before validation' do

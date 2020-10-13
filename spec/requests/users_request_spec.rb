@@ -1,6 +1,3 @@
-require 'rails_helper'
-require 'spec_helpers/session_helper'
-
 RSpec.describe 'Request Users', type: :request do
   before(:each) do
     seed_db
@@ -11,16 +8,16 @@ RSpec.describe 'Request Users', type: :request do
     let(:blank_email_params) { { email: '', email_confirmation: '' } }
     let(:blank_password_params) { { password: '', password_confirmation: '' } }
     let(:blank_mobile_number_params) { { mobile_number: '', mobile_number_confirmation: '' } }
-    let(:default_current_password_params) { { password: @test_user_password } }
+    let(:default_current_password_params) { { password: @user_password } }
 
     it 'Redirects to homepage if user not logged in' do
-      put "/users.#{@test_user.id}"
+      put "/users.#{@user.id}"
       expect(response.status).to eq(401)
     end
 
     it 'Original password must be present to update section' do
       login
-      put "/users.#{@test_user.id}", params: {
+      put "/users.#{@user.id}", params: {
         username: {
           username: 'new_username',
           username_confirmation: 'new_username'
@@ -37,7 +34,7 @@ RSpec.describe 'Request Users', type: :request do
 
     it 'Username can be updated' do
       login
-      put "/users.#{@test_user.id}", params: {
+      put "/users.#{@user.id}", params: {
         username: {
           username: 'new_username',
           username_confirmation: 'new_username'
@@ -48,14 +45,14 @@ RSpec.describe 'Request Users', type: :request do
         current_password: default_current_password_params
       }
       expect(flash[:notice]).to include('Username updated!')
-      @test_user.reload
-      expect(@test_user.username).to eq('new_username')
+      @user.reload
+      expect(@user.username).to eq('new_username')
     end
 
     it 'Username not updated if fields are left empty' do
-      original_username = @test_user.username
+      original_username = @user.username
       login
-      put "/users.#{@test_user.id}", params: {
+      put "/users.#{@user.id}", params: {
         username: {
           username: '',
           username_confirmation: ''
@@ -66,13 +63,13 @@ RSpec.describe 'Request Users', type: :request do
         current_password: default_current_password_params
       }
       expect(response).to redirect_to(admin_user_settings_path)
-      @test_user.reload
-      expect(@test_user.username).to eq(original_username)
+      @user.reload
+      expect(@user.username).to eq(original_username)
     end
 
     it 'Username update validation errors get displayed' do
       login
-      put "/users.#{@test_user.id}", params: {
+      put "/users.#{@user.id}", params: {
         username: {
           username: 'new_username',
           username_confirmation: ''
@@ -87,7 +84,7 @@ RSpec.describe 'Request Users', type: :request do
 
     it 'Email can be updated' do
       login
-      put "/users.#{@test_user.id}", params: {
+      put "/users.#{@user.id}", params: {
         email: {
           email: 'new@example.com',
           email_confirmation: 'new@example.com'
@@ -98,13 +95,13 @@ RSpec.describe 'Request Users', type: :request do
         current_password: default_current_password_params
       }
       expect(flash[:notice]).to include('Email address updated!')
-      @test_user.reload
-      expect(@test_user.email).to eq('new@example.com')
+      @user.reload
+      expect(@user.email).to eq('new@example.com')
     end
 
     it 'Email update validation errors get displayed' do
       login
-      put "/users.#{@test_user.id}", params: {
+      put "/users.#{@user.id}", params: {
         email: {
           email: 'example.com',
           email_confirmation: 'example.com'
@@ -119,7 +116,7 @@ RSpec.describe 'Request Users', type: :request do
 
     it 'Password can be updated' do
       login
-      put "/users.#{@test_user.id}", params: {
+      put "/users.#{@user.id}", params: {
         password: {
           password: 'newpassword',
           password_confirmation: 'newpassword'
@@ -130,13 +127,13 @@ RSpec.describe 'Request Users', type: :request do
         current_password: default_current_password_params
       }
       expect(flash[:notice]).to include('Password updated!')
-      @test_user.reload
-      expect(@test_user.authenticate('newpassword')).to eq(@test_user)
+      @user.reload
+      expect(@user.authenticate('newpassword')).to eq(@user)
     end
 
     it 'Password update validation errors get displayed' do
       login
-      put "/users.#{@test_user.id}", params: {
+      put "/users.#{@user.id}", params: {
         password: {
           password: 'badpassword',
           password_confirmation: 'newpassword'
@@ -151,7 +148,7 @@ RSpec.describe 'Request Users', type: :request do
 
     it 'Mobile number can be updated' do
       login
-      put "/users.#{@test_user.id}", params: {
+      put "/users.#{@user.id}", params: {
         mobile_number: {
           mobile_number: '07123456789',
           mobile_number_confirmation: '07123456789'
@@ -162,8 +159,8 @@ RSpec.describe 'Request Users', type: :request do
         current_password: default_current_password_params
       }
       expect(flash[:notice]).to include('Mobile number updated!')
-      @test_user.reload
-      expect(@test_user.mobile_number).to eq('+447123456789')
+      @user.reload
+      expect(@user.mobile_number).to eq('+447123456789')
     end
   end
 end

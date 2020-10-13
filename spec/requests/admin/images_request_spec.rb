@@ -1,6 +1,3 @@
-require 'rails_helper'
-require 'spec_helpers/session_helper'
-
 RSpec.describe 'Request Admin:Images', type: :request do
   let(:image_path) { Rails.root.join('spec/files/sample_image.jpg') }
   let(:image_invalid_path) { Rails.root.join('spec/files/sample_image_invalid.jpg') }

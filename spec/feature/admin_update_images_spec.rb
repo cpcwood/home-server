@@ -1,5 +1,3 @@
-require 'spec_helpers/feature_helpers'
-
 feature 'Admin update images', feature: true, slow: true do
   before(:each) do
     seed_db

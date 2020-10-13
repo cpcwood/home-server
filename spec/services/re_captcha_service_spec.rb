@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe ReCaptchaService do
   let(:client_response) { 'client recaptcha response code' }
   let(:post_response_valid) { double(:response, body: '{"success": true}') }

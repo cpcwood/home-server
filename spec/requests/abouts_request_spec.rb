@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe 'Request Abouts', type: :request do
   before(:each) do
     seed_db
