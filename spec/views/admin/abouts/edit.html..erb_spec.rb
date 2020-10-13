@@ -1,9 +1,10 @@
 describe 'Views' do
-  let(:about) { About.create(name: 'test name', about_me: 'test about me text') }
+  let(:profile_image) { build_stubbed(:profile_image) }
+  let(:about) { build_stubbed(:about) }
+  let(:about_attached_image) { build_stubbed(:about, profile_image: profile_image) }
 
   describe 'admin/about rendering' do
     it 'default view' do
-      profile_image = ProfileImage.create
       assign(:about, about)
 
       render template: 'admin/abouts/edit.html.erb'
@@ -15,6 +16,7 @@ describe 'Views' do
     end
 
     it 'No image attached' do
+      about.profile_image = nil
       assign(:about, about)
 
       render template: 'admin/abouts/edit.html.erb'
@@ -25,8 +27,7 @@ describe 'Views' do
     end
 
     it 'image attached' do
-      about.create_profile_image
-      assign(:about, about)
+      assign(:about, about_attached_image)
 
       render template: 'admin/abouts/edit.html.erb'
 
