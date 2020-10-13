@@ -1,6 +1,5 @@
 RSpec.describe CoverImage, type: :model do
-  let(:site_setting) { SiteSetting.create(name: 'test_name', typed_header_enabled: false, header_text: 'test header_text', subtitle_text: 'test subtitle_text') }
-  let(:image) { CoverImage.new(site_setting: site_setting, description: 'cover_image') }
+  let(:image) { create(:cover_image) }
 
   let(:image_path_valid) { Rails.root.join('spec/files/sample_image.jpg') }
   let(:image_path_invalid) { Rails.root.join('spec/files/sample_image_invalid.jpg') }
@@ -80,19 +79,18 @@ RSpec.describe CoverImage, type: :model do
 
   describe '#change_messages' do
     it 'no changes' do
+      image.reload
       expect(image.change_messages).to eq([])
     end
 
     it 'attribute change' do
-      test_image = CoverImage.create(site_setting: site_setting, description: 'cover_image')
-      test_image.update(x_loc: 10, y_loc: 90)
-      expect(test_image.change_messages).to eq(['Cover image x loc updated!', 'Cover image y loc updated!'])
+      image.update(x_loc: 10, y_loc: 90)
+      expect(image.change_messages).to eq(['Cover image x loc updated!', 'Cover image y loc updated!'])
     end
 
     it 'image update' do
-      test_image = CoverImage.create(site_setting: site_setting, description: 'cover_image')
-      test_image.update(image_file: image_file_upload)
-      expect(test_image.change_messages).to eq(['Cover image updated!'])
+      image.update(image_file: image_file_upload)
+      expect(image.change_messages).to eq(['Cover image updated!'])
     end
   end
 
