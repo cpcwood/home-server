@@ -5,12 +5,16 @@ class PasswordMailer < ApplicationMailer
 
   def password_reset_email
     assign_default_variables
-    mail(to: @user.email, subject: "Password Reset: #{@user.email}")
+    mail(to: @user.email, subject: "Password Reset: #{@user.email}") do |format|
+      format.html { render layout: 'default_email' }
+    end
   end
 
   def password_updated_email
     assign_default_variables
-    mail(to: @user.email, subject: "Your Password Has Been Updated: #{@user.email}")
+    mail(to: @user.email, subject: "Your Password Has Been Updated: #{@user.email}") do |format|
+      format.html { render layout: 'default_email' }
+    end
   end
 
   private
