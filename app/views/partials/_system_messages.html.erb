@@ -1,3 +1,5 @@
+<% no_messages = false if local_assigns[:no_messages].nil? %>
+
 <div class="system-messages">
   <% flash.each do |type, msg| %>
     <% if msg.kind_of?(Array) %>
@@ -7,5 +9,8 @@
     <% else %>
       <div class='<%= type %>'><%= msg %></div>
     <% end %>
+  <% end %>
+  <% if no_messages %>
+    <div class='no-messages'>You have no messages</div>
   <% end %>
 </div>
