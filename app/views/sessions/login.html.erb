@@ -2,19 +2,19 @@
   Login
 <% end %>
 
-<div class='centered-container'>
-  <div class='floating-form-container'>
-    <%= form_with(url: "/login", method: "post", class: 'floating-form') do |f| %>
-      <%= render partial: 'partials/system_messages'%>
-      <%= f.text_field(:user, required: true, class: 'input-box', placeholder: 'Username or Email', autocomplete: "on") %>
-      <div class='input-seperator'></div>
-      <%= f.password_field(:password, required: true, class: 'input-box', placeholder: 'Password', autocomplete: "on") %>
-      <div class='input-seperator'></div>
-      <div class='options login'>
-        <%= link_to "Forgotten Password", "/forgotten-password", class: 'option right' %>
-      </div>
-      <div class='recaptcha' id='recaptcha' data-controller='recaptcha'></div>
-      <%= f.submit("Login", class: 'input-submit') %>
-    <% end %>
-  </div>
-</div>
+<% content_for :form do %>
+  <%= form_with(url: "/login", method: "post", class: 'floating-form') do |f| %>
+    <%= render partial: 'partials/system_messages'%>
+    <%= f.text_field(:user, required: true, class: 'input-box', placeholder: 'Username or Email', autocomplete: "on") %>
+    <div class='input-seperator'></div>
+    <%= f.password_field(:password, required: true, class: 'input-box', placeholder: 'Password', autocomplete: "on") %>
+    <div class='input-seperator'></div>
+    <div class='options login'>
+      <%= link_to "Forgotten Password", "/forgotten-password", class: 'option right' %>
+    </div>
+    <div class='recaptcha' id='recaptcha' data-controller='recaptcha'></div>
+    <%= f.submit("Login", class: 'input-submit') %>
+  <% end %>
+<% end %>
+
+<%= render template: "layouts/forms/floating_form" %>
