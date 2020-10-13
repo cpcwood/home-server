@@ -1,9 +1,10 @@
-<h1>
+<% content_for :section_title do %>
   Admin Zone
-  <div class='subtitle'>
-    Site Settings
-  </div>
-</h1>
+<% end %>
+<% content_for :section_subtitle do %>
+  Site Settings
+<% end %>
+
 <div class='dashboard-container'>
   <%= render 'admins/dashboard_sidebar' %>
   <div class='dashboard-content'>
@@ -13,7 +14,7 @@
       </h3>
     </div>
     <div class='dashboard-item-container'>
-      <%= render 'layouts/system_messages'%>
+      <%= render partial: 'application/system_messages'%>
     </div>
     <div class='dashboard-item-container'>
       <%= render 'admin/site_settings/update_form'%>

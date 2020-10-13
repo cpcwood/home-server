@@ -1,9 +1,10 @@
-<h1>
+<% content_for :section_title do %>
   Admin Zone
-  <div class='subtitle'>
-    General
-  </div>
-</h1>
+<% end %>
+<% content_for :section_subtitle do %>
+  General
+<% end %>
+
 <div class='dashboard-container'>
   <%= render 'admins/dashboard_sidebar' %>
   <div class='dashboard-content'>

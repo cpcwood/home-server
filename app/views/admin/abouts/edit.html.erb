@@ -1,8 +1,13 @@
-<%= render partial: "layouts/section_title", locals: {title: 'About', subtitle: 'Admin edit'} %>
+<% content_for :section_title do %>
+  About
+<% end %>
+<% content_for :section_subtitle do %>
+  Admin edit
+<% end %>
 
 <%= form_with(model: [:admin, @about], method: "put", class: 'admin-section-form') do |f| %>
 
-  <%= render 'layouts/system_messages'%>
+  <%= render partial: 'application/system_messages'%>
 
   <%= render partial: 'layouts/images/profile_image_upload', locals: {image: @about.profile_image, form: f} %>
 
