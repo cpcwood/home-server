@@ -12,7 +12,7 @@
 #
 
 RSpec.describe SiteSetting, type: :model do
-  subject { SiteSetting.create(name: 'test_name', typed_header_enabled: false, header_text: 'test header_text', subtitle_text: 'test subtitle_text') }
+  subject { create(:site_setting) }
 
   describe 'name validations' do
     it 'rejects too short' do
