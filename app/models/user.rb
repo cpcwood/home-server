@@ -17,6 +17,8 @@
 #  current_login_time    :datetime
 #
 class User < ApplicationRecord
+  DEFAULT_REMOTE_IP = '127.0.0.1'.freeze
+
   has_secure_password validations: false
   after_initialize :add_defaults
   after_validation :convert_mobile_number, if: -> { :mobile_number_changed? && !mobile_number.nil? }
@@ -68,11 +70,20 @@ class User < ApplicationRecord
     self.mobile_number_confirmation = mobile_number_confirmation.sub(/\A(0)(7\d{9})\z/, '+44\2') if mobile_number_confirmation
   end
 
+  def record_ip(request)
+    update({
+             last_login_time: current_login_time,
+             last_login_ip: current_login_ip,
+             current_login_time: Time.zone.now,
+             current_login_ip: request.remote_ip
+           })
+  end
+
   private
 
   def add_defaults
     self.last_login_time ||= Time.zone.now
-    self.last_login_ip ||= '127.0.0.1'
+    self.last_login_ip ||= DEFAULT_REMOTE_IP
   end
 
   def remove_password_reset
