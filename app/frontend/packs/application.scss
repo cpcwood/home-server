@@ -22,6 +22,7 @@ Sass Styles
 |   |   |– _navbar.scss       # Navbar - top and side
 |   |   |– _dashboard.scss    # Dashboard
 |   |   |– _typed_header.scss # Typed header
+|   |   |– _toolbars.scss      # Toolbars
 |   |   ┴
 |   |
 |   |– vendor/
@@ -52,6 +53,7 @@ Sass Styles
 @use 'styles/components/dashboard';
 @use 'styles/components/image_tile';
 @use 'styles/components/typed_header';
+@use 'styles/components/toolbars';
 
 // Site Wide Vendor
 @use 'styles/vendor/loaders';

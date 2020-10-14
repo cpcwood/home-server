@@ -14,3 +14,26 @@
     cursor: pointer;
   }
 }
+
+.standard-button {
+  position: relative;
+  border: unset;
+  box-sizing: border-box;
+  color: colors.$light;
+  background-image: linear-gradient(to bottom right, colors.$dark, colors.$dark-fade);
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 250;
+  padding: 15px 30px;
+  line-height: 1em;
+
+  @include respond-to(tablet) {
+    font-size: 16px;
+  }
+  @include respond-to(desktop) {
+    font-size: 18px;
+  }
+}
