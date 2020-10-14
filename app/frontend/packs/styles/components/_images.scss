@@ -1,0 +1,17 @@
+@use '../base/mixins' as *;
+
+.profile-image {
+  position: relative;
+  width: 50%;
+
+  @include respond-to(tablet) {
+    width: 300px;
+  }
+  @include respond-to(desktop) {
+    width: 350px;
+  }
+
+  &.about {
+    float: right;
+  }
+}
