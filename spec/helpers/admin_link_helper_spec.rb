@@ -15,12 +15,19 @@ describe AdminLinkHelper do
     end
   end
 
-  describe '#on_admin_page?' do
-    it 'on admin page' do
-      simple_path = '/admin'
-      request_mock = double(:request, original_fullpath: simple_path)
+  describe '#in_admin_scope?' do
+    it 'in admin scope' do
+      scope = '/admin/some-page'
+      request_mock = double(:request, original_fullpath: scope)
       allow(helper).to receive(:request).and_return(request_mock)
-      expect(helper.on_admin_page?).to eq(true)
+      expect(helper.in_admin_scope?).to eq(true)
+    end
+
+    it 'not in admin scope - simple' do
+      scope = '/some-page'
+      request_mock = double(:request, original_fullpath: scope)
+      allow(helper).to receive(:request).and_return(request_mock)
+      expect(helper.in_admin_scope?).to eq(false)
     end
   end
 end
