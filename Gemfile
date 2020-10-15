@@ -27,6 +27,8 @@ gem 'sidekiq', '< 7'
 gem 'image_processing'
 # Process markdown
 gem 'redcarpet', require: false
+# Markdown syntax highlighing
+gem 'rouge'
 
 group :production do
   # AWS S3 for production storage
