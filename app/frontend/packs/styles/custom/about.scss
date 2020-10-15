@@ -1,0 +1,66 @@
+// Modules
+@use '../base/colors';
+@use '../base/mixins' as *;
+@use '../base/typography';
+
+.about-contact-container {
+  display: flex;
+  max-width: 550px;
+  position: relative;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    flex-direction: column;
+    float: right;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    width: 300px;
+  }
+
+  .profile-image {
+    align-self: flex-end;
+    width: 50%;
+
+    @include respond-to(tablet) {
+      width: 100%;
+    }
+  }
+}
+
+.about-contact-links-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  width: 50%;
+
+  @include respond-to(tablet) {
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+  }
+
+  .about-contact-link {
+    width: max-content;
+
+    @include respond-to(tablet) {
+      order: 1;
+    }
+  }
+}
+
+.about-contact-external-links {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+
+  @include respond-to(tablet) {
+    flex: 1 1 100%;
+    order: 2;
+  }
+
+  a {
+    padding: 5px;
+  }
+}

@@ -5,16 +5,18 @@
 <div class='section-content'>
   <%= render partial: 'partials/admin_toolbar' %>
 
-  <div class='profile-image-container'>
+  <div class='about-contact-container'>
     <%= image_tag(image_path_helper(@about.profile_image), class: 'profile-image about') %>
-    <div class='contact-links-container'>
-      <a href='<%= @about.linkedin_link%>' class='logo-link' target='_blank' title='LinkedIn link'>
-        <%= image_tag('icons/linkedin-icon', alt: 'LinkedIn logo') %>
-      </a>
-      <a href='<%= @about.github_link%>' class='logo-link' target='_blank' title='Github link'>
-        <%= image_tag('icons/github-icon', alt: 'Github logo') %>
-      </a>
-      <%= link_to('Contact', contact_path, class: 'standard-button') %>
+    <div class='about-contact-links-container'>
+      <div class='about-contact-external-links'>
+        <a href='<%= @about.linkedin_link%>' class='logo-link' target='_blank' title='LinkedIn link'>
+          <%= image_tag('icons/linkedin-icon', alt: 'LinkedIn logo') %>
+        </a>
+        <a href='<%= @about.github_link%>' class='logo-link' target='_blank' title='Github link'>
+          <%= image_tag('icons/github-icon', alt: 'Github logo') %>
+        </a>
+      </div>
+      <%= link_to('Contact', contact_path, class: 'standard-button about-contact-link') %>
     </div>
   </div>
 
