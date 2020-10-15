@@ -1,0 +1,61 @@
+<nav class='navbar'>
+  <div class='nav-title-container'>
+    <a href='/'><%= @site_settings.name %></a>
+  </div>
+  <% if @user %>
+    <div class='username'>
+      <a href='/admin'>
+        <%= @user.username %>
+      </a>
+    </div>
+  <% end %>
+  <div class='nav-menu' data-controller='nav-menu' data-nav-menu-open='false'>
+    <div class='hamburger-container' data-action='click->nav-menu#menuToggle' data-target='nav-menu.navHamburger'>
+      <div class='hamburger'>
+        <div class='hamburger-bar' id='hamburger-crown'></div>
+        <div class='hamburger-bar' id='hamburger-patty'></div>
+        <div class='hamburger-bar' id='hamburger-heel'></div>
+      </div>
+    </div>
+    <div class='nav-sidebar' data-target='nav-menu.navSidebar'>
+      <div class='upper'>
+        <a href='/' class='nav-item'>
+          HOME
+        </a>
+        <a href='/about' class='nav-item'>
+          ABOUT
+        </a>
+        <a href='/projects' class='nav-item'>
+          PROJECTS
+        </a>
+        <a href='/blog' class='nav-item'>
+          BLOG
+        </a>
+        <a href='/say-hello' class='nav-item'>
+          SAY HELLO
+        </a>
+        <a href='/gallery' class='nav-item'>
+          GALLERY
+        </a>
+        <a href='/contact' class='nav-item'>
+          CONTACT
+        </a>
+      </div>
+      <div class='lower'>
+        <% if @user %>
+        <a href='/admin' class='nav-item'>
+          ADMIN
+        </a>
+        <%= form_with(url: "/login", method: "delete", class: 'logout-form') do %>
+          <%= submit_tag("LOGOUT", class: 'nav-item', id: 'logout-button') %>
+        <% end %>
+        <% else %>
+        <a href='/login' class='nav-item' id='login-button'>
+          LOGIN
+        </a>
+        <% end %>
+      </div>
+    </div>
+    <div class='nav-screen-cover' data-action='click->nav-menu#closeMenu'></div>
+  </div>
+</nav>

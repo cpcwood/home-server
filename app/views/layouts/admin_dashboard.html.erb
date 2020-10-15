@@ -1,0 +1,11 @@
+<% content_for :section_title do %>
+  Admin Zone
+<% end %>
+
+<div class='dashboard-container'>
+  <%= render 'admins/dashboard_sidebar' %>
+  <div class='dashboard-content'>
+    <%= yield :dashboard_content %>
+    <div class='dashboard-item-separator'></div>
+  </div>
+</div>

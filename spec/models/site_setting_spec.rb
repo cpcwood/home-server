@@ -1,77 +1,78 @@
-require 'rails_helper'
+# == Schema Information
+#
+# Table name: site_settings
+#
+#  id                   :bigint           not null, primary key
+#  name                 :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  typed_header_enabled :boolean
+#  header_text          :string
+#  subtitle_text        :string
+#
 
 RSpec.describe SiteSetting, type: :model do
-  let(:site_setting) { @site_settings }
+  subject { create(:site_setting) }
 
-  describe 'Name validations' do
-    it 'Rejects too short' do
-      site_setting.name = ''
-      expect(site_setting).to_not be_valid
-      expect(site_setting.errors.messages[:name]).to eq(['Site name cannot be blank'])
+  describe 'name validations' do
+    it 'rejects too short' do
+      subject.name = ''
+      expect(subject).to_not be_valid
+      expect(subject.errors.messages[:name]).to eq(['Site name cannot be blank'])
     end
 
-    it 'Rejects too long' do
-      site_setting.name = '0' * 256
-      expect(site_setting).to_not be_valid
-      expect(site_setting.errors.messages[:name]).to eq(['Site name cannot be longer than 255 charaters'])
+    it 'rejects too long' do
+      subject.name = '0' * 256
+      expect(subject).to_not be_valid
+      expect(subject.errors.messages[:name]).to eq(['Site name cannot be longer than 255 charaters'])
     end
 
-    it 'Accepts correct length' do
-      site_setting.name = '0'
-      expect(site_setting).to be_valid
-      site_setting.name = '0' * 255
-      expect(site_setting).to be_valid
-    end
-  end
-
-  describe 'Typed_header_enabled validations' do
-    it 'Data type' do
-      site_setting.typed_header_enabled = nil
-      expect(site_setting).to_not be_valid
-      site_setting.typed_header_enabled = true
-      expect(site_setting).to be_valid
+    it 'accepts correct length' do
+      subject.name = '0'
+      expect(subject).to be_valid
+      subject.name = '0' * 255
+      expect(subject).to be_valid
     end
   end
 
-  describe 'Header_text validations' do
-    it 'Max length' do
-      site_setting.header_text = '0' * 256
-      expect(site_setting).to_not be_valid
-      expect(site_setting.errors.messages[:header_text]).to eq(['Header text cannot be longer than 255 charaters'])
-      site_setting.header_text = '0' * 255
-      expect(site_setting).to be_valid
+  describe 'typed_header_enabled validations' do
+    it 'data type' do
+      subject.typed_header_enabled = nil
+      expect(subject).to_not be_valid
+      subject.typed_header_enabled = true
+      expect(subject).to be_valid
     end
   end
 
-  describe 'Subtitle_text validations' do
-    it 'Max length' do
-      site_setting.subtitle_text = '0' * 256
-      expect(site_setting).to_not be_valid
-      expect(site_setting.errors.messages[:subtitle_text]).to eq(['Subtitle text cannot be longer than 255 charaters'])
-      site_setting.subtitle_text = '0' * 255
-      expect(site_setting).to be_valid
+  describe 'header_text validations' do
+    it 'max length' do
+      subject.header_text = '0' * 256
+      expect(subject).to_not be_valid
+      expect(subject.errors.messages[:header_text]).to eq(['Header text cannot be longer than 255 charaters'])
+      subject.header_text = '0' * 255
+      expect(subject).to be_valid
     end
   end
 
-  describe '#update_required?' do
-    it 'No update required' do
-      original_name = site_setting.name
-      expect(site_setting.update_required?(attribute: 'name', value: original_name)).to eq(false)
-    end
-
-    it 'Update required' do
-      new_name = 'new_name'
-      expect(site_setting.update_required?(attribute: 'name', value: new_name)).to eq(true)
+  describe 'subtitle_text validations' do
+    it 'max length' do
+      subject.subtitle_text = '0' * 256
+      expect(subject).to_not be_valid
+      expect(subject.errors.messages[:subtitle_text]).to eq(['Subtitle text cannot be longer than 255 charaters'])
+      subject.subtitle_text = '0' * 255
+      expect(subject).to be_valid
     end
   end
 
-  describe '#cover_images' do
-    before(:each) do
-      @cover_image2 = Image.create(site_setting: site_setting, name: 'cover_image2', x_dim: 1, y_dim: 1, image_type: 'cover_image')
+  describe '#change_messages' do
+    it 'no change' do
+      expect(subject.reload.change_messages).to eq([])
     end
 
-    it 'multiple images' do
-      expect(site_setting.cover_images).to eq([@cover_image, @cover_image2])
+    it 'attribute changes' do
+      subject.reload
+      subject.update(name: 'new name', header_text: 'new header')
+      expect(subject.change_messages).to eq(['Name updated!', 'Header text updated!'])
     end
   end
 end

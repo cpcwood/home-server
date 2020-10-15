@@ -1,10 +1,10 @@
-require 'spec_helper'
-
 describe 'Views' do
+  let(:user) { build_stubbed(:user) }
+
   describe 'admins/notifications rendering' do
     it 'Displays new contact emails' do
       # Placeholder spec
-      assign(:user, @test_user)
+      assign(:user, user)
 
       render template: 'admins/notifications.html.erb'
 
@@ -13,7 +13,7 @@ describe 'Views' do
 
     it 'Displays new blog comment notifications' do
       # Placeholder spec
-      assign(:user, @test_user)
+      assign(:user, user)
 
       render template: 'admins/notifications.html.erb'
 
@@ -22,7 +22,7 @@ describe 'Views' do
 
     it 'Displays new blog comment notifications' do
       # Placeholder spec
-      assign(:user, @test_user)
+      assign(:user, user)
 
       render template: 'admins/notifications.html.erb'
 
@@ -31,7 +31,7 @@ describe 'Views' do
 
     it 'Displays new say hello notifications' do
       # Placeholder spec
-      assign(:user, @test_user)
+      assign(:user, user)
 
       render template: 'admins/notifications.html.erb'
 

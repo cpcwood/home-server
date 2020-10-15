@@ -1,0 +1,31 @@
+// Modules
+@use '../base/colors';
+@use '../base/mixins' as *;
+@use '../base/typography';
+
+
+// Notice and Alerts
+.system-messages {
+  box-sizing: border-box;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.notice,
+.alert {
+  box-sizing: border-box;
+  width: 100%;
+
+  + .no-messages {
+    display: none;
+  }
+}
+
+.alert {
+  color: colors.$alerts;
+}
+
+.notice {
+  color: colors.$notices;
+}
+

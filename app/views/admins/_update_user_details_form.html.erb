@@ -2,49 +2,49 @@
   Update Details
 </h3>
 <%= form_with(model: @user,  :url => users_path(@user), method: "put") do |f| %>
-  <%= render 'layouts/system_messages'%>
-  <div class="embedded_form_entry_container">
-    <%= label(:username, :username, 'Username:', class: 'input_label embedded_label') %>
-    <%= text_field(:username, :username, {class: 'input_box embedded_input_box', placeholder: 'new username'}) %>
+  <%= render partial: 'partials/system_messages'%>
+  <div class="embedded-form-entry-container">
+    <%= label(:username, :username, 'Username', class: 'input-label embedded-label') %>
+    <%= text_field(:username, :username, {class: 'input-box embedded-input-box', placeholder: 'new username'}) %>
   </div>
-  <div class="embedded_form_entry_container">
-    <%= label(:username, :username_confirmation, 'Username confirmation:', class: 'input_label embedded_label') %>
-    <%= text_field(:username, :username_confirmation, class: 'input_box embedded_input_box', placeholder: 'username confirmation') %>
+  <div class="embedded-form-entry-container">
+    <%= label(:username, :username_confirmation, 'Username confirmation', class: 'input-label embedded-label') %>
+    <%= text_field(:username, :username_confirmation, class: 'input-box embedded-input-box', placeholder: 'username confirmation') %>
   </div>
-  <div class='input_seperator embedded_input_seperator'></div>
-  <div class="embedded_form_entry_container">
-    <%= label(:email, :email, 'Email:', class: 'input_label embedded_label') %>
-    <%= text_field(:email, :email, {class: 'input_box embedded_input_box', placeholder: 'new email'}) %>
+  <div class='input-seperator embedded-input-seperator'></div>
+  <div class="embedded-form-entry-container">
+    <%= label(:email, :email, 'Email', class: 'input-label embedded-label') %>
+    <%= text_field(:email, :email, {class: 'input-box embedded-input-box', placeholder: 'new email'}) %>
   </div>
-  <div class="embedded_form_entry_container">
-    <%= label(:email, :email_confirmation, 'Email confirmation:', class: 'input_label embedded_label') %>
-    <%= text_field(:email, :email_confirmation, class: 'input_box embedded_input_box', placeholder: 'email confirmation') %>
+  <div class="embedded-form-entry-container">
+    <%= label(:email, :email_confirmation, 'Email confirmation', class: 'input-label embedded-label') %>
+    <%= text_field(:email, :email_confirmation, class: 'input-box embedded-input-box', placeholder: 'email confirmation') %>
   </div>
-  <div class='input_seperator embedded_input_seperator'></div>
-  <div class="embedded_form_entry_container">
-    <%= label(:password, :password, 'Password:', class: 'input_label embedded_label') %>
-    <%= password_field(:password, :password, {class: 'input_box embedded_input_box', placeholder: 'new password'}) %>
+  <div class='input-seperator embedded-input-seperator'></div>
+  <div class="embedded-form-entry-container">
+    <%= label(:password, :password, 'Password', class: 'input-label embedded-label') %>
+    <%= password_field(:password, :password, {class: 'input-box embedded-input-box', placeholder: 'new password'}) %>
   </div>
-  <div class="embedded_form_entry_container">
-    <%= label(:password, :password_confirmation, 'Password confirmation:', class: 'input_label embedded_label') %>
-    <%= password_field(:password, :password_confirmation, class: 'input_box embedded_input_box', placeholder: 'password confirmation') %>
+  <div class="embedded-form-entry-container">
+    <%= label(:password, :password_confirmation, 'Password confirmation', class: 'input-label embedded-label') %>
+    <%= password_field(:password, :password_confirmation, class: 'input-box embedded-input-box', placeholder: 'password confirmation') %>
   </div>
-  <div class='input_seperator embedded_input_seperator'></div>
-  <div class="embedded_form_entry_container">
-    <%= label(:mobile_number, :mobile_number, 'UK mobile number:', class: 'input_label embedded_label') %>
-    <%= text_field(:mobile_number, :mobile_number, {class: 'input_box embedded_input_box', placeholder: 'new mobile number'}) %>
+  <div class='input-seperator embedded-input-seperator'></div>
+  <div class="embedded-form-entry-container">
+    <%= label(:mobile_number, :mobile_number, 'UK mobile number', class: 'input-label embedded-label') %>
+    <%= text_field(:mobile_number, :mobile_number, {class: 'input-box embedded-input-box', placeholder: 'new mobile number'}) %>
   </div>
-  <div class="embedded_form_entry_container">
-    <%= label(:mobile_number, :mobile_numberconfirmation, 'UK mobile number confirmation:', class: 'input_label embedded_label') %>
-    <%= text_field(:mobile_number, :mobile_number_confirmation, class: 'input_box embedded_input_box', placeholder: 'mobile number confirmation') %>
+  <div class="embedded-form-entry-container">
+    <%= label(:mobile_number, :mobile_numberconfirmation, 'UK mobile number confirmation', class: 'input-label embedded-label') %>
+    <%= text_field(:mobile_number, :mobile_number_confirmation, class: 'input-box embedded-input-box', placeholder: 'mobile number confirmation') %>
   </div>
-  <div class='input_seperator embedded_input_seperator'></div>
-  <div class="embedded_form_entry_container">
-    <%= label(:current_password, :password, 'Enter current password to confirm changes:', class: 'input_label embedded_label') %>
-    <%= password_field(:current_password, :password, class: 'input_box embedded_input_box', placeholder: 'current password') %>
+  <div class='input-seperator embedded-input-seperator'></div>
+  <div class="embedded-form-entry-container">
+    <%= label(:current_password, :password, 'Enter current password to confirm changes', class: 'input-label embedded-label') %>
+    <%= password_field(:current_password, :password, class: 'input-box embedded-input-box', placeholder: 'current password') %>
   </div>
-  <div class='input_seperator embedded_input_seperator'></div>
-  <div class="form_submit_container">
-    <%= f.submit('Update details', class: 'input_submit') %>
+  <div class='input-seperator embedded-input-seperator'></div>
+  <div class="form-submit-container">
+    <%= f.submit('Update details', class: 'input-submit') %>
   </div>
 <% end %>

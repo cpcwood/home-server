@@ -1,0 +1,96 @@
+// Modules
+@use 'colors';
+@use 'mixins' as *;
+@use 'typography';
+
+// Styles
+#background {
+  background-color: colors.$background-color;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: -10;
+}
+
+.page-container {
+  box-sizing: border-box;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: relative;
+  top: 0;
+  width: 100%;
+}
+
+.content-container {
+  box-sizing: border-box;
+  display: flex;
+  height: calc(100vh - 70px);
+  justify-content: center;
+  -ms-overflow-style: none;
+  overflow-y: scroll;
+  position: absolute;
+  top: 60px;
+  width: 100%;
+  width: 100%;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.content {
+  align-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  height: calc(100vh - 70px);
+  justify-content: center;
+  max-width: 1280px;
+  min-width: 200px;
+  overflow-wrap: break-word;
+  padding: 5px 15px 0;
+  position: absolute;
+  width: 100%;
+}
+
+.header-image {
+  background-color: colors.$dark;
+  box-sizing: border-box;
+  height: 300px;
+  left: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+  
+  img {
+    height: 100%;
+    object-fit: none;
+    object-position: 50% 50%;
+    opacity: 0.6;
+    position: relative;
+    width: 100%;
+    z-index: inherit;
+    
+    @include respond-to(extra-wide) {
+      object-fit: cover;
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.section-content {
+  max-width: 900px;
+  position: relative;
+  width: 100%;
+}

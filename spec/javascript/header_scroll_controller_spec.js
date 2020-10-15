@@ -19,8 +19,8 @@ describe('header_scroll_controller', () => {
 
   beforeEach(() => {
     document.body.innerHTML = applicationHTML
-    headerImage = document.querySelector('.header_image')
-    contentContainer = document.querySelector('.content_container')
+    headerImage = document.querySelector('.header-image')
+    contentContainer = document.querySelector('.content-container')
   })
 
   describe('#scrollHeaderImage', () => {

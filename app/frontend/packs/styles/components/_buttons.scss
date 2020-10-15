@@ -1,0 +1,39 @@
+// Modules
+@use '../base/colors';
+@use '../base/mixins' as *;
+@use '../base/typography';
+
+.menu-button { 
+  border: unset;
+  box-sizing: border-box;
+  position: relative;
+  text-decoration: none;
+  width: 100%;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.standard-button {
+  background-image: linear-gradient(to bottom right, colors.$dark, colors.$dark-fade);
+  border: unset;
+  box-sizing: border-box;
+  color: colors.$light;
+  font-size: 14px;
+  font-weight: 250;
+  line-height: 1em;
+  padding: 15px 30px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  white-space: nowrap;
+
+  @include respond-to(tablet) {
+    font-size: 16px;
+  }
+  @include respond-to(desktop) {
+    font-size: 18px;
+  }
+}

@@ -10,73 +10,39 @@ site_settings = SiteSetting.create(
   header_text: 'Welcome to your...',
   subtitle_text: 'home-server')
 
-#=============
-header_image_x_dim = 2560
-header_image_y_dim = 300
-#=============
-
-Image.create(
+HeaderImage.create(
   site_setting: site_settings,
-  name: 'header_image',
-  x_dim: header_image_x_dim,
-  y_dim: header_image_y_dim,
-  image_type: 'header_image')
+  description: 'Header image')
 
-#=============
-cover_image_x_dim = 1450
-cover_image_y_dim = 680
-#=============
-
-Image.create(
+CoverImage.create(
   site_setting: site_settings,
-  name: 'about_image',
-  x_dim: cover_image_x_dim,
-  y_dim: cover_image_y_dim,
-  image_type: 'cover_image',
   link: '/about',
-  description: 'About')
+  description: 'ABOUT')
 
-Image.create(
+CoverImage.create(
   site_setting: site_settings,
-  name: 'projects_image',
-  x_dim: cover_image_x_dim,
-  y_dim: cover_image_y_dim,
-  image_type: 'cover_image',
   link: '/projects',
   description: 'PROJECTS')
 
-Image.create(
+CoverImage.create(
   site_setting: site_settings,
-  name: 'blog_image',
-  x_dim: cover_image_x_dim,
-  y_dim: cover_image_y_dim,
-  image_type: 'cover_image',
   link: '/blog',
   description: 'BLOG')
 
-Image.create(
+CoverImage.create(
   site_setting: site_settings,
-  name: 'say_hello_image',
-  x_dim: cover_image_x_dim,
-  y_dim: cover_image_y_dim,
-  image_type: 'cover_image',
   link: '/say-hello',
   description: 'SAY HELLO')
 
-Image.create(
+CoverImage.create(
   site_setting: site_settings,
-  name: 'gallery_image',
-  x_dim: cover_image_x_dim,
-  y_dim: cover_image_y_dim,
-  image_type: 'cover_image',
   link: '/gallery',
   description: 'GALLERY')
 
-Image.create(
+CoverImage.create(
   site_setting: site_settings,
-  name: 'contact_image',
-  x_dim: cover_image_x_dim,
-  y_dim: cover_image_y_dim,
-  image_type: 'cover_image',
   link: '/contact',
   description: 'CONTACT')
+
+
+About.create(name: 'owners name')

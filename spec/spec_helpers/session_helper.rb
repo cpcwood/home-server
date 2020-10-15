@@ -1,25 +1,24 @@
-def password_athenticate_admin(user:, password:, captcha_success:)
-  stub_request(:post, "https://www.google.com/recaptcha/api/siteverify?response=#{captcha_success}&secret=test")
-    .to_return(status: 200, body: "{\"success\": #{captcha_success}}", headers: {})
-  post '/login', params: { user: user, password: password, 'g-recaptcha-response' => captcha_success }
-end
-
-def block_twilio_verification_checks
-  stub_request(:post, 'https://verify.twilio.com/v2/Services/VAbe124f2ff38bc35c1de5c4f5f3fb14c8/Verifications')
-    .to_return(status: 200, body: '', headers: {})
-  stub_request(:post, 'https://verify.twilio.com/v2/Services/VAbe124f2ff38bc35c1de5c4f5f3fb14c8/VerificationCheck')
-    .to_return(status: 200, body: '', headers: {})
+def password_athenticate_admin(user:, password:)
+  stub_recaptcha_service
+  post '/login', params: { user: user, password: password, 'g-recaptcha-response': 'test' }
 end
 
 def login
-  block_twilio_verification_checks
-  password_athenticate_admin(user: @test_user.username, password: @test_user_password, captcha_success: true)
-  verification_double = double('verification', status: 'approved')
-  allow_any_instance_of(Twilio::REST::Verify::V2::ServiceContext::VerificationCheckList).to receive(:create).and_return(verification_double)
+  stub_two_factor_auth_service
+  password_athenticate_admin(user: @user.username, password: @user_password)
   post '/2fa', params: { auth_code: '123456' }
   follow_redirect!
 end
 
 def logout
   delete '/login'
+end
+
+def stub_two_factor_auth_service
+  allow(TwoFactorAuthService).to receive(:send_auth_code).and_return(true)
+  allow(TwoFactorAuthService).to receive(:auth_code_valid?).and_return(true)
+end
+
+def stub_recaptcha_service
+  allow(ReCaptchaService).to receive(:recaptcha_valid?).and_return(true)
 end
