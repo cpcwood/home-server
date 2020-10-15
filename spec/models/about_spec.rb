@@ -25,6 +25,16 @@ RSpec.describe About, type: :model do
         expect(about).to be_valid
       end
     end
+
+    describe 'github_link' do
+      it 'is link' do
+        about.github_link = 'not a link'
+        expect(about).to_not be_valid
+        expect(about.errors.messages[:github_link]).to eq ['Github link is not valid']
+        about.github_link = 'http://example.com'
+        expect(about).to be_valid
+      end
+    end
   end
 
   describe '#change_messages' do
