@@ -25,6 +25,8 @@ gem 'twilio-ruby', '~> 5.34', require: false
 gem 'sidekiq', '< 7'
 # Transform uploaded images
 gem 'image_processing'
+# Process markdown
+gem 'redcarpet', require: false
 
 group :production do
   # AWS S3 for production storage

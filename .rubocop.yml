@@ -63,3 +63,6 @@ Metrics/AbcSize:
 
 Rails/SkipsModelValidations:
   Enabled: false
+
+Rails/OutputSafety:
+  Enabled: false
