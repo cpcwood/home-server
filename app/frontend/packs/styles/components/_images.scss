@@ -4,15 +4,6 @@
   position: relative;
   width: 50%;
 
-  @include respond-to(tablet) {
-    margin-bottom: 20px;
-    margin-left: 20px;
-    width: 300px;
-  }
-  @include respond-to(desktop) {
-    width: 350px;
-  }
-
   &.about {
     float: right;
   }
@@ -20,5 +11,15 @@
   &.admin {
     max-width: 500px;
     width: 100%;
+  }
+}
+
+.logo-link {
+  position: relative;
+
+
+  img {
+    height: 40px;
+    width: 40px;
   }
 }
