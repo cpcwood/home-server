@@ -21,7 +21,7 @@ RSpec.describe About, type: :model do
         about.linkedin_link = 'not a link'
         expect(about).to_not be_valid
         expect(about.errors.messages[:linkedin_link]).to eq ['Linkedin link is not valid']
-        about.linkedin_link = 'http://example.com'
+        about.linkedin_link = ''
         expect(about).to be_valid
       end
     end
@@ -31,7 +31,7 @@ RSpec.describe About, type: :model do
         about.github_link = 'not a link'
         expect(about).to_not be_valid
         expect(about.errors.messages[:github_link]).to eq ['Github link is not valid']
-        about.github_link = 'http://example.com'
+        about.github_link = ''
         expect(about).to be_valid
       end
     end
