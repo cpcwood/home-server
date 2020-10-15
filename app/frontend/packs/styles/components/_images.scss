@@ -5,7 +5,8 @@
   width: 50%;
 
   @include respond-to(tablet) {
-    margin: 0 10px;
+    margin-left: 20px;
+    margin-bottom: 20px;
     width: 300px;
   }
   @include respond-to(desktop) {
