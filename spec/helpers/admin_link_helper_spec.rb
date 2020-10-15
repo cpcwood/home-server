@@ -29,5 +29,12 @@ describe AdminLinkHelper do
       allow(helper).to receive(:request).and_return(request_mock)
       expect(helper.in_admin_scope?).to eq(false)
     end
+
+    it 'not in admin scope - edge' do
+      scope = '/admin-not-admin/'
+      request_mock = double(:request, original_fullpath: scope)
+      allow(helper).to receive(:request).and_return(request_mock)
+      expect(helper.in_admin_scope?).to eq(false)
+    end
   end
 end
