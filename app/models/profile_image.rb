@@ -6,9 +6,17 @@
 #  description :string
 #  x_loc       :integer          default(50)
 #  y_loc       :integer          default(50)
-#  about_id    :bigint
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  about_id    :bigint
+#
+# Indexes
+#
+#  index_profile_images_on_about_id  (about_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (about_id => abouts.id)
 #
 class ProfileImage < Image
   belongs_to :about

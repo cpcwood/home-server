@@ -3,13 +3,21 @@
 # Table name: cover_images
 #
 #  id              :bigint           not null, primary key
-#  link            :string
 #  description     :string
+#  link            :string
 #  x_loc           :integer          default(50)
 #  y_loc           :integer          default(50)
-#  site_setting_id :bigint
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  site_setting_id :bigint
+#
+# Indexes
+#
+#  index_cover_images_on_site_setting_id  (site_setting_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (site_setting_id => site_settings.id)
 #
 class CoverImage < Image
   belongs_to :site_setting
