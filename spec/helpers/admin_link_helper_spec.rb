@@ -47,10 +47,10 @@ describe AdminLinkHelper do
     end
 
     it 'edit view' do
-      path = '/admin/about/edit'
+      path = '/admin/about/1/edit'
       request_mock = double(:request, original_fullpath: path)
       allow(helper).to receive(:request).and_return(request_mock)
-      expect(helper.admin_link_helper_return_link).to eq('/about')
+      expect(helper.admin_link_helper_return_link).to eq('/about/1')
     end
   end
 end
