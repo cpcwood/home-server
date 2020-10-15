@@ -1,8 +1,8 @@
 describe AdminLinkHelper do
   describe '#admin_link_helper_edit_link' do
     it 'simple link' do
-      simple_path = '/about'
-      request_mock = double(:request, original_fullpath: simple_path)
+      path = '/about'
+      request_mock = double(:request, original_fullpath: path)
       allow(helper).to receive(:request).and_return(request_mock)
       expect(helper.admin_link_helper_edit_link).to eq('/admin/about/edit')
     end
@@ -17,24 +17,33 @@ describe AdminLinkHelper do
 
   describe '#in_admin_scope?' do
     it 'in admin scope' do
-      scope = '/admin/some-page'
-      request_mock = double(:request, original_fullpath: scope)
+      path = '/admin/some-page'
+      request_mock = double(:request, original_fullpath: path)
       allow(helper).to receive(:request).and_return(request_mock)
       expect(helper.in_admin_scope?).to eq(true)
     end
 
     it 'not in admin scope - simple' do
-      scope = '/some-page'
-      request_mock = double(:request, original_fullpath: scope)
+      path = '/some-page'
+      request_mock = double(:request, original_fullpath: path)
       allow(helper).to receive(:request).and_return(request_mock)
       expect(helper.in_admin_scope?).to eq(false)
     end
 
     it 'not in admin scope - edge' do
-      scope = '/admin-not-admin/'
-      request_mock = double(:request, original_fullpath: scope)
+      path = '/admin-not-admin/'
+      request_mock = double(:request, original_fullpath: path)
       allow(helper).to receive(:request).and_return(request_mock)
       expect(helper.in_admin_scope?).to eq(false)
+    end
+  end
+
+  describe '#admin_link_helper_return_link' do
+    it 'simple link' do
+      path = '/admin/about'
+      request_mock = double(:request, original_fullpath: path)
+      allow(helper).to receive(:request).and_return(request_mock)
+      expect(helper.admin_link_helper_return_link).to eq('/about')
     end
   end
 end
