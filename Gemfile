@@ -29,6 +29,8 @@ gem 'image_processing'
 gem 'redcarpet', require: false
 # Markdown syntax highlighing
 gem 'rouge'
+# Validate urls in model
+gem 'validate_url'
 
 group :production do
   # AWS S3 for production storage
