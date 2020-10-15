@@ -1,0 +1,220 @@
+// Modules
+@use '../base/colors';
+@use '../base/mixins' as *;
+@use '../base/typography';
+
+
+// Styles
+.dashboard-container {
+  background-color: colors.$light;
+  border: 2px solid colors.$box-border-light;
+  box-sizing: border-box;
+  display: flex;
+  font-size: 14px;
+
+  min-height: 350px;
+  position: relative;
+  top: 20px;
+  width: 100%;
+  @include respond-to(tablet) {
+    font-size: 18px;
+    min-height: 500px;
+  }
+  @include respond-to(desktop) {
+    font-size: 22px;
+    min-height: 500px;
+  }
+}
+
+.dashboard-sidebar {
+  background-color: colors.$sidebar-background;
+  bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+
+  max-width: 20px;
+  position: relative;
+  top: 0;
+  width: 35%;
+  @include respond-to(tablet) {
+    border-right: 2px solid colors.$box-border-light;
+    max-width: 300px;
+    min-width: 236px;
+
+    .dashboard-sidebar-toggle {
+      display: none;
+    }
+  }
+  @include respond-to(desktop) {
+    border-right: 2px solid colors.$box-border-light;
+    max-width: 350px;
+    min-width: 240px;
+
+    .dashboard-sidebar-toggle {
+      display: none;
+    }
+  }
+
+  &.open {
+    display: flex;
+    max-width: 300px;
+    min-width: 150px;
+    z-index: 2;
+  
+    h2 {
+      display: block;
+    }
+
+    .dashboard-button {
+      display: block;
+    }
+  }
+
+  h2 {
+    border: unset;
+    box-sizing: border-box;
+    color: colors.$background-color;
+
+    display: none;
+    font-size: 22px;
+    font-weight: 350;
+    margin: 0;
+    padding: 25px 10px;
+    position: relative;
+    width: 100%;
+    @include respond-to(tablet) {
+      display: block;
+      font-size: 30px;
+      padding: 25px 40px;
+    }
+    @include respond-to(desktop) {
+      display: block;
+      font-size: 34px;
+      padding: 25px 40px;
+    }
+  }
+}
+
+.dashboard-button {
+  color: colors.$sidebar-text-unselected;
+  display: none;
+  font-size: 16px;
+  font-weight: 300;
+  padding: 10px;
+  transition: all 0.25s ease;
+
+  @include respond-to(tablet) {
+    display: block;
+    font-size: 22px;
+    padding: 15px 40px;
+  }
+  @include respond-to(desktop) {
+    display: block;
+    font-size: 24px;
+    padding: 20px 40px;
+  }
+
+  &:hover {
+    background-color: colors.$sidebar-highlight;
+    color: colors.$background-color;
+  }
+}
+
+.dashboard-sidebar-toggle {
+  align-items: center;
+  bottom: 0;
+  box-sizing: border-box;
+  color: colors.$sidebar-text;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 20px;
+
+  &:hover {
+    background-color: colors.$background-dark;
+    color: colors.$background-color;
+    cursor: pointer;
+  }
+
+  div {
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  .tab-title {
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight: 300;
+    writing-mode: vertical-rl;
+  }
+
+  .closed {
+    box-sizing: border-box;
+  }
+
+  .open {
+    display: none;
+  }
+
+  &.open {
+    background-color: colors.$sidebar-highlight;
+    border-left: 1px solid colors.$dark;
+
+    .open {
+      display: block;
+    }
+
+    .closed {
+      display: none;
+    }
+  }
+}
+
+.dashboard-content {
+  align-items: center;
+  bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0 5% 5%;
+  position: relative;
+  right: 0;
+  top: 0;
+  width: 90%;
+}
+
+.dashboard-item-container {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.dashboard-item-separator {
+  background-color: colors.$sidebar-highlight;
+  border-radius: 20%;
+  height: 4px;
+  margin: 30px 0;
+  width: 100%;
+}
+
+h3 {
+  font-size: 22px;
+  font-weight: 350;
+  margin: 0;
+  padding: 25px 0;
+
+  @include respond-to(tablet) {
+    font-size: 30px;
+    padding: 25px 0;
+  }
+  @include respond-to(desktop) {
+    font-size: 34px;
+    padding: 25px 0;
+  }
+}

@@ -1,0 +1,417 @@
+// Modules
+@use '../base/colors';
+@use '../base/mixins' as *;
+@use '../base/typography';
+
+// Containers
+.centered-container {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  top: 50px;
+  width: 100%;
+}
+
+.floating-form-container {
+  background-color: colors.$light;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  padding: 20px;
+  width: 350px;
+
+  @include respond-to(tablet) {
+    padding: 30px;
+    width: 400px;
+  }
+  @include respond-to(desktop) {
+    padding: 30px;
+    width: 400px;
+  }
+}
+
+
+// Forms
+.floating-form {
+  color: colors.$dark;
+}
+
+
+// Input types
+.input-label {
+  color: colors.$dark;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.input-box {
+  border: unset;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: 350;
+  height: 35px;
+  margin: 10px 0 0;
+  padding: 0 5px;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    height: 35px;
+    margin: 15px 0 0;
+  }
+  @include respond-to(desktop) {
+    height: 35px;
+    margin: 15px 0 0;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.input-check-box {
+  box-sizing: border-box;
+  margin: 0 0 0 5px;
+  position: relative;
+
+  @include respond-to(tablet) {
+    margin: 0;
+  }
+  @include respond-to(desktop) {
+    margin: 0;
+  }
+}
+
+.input-seperator {
+  background-color: colors.$form-separator;
+  border-radius: 1px;
+  box-sizing: border-box;
+  height: 2px;
+  margin: 10px 0;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    margin: 10px 0 30px;
+  }
+  @include respond-to(desktop) {
+    margin: 10px 0 30px;
+  }
+}
+
+.recaptcha {
+  box-sizing: border-box;
+  margin: 20px 0;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    margin: 30px 0;
+  }
+  @include respond-to(desktop) {
+    margin: 30px 0;
+  }
+}
+
+.input-submit {
+  background-image: linear-gradient(to bottom right, colors.$dark, colors.$dark-fade);
+  border: unset;
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: colors.$light;
+  font-size: 25px;
+  font-weight: 250;
+  padding: 20px 40px;
+  width: 100%;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+// Option links
+
+.options {
+  box-sizing: border-box;
+  margin: 25px 0 0;
+  overflow: hidden;
+  padding: 0 5px;
+  width: 100%;
+
+  &.login {
+    margin-top: 0;
+
+    @include respond-to(tablet) {
+      margin-top: -10px;
+    }
+    @include respond-to(desktop) {
+      margin-top: -10px;
+    }
+  }
+
+  .option {
+    background: rgba(0, 0, 0, 0);
+    border: unset;
+    color: colors.$dark;
+    font-size: 18px;
+    font-weight: 300;
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.left {
+      float: left;
+    }
+
+    &.right {
+      float: right;
+    }
+  }
+}
+
+// Embedded Forms
+
+.embedded-form-entry-container {
+  align-content: flex-start;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  justify-content: flex-start;
+  margin: 20px 0;
+  position: relative;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    align-items: center;
+    flex-direction: row;
+  }
+  @include respond-to(desktop) {
+    align-items: center;
+    flex-direction: row;
+  }
+}
+
+.embedded-label {
+  box-sizing: border-box;
+  font-size: inherit;
+  font-weight: 600;
+  height: inherit;
+  margin-bottom: 10px;
+  padding: 0;
+  position: relative;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    font-weight: 500;
+    margin: 0;
+    padding: 0 2% 0 0;
+    width: 33%;
+
+    &::after {
+      content: ':';
+    }
+  }
+  @include respond-to(desktop) {
+    font-weight: 500;
+    margin: 0;
+    padding: 0 2% 0 0;
+    width: 33%;
+  }
+}
+
+.embedded-input-title {
+  box-sizing: border-box;
+  font-size: inherit;
+  font-weight: 600;
+  height: inherit;
+  margin-bottom: 10px;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+
+.embedded-title {
+  box-sizing: border-box;
+  font-size: inherit;
+  font-weight: 600;
+  height: inherit;
+  padding: 0;
+  position: relative;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    font-weight: 500;
+    padding: 0 2% 0 0;
+  }
+  @include respond-to(desktop) {
+    font-weight: 500;
+    padding: 0 2% 0 0;
+  }
+}
+
+.embedded-input-box {
+  background-color: colors.$background-color;
+  border: colors.$box-border-color 1px solid;
+  border-radius: 0;
+  box-sizing: border-box;
+  font-size: inherit;
+  height: inherit;
+  margin: 0;
+  max-width: 450px;
+  padding: 3px;
+  position: relative;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    padding: 3px 10px;
+    width: 65%;
+  }
+  @include respond-to(desktop) {
+    padding: 3px 10px;
+    width: 65%;
+  }
+}
+
+.embedded-text-area {
+  border: 1px solid colors.$dark;
+  border-radius: 0;
+  max-width: 100%;
+  min-height: 500px;
+  padding: 10px 15px;
+}
+
+.embedded-no-border {
+  border-radius: 0;
+  box-sizing: border-box;
+  font-size: inherit;
+  height: inherit;
+  margin: 0;
+  max-width: 450px;
+  padding: 3px 0;
+  position: relative;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    width: 65%;
+  }
+  @include respond-to(desktop) {
+    width: 65%;
+  }
+}
+
+.embedded-current-value {
+  border-radius: 0;
+  box-sizing: border-box;
+  font-size: inherit;
+  font-weight: 500;
+  height: inherit;
+  margin: 0;
+  max-width: 450px;
+  padding: 3px 0;
+  position: relative;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    padding: 3px 5px;
+    width: 65%;
+  }
+  @include respond-to(desktop) {
+    padding: 3px 5px;
+    width: 65%;
+  }
+}
+
+.embedded-full-width {
+  box-sizing: border-box;
+  height: auto;
+  position: relative;
+  width: 100%;
+}
+
+.form-submit-container {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  max-width: 300px;
+  position: relative;
+  width: fit-content;
+
+  input {
+    font-size: inherit;
+  }
+
+  &:active + .default-loader {
+    visibility: visible;
+  }
+}
+
+.embedded-input-seperator {
+  margin: 20px 0;
+  @include respond-to(tablet) {
+    margin: 30px 0;
+  }
+  @include respond-to(desktop) {
+    margin: 30px 0;
+  }
+}
+
+.embedded-cover-image {
+  max-height: 300px;
+  object-fit: contain;
+}
+
+.slider {
+  appearance: none;
+  background: colors.$form-slider;
+  border-radius: 6px;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  height: 12px;
+  opacity: 0.7;
+  outline: none;
+  padding: 0;
+  position: relative;
+  transition: 0.1s;
+  transition: opacity 0.1s;
+
+  @include respond-to(tablet) {
+    max-width: 65%;
+  }
+  @include respond-to(desktop) {
+    max-width: 65%;
+  }
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    appearance: none;
+    background: colors.$form-slider-thumb;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+  }
+  
+  &::-moz-range-thumb {
+    background: colors.$form-slider-thumb;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.slider-value {
+  box-sizing: border-box;
+  font-weight: 300;
+  padding: 0 5px;
+  position: relative;
+}
+
+.admin-section-form {
+  padding: 20px;
+}
+
+.submit-right {
+  flex-direction: row-reverse;
+}

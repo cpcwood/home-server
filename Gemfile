@@ -13,8 +13,6 @@ gem 'puma', '~> 4.1'
 gem 'webpacker', '~> 5.0.1'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
-# Dynamic creation of JSONs
-gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 # Throttle excessive requests
@@ -24,9 +22,15 @@ gem 'faraday', require: false
 # Verify 2FA using twilio
 gem 'twilio-ruby', '~> 5.34', require: false
 # Action Mailer and Action Job Backend - Sidekiq (Requires redis and start upon server launch)
-gem 'sidekiq', '~> 6.0.7'
+gem 'sidekiq', '< 7'
 # Transform uploaded images
 gem 'image_processing'
+# Process markdown
+gem 'redcarpet', require: false
+# Markdown syntax highlighing
+gem 'rouge'
+# Validate urls in model
+gem 'validate_url'
 
 group :production do
   # AWS S3 for production storage
@@ -39,6 +43,10 @@ group :development, :test do
   # Code policing with rubocop
   gem 'rubocop-rails', '~> 2.5.2', require: false
   gem 'rubocop-performance', '~> 1.5.2', require: false
+  # Some real nice printing
+  gem 'amazing_print', '~> 1.2'
+  # Manage models in spec
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -48,6 +56,12 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # Annotate models for quick reference
+  gem 'annotate'
+  # Catch and check mail in real time
+  gem 'letter_opener'
+  # Static security testing
+  gem 'brakeman'
 end
 
 group :test do

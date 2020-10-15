@@ -10,6 +10,6 @@ class ApplicationController < ActionController::Base
 
   def assign_site_setings
     @site_settings = SiteSetting.first
-    @header_image = @site_settings.images.find_by(image_type: 'header_image')
+    @header_image = @site_settings.header_image
   end
 end

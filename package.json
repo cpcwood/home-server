@@ -30,11 +30,14 @@
     "eslint-plugin-standard": "^4.0.1",
     "html-loader-jest": "^0.2.1",
     "jest": "^26.0.1",
+    "stylelint": "^13.7.2",
+    "stylelint-config-sass-guidelines": "^7.1.0",
+    "stylelint-config-standard": "^20.0.0",
     "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
     "test": "jest --no-cache",
-    "eslint": "eslint --fix \"app/javascript/packs/controllers/**/*\" \"spec/javascript/**/*\""
+    "lint": "eslint --fix . && stylelint --fix \"**/*.scss\""
   },
   "jest": {
     "testRegex": ".*_spec.js",
@@ -48,7 +51,7 @@
     ],
     "moduleDirectories": [
       "node_modules",
-      "<rootDir>/app/javascript/packs"
+      "<rootDir>/app/frontend/packs"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/spec/javascript/__mocks__/fileMock.js",

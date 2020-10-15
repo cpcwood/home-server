@@ -1,40 +1,32 @@
 <% if @site_settings.typed_header_enabled %>
-  <h1 data-controller="typed-header">
-    <div class="hidden" id="typed-strings-header" >
-      <p> 
-        <%= @site_settings.header_text %>
-      </p>
-    </div>
-    <span id="typed-header" data-target="typed-header.typedHeader"></span>
-    <br>
-    <div class="hidden" id="typed-strings-subtitle">
-      <p> 
-        <%= @site_settings.subtitle_text %>
-      </p>
-    </div>
-    <span class="subtitle" id="typed-subtitle" data-target="typed-header.typedSubtitle"></span>
-  </h1>
-<% else %>
-  <h1>
+  <% content_for :typed_header do %>
     <%= @site_settings.header_text %>
-    <div class='subtitle'>
-      <%= @site_settings.subtitle_text %>
-    </div>
-  </h1>  
+  <% end %>
+  <% content_for :typed_header_sub do %>
+    <%= @site_settings.subtitle_text %>
+  <% end %>
+<% else %>
+  <% content_for :section_title do %>
+    <%= @site_settings.header_text %>
+  <% end %>
+  <% content_for :section_subtitle do %>
+    <%=  @site_settings.subtitle_text %>
+  <% end %> 
 <% end %>
 
-<%= render 'layouts/system_messages'%>
+<%= render partial: 'partials/system_messages' %>
 
 <% fade_delay_num = 1%>
-<% @cover_images.each do |image| %>
-  <div class="flex_image_tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
-    <div class="fade_cover fade_out animation_delay_<%= fade_delay_num %>"></div>
-    <%= image_tag(image_path_helper(image), class: image.image_type, style: image.custom_style ) %>
-    <a href="<%= image.link %>">
-      <span class="cover_title" data-target="touch-hover-tile.coverTitle">
-        <span><%= image.description %></span>
-      </span>
-    </a>
-  </div>
-  <% fade_delay_num += 1 %>
-<% end %>
+<div class="image-tile-container" data-controller="image-loader" data-image-loader-num-images="<%= @cover_images.length %>">
+  <% @cover_images.each do |image| %>
+    <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
+      <%= image_tag(image_path_helper(image), class: "cover-image transition-delay-#{fade_delay_num}", style: image.custom_style, data: {action: "load->image-loader#imageLoaded", target: 'image-loader.fade'} ) %>
+      <a href="<%= image.link %>">
+        <span class="cover-title" data-target="touch-hover-tile.coverTitle">
+          <span><%= image.description %></span>
+        </span>
+      </a>
+    </div>
+    <% fade_delay_num += 1 %>
+  <% end %>
+</div>

@@ -1,0 +1,120 @@
+// Default Variables
+$container-position: relative !default;
+$container-height: 55px !default;
+$container-width: 55px !default;
+$container-z-index: 1 !default;
+$container-color: none !default;
+$hamburger-padding: 6px 6px !default;
+$bar-height: 5px !default;
+$bar-color-normal: rgb(0, 0, 0) !default;
+$bar-color-clicked: rgb(0, 0, 0) !default;
+$animation-duration: 0.3s !default;
+$length-scale: 0.96 !default;
+
+// Location and Dimensions
+.hamburger-container {
+  align-items: center;
+  background-color: $container-color;
+  box-sizing: border-box;
+  display: flex;
+  height: $container-height;
+  justify-content: center;
+  position: $container-position;
+  width: $container-width;
+  z-index: $container-z-index;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.hamburger {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-evenly;
+  margin: auto;
+  padding: $hamburger-padding;
+  position: absolute;
+  width: 100%;
+}
+
+.hamburger-bar {
+  background-color: $bar-color-normal;
+  border-radius: 999px;
+  display: block;
+  height: $bar-height;
+  transition: background-color 0.1s ease 0.1s;
+  width: 100%;
+}
+
+.clicked .hamburger-bar {
+  background-color: $bar-color-clicked;
+  transition: background-color 0.1s ease 0s;
+}
+
+// Crown Animation
+
+@keyframes hamburger-crown-rotate {
+  0% {transform: rotate(0deg) scaleX(1);}
+  100% {transform: rotate(45deg) scaleX($length-scale);}
+}
+@keyframes hamburger-crown-rotate-reverse {
+  0% {transform: rotate(45deg) scaleX($length-scale);}
+  100% {transform: rotate(0deg) scaleX(1);}
+}
+
+// Patty Animation
+
+@keyframes hamburger-patty-hide {
+  0% {transform: scale(1, 1);}
+  100% {transform: scale(0, 0);}
+}
+@keyframes hamburger-patty-show {
+  0% {transform: scale(0, 0);}
+  100% {transform: scale(1, 1);}
+}
+
+// Heel Animation
+
+@keyframes hamburger-heel-rotate {
+  0% {transform: rotate(0deg) scaleX(1);}
+  100% {transform: rotate(-45deg) scaleX($length-scale);}
+}
+@keyframes hamburger-heel-rotate-reverse {
+  0% {transform: rotate(-45deg) scaleX($length-scale);}
+  100% {transform: rotate(0deg) scaleX(1);}
+}
+
+// Hover Event
+
+.clicked #hamburger-crown {
+  animation: hamburger-crown-rotate $animation-duration ease-in-out 0s 1 normal forwards;
+  transform-origin: 9%;
+}
+
+.clicked #hamburger-patty {
+  animation: hamburger-patty-hide $animation-duration ease-in-out 0s 1 normal forwards;
+}
+
+.clicked #hamburger-heel {
+  animation: hamburger-heel-rotate $animation-duration ease-in-out 0s 1 normal forwards;
+  transform-origin: 9%;
+}
+
+// Hover Off Event
+
+.reset-animation #hamburger-crown {
+  animation: hamburger-crown-rotate-reverse $animation-duration ease-in-out 0s 1 normal backwards;
+  transform-origin: 9%;
+}
+
+.reset-animation #hamburger-patty {
+  animation: hamburger-patty-show $animation-duration ease-in-out 0s 1 normal backwards;
+}
+
+.reset-animation #hamburger-heel {
+  animation: hamburger-heel-rotate-reverse $animation-duration ease-in-out 0s 1 normal backwards;
+  transform-origin: 9%;
+}

@@ -1,10 +1,5 @@
 const { environment } = require('@rails/webpacker')
 
-// resolve-url-loader must be used before sass-loader
-environment.loaders.get('sass').use.splice(-1, 0, {
-  loader: 'resolve-url-loader'
-});
-
 // Allow Webpack to read erb files
 const erb = require('./loaders/erb')
 environment.loaders.prepend('erb', erb)
@@ -12,6 +7,11 @@ environment.loaders.prepend('erb', erb)
 // Allow Webpack to read font files
 const fonts = require('./loaders/fonts')
 environment.loaders.prepend('fonts', fonts)
+
+// resolve-url-loader must be used before sass-loader
+environment.loaders.get('sass').use.splice(-1, 0, {
+  loader: 'resolve-url-loader'
+});
 
 // Get the actual sass-loader config and set loader to dart sass
 const sassLoader = environment.loaders.get('sass')

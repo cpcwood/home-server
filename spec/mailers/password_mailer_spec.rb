@@ -1,13 +1,18 @@
-require 'rails_helper'
-
 RSpec.describe PasswordMailer, type: :mailer do
-  let(:image_mock_path) { Rails.root.join('spec/files/image_mock.jpg') }
+  let(:user) { build_stubbed(:user) }
+  let(:header_image) { create(:header_image, site_setting: create(:site_setting)) }
+  let(:image_name) { 'image_mock.jpg' }
+  let(:image_attachment) { fixture_file_upload(Rails.root.join("spec/files/#{image_name}"), 'image/png') }
+
+  before(:each) do
+    header_image
+  end
 
   describe '#password_reset_email' do
-    let(:mail) { PasswordMailer.with(user: @test_user).password_reset_email }
+    let(:mail) { PasswordMailer.with(user: user).password_reset_email }
 
     it 'Renders the receivers email' do
-      expect(mail.to).to eql([@test_user.email])
+      expect(mail.to).to eql([user.email])
     end
 
     it 'Renders the sender email correctly' do
@@ -15,15 +20,15 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Renders the subject' do
-      expect(mail.subject).to eql("Password Reset: #{@test_user.email}")
+      expect(mail.subject).to eql("Password Reset: #{user.email}")
     end
 
     it 'Assigns greeting in email' do
-      expect(mail.body.encoded).to match("Hi #{@test_user.username},")
+      expect(mail.body.encoded).to match(/Hi[\w\W]+test/)
     end
 
     it 'Assigns adds password reset url' do
-      @test_user.password_reset_token = 'hashed-token'
+      user.password_reset_token = 'hashed-token'
       expect(mail.body.encoded).to include(reset_password_url(reset_token: 'hashed-token'))
     end
 
@@ -36,24 +41,20 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Renders attached header image path' do
-      image_name = 'image_mock.jpg'
-      header_image = SiteSetting.first.images.find_by(name: 'header_image')
-      header_image.image_file.attach(
-        io: File.open(image_mock_path),
-        filename: 'image_mock.jpg')
+      header_image.image_file.attach(image_attachment)
       expect(mail.body.encoded).to match(image_name)
     end
 
     it 'Renders default header image path' do
-      expect(mail.body.encoded).to match('http://localhost:3001/assets/default_images/default_header_image-5d68de84079940fdf808d15d80c7a75b462c5ef464ef25d88f358b65a984f8dc.jpg')
+      expect(mail.body.encoded).to match(/default_header_image-\w+.jpg/)
     end
   end
 
   describe '#password_updated_email' do
-    let(:mail) { PasswordMailer.with(user: @test_user).password_updated_email }
+    let(:mail) { PasswordMailer.with(user: user).password_updated_email }
 
     it 'Renders the receivers email' do
-      expect(mail.to).to eql([@test_user.email])
+      expect(mail.to).to eql([user.email])
     end
 
     it 'Renders the sender email correctly' do
@@ -61,11 +62,11 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Renders the subject' do
-      expect(mail.subject).to eql("Your Password Has Been Updated: #{@test_user.email}")
+      expect(mail.subject).to eql("Your Password Has Been Updated: #{user.email}")
     end
 
     it 'Assigns greeting in email' do
-      expect(mail.body.encoded).to match("Hi #{@test_user.username},")
+      expect(mail.body.encoded).to match(/Hi[\w\W]+test/)
     end
 
     it 'Provides contact email' do
@@ -76,24 +77,20 @@ RSpec.describe PasswordMailer, type: :mailer do
       expect(mail.body.encoded).to match("Thanks,\r\n                        <br>\r\n                        <br>\r\n                        #{Rails.application.credentials.email[:company_name]}")
     end
 
-    it 'Renders time at which acount was updated' do
+    it 'Renders time at which account was updated' do
       travel_to Time.zone.local(2020, 04, 19, 12, 10, 00)
-      @another_user = User.create(username: 'another_user', password: 'password', email: 'another_user@example.com', mobile_number: '+447234567890')
-      mail = PasswordMailer.with(user: @another_user).password_updated_email
+      another_user = build_stubbed(:user)
+      mail = PasswordMailer.with(user: another_user).password_updated_email
       expect(mail.body.encoded).to match('Your password was updated on: 12:10 19-04-2020')
     end
 
     it 'Renders attached header image path' do
-      image_name = 'image_mock.jpg'
-      header_image = SiteSetting.first.images.find_by(name: 'header_image')
-      header_image.image_file.attach(
-        io: File.open(image_mock_path),
-        filename: 'image_mock.jpg')
+      header_image.image_file.attach(image_attachment)
       expect(mail.body.encoded).to match(image_name)
     end
 
     it 'Renders default header image path' do
-      expect(mail.body.encoded).to match('http://localhost:3001/assets/default_images/default_header_image-5d68de84079940fdf808d15d80c7a75b462c5ef464ef25d88f358b65a984f8dc.jpg')
+      expect(mail.body.encoded).to match(/default_header_image-\w+.jpg/)
     end
   end
 end

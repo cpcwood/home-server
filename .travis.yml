@@ -14,8 +14,6 @@ before_install:
 cache:
   bundler: true
   yarn: true
-  directories:
-    - node_modules
 before_script:
   - yarn install
   - bundle exec rake db:create
@@ -25,7 +23,7 @@ script:
   - bundle exec rspec
   - bundle exec rubocop -a -c ./.rubocop.yml
   - yarn test
-  - yarn eslint
+  - yarn lint
 services:
   - postgresql
 addons:
