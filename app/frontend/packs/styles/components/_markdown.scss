@@ -7,23 +7,16 @@
   font-size: 18px;
   line-height: 1.5em;
 
+  @include respond-to(tablet) {
+    font-size: 20px;
+  }
+
   ul {
     margin-top: 5px;
   }
 
   p {
     margin-bottom: 5px;
-  }
-
-  @include respond-to(tablet) {
-    font-size: 20px;
-  }
-
-  @mixin header {
-    color: colors.$general-font;
-    font-weight: bold;
-    height: initial;
-    padding: initial;
   }
 
   h1 {
@@ -49,5 +42,4 @@
     font-size: 1em;
     margin-bottom: 10px;
   }
-
 }
