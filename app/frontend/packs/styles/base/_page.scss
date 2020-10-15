@@ -50,13 +50,13 @@
   flex: 1 1 100%;
   flex-wrap: wrap;
   height: calc(100vh - 70px);
+  justify-content: center;
   max-width: 1280px;
   min-width: 200px;
   overflow-wrap: break-word;
   padding: 5px 15px 0;
   position: absolute;
   width: 100%;
-  justify-content: center;
 }
 
 .header-image {
@@ -90,6 +90,7 @@
 }
 
 .section-content {
+  max-width: 900px;
   position: relative;
   width: 100%;
 }

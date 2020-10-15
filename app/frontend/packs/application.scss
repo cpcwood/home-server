@@ -22,6 +22,7 @@ Sass Styles
 |   |   |– _typed_header.scss # Typed header
 |   |   |– _toolbars.scss     # Toolbars
 |   |   |– _images.scss       # Images
+|   |   |– _markdown.scss     # Markdown
 |   |   ┴
 |   |
 |   |– vendor/
@@ -56,6 +57,7 @@ Sass Styles
 @use 'styles/components/typed_header';
 @use 'styles/components/toolbars';
 @use 'styles/components/images';
+@use 'styles/components/markdown';
 
 // Site Wide Vendor
 @use 'styles/vendor/loaders';
