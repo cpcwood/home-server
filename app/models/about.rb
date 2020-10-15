@@ -16,6 +16,9 @@ class About < ApplicationRecord
 
   validates :linkedin_link,
             url: { allow_blank: true, message: 'Linkedin link is not valid' }
+  
+  validates :github_link,
+            url: { allow_blank: true, message: 'Github link is not valid' }
 
   def change_messages
     messages = []

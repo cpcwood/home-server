@@ -5,7 +5,6 @@
 
 .markdown {
   font-size: 18px;
-  text-justify: center;
 
   @include respond-to(tablet) {
     font-size: 20px;
