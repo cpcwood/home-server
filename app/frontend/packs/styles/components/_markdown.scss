@@ -5,6 +5,15 @@
 
 .markdown {
   font-size: 18px;
+  line-height: 1.5em;
+
+  ul {
+    margin-top: 5px;
+  }
+
+  p {
+    margin-bottom: 5px;
+  }
 
   @include respond-to(tablet) {
     font-size: 20px;
