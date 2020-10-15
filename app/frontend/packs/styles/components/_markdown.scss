@@ -6,6 +6,7 @@
 .markdown {
 
   font-size: 18px;
+  align: center;
 
   @include respond-to(tablet) {
     font-size: 20px;

@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: site_settings
+#
+#  id                   :bigint           not null, primary key
+#  header_text          :string
+#  name                 :string
+#  subtitle_text        :string
+#  typed_header_enabled :boolean
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#
 FactoryBot.define do
   factory :site_setting, class: 'SiteSetting' do
     name { 'site name' }

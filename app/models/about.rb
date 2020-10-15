@@ -2,11 +2,13 @@
 #
 # Table name: abouts
 #
-#  id         :bigint           not null, primary key
-#  name       :string
-#  about_me   :text
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id            :bigint           not null, primary key
+#  about_me      :text
+#  github_link   :string
+#  linkedin_link :string
+#  name          :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #
 class About < ApplicationRecord
   has_one :profile_image, dependent: :destroy
