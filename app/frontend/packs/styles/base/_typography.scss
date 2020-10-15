@@ -19,8 +19,16 @@ $general-font: 'RobotoBody', Fallback, sans-serif;
 html {
   color: colors.$general-font;
   font-family: $general-font;
+  font-size: 14px;
   font-weight: 300;
   letter-spacing: 0.05em;
+
+  @include respond-to(tablet) {
+    font-size: 15px;
+  }
+  @include respond-to(tablet) {
+    font-size: 16px;
+  }
 }
 
 h1 {
@@ -63,16 +71,14 @@ h3 {
 }
 
 h4 {
-  font-size: 18px;
+  font-size: inherit;
   font-weight: 600;
   margin: 0;
 
   @include respond-to(tablet) {
-    font-size: 22px;
     margin: 15px 0;
   }
   @include respond-to(desktop) {
-    font-size: 24px;
     margin: 20px 0;
   }
 }

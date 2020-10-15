@@ -7,7 +7,6 @@ export default class extends Controller {
     if (this.contentContainerTarget.scrollTop < 240) {
       this.headerImageTarget.style.height = `${300 - this.contentContainerTarget.scrollTop}px`
       this.headerImageTarget.style.zIndex = '-1'
-      this.headerImageTarget.setAttribute('data-test', 'test')
     } else {
       this.headerImageTarget.style.height = '60px'
       this.headerImageTarget.style.zIndex = '2'

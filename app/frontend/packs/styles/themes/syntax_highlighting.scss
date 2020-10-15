@@ -1,9 +1,9 @@
 .code-block {
   background-color: #151515;
   color: #d0d0d0;
-  padding: 25px 20px;
   line-height: 1.25;
   overflow-x: scroll;
+  padding: 25px 20px;
 
   table td {
     padding: 5px;
@@ -126,7 +126,8 @@
     
   }
   
-  .nc, .no  {
+  .nc,
+  .no {
     color: #f5f0a0;
   }
 
@@ -134,7 +135,7 @@
     color: #6a9fb5;
   }
 
-  .nf{
+  .nf {
 
     color: #f4bf75;
   }
