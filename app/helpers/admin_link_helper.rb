@@ -4,11 +4,11 @@ module AdminLinkHelper
   end
 
   def in_admin_scope?
-    current_path.match?(/^\/admin\//)
+    current_path.match?(%r{^/admin/})
   end
 
   def admin_link_helper_return_link
-    current_path[/^\/admin(\/[\w\-\.~\/]+)/, 1]
+    current_path[%r{^/admin((/[\w\-.~/]+)(?=/edit$)|(/[\w\-.~/]+$))}, 1]
   end
 
   private

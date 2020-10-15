@@ -12,7 +12,7 @@ feature 'Admin update site settings', feature: true, slow: true do
     click_button('Update About')
     expect(page).to have_content('Name updated!')
     expect(page).to have_content('About me updated!')
-    click_on('Return to Section')
+    click_on('View Section')
     expect(page).to have_content('new section name')
     expect(page).to have_content('<h1>new about me text in markdown</h1>')
   end
