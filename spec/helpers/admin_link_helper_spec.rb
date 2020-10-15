@@ -1,13 +1,13 @@
 describe AdminLinkHelper do
   describe '#admin_link_helper_edit_link' do
-    it 'simple link' do
+    it 'simple path' do
       path = '/about'
       request_mock = double(:request, original_fullpath: path)
       allow(helper).to receive(:request).and_return(request_mock)
       expect(helper.admin_link_helper_edit_link).to eq('/admin/about/edit')
     end
 
-    it 'complex link' do
+    it 'complex path' do
       simple_path = '/test/123/about'
       request_mock = double(:request, original_fullpath: simple_path)
       allow(helper).to receive(:request).and_return(request_mock)
@@ -39,8 +39,15 @@ describe AdminLinkHelper do
   end
 
   describe '#admin_link_helper_return_link' do
-    it 'simple link' do
+    it 'simple path' do
       path = '/admin/about'
+      request_mock = double(:request, original_fullpath: path)
+      allow(helper).to receive(:request).and_return(request_mock)
+      expect(helper.admin_link_helper_return_link).to eq('/about')
+    end
+
+    it 'edit view' do
+      path = '/admin/about/edit'
       request_mock = double(:request, original_fullpath: path)
       allow(helper).to receive(:request).and_return(request_mock)
       expect(helper.admin_link_helper_return_link).to eq('/about')

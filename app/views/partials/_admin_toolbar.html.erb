@@ -1,7 +1,7 @@
 <% if @user %>
   <div class='toolbar-container'>
     <% if in_admin_scope? %>
-      <%= link_to('Return to Section', admin_link_helper_return_link ,class: 'standard-button') %>
+      <%= link_to('View Section', admin_link_helper_return_link ,class: 'standard-button') %>
     <% else %>
       <%= link_to('Admin edit', admin_link_helper_edit_link ,class: 'standard-button') %>
     <% end %>
