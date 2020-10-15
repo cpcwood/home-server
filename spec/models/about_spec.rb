@@ -15,6 +15,18 @@ RSpec.describe About, type: :model do
   let(:image_file_upload) { fixture_file_upload(Rails.root.join('spec/files/sample_image.jpg'), 'image/jpg') }
   let(:about) { create(:about) }
 
+  context 'validations' do
+    describe 'linkedin_link' do
+      it 'is link' do
+        about.linkedin_link = 'not a link'
+        expect(about).to_not be_valid
+        expect(about.errors.messages[:linkedin_link]).to eq ['Linkedin link is not valid']
+        about.linkedin_link = 'http://example.com'
+        expect(about).to be_valid
+      end
+    end
+  end
+
   describe '#change_messages' do
     it 'no changes' do
       about.reload
