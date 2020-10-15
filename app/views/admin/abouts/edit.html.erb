@@ -21,9 +21,12 @@
 
     <div class="embedded-form-entry-container">
       <%= f.label(:about_me, 'About me', class: 'input-label embedded-label') %>
-      <%= f.text_area(:about_me, class: 'input-box embedded-input-box embedded-text-area', placeholder: 'Add about me text (you can use markdown)...', value: @about.about_me) %>
     </div>
 
+    <div class="embedded-form-entry-container">
+      <%= f.text_area(:about_me, class: 'input-box embedded-text-area', placeholder: 'Add about me text (you can use markdown)...', value: @about.about_me) %>
+    </div>
+    
     <div class="embedded-form-entry-container submit-right">
     <div class="form-submit-container">
       <%= f.submit("Update About", class: 'input-submit') %>
