@@ -5,8 +5,6 @@ Sass Styles
 |   
 |– styles/
 |   |
-|   |– main.scss              # Primary Site Sass file
-|   |
 |   |– base/
 |   |   |– _normalize.scss    # Import vendor normalize.css
 |   |   |– _typography.scss   # Typography rules
@@ -32,7 +30,9 @@ Sass Styles
 |   |   |– loaders.scss       # Animated loading icons
 |   |   ┴
 |   |
-|   |– ./                     # Page specific style
+|   |– themes/
+|   |   |– syntax_highlighting.scss   # Code block syntax highlighting
+|   |   ┴
 |   |
 ┴   ┴
 */
@@ -59,3 +59,6 @@ Sass Styles
 
 // Site Wide Vendor
 @use 'styles/vendor/loaders';
+
+// Themes
+@use './styles/themes/syntax_highlighting';

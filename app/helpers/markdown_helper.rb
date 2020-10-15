@@ -1,7 +1,15 @@
 module MarkdownHelper
   require 'redcarpet'
+  require 'rouge'
+  require 'rouge/plugins/redcarpet'
 
-  class HTML < Redcarpet::Render::HTML; end
+  class HTML < Redcarpet::Render::HTML
+    include Rouge::Plugins::Redcarpet
+
+    def rouge_formatter(lexer)
+      Rouge::Formatters::HTMLLegacy.new(css_class: "code-block #{lexer.tag}")
+    end
+  end
 
   def markdown_admin(text)
     render_options = {
@@ -24,8 +32,8 @@ module MarkdownHelper
 
     renderer = HTML.new(render_options)
     markdown = Redcarpet::Markdown.new(renderer, extensions)
-    html = markdown.render(text).html_safe
-    encapsulate_markdown(html)
+    html = markdown.render(text)
+    encapsulate_markdown(html).html_safe
   end
 
   def encapsulate_markdown(html)
