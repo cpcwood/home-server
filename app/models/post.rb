@@ -24,5 +24,5 @@ class Post < ApplicationRecord
   belongs_to :user
 
   validates :date_published,
-            presence: {message: 'Date published cannot be blank'}
+            timeliness: { message: 'Date published must be date' }
 end
