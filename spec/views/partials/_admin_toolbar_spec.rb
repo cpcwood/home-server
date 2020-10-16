@@ -23,7 +23,6 @@ describe 'Views' do
 
         it 'renders buttons' do
           render partial: 'partials/admin_toolbar.html.erb'
-
           expect(rendered).to match('View Section')
         end
 
@@ -41,7 +40,6 @@ describe 'Views' do
 
         it 'renders buttons' do
           render partial: 'partials/admin_toolbar.html.erb'
-
           expect(rendered).to match('Admin Edit')
         end
       end
