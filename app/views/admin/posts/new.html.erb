@@ -5,8 +5,6 @@
   Admin New
 <% end %>
 
-<%= render partial: 'partials/admin_toolbar' %>
-
 <%= form_with(model: [:admin, @post], class: 'admin-section-form') do |f| %>
 
   <%= render partial: 'partials/system_messages'%>

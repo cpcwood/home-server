@@ -9,8 +9,8 @@ describe 'Views' do
       end
 
       it 'it renders posts' do
-        expect(rendered).to match("post_title")
-        expect(rendered).to match("post_overview")
+        expect(rendered).to match('post_title')
+        expect(rendered).to match('post_overview')
         expect(rendered).to match('post_text')
         expect(rendered).to match('post_date_published')
         expect(rendered).to match(admin_posts_path(Post.new))

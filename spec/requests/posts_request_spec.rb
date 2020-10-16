@@ -1,6 +1,10 @@
-Spec.describe 'Posts', type: :request do
+RSpec.describe 'Posts', type: :request do
+  before(:each) do
+    seed_db
+  end
+
   it 'Renders posts index page' do
-    get '/posts'
+    get '/blog'
     expect(response).to render_template(:index)
   end
 end
