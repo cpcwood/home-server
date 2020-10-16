@@ -20,7 +20,7 @@
   border: unset;
   box-sizing: border-box;
   color: colors.$light;
-  font-size: 14px;
+  font-size: inherit;
   font-weight: 250;
   line-height: 1em;
   padding: 15px 30px;
@@ -29,11 +29,20 @@
   text-decoration: none;
   vertical-align: middle;
   white-space: nowrap;
+}
 
-  @include respond-to(tablet) {
-    font-size: 16px;
-  }
-  @include respond-to(desktop) {
-    font-size: 18px;
+.input-submit {
+  background-image: linear-gradient(to bottom right, colors.$dark, colors.$dark-fade);
+  border: unset;
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: colors.$light;
+  font-weight: 250;
+  line-height: 1em;
+  min-width: 110px;
+  padding: 15px 25px;
+
+  &:hover {
+    cursor: pointer;
   }
 }

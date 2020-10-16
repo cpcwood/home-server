@@ -112,22 +112,6 @@
   }
 }
 
-.input-submit {
-  background-image: linear-gradient(to bottom right, colors.$dark, colors.$dark-fade);
-  border: unset;
-  border-radius: 10px;
-  box-sizing: border-box;
-  color: colors.$light;
-  font-size: 25px;
-  font-weight: 250;
-  padding: 20px 40px;
-  width: 100%;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
 // Option links
 
 .options {
@@ -331,7 +315,7 @@
 
 .form-submit-container {
   box-sizing: border-box;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   max-width: 300px;
   position: relative;
   width: fit-content;
@@ -413,4 +397,5 @@
 
 .submit-right {
   flex-direction: row-reverse;
+  justify-content: space-between;
 }
