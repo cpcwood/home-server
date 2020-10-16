@@ -33,4 +33,6 @@ Rails.application.routes.draw do
   get '/contact', to: 'contact#index'
 
   resource :users, only: [:update]
+
+  resources :posts, only: [:index], :path => "/blog"
 end

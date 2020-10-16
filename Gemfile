@@ -34,7 +34,6 @@ gem 'validate_url'
 # Validate dates in model
 gem 'validates_timeliness', '~> 5.0.0.beta1'
 
-
 group :production do
   # AWS S3 for production storage
   gem 'aws-sdk-s3', require: 'false'
