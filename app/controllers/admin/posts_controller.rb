@@ -24,12 +24,13 @@ module Admin
     private
 
     def permitted_params
-      params.require(:post).permit([
-                                     :title,
-                                     :overview,
-                                     :date_published,
-                                     :text
-                                   ])
+      params
+        .require(:post)
+        .permit(
+          :title,
+          :overview,
+          :date_published,
+          :text)
     end
 
     def create_post

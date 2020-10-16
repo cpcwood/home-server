@@ -21,6 +21,7 @@ RSpec.describe 'Request Admin:Posts', type: :request do
         text: 'post content'
       }}
     end
+
     it 'create sucessful' do
       post('/admin/posts', params: valid_post_attributes)
       expect(response).to redirect_to(admin_posts_path)
@@ -33,6 +34,12 @@ RSpec.describe 'Request Admin:Posts', type: :request do
       allow_any_instance_of(Post).to receive(:errors).and_return({ error: 'save failure' })
       post('/admin/posts', params: valid_post_attributes)
       expect(flash[:alert]).to include('save failure')
+    end
+
+    it 'General error' do
+      allow_any_instance_of(Post).to receive(:save).and_raise('general error')
+      post('/admin/posts', params: valid_post_attributes)
+      expect(flash[:alert]).to include('general error')
     end
   end
 end
