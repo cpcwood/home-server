@@ -15,6 +15,10 @@ module AdminLinkHelper
     current_path[%r{^/admin((/[\w\-.~/]+)(?=/edit$)|(/[\w\-.~/]+$))}, 1]
   end
 
+  def admin_link_helper_new_link
+    "#{current_path}/new"
+  end
+
   private
 
   def current_path

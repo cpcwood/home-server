@@ -69,4 +69,13 @@ describe AdminLinkHelper do
       expect(helper.admin_link_helper_return_link).to eq('/blog')
     end
   end
+
+  describe '#admin_link_helper_new_link' do
+    it 'path modified' do
+      path = '/admin/blog'
+      request_mock = double(:request, original_fullpath: path)
+      allow(helper).to receive(:request).and_return(request_mock)
+      expect(helper.admin_link_helper_new_link).to eq('/admin/blog/new')
+    end
+  end
 end
