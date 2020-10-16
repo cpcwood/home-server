@@ -46,13 +46,20 @@ RSpec.describe Post, type: :model do
       end
     end
 
-    describe 'titlel' do
+    describe 'title' do
       it 'presence' do 
         subject.title = nil
         expect(subject).to_not be_valid
         subject.title = ''
         expect(subject).to_not be_valid
         expect(subject.errors.messages[:title]).to eq ['Blog post title cannot be empty']
+      end
+    end
+
+    describe 'user associtation' do
+      it 'presence' do
+        subject.user = nil
+        expect(subject).to_not be_valid
       end
     end
   end
