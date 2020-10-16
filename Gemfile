@@ -26,7 +26,7 @@ gem 'sidekiq', '< 7'
 # Transform uploaded images
 gem 'image_processing'
 # Process markdown
-gem 'redcarpet', require: false
+gem 'redcarpet'
 # Markdown syntax highlighing
 gem 'rouge'
 # Validate urls in model
