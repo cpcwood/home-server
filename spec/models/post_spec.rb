@@ -27,10 +27,12 @@ RSpec.describe Post, type: :model do
 
   context 'validations' do
     describe 'date_published' do
-      it 'presence' do
+      it 'type' do
         subject.date_published = nil
         expect(subject).to_not be_valid
-        expect(subject.errors.messages[:date_published]).to eq ["Date published cannot be blank"]
+        subject.date_published = 'not a date'
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:date_published]).to eq ['Date published must be date']
       end
     end
   end
