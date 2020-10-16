@@ -90,7 +90,7 @@
 }
 
 .section-content {
-  max-width: 900px;
+  @include reading-pane;
   position: relative;
   width: 100%;
 }

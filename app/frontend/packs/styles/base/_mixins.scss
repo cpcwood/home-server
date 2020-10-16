@@ -28,3 +28,8 @@ $breakpoints: (
   height: initial;
   padding: initial;
 }
+
+@mixin reading-pane {
+  max-width: 850px;
+  text-align: justify;
+}
