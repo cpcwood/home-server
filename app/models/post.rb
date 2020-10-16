@@ -25,4 +25,8 @@ class Post < ApplicationRecord
 
   validates :date_published,
             timeliness: { message: 'Date published must be date' }
+
+  validates :overview,
+            presence: { message: 'Blog post overview cannot be blank' }
+            
 end
