@@ -27,6 +27,9 @@ class Post < ApplicationRecord
             timeliness: { message: 'Date published must be date' }
 
   validates :overview,
-            presence: { message: 'Blog post overview cannot be blank' }
+            length: {minimum: 1, message: 'Blog post overview cannot be empty'}
+
+  validates :title,
+            length: {minimum: 1, message: 'Blog post title cannot be empty'}
             
 end

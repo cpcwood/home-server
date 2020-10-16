@@ -40,7 +40,19 @@ RSpec.describe Post, type: :model do
       it 'presence' do 
         subject.overview = nil
         expect(subject).to_not be_valid
-        expect(subject.errors.messages[:overview]).to eq ['Blog post overview cannot be blank']
+        subject.overview = ''
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:overview]).to eq ['Blog post overview cannot be empty']
+      end
+    end
+
+    describe 'titlel' do
+      it 'presence' do 
+        subject.title = nil
+        expect(subject).to_not be_valid
+        subject.title = ''
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:title]).to eq ['Blog post title cannot be empty']
       end
     end
   end
