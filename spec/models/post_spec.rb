@@ -35,5 +35,13 @@ RSpec.describe Post, type: :model do
         expect(subject.errors.messages[:date_published]).to eq ['Date published must be date']
       end
     end
+
+    describe 'overview' do
+      it 'presence' do 
+        subject.overview = nil
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:overview]).to eq ['Blog post overview cannot be blank']
+      end
+    end
   end
 end
