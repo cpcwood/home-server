@@ -1,0 +1,11 @@
+var form = window.document.querySelector('#<%= j(selector_id) %>')
+var parent = form.parentNode
+tempDiv = window.document.createElement('div');
+
+tempDiv.innerHTML = '<%= j(render partial: form_partial, locals: { post: @post } ) %>'
+
+var input = tempDiv.childNodes[0];
+
+parent.replaceChild(input, form);
+
+Turbolinks.clearCache();

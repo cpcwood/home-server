@@ -25,7 +25,7 @@
 class User < ApplicationRecord
   DEFAULT_REMOTE_IP = '127.0.0.1'.freeze
 
-  has_many :posts
+  has_many :posts, dependent: :destroy
 
   has_secure_password validations: false
   after_initialize :add_defaults
