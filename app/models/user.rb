@@ -25,6 +25,8 @@
 class User < ApplicationRecord
   DEFAULT_REMOTE_IP = '127.0.0.1'.freeze
 
+  has_many :posts
+
   has_secure_password validations: false
   after_initialize :add_defaults
   after_validation :convert_mobile_number, if: -> { :mobile_number_changed? && !mobile_number.nil? }
