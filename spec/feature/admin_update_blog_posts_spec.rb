@@ -12,7 +12,7 @@ feature 'admin update blog posts', feature: true, slow: true do
     fill_in('post[text]', with: 'post text content')
     blog_publish_date = DateTime.new(2020, 04, 19, 0, 0, 0)
     fill_in('post[date_published]', with: blog_publish_date)
-    click_button('Create Blog Post')
+    click_button('Submit')
     expect(page).to have_content('New blog post created!')
     expect(page).to have_content('post section')
     expect(page).to have_content('post overview')
