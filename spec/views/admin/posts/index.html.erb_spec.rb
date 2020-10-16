@@ -19,12 +19,7 @@ describe 'Views' do
         expect(rendered).to match(post2.overview)
         expect(rendered).to match(post1.date_published)
         expect(rendered).to match(post1.date_published)
-      end
-
-      it 'renders admin toolbar' do
         expect(rendered).to match('toolbar-container')
-        expect(rendered).to match('View Section')
-        expect(rendered).to match('Create New')
       end
     end
   end
