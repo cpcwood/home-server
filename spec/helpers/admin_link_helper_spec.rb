@@ -61,5 +61,12 @@ describe AdminLinkHelper do
       allow(helper).to receive(:request).and_return(request_mock)
       expect(helper.admin_link_helper_return_link).to eq('/about/1')
     end
+
+    it 'index view' do
+      path = '/admin/blog'
+      request_mock = double(:request, original_fullpath: path)
+      allow(helper).to receive(:request).and_return(request_mock)
+      expect(helper.admin_link_helper_return_link).to eq('/blog')
+    end
   end
 end
