@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :header_images, only: [:update], path: '/header-images'
     resources :cover_images, only: [:update], path: '/cover-images'
     resource :about, only: [:edit, :update]
+    resources :posts, only: [:index], :path => "/blog"
   end
 
   get '/say-hello', to: 'homepages#index'
