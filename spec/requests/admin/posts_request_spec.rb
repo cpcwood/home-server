@@ -33,13 +33,13 @@ RSpec.describe 'Request Admin:Posts', type: :request do
       allow_any_instance_of(Post).to receive(:save).and_return(false)
       allow_any_instance_of(Post).to receive(:errors).and_return({ error: 'save failure' })
       post('/admin/posts', params: valid_post_attributes)
-      expect(flash[:alert]).to include('save failure')
+      expect(response.body).to include('save failure')
     end
 
     it 'General error' do
       allow_any_instance_of(Post).to receive(:save).and_raise('general error')
       post('/admin/posts', params: valid_post_attributes)
-      expect(flash[:alert]).to include('general error')
+      expect(response.body).to include('general error')
     end
   end
 end
