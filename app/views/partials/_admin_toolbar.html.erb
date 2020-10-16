@@ -1,9 +1,11 @@
+<% collection = false if local_assigns[:collection].nil? %>
+
 <% if @user %>
   <div class='toolbar-container'>
     <% if in_admin_scope? %>
       <%= link_to('View Section', admin_link_helper_return_link ,class: 'standard-button') %>
     <% else %>
-      <%= link_to('Admin Edit', admin_link_helper_edit_link ,class: 'standard-button') %>
+      <%= link_to('Admin Edit', (collection ? admin_link_helper_index_link : admin_link_helper_edit_link), class: 'standard-button') %>     
     <% end %>
   </div>
 <% end %>

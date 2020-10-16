@@ -3,7 +3,7 @@
 <% end %>
 
 <div class='section-content'>
-  <%= render partial: 'partials/admin_toolbar' %>
+  <%= render partial: 'partials/admin_toolbar', partials: { collection: true } %>
 
   <%= render partial: 'posts/post_overview', collection: @posts, as: :post, spacer_template: "partials/standard_ruler" %>
 </div>

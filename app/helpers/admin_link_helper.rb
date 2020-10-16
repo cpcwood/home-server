@@ -3,6 +3,10 @@ module AdminLinkHelper
     "/admin#{current_path}/edit"
   end
 
+  def admin_link_helper_index_link
+    "/admin#{current_path}"
+  end
+
   def in_admin_scope?
     current_path.match?(%r{^/admin/})
   end

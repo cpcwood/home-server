@@ -15,6 +15,15 @@ describe AdminLinkHelper do
     end
   end
 
+  describe '#admin_link_helper_index_link' do
+    it 'path modified' do
+      path = '/blog'
+      request_mock = double(:request, original_fullpath: path)
+      allow(helper).to receive(:request).and_return(request_mock)
+      expect(helper.admin_link_helper_index_link).to eq('/admin/blog')
+    end
+  end
+
   describe '#in_admin_scope?' do
     it 'in admin scope' do
       path = '/admin/some-page'

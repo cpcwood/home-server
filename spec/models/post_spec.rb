@@ -19,7 +19,6 @@
 #
 #  fk_rails_...  (user_id => users.id)
 #
-require 'rails_helper'
 
 RSpec.describe Post, type: :model do
   let(:user) { create(:user) }
