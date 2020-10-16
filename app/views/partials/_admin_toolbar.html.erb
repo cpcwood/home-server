@@ -1,14 +1,12 @@
-<% collection = false if local_assigns[:collection].nil? %>
-
 <% if @user %>
   <div class='toolbar-container'>
     <% if in_admin_scope? %>
-      <%= link_to('View Section', admin_link_helper_return_link, class: 'standard-button') %>
-      <% if collection %>
-        <%= link_to('Create New', admin_link_helper_new_link, class: 'standard-button') %>
+      <%= link_to('View Section', admin_link_helper_section_path(model), class: 'standard-button') %>
+      <% if model.is_a?(Enumerable) %>
+        <%= link_to('Create New', admin_link_helper_new_path(model), class: 'standard-button') %>
       <% end %>
     <% else %>
-      <%= link_to('Admin Edit', (collection ? admin_link_helper_index_link : admin_link_helper_edit_link), class: 'standard-button') %>     
+      <%= link_to('Admin Edit', admin_link_helper_admin_path(model), class: 'standard-button') %>     
     <% end %>
   </div>
 <% end %>

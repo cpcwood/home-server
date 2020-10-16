@@ -5,7 +5,7 @@
   Admin edit
 <% end %>
 
-<%= render partial: 'partials/admin_toolbar' %>
+<%= render partial: 'partials/admin_toolbar', locals: { model: @about }  %>
 
 <%= form_with(model: [:admin, @about], method: "put", class: 'admin-section-form') do |f| %>
 

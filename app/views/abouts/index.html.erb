@@ -3,7 +3,7 @@
 <% end %>
 
 <div class='section-content'>
-  <%= render partial: 'partials/admin_toolbar' %>
+  <%= render partial: 'partials/admin_toolbar', locals: { model: @about } %>
 
   <div class='about-contact-container'>
     <%= image_tag(image_path_helper(@about.profile_image), class: 'profile-image about') %>
