@@ -1,0 +1,9 @@
+<% content_for :section_title do %>
+  Edit Blog
+<% end %>
+
+<div class='section-content'>
+  <%= render partial: 'partials/admin_toolbar', locals: { collection: true } %>
+
+  <%= render partial: 'posts/post_overview', collection: @posts, as: :post, spacer_template: "partials/standard_ruler" %>
+</div>

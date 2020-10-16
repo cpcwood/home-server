@@ -4,7 +4,7 @@ describe 'Views' do
   let(:post2) { build_stubbed(:post, user: user) }
   let(:posts) { [post1, post2] }
 
-  describe '/posts rendering' do
+  describe '/blog rendering' do
     it 'index view' do
       assign(:posts, posts)
 
