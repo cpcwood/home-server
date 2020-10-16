@@ -20,4 +20,9 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Post < ApplicationRecord
+
+  belongs_to :user
+
+  validates :date_published,
+            presence: {message: 'Date published cannot be blank'}
 end

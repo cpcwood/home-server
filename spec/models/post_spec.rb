@@ -22,5 +22,16 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:user) {create(:user)}
+  subject { create(:post) }
+
+  context 'validations' do
+    describe 'date_published' do
+      it 'presence' do
+        subject.date_published = nil
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:date_published]).to eq ["Date published cannot be blank"]
+      end
+    end
+  end
 end
