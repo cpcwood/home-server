@@ -22,7 +22,7 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  let(:user) {create(:user)}
+  let(:user) { create(:user) }
   subject { create(:post) }
 
   context 'validations' do
@@ -37,7 +37,7 @@ RSpec.describe Post, type: :model do
     end
 
     describe 'overview' do
-      it 'presence' do 
+      it 'presence' do
         subject.overview = nil
         expect(subject).to_not be_valid
         subject.overview = ''
@@ -47,7 +47,7 @@ RSpec.describe Post, type: :model do
     end
 
     describe 'title' do
-      it 'presence' do 
+      it 'presence' do
         subject.title = nil
         expect(subject).to_not be_valid
         subject.title = ''

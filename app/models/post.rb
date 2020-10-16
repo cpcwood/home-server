@@ -20,16 +20,14 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Post < ApplicationRecord
-
   belongs_to :user
 
   validates :date_published,
             timeliness: { message: 'Date published must be date' }
 
   validates :overview,
-            length: {minimum: 1, message: 'Blog post overview cannot be empty'}
+            length: { minimum: 1, message: 'Blog post overview cannot be empty' }
 
   validates :title,
-            length: {minimum: 1, message: 'Blog post title cannot be empty'}
-            
+            length: { minimum: 1, message: 'Blog post title cannot be empty' }
 end
