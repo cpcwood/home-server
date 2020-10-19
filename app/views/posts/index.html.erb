@@ -5,6 +5,8 @@
 <div class='section-content'>
   <%= render partial: 'partials/admin_toolbar', locals: { model: (@posts.empty? ? [Post.new] : @posts) } %>
 
+  <%= render partial: 'partials/system_messages'%>
+
   <% if @posts.empty? %>
     <%= render partial: 'posts/no_posts' %>
   <% else %>

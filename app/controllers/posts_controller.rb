@@ -5,6 +5,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find_by(id: sanitize(params[:id]))
+    redirect_to(posts_path, alert: 'Post not found') unless @post
   end
 
   private
