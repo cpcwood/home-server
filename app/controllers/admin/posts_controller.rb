@@ -24,7 +24,7 @@ module Admin
         render(
           partial: 'partials/form_replacement',
           locals: {
-            selector_id: 'admin-post-form',
+            selector_id: 'admin-post-new-form',
             form_partial: 'admin/posts/new_form',
             model: { post: @post }
           },
@@ -34,6 +34,12 @@ module Admin
         redirect_to(admin_posts_path, notice: @notices)
       end
     end
+
+    def edit
+      @post = Post.find(params[:id])
+    end
+
+    def update; end
 
     private
 
