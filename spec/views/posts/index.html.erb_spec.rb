@@ -24,5 +24,11 @@ describe 'Views' do
       render template: 'posts/index.html.erb'
       expect(rendered).to match('toolbar-container')
     end
+
+    it 'no posts' do
+      assign(:posts, [])
+      render template: 'posts/index.html.erb'
+      expect(rendered).to match('There are no posts here...')
+    end
   end
 end
