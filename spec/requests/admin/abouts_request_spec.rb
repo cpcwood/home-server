@@ -43,7 +43,7 @@ RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
       put '/admin/about', params: {
         about: attribute_update
       }
-      expect(flash[:alert]).to include('save failure')
+      expect(response.body).to include('save failure')
     end
 
     it 'General error' do
@@ -51,7 +51,7 @@ RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
       put '/admin/about', params: {
         about: attribute_update
       }
-      expect(flash[:alert]).to include('general error')
+      expect(response.body).to include('general error')
     end
 
     it 'upload image' do
