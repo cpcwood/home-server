@@ -8,41 +8,5 @@
 <%= render partial: 'partials/admin_toolbar', locals: { model: @about }  %>
 
 <div class='section-content'>
-  <%= form_with(model: [:admin, @about], method: "put", class: 'admin-section-form') do |f| %>
-
-    <%= render partial: 'partials/system_messages'%>
-
-    <%= render partial: 'layouts/images/profile_image_upload', locals: {image: @about.profile_image, form: f} %>
-
-    <div class="embedded-form-entry-container">
-      <%= f.label(:name, 'Name', class: 'input-label embedded-label') %>
-      <%= f.text_field(:name, class: 'input-box embedded-input-box', placeholder: 'about me name') %>
-    </div>
-
-    <div class="embedded-form-entry-container">
-      <%= f.label(:linkedin_link, 'LinkedIn Link', class: 'input-label embedded-label') %>
-      <%= f.text_field(:linkedin_link, class: 'input-box embedded-input-box', placeholder: 'Enter valid link') %>
-    </div>
-
-    <div class="embedded-form-entry-container">
-      <%= f.label(:github_link, 'Github Link', class: 'input-label embedded-label') %>
-      <%= f.text_field(:github_link, class: 'input-box embedded-input-box', placeholder: 'Enter valid link') %>
-    </div>
-
-    <div class="embedded-form-entry-container">
-      <%= f.label(:about_me, 'About me', class: 'input-label embedded-label') %>
-    </div>
-
-    <div class="embedded-form-entry-container">
-      <%= f.text_area(:about_me, class: 'input-box embedded-text-area', placeholder: 'Add about me text (you can use markdown)...') %>
-    </div>
-    
-    <div class="embedded-form-entry-container submit-right">
-    <div class="form-submit-container">
-      <%= f.submit("Update About", class: 'input-submit') %>
-    </div>
-    <div class="default-loader"></div>
-    </div>
-
-  <% end %>
+  <%= render partial: 'admin/abouts/edit_form', locals: { about: @about } %>
 </div>

@@ -21,7 +21,7 @@ module Admin
       if @alerts.any?
         @post = Post.new(permitted_params)
         flash[:alert] = @alerts
-        render partial: 'partials/form_replacement', locals: { selector_id: 'admin-post-form', form_partial: 'admin/posts/new_form' }, formats: [:js]
+        render partial: 'partials/form_replacement', locals: { selector_id: 'admin-post-form', form_partial: 'admin/posts/new_form', model: { post: @post }}, formats: [:js]
         flash[:alert] = nil
       else
         redirect_to(admin_posts_path, notice: @notices)
