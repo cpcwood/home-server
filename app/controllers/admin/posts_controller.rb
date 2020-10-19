@@ -13,13 +13,13 @@ module Admin
       @notices = []
       @alerts = []
       begin
-        create_post
+        @post = @user.posts.new
+        update_post(post: @post, success_message: 'Blog post created')
       rescue StandardError => e
         @alerts.push('Sorry, something went wrong!')
         @alerts.push(e.message)
       end
       if @alerts.any?
-        @post = Post.new(permitted_params)
         flash[:alert] = @alerts
         render(
           partial: 'partials/form_replacement',
@@ -36,16 +36,16 @@ module Admin
     end
 
     def edit
-      assign_post
+      @post = find_post
     end
 
     def update
       @notices = []
       @alerts = []
       begin
-        assign_post
+        @post = find_post
         return redirect_to(admin_posts_path, alert: 'Post not found') unless @post
-        update_post
+        update_post(post: @post, success_message: 'Blog post updated')
       rescue StandardError => e
         @alerts.push('Sorry, something went wrong!')
         @alerts.push(e.message)
@@ -78,24 +78,15 @@ module Admin
           :text)
     end
 
-    def assign_post
-      @post = Post.find_by(id: params[:id])
+    def find_post
+      Post.find_by(id: params[:id])
     end
 
-    def create_post
-      new_post = @user.posts.new
-      if new_post.update(permitted_params)
-        @notices.push('New blog post created')
+    def update_post(post:, success_message:)
+      if post.update(permitted_params)
+        @notices.push(success_message)
       else
-        @alerts.push(new_post.errors.values.flatten.last)
-      end
-    end
-
-    def update_post
-      if @post.update(permitted_params)
-        @notices.push('Blog post updated')
-      else
-        @alerts.push(@post.errors.values.flatten.last)
+        @alerts.push(post.errors.values.flatten.last)
       end
     end
   end

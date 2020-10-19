@@ -40,7 +40,7 @@ RSpec.describe 'Request Admin:Posts', type: :request do
     it 'create sucessful' do
       post('/admin/posts', params: valid_post_attributes)
       expect(response).to redirect_to(admin_posts_path)
-      expect(flash[:notice]).to include('New blog post created')
+      expect(flash[:notice]).to include('Blog post created')
       expect(Post.first).not_to be_nil
     end
 
