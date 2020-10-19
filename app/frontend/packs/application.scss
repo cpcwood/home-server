@@ -68,6 +68,7 @@ Sass Styles
 
 // Site Wide Vendor
 @use 'styles/vendor/loaders';
+@use 'node_modules/pikaday/css/pikaday.css';
 
 // Themes
 @use './styles/themes/syntax_highlighting';
