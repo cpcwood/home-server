@@ -31,7 +31,7 @@ feature 'admin update blog posts', feature: true, slow: true do
     click_button('Submit')
     expect(page).to have_content('New blog post created')
     expect(page).to have_content('new title')
-    
+
     # add feature for editing specific post by css selector.first
   end
 end

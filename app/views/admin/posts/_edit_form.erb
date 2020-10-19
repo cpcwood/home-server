@@ -1,0 +1,5 @@
+<%= form_with(model: [:admin, post], method: 'put', class: 'admin-section-form', id: 'admin-post-update-form') do |f| %>
+
+  <%= render partial: 'admin/posts/form_components', locals: { f: f } %>
+
+<% end %>

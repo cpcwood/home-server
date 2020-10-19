@@ -1,4 +1,4 @@
-<%= form_with(model: post, url: {action: 'create', controller: 'admin/posts'}, class: 'admin-section-form', id: 'admin-post-form') do |f| %>
+<%= form_with(model: post, url: {action: 'create', controller: 'admin/posts'}, class: 'admin-section-form', id: 'admin-post-new-form') do |f| %>
 
   <%= render partial: 'admin/posts/form_components', locals: { f: f } %>
 
