@@ -68,6 +68,8 @@ module Admin
     def destroy
       @post = find_post
       return redirect_to(admin_posts_path, alert: 'Post not found') unless @post
+      @post.destroy
+      redirect_to(admin_posts_path, notice: 'Blog post removed')
     end
 
     private

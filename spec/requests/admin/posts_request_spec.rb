@@ -97,5 +97,13 @@ RSpec.describe 'Request Admin:Posts', type: :request do
       expect(response).to redirect_to(admin_posts_path)
       expect(flash[:alert]).to include('Post not found')
     end
+
+    it 'successful request' do
+      post = create(:post, user: @user)
+      delete("/admin/posts/#{post.id}")
+      expect(response).to redirect_to(admin_posts_path)
+      expect(flash[:notice]).to include('Blog post removed')
+      expect(Post.find_by(id: post.id)).to be_nil
+    end
   end
 end
