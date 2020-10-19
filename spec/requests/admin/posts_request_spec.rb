@@ -1,4 +1,19 @@
 RSpec.describe 'Request Admin:Posts', type: :request do
+  let(:valid_post_attributes) do
+    { post: {
+      title: 'new blog post',
+      overview: 'post overview',
+      date_published: DateTime.new(2020, 04, 19, 0, 0, 0),
+      text: 'post content'
+    }}
+  end
+
+  let(:invalid_post_attributes) do
+    invalid_post_attribubtes = valid_post_attributes
+    invalid_post_attribubtes[:post][:title] = ''
+    invalid_post_attribubtes
+  end
+
   before(:each) do
     seed_db
     login
@@ -29,38 +44,42 @@ RSpec.describe 'Request Admin:Posts', type: :request do
       expect(Post.first).not_to be_nil
     end
 
-    it 'Save failure' do
-      allow_any_instance_of(Post).to receive(:save).and_return(false)
-      allow_any_instance_of(Post).to receive(:errors).and_return({ error: 'save failure' })
-      post('/admin/posts', params: valid_post_attributes)
-      expect(response.body).to include('save failure')
+    it 'save failure' do
+      post('/admin/posts', params: invalid_post_attributes)
+      expect(response).not_to redirect_to(admin_posts_path)
+      expect(response.body).to include('Blog post title cannot be empty')
     end
 
-    it 'General error' do
+    it 'general error' do
       allow_any_instance_of(Post).to receive(:save).and_raise('general error')
       post('/admin/posts', params: valid_post_attributes)
+      expect(response).not_to redirect_to(admin_posts_path)
       expect(response.body).to include('general error')
     end
   end
 
   describe 'PUT /admin/posts/:id #update' do
-    let(:update_params) do
-      { post: {
-        title: 'updated blog post',
-        overview: 'updated overview',
-        date_published: DateTime.new(2020, 04, 19, 0, 0, 0),
-        text: 'updated post content'
-      }}
-    end
-
     it 'update sucessful' do
       post = create(:post, user: @user)
-      put("/admin/posts/#{post.id}", params: update_params)
+      put("/admin/posts/#{post.id}", params: valid_post_attributes)
       expect(response).to redirect_to(admin_posts_path)
       expect(flash[:notice]).to include('Blog post updated')
       post.reload
-      expect(post.title).to eq(update_params[:post][:title])
-      expect(post.overview).to eq(update_params[:post][:overview])
+      expect(post.title).to eq(valid_post_attributes[:post][:title])
+      expect(post.overview).to eq(valid_post_attributes[:post][:overview])
+    end
+
+    it 'save failure' do
+      post = create(:post, user: @user)
+      put("/admin/posts/#{post.id}", params: invalid_post_attributes)
+      expect(response).not_to redirect_to(admin_posts_path)
+      expect(response.body).to include('Blog post title cannot be empty')
+    end
+
+    it 'post id invalid' do
+      put("/admin/posts/not-a-post-id", params: valid_post_attributes)
+      expect(response).to redirect_to(admin_posts_path)
+      expect(flash[:alert]).to include('Post not found')
     end
   end
 end
