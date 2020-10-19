@@ -15,6 +15,8 @@ describe 'Views' do
       expect(rendered).to match(post1.overview)
       expect(rendered).to match(post2.overview)
       expect(rendered).not_to match('toolbar-container')
+      expect(rendered).to match(post_path(post1))
+      expect(rendered).to match(post_path(post2))
     end
 
     it 'user signed in' do
