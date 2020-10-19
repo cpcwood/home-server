@@ -1,0 +1,10 @@
+<% content_for :section_title do %>
+  Blog
+<% end %>
+
+<div class='section-content'>
+  <h3><%= @post.title %></h3>
+  <%= @post.user.username %>
+  <%= @post.date_published %>
+  <%= markdown_admin(@post.text) %>
+</div>
