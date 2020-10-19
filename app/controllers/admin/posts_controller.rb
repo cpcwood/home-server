@@ -65,6 +65,11 @@ module Admin
       end
     end
 
+    def destroy
+      @post = find_post
+      return redirect_to(admin_posts_path, alert: 'Post not found') unless @post
+    end
+
     private
 
     def permitted_params

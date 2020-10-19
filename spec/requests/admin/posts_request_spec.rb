@@ -90,4 +90,12 @@ RSpec.describe 'Request Admin:Posts', type: :request do
       expect(response.body).to include('general error')
     end
   end
+
+  describe 'DELETE /admin/posts/:id #update' do
+    it 'post id invalid' do
+      delete('/admin/posts/not-a-post-id')
+      expect(response).to redirect_to(admin_posts_path)
+      expect(flash[:alert]).to include('Post not found')
+    end
+  end
 end
