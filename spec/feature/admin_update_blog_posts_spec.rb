@@ -37,7 +37,7 @@ feature 'admin update blog posts', feature: true, slow: true do
     expect(page).to have_content('Blog post updated')
     expect(page).to have_content('new title')
     click_on('View Section')
-    expect(page).not_to have_content('new title')
+    expect(page).to have_content('new title')
 
     # destroy post
     click_on('Admin Edit')

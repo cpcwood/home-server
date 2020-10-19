@@ -66,10 +66,18 @@ module Admin
     end
 
     def destroy
-      @post = find_post
-      return redirect_to(admin_posts_path, alert: 'Post not found') unless @post
-      @post.destroy
-      redirect_to(admin_posts_path, notice: 'Blog post removed')
+      @notices = []
+      @alerts = []
+      begin
+        @post = find_post
+        return redirect_to(admin_posts_path, alert: 'Post not found') unless @post
+        @post.destroy
+        @notices.push('Blog post removed')
+      rescue StandardError => e
+        @alerts.push('Sorry, something went wrong!')
+        @alerts.push(e.message)
+      end
+      redirect_to(admin_posts_path, notice: @notices, alert: @alerts)
     end
 
     private
