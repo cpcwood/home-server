@@ -94,3 +94,8 @@
   position: relative;
   width: 100%;
 }
+
+.noselect {
+  -webkit-touch-callout: none;
+  user-select: none;          
+}

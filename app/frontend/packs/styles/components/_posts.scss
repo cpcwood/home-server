@@ -1,0 +1,40 @@
+// Modules
+@use '../base/colors';
+@use '../base/mixins' as *;
+@use '../base/typography' as *;
+
+.post-overview-container {
+  color: colors.$dark;
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  width: 100%;
+
+  a:link,
+  a:visited,
+  a:active {
+    color: colors.$dark;
+    text-decoration: none;
+    width: 100%;
+  }
+}
+
+.post-overview-title {
+  @include large-font;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.post-overview-date {
+  color: colors.$dark-fade;
+}
+
+.ruler {
+  background-color: colors.$light-fade;
+  height: 1px;
+  margin-bottom: 35px;
+  margin-top: 15px;
+}
