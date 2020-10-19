@@ -1,17 +1,17 @@
 def password_athenticate_admin(user:, password:)
   stub_recaptcha_service
-  post '/login', params: { user: user, password: password, 'g-recaptcha-response': 'test' }
+  post('/login', params: { user: user, password: password, 'g-recaptcha-response': 'test' })
 end
 
 def login
   stub_two_factor_auth_service
   password_athenticate_admin(user: @user.username, password: @user_password)
-  post '/2fa', params: { auth_code: '123456' }
+  post('/2fa', params: { auth_code: '123456' })
   follow_redirect!
 end
 
 def logout
-  delete '/login'
+  delete('/login')
 end
 
 def stub_two_factor_auth_service

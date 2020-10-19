@@ -36,10 +36,14 @@ module Admin
     end
 
     def edit
-      @post = Post.find(params[:id])
+      assign_post
     end
 
-    def update; end
+    def update
+      assign_post
+      @post.update(permitted_params)
+      redirect_to(admin_posts_path, notice: 'Blog post updated')
+    end
 
     private
 
@@ -60,6 +64,10 @@ module Admin
       else
         @alerts.push(new_post.errors.values.flatten.last)
       end
+    end
+
+    def assign_post
+      @post = Post.find(params[:id])
     end
   end
 end
