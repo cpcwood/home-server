@@ -24,6 +24,8 @@ describe 'Views' do
         expect(rendered).to match(post1.date_published)
         expect(rendered).to match(post1.date_published)
         expect(rendered).to match('toolbar-container')
+        expect(rendered).to match(edit_admin_post_path(post1))
+        expect(rendered).to match(edit_admin_post_path(post2))
       end
 
       it 'no posts' do
