@@ -42,9 +42,14 @@ module Admin
     def update
       @notices = []
       @alerts = []
-      assign_post
-      return redirect_to(admin_posts_path, alert: 'Post not found') unless @post
-      update_post
+      begin
+        assign_post
+        return redirect_to(admin_posts_path, alert: 'Post not found') unless @post
+        update_post
+      rescue StandardError => e
+        @alerts.push('Sorry, something went wrong!')
+        @alerts.push(e.message)
+      end
       if @alerts.any?
         flash[:alert] = @alerts
         render(

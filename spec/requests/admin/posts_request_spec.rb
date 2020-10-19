@@ -59,6 +59,12 @@ RSpec.describe 'Request Admin:Posts', type: :request do
   end
 
   describe 'PUT /admin/posts/:id #update' do
+    it 'post id invalid' do
+      put('/admin/posts/not-a-post-id', params: valid_post_attributes)
+      expect(response).to redirect_to(admin_posts_path)
+      expect(flash[:alert]).to include('Post not found')
+    end
+
     it 'update sucessful' do
       post = create(:post, user: @user)
       put("/admin/posts/#{post.id}", params: valid_post_attributes)
@@ -76,10 +82,12 @@ RSpec.describe 'Request Admin:Posts', type: :request do
       expect(response.body).to include('Blog post title cannot be empty')
     end
 
-    it 'post id invalid' do
-      put("/admin/posts/not-a-post-id", params: valid_post_attributes)
-      expect(response).to redirect_to(admin_posts_path)
-      expect(flash[:alert]).to include('Post not found')
+    it 'general error' do
+      post = create(:post, user: @user)
+      allow_any_instance_of(Post).to receive(:save).and_raise('general error')
+      put("/admin/posts/#{post.id}", params: valid_post_attributes)
+      expect(response).not_to redirect_to(admin_posts_path)
+      expect(response.body).to include('general error')
     end
   end
 end
