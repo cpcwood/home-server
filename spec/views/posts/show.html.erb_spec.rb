@@ -12,6 +12,7 @@ describe 'Views' do
       expect(rendered).to match(Regexp.escape(post.title))
       expect(rendered).to match(Regexp.escape(user.username))
       expect(rendered).to match('some markdown')
+      expect(rendered).to match(posts_path)
     end
   end
 end

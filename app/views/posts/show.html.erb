@@ -7,4 +7,5 @@
   <%= @post.user.username %>
   <%= @post.date_published %>
   <%= markdown_admin(@post.text) %>
+  <a href='<%= posts_path%>' class='general-button'>Back to all posts</a>
 </div>
