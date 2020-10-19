@@ -9,6 +9,6 @@ export default class extends Controller {
   }
 
   disconnect () {
-
+    this.datePicker.destroy()
   }
 }
