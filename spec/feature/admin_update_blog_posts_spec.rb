@@ -1,5 +1,5 @@
 feature 'admin update blog posts', feature: true, slow: true do
-  scenario 'create blog post' do
+  scenario 'create and update blog post' do
     seed_db
     visit('/blog')
     expect(page).not_to have_button('Admin Edit')
@@ -17,11 +17,21 @@ feature 'admin update blog posts', feature: true, slow: true do
     expect(page).to have_content('post title')
     expect(page).to have_content('post overview')
     expect(page).to have_content(blog_publish_date.utc)
+
     click_on('View Section')
     expect(page).to have_content('post title')
     expect(page).to have_content('post overview')
     expect(page).to have_content(blog_publish_date.utc)
     # add feature for viewing specific post by css selector.first
+
+    click_on('Admin Edit')
+    first('.blog-post > a').click
+    expect(page).to have_content('post title')
+    fill_in('post[title]', with: 'new title')
+    click_button('Submit')
+    expect(page).to have_content('New blog post created')
+    expect(page).to have_content('new title')
+    
     # add feature for editing specific post by css selector.first
   end
 end
