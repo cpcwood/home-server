@@ -14,18 +14,29 @@ describe('recaptcha_controller', () => {
     application.register('datepicker', datepickerController)
   })
 
-  afterAll(() => {
-    jest.clearAllMocks()
-  })
-
   beforeEach(() => {
     document.body.innerHTML = '<input data-controller="datepicker" data-target="datepicker.dateField" type="text">'
     dateField = document.body.childNodes[0]
   })
 
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   describe('#connect', () => {
     it('datepicker.js initialized', () => {
       expect(Pikaday).toHaveBeenCalledWith({ field: dateField })
+    })
+  })
+
+  describe('#disconnect', () => {
+    beforeEach(() => {
+      document.body.innerHTML = ''
+    })
+
+    it('datepicker.js destroyed', () => {
+      const mockPikadayInstance = Pikaday.mock.instances[0]
+      expect(mockPikadayInstance.destroy).toHaveBeenCalledTimes(1)
     })
   })
 })
