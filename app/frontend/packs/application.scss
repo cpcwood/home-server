@@ -23,6 +23,7 @@ Sass Styles
 |   |   |– _toolbars.scss     # Toolbars
 |   |   |– _images.scss       # Images
 |   |   |– _markdown.scss     # Markdown
+|   |   |– _posts.scss        # Posts
 |   |   ┴
 |   |
 |   |– custom/
@@ -62,6 +63,7 @@ Sass Styles
 @use 'styles/components/toolbars';
 @use 'styles/components/images';
 @use 'styles/components/markdown';
+@use 'styles/components/posts';
 
 // Custom page styles
 @use 'styles/custom/about.scss';
