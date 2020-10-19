@@ -18,7 +18,7 @@ RSpec.describe 'Request Admin:SiteSettings', type: :request, slow: true do
           name: ''
         }
       }
-      expect(flash[:alert]).to include('Site name cannot be blank')
+      expect(response.body).to include('Site name cannot be blank')
     end
 
     it 'update unsuccessful - general error' do
@@ -28,8 +28,8 @@ RSpec.describe 'Request Admin:SiteSettings', type: :request, slow: true do
           name: ''
         }
       }
-      expect(flash[:alert]).to include('Sorry, something went wrong!')
-      expect(flash[:alert]).to include('general error')
+      expect(response.body).to include('Sorry, something went wrong!')
+      expect(response.body).to include('general error')
     end
 
     it 'single attribute update' do

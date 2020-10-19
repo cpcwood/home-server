@@ -16,7 +16,14 @@ module Admin
       if @alerts.any?
         @about.assign_attributes(permitted_params)
         flash[:alert] = @alerts
-        render partial: 'partials/form_replacement', locals: { selector_id: 'admin-abouts-edit-form', form_partial: 'admin/abouts/edit_form', model: { about: @about }}, formats: [:js]
+        render(
+          partial: 'partials/form_replacement',
+          locals: {
+            selector_id: 'admin-abouts-edit-form',
+            form_partial: 'admin/abouts/edit_form',
+            model: { about: @about }
+          },
+          formats: [:js])
         flash[:alert] = nil
       else
         redirect_to(edit_admin_about_path, notice: @notices)
