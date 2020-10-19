@@ -105,5 +105,13 @@ RSpec.describe 'Request Admin:Posts', type: :request do
       expect(flash[:notice]).to include('Blog post removed')
       expect(Post.find_by(id: post.id)).to be_nil
     end
+
+    it 'general error' do
+      post = create(:post, user: @user)
+      allow_any_instance_of(Post).to receive(:destroy).and_raise('general error')
+      delete("/admin/posts/#{post.id}")
+      expect(response).to redirect_to(admin_posts_path)
+      expect(flash[:alert]).to include('general error')
+    end
   end
 end
