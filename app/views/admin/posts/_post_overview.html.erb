@@ -10,4 +10,7 @@
       <%= post.overview %>
     </div>
   </a>
+  <%= form_with(model: [:admin, post], method: 'delete') do |f| %>
+    <%= f.submit("Remove", class: 'input-submit destroy-blog-post-button') %>
+  <% end %>
 </div>

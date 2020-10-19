@@ -1,11 +1,14 @@
 feature 'admin update blog posts', feature: true, slow: true do
   scenario 'create and update blog post' do
+    # admin feature
     seed_db
     visit('/blog')
     expect(page).not_to have_button('Admin Edit')
     login_feature
     visit('/blog')
     click_on('Admin Edit')
+
+    # create post
     click_on('Create New')
     fill_in('post[title]', with: 'post title')
     fill_in('post[overview]', with: 'post overview')
@@ -18,12 +21,14 @@ feature 'admin update blog posts', feature: true, slow: true do
     expect(page).to have_content('post overview')
     expect(page).to have_content(blog_publish_date.utc)
 
+    # view post
     click_on('View Section')
     expect(page).to have_content('post title')
     expect(page).to have_content('post overview')
     expect(page).to have_content(blog_publish_date.utc)
     # add feature for viewing specific post by css selector.first
 
+    # edit post
     click_on('Admin Edit')
     first('.edit-blog-post-button').click
     expect(page).to have_content('post text content')
@@ -31,7 +36,15 @@ feature 'admin update blog posts', feature: true, slow: true do
     click_button('Submit')
     expect(page).to have_content('Blog post updated')
     expect(page).to have_content('new title')
+    click_on('View Section')
+    expect(page).not_to have_content('new title')
 
-    # add feature for editing specific post by css selector.first
+    # destroy post
+    click_on('Admin Edit')
+    first('.destroy-blog-post-button').click
+    expect(page).to have_content('Blog post removed')
+    expect(page).not_to have_content('new title')
+    click_on('View Section')
+    expect(page).not_to have_content('new title')
   end
 end
