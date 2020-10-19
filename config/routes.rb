@@ -36,5 +36,5 @@ Rails.application.routes.draw do
 
   resource :users, only: [:update]
 
-  resources :posts, only: [:index], :path => "/blog"
+  resources :posts, only: [:index, :show], :path => "/blog"
 end
