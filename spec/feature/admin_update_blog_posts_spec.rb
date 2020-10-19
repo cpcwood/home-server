@@ -13,7 +13,7 @@ feature 'admin update blog posts', feature: true, slow: true do
     blog_publish_date = DateTime.new(2020, 04, 19, 0, 0, 0)
     fill_in('post[date_published]', with: blog_publish_date)
     click_button('Submit')
-    expect(page).to have_content('New blog post created')
+    expect(page).to have_content('Blog post created')
     expect(page).to have_content('post title')
     expect(page).to have_content('post overview')
     expect(page).to have_content(blog_publish_date.utc)
@@ -25,11 +25,11 @@ feature 'admin update blog posts', feature: true, slow: true do
     # add feature for viewing specific post by css selector.first
 
     click_on('Admin Edit')
-    first('.blog-post > a').click
-    expect(page).to have_content('post title')
+    first('.edit-blog-post-button').click
+    expect(page).to have_content('post text content')
     fill_in('post[title]', with: 'new title')
     click_button('Submit')
-    expect(page).to have_content('New blog post created')
+    expect(page).to have_content('Blog post updated')
     expect(page).to have_content('new title')
 
     # add feature for editing specific post by css selector.first
