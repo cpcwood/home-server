@@ -40,9 +40,25 @@ module Admin
     end
 
     def update
+      @notices = []
+      @alerts = []
       assign_post
-      @post.update(permitted_params)
-      redirect_to(admin_posts_path, notice: 'Blog post updated')
+      return redirect_to(admin_posts_path, alert: 'Post not found') unless @post
+      update_post
+      if @alerts.any?
+        flash[:alert] = @alerts
+        render(
+          partial: 'partials/form_replacement',
+          locals: {
+            selector_id: 'admin-post-edit-form',
+            form_partial: 'admin/posts/edit_form',
+            model: { post: @post }
+          },
+          formats: [:js])
+        flash[:alert] = nil
+      else
+        redirect_to(admin_posts_path, notice: @notices)
+      end
     end
 
     private
@@ -57,6 +73,10 @@ module Admin
           :text)
     end
 
+    def assign_post
+      @post = Post.find_by(id: params[:id])
+    end
+
     def create_post
       new_post = @user.posts.new
       if new_post.update(permitted_params)
@@ -66,8 +86,12 @@ module Admin
       end
     end
 
-    def assign_post
-      @post = Post.find(params[:id])
+    def update_post
+      if @post.update(permitted_params)
+        @notices.push('Blog post updated')
+      else
+        @alerts.push(@post.errors.values.flatten.last)
+      end
     end
   end
 end
