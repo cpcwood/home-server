@@ -397,5 +397,17 @@
 
 .submit-right {
   flex-direction: row-reverse;
-  justify-content: space-between;
+  float: right;
+  width: fit-content;
+}
+
+.embedded-form-button-container {
+  display: flex;
+  margin-left: 20px;
+  width: max-content;
+
+  input,
+  a {
+    margin: 0 10px 0 0;
+  }
 }

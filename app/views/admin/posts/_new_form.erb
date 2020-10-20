@@ -3,3 +3,7 @@
   <%= render partial: 'admin/posts/form_components', locals: { f: f } %>
 
 <% end %>
+
+<div class="embedded-form-button-container">
+  <%= link_to('Return', admin_posts_path, class: 'standard-button input-submit') %>
+</div>
