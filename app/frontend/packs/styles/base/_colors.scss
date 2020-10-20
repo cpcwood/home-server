@@ -2,6 +2,7 @@
 $dark: rgb(0, 0, 0);
 $light: rgb(255, 255, 255);
 $dark-fade: rgb(112, 112, 112);
+$medium-light: rgb(211, 211, 211);
 
 // font
 $general-font: $dark;
@@ -21,10 +22,10 @@ $box-highlight: $box-border-light;
 $sidebar-background: rgb(34, 37, 42);
 $sidebar-highlight: rgb(15, 16, 19);
 $sidebar-text-unselected: rgb(151, 156, 172);
-$sidebar-text: rgb(211, 211, 211);
+$sidebar-text: $medium-light;
 
 $form-separator: rgb(160, 160, 160);
-$form-slider: rgb(211, 211, 211);
+$form-slider: $medium-light;
 $form-slider-thumb: rgb(76, 175, 80);
 
 $nav-button-hover: rgb(94, 94, 94);
