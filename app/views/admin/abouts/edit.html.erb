@@ -5,8 +5,7 @@
   Admin: Edit About
 <% end %>
 
-<%= render partial: 'partials/admin_toolbar', locals: { model: @about }  %>
-
-<div class='section-content'>
+<section class='reading-pane'>
+  <%= render partial: 'partials/admin_toolbar', locals: { model: @about }  %>
   <%= render partial: 'admin/abouts/edit_form', locals: { about: @about } %>
-</div>
+</section>

@@ -2,14 +2,13 @@
   Blog
 <% end %>
 
-<div class='section-content'>
-  <%= render partial: 'partials/admin_toolbar', locals: { model: (@posts.empty? ? [Post.new] : @posts) } %>
 
-  <%= render partial: 'partials/system_messages'%>
+<%= render partial: 'partials/admin_toolbar', locals: { model: (@posts.empty? ? [Post.new] : @posts) } %>
 
-  <% if @posts.empty? %>
-    <%= render partial: 'posts/no_posts' %>
-  <% else %>
-    <%= render partial: 'posts/post_overview', collection: @posts, as: :post, spacer_template: "partials/standard_ruler" %>
-  <% end %>
-</div>
+<%= render partial: 'partials/system_messages'%>
+
+<% if @posts.empty? %>
+  <%= render partial: 'posts/no_posts' %>
+<% else %>
+  <%= render partial: 'posts/post_overview', collection: @posts, as: :post, spacer_template: "partials/standard_ruler" %>
+<% end %>

@@ -2,7 +2,7 @@
   <%= @about.name %>
 <% end %>
 
-<div class='section-content'>
+<section class='reading-pane'>
   <%= render partial: 'partials/admin_toolbar', locals: { model: @about } %>
 
   <div class='about-contact-container'>
@@ -21,4 +21,4 @@
   </div>
 
   <%= markdown_admin(@about.about_me)%>
-</div>
+</section>

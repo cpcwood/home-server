@@ -31,34 +31,35 @@ html {
   }
 }
 
-h1 {
-  box-sizing: border-box;
+@mixin main-heading {
   color: colors.$inverse-font;
   font-family: $header-font;
-  font-size: 45px;
   font-weight: 300;
-  height: 250px;
   margin: 0;
   padding: 20px;
   width: 100%;
-  
+}
+
+h1 {
+  @include main-heading;
+  font-size: 45px;
   @include respond-to(tablet) {
     font-size: 55px;
   }
   @include respond-to(desktop) {
     font-size: 65px;
   }
+}
 
-  .subtitle {
-    font-family: $header-font;
-    font-size: 25px;
-    padding-top: 15px;
-    @include respond-to(tablet) {
-      font-size: 30px;
-    }
-    @include respond-to(desktop) {
-      font-size: 35px;
-    }
+.subtitle {
+  @include main-heading;
+  font-size: 25px;
+  padding-top: 15px;
+  @include respond-to(tablet) {
+    font-size: 30px;
+  }
+  @include respond-to(desktop) {
+    font-size: 35px;
   }
 }
 
@@ -112,4 +113,10 @@ strong {
   @include respond-to(desktop) {
     font-size: 2.5em;
   }
+}
+
+.reading-pane {
+  max-width: 850px;
+  position: relative;
+  width: 100%;
 }
