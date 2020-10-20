@@ -1,20 +1,8 @@
 @use 'mixins' as *;
 @use 'colors';
 
-@font-face {
-  font-family: 'RobotoTitle';
-  font-weight: 1 999;
-  src: url('../fonts/RobotoSlab-Variable.woff2') format('woff2'), url('../fonts/RobotoSlab-Regular.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'RobotoBody';
-  font-weight: 1 999;
-  src: url('../fonts/Roboto-Variable.woff2') format('woff2'), url('../fonts/Roboto-Medium.woff2') format('woff2');
-}
-
-$header-font: 'RobotoTitle', Fallback, sans-serif;
-$general-font: 'RobotoBody', Fallback, sans-serif;
+$header-font: 'Roboto Slab', Fallback, sans-serif;
+$general-font: 'Roboto', Fallback, sans-serif;
 
 html {
   color: colors.$general-font;
@@ -31,57 +19,72 @@ html {
   }
 }
 
-h1 {
-  box-sizing: border-box;
+@mixin main-heading {
   color: colors.$inverse-font;
   font-family: $header-font;
-  font-size: 45px;
   font-weight: 300;
-  height: 250px;
   margin: 0;
   padding: 20px;
   width: 100%;
-  
+}
+
+h1 {
+  @include main-heading;
+  font-size: 3.2em;
   @include respond-to(tablet) {
-    font-size: 55px;
+    font-size: 3.6em;
   }
   @include respond-to(desktop) {
-    font-size: 65px;
+    font-size: 4.1em;
   }
+}
 
-  .subtitle {
-    font-family: $header-font;
-    font-size: 25px;
+.subtitle {
+  @include main-heading;
+  font-size: 1.8em;
+  line-height: initial;
+  padding-top: 10px;
+  @include respond-to(tablet) {
+    font-size: 2em;
     padding-top: 15px;
-    @include respond-to(tablet) {
-      font-size: 30px;
-    }
-    @include respond-to(desktop) {
-      font-size: 35px;
-    }
   }
+  @include respond-to(desktop) {
+    font-size: 2.3em;
+  }
+}
+
+@mixin sub-header {
+  font-weight: 500;
+  line-height: initial;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
 }
 
 h2 {
-  font-family: $general-font;
+  @include sub-header;
+  font-size: 3em;
 }
 
 h3 {
-  font-family: $general-font;
+  @include sub-header;
+  font-size: 2em;
 }
 
 h4 {
-  font-size: inherit;
-  font-weight: 600;
-  margin: 0;
-
-  @include respond-to(tablet) {
-    margin: 15px 0;
-  }
-  @include respond-to(desktop) {
-    margin: 20px 0;
-  }
+  @include sub-header;
+  font-size: 1.5em;
 }
+
+h5 {
+  @include sub-header;
+  font-size: 1.2em;
+}
+
+h6 {
+  @include sub-header;
+  font-size: 1em;
+}
+
 
 b,
 strong {
@@ -90,14 +93,10 @@ strong {
 
 .small-font {
   color: colors.$darker-font;
-  font-size: 12px;
+  font-size: 0.85em;
   font-weight: 300;
+}
 
-  @include respond-to(tablet) {
-    font-size: 14px;
-  }
-
-  @include respond-to(desktop) {
-    font-size: 16px;
-  }
+sup {
+  top: -0.35em;
 }

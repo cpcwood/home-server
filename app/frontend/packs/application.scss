@@ -7,7 +7,8 @@ Sass Styles
 |   |
 |   |– base/
 |   |   |– _normalize.scss    # Import vendor normalize.css
-|   |   |– _typography.scss   # Typography rules
+|   |   |– _fonts.scss        # Import fonts
+|   |   |– _typography.scss   # Typography and header
 |   |   |– _colors.scss       # Theme colors
 |   |   |– _mixins.scss       # Sass mixins
 |   |   |– _page.scss         # General page structure
@@ -23,6 +24,7 @@ Sass Styles
 |   |   |– _toolbars.scss     # Toolbars
 |   |   |– _images.scss       # Images
 |   |   |– _markdown.scss     # Markdown
+|   |   |– _posts.scss        # Posts
 |   |   ┴
 |   |
 |   |– custom/
@@ -42,10 +44,9 @@ Sass Styles
 ┴   ┴
 */
 
-
-
 // Application Partials
 @use 'styles/base/normalize';
+@use 'styles/base/fonts';
 @use 'styles/base/colors';
 @use 'styles/base/mixins';
 @use 'styles/base/typography';
@@ -62,12 +63,14 @@ Sass Styles
 @use 'styles/components/toolbars';
 @use 'styles/components/images';
 @use 'styles/components/markdown';
+@use 'styles/components/posts';
 
 // Custom page styles
 @use 'styles/custom/about.scss';
 
 // Site Wide Vendor
 @use 'styles/vendor/loaders';
+@use 'node_modules/pikaday/css/pikaday.css';
 
 // Themes
 @use './styles/themes/syntax_highlighting';

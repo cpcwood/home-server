@@ -347,3 +347,27 @@ template {
 [hidden] {
   display: none;
 }
+
+
+/* Custom
+   ========================================================================== */
+
+
+/** 
+ * Remove default button styling
+ */
+
+button {
+  text-indent: 0px;
+  text-shadow: none;
+  display: block;
+  text-align: center;
+  align-items: flex-start;
+  cursor: pointer;
+  background-color: inherit;
+  box-sizing: border-box;
+  margin: 0em;
+  font: inherit;
+  padding: 0;
+  border-width: 0;
+}

@@ -7,7 +7,7 @@ describe 'Views' do
 
       render template: 'admin/site_settings/index.html.erb'
 
-      expect(rendered).to match('Current site name')
+      expect(rendered).to match('Site name')
       expect(rendered).to match(Regexp.escape(site_setting.name))
 
       expect(rendered).to match('Homepage header')

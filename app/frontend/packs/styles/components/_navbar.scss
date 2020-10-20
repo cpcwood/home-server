@@ -127,11 +127,12 @@ $btn-hover-animation: 0.2s;
   font-weight: 450;
   height: 0;
   overflow: hidden;
-  padding: 0;
+  padding: 15px 0;
   position: relative;
   text-align: center;
   text-decoration: none;
-  transition: visibility 0s ease $sidebar-transition, height 0s ease $sidebar-transition, padding 0s ease $sidebar-transition;
+  transition: visibility $sidebar-transition/2 step-end,
+    height $sidebar-transition step-end;
   vertical-align: middle;
   visibility: hidden;
   white-space: nowrap;
@@ -157,8 +158,7 @@ $btn-hover-animation: 0.2s;
   position: fixed;
   right: 0;
   top: 0;
-  transition: opacity $sidebar-transition ease,
-    visibility $sidebar-transition step-end;
+  transition: opacity $sidebar-transition ease, visibility $sidebar-transition step-end;
   visibility: hidden;
 }
 
@@ -175,10 +175,11 @@ $btn-hover-animation: 0.2s;
   .nav-item {
     background-color: colors.$light;
     color: colors.$darker-font;
-    height: fit-content;
-    line-height: 1;
+    height: calc(1em + 30px);
+    line-height: 1em;
     padding: 15px 0;
-    transition: color $btn-hover-animation ease 0s, background-color $btn-hover-animation ease 0s;
+    transition: color $btn-hover-animation ease,
+      background-color $btn-hover-animation ease;
     visibility: visible;
 
     &:hover {
@@ -190,7 +191,7 @@ $btn-hover-animation: 0.2s;
 
   +.nav-screen-cover {
     opacity: 0.5;
-    transition: background-color $sidebar-transition ease 0s;
+    transition: opacity $sidebar-transition ease 0s;
     visibility: visible;
     z-index: 4;
   }

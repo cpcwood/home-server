@@ -1,14 +1,26 @@
 module AdminLinkHelper
-  def admin_link_helper_edit_link
-    "/admin#{current_path}/edit"
+  def admin_link_helper_admin_path(model)
+    if model.is_a?(Enumerable)
+      send("admin_#{model.first.model_name.plural}_path")
+    else
+      send("edit_admin_#{model.model_name.singular}_path")
+    end
+  end
+
+  def admin_link_helper_section_path(model)
+    if model.is_a?(Enumerable)
+      send("#{model.first.model_name.plural}_path")
+    else
+      send("#{model.model_name.singular}_path")
+    end
+  end
+
+  def admin_link_helper_new_path(model)
+    send("new_admin_#{model.first.model_name.singular}_path")
   end
 
   def in_admin_scope?
     current_path.match?(%r{^/admin/})
-  end
-
-  def admin_link_helper_return_link
-    current_path[%r{^/admin((/[\w\-.~/]+)(?=/edit$)|(/[\w\-.~/]+$))}, 1]
   end
 
   private

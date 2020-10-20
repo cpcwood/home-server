@@ -1,0 +1,52 @@
+// Modules
+@use '../base/colors';
+@use '../base/mixins' as *;
+@use '../base/typography' as *;
+
+.post-overview-container {
+  color: colors.$dark;
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  padding: 10px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  width: 100%;
+
+  &:link,
+  &:visited {
+    color: colors.$dark;
+    text-decoration: none;
+    width: 100%;
+  }
+
+  &:focus,
+  &:active {
+    outline: thin dotted;
+  }
+
+  &:hover {
+    outline: none;
+  }
+}
+
+.post-overview-title {
+  font-size: 2.5em;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.post-overview-date {
+  color: colors.$light-dark;
+  font-size: 0.85em;
+  font-weight: 400;
+}
+
+.ruler {
+  background-color: colors.$box-border-color;
+  height: 1px;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  width: 100%;
+}
