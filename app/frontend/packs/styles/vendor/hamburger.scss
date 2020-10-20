@@ -26,6 +26,10 @@ $length-scale: 0.96 !default;
   &:hover {
     cursor: pointer;
   }
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .hamburger {
