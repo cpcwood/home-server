@@ -1,0 +1,15 @@
+<% content_for :section_title do %>
+  Blog
+<% end %>
+
+<section class='reading-pane'>
+  <%= render partial: 'partials/admin_toolbar', locals: { model: (@posts.empty? ? [Post.new] : @posts) } %>
+
+  <%= render partial: 'partials/system_messages'%>
+
+  <% if @posts.empty? %>
+    <%= render partial: 'posts/no_posts' %>
+  <% else %>
+    <%= render partial: 'posts/post_overview', collection: @posts, as: :post, spacer_template: "partials/standard_ruler" %>
+  <% end %>
+  </div>

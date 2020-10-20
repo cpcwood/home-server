@@ -16,12 +16,12 @@
 }
 
 .standard-button {
-  background-image: linear-gradient(to bottom right, colors.$dark, colors.$dark-fade);
+  background-image: linear-gradient(to bottom right, colors.$dark, colors.$medium-dark);
   border: unset;
   box-sizing: border-box;
   color: colors.$light;
-  font-size: 14px;
-  font-weight: 250;
+  font-size: inherit;
+  font-weight: 300;
   line-height: 1em;
   padding: 15px 30px;
   position: relative;
@@ -29,11 +29,24 @@
   text-decoration: none;
   vertical-align: middle;
   white-space: nowrap;
+}
 
-  @include respond-to(tablet) {
-    font-size: 16px;
+.input-submit {
+  background-image: linear-gradient(to bottom right, colors.$dark, colors.$medium-dark);
+  border: unset;
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: colors.$light;
+  font-weight: 300;
+  line-height: 1em;
+  min-width: 110px;
+  padding: 15px 25px;
+
+  &:hover {
+    cursor: pointer;
   }
-  @include respond-to(desktop) {
-    font-size: 18px;
-  }
+}
+
+.destroy-blog-post-button {
+  margin-top: 10px;
 }

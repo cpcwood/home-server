@@ -1,0 +1,9 @@
+<%= form_with(model: post, url: {action: 'create', controller: 'admin/posts'}, class: 'admin-section-form', id: 'admin-post-new-form') do |f| %>
+
+  <%= render partial: 'admin/posts/form_components', locals: { f: f } %>
+
+<% end %>
+
+<div class="embedded-form-button-container">
+  <%= link_to('Return', admin_posts_path, class: 'standard-button input-submit') %>
+</div>

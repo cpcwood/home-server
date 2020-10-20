@@ -1,0 +1,12 @@
+<% content_for :section_title do %>
+  Blog
+<% end %>
+<% content_for :section_subtitle do %>
+  Admin: Edit Blog Post
+<% end %>
+
+<section class='form-pane'>
+
+  <%= render partial: 'admin/posts/edit_form', locals: { post: @post } %>
+
+</section>

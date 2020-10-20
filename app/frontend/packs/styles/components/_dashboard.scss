@@ -24,6 +24,12 @@
     font-size: 22px;
     min-height: 500px;
   }
+
+  h3 {
+    font-weight: 400;
+    margin: 0;
+    padding: 25px 0;
+  }
 }
 
 .dashboard-sidebar {
@@ -79,7 +85,7 @@
 
     display: none;
     font-size: 22px;
-    font-weight: 350;
+    font-weight: 400;
     margin: 0;
     padding: 25px 10px;
     position: relative;
@@ -203,18 +209,4 @@
   width: 100%;
 }
 
-h3 {
-  font-size: 22px;
-  font-weight: 350;
-  margin: 0;
-  padding: 25px 0;
 
-  @include respond-to(tablet) {
-    font-size: 30px;
-    padding: 25px 0;
-  }
-  @include respond-to(desktop) {
-    font-size: 34px;
-    padding: 25px 0;
-  }
-}

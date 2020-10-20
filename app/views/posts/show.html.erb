@@ -1,0 +1,11 @@
+<% content_for :section_title do %>
+  Blog
+<% end %>
+
+<section class='reading-pane'>
+  <h2><%= @post.title %></h2>
+  <%= @post.user.username.humanize %> | <%= full_date(@post.date_published) %>
+  
+  <%= markdown_admin(@post.text) %>
+  <a href='<%= posts_path%>' class='standard-button'>Back to all posts</a>
+</section>

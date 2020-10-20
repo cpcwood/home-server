@@ -1,0 +1,34 @@
+var oldForm = window.document.querySelector('#<%= j(selector_id) %>');
+var parent = oldForm.parentNode;
+
+tempDiv = window.document.createElement('div');
+tempDiv.innerHTML = '<%= j(render partial: form_partial, locals: model ) %>';
+var newForm = tempDiv.childNodes[0];
+
+var images = newForm.getElementsByTagName("img");
+
+var numImages = images.length;
+var counter = 0;
+
+function replaceAndScrollForm() {
+  parent.replaceChild(newForm, oldForm);
+  newForm.scrollIntoView({ block: 'start',  behavior: 'smooth' });
+}
+
+function imageLoaded() {
+  counter += 1;
+  if (counter == numImages) {
+    replaceAndScrollForm();
+  }
+}
+
+if (this.images.length > 0) {
+  for (var i = 0; i < this.images.length; i++) {
+    this.images[i].addEventListener('load', imageLoaded);
+  }
+} else {
+  replaceAndScrollForm();
+}
+
+
+Turbolinks.clearCache();

@@ -42,6 +42,12 @@
   }
 }
 
+.main-page-header {
+  height: 250px;
+  position: relative;
+  width: 100%;
+}
+
 .content {
   align-content: flex-start;
   align-items: flex-start;
@@ -89,8 +95,16 @@
   display: none;
 }
 
-.section-content {
-  max-width: 900px;
+.reading-pane {
+  font-size: 1.2em;
+  line-height: 1.5em;
+  max-width: 800px;
+  position: relative;
+  width: 100%;
+}
+
+.form-pane {
+  max-width: 800px;
   position: relative;
   width: 100%;
 }

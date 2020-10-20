@@ -50,7 +50,7 @@
   border-radius: 5px;
   box-sizing: border-box;
   font-size: 16px;
-  font-weight: 350;
+  font-weight: 400;
   height: 35px;
   margin: 10px 0 0;
   padding: 0 5px;
@@ -109,22 +109,6 @@
   }
   @include respond-to(desktop) {
     margin: 30px 0;
-  }
-}
-
-.input-submit {
-  background-image: linear-gradient(to bottom right, colors.$dark, colors.$dark-fade);
-  border: unset;
-  border-radius: 10px;
-  box-sizing: border-box;
-  color: colors.$light;
-  font-size: 25px;
-  font-weight: 250;
-  padding: 20px 40px;
-  width: 100%;
-
-  &:hover {
-    cursor: pointer;
   }
 }
 
@@ -252,7 +236,6 @@
 }
 
 .embedded-input-box {
-  background-color: colors.$background-color;
   border: colors.$box-border-color 1px solid;
   border-radius: 0;
   box-sizing: border-box;
@@ -332,7 +315,7 @@
 
 .form-submit-container {
   box-sizing: border-box;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   max-width: 300px;
   position: relative;
   width: fit-content;
@@ -414,4 +397,17 @@
 
 .submit-right {
   flex-direction: row-reverse;
+  float: right;
+  width: fit-content;
+}
+
+.embedded-form-button-container {
+  display: flex;
+  margin-left: 20px;
+  width: max-content;
+
+  input,
+  a {
+    margin: 0 10px 0 0;
+  }
 }

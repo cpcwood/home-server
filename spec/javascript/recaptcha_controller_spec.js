@@ -38,8 +38,11 @@ describe('recaptcha_controller', () => {
   })
 
   describe('#disconnect', () => {
-    it('removes reCaptchaScript from head on disconnect', () => {
+    beforeEach(() => {
       document.body.innerHTML = ''
+    })
+
+    it('removes reCaptchaScript from head on disconnect', () => {
       expect(removeChildSpy).toHaveBeenCalled()
     })
   })

@@ -20,6 +20,8 @@ class About < ApplicationRecord
   validates :github_link,
             url: { allow_blank: true, message: 'Github link is not valid' }
 
+  validates_associated :profile_image
+
   def change_messages
     messages = []
     messages += (previous_changes.keys - ['updated_at'])
