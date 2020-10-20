@@ -8,17 +8,26 @@
   display: flex;
   flex-direction: column;
   height: max-content;
+  padding: 10px;
   position: relative;
   text-align: left;
   text-decoration: none;
   width: 100%;
 
-  a:link,
-  a:visited,
-  a:active {
+  &:link,
+  &:visited {
     color: colors.$dark;
     text-decoration: none;
     width: 100%;
+  }
+
+  &:focus,
+  &:active {
+    outline: thin dotted;
+  }
+
+  &:hover {
+    outline: none;
   }
 }
 
