@@ -5,7 +5,7 @@
   Admin: Index
 <% end %>
 
-<div class='section-content'>
+<section class='reading-pane'>
   <%= render partial: 'partials/admin_toolbar', locals: { model: (@posts.empty? ? [Post.new] : @posts) } %>
 
   <%= render partial: 'partials/system_messages'%>
@@ -15,4 +15,4 @@
   <% else %>
     <%= render partial: 'admin/posts/post_overview', collection: @posts, as: :post, spacer_template: "partials/standard_ruler" %>
   <% end %>
-</div>
+</section>

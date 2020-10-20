@@ -21,15 +21,3 @@ $breakpoints: (
       + 'Please make sure it is defined in `$breakpoints` map.';
   }
 }
-
-@mixin header {
-  color: colors.$general-font;
-  font-weight: bold;
-  height: initial;
-  padding: initial;
-}
-
-@mixin reading-pane {
-  max-width: 850px;
-  text-align: justify;
-}

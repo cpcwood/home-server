@@ -3,6 +3,14 @@
 @use '../base/mixins' as *;
 @use '../base/typography';
 
+
+@mixin header {
+  color: colors.$general-font;
+  font-weight: bold;
+  height: initial;
+  padding: initial;
+}
+
 .markdown {
   font-size: 18px;
   line-height: 1.5em;

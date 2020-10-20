@@ -42,6 +42,12 @@
   }
 }
 
+.main-page-header {
+  height: 250px;
+  position: relative;
+  width: 100%;
+}
+
 .content {
   align-content: flex-start;
   align-items: flex-start;
@@ -87,15 +93,4 @@
 
 .hidden {
   display: none;
-}
-
-.section-content {
-  @include reading-pane;
-  position: relative;
-  width: 100%;
-}
-
-.noselect {
-  -webkit-touch-callout: none;
-  user-select: none;          
 }
