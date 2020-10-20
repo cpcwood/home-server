@@ -1,6 +1,6 @@
 <a href='<%= post_path(post) %>' class='post-overview-container view-blog-post-button' title='<%= post.title %>' tabindex='<%=post_iteration.index + 1%>'>
   <div class='post-overview-date'>
-    <%= post.date_published.strftime('%B %d, %Y') %>
+    <%= full_date(post.date_published) %>
   </div>
   <h3 class='post-overview-title'>
     <%= post.title %>
