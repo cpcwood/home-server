@@ -96,7 +96,15 @@
 }
 
 .reading-pane {
-  max-width: 850px;
+  font-size: 1.2em;
+  line-height: 1.5em;
+  max-width: 800px;
+  position: relative;
+  width: 100%;
+}
+
+.form-pane {
+  max-width: 800px;
   position: relative;
   width: 100%;
 }

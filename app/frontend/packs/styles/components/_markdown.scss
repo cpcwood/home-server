@@ -4,13 +4,8 @@
 @use '../base/typography';
 
 .markdown {
-  font-size: 18px;
-  line-height: 1.5em;
-
-  @include respond-to(tablet) {
-    font-size: 20px;
-  }
-
+  margin-bottom: 3em;
+  
   ul {
     margin-top: 5px;
   }

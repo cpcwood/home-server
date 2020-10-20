@@ -42,6 +42,7 @@ h1 {
 .subtitle {
   @include main-heading;
   font-size: 1.8em;
+  line-height: initial;
   padding-top: 10px;
   @include respond-to(tablet) {
     font-size: 2em;
@@ -52,32 +53,36 @@ h1 {
   }
 }
 
+@mixin sub-header {
+  font-weight: 500;
+  line-height: initial;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
+
 h2 {
+  @include sub-header;
   font-size: 3em;
 }
 
 h3 {
+  @include sub-header;
   font-size: 2em;
-  font-weight: 500;
-  margin-bottom: 15px;
 }
 
 h4 {
+  @include sub-header;
   font-size: 1.5em;
-  font-weight: 500;
-  margin-bottom: 15px;
 }
 
 h5 {
+  @include sub-header;
   font-size: 1.2em;
-  font-weight: 500;
-  margin-bottom: 10px;
 }
 
 h6 {
+  @include sub-header;
   font-size: 1em;
-  font-weight: 500;
-  margin-bottom: 10px;
 }
 
 
