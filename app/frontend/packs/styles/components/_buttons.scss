@@ -16,12 +16,12 @@
 }
 
 .standard-button {
-  background-image: linear-gradient(to bottom right, colors.$dark, colors.$dark-fade);
+  background-image: linear-gradient(to bottom right, colors.$dark, colors.$medium-dark);
   border: unset;
   box-sizing: border-box;
   color: colors.$light;
   font-size: inherit;
-  font-weight: 250;
+  font-weight: 300;
   line-height: 1em;
   padding: 15px 30px;
   position: relative;
@@ -32,12 +32,12 @@
 }
 
 .input-submit {
-  background-image: linear-gradient(to bottom right, colors.$dark, colors.$dark-fade);
+  background-image: linear-gradient(to bottom right, colors.$dark, colors.$medium-dark);
   border: unset;
   border-radius: 10px;
   box-sizing: border-box;
   color: colors.$light;
-  font-weight: 250;
+  font-weight: 300;
   line-height: 1em;
   min-width: 110px;
   padding: 15px 25px;
