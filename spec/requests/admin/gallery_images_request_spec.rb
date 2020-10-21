@@ -20,7 +20,6 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
 
   describe 'POST /admin/gallery_images' do
     it 'successful request' do
-      
     end
   end
 end
