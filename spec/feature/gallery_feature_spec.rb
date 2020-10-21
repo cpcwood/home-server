@@ -18,4 +18,17 @@ feature 'admin update gallery', feature: true do
       expect(page.html).to include(@gallery_image.description)
     end
   end
+
+  context 'admin user' do
+    before(:each) do
+      login_feature
+    end
+
+    scenario 'create new image' do
+      visit('/gallery')
+      click_on('Admin Edit')
+      expect(page).to have_content('There are no images here...')
+      click_on('Create New')
+    end
+  end
 end
