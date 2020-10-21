@@ -22,30 +22,38 @@
 class GalleryImage < ApplicationRecord
   belongs_to :user
 
+  has_one_attached :image_file
+
   validates :description,
-            length: { 
-              minimum: 1, 
-              message: 'Description cannot be blank' }
+            length: {
+              minimum: 1,
+              message: 'Description cannot be blank'
+            }
 
   validates :date_taken,
-            timeliness: { 
-              message: 'Date taken must be date' }
+            timeliness: {
+              message: 'Date taken must be date'
+            }
 
   validates :latitude,
-            numericality: { 
-              allow_nil: true, 
-              message: 'Latitude must be a (10, 6) decimal' },
-            format: { 
-              allow_nil: true, 
-              with: /\A[+-]?\d{1,3}\.\d{0,7}\z/, 
-              message: 'Latitude must be a (10, 6) decimal' }
-  
+            numericality: {
+              allow_nil: true,
+              message: 'Latitude must be a (10, 6) decimal'
+            },
+            format: {
+              allow_nil: true,
+              with: /\A[+-]?\d{1,3}\.\d{0,7}\z/,
+              message: 'Latitude must be a (10, 6) decimal'
+            }
+
   validates :longitude,
-            numericality: { 
-              allow_nil: true, 
-              message: 'Longitude must be a (10, 6) decimal' },
-            format: { 
-              allow_nil: true, 
-              with: /\A[+-]?\d{1,3}\.\d{0,7}\z/, 
-              message: 'Longitude must be a (10, 6) decimal' }
+            numericality: {
+              allow_nil: true,
+              message: 'Longitude must be a (10, 6) decimal'
+            },
+            format: {
+              allow_nil: true,
+              with: /\A[+-]?\d{1,3}\.\d{0,7}\z/,
+              message: 'Longitude must be a (10, 6) decimal'
+            }
 end
