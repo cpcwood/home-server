@@ -10,4 +10,11 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
       expect(response).to render_template(:index)
     end
   end
+
+  describe 'GET /admin/gallery_images/new' do
+    it 'template render' do
+      get('/admin/gallery_images/new')
+      expect(response).to render_template(:new)
+    end
+  end
 end
