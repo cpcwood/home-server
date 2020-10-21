@@ -2,14 +2,16 @@
   Gallery
 <% end %>
 
+<%= render partial: 'partials/admin_toolbar', locals: { model: (@gallery_images.empty? ? [GalleryImage.new] : @gallery_images) } %>
+
 <%= render partial: 'partials/system_messages'%>
 
 <section class='gallery-container'>
 
-    <% if @gallery_images.empty? %>
-      <%= render partial: 'gallery_images/no_images' %>
-    <% else %>
-      <%= render partial: 'gallery_images/image_thumbnail', collection: @gallery_images, as: :gallery_image %>
-    <% end %>
+  <% if @gallery_images.empty? %>
+    <%= render partial: 'gallery_images/no_images' %>
+  <% else %>
+    <%= render partial: 'gallery_images/image_thumbnail', collection: @gallery_images, as: :gallery_image %>
+  <% end %>
 
 </section>

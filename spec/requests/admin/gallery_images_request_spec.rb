@@ -1,11 +1,12 @@
-RSpec.describe 'GalleryImages', type: :request do
+RSpec.describe 'Admin::GalleryImages', type: :request do
   before(:each) do
     seed_user_and_settings
+    login
   end
 
-  describe 'GET /gallery #index' do
+  describe 'GET /admin/gallery' do
     it 'template render' do
-      get('/gallery')
+      get('/admin/gallery')
       expect(response).to render_template(:index)
     end
   end
