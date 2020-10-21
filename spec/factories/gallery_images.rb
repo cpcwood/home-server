@@ -23,7 +23,7 @@ FactoryBot.define do
   factory :gallery_image do
     description { 'test gallery image' }
     date_taken { DateTime.new(2020, 04, 19, 0, 0, 0) }
-    lattitude { 51.510357 }
+    latitude { 51.510357 }
     longitude { -0.116773 }
     user
   end
