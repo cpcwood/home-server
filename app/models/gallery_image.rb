@@ -20,4 +20,9 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class GalleryImage < ApplicationRecord
+  belongs_to :user
+
+  validates :description,
+            presence: true,
+            length: { minimum: 1 }
 end

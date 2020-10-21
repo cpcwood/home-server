@@ -19,6 +19,7 @@
 #
 #  fk_rails_...  (user_id => users.id)
 #
+
 FactoryBot.define do
   factory :gallery_image do
     description { 'test gallery image' }
