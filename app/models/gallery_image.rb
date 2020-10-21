@@ -21,6 +21,7 @@
 #
 class GalleryImage < ApplicationRecord
   require 'image_processing'
+  require 'mini_magick'
 
   belongs_to :user
 
@@ -59,14 +60,14 @@ class GalleryImage < ApplicationRecord
               message: 'Longitude must be a (10, 6) decimal'
             }
 
-  before_save :process_image_attachment
-
-  private
+  before_validation :process_image_attachment
 
   def process_image_attachment
     image_upload = attachment_changes['image_file']
     attach_image(image_upload.attachable) if image_upload&.attachable.instance_of?(ActionDispatch::Http::UploadedFile)
   end
+
+  private
 
   def attach_image(upload_params)
     image_file_path = upload_params.tempfile.path
@@ -74,5 +75,35 @@ class GalleryImage < ApplicationRecord
       errors[:base].push('Image invalid, please upload a jpeg or png file!')
       throw(:abort)
     end
+    extract_meta_data(image_file_path)
+  end
+
+  def extract_meta_data(image_file_path)
+    image_meta_data = MiniMagick::Image.new(image_file_path).exif
+    extract_date_taken(image_meta_data)
+    extract_latitude(image_meta_data)
+    extract_longitude(image_meta_data)
+  end
+
+  def extract_date_taken(image_meta_data)
+    return unless date_taken.blank? && image_meta_data['DateTimeOriginal']
+    self.date_taken = DateTime.parse(image_meta_data['DateTimeOriginal'].gsub(':', '-'))
+  end
+
+  def extract_latitude(image_meta_data)
+    return unless latitude.blank? && image_meta_data['GPSLatitude'] && image_meta_data['GPSLatitudeRef']
+    self.latitude = parse_exif_dms(coordinate: image_meta_data['GPSLatitude'], ref: image_meta_data['GPSLatitudeRef'])
+  end
+
+  def extract_longitude(image_meta_data)
+    return unless longitude.blank? && image_meta_data['GPSLongitude'] && image_meta_data['GPSLongitudeRef']
+    self.longitude = parse_exif_dms(coordinate: image_meta_data['GPSLongitude'], ref: image_meta_data['GPSLongitudeRef'])
+  end
+
+  def parse_exif_dms(coordinate:, ref:)
+    d, m, s = coordinate.split(', ').map(&:to_r)
+    dd = d + m / 60 + s / 3600
+    dd *= -1 if %w[S W].include?(ref)
+    dd
   end
 end

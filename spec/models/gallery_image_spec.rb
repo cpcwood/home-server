@@ -88,14 +88,28 @@ RSpec.describe GalleryImage, type: :model do
     end
   end
 
-  context 'before_save' do
+  context 'before_validation' do
     describe '#process_image_attachment' do
-      it 'validate image' do
+      before(:each) do
         subject
         allow(image_file_upload).to receive(:instance_of?).with(ActionDispatch::Http::UploadedFile).and_return(true)
+      end
+
+      it 'validate image' do
         expect(Image).to receive(:valid?).and_return(false)
         subject.image_file = image_file_upload
         expect(subject.save).to eq(false)
+      end
+
+      it 'attributes missing - extract meta data' do
+        subject.image_file = image_file_upload
+        subject.date_taken = nil
+        subject.latitude = nil
+        subject.longitude = nil
+        subject.save
+        expect(subject.date_taken).to eq(DateTime.new(2020, 04, 19))
+        expect(subject.latitude).to eq(1)
+        expect(subject.longitude).to eq(-1)
       end
     end
   end
