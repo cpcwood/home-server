@@ -23,6 +23,9 @@
 RSpec.describe GalleryImage, type: :model do
   subject { create(:gallery_image) }
 
+  let(:image_path_valid) { Rails.root.join('spec/files/sample_image.jpg') }
+  let(:image_file_upload) { fixture_file_upload(image_path_valid, 'image/jpg') }
+
   context 'validations' do
     describe 'description' do
       it 'format' do
@@ -81,6 +84,18 @@ RSpec.describe GalleryImage, type: :model do
         expect(subject).to be_valid
         subject.longitude = 179.999999
         expect(subject).to be_valid
+      end
+    end
+  end
+
+  context 'before_save' do
+    describe '#process_image_attachment' do
+      it 'validate image' do
+        subject
+        allow(image_file_upload).to receive(:instance_of?).with(ActionDispatch::Http::UploadedFile).and_return(true)
+        expect(Image).to receive(:valid?).and_return(false)
+        subject.image_file = image_file_upload
+        expect(subject.save).to eq(false)
       end
     end
   end

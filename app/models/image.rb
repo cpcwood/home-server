@@ -1,7 +1,7 @@
 class Image < ApplicationRecord
-  self.abstract_class = true
-
   require 'image_processing'
+
+  self.abstract_class = true
 
   DEFAULT_X_LOC = 50
   DEFAULT_Y_LOC = 50
