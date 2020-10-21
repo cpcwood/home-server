@@ -20,7 +20,7 @@ def seed_blog_post
   @blog_post = create(:post, user: @user)
 end
 
-def seed_test_user
+def seed_user_and_settings
   seed_user
   seed_site_settings
 end
