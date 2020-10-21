@@ -44,10 +44,20 @@ class Image < ApplicationRecord
     image.valid? ? image.mime_type.match?(%r{\Aimage/(png|jpeg)\z}i) : false
   end
 
-  def self.resize(image_path:, x_dim:, y_dim:)
-    manipulated_image = resize_and_crop(image: initalize_image(image_path), x_dim: x_dim, y_dim: y_dim)
-    image_to_process = remove_exif_data(manipulated_image)
-    image_to_process.call
+  def self.resize_and_fill(image_path:, x_dim:, y_dim:)
+    pipeline = initalize_image(image_path)
+    pipeline = resize_and_crop(pipeline: pipeline, x_dim: x_dim, y_dim: y_dim)
+    pipeline = pipeline.strip
+    pipeline = convert(pipeline)
+    pipeline.call
+  end
+
+  def self.resize_to_max(image_path:, max_dim:)
+    pipeline = initalize_image(image_path)
+    pipeline = pipeline.resize_to_limit(max_dim, max_dim)
+    pipeline = pipeline.strip
+    pipeline = convert(pipeline)
+    pipeline.call
   end
 
   private
@@ -63,7 +73,7 @@ class Image < ApplicationRecord
       errors[:base].push("#{description.humanize} invalid, please upload a jpeg or png file!")
       throw(:abort)
     end
-    modified_image = Image.resize(image_path: image_file_path, x_dim: x_dim, y_dim: y_dim)
+    modified_image = Image.resize_and_fill(image_path: image_file_path, x_dim: x_dim, y_dim: y_dim)
     image_file.attach(
       io: File.open(modified_image),
       filename: upload_params.original_filename,
@@ -74,11 +84,13 @@ class Image < ApplicationRecord
     ImageProcessing::MiniMagick.source(image_path)
   end
 
-  private_class_method def self.resize_and_crop(image:, x_dim:, y_dim:)
-    image.resize_to_fill(x_dim, y_dim, gravity: 'north-west')
+  private_class_method def self.resize_and_crop(pipeline:, x_dim:, y_dim:)
+    pipeline.resize_to_fill(x_dim, y_dim, gravity: 'north-west')
   end
 
-  private_class_method def self.remove_exif_data(image)
-    image.strip
+  private_class_method def self.convert(pipeline)
+    pipeline
+      .saver(quality: 85)
+      .convert('jpg')
   end
 end

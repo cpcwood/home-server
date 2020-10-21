@@ -57,7 +57,7 @@ RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
 
     it 'upload image' do
       expect(Image).to receive(:valid?).and_call_original
-      expect(Image).to receive(:resize).with(image_path: anything, x_dim: ProfileImage.new.x_dim, y_dim: ProfileImage.new.y_dim).and_call_original
+      expect(Image).to receive(:resize_and_fill).with(image_path: anything, x_dim: ProfileImage.new.x_dim, y_dim: ProfileImage.new.y_dim).and_call_original
       put '/admin/about', params: {
         about: {
           profile_image_attributes: {
