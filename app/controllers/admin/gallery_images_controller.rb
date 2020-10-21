@@ -9,8 +9,24 @@ module Admin
     end
 
     def create
-      @user.gallery_images.create(permitted_params)
-      redirect_to(admin_gallery_images_path, notice: 'Gallery image created')
+      @notices = []
+      @alerts = []
+      @gallery_image = @user.gallery_images.new
+      update_model(model: @gallery_image, success_message: 'Gallery image created')
+      if @alerts.any?
+        flash[:alert] = @alerts
+        render(
+          partial: 'partials/form_replacement',
+          locals: {
+            selector_id: 'admin-gallery-images-new-form',
+            form_partial: 'admin/gallery_images/new_form',
+            model: { gallery_image: @gallery_image }
+          },
+          formats: [:js])
+        flash[:alert] = nil
+      else
+        redirect_to(admin_gallery_images_path, notice: @notices)
+      end
     end
 
     private
@@ -22,6 +38,14 @@ module Admin
         :date_taken,
         :latitude,
         :longitude)
+    end
+
+    def update_model(model:, success_message:)
+      if model.update(permitted_params)
+        @notices.push(success_message)
+      else
+        @alerts.push(model.errors.values.flatten.last)
+      end
     end
   end
 end
