@@ -1,7 +1,7 @@
 describe 'Views' do
   let(:gallery_image) { build(:gallery_image) }
 
-  describe '/admin/gallery_images/new rendering' do
+  describe '/admin/gallery-images/new rendering' do
     context 'new view' do
       before(:each) do
         assign(:gallery_image, gallery_image)
