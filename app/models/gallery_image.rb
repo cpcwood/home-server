@@ -23,6 +23,9 @@ class GalleryImage < ApplicationRecord
   belongs_to :user
 
   validates :description,
-            presence: true,
-            length: { minimum: 1 }
+            length: { minimum: 1, message: 'Description cannot be blank' }
+
+  validates :date_taken,
+            timeliness: { message: 'Date taken must be date' }
+
 end
