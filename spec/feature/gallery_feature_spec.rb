@@ -33,8 +33,9 @@ feature 'admin update gallery', feature: true do
       fill_in('gallery_image[date_taken]', with: DateTime.new(2020, 04, 19, 0, 0, 0))
       fill_in('gallery_image[latitude]', with: 179)
       fill_in('gallery_image[longitude]', with: -179)
-      find_field('gallery_image[image_file]').set(Rails.root.join('spec/files/sample_image.jpg'))  
+      find_field('gallery_image[image_file]').set(Rails.root.join('spec/files/sample_image.jpg'))
       click_button('Submit')
+      expect(page).to have_content('Gallery image created')
       # next - check messages
     end
   end
