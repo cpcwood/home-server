@@ -23,7 +23,7 @@ class GalleryImage < ApplicationRecord
   require 'image_processing'
   require 'mini_magick'
 
-  MAX_DIM = 2000
+  MAX_DIM = 3000
 
   belongs_to :user
 
