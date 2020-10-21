@@ -20,6 +20,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class GalleryImage < ApplicationRecord
+  require 'image_processing'
+
   belongs_to :user
 
   has_one_attached :image_file
@@ -56,4 +58,21 @@ class GalleryImage < ApplicationRecord
               with: /\A[+-]?\d{1,3}\.\d{0,7}\z/,
               message: 'Longitude must be a (10, 6) decimal'
             }
+
+  before_save :process_image_attachment
+
+  private
+
+  def process_image_attachment
+    image_upload = attachment_changes['image_file']
+    attach_image(image_upload.attachable) if image_upload&.attachable.instance_of?(ActionDispatch::Http::UploadedFile)
+  end
+
+  def attach_image(upload_params)
+    image_file_path = upload_params.tempfile.path
+    unless Image.valid?(image_file_path)
+      errors[:base].push('Image invalid, please upload a jpeg or png file!')
+      throw(:abort)
+    end
+  end
 end
