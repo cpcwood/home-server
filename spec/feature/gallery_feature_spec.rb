@@ -36,7 +36,8 @@ feature 'admin update gallery', feature: true do
       find_field('gallery_image[image_file]').set(Rails.root.join('spec/files/sample_image.jpg'))
       click_button('Submit')
       expect(page).to have_content('Gallery image created')
-      # next - check messages
+      expect(page).to have_selector('img.gallery-image-thumbnail')
+      expect(page.html).to include('new gallery image')
     end
   end
 end
