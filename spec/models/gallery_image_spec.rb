@@ -65,5 +65,23 @@ RSpec.describe GalleryImage, type: :model do
         expect(subject).to be_valid
       end
     end
+
+    describe 'longitude' do
+      it 'type' do
+        subject.longitude = 'not a number'
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:longitude].first).to eq('Longitude must be a (10, 6) decimal')
+      end
+
+      it 'format' do
+        subject.longitude = 1179.999999
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:longitude].first).to eq('Longitude must be a (10, 6) decimal')
+        subject.longitude = nil
+        expect(subject).to be_valid
+        subject.longitude = 179.999999
+        expect(subject).to be_valid
+      end
+    end
   end
 end
