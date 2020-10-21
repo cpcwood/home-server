@@ -1,6 +1,6 @@
 feature 'Admin update site settings', feature: true, slow: true do
   before(:each) do
-    seed_db
+    seed_test_user
     login_feature
   end
 

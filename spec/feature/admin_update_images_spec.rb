@@ -1,6 +1,6 @@
 feature 'Admin update images', feature: true, slow: true do
   before(:each) do
-    seed_db
+    seed_test_user
   end
 
   scenario 'Update custom image location' do

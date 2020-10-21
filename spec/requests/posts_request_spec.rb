@@ -1,6 +1,6 @@
 RSpec.describe 'Posts', type: :request do
   before(:each) do
-    seed_db
+    seed_test_user
   end
 
   describe 'GET /blog' do

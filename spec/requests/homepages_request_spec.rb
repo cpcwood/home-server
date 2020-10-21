@@ -1,6 +1,6 @@
 RSpec.describe 'Request Homepages', type: :request do
   before(:each) do
-    seed_db
+    seed_test_user
   end
 
   it 'Renders the homepage' do

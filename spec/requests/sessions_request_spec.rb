@@ -1,6 +1,6 @@
 RSpec.describe 'Request Sessions', type: :request do
   before(:each) do
-    seed_db
+    seed_test_user
   end
 
   describe 'GET /login #login ' do

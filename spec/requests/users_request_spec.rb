@@ -1,6 +1,6 @@
 RSpec.describe 'Request Users', type: :request do
   before(:each) do
-    seed_db
+    seed_test_user
   end
 
   describe 'PUT /user.id #update' do
