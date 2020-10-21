@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     resources :posts, only: [:index], :path => "/blog"
     resources :posts, only: [:new, :create, :edit, :update, :destroy]
     resources :gallery_images, only: [:index], :path => "/gallery"
-    resources :gallery_images, only: [:new]
+    resources :gallery_images, only: [:new, :create]
   end
 
   get '/say-hello', to: 'homepages#index'
