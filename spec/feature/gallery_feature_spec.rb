@@ -29,6 +29,12 @@ feature 'admin update gallery', feature: true do
       click_on('Admin Edit')
       expect(page).to have_content('There are no images here...')
       click_on('Create New')
+      fill_in('gallery_image[description]', with: 'new gallery image')
+      fill_in('gallery_image[date_taken]', with: DateTime.new(2020, 04, 19, 0, 0, 0))
+      fill_in('gallery_image[latitude]', with: 179)
+      fill_in('gallery_image[longitude]', with: -179)
+      find_field('gallery_image[image_file]').set(Rails.root.join('spec/files/sample_image.jpg'))  
+      # next - check messages
     end
   end
 end

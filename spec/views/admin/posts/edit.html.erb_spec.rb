@@ -1,7 +1,7 @@
 describe 'Views' do
   let(:post) { create(:post) }
 
-  describe '/admin/blog rendering' do
+  describe '/admin/posts/:id/edit rendering' do
     context 'edit view' do
       before(:each) do
         assign(:post, post)

@@ -17,4 +17,10 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
       expect(response).to render_template(:new)
     end
   end
+
+  describe 'POST /admin/gallery_images' do
+    it 'successful request' do
+      
+    end
+  end
 end

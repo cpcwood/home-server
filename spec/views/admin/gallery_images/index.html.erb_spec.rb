@@ -4,7 +4,7 @@ describe 'Views' do
   let(:gallery_image2) { build_stubbed(:gallery_image, user: user) }
   let(:gallery_images) { [gallery_image1, gallery_image2] }
 
-  describe '/admin/blog rendering' do
+  describe '/admin/gallery rendering' do
     before(:each) do
       allow_any_instance_of(AdminLinkHelper).to receive(:in_admin_scope?).and_return(true)
     end
