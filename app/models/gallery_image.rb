@@ -28,4 +28,7 @@ class GalleryImage < ApplicationRecord
   validates :date_taken,
             timeliness: { message: 'Date taken must be date' }
 
+  validates :latitude,
+            numericality: { allow_nil: true, message: 'Latitude must be a (10, 6) decimal' },
+            format: { allow_nil: true, with: /\A[+-]?\d{1,3}\.\d{0,7}\z/, message: 'Latitude must be a (10, 6) decimal' }
 end
