@@ -11,8 +11,13 @@ module Admin
     def create
       @notices = []
       @alerts = []
-      @gallery_image = @user.gallery_images.new
-      update_model(model: @gallery_image, success_message: 'Gallery image created')
+      begin
+        @gallery_image = @user.gallery_images.new
+        update_model(model: @gallery_image, success_message: 'Gallery image created')
+      rescue StandardError => e
+        @alerts.push('Sorry, something went wrong!')
+        @alerts.push(e.message)
+      end
       if @alerts.any?
         flash[:alert] = @alerts
         render(
