@@ -101,6 +101,14 @@ RSpec.describe GalleryImage, type: :model do
         expect(subject.save).to eq(false)
       end
 
+      it 'resizes image' do
+        expect(Image).to receive(:resize_to_max) do |image|
+          image[:image_path]
+        end
+        subject.image_file = image_file_upload
+        subject.save
+      end
+
       it 'attributes missing - extract meta data' do
         subject.image_file = image_file_upload
         subject.date_taken = nil

@@ -23,6 +23,8 @@ class GalleryImage < ApplicationRecord
   require 'image_processing'
   require 'mini_magick'
 
+  MAX_DIM = 2000
+
   belongs_to :user
 
   has_one_attached :image_file
@@ -76,6 +78,11 @@ class GalleryImage < ApplicationRecord
       throw(:abort)
     end
     extract_meta_data(image_file_path)
+    processed_image = Image.resize_to_max(image_path: image_file_path, max_dim: MAX_DIM)
+    image_file.attach(
+      io: File.open(processed_image),
+      filename: upload_params.original_filename,
+      content_type: upload_params.content_type)
   end
 
   def extract_meta_data(image_file_path)
