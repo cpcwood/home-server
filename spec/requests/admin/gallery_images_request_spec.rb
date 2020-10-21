@@ -19,10 +19,7 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
   end
 
   let(:image_path) { Rails.root.join('spec/files/sample_image.jpg') }
-  let(:image_invalid_path) { Rails.root.join('spec/files/sample_image_invalid.jpg') }
   let(:image_fixture) { fixture_file_upload(image_path, 'image/png') }
-  let(:image_fixture_invalid) { fixture_file_upload(image_invalid_path, 'image/png') }
-  let(:image_file_error) { double :image_file, attach: false }
 
   describe 'POST /admin/gallery-images' do
     let(:valid_attributes) do
@@ -49,9 +46,16 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
       expect(response).to redirect_to(admin_gallery_images_path)
     end
 
-    it 'validation error' do
+    it 'validation failure' do
       post('/admin/gallery-images', params: invalid_attributes)
       expect(response.body).to include('Description cannot be blank')
+      expect(response).not_to redirect_to(admin_gallery_images_path)
+    end
+
+    it 'general error' do
+      allow_any_instance_of(GalleryImage).to receive(:save).and_raise('general error')
+      post('/admin/gallery-images', params: valid_attributes)
+      expect(response.body).to include('general error')
       expect(response).not_to redirect_to(admin_gallery_images_path)
     end
   end
