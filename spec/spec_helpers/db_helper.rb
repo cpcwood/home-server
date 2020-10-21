@@ -20,6 +20,10 @@ def seed_blog_post
   @blog_post = create(:post, user: @user)
 end
 
+def seed_gallery_image
+  @gallery_image = create(:gallery_image, user: @user)
+end
+
 def seed_user_and_settings
   seed_user
   seed_site_settings
