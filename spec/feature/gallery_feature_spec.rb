@@ -27,7 +27,6 @@ feature 'admin update gallery', feature: true do
     scenario 'create new image' do
       visit('/gallery')
       click_on('Admin Edit')
-      expect(page).to have_content('There are no images here...')
       click_on('Create New')
     end
   end
