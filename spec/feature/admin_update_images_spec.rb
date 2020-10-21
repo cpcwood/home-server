@@ -1,11 +1,11 @@
 feature 'Admin update images', feature: true, slow: true do
   before(:each) do
     seed_user_and_settings
+    login_feature
+    visit('admin/images')
   end
 
   scenario 'Update custom image location' do
-    login_feature
-    visit('admin/images')
     fill_in('header_image_x_loc', match: :first, with: '10')
     click_button('Update header image')
     expect(page).to have_content('Header image x loc updated!')
@@ -15,8 +15,6 @@ feature 'Admin update images', feature: true, slow: true do
   end
 
   scenario 'Update header image' do
-    login_feature
-    visit('admin/images')
     find_field('header_image[image_file]').set(Rails.root.join('spec/files/sample_image.jpg'))
     click_button('Update header image')
     expect(page).to have_content('Header image updated!')
@@ -31,8 +29,6 @@ feature 'Admin update images', feature: true, slow: true do
   end
 
   scenario 'Update custom image location' do
-    login_feature
-    visit('admin/images')
     fill_in('header_image_x_loc', match: :first, with: '10')
     click_button('Update header image')
     expect(page).to have_content('Header image x loc updated!')
