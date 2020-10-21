@@ -1,12 +1,13 @@
 feature 'Admin update about section', feature: true do
   before(:each) do
-    seed_test_user
+    seed_user_and_settings
     seed_about
   end
 
   context 'public user' do
     scenario 'view about' do
-      visit('/about')
+      visit('/')
+      click_on('ABOUT')
       expect(page).not_to have_button('Admin Edit')
       expect(page).to have_content(@about.name)
       expect(page).to have_content(@about.about_me)

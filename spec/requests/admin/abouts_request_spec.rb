@@ -3,7 +3,7 @@ RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
   let(:image_fixture) { fixture_file_upload(image_path, 'image/png') }
 
   before(:each) do
-    seed_test_user
+    seed_user_and_settings
     seed_about
     login
   end

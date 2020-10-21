@@ -15,7 +15,7 @@ RSpec.describe 'Request Admin:Posts', type: :request do
   end
 
   before(:each) do
-    seed_test_user
+    seed_user_and_settings
     login
   end
 

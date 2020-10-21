@@ -1,11 +1,12 @@
 feature 'admin update blog posts', feature: true do
   before(:each) do
-    seed_test_user
+    seed_user_and_settings
   end
 
   context 'public user' do
     scenario 'no blog posts' do
-      visit('/blog')
+      visit('/')
+      click_on('BLOG')
       expect(page).to have_content('There are no posts here...')
     end
 

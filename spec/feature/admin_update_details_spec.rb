@@ -1,6 +1,6 @@
 feature 'Admin update details', feature: true do
   before(:each) do
-    seed_test_user
+    seed_user_and_settings
   end
 
   scenario 'Update username' do
