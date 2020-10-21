@@ -4,7 +4,7 @@ module Admin
       @gallery_images = GalleryImage.order(created_at: :desc)
     end
 
-    def new 
+    def new
       @gallery_image = GalleryImage.new
     end
   end
