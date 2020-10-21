@@ -37,10 +37,22 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
       }
     end
 
+    let(:invalid_attributes) do
+      invalid_attributes = valid_attributes
+      invalid_attributes[:gallery_image][:description] = ''
+      invalid_attributes
+    end
+
     it 'successful request' do
       post('/admin/gallery-images', params: valid_attributes)
       expect(flash[:notice]).to include('Gallery image created')
       expect(response).to redirect_to(admin_gallery_images_path)
+    end
+
+    it 'validation error' do
+      post('/admin/gallery-images', params: invalid_attributes)
+      expect(response.body).to include('Description cannot be blank')
+      expect(response).not_to redirect_to(admin_gallery_images_path)
     end
   end
 end
