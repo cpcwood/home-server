@@ -7,5 +7,7 @@ module Admin
     def new
       @gallery_image = GalleryImage.new
     end
+
+    def create; end
   end
 end
