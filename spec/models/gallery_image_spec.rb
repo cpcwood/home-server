@@ -25,14 +25,22 @@ RSpec.describe GalleryImage, type: :model do
 
   context 'validations' do
     describe 'description' do
-      it 'Presence' do
+      it 'Length' do
         subject.description = nil
         expect(subject).to_not be_valid
-      end
-
-      it 'Value' do
         subject.description = ''
         expect(subject).to_not be_valid
+        expect(subject.errors.messages[:description]).to eq ['Description cannot be blank']
+      end
+    end
+
+    describe 'date_taken' do
+      it 'type' do
+        subject.date_taken = nil
+        expect(subject).to_not be_valid
+        subject.date_taken = 'not a date'
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:date_taken]).to eq ['Date taken must be date']
       end
     end
   end
