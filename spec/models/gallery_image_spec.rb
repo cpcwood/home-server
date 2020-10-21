@@ -19,8 +19,21 @@
 #
 #  fk_rails_...  (user_id => users.id)
 #
-require 'rails_helper'
 
 RSpec.describe GalleryImage, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { create(:gallery_image) }
+
+  context 'validations' do
+    describe 'description' do
+      it 'Presence' do
+        subject.description = nil
+        expect(subject).to_not be_valid
+      end
+
+      it 'Value' do
+        subject.description = ''
+        expect(subject).to_not be_valid
+      end
+    end
+  end
 end
