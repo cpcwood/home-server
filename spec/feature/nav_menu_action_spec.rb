@@ -1,6 +1,6 @@
 feature 'Nav menu action', feature: true, js: true do
   before(:each) do
-    seed_db
+    seed_test_user
   end
 
   scenario 'Clicking hamburger opens and closes navbar menu' do

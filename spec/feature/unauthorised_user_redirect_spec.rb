@@ -1,6 +1,6 @@
 feature 'Unauthorised user redirect', feature: true do
   before(:each) do
-    seed_db
+    seed_test_user
   end
 
   scenario 'Only logged in user can access admin page' do

@@ -1,6 +1,6 @@
 feature 'Password reset', feature: true do
   before(:each) do
-    seed_db
+    seed_test_user
     stub_recaptcha_service
   end
 
