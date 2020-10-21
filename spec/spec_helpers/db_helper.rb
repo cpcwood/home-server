@@ -21,7 +21,7 @@ def seed_blog_post
 end
 
 def seed_gallery_image
-  @gallery_image = create(:gallery_image, user: @user)
+  @gallery_image = create(:gallery_image, user_id: @user.id)
 end
 
 def seed_user_and_settings

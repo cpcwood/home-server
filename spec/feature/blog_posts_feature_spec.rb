@@ -7,6 +7,7 @@ feature 'admin update blog posts', feature: true do
     scenario 'no blog posts' do
       visit('/')
       click_on('BLOG')
+      expect(page).to have_current_path('/blog')
       expect(page).to have_content('There are no posts here...')
     end
 

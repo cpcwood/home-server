@@ -7,13 +7,13 @@ feature 'admin update gallery', feature: true do
     scenario 'no gallery images' do
       visit('/')
       click_on('GALLERY')
+      expect(page).to have_current_path('/gallery')
       expect(page).to have_content('There are no images here...')
     end
 
     scenario 'gallery images' do
       seed_gallery_image
-      visit('/')
-      click_on('GALLERY')
+      visit('/gallery')
       expect(page).to have_selector('img.gallery-image-thumbnail')
       expect(page).to have_content(@gallery_image.description)
     end

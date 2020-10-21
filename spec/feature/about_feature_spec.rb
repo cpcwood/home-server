@@ -8,6 +8,7 @@ feature 'Admin update about section', feature: true do
     scenario 'view about' do
       visit('/')
       click_on('ABOUT')
+      expect(page).to have_current_path('/about')
       expect(page).not_to have_button('Admin Edit')
       expect(page).to have_content(@about.name)
       expect(page).to have_content(@about.about_me)
