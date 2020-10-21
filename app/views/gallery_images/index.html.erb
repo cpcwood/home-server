@@ -9,7 +9,7 @@
     <% if @gallery_images.empty? %>
       <%= render partial: 'gallery_images/no_images' %>
     <% else %>
-      <%= render partial: 'gallery_images/image_thumbnail', collection: @gallery_images, as: :image %>
+      <%= render partial: 'gallery_images/image_thumbnail', collection: @gallery_images, as: :gallery_image %>
     <% end %>
 
 </section>

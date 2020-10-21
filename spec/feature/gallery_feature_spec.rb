@@ -15,7 +15,7 @@ feature 'admin update gallery', feature: true do
       seed_gallery_image
       visit('/gallery')
       expect(page).to have_selector('img.gallery-image-thumbnail')
-      expect(page).to have_content(@gallery_image.description)
+      expect(page.html).to include(@gallery_image.description)
     end
   end
 end
