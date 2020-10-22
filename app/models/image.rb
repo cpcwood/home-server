@@ -11,6 +11,8 @@ class Image < ApplicationRecord
 
   before_save :process_new_image_attachment
 
+  after_save :process_variants
+
   def change_messages
     messages = []
     messages += (previous_changes.keys - ['updated_at'])
@@ -23,6 +25,15 @@ class Image < ApplicationRecord
     image_upload = attachment_changes['image_file']
     return unless image_upload&.attachable.instance_of?(ActionDispatch::Http::UploadedFile)
     process_and_reattach_image(image_upload.attachable)
+  end
+
+  def process_variants
+    ap '--------------------'
+    return unless self.variant_sizes
+    self.variant_sizes.each do |size, process|
+      ap size
+      ap process
+    end
   end
 
   def self.valid?(image_path)

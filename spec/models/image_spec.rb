@@ -122,4 +122,20 @@ RSpec.describe Image, type: :model do
       end
     end
   end
+
+  describe 'after_save' do
+    describe '#process_variants' do
+      it 'no image attached' do
+
+      end
+
+      it 'no variant sizes' do
+        
+      end
+
+      it 'image attached with sizes to process' do
+        
+      end
+    end
+  end
 end

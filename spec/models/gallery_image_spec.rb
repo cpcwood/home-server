@@ -23,8 +23,7 @@
 RSpec.describe GalleryImage, type: :model do
   subject { create(:gallery_image) }
 
-  let(:image_path_valid) { Rails.root.join('spec/files/sample_image.jpg') }
-  let(:image_file_upload) { fixture_file_upload(image_path_valid, 'image/jpg') }
+  let(:image_file_upload) { fixture_file_upload(Rails.root.join('spec/files/sample_image.jpg'), 'image/jpg') }
 
   context 'validations' do
     describe 'date_taken' do
@@ -73,6 +72,12 @@ RSpec.describe GalleryImage, type: :model do
         subject.longitude = 179.999999
         expect(subject).to be_valid
       end
+    end
+  end
+
+  describe '#variant_sizes' do
+    it 'default_value' do
+      expect(subject.variant_sizes).to eq(GalleryImage::VARIANT_SIZES)
     end
   end
 

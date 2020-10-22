@@ -24,6 +24,10 @@ class GalleryImage < Image
 
   MAX_DIM = 3000
 
+  VARIANT_SIZES = {
+    thumbnail: { resize_to_limit: [100, 100] }
+  }
+
   belongs_to :user
 
   validates :date_taken,
@@ -54,6 +58,10 @@ class GalleryImage < Image
             }
 
   before_validation :extract_meta_data
+
+  def variant_sizes
+    VARIANT_SIZES
+  end
 
   private
 
