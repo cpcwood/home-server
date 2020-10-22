@@ -58,10 +58,6 @@ class Image < ApplicationRecord
     throw(:abort)
   end
 
-  def process_image(image_attachment)
-    Image.image_processing_pipeline(image_path: image_attachment)
-  end
-
   private_class_method def self.initalize_image(image_path)
     ImageProcessing::MiniMagick.source(image_path)
   end
