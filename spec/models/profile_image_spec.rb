@@ -20,7 +20,6 @@
 #
 
 RSpec.describe ProfileImage, type: :model do
-
   subject { create(:profile_image) }
 
   describe '#x_dim' do

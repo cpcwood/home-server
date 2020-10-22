@@ -1,5 +1,4 @@
 RSpec.describe HeaderImage, type: :model do
-
   subject { create(:header_image) }
 
   describe '#default_image' do

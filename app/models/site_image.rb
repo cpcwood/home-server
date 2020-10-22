@@ -1,6 +1,6 @@
 class SiteImage < Image
   self.abstract_class = true
-  
+
   belongs_to :site_setting
 
   DEFAULT_X_LOC = 50
@@ -26,7 +26,7 @@ class SiteImage < Image
   private
 
   def process_image(attached_image)
-    Image.image_processing_pipeline(image_path: attached_image) do |pipeline| 
+    Image.image_processing_pipeline(image_path: attached_image) do |pipeline|
       pipeline.resize_to_fill(x_dim, y_dim, gravity: 'north-west')
     end
   end

@@ -1,5 +1,4 @@
 RSpec.describe SiteImage, type: :model do
-
   subject { create(:cover_image) }
   let(:image_jpg_path) { Rails.root.join('spec/files/sample_image.jpg') }
   let(:image_file_upload) { fixture_file_upload(image_jpg_path, 'image/jpg') }
@@ -10,7 +9,7 @@ RSpec.describe SiteImage, type: :model do
         subject.x_loc = nil
         expect(subject).to_not be_valid
       end
-    
+
       it 'format' do
         subject.x_loc = -1
         expect(subject).to_not be_valid
@@ -22,13 +21,13 @@ RSpec.describe SiteImage, type: :model do
         expect(subject).to be_valid
       end
     end
-    
+
     describe 'y_loc' do
       it 'presence' do
         subject.y_loc = nil
         expect(subject).to_not be_valid
       end
-    
+
       it 'format' do
         subject.y_loc = -1
         expect(subject).to_not be_valid
@@ -46,17 +45,17 @@ RSpec.describe SiteImage, type: :model do
     it 'locations are default' do
       expect(subject.custom_style).to eq(nil)
     end
-  
+
     it 'x_loc custom' do
       subject.update(x_loc: 10)
       expect(subject.custom_style).to eq('object-position: 10% 50%;')
     end
-  
+
     it 'y_loc custom' do
       subject.update(y_loc: 10)
       expect(subject.custom_style).to eq('object-position: 50% 10%;')
     end
-  
+
     it 'x_loc and y_loc custom' do
       subject.update(x_loc: 10, y_loc: 90)
       expect(subject.custom_style).to eq('object-position: 10% 90%;')
