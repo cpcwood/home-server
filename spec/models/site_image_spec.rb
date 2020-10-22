@@ -13,6 +13,7 @@ RSpec.describe SiteImage, type: :model do
       it 'format' do
         subject.x_loc = -1
         expect(subject).to_not be_valid
+        expect(subject.errors.messages[:x_loc].first).to eq('X loc must be in range 0-100')
         subject.x_loc = 0
         expect(subject).to be_valid
         subject.x_loc = 101
@@ -31,6 +32,7 @@ RSpec.describe SiteImage, type: :model do
       it 'format' do
         subject.y_loc = -1
         expect(subject).to_not be_valid
+        expect(subject.errors.messages[:y_loc].first).to eq('Y loc must be in range 0-100')
         subject.y_loc = 0
         expect(subject).to be_valid
         subject.y_loc = 101

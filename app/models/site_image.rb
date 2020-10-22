@@ -8,11 +8,19 @@ class SiteImage < Image
 
   validates :x_loc,
             presence: true,
-            numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
+            numericality: {
+              greater_than_or_equal_to: 0,
+              less_than_or_equal_to: 100,
+              message: 'X loc must be in range 0-100'
+            }
 
   validates :y_loc,
             presence: true,
-            numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
+            numericality: {
+              greater_than_or_equal_to: 0,
+              less_than_or_equal_to: 100,
+              message: 'Y loc must be in range 0-100'
+            }
 
   def custom_style
     "object-position: #{x_loc}% #{y_loc}%;" if x_loc != DEFAULT_X_LOC || y_loc != DEFAULT_Y_LOC
