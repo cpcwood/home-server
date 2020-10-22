@@ -6,12 +6,14 @@
 
 <%= render partial: 'partials/system_messages'%>
 
-<section class='gallery-container'>
+<section class='gallery'>
 
   <% if @gallery_images.empty? %>
     <%= render partial: 'gallery_images/no_images' %>
   <% else %>
-    <%= render partial: 'gallery_images/image_thumbnail', collection: @gallery_images, as: :gallery_image %>
+    <ul id='gallery-container'>
+      <%= render partial: 'gallery_images/image_thumbnail', collection: @gallery_images, as: :gallery_image %>
+    </ul>
   <% end %>
 
 </section>

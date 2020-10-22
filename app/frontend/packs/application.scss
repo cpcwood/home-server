@@ -29,6 +29,7 @@ Sass Styles
 |   |
 |   |– custom/
 |   |   |– about.scss         # Custom styles for /about
+|   |   |– gallery.scss       # Custom styles for /gallery
 |   |   ┴
 |   |
 |   |– vendor/
@@ -67,6 +68,7 @@ Sass Styles
 
 // Custom page styles
 @use 'styles/custom/about.scss';
+@use 'styles/custom/gallery.scss';
 
 // Site Wide Vendor
 @use 'styles/vendor/loaders';

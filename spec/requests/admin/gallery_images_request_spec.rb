@@ -16,7 +16,7 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
   let(:invalid_attributes) do
     {
       gallery_image: {
-        description: '',
+        description: ''
       }
     }
   end

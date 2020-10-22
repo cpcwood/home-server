@@ -2,7 +2,6 @@ import { Application } from 'stimulus'
 import imageLoaderController from 'controllers/image_loader_controller'
 
 describe('touch_hover_tile_controller', () => {
-  const targetLoaded = 2
   let fadeTargetOne
   let fadeTargetTwo
 
@@ -13,7 +12,7 @@ describe('touch_hover_tile_controller', () => {
 
   beforeEach(() => {
     document.body.innerHTML = `
-      <div data-controller="image-loader" data-image-loader-num-images="${targetLoaded}">
+      <div data-controller="image-loader" data-target="image-loader.container">
         <img class="fade-target" data-action="load->image-loader#imageLoaded" data-target="image-loader.fade">
         <img class="fade-target" data-action="load->image-loader#imageLoaded" data-target="image-loader.fade">
       </div>
