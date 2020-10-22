@@ -10,7 +10,7 @@
   </div>
 
   <div class="embedded-form-entry-container">
-    <%= image_tag(image_path_helper(image), class: 'profile-image admin')%>
+    <%= image_tag(image_path_helper(image_model: image), class: 'profile-image admin')%>
   </div>
 
   <%= render partial: 'layouts/images/images_will_be_resized', locals: {image: image}%>

@@ -11,7 +11,7 @@ class Image < ApplicationRecord
 
   before_save :process_new_image_attachment
 
-  after_save :process_variants
+  after_commit :process_variants
 
   def change_messages
     messages = []

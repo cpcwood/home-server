@@ -25,7 +25,7 @@ class PasswordMailer < ApplicationMailer
     @header_image_url = if header_image.image_file.attached?
                           Rails.application.routes.url_helpers.rails_blob_path(header_image.image_file)
                         else
-                          image_path_helper(header_image)
+                          image_path_helper(image_model: header_image)
                         end
   end
 end

@@ -14,7 +14,7 @@
     <div class='page-container' data-controller='header-scroll'>
       <%= render partial: 'partials/navigation' %>
       <div class='header-image' data-target='header-scroll.headerImage'>
-        <%= image_tag(image_path_helper(@header_image), id: 'header-image', style: @header_image.custom_style)%>
+        <%= image_tag(image_path_helper(image_model: @header_image), id: 'header-image', style: @header_image.custom_style)%>
       </div>
       <div class='content-container' data-action='scroll->header-scroll#scrollHeaderImage' data-target='header-scroll.contentContainer'>
         <div class='content'>

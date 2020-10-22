@@ -123,7 +123,7 @@ RSpec.describe Image, type: :model do
     end
   end
 
-  describe 'after_save' do
+  describe 'after_commit' do
     describe '#process_variants' do
       before(:each) do
         allow_any_instance_of(Image).to receive(:process_new_image_attachment).and_return(true)

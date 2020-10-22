@@ -1,9 +1,12 @@
 module AttachmentHelper
   IMAGE_NOT_FOUND = 'default_images/image_not_found.png'.freeze
 
-  def image_path_helper(image)
-    return image.image_file if image&.image_file&.attached?
-    return image.default_image if image.respond_to?(:default_image)
+  def image_path_helper(image_model:, variant: nil)
+    if image_model&.image_file&.attached?
+      return image_model.image_file.variant(image_model.variant_sizes[variant]) if variant
+      return image_model.image_file
+    end
+    return image_model.default_image if image_model.respond_to?(:default_image)
     IMAGE_NOT_FOUND
   end
 
