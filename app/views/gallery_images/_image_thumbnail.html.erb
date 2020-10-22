@@ -1,3 +1,1 @@
-<li class='gallery-image-container'>
-  <%= image_tag(image_path_helper(image_model: gallery_image, variant: :thumbnail), class: 'gallery-image-thumbnail', alt: gallery_image.description) %>
-</li>
+<%= image_tag(image_path_helper(image_model: gallery_image, variant: :thumbnail), class: 'gallery-image-thumbnail', alt: gallery_image.description, data: {action: "load->justified-gallery#imageLoaded", target: 'justified-gallery.galleryItem'}) %>

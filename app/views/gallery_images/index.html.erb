@@ -11,9 +11,9 @@
   <% if @gallery_images.empty? %>
     <%= render partial: 'gallery_images/no_images' %>
   <% else %>
-    <ul id='gallery-container'>
+    <div class='gallery-container' data-controller='justified-gallery' data-target='justified-gallery.container'>
       <%= render partial: 'gallery_images/image_thumbnail', collection: @gallery_images, as: :gallery_image %>
-    </ul>
+    </div>
   <% end %>
 
 </section>
