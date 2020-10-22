@@ -14,13 +14,13 @@ class SiteImage < Image
             presence: true,
             numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
 
+  def custom_style
+    "object-position: #{x_loc}% #{y_loc}%;" if x_loc != DEFAULT_X_LOC || y_loc != DEFAULT_Y_LOC
+  end
+
   def reset_to_default
     image_file.purge_later
     update(x_loc: DEFAULT_X_LOC, y_loc: DEFAULT_Y_LOC)
-  end
-
-  def custom_style
-    "object-position: #{x_loc}% #{y_loc}%;" if x_loc != DEFAULT_X_LOC || y_loc != DEFAULT_Y_LOC
   end
 
   private
