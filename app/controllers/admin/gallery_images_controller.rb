@@ -15,6 +15,7 @@ module Admin
         @gallery_image = @user.gallery_images.new
         update_model(model: @gallery_image, success_message: 'Gallery image created')
       rescue StandardError => e
+        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
         @alerts.push('Sorry, something went wrong!')
         @alerts.push(e.message)
       end

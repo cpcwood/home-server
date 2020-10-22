@@ -19,21 +19,12 @@
 #
 #  fk_rails_...  (user_id => users.id)
 #
-class GalleryImage < ApplicationRecord
-  require 'image_processing'
+class GalleryImage < Image
   require 'mini_magick'
 
   MAX_DIM = 3000
 
   belongs_to :user
-
-  has_one_attached :image_file
-
-  validates :description,
-            length: {
-              minimum: 1,
-              message: 'Description cannot be blank'
-            }
 
   validates :date_taken,
             timeliness: {
@@ -62,31 +53,20 @@ class GalleryImage < ApplicationRecord
               message: 'Longitude must be a (10, 6) decimal'
             }
 
-  before_validation :process_image_attachment
+  before_validation :extract_meta_data
 
-  def process_image_attachment
-    image_upload = attachment_changes['image_file']
-    attach_image(image_upload.attachable) if image_upload&.attachable.instance_of?(ActionDispatch::Http::UploadedFile)
+  def process_image(attached_image)
+    Image.image_processing_pipeline(image_path: attached_image) do |pipeline| 
+      pipeline.resize_to_limit(MAX_DIM, MAX_DIM)
+    end
   end
 
   private
 
-  def attach_image(upload_params)
-    image_file_path = upload_params.tempfile.path
-    unless Image.valid?(image_file_path)
-      errors[:base].push('Image invalid, please upload a jpeg or png file!')
-      throw(:abort)
-    end
-    extract_meta_data(image_file_path)
-    processed_image = Image.resize_to_max(image_path: image_file_path, max_dim: MAX_DIM)
-    image_file.attach(
-      io: File.open(processed_image),
-      filename: upload_params.original_filename,
-      content_type: upload_params.content_type)
-  end
-
-  def extract_meta_data(image_file_path)
-    image_meta_data = MiniMagick::Image.new(image_file_path).exif
+  def extract_meta_data
+    image_upload = attachment_changes['image_file']
+    return unless image_upload&.attachable
+    image_meta_data = MiniMagick::Image.new(image_upload.attachable.tempfile.path).exif
     extract_date_taken(image_meta_data)
     extract_latitude(image_meta_data)
     extract_longitude(image_meta_data)

@@ -88,7 +88,7 @@ RSpec.describe GalleryImage, type: :model do
     end
   end
 
-  context 'before_validation' do
+  describe 'before_validation' do
     describe '#process_image_attachment' do
       before(:each) do
         subject

@@ -15,6 +15,7 @@ module Admin
         @post = @user.posts.new
         update_post(post: @post, success_message: 'Blog post created')
       rescue StandardError => e
+        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
         @alerts.push('Sorry, something went wrong!')
         @alerts.push(e.message)
       end
@@ -46,6 +47,7 @@ module Admin
         return redirect_to(admin_posts_path, alert: 'Post not found') unless @post
         update_post(post: @post, success_message: 'Blog post updated')
       rescue StandardError => e
+        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
         @alerts.push('Sorry, something went wrong!')
         @alerts.push(e.message)
       end
@@ -74,6 +76,7 @@ module Admin
         @post.destroy
         @notices.push('Blog post removed')
       rescue StandardError => e
+        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
         @alerts.push('Sorry, something went wrong!')
         @alerts.push(e.message)
       end
