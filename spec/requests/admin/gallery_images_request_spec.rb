@@ -14,9 +14,11 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
   end
 
   let(:invalid_attributes) do
-    invalid_attributes = valid_attributes
-    invalid_attributes[:gallery_image][:description] = ''
-    invalid_attributes
+    {
+      gallery_image: {
+        description: '',
+      }
+    }
   end
 
   before(:each) do
@@ -48,7 +50,7 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
 
     it 'validation failure' do
       post('/admin/gallery-images', params: invalid_attributes)
-      expect(response.body).to include('Description cannot be blank')
+      expect(response.body).to include('Date taken must be date')
       expect(response).not_to redirect_to(admin_gallery_images_path)
     end
 
