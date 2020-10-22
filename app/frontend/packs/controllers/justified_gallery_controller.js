@@ -18,7 +18,9 @@ export default class extends Controller {
       
       // fade in
       for (let i = 0; i < this.galleryItemTargets.length; i++) {
-        this.galleryItemTargets[i].classList.add('fade-in')
+        let target = this.galleryItemTargets[i]
+        target.classList.add('fade-in')
+        target.style["transitionDelay"] = `${i*0.1}s`
       }
     }
   }
@@ -37,7 +39,9 @@ export default class extends Controller {
     this.imageCounter = 0
     this.targetNumber = 0
     for (let i = 0; i < this.fadeTargets.length; i++) {
-      this.fadeTargets[i].classList.remove('fade-in')
+      let target = this.galleryItemTargets[i]
+      target.classList.remove('fade-in')
+      target.style["transitionDelay"] = '0'
     }
   }
 }
