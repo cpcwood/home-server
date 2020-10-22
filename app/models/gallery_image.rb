@@ -55,13 +55,13 @@ class GalleryImage < Image
 
   before_validation :extract_meta_data
 
+  private
+
   def process_image(attached_image)
     Image.image_processing_pipeline(image_path: attached_image) do |pipeline| 
       pipeline.resize_to_limit(MAX_DIM, MAX_DIM)
     end
   end
-
-  private
 
   def extract_meta_data
     image_upload = attachment_changes['image_file']
