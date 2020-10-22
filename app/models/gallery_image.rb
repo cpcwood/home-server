@@ -25,7 +25,7 @@ class GalleryImage < Image
   MAX_DIM = 3000
 
   VARIANT_SIZES = {
-    thumbnail: { resize_to_limit: [500, 300] }
+    thumbnail: { resize_to_limit: [700, 500] }
   }.freeze
 
   belongs_to :user

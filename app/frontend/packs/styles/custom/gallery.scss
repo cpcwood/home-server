@@ -1,11 +1,13 @@
 .gallery-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   width: 100%;
 }
 
 .gallery-image-thumbnail {
   margin: 2px;
+  object-fit: cover;
   opacity: 0;
   transition: opacity 0.7s cubic-bezier(0.76, 0.24, 0.26, 0.99);
 }

@@ -1,4 +1,5 @@
 import { Controller } from 'stimulus'
+import justifiedLayout from 'justified-layout'
 
 export default class extends Controller {
   static targets = ['galleryItem', 'container']
@@ -6,42 +7,50 @@ export default class extends Controller {
   initialize () {
     this.targetNumber = this.containerTarget.getElementsByTagName('img').length
     this.imageCounter = 0
-    this.targetRowHeight = 350
-    // add event listener for window resize to trigger render gallery
   }
 
-  imageLoaded (event) {
+  imageLoaded () {
     this.imageCounter += 1
     if (this.imageCounter === this.targetNumber) {
-      // render gallery
-      this.renderGallery()
-      
-      // fade in
+      this.resizeObserver = new ResizeObserver(this.renderGallery.bind(this)).observe(this.containerTarget)
       for (let i = 0; i < this.galleryItemTargets.length; i++) {
-        let target = this.galleryItemTargets[i]
+        const target = this.galleryItemTargets[i]
         target.classList.add('fade-in')
-        target.style["transitionDelay"] = `${i*0.1}s`
+        target.style.transitionDelay = `${i * 0.1}s`
       }
     }
   }
 
-  renderGallery() {
-    // fetch image sizes
-    console.log(this.galleryItemTarget.width)
-    // fetch container size
-    console.log(this.containerTarget.clientWidth)
-    // compute sizes using plugin
-    // apply sizes
-    // return
+  renderGallery () {
+    const geometryInput = []
+    for (let i = 0; i < this.galleryItemTargets.length; i++) {
+      geometryInput.push({
+        width: this.galleryItemTargets[i].width,
+        height: this.galleryItemTargets[i].height
+      })
+    }
+    const config = {
+      boxSpacing: {
+        horizontal: parseInt(this.data.get('margin')),
+        vertical: 0
+      },
+      containerWidth: this.containerTarget.clientWidth
+    }
+    const geometry = justifiedLayout(geometryInput, config)
+    for (let i = 0; i < this.galleryItemTargets.length; i++) {
+      this.galleryItemTargets[i].width = geometry.boxes[i].width
+      this.galleryItemTargets[i].height = geometry.boxes[i].height
+    }
   }
 
   disconnect () {
-    this.imageCounter = 0
-    this.targetNumber = 0
-    for (let i = 0; i < this.fadeTargets.length; i++) {
-      let target = this.galleryItemTargets[i]
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect()
+    }
+    for (let i = 0; i < this.galleryItemTargets.length; i++) {
+      const target = this.galleryItemTargets[i]
       target.classList.remove('fade-in')
-      target.style["transitionDelay"] = '0'
+      target.style.transitionDelay = '0'
     }
   }
 }
