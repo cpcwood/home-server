@@ -72,12 +72,18 @@ class GalleryImage < Image
   end
 
   def extract_meta_data
-    image_upload = attachment_changes['image_file']
-    return unless image_upload&.attachable
-    image_meta_data = MiniMagick::Image.new(image_upload.attachable.tempfile.path).exif
+    image_attachment = attachment_changes['image_file']&.attachable
+    return unless image_attachment
+    image_meta_data = MiniMagick::Image.new(image_attachment.tempfile.path).exif
+    extract_description(image_attachment)
     extract_date_taken(image_meta_data)
     extract_latitude(image_meta_data)
     extract_longitude(image_meta_data)
+  end
+
+  def extract_description(image_attachment)
+    return unless description.blank? && image_attachment.original_filename
+    self.description = image_attachment.original_filename
   end
 
   def extract_date_taken(image_meta_data)
