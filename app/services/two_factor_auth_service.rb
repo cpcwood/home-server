@@ -1,6 +1,6 @@
-require 'twilio-ruby'
-
 module TwoFactorAuthService
+  require 'twilio-ruby'
+  
   mattr_accessor :logger, :twilio_client
 
   class << self

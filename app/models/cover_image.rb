@@ -19,9 +19,7 @@
 #
 #  fk_rails_...  (site_setting_id => site_settings.id)
 #
-class CoverImage < Image
-  belongs_to :site_setting
-
+class CoverImage < SiteImage
   X_DIM = 1450
   Y_DIM = 680
 
