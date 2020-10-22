@@ -28,11 +28,10 @@ class Image < ApplicationRecord
   end
 
   def process_variants
-    ap '--------------------'
-    return unless self.variant_sizes
-    self.variant_sizes.each do |size, process|
-      ap size
-      ap process
+    return unless attachment_changes['image_file']
+    return unless respond_to?(:variant_sizes)
+    variant_sizes&.each do |_size, process|
+      ProcessImageVariantJob.perform_later(model: self, variant: process)
     end
   end
 

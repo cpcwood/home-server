@@ -26,7 +26,7 @@ class GalleryImage < Image
 
   VARIANT_SIZES = {
     thumbnail: { resize_to_limit: [100, 100] }
-  }
+  }.freeze
 
   belongs_to :user
 

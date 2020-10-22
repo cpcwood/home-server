@@ -1,7 +1,7 @@
 class ProcessImageVariantJob < ApplicationJob
   queue_as :default
 
-  def perform(image_attachment:, variant:)
-    image_attachment.variant(variant).processed
+  def perform(model:, variant:)
+    model.image_file.variant(variant).processed
   end
 end

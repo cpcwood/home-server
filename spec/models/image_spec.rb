@@ -125,16 +125,30 @@ RSpec.describe Image, type: :model do
 
   describe 'after_save' do
     describe '#process_variants' do
-      it 'no image attached' do
+      before(:each) do
+        allow_any_instance_of(Image).to receive(:process_new_image_attachment).and_return(true)
+      end
 
+      it 'no image attached' do
+        subject.description = 'attribute update'
+        expect { subject.save }.not_to have_enqueued_job(ProcessImageVariantJob)
       end
 
       it 'no variant sizes' do
-        
+        allow(subject).to receive(:variant_sizes).and_return(nil)
+        subject.image_file = image_file_upload
+        expect { subject.save }.not_to have_enqueued_job(ProcessImageVariantJob)
       end
 
-      it 'image attached with sizes to process' do
-        
+      it 'image attached with size to process' do
+        allow(subject).to receive(:variant_sizes).and_return({
+                                                               thumbnail: { resize_to_limit: [100, 100] },
+                                                               hero: { resize_to_limit: [100, 500] }
+                                                             })
+        subject.image_file = image_file_upload
+        subject.save
+        expect(ProcessImageVariantJob).to have_been_enqueued.with(model: subject, variant: { resize_to_limit: [100, 100] })
+        expect(ProcessImageVariantJob).to have_been_enqueued.with(model: subject, variant: { resize_to_limit: [100, 500] })
       end
     end
   end
