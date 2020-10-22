@@ -1,18 +1,20 @@
 RSpec.describe Image, type: :model do
 
-  subject  { create(:gallery_image) }
+  subject { create(:gallery_image) }
   let(:image_jpg_path) { Rails.root.join('spec/files/sample_image.jpg') }
   let(:image_file_upload) { fixture_file_upload(image_jpg_path, 'image/jpg') }
 
-  describe 'description validations' do
-    it 'presence' do
-      subject.description = nil
-      expect(subject).to_not be_valid
-    end
+  describe 'validations' do
+    describe 'description validations' do
+      it 'presence' do
+        subject.description = nil
+        expect(subject).to_not be_valid
+      end
 
-    it 'format' do
-      subject.description = ''
-      expect(subject).to_not be_valid
+      it 'format' do
+        subject.description = ''
+        expect(subject).to_not be_valid
+      end
     end
   end
 
