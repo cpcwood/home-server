@@ -16,17 +16,15 @@
 
 <%= render partial: 'partials/system_messages' %>
 
-<% fade_delay_num = 1%>
 <section class="image-tile-container" data-controller="image-loader" data-target='image-loader.container'>
-  <% @cover_images.each do |image| %>
+  <% @cover_images.each_with_index do |image, index| %>
     <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
-      <%= image_tag(image_path_helper(image_model: image), class: "cover-image transition-delay-#{fade_delay_num}", style: image.custom_style, alt: image.description, data: {action: "load->image-loader#imageLoaded", target: 'image-loader.fade'} ) %>
-      <a href="<%= image.link %>" title='<%= image.description %>' tabindex='<%= fade_delay_num %>'>
+      <%= image_tag(image_path_helper(image_model: image), class: "cover-image", style: image.custom_style, alt: image.description, data: {action: "load->image-loader#imageLoaded", target: 'image-loader.fade'} ) %>
+      <a href="<%= image.link %>" title='<%= image.description %>' tabindex='<%= index + 1 %>'>
         <span class="cover-title" data-target="touch-hover-tile.coverTitle">
           <span><%= image.description %></span>
         </span>
       </a>
     </div>
-    <% fade_delay_num += 1 %>
   <% end %>
 </section>
