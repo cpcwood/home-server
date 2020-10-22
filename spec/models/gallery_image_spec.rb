@@ -80,12 +80,12 @@ RSpec.describe GalleryImage, type: :model do
     describe '#extract_meta_data' do
       before(:each) do
         mini_magick_mock = double(:mini_magick, exif: {
-          "DateTimeOriginal" => "2020:04:19 00:00",
-          'GPSLatitude' => "1, 60, 3600",
-          'GPSLatitudeRef' => 'N',
-          'GPSLongitude' => "1, 60, 3600",
-          'GPSLongitudeRef' => "W"
-          })
+                                    'DateTimeOriginal' => '2020:04:19 00:00',
+                                    'GPSLatitude' => '1, 60, 3600',
+                                    'GPSLatitudeRef' => 'N',
+                                    'GPSLongitude' => '1, 60, 3600',
+                                    'GPSLongitudeRef' => 'W'
+                                  })
         allow(MiniMagick::Image).to receive(:new).and_return(mini_magick_mock)
         allow(subject).to receive(:process_new_image_attachment).and_throw(:abort)
         subject.image_file = image_file_upload

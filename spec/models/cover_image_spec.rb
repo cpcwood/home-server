@@ -1,5 +1,4 @@
 RSpec.describe CoverImage, type: :model do
-
   subject { create(:cover_image) }
 
   describe '#default_image' do

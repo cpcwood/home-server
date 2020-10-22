@@ -1,5 +1,4 @@
 RSpec.describe Image, type: :model do
-
   subject { create(:gallery_image) }
   let(:image_jpg_path) { Rails.root.join('spec/files/sample_image.jpg') }
   let(:image_file_upload) { fixture_file_upload(image_jpg_path, 'image/jpg') }
@@ -9,11 +8,13 @@ RSpec.describe Image, type: :model do
       it 'presence' do
         subject.description = nil
         expect(subject).to_not be_valid
+        expect(subject.errors.messages[:description].first).to eq('Description cannot be blank')
       end
 
       it 'format' do
         subject.description = ''
         expect(subject).to_not be_valid
+        expect(subject.errors.messages[:description].first).to eq('Description cannot be blank')
       end
     end
   end
@@ -73,9 +74,7 @@ RSpec.describe Image, type: :model do
       allow(ImageProcessing::MiniMagick).to receive(:source).with(image_path).and_return(mock_pipeline)
       allow(mock_pipeline).to receive_message_chain(:strip, :saver, :convert, :call)
       expect(mock_pipeline).to receive(:pipeline_method).and_return(mock_pipeline)
-      Image.image_processing_pipeline(image_path: image_path) do |pipeline|
-        pipeline.pipeline_method
-      end
+      Image.image_processing_pipeline(image_path: image_path, &:pipeline_method)
     end
 
     it 'quality defined' do
@@ -109,7 +108,7 @@ RSpec.describe Image, type: :model do
         it 'validate image' do
           expect(Image).to receive(:valid?).and_return(false)
           expect(subject.save).to eq(false)
-          expect(subject.errors.messages[:base]).to eq ["Image invalid, please upload a jpeg or png file!"]
+          expect(subject.errors.messages[:base]).to eq ['Image invalid, please upload a jpeg or png file!']
         end
 
         it 'image processed' do

@@ -7,8 +7,7 @@ class Image < ApplicationRecord
   has_one_attached :image_file
 
   validates :description,
-            presence: true,
-            length: { minimum: 1 }
+            length: { minimum: 1, message: 'Description cannot be blank' }
 
   before_save :process_new_image_attachment
 
@@ -54,10 +53,9 @@ class Image < ApplicationRecord
   end
 
   def validate_image(image_attachment)
-    unless Image.valid?(image_attachment.tempfile.path)
-      errors[:base].push("Image invalid, please upload a jpeg or png file!")
-      throw(:abort)
-    end
+    return if Image.valid?(image_attachment.tempfile.path)
+    errors[:base].push('Image invalid, please upload a jpeg or png file!')
+    throw(:abort)
   end
 
   def process_image(image_attachment)
