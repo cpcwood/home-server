@@ -27,18 +27,6 @@ RSpec.describe GalleryImage, type: :model do
   let(:image_file_upload) { fixture_file_upload(image_path_valid, 'image/jpg') }
 
   context 'validations' do
-    describe 'description' do
-      it 'format' do
-        subject.description = nil
-        expect(subject).to_not be_valid
-        subject.description = ''
-        expect(subject).to_not be_valid
-        expect(subject.errors.messages[:description]).to eq ['Description cannot be blank']
-        subject.description = 'a'
-        expect(subject).to be_valid
-      end
-    end
-
     describe 'date_taken' do
       it 'format' do
         subject.date_taken = nil
@@ -89,35 +77,36 @@ RSpec.describe GalleryImage, type: :model do
   end
 
   describe 'before_validation' do
-    describe '#process_image_attachment' do
+    describe '#extract_meta_data' do
       before(:each) do
-        subject
-        allow(image_file_upload).to receive(:instance_of?).with(ActionDispatch::Http::UploadedFile).and_return(true)
+        mini_magick_mock = double(:mini_magick, exif: {
+          "DateTimeOriginal" => "2020:04:19 00:00",
+          'GPSLatitude' => "1, 60, 3600",
+          'GPSLatitudeRef' => 'N',
+          'GPSLongitude' => "1, 60, 3600",
+          'GPSLongitudeRef' => "W"
+          })
+        allow(MiniMagick::Image).to receive(:new).and_return(mini_magick_mock)
+        allow(subject).to receive(:process_new_image_attachment).and_throw(:abort)
+        subject.image_file = image_file_upload
       end
 
-      it 'validate image' do
-        expect(Image).to receive(:valid?).and_return(false)
-        subject.image_file = image_file_upload
-        expect(subject.save).to eq(false)
-      end
-
-      it 'resizes image' do
-        expect(Image).to receive(:resize_to_max) do |image|
-          image[:image_path]
-        end
-        subject.image_file = image_file_upload
-        subject.save
-      end
-
-      it 'attributes missing - extract meta data' do
-        subject.image_file = image_file_upload
+      it 'date_taken attribute missing' do
         subject.date_taken = nil
-        subject.latitude = nil
-        subject.longitude = nil
         subject.save
         expect(subject.date_taken).to eq(DateTime.new(2020, 04, 19))
-        expect(subject.latitude).to eq(1)
-        expect(subject.longitude).to eq(-1)
+      end
+
+      it 'latitude attribute missing' do
+        subject.latitude = nil
+        subject.save
+        expect(subject.latitude).to eq(3)
+      end
+
+      it 'longitude attribute missing' do
+        subject.longitude = nil
+        subject.save
+        expect(subject.longitude).to eq(-3)
       end
     end
   end
