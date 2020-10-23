@@ -35,6 +35,10 @@ module Admin
       end
     end
 
+    def edit
+      @gallery_image = find_model
+    end
+
     private
 
     def permitted_params
@@ -52,6 +56,10 @@ module Admin
       else
         @alerts.push(model.errors.values.flatten.last)
       end
+    end
+
+    def find_model
+      GalleryImage.find_by(id: params[:id])
     end
   end
 end
