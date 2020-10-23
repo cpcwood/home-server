@@ -37,6 +37,7 @@ module Admin
 
     def edit
       @post = find_post
+      return redirect_to(admin_posts_path, alert: 'Post not found') unless @post
     end
 
     def update
