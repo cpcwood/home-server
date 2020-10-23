@@ -14,4 +14,8 @@ module AttachmentHelper
     return image.image_file.attachment.blob.filename if image&.image_file&.attached?
     default_name || "default #{"#{model_name} " if model_name}image"
   end
+
+  def blob_url(image_model:)
+    return unless image_model.image_file.attached?
+  end
 end
