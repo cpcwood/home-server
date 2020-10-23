@@ -6,7 +6,7 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
       gallery_image: {
         image_file: image_fixture,
         description: 'new gallery image',
-        date_taken: Date.new(2020, 04, 19),
+        date_taken: Date.new(2021, 04, 19),
         latitude: 180,
         longitude: -180
       }
@@ -41,20 +41,6 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
     end
   end
 
-  describe 'GET /admin/gallery-images/:id/edit #edit' do
-    it 'valid request' do
-      gallery_image = create(:gallery_image, user: @user)
-      get("/admin/gallery-images/#{gallery_image.id}/edit")
-      expect(response).to render_template(:edit)
-    end
-
-    it 'invalid id' do
-      get("/admin/gallery-images/not-a-valid-id/edit")
-      expect(response).to redirect_to(admin_gallery_images_path)
-      expect(flash[:alert]).to eq('Image not found')
-    end
-  end
-
   describe 'POST /admin/gallery-images #create' do
     it 'successful request' do
       post('/admin/gallery-images', params: valid_attributes)
@@ -76,11 +62,38 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
     end
   end
 
+  describe 'GET /admin/gallery-images/:id/edit #edit' do
+    it 'valid request' do
+      gallery_image = create(:gallery_image, user: @user)
+      get("/admin/gallery-images/#{gallery_image.id}/edit")
+      expect(response).to render_template(:edit)
+    end
+
+    it 'invalid id' do
+      get("/admin/gallery-images/not-a-valid-id/edit")
+      expect(response).to redirect_to(admin_gallery_images_path)
+      expect(flash[:alert]).to eq('Gallery image not found')
+    end
+  end
+
   describe 'PUT /admin/gallery-images/:id #update' do
     it 'post id invalid' do
       put('/admin/gallery-images/not-a-image-id', params: valid_attributes)
       expect(response).to redirect_to(admin_gallery_images_path)
-      expect(flash[:alert]).to include('Image not found')
+      expect(flash[:alert]).to include('Gallery image not found')
+    end
+
+    it 'update sucessful' do
+      gallery_image = create(:gallery_image, user: @user)
+      put("/admin/gallery-images/#{gallery_image.id}", params: valid_attributes)
+      expect(response).to redirect_to(admin_gallery_images_path)
+      expect(flash[:notice]).to include('Gallery image updated')
+      gallery_image.reload
+      expect(gallery_image.description).to eq(valid_attributes[:gallery_image][:description])
+      expect(gallery_image.date_taken).to eq(valid_attributes[:gallery_image][:date_taken])
+      expect(gallery_image.longitude).to eq(valid_attributes[:gallery_image][:longitude])
+      expect(gallery_image.latitude).to eq(valid_attributes[:gallery_image][:latitude])
+      expect(gallery_image.image_file.attached?).to eq(true)
     end
   end
 end

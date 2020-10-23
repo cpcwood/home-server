@@ -37,12 +37,16 @@ module Admin
 
     def edit
       @gallery_image = find_model
-      return redirect_to(admin_gallery_images_path, alert: 'Image not found') unless @gallery_image
+      return redirect_to(admin_gallery_images_path, alert: 'Gallery image not found') unless @gallery_image  
     end
 
     def update
+      @notices = []
+      @alerts = []
       @gallery_image = find_model
-      return redirect_to(admin_gallery_images_path, alert: 'Image not found') unless @gallery_image
+      return redirect_to(admin_gallery_images_path, alert: 'Gallery image not found') unless @gallery_image
+      update_model(model: @gallery_image, success_message: 'Gallery image updated')
+      redirect_to(admin_gallery_images_path, notice: @notices)
     end
 
     private
