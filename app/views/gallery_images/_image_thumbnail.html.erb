@@ -1,5 +1,5 @@
-<li class='gallery-image-container'>
+<div class='gallery-image-container'>
   <a href="<%= rails_blob_url(gallery_image.image_file) if image_attached?(gallery_image) %>">
     <%= image_tag(image_path_helper(image_model: gallery_image, variant: :thumbnail), class: 'gallery-image-thumbnail', title: gallery_image.description, alt: gallery_image.description, data: {action: "load->justified-gallery#imageLoaded", target: 'justified-gallery.galleryItem'}) %>
   </a>
-</li>
+</div>
