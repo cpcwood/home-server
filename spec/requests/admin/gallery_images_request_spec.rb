@@ -75,4 +75,12 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
       expect(response).not_to redirect_to(admin_gallery_images_path)
     end
   end
+
+  describe 'PUT /admin/gallery-images/:id #update' do
+    it 'post id invalid' do
+      put('/admin/gallery-images/not-a-image-id', params: valid_attributes)
+      expect(response).to redirect_to(admin_gallery_images_path)
+      expect(flash[:alert]).to include('Image not found')
+    end
+  end
 end
