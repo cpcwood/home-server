@@ -82,6 +82,13 @@ RSpec.describe GalleryImage, type: :model do
   end
 
   describe 'before_validation' do
+    describe '#set_defaults' do
+      it 'no description' do
+        gallery_image = create(:gallery_image, description: nil)
+        expect(gallery_image.description).to eq('gallery-image')
+      end
+    end
+
     describe '#extract_meta_data' do
       it 'image already processed' do
         allow(image_file_upload).to receive(:instance_of?).with(ActionDispatch::Http::UploadedFile).and_return(false)

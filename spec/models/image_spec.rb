@@ -4,6 +4,8 @@ RSpec.describe Image, type: :model do
   let(:image_file_upload) { fixture_file_upload(image_jpg_path, 'image/jpg') }
 
   describe 'validations' do
+    subject { create(:cover_image) }
+    
     describe 'description validations' do
       it 'presence' do
         subject.description = nil

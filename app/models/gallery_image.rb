@@ -57,13 +57,17 @@ class GalleryImage < Image
               message: 'Longitude must be a (10, 6) decimal'
             }
 
-  before_validation :extract_meta_data
+  before_validation :extract_meta_data, :set_defaults
 
   def variant_sizes
     VARIANT_SIZES
   end
 
   private
+
+  def set_defaults
+    self.description ||= 'gallery-image'
+  end
 
   def process_image(attached_image)
     Image.image_processing_pipeline(image_path: attached_image) do |pipeline|
