@@ -1,1 +1,5 @@
-<%= image_tag(image_path_helper(image_model: gallery_image, variant: :thumbnail), class: 'gallery-image-thumbnail', alt: gallery_image.description, data: {action: "load->justified-gallery#imageLoaded", target: 'justified-gallery.galleryItem'}) %>
+<li class='gallery-image-container'>
+  <a href="<%= rails_blob_url(image_path_helper(image_model: gallery_image)) %>">
+    <%= image_tag(image_path_helper(image_model: gallery_image, variant: :thumbnail), class: 'gallery-image-thumbnail', title: gallery_image.description, alt: gallery_image.description, data: {action: "load->justified-gallery#imageLoaded", target: 'justified-gallery.galleryItem'}) %>
+  </a>
+</li>

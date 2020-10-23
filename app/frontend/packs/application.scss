@@ -74,9 +74,10 @@ Sass Styles
 // Site Wide Vendor
 @use 'styles/vendor/loaders';
 @use 'node_modules/pikaday/css/pikaday.css';
+@use 'node_modules/simplelightbox/src/simple-lightbox';
 
 // Themes
 @use './styles/themes/syntax_highlighting';
 
 // Dynamic selectors
-@use './styles/components/dynamic_selectors'
+@use './styles/components/dynamic_selectors';
