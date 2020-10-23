@@ -69,8 +69,13 @@ module Admin
     end
 
     def destroy
+      @notices = []
+      @alerts = []
       @gallery_image = find_model
       return redirect_to(admin_gallery_images_path, alert: 'Gallery image not found') unless @gallery_image
+      @gallery_image.destroy
+      @notices.push('Gallery image removed')
+      redirect_to(admin_gallery_images_path, notice: @notices, alert: @alerts)
     end
 
     private
