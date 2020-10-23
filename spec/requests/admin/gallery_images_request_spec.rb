@@ -132,7 +132,7 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
       allow_any_instance_of(GalleryImage).to receive(:destroy).and_raise('general error')
       delete("/admin/gallery-images/#{gallery_image.id}")
       expect(response).to redirect_to(admin_gallery_images_path)
-      expect(flash[:alert]).to include('general error')     
+      expect(flash[:alert]).to include('general error')
     end
   end
 end
