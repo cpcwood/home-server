@@ -44,7 +44,7 @@ describe('touch_hover_tile_controller', () => {
       document.body.innerHTML = ''
     })
 
-    it('classes removed before page cache', () => {
+    it('reset to cache safe state', () => {
       expect(fadeTargetOne.classList).not.toContain('fade-in')
       expect(fadeTargetTwo.classList).not.toContain('fade-in')
       expect(fadeTargetOne.style.transitionDelay).toBe('')
