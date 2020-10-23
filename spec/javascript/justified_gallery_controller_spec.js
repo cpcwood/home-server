@@ -47,49 +47,61 @@ describe('touch_hover_tile_controller', () => {
     jest.clearAllMocks()
   })
 
-  describe('fade in', () => {
-    it('not all images loaded', () => {
-      galleryItemTargetOne.dispatchEvent(new Event('load'))
-      expect(galleryItemTargetOne.classList).not.toContain('fade-in')
-      expect(galleryItemTargetTwo.classList).not.toContain('fade-in')
+  describe('#imageLoaded', () => {
+    describe('not all images loaded', () => {
+      it('controller waiting', () => {
+        galleryItemTargetOne.dispatchEvent(new Event('load'))
+        expect(galleryItemTargetOne.classList).not.toContain('fade-in')
+        expect(galleryItemTargetTwo.classList).not.toContain('fade-in')
+        expect(justifiedLayout).not.toHaveBeenCalled()
+      })
     })
 
-    it('all images loaded', () => {
-      galleryItemTargetOne.dispatchEvent(new Event('load'))
-      galleryItemTargetTwo.dispatchEvent(new Event('load'))
-      expect(galleryItemTargetOne.classList).toContain('fade-in')
-      expect(galleryItemTargetTwo.classList).toContain('fade-in')
+    describe('all images loaded', () => {
+      it('fade in', () => {
+        galleryItemTargetOne.dispatchEvent(new Event('load'))
+        galleryItemTargetTwo.dispatchEvent(new Event('load'))
+        expect(galleryItemTargetOne.classList).toContain('fade-in')
+        expect(galleryItemTargetTwo.classList).toContain('fade-in')
+      })
+
+      it('images justified', () => {
+        const containerWidth = 15
+        const galleryContainer = document.querySelector('.gallery-container')
+        jest
+          .spyOn(galleryContainer, 'clientWidth', 'get')
+          .mockImplementation(() => containerWidth)
+        galleryItemTargetOne.dispatchEvent(new Event('load'))
+        galleryItemTargetTwo.dispatchEvent(new Event('load'))
+
+        expect(justifiedLayout).toHaveBeenCalledWith([
+          galleryItemOneDimensions,
+          galleryItemTwoDimensions
+        ], {
+          boxSpacing: {
+            horizontal: margin,
+            vertical: 0
+          },
+          containerWidth: containerWidth
+        })
+        expect(galleryItemTargetOne.width).toEqual(20)
+        expect(galleryItemTargetOne.height).toEqual(30)
+        expect(galleryItemTargetTwo.width).toEqual(40)
+        expect(galleryItemTargetTwo.height).toEqual(50)
+      })
     })
   })
 
-  describe('justify images', () => {
-    it('not all images loaded', () => {
-      galleryItemTargetOne.dispatchEvent(new Event('load'))
-      expect(justifiedLayout).not.toHaveBeenCalled()
+  describe('#disconnect', () => {
+    beforeEach(() => {
+      document.body.innerHTML = ''
     })
 
-    it('all images loaded', () => {
-      const containerWidth = 15
-      const galleryContainer = document.querySelector('.gallery-container')
-      jest
-        .spyOn(galleryContainer, 'clientWidth', 'get')
-        .mockImplementation(() => containerWidth)
-      galleryItemTargetOne.dispatchEvent(new Event('load'))
-      galleryItemTargetTwo.dispatchEvent(new Event('load'))
-      expect(justifiedLayout).toHaveBeenCalledWith([
-        galleryItemOneDimensions,
-        galleryItemTwoDimensions
-      ], {
-        boxSpacing: {
-          horizontal: margin,
-          vertical: 0
-        },
-        containerWidth: containerWidth
-      })
-      expect(galleryItemTargetOne.width).toEqual(20)
-      expect(galleryItemTargetOne.height).toEqual(30)
-      expect(galleryItemTargetTwo.width).toEqual(40)
-      expect(galleryItemTargetTwo.height).toEqual(50)
+    it('reset to cache safe state', () => {
+      expect(galleryItemTargetOne.classList).not.toContain('fade-in')
+      expect(galleryItemTargetTwo.classList).not.toContain('fade-in')
+      expect(galleryItemTargetOne.style.transitionDelay).toBe('')
+      expect(galleryItemTargetTwo.style.transitionDelay).toBe('')
     })
   })
 })

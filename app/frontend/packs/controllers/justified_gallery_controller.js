@@ -50,7 +50,7 @@ export default class extends Controller {
     for (let i = 0; i < this.galleryItemTargets.length; i++) {
       const target = this.galleryItemTargets[i]
       target.classList.remove('fade-in')
-      target.style.transitionDelay = '0'
+      target.style.transitionDelay = null
     }
   }
 }
