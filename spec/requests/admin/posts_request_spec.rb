@@ -34,7 +34,7 @@ RSpec.describe 'Request Admin:Posts', type: :request do
     end
 
     it 'invalid id' do
-      get "/admin/posts/not-a-post-id/edit"
+      get '/admin/posts/not-a-post-id/edit'
       expect(response).to redirect_to(admin_posts_path)
       expect(flash[:alert]).to include('Post not found')
     end
