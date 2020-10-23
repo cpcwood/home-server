@@ -40,6 +40,8 @@ module Admin
       return redirect_to(admin_gallery_images_path, alert: 'Image not found') unless @gallery_image
     end
 
+    def update; end
+
     private
 
     def permitted_params
