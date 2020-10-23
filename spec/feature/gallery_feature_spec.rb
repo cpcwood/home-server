@@ -55,5 +55,15 @@ feature 'admin update gallery', feature: true do
       expect(page).to have_selector('img.gallery-image-thumbnail')
       expect(page.html).to include('edited gallery image')
     end
+
+    scenario 'delete blog post' do
+      seed_gallery_image
+      visit('/gallery')
+      click_on('Admin Edit')
+      first('.view-gallery-image').click
+      first('.destroy-button').click
+      expect(page).to have_content('Gallery image removed')
+      expect(page).to have_content('There are no images here...')
+    end
   end
 end

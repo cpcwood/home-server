@@ -19,4 +19,7 @@
 
 <div class="embedded-form-button-container">
   <%= link_to('Return', admin_gallery_images_path, class: 'standard-button input-submit') %>
+  <%= form_with(model: [:admin, gallery_image], method: 'delete') do |r| %>
+    <%= r.submit("Remove", class: 'input-submit destroy-button') %>
+  <% end %>
 </div>
