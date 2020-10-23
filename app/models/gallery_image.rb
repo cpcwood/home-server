@@ -7,6 +7,7 @@
 #  description :string           not null
 #  latitude    :decimal(10, 6)
 #  longitude   :decimal(10, 6)
+#  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  user_id     :bigint           not null
