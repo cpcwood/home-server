@@ -47,6 +47,12 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
       get("/admin/gallery-images/#{gallery_image.id}/edit")
       expect(response).to render_template(:edit)
     end
+
+    it 'invalid id' do
+      get("/admin/gallery-images/not-a-valid-id/edit")
+      expect(response).to redirect_to(admin_gallery_images_path)
+      expect(flash[:alert]).to eq('Image not found')
+    end
   end
 
   describe 'POST /admin/gallery-images' do
