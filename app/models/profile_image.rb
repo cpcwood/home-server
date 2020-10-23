@@ -4,8 +4,6 @@
 #
 #  id          :bigint           not null, primary key
 #  description :string
-#  x_loc       :integer          default(50)
-#  y_loc       :integer          default(50)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  about_id    :bigint
@@ -36,5 +34,13 @@ class ProfileImage < Image
 
   def y_dim
     Y_DIM
+  end
+
+  private
+
+  def process_image(attached_image)
+    Image.image_processing_pipeline(image_path: attached_image) do |pipeline|
+      pipeline.resize_to_fill(x_dim, y_dim, gravity: 'north-west')
+    end
   end
 end

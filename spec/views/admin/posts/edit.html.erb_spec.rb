@@ -1,7 +1,7 @@
 describe 'Views' do
   let(:post) { create(:post) }
 
-  describe '/admin/blog rendering' do
+  describe '/admin/posts/:id/edit rendering' do
     context 'edit view' do
       before(:each) do
         assign(:post, post)
@@ -13,6 +13,9 @@ describe 'Views' do
         expect(rendered).to match(Regexp.escape(post.overview))
         expect(rendered).to match(Regexp.escape(post.text))
         expect(rendered).to match(admin_post_path(post))
+        expect(rendered).to match(admin_posts_path)
+        expect(rendered).to match('Return')
+        expect(rendered).to match('Remove')
       end
     end
   end

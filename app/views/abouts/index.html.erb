@@ -6,7 +6,7 @@
   <%= render partial: 'partials/admin_toolbar', locals: { model: @about } %>
 
   <div class='about-contact-container'>
-    <%= image_tag(image_path_helper(@about.profile_image), class: 'profile-image about') %>
+    <%= image_tag(image_path_helper(image_model: @about.profile_image), class: 'profile-image about') %>
     <div class='about-contact-links-container'>
       <div class='about-contact-external-links'>
         <a href='<%= @about.linkedin_link%>' class='logo-link' target='_blank' title='LinkedIn link'>

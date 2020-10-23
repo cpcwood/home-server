@@ -1,6 +1,6 @@
 RSpec.describe 'Request Admin:SiteSettings', type: :request, slow: true do
   before(:each) do
-    seed_db
+    seed_user_and_settings
     login
   end
 

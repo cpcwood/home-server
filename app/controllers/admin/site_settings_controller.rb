@@ -8,6 +8,7 @@ module Admin
       begin
         update_settings
       rescue StandardError => e
+        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
         @alerts.push('Sorry, something went wrong!')
         @alerts.push(e.message)
       end

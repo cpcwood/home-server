@@ -2,7 +2,6 @@ import { Application } from 'stimulus'
 import imageLoaderController from 'controllers/image_loader_controller'
 
 describe('touch_hover_tile_controller', () => {
-  const targetLoaded = 2
   let fadeTargetOne
   let fadeTargetTwo
 
@@ -13,7 +12,7 @@ describe('touch_hover_tile_controller', () => {
 
   beforeEach(() => {
     document.body.innerHTML = `
-      <div data-controller="image-loader" data-image-loader-num-images="${targetLoaded}">
+      <div data-controller="image-loader" data-target="image-loader.container">
         <img class="fade-target" data-action="load->image-loader#imageLoaded" data-target="image-loader.fade">
         <img class="fade-target" data-action="load->image-loader#imageLoaded" data-target="image-loader.fade">
       </div>
@@ -35,6 +34,21 @@ describe('touch_hover_tile_controller', () => {
       fadeTargetTwo.dispatchEvent(new Event('load'))
       expect(fadeTargetOne.classList).toContain('fade-in')
       expect(fadeTargetTwo.classList).toContain('fade-in')
+      expect(fadeTargetOne.style.transitionDelay).toBe('0s')
+      expect(fadeTargetTwo.style.transitionDelay).toBe('0.1s')
+    })
+  })
+
+  describe('#disconnect', () => {
+    beforeEach(() => {
+      document.body.innerHTML = ''
+    })
+
+    it('reset to cache safe state', () => {
+      expect(fadeTargetOne.classList).not.toContain('fade-in')
+      expect(fadeTargetTwo.classList).not.toContain('fade-in')
+      expect(fadeTargetOne.style.transitionDelay).toBe('')
+      expect(fadeTargetTwo.style.transitionDelay).toBe('')
     })
   })
 })

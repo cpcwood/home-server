@@ -1,26 +1,29 @@
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = ['fade']
+  static targets = ['fade', 'container']
 
   initialize () {
+    this.targetNumber = this.containerTarget.getElementsByTagName('img').length
     this.imageCounter = 0
   }
 
-  imageLoaded (event) {
-    const targetNumber = parseInt(this.data.get('num-images'))
+  imageLoaded () {
     this.imageCounter += 1
-    if (this.imageCounter === targetNumber) {
+    if (this.imageCounter === this.targetNumber) {
       for (let i = 0; i < this.fadeTargets.length; i++) {
-        this.fadeTargets[i].classList.add('fade-in')
+        const target = this.fadeTargets[i]
+        target.classList.add('fade-in')
+        target.style.transitionDelay = `${i * 0.1}s`
       }
     }
   }
 
   disconnect () {
-    this.imageCounter = 0
     for (let i = 0; i < this.fadeTargets.length; i++) {
-      this.fadeTargets[i].classList.remove('fade-in')
+      const target = this.fadeTargets[i]
+      target.classList.remove('fade-in')
+      target.style.transitionDelay = null
     }
   }
 }
