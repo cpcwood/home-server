@@ -118,5 +118,13 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
       expect(response).to redirect_to(admin_gallery_images_path)
       expect(flash[:alert]).to include('Gallery image not found')
     end
+
+    it 'successful request' do
+      gallery_image = create(:gallery_image, user: @user)
+      delete("/admin/gallery-images/#{gallery_image.id}")
+      expect(response).to redirect_to(admin_gallery_images_path)
+      expect(flash[:notice]).to include('Gallery image removed')
+      expect(GalleryImage.find_by(id: gallery_image.id)).to be_nil
+    end
   end
 end
