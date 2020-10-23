@@ -61,10 +61,19 @@ describe AttachmentHelper do
     end
   end
 
-  describe '#blob_url' do
+  describe '#image_attached?' do
+    it 'no image passed' do
+      expect(helper.image_attached?(nil)).to eq(false)
+    end
+
     it 'no image attached' do
       allow(mock_image_file).to receive(:attached?).and_return(false)
-      expect(helper.blob_url(image_model: header_image)).to eq(nil)
+      expect(helper.image_attached?(header_image)).to eq(false)
+    end
+
+    it 'image attached' do
+      allow(mock_image_file).to receive(:attached?).and_return(true)
+      expect(helper.image_attached?(header_image)).to eq(true)
     end
   end
 end
