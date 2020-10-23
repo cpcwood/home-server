@@ -71,10 +71,16 @@ module Admin
     def destroy
       @notices = []
       @alerts = []
-      @gallery_image = find_model
-      return redirect_to(admin_gallery_images_path, alert: 'Gallery image not found') unless @gallery_image
-      @gallery_image.destroy
-      @notices.push('Gallery image removed')
+      begin
+        @gallery_image = find_model
+        return redirect_to(admin_gallery_images_path, alert: 'Gallery image not found') unless @gallery_image
+        @gallery_image.destroy
+        @notices.push('Gallery image removed')
+      rescue StandardError => e
+        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
+        @alerts.push('Sorry, something went wrong!')
+        @alerts.push(e.message)
+      end
       redirect_to(admin_gallery_images_path, notice: @notices, alert: @alerts)
     end
 
