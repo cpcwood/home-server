@@ -62,7 +62,7 @@ feature 'admin update blog posts', feature: true do
       visit('/blog')
       click_on('Admin Edit')
       first('.show-blog-post-button').click
-      first('.destroy-blog-post-button').click
+      first('.destroy-button').click
       expect(page).to have_content('Blog post removed')
       expect(page).to have_content('There are no posts here...')
     end

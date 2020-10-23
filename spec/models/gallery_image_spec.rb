@@ -106,12 +106,6 @@ RSpec.describe GalleryImage, type: :model do
           subject.image_file = image_file_upload
         end
 
-        it 'description attribute missing' do
-          subject.description = nil
-          subject.save
-          expect(subject.description).to eq('sample_image.jpg')
-        end
-
         it 'date_taken attribute missing' do
           subject.date_taken = nil
           subject.save
