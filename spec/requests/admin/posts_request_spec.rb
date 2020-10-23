@@ -20,10 +20,23 @@ RSpec.describe 'Request Admin:Posts', type: :request do
   end
 
   describe 'GET /admin/blog #index' do
-    it 'Renders page' do
-      create(:post, user: @user)
+    it 'valid request' do
       get '/admin/blog'
       expect(response).to render_template(:index)
+    end
+  end
+
+  describe 'GET /admin/posts/:id/edit #edit' do
+    it 'valid request' do
+      post = create(:post, user: @user)
+      get "/admin/posts/#{post.id}/edit"
+      expect(response).to render_template(:edit)
+    end
+
+    it 'invalid id' do
+      get "/admin/posts/not-a-post-id/edit"
+      expect(response).to redirect_to(admin_posts_path)
+      expect(flash[:alert]).to include('Post not found')
     end
   end
 
