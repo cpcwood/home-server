@@ -14,6 +14,9 @@ describe 'Views' do
         expect(rendered).to match(Regexp.escape(gallery_image.latitude.to_s))
         expect(rendered).to match(Regexp.escape(gallery_image.longitude.to_s))
         expect(rendered).to match(admin_gallery_image_path(gallery_image))
+        expect(rendered).to match(admin_gallery_images_path)
+        expect(rendered).to match('Return')
+        expect(rendered).to match('Remove')
       end
     end
   end

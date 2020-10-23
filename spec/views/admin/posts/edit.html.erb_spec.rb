@@ -13,6 +13,9 @@ describe 'Views' do
         expect(rendered).to match(Regexp.escape(post.overview))
         expect(rendered).to match(Regexp.escape(post.text))
         expect(rendered).to match(admin_post_path(post))
+        expect(rendered).to match(admin_posts_path)
+        expect(rendered).to match('Return')
+        expect(rendered).to match('Remove')
       end
     end
   end
