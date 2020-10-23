@@ -111,4 +111,12 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
       expect(response.body).to include('general error')
     end
   end
+
+  describe 'DELETE /admin/posts/:id #update' do
+    it 'post id invalid' do
+      delete('/admin/gallery-images/not-a-post-id')
+      expect(response).to redirect_to(admin_gallery_images_path)
+      expect(flash[:alert]).to include('Gallery image not found')
+    end
+  end
 end
