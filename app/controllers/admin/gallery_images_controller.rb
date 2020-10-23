@@ -89,7 +89,7 @@ module Admin
     def permitted_params
       params.require(:gallery_image).permit(
         :image_file,
-        :description,
+        :title,
         :date_taken,
         :latitude,
         :longitude)

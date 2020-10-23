@@ -10,7 +10,7 @@ describe 'Views' do
 
       it 'gallery image form' do
         expect(rendered).to match('gallery_image_image_file')
-        expect(rendered).to match('gallery_image_description')
+        expect(rendered).to match('gallery_image_title')
         expect(rendered).to match('gallery_image_date_taken')
         expect(rendered).to match('gallery_image_latitude')
         expect(rendered).to match('gallery_image_longitude')

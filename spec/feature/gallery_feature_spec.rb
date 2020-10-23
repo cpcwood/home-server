@@ -15,6 +15,7 @@ feature 'admin update gallery', feature: true do
       seed_gallery_image
       visit('/gallery')
       expect(page).to have_selector('img.gallery-image-thumbnail')
+      expect(page.html).to include(@gallery_image.title)
       expect(page.html).to include(@gallery_image.description)
     end
   end
@@ -29,7 +30,7 @@ feature 'admin update gallery', feature: true do
       click_on('Admin Edit')
       expect(page).to have_content('There are no images here...')
       click_on('Create New')
-      fill_in('gallery_image[description]', with: 'new gallery image')
+      fill_in('gallery_image[title]', with: 'new gallery image')
       fill_in('gallery_image[date_taken]', with: DateTime.new(2020, 04, 19, 0, 0, 0))
       fill_in('gallery_image[latitude]', with: 179)
       fill_in('gallery_image[longitude]', with: -179)
@@ -45,7 +46,7 @@ feature 'admin update gallery', feature: true do
       visit('/gallery')
       click_on('Admin Edit')
       first('.view-gallery-image').click
-      fill_in('gallery_image[description]', with: 'edited gallery image')
+      fill_in('gallery_image[title]', with: 'edited gallery image')
       fill_in('gallery_image[date_taken]', with: DateTime.new(2020, 04, 19, 0, 0, 0))
       fill_in('gallery_image[latitude]', with: 179)
       fill_in('gallery_image[longitude]', with: -179)

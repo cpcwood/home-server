@@ -5,7 +5,7 @@ RSpec.describe Image, type: :model do
 
   describe 'validations' do
     subject { create(:cover_image) }
-    
+
     describe 'description validations' do
       it 'presence' do
         subject.description = nil
