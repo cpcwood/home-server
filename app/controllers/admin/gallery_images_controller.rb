@@ -37,6 +37,7 @@ module Admin
 
     def edit
       @gallery_image = find_model
+      return redirect_to(admin_gallery_images_path, alert: 'Image not found') unless @gallery_image
     end
 
     private
