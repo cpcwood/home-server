@@ -25,12 +25,12 @@ Sass Styles
 |   |   |– _images.scss                   # Images
 |   |   |– _markdown.scss                 # Markdown
 |   |   |– _posts.scss                    # Posts
-|   |   |– _dynamic_selectors.scss        # Dynamically added selectors
 |   |   ┴
 |   |
 |   |– custom/
 |   |   |– about.scss                     # Custom styles for /about
 |   |   |– gallery.scss                   # Custom styles for /gallery
+|   |   |– overrides.scss                # Overrides and dynamically added selectors
 |   |   ┴           
 |   |           
 |   |– vendor/            
@@ -80,4 +80,4 @@ Sass Styles
 @use './styles/themes/syntax_highlighting';
 
 // Dynamic selectors
-@use './styles/components/dynamic_selectors';
+@use './styles/custom/overrides';

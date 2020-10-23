@@ -4,6 +4,7 @@ import SimpleLightbox from 'simplelightbox'
 
 jest.mock('simplelightbox', () => {
   return jest.fn().mockImplementation(() => {
+
   })
 })
 
@@ -11,6 +12,13 @@ describe('touch_hover_tile_controller', () => {
   const galleryContainerItemSelector = '.gallery-container a'
   const pathToGalleryItem = 'path-to-full-image.jpg'
   const galleryItemDescription = 'gallery item description'
+  const mockSimpleLightbox = jest.fn()
+
+  jest.mock('simplelightbox', () => {
+    return jest.fn().mockImplementation(() => {
+      return mockSimpleLightbox
+    })
+  })
 
   beforeAll(() => {
     const application = Application.start()
@@ -33,9 +41,18 @@ describe('touch_hover_tile_controller', () => {
     jest.clearAllMocks()
   })
 
-  describe('initialize', () => {
+  describe('#initialize', () => {
     it('lightbox initialized', () => {
-      expect(SimpleLightbox).toHaveBeenCalledWith(galleryContainerItemSelector, {})
+      expect(SimpleLightbox).toHaveBeenCalledWith(galleryContainerItemSelector, {
+        animationSlide: false,
+        animationSpeed: 100,
+        captionClass: 'lightbox-caption',
+        close: false,
+        fadeSpeed: 150,
+        history: false,
+        htmlClass: false,
+        showCounter: false
+      })
     })
   })
 })
