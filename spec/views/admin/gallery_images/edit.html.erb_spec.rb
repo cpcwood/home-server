@@ -10,7 +10,7 @@ describe 'Views' do
       end
 
       it 'it renders posts' do
-        expect(rendered).to match(Regexp.escape(gallery_image.description))
+        expect(rendered).to match(Regexp.escape(gallery_image.title))
         expect(rendered).to match(Regexp.escape(gallery_image.latitude.to_s))
         expect(rendered).to match(Regexp.escape(gallery_image.longitude.to_s))
         expect(rendered).to match(admin_gallery_image_path(gallery_image))

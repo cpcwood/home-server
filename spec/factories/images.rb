@@ -24,6 +24,7 @@ FactoryBot.define do
 
     factory :gallery_image, class: 'GalleryImage' do
       description { 'gallery_image' }
+      title { 'a nice picture' }
       date_taken { DateTime.new(2020, 04, 19, 0, 0, 0) }
       latitude { 51.510357 }
       longitude { -0.116773 }

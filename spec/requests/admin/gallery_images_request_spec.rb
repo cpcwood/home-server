@@ -5,7 +5,7 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
     {
       gallery_image: {
         image_file: image_fixture,
-        description: 'new gallery image',
+        title: 'new gallery image',
         date_taken: Date.new(2021, 04, 19),
         latitude: 180,
         longitude: -180
@@ -16,7 +16,7 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
   let(:invalid_attributes) do
     {
       gallery_image: {
-        description: ''
+        date_taken: ''
       }
     }
   end
@@ -89,7 +89,7 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
       expect(response).to redirect_to(admin_gallery_images_path)
       expect(flash[:notice]).to include('Gallery image updated')
       gallery_image.reload
-      expect(gallery_image.description).to eq(valid_attributes[:gallery_image][:description])
+      expect(gallery_image.title).to eq(valid_attributes[:gallery_image][:title])
       expect(gallery_image.date_taken).to eq(valid_attributes[:gallery_image][:date_taken])
       expect(gallery_image.longitude).to eq(valid_attributes[:gallery_image][:longitude])
       expect(gallery_image.latitude).to eq(valid_attributes[:gallery_image][:latitude])
@@ -100,7 +100,7 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
       gallery_image = create(:gallery_image, user: @user)
       put("/admin/gallery-images/#{gallery_image.id}", params: invalid_attributes)
       expect(response).not_to redirect_to(admin_gallery_images_path)
-      expect(response.body).to include('Description cannot be blank')
+      expect(response.body).to include('Date taken must be date')
     end
 
     it 'general error' do
