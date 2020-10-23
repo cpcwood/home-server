@@ -43,9 +43,15 @@ module Admin
     def update
       @notices = []
       @alerts = []
-      @gallery_image = find_model
-      return redirect_to(admin_gallery_images_path, alert: 'Gallery image not found') unless @gallery_image
-      update_model(model: @gallery_image, success_message: 'Gallery image updated')
+      begin
+        @gallery_image = find_model
+        return redirect_to(admin_gallery_images_path, alert: 'Gallery image not found') unless @gallery_image
+        update_model(model: @gallery_image, success_message: 'Gallery image updated')
+      rescue StandardError => e
+        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
+        @alerts.push('Sorry, something went wrong!')
+        @alerts.push(e.message)
+      end
       if @alerts.any?
         flash[:alert] = @alerts
         render(
