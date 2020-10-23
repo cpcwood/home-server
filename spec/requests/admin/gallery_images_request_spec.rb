@@ -95,5 +95,12 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
       expect(gallery_image.latitude).to eq(valid_attributes[:gallery_image][:latitude])
       expect(gallery_image.image_file.attached?).to eq(true)
     end
+
+    it 'save failure' do
+      gallery_image = create(:gallery_image, user: @user)
+      put("/admin/gallery-images/#{gallery_image.id}", params: invalid_attributes)
+      expect(response).not_to redirect_to(admin_gallery_images_path)
+      expect(response.body).to include('Description cannot be blank')
+    end
   end
 end
