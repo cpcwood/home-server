@@ -34,6 +34,21 @@ describe('touch_hover_tile_controller', () => {
       fadeTargetTwo.dispatchEvent(new Event('load'))
       expect(fadeTargetOne.classList).toContain('fade-in')
       expect(fadeTargetTwo.classList).toContain('fade-in')
+      expect(fadeTargetOne.style.transitionDelay).toBe('0s')
+      expect(fadeTargetTwo.style.transitionDelay).toBe('0.1s')
+    })
+  })
+
+  describe('#disconnect', () => {
+    beforeEach(() => {
+      document.body.innerHTML = ''
+    })
+
+    it('classes removed before page cache', () => {
+      expect(fadeTargetOne.classList).not.toContain('fade-in')
+      expect(fadeTargetTwo.classList).not.toContain('fade-in')
+      expect(fadeTargetOne.style.transitionDelay).toBe('')
+      expect(fadeTargetTwo.style.transitionDelay).toBe('')
     })
   })
 })
