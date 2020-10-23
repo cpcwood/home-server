@@ -11,7 +11,7 @@
   <%= image_tag(image_path_helper(image_model: gallery_image), class: 'embedded-full-width embedded-cover-image')%>
 </div>
 
-<%= form_with(model: [:admin, gallery_image], class: 'admin-section-form', id: 'admin-gallery-images-new-form') do |f| %>
+<%= form_with(model: [:admin, gallery_image], class: 'admin-section-form', id: 'admin-gallery-images-edit-form') do |f| %>
   
   <%= render partial: 'admin/gallery_images/form_components', locals: { f: f } %>
 

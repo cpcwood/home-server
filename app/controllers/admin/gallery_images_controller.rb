@@ -46,7 +46,20 @@ module Admin
       @gallery_image = find_model
       return redirect_to(admin_gallery_images_path, alert: 'Gallery image not found') unless @gallery_image
       update_model(model: @gallery_image, success_message: 'Gallery image updated')
-      redirect_to(admin_gallery_images_path, notice: @notices)
+      if @alerts.any?
+        flash[:alert] = @alerts
+        render(
+          partial: 'partials/form_replacement',
+          locals: {
+            selector_id: 'admin-gallery-images-edit-form',
+            form_partial: 'admin/gallery_images/edit_form',
+            model: { gallery_image: @gallery_image }
+          },
+          formats: [:js])
+        flash[:alert] = nil
+      else
+        redirect_to(admin_gallery_images_path, notice: @notices)
+      end
     end
 
     private
