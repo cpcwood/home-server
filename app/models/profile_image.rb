@@ -4,8 +4,6 @@
 #
 #  id          :bigint           not null, primary key
 #  description :string
-#  x_loc       :integer          default(50)
-#  y_loc       :integer          default(50)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  about_id    :bigint
