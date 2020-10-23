@@ -28,6 +28,8 @@ Rails.application.routes.draw do
     resource :about, only: [:edit, :update]
     resources :posts, only: [:index], :path => "/blog"
     resources :posts, only: [:new, :create, :edit, :update, :destroy]
+    resources :gallery_images, only: [:index], :path => "/gallery"
+    resources :gallery_images, only: [:new, :create, :edit, :update, :destroy], path: '/gallery-images'
   end
 
   get '/say-hello', to: 'homepages#index'
@@ -37,4 +39,6 @@ Rails.application.routes.draw do
   resource :users, only: [:update]
 
   resources :posts, only: [:index, :show], :path => "/blog"
+
+  resources :gallery_images, only: [:index], :path => "/gallery"
 end

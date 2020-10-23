@@ -1,6 +1,6 @@
 feature 'Admin login logout', feature: true do
   before(:each) do
-    seed_db
+    seed_user_and_settings
   end
 
   scenario 'Admin can login and logout' do

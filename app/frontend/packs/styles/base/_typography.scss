@@ -20,6 +20,7 @@ html {
 }
 
 @mixin main-heading {
+  box-sizing: border-box;
   color: colors.$inverse-font;
   font-family: $header-font;
   font-weight: 300;

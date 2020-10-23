@@ -23,7 +23,7 @@ describe('recaptcha_controller', () => {
     jest.clearAllMocks()
   })
 
-  describe('#connect', () => {
+  describe('#initialize', () => {
     it('datepicker.js initialized', () => {
       expect(Pikaday).toHaveBeenCalledWith({ field: dateField })
     })

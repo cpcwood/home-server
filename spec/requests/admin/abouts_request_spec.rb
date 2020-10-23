@@ -1,9 +1,10 @@
 RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
-  let(:image_path) { Rails.root.join('spec/files/sample_image.jpg') }
-  let(:image_fixture) { fixture_file_upload(image_path, 'image/png') }
+  let(:image_fixture) { fixture_file_upload(Rails.root.join('spec/files/sample_image.jpg'), 'image/png') }
 
   before(:each) do
-    seed_db
+    allow_any_instance_of(Image).to receive(:process_new_image_attachment).and_return(true)
+    seed_user_and_settings
+    seed_about
     login
   end
 
@@ -55,8 +56,6 @@ RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
     end
 
     it 'upload image' do
-      expect(Image).to receive(:valid?).and_call_original
-      expect(Image).to receive(:resize).with(image_path: anything, x_dim: ProfileImage.new.x_dim, y_dim: ProfileImage.new.y_dim).and_call_original
       put '/admin/about', params: {
         about: {
           profile_image_attributes: {

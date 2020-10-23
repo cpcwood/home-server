@@ -7,21 +7,28 @@ describe AttachmentHelper do
   describe '#image_path_helper' do
     it 'image attached' do
       allow(mock_image_file).to receive(:attached?).and_return(true)
-      expect(helper.image_path_helper(header_image)).to eq(mock_image_file)
+      expect(helper.image_path_helper(image_model: header_image)).to eq(mock_image_file)
     end
 
     it 'default image method implemented' do
       allow(mock_image_file).to receive(:attached?).and_return(false)
-      expect(helper.image_path_helper(header_image)).to eq(default_image_path)
+      expect(helper.image_path_helper(image_model: header_image)).to eq(default_image_path)
     end
 
     it 'no image attached' do
       allow(mock_image_file).to receive(:attached?).and_return(false)
-      expect(helper.image_path_helper(profile_image)).to eq(AttachmentHelper::IMAGE_NOT_FOUND)
+      expect(helper.image_path_helper(image_model: profile_image)).to eq(AttachmentHelper::IMAGE_NOT_FOUND)
     end
 
     it 'no image passed' do
-      expect(helper.image_path_helper(nil)).to eq(AttachmentHelper::IMAGE_NOT_FOUND)
+      expect(helper.image_path_helper(image_model: nil)).to eq(AttachmentHelper::IMAGE_NOT_FOUND)
+    end
+
+    it 'variant passed' do
+      allow(mock_image_file).to receive(:attached?).and_return(true)
+      allow(header_image).to receive(:variant_sizes).and_return({ thumbnail: { resize_to_limit: [100, 100] }})
+      expect(mock_image_file).to receive(:variant).with({ resize_to_limit: [100, 100] })
+      helper.image_path_helper(image_model: header_image, variant: :thumbnail)
     end
   end
 
@@ -51,6 +58,22 @@ describe AttachmentHelper do
 
     it 'image file attached' do
       expect(helper.image_file_name(image: image_file_attached)).to eq('sample_image.jpg')
+    end
+  end
+
+  describe '#image_attached?' do
+    it 'no image passed' do
+      expect(helper.image_attached?(nil)).to eq(false)
+    end
+
+    it 'no image attached' do
+      allow(mock_image_file).to receive(:attached?).and_return(false)
+      expect(helper.image_attached?(header_image)).to eq(false)
+    end
+
+    it 'image attached' do
+      allow(mock_image_file).to receive(:attached?).and_return(true)
+      expect(helper.image_attached?(header_image)).to eq(true)
     end
   end
 end

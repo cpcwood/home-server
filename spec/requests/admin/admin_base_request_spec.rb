@@ -1,6 +1,6 @@
 RSpec.describe 'Request Admin:Base', type: :request do
   before(:each) do
-    seed_db
+    seed_user_and_settings
   end
 
   describe 'before_action:' do

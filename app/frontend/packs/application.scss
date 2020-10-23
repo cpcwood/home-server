@@ -6,39 +6,41 @@ Sass Styles
 |– styles/
 |   |
 |   |– base/
-|   |   |– _normalize.scss    # Import vendor normalize.css
-|   |   |– _fonts.scss        # Import fonts
-|   |   |– _typography.scss   # Typography and header
-|   |   |– _colors.scss       # Theme colors
-|   |   |– _mixins.scss       # Sass mixins
-|   |   |– _page.scss         # General page structure
-|   |   ┴
-|   |
-|   |– components/
-|   |   |– _buttons.scss      # Buttons
-|   |   |– _messages.scss     # Messages
-|   |   |– _forms.scss        # Forms
-|   |   |– _navbar.scss       # Navbar - top and side
-|   |   |– _dashboard.scss    # Dashboard
-|   |   |– _typed_header.scss # Typed header
-|   |   |– _toolbars.scss     # Toolbars
-|   |   |– _images.scss       # Images
-|   |   |– _markdown.scss     # Markdown
-|   |   |– _posts.scss        # Posts
+|   |   |– _normalize.scss                # Import vendor normalize.css
+|   |   |– _fonts.scss                    # Import fonts
+|   |   |– _typography.scss               # Typography and header
+|   |   |– _colors.scss                   # Theme colors
+|   |   |– _mixins.scss                   # Sass mixins
+|   |   |– _page.scss                     # General page structure
+|   |   ┴           
+|   |           
+|   |– components/            
+|   |   |– _buttons.scss                  # Buttons
+|   |   |– _messages.scss                 # Messages
+|   |   |– _forms.scss                    # Forms
+|   |   |– _navbar.scss                   # Navbar - top and side
+|   |   |– _dashboard.scss                # Dashboard
+|   |   |– _typed_header.scss             # Typed header
+|   |   |– _toolbars.scss                 # Toolbars
+|   |   |– _images.scss                   # Images
+|   |   |– _markdown.scss                 # Markdown
+|   |   |– _posts.scss                    # Posts
 |   |   ┴
 |   |
 |   |– custom/
-|   |   |– about.scss         # Custom styles for /about
-|   |   ┴
-|   |
-|   |– vendor/
-|   |   |– hamburger.scss     # Hamburger icon for navbar
-|   |   |– normalize.css      # Normalize.css https://github.com/necolas/normalize.css
-|   |   |– loaders.scss       # Animated loading icons
+|   |   |– about.scss                     # Custom styles for /about
+|   |   |– gallery.scss                   # Custom styles for /gallery
+|   |   |– overrides.scss                # Overrides and dynamically added selectors
+|   |   ┴           
+|   |           
+|   |– vendor/            
+|   |   |– hamburger.scss                 # Hamburger icon for navbar
+|   |   |– normalize.css                  # Normalize.css https://github.com/necolas/normalize.css
+|   |   |– loaders.scss                   # Animated loading icons
 |   |   ┴
 |   |
 |   |– themes/
-|   |   |– syntax_highlighting.scss   # Code block syntax highlighting
+|   |   |– syntax_highlighting.scss       # Code block syntax highlighting
 |   |   ┴
 |   |
 ┴   ┴
@@ -67,10 +69,15 @@ Sass Styles
 
 // Custom page styles
 @use 'styles/custom/about.scss';
+@use 'styles/custom/gallery.scss';
 
 // Site Wide Vendor
 @use 'styles/vendor/loaders';
 @use 'node_modules/pikaday/css/pikaday.css';
+@use 'node_modules/simplelightbox/src/simple-lightbox';
 
 // Themes
 @use './styles/themes/syntax_highlighting';
+
+// Dynamic selectors
+@use './styles/custom/overrides';

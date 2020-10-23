@@ -18,9 +18,7 @@
 #
 #  fk_rails_...  (site_setting_id => site_settings.id)
 #
-class HeaderImage < Image
-  belongs_to :site_setting
-
+class HeaderImage < SiteImage
   X_DIM = 2560
   Y_DIM = 300
 
