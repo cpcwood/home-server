@@ -41,6 +41,14 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
     end
   end
 
+  describe 'GET /admin/gallery-images/:id/edit' do
+    it 'valid request' do
+      gallery_image = create(:gallery_image, user: @user)
+      get("/admin/gallery-images/#{gallery_image.id}/edit")
+      expect(response).to render_template(:edit)
+    end
+  end
+
   describe 'POST /admin/gallery-images' do
     it 'successful request' do
       post('/admin/gallery-images', params: valid_attributes)
