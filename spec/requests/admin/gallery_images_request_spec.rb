@@ -102,5 +102,13 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
       expect(response).not_to redirect_to(admin_gallery_images_path)
       expect(response.body).to include('Description cannot be blank')
     end
+
+    it 'general error' do
+      gallery_image = create(:gallery_image, user: @user)
+      allow_any_instance_of(GalleryImage).to receive(:save).and_raise('general error')
+      put("/admin/gallery-images/#{gallery_image.id}", params: valid_attributes)
+      expect(response).not_to redirect_to(admin_gallery_images_path)
+      expect(response.body).to include('general error')
+    end
   end
 end
