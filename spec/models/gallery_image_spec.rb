@@ -83,41 +83,52 @@ RSpec.describe GalleryImage, type: :model do
 
   describe 'before_validation' do
     describe '#extract_meta_data' do
-      before(:each) do
-        mini_magick_mock = double(:mini_magick, exif: {
-                                    'DateTimeOriginal' => '2020:04:19 00:00',
-                                    'GPSLatitude' => '1, 60, 3600',
-                                    'GPSLatitudeRef' => 'N',
-                                    'GPSLongitude' => '1, 60, 3600',
-                                    'GPSLongitudeRef' => 'W'
-                                  })
-        allow(MiniMagick::Image).to receive(:new).and_return(mini_magick_mock)
+      it 'image already processed' do
+        allow(image_file_upload).to receive(:instance_of?).with(ActionDispatch::Http::UploadedFile).and_return(false)
         allow(subject).to receive(:process_new_image_attachment).and_throw(:abort)
+        expect(MiniMagick::Image).not_to receive(:new)
         subject.image_file = image_file_upload
+        subject.save
       end
 
-      it 'description attribute missing' do
-        subject.description = nil
-        subject.save
-        expect(subject.description).to eq('sample_image.jpg')
-      end
+      describe 'image not yet processed' do
+        before(:each) do
+          allow(image_file_upload).to receive(:instance_of?).with(ActionDispatch::Http::UploadedFile).and_return(true)
+          mini_magick_mock = double(:mini_magick, exif: {
+                                      'DateTimeOriginal' => '2020:04:19 00:00',
+                                      'GPSLatitude' => '1, 60, 3600',
+                                      'GPSLatitudeRef' => 'N',
+                                      'GPSLongitude' => '1, 60, 3600',
+                                      'GPSLongitudeRef' => 'W'
+                                    })
+          allow(MiniMagick::Image).to receive(:new).and_return(mini_magick_mock)
+          allow(subject).to receive(:process_new_image_attachment).and_throw(:abort)
+          subject.image_file = image_file_upload
+        end
 
-      it 'date_taken attribute missing' do
-        subject.date_taken = nil
-        subject.save
-        expect(subject.date_taken).to eq(DateTime.new(2020, 04, 19))
-      end
+        it 'description attribute missing' do
+          subject.description = nil
+          subject.save
+          expect(subject.description).to eq('sample_image.jpg')
+        end
 
-      it 'latitude attribute missing' do
-        subject.latitude = nil
-        subject.save
-        expect(subject.latitude).to eq(3)
-      end
+        it 'date_taken attribute missing' do
+          subject.date_taken = nil
+          subject.save
+          expect(subject.date_taken).to eq(DateTime.new(2020, 04, 19))
+        end
 
-      it 'longitude attribute missing' do
-        subject.longitude = nil
-        subject.save
-        expect(subject.longitude).to eq(-3)
+        it 'latitude attribute missing' do
+          subject.latitude = nil
+          subject.save
+          expect(subject.latitude).to eq(3)
+        end
+
+        it 'longitude attribute missing' do
+          subject.longitude = nil
+          subject.save
+          expect(subject.longitude).to eq(-3)
+        end
       end
     end
   end

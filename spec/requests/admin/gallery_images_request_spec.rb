@@ -70,7 +70,7 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
     end
 
     it 'invalid id' do
-      get("/admin/gallery-images/not-a-valid-id/edit")
+      get('/admin/gallery-images/not-a-valid-id/edit')
       expect(response).to redirect_to(admin_gallery_images_path)
       expect(flash[:alert]).to eq('Gallery image not found')
     end
