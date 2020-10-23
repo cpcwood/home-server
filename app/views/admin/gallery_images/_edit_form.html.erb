@@ -1,0 +1,22 @@
+<div class="embedded-form-entry-container">
+  <div class="input-label embedded-label">
+    Current image
+  </div>
+  <div class="embedded-current-value">
+    <%= gallery_image.image_file.attached? ? gallery_image.image_file.attachment.blob.filename : "default #{gallery_image.description.humanize(capitalize: false)}" %>
+  </div>
+</div>
+
+<div class="embedded-form-entry-container">
+  <%= image_tag(image_path_helper(image_model: gallery_image), class: 'embedded-full-width embedded-cover-image')%>
+</div>
+
+<%= form_with(model: [:admin, gallery_image], class: 'admin-section-form', id: 'admin-gallery-images-new-form') do |f| %>
+  
+  <%= render partial: 'admin/gallery_images/form_components', locals: { f: f } %>
+
+<% end %>
+
+<div class="embedded-form-button-container">
+  <%= link_to('Return', admin_gallery_images_path, class: 'standard-button input-submit') %>
+</div>

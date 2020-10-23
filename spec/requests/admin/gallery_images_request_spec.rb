@@ -27,21 +27,21 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
     login
   end
 
-  describe 'GET /admin/gallery' do
+  describe 'GET /admin/gallery #index' do
     it 'template render' do
       get('/admin/gallery')
       expect(response).to render_template(:index)
     end
   end
 
-  describe 'GET /admin/gallery-images/new' do
+  describe 'GET /admin/gallery-images/new #new' do
     it 'template render' do
       get('/admin/gallery-images/new')
       expect(response).to render_template(:new)
     end
   end
 
-  describe 'GET /admin/gallery-images/:id/edit' do
+  describe 'GET /admin/gallery-images/:id/edit #edit' do
     it 'valid request' do
       gallery_image = create(:gallery_image, user: @user)
       get("/admin/gallery-images/#{gallery_image.id}/edit")
@@ -55,7 +55,7 @@ RSpec.describe 'Admin::GalleryImages', type: :request do
     end
   end
 
-  describe 'POST /admin/gallery-images' do
+  describe 'POST /admin/gallery-images #create' do
     it 'successful request' do
       post('/admin/gallery-images', params: valid_attributes)
       expect(flash[:notice]).to include('Gallery image created')
