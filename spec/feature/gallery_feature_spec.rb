@@ -39,5 +39,21 @@ feature 'admin update gallery', feature: true do
       expect(page).to have_selector('img.gallery-image-thumbnail')
       expect(page.html).to include('new gallery image')
     end
+
+    scenario 'edit image' do
+      seed_gallery_image
+      visit('/gallery')
+      click_on('Admin Edit')
+      first('.view-gallery-image').click
+      fill_in('gallery_image[description]', with: 'edited gallery image')
+      fill_in('gallery_image[date_taken]', with: DateTime.new(2020, 04, 19, 0, 0, 0))
+      fill_in('gallery_image[latitude]', with: 179)
+      fill_in('gallery_image[longitude]', with: -179)
+      find_field('gallery_image[image_file]').set(Rails.root.join('spec/files/sample_image.jpg'))
+      click_button('Submit')
+      expect(page).to have_content('Gallery image updated')
+      expect(page).to have_selector('img.gallery-image-thumbnail')
+      expect(page.html).to include('edited gallery image')
+    end
   end
 end

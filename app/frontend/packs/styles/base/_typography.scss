@@ -20,13 +20,13 @@ html {
 }
 
 @mixin main-heading {
+  box-sizing: border-box;
   color: colors.$inverse-font;
   font-family: $header-font;
   font-weight: 300;
   margin: 0;
   padding: 20px;
   width: 100%;
-  box-sizing: border-box;
 }
 
 h1 {
