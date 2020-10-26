@@ -62,6 +62,18 @@ RSpec.describe About, type: :model do
         expect(about).to be_valid
       end
     end
+
+    describe 'contact_email' do
+      it 'format' do
+        about.contact_email = nil
+        expect(about).to_not be_valid
+        about.contact_email = 'admin@'
+        expect(about).to_not be_valid
+        expect(about.errors.messages[:contact_email]).to eq ['Email must be valid format']
+        about.contact_email = 'admin@example.com'
+        expect(about).to be_valid
+      end
+    end
   end
 
   describe '#change_messages' do
