@@ -1,6 +1,7 @@
 feature 'send contact message', feature: true do
   before(:each) do
     seed_user_and_settings
+    allow(ReCaptchaService).to receive(:recaptcha_valid?).and_return(true)
   end
 
   context 'public user' do

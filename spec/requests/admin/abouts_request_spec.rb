@@ -4,7 +4,6 @@ RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
   before(:each) do
     allow_any_instance_of(Image).to receive(:process_new_image_attachment).and_return(true)
     seed_user_and_settings
-    seed_about
     login
   end
 
