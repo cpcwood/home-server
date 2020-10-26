@@ -4,7 +4,7 @@ module DateHelper
   end
 
   def full_date_and_time(datetime)
-    export_html(render_date(datetime) + ' at' + render_time(datetime))
+    export_html("#{render_date(datetime)} at#{render_time(datetime)}")
   end
 
   def export_html(string)
