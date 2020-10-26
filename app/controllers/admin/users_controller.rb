@@ -1,19 +1,18 @@
 module Admin
   class UsersController < AdminBaseController
-
     def edit
       render layout: 'layouts/admin_dashboard'
     end
 
     def update
-      return redirect_to(admin_user_settings_path, alert: 'Enter current password to update details') unless verify_current_password
+      return redirect_to(edit_admin_user_path(@user), alert: 'Enter current password to update details') unless verify_current_password
       @notices = []
       @alerts = []
       update_section(username_update_params, 'Username')
       update_section(email_update_params, 'Email address')
       update_section(password_update_params, 'Password')
       update_section(mobile_number_update_params, 'Mobile number')
-      redirect_to(admin_user_settings_path, notice: @notices, alert: @alerts)
+      redirect_to(edit_admin_user_path(@user), notice: @notices, alert: @alerts)
     end
 
     private
