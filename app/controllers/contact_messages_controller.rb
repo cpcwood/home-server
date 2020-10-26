@@ -7,8 +7,13 @@ class ContactMessagesController < ApplicationController
   def create
     @notices = []
     @alerts = []
-    @contact_message = ContactMessage.new
-    update_model(model: @contact_message, success_message: 'Message sent! You should receive a confirmation email shortly.')
+    begin
+      @contact_message = ContactMessage.new
+      update_model(model: @contact_message, success_message: 'Message sent! You should receive a confirmation email shortly.')
+    rescue StandardError => e
+      logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
+      @alerts.push('Sorry, something went wrong!')
+    end
     if @alerts.any?
       flash[:alert] = @alerts
       render(
