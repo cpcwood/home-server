@@ -13,7 +13,7 @@ describe DateHelper do
   describe '#full_date_and_time' do
     it 'process to html' do
       result = helper.full_date_and_time(datetime)
-      expect(result).to eq('<span>April 19<sup>th</sup>, 2020 at 1:02am</span>')
+      expect(result).to eq('<span>April 19<sup>th</sup>, 2020 at  1:02am</span>')
       expect(result).to be_kind_of(ActiveSupport::SafeBuffer)
     end
   end

@@ -38,7 +38,7 @@ RSpec.describe ContactMessageMailer, type: :mailer do
     end
 
     it 'renders intro message' do
-      expect(mail.body.encoded).to match(/You have received a new contact message from:[\w ]+#{contact_message.from}/)
+      expect(mail.body.encoded).to match(contact_message.from)
     end
 
     it 'renders message timestamp' do
@@ -75,7 +75,7 @@ RSpec.describe ContactMessageMailer, type: :mailer do
     end
 
     it 'renders intro message' do
-      expect(mail.body.encoded).to match(/You sent a new contact message to:[\w ]+#{about.name}/)
+      expect(mail.body.encoded).to match(about.name)
     end
 
     it 'renders message timestamp' do
