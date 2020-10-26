@@ -1,6 +1,6 @@
 RSpec.describe ContactMessageMailer, type: :mailer do
   include DateHelper
-  
+
   let(:about) { create(:about) }
   let(:user) { build_stubbed(:user) }
   let(:contact_message) { build_stubbed(:contact_message, user: user) }
