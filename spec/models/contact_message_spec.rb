@@ -75,10 +75,12 @@ RSpec.describe ContactMessage, type: :model do
 
   describe 'after_commit' do
     describe '#send_contact_message' do
-      user =  create(:user)
-      message = build(:contact_message, user: user)
-      expect(NewContactMessageJob).to receive(:perform_later).with(message: message, user: user)
-      message.save
+      it 'generates new job' do
+        user = create(:user)
+        message = build(:contact_message, user: user)
+        expect(NewContactMessageJob).to receive(:perform_later).with(message: message, user: user)
+        message.save
+      end
     end
   end
 end

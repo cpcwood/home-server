@@ -8,7 +8,7 @@ class ContactMessagesController < ApplicationController
     @notices = []
     @alerts = []
     begin
-      @contact_message = ContactMessage.new
+      @contact_message = User.first.contact_messages.new
       return unless recaptcha_valid?
       update_model(model: @contact_message, success_message: 'Message sent! You should receive a confirmation email shortly.')
     rescue StandardError => e
