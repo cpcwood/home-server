@@ -20,4 +20,7 @@ class ContactMessage < ApplicationRecord
 
   validates :subject,
             length: { minimum: 1, message: 'Subject cannot be blank' }
+
+  validates :content,
+            length: { minimum: 1, message: 'Content cannot be blank' }
 end
