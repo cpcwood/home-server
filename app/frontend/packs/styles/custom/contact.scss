@@ -34,3 +34,9 @@
 .contact-form-container .embedded-label {
   width: 26%;
 }
+
+.recaptcha.contact {
+  display:flex;
+  flex-direction: row-reverse;
+  margin-bottom: 0px;
+}

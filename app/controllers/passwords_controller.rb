@@ -1,5 +1,3 @@
-require 'faraday'
-
 class PasswordsController < ApplicationController
   before_action :already_logged_in
 

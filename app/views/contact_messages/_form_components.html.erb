@@ -24,6 +24,8 @@
   <%= f.text_area(:content, class: 'input-box embedded-text-area contact', placeholder: 'Enter message...') %>
 </div>
 
+<div class='recaptcha contact' id='recaptcha' data-controller='recaptcha'></div>
+
 <div class="embedded-form-entry-container submit-right">
   <%= f.submit("Send", class: 'input-submit') %>
 </div>
