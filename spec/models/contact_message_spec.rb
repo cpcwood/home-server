@@ -26,5 +26,17 @@ RSpec.describe ContactMessage, type: :model do
         expect(subject).to be_valid
       end
     end
+
+    describe 'email' do
+      it 'format' do
+        subject.email = nil
+        expect(subject).to_not be_valid
+        subject.email = 'test@'
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:email]).to eq(['Email must be valid'])
+        subject.email = 'test@example.com'
+        expect(subject).to be_valid
+      end
+    end
   end
 end
