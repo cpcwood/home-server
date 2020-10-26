@@ -77,7 +77,7 @@ RSpec.describe ContactMessage, type: :model do
     describe '#send_contact_message' do
       it 'generates new job' do
         message = build(:contact_message)
-        expect(NewContactMessageJob).to receive(:perform_later).with(message: message)
+        expect(NewContactMessageJob).to receive(:perform_later).with(contact_message: message)
         message.save
       end
     end
