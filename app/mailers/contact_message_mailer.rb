@@ -5,7 +5,7 @@ class ContactMessageMailer < ApplicationMailer
 
   def contact_message
     assign_default_variables
-    mail(to: params[:deliver_to], subject: "New contact message: #{@subject}") do |format|
+    mail(to: params[:deliver_to], reply_to: @from_email, subject: "New contact message: #{@subject}") do |format|
       format.html { render layout: 'default_email' }
     end
   end

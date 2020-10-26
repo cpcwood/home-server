@@ -4,24 +4,24 @@ RSpec.describe 'ContactMessages', type: :request do
   end
 
   let(:valid_params) do
-    { 
+    {
       contact_message: {
         from: 'test user',
         email: 'test@example.com',
         subject: 'new message subject',
-        content: 'new message text content',
+        content: 'new message text content'
       },
       'g-recaptcha-response' => 'test'
     }
   end
 
   let(:invalid_params) do
-    { 
+    {
       contact_message: {
         from: '',
         email: 'test@example.com',
         subject: 'new message subject',
-        content: 'new message text content',
+        content: 'new message text content'
       },
       'g-recaptcha-response' => 'test'
     }

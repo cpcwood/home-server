@@ -20,7 +20,6 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class ContactMessage < ApplicationRecord
-
   belongs_to :user
 
   validates :from,
