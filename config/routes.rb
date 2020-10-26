@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   get '/say-hello', to: 'homepages#index'
 
   get '/contact', to: 'contact_messages#new'
-  resources :contact_messages, only: [:new, :create]
+  resources :contact_messages, only: [:new, :create], path: 'contact-messages'
 
   resource :users, only: [:update]
 
