@@ -25,4 +25,17 @@ RSpec.describe ContactMessageMailer, type: :mailer do
       expect(mail.reply_to).to eql([contact_message.email])
     end
   end
+
+
+  describe '#confirmation' do
+    let(:mail) { ContactMessageMailer.with(contact_message: contact_message).confirmation }
+
+    it 'Renders the receivers email' do
+      expect(mail.to).to eql([contact_message.email])
+    end
+
+    it 'Renders the sender email correctly' do
+      expect(mail.from).to eql([Rails.application.credentials.email[:no_reply_email]])
+    end
+  end
 end
