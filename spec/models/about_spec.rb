@@ -40,13 +40,25 @@ RSpec.describe About, type: :model do
     end
 
     describe 'name' do
-      it 'presence' do
+      it 'format' do
         about.name = nil
         expect(about).to_not be_valid
         about.name = ''
         expect(about).to_not be_valid
         expect(about.errors.messages[:name]).to eq ['Name cannot be blank']
         about.name = 'a'
+        expect(about).to be_valid
+      end
+    end
+
+    describe 'location' do
+      it 'format' do
+        about.location = nil
+        expect(about).to_not be_valid
+        about.location = ''
+        expect(about).to_not be_valid
+        expect(about.errors.messages[:location]).to eq ['Location cannot be blank']
+        about.location = 'a'
         expect(about).to be_valid
       end
     end
