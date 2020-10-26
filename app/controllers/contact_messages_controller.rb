@@ -52,14 +52,14 @@ class ContactMessagesController < ApplicationController
 
   def render_form_alerts
     flash[:alert] = @alerts
-      render(
-        partial: 'partials/form_replacement',
-        locals: {
-          selector_id: 'contact-messages-new-form',
-          form_partial: 'contact_messages/new_form',
-          model: { contact_message: @contact_message }
-        },
-        formats: [:js])
-      flash[:alert] = nil
+    render(
+      partial: 'partials/form_replacement',
+      locals: {
+        selector_id: 'contact-messages-new-form',
+        form_partial: 'contact_messages/new_form',
+        model: { contact_message: @contact_message }
+      },
+      formats: [:js])
+    flash[:alert] = nil
   end
 end

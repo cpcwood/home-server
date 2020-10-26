@@ -1,7 +1,7 @@
 RSpec.describe NewContactMessageJob, type: :job do
-  let(:about) {create(:about)}
+  let(:about) { create(:about) }
   let(:contact_message) { build_stubbed(:contact_message) }
-  let(:mock_contact_message_mailer) {double(:ContactMessageMailer, deliver_now: nil)}
+  let(:mock_contact_message_mailer) { double(:ContactMessageMailer, deliver_now: nil) }
 
   it 'Contact message sent' do
     about

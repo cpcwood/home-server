@@ -1,5 +1,5 @@
 RSpec.describe ContactMessageMailer, type: :mailer do
-  let(:about) {build_stubbed(:about)}
+  let(:about) { build_stubbed(:about) }
   let(:user) { build_stubbed(:user) }
   let(:contact_message) { build_stubbed(:contact_message, user: user) }
   let(:header_image) { create(:header_image, site_setting: create(:site_setting)) }
@@ -19,6 +19,10 @@ RSpec.describe ContactMessageMailer, type: :mailer do
 
     it 'Renders the sender email correctly' do
       expect(mail.from).to eql([Rails.application.credentials.email[:no_reply_email]])
+    end
+
+    it 'Renders the reply to email' do
+      expect(mail.reply_to).to eql([contact_message.email])
     end
   end
 end
