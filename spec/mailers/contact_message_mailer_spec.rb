@@ -24,6 +24,10 @@ RSpec.describe ContactMessageMailer, type: :mailer do
     it 'Renders the reply to email' do
       expect(mail.reply_to).to eql([contact_message.email])
     end
+
+    it 'Renders the subject' do
+      expect(mail.subject).to eql("New contact message: #{contact_message.subject}")
+    end
   end
 
 
