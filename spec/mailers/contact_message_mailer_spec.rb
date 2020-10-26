@@ -41,5 +41,9 @@ RSpec.describe ContactMessageMailer, type: :mailer do
     it 'Renders the sender email correctly' do
       expect(mail.from).to eql([Rails.application.credentials.email[:no_reply_email]])
     end
+
+    it 'Renders the subject' do
+      expect(mail.subject).to eql("Contact message sent: #{contact_message.subject}")
+    end
   end
 end
