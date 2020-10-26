@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   get '/admin', to: 'admins#general'
   get '/admin/notifications', to: 'admins#notifications'
   get '/admin/analytics', to: 'admins#analytics'
-  get '/admin/user_settings', to: 'admins#user_settings'
 
   namespace :admin do
     resources :site_settings, only: [:index, :update]

@@ -2,7 +2,8 @@ feature 'Admin update details', feature: true do
   before(:each) do
     seed_user_and_settings
     login_feature
-    visit('admin/user_settings')
+    visit('admin')
+    click_on('User Settings')
   end
 
   scenario 'Update username' do
