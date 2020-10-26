@@ -19,7 +19,7 @@ class ContactMessageMailer < ApplicationMailer
     assign_default_variables
     @to_email = @contact_message.email
     @to_name = @contact_message.from
-    @from_name = @about.name
+    @user_name = @about.name
     mail(to: @to_email, subject: "Contact message sent: #{@subject}") do |format|
       format.html { render layout: 'default_email' }
     end
