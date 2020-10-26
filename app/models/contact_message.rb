@@ -34,9 +34,23 @@ class ContactMessage < ApplicationRecord
   validates :content,
             length: { minimum: 1, message: 'Content cannot be blank' }
 
+  before_validation :sanitize_inputs
   after_commit :send_contact_message
+
+  def sanitize_inputs
+    self.from = sanitize(from)
+    self.email = sanitize(email)
+    self.subject = sanitize(subject)
+    self.content = sanitize(content)
+  end
 
   def send_contact_message
     NewContactMessageJob.perform_later(contact_message: self)
+  end
+
+  private
+
+  def sanitize(string)
+    ActionView::Base.full_sanitizer.sanitize(string)
   end
 end
