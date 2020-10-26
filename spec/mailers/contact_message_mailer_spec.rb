@@ -65,5 +65,9 @@ RSpec.describe ContactMessageMailer, type: :mailer do
     it 'renders the subject' do
       expect(mail.subject).to eql("Contact message sent: #{contact_message.subject}")
     end
+
+    it 'assigns greeting in email' do
+      expect(mail.body.encoded).to match(/Hi[\w\W]+#{contact_message.from}/)
+    end
   end
 end
