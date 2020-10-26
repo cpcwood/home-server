@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 
   get '/say-hello', to: 'homepages#index'
 
-  get '/contact', to: 'contact#index'
+  get '/contact', to: 'contact_messages#new'
 
   resource :users, only: [:update]
 

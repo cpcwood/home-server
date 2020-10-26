@@ -5,29 +5,7 @@
 <section class='reading-pane'>
   <%= render partial: 'partials/admin_toolbar', locals: { model: @about } %>
 
-  <div class='about-contact-container'>
-
-    <%= image_tag(image_path_helper(image_model: @about.profile_image), class: 'profile-image about') %>
-    <div class='about-contact-details-container'>
-      <div class='name'>
-        <%= @about.name %>
-      </div>
-      <div class='location'>
-        <%= @about.location %>
-      </div>
-    </div>
-
-    <div class='about-contact-links-section'>
-      <%= link_to('Contact', contact_path, class: 'standard-button about-contact-link') %>
-      <a href='<%= @about.linkedin_link%>' class='logo-link' target='_blank' title='LinkedIn link'>
-        <%= image_tag('icons/linkedin-icon', alt: 'LinkedIn logo') %>
-      </a>
-      <a href='<%= @about.github_link%>' class='logo-link' target='_blank' title='Github link'>
-        <%= image_tag('icons/github-icon', alt: 'Github logo') %>
-      </a>
-    </div>
-
-  </div>
+  <%= render partial: 'partials/contact_details', locals: { model: @about, contact_link: true } %>
 
   <%= markdown_admin(@about.about_me)%>
 </section>
