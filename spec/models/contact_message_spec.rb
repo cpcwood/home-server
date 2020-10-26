@@ -10,8 +10,21 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-require 'rails_helper'
 
 RSpec.describe ContactMessage, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { build_stubbed(:contact_message) }
+
+  describe 'validations' do
+    describe 'from' do
+      it 'format' do
+        subject.from = nil
+        expect(subject).to_not be_valid
+        subject.from = ''
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:from]).to eq(['From field cannot be blank'])
+        subject.from = 'a'
+        expect(subject).to be_valid
+      end
+    end
+  end
 end
