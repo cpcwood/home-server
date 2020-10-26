@@ -12,7 +12,7 @@ feature 'send contact message', feature: true do
       fill_in('contact_message[email]', with: 'email@example.com')
       fill_in('contact_message[subject]', with: 'new message')
       fill_in('contact_message[content]', with: 'new contact message')
-      expect{ click_on('Send') }.to change{ContactMessage.all.length}.from(0).to(1)
+      expect{ click_on('Send') }.to change{ ContactMessage.all.length }.from(0).to(1)
       expect(page).to have_content('Message sent! You should receive a confirmation email shortly.')
     end
   end
