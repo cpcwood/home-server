@@ -41,5 +41,13 @@ RSpec.describe 'ContactMessages', type: :request do
       expect(response).not_to redirect_to(admin_posts_path)
       expect(response.body).to include('From field cannot be blank')
     end
+
+    it 'general error' do
+      allow_any_instance_of(ContactMessage).to receive(:save).and_raise('general error')
+      expect{ post('/contact-messages', params: valid_params) }.not_to(change{ ContactMessage.all.length })
+      expect(response).not_to redirect_to(admin_posts_path)
+      expect(response.body).to include('Sorry, something went wrong!')
+      expect(response.body).not_to include('general error')
+    end
   end
 end
