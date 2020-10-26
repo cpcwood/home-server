@@ -17,4 +17,7 @@ class ContactMessage < ApplicationRecord
             
   validates :email,
             format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Email must be valid' }
+
+  validates :subject,
+            length: { minimum: 1, message: 'Subject cannot be blank' }
 end
