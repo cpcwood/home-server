@@ -402,30 +402,28 @@
 }
 
 .embedded-form-button-container {
-  display: flex;
-  float: right;
-  padding: 0px 20px;
-  justify-content: space-between;
   box-sizing: border-box;
-  width: 100%;
+  display: flex;
   flex-direction: row-reverse;
+  float: right;
+  justify-content: space-between;
+  padding: 0 20px;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    flex-direction: row;
+    float: left;
+    justify-content: initial;
+    margin: 0 20px;
+    padding: 0;
+    width: max-content;
+  }
 
   input,
   a {
     margin: 0;
-  }
 
-  @include respond-to(tablet) {
-    padding: 0px;
-    margin: 0px 20px;
-    width: max-content;
-    justify-content: initial;
-    float: left;
-    flex-direction: row;
-
-
-    input,
-    a {
+    @include respond-to(tablet) {
       margin: 0 10px 0 0;
     }
   }

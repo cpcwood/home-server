@@ -20,8 +20,11 @@
   <a href='/admin/images' class='dashboard-button menu-button'>
     Images
   </a>
-  <a href='/admin/about/edit' class='dashboard-button menu-button'>
+  <a href='<%= edit_admin_about_path %>' class='dashboard-button menu-button'>
     About/Contact
+  </a>
+  <a href='<%= admin_posts_path %>' class='dashboard-button menu-button'>
+    Blog
   </a>
   <div class='dashboard-sidebar-toggle' data-action='click->dashboard-sidebar#sidebarToggle' data-target='dashboard-sidebar.sidebarToggle'>
     <div class='closed'> > </div>
