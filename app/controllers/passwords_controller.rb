@@ -1,5 +1,3 @@
-require 'faraday'
-
 class PasswordsController < ApplicationController
   before_action :already_logged_in
 
@@ -41,5 +39,3 @@ class PasswordsController < ApplicationController
     params.permit(:password, :password_confirmation)
   end
 end
-
-# @user.remove_password_reset!

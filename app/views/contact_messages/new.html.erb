@@ -1,0 +1,10 @@
+<%= content_for :section_title do %>
+  Contact
+<% end %>
+
+<div class='contact-details-container'>
+  <%= render partial: 'partials/contact_details', locals: { model: @about, contact_link: false } %>
+</div>
+
+<%= render partial: 'contact_messages/new_form', locals: {contact_message: @contact_message} %>
+

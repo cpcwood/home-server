@@ -1,12 +1,27 @@
-<%= form_with(model: [:admin, about], method: "put", class: 'admin-section-form', id: 'admin-abouts-edit-form') do |f| %>
+<%= form_with(model: [:admin, about], method: "put", class: 'section-form', id: 'admin-abouts-edit-form') do |f| %>
 
   <%= render partial: 'partials/system_messages'%>
 
   <%= render partial: 'layouts/images/profile_image_upload', locals: {image: about.profile_image, form: f} %>
 
   <div class="embedded-form-entry-container">
-    <%= f.label(:name, 'Name', class: 'input-label embedded-label') %>
-    <%= f.text_field(:name, class: 'input-box embedded-input-box', placeholder: 'about me name') %>
+    <%= f.label(:section_title, 'Section title', class: 'input-label embedded-label') %>
+    <%= f.text_field(:section_title, class: 'input-box embedded-input-box', placeholder: 'Enter about section title') %>
+  </div>
+
+  <div class="embedded-form-entry-container">
+    <%= f.label(:name, 'Contact name', class: 'input-label embedded-label') %>
+    <%= f.text_field(:name, class: 'input-box embedded-input-box', placeholder: 'Enter contact name') %>
+  </div>
+
+  <div class="embedded-form-entry-container">
+    <%= f.label(:location, 'Location', class: 'input-label embedded-label') %>
+    <%= f.text_field(:location, class: 'input-box embedded-input-box', placeholder: 'Enter location (this is public)') %>
+  </div>
+
+  <div class="embedded-form-entry-container">
+    <%= f.label(:contact_email, 'Contact email', class: 'input-label embedded-label') %>
+    <%= f.text_field(:contact_email, class: 'input-box embedded-input-box', placeholder: 'Enter contact email') %>
   </div>
 
   <div class="embedded-form-entry-container">

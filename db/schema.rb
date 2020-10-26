@@ -10,18 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_23_170632) do
+ActiveRecord::Schema.define(version: 2020_10_26_181616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "abouts", force: :cascade do |t|
-    t.string "name"
+    t.string "section_title"
     t.text "about_me"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "linkedin_link"
     t.string "github_link"
+    t.string "name", null: false
+    t.string "location", null: false
+    t.string "contact_email", null: false
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -43,6 +46,17 @@ ActiveRecord::Schema.define(version: 2020_10_23_170632) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "contact_messages", force: :cascade do |t|
+    t.string "from", null: false
+    t.string "email", null: false
+    t.string "subject", null: false
+    t.text "content", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_contact_messages_on_user_id"
   end
 
   create_table "cover_images", force: :cascade do |t|
@@ -125,6 +139,7 @@ ActiveRecord::Schema.define(version: 2020_10_23_170632) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "contact_messages", "users"
   add_foreign_key "cover_images", "site_settings"
   add_foreign_key "gallery_images", "users"
   add_foreign_key "header_images", "site_settings"

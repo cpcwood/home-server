@@ -1,0 +1,42 @@
+// Modules
+@use '../base/colors';
+@use '../base/mixins' as *;
+@use '../base/typography';
+
+.contact-form-container {
+  flex: 0 1 600px;
+}
+
+.contact-details-container {
+  padding: 20px 20px 0;
+}
+
+.embedded-text-area.contact {
+  margin-top: 0;
+  min-height: 200px;
+  min-width: initial;
+}
+
+.embedded-form-entry-container.contact {
+  margin: 0;
+
+  @include respond-to(tablet) {
+    margin: 20px 0;
+  }
+}
+
+.about-contact-container .profile-image,
+.about-contact-container .about-contact-details-container {
+  box-sizing: border-box;
+  padding: 0 5px;
+}
+
+.contact-form-container .embedded-label {
+  width: 26%;
+}
+
+.recaptcha.contact {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: 0;
+}

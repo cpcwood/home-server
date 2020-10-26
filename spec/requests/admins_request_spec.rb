@@ -31,12 +31,4 @@ RSpec.describe 'Request Admins', type: :request do
       expect(response).to render_template(:analytics)
     end
   end
-
-  describe 'GET /admin/user_settings #user_settings' do
-    it 'Displays user settings page' do
-      login
-      get '/admin/user_settings'
-      expect(response).to render_template(:user_settings)
-    end
-  end
 end

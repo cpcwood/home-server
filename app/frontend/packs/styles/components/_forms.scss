@@ -170,10 +170,7 @@
   @include respond-to(tablet) {
     align-items: center;
     flex-direction: row;
-  }
-  @include respond-to(desktop) {
-    align-items: center;
-    flex-direction: row;
+    margin: 20px 0;
   }
 }
 
@@ -260,9 +257,14 @@
 .embedded-text-area {
   border: 1px solid colors.$dark;
   border-radius: 0;
+  font-size: 1em;
   max-width: 100%;
   min-height: 500px;
-  padding: 10px 15px;
+  padding: 3px;
+
+  @include respond-to(tablet) {
+    padding: 10px 15px;
+  }
 }
 
 .embedded-no-border {
@@ -391,7 +393,7 @@
   position: relative;
 }
 
-.admin-section-form {
+.section-form {
   padding: 20px;
 }
 
@@ -402,12 +404,29 @@
 }
 
 .embedded-form-button-container {
+  box-sizing: border-box;
   display: flex;
-  margin-left: 20px;
-  width: max-content;
+  flex-direction: row-reverse;
+  float: right;
+  justify-content: space-between;
+  padding: 0 20px;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    flex-direction: row;
+    float: left;
+    justify-content: initial;
+    margin: 0 20px;
+    padding: 0;
+    width: max-content;
+  }
 
   input,
   a {
-    margin: 0 10px 0 0;
+    margin: 0;
+
+    @include respond-to(tablet) {
+      margin: 0 10px 0 0;
+    }
   }
 }

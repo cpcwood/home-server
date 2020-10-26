@@ -10,7 +10,6 @@
   border: 2px solid colors.$box-border-light;
   box-sizing: border-box;
   display: flex;
-  font-size: 14px;
 
   min-height: 350px;
   position: relative;
@@ -21,14 +20,19 @@
     min-height: 500px;
   }
   @include respond-to(desktop) {
-    font-size: 22px;
     min-height: 500px;
   }
 
   h3 {
-    font-weight: 400;
+    font-size: 1.5em;
+    font-weight: 500;
     margin: 0;
     padding: 25px 0;
+  }
+
+  h4 {
+    font-size: 1.3em;
+    font-weight: 400;
   }
 }
 
@@ -41,26 +45,23 @@
   left: 0;
 
   max-width: 20px;
-  position: relative;
+  position: absolute;
   top: 0;
   width: 35%;
+
   @include respond-to(tablet) {
     border-right: 2px solid colors.$box-border-light;
     max-width: 300px;
     min-width: 236px;
+    position: relative;
 
     .dashboard-sidebar-toggle {
       display: none;
     }
   }
   @include respond-to(desktop) {
-    border-right: 2px solid colors.$box-border-light;
     max-width: 350px;
     min-width: 240px;
-
-    .dashboard-sidebar-toggle {
-      display: none;
-    }
   }
 
   &.open {
@@ -186,14 +187,16 @@
   align-items: center;
   bottom: 0;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
   margin: 0 5% 5%;
   position: relative;
-  right: 0;
+  right: -20px;
   top: 0;
-  width: 90%;
+  width: calc(90% - 20px);
+
+  @include respond-to(tablet) {
+    right: unset;
+    width: 90%;
+  }
 }
 
 .dashboard-item-container {
@@ -204,7 +207,7 @@
 .dashboard-item-separator {
   background-color: colors.$sidebar-highlight;
   border-radius: 20%;
-  height: 4px;
+  height: 2px;
   margin: 30px 0;
   width: 100%;
 }

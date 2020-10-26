@@ -27,6 +27,7 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy
   has_many :gallery_images, dependent: :destroy
+  has_many :contact_messages, dependent: :destroy
 
   has_secure_password validations: false
   after_initialize :add_defaults

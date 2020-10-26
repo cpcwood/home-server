@@ -4,9 +4,12 @@
 #
 #  id            :bigint           not null, primary key
 #  about_me      :text
+#  contact_email :string           not null
 #  github_link   :string
 #  linkedin_link :string
-#  name          :string
+#  location      :string           not null
+#  name          :string           not null
+#  section_title :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
@@ -35,6 +38,42 @@ RSpec.describe About, type: :model do
         expect(about).to be_valid
       end
     end
+
+    describe 'name' do
+      it 'format' do
+        about.name = nil
+        expect(about).to_not be_valid
+        about.name = ''
+        expect(about).to_not be_valid
+        expect(about.errors.messages[:name]).to eq ['Name cannot be blank']
+        about.name = 'a'
+        expect(about).to be_valid
+      end
+    end
+
+    describe 'location' do
+      it 'format' do
+        about.location = nil
+        expect(about).to_not be_valid
+        about.location = ''
+        expect(about).to_not be_valid
+        expect(about.errors.messages[:location]).to eq ['Location cannot be blank']
+        about.location = 'a'
+        expect(about).to be_valid
+      end
+    end
+
+    describe 'contact_email' do
+      it 'format' do
+        about.contact_email = nil
+        expect(about).to_not be_valid
+        about.contact_email = 'admin@'
+        expect(about).to_not be_valid
+        expect(about.errors.messages[:contact_email]).to eq ['Email must be valid format']
+        about.contact_email = 'admin@example.com'
+        expect(about).to be_valid
+      end
+    end
   end
 
   describe '#change_messages' do
@@ -45,7 +84,8 @@ RSpec.describe About, type: :model do
 
     it 'attribute changes' do
       about.update(name: 'new name', about_me: 'new description')
-      expect(about.change_messages).to eq(['Name updated!', 'About me updated!'])
+      expect(about.change_messages).to include('Name updated!')
+      expect(about.change_messages).to include('About me updated!')
     end
 
     it 'attachment changes' do

@@ -18,11 +18,11 @@ Rails.application.routes.draw do
   get '/admin', to: 'admins#general'
   get '/admin/notifications', to: 'admins#notifications'
   get '/admin/analytics', to: 'admins#analytics'
-  get '/admin/user_settings', to: 'admins#user_settings'
 
   namespace :admin do
     resources :site_settings, only: [:index, :update]
     resources :images, only: [:index]
+    resources :users, only: [:edit, :update]
     resources :header_images, only: [:update], path: '/header-images'
     resources :cover_images, only: [:update], path: '/cover-images'
     resource :about, only: [:edit, :update]
@@ -34,7 +34,8 @@ Rails.application.routes.draw do
 
   get '/say-hello', to: 'homepages#index'
 
-  get '/contact', to: 'contact#index'
+  get '/contact', to: 'contact_messages#new'
+  resources :contact_messages, only: [:new, :create], path: 'contact-messages'
 
   resource :users, only: [:update]
 

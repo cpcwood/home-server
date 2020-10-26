@@ -1,11 +1,11 @@
-<% content_for :section_title do %>
-  About
-<% end %>
 <% content_for :section_subtitle do %>
-  Admin: Edit About
+  About/Contact
 <% end %>
 
-<section class='form-pane'>
-  <%= render partial: 'partials/admin_toolbar', locals: { model: @about }  %>
-  <%= render partial: 'admin/abouts/edit_form', locals: { about: @about } %>
-</section>
+<div class='dashboard-item-container'>
+  <h3> 
+    Update About and Contact details
+  </h3>
+</div>
+<%= render partial: 'partials/admin_toolbar', locals: { model: @about } %>
+<%= render partial: 'admin/abouts/edit_form', locals: { about: @about } %>

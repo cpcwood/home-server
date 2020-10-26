@@ -1,18 +1,17 @@
-<% content_for :section_title do %>
-  Blog
-<% end %>
 <% content_for :section_subtitle do %>
-  Admin: Index
+  Blog: Index
 <% end %>
 
-<section class='reading-pane'>
+<div class='dashboard-item-container'>
   <%= render partial: 'partials/admin_toolbar', locals: { model: (@posts.empty? ? [Post.new] : @posts) } %>
+</div>
 
+<div class='dashboard-item-container'>
   <%= render partial: 'partials/system_messages'%>
+</div>
 
-  <% if @posts.empty? %>
-    <%= render partial: 'posts/no_posts' %>
-  <% else %>
-    <%= render partial: 'admin/posts/post_overview', collection: @posts, as: :post, spacer_template: "partials/standard_ruler" %>
-  <% end %>
-</section>
+<% if @posts.empty? %>
+  <%= render partial: 'posts/no_posts' %>
+<% else %>
+  <%= render partial: 'admin/posts/post_overview', collection: @posts, as: :post, spacer_template: "partials/standard_ruler" %>
+<% end %>

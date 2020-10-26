@@ -27,4 +27,5 @@ end
 def seed_user_and_settings
   seed_user
   seed_site_settings
+  seed_about
 end
