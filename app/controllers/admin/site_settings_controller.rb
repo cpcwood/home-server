@@ -1,6 +1,8 @@
 module Admin
   class SiteSettingsController < AdminBaseController
-    def index; end
+    def index
+      render layout: 'layouts/admin_dashboard'
+    end
 
     def update
       @notices = []

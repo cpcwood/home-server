@@ -9,10 +9,13 @@ describe 'Views' do
 
       render template: 'admin/abouts/edit.html.erb'
 
-      expect(rendered).to match(about.name)
+      expect(rendered).to match(about.section_title)
       expect(rendered).to match(about.about_me)
       expect(rendered).to match(about.linkedin_link)
       expect(rendered).to match(about.github_link)
+      expect(rendered).to match(about.name)
+      expect(rendered).to match(about.location)
+      expect(rendered).to match(about.contact_email)
       expect(rendered).to match("Images will be resized to #{profile_image.x_dim}")
       expect(rendered).to match(profile_image.y_dim.to_s)
     end

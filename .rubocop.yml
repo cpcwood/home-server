@@ -60,6 +60,8 @@ Metrics/MethodLength:
   Enabled: false
 Metrics/AbcSize:
   Enabled: false
+Metrics/ClassLength:
+  Max: 200
 
 Rails/SkipsModelValidations:
   Enabled: false

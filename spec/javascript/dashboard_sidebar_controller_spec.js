@@ -10,7 +10,7 @@ describe('dashboard_sidebar_controller', () => {
   beforeAll(done => {
     const application = Application.start()
     application.register('dashboard-sidebar', dashboardSidebarController)
-    fs.readFile('app/views/admins/_dashboard_sidebar.html.erb', 'utf8', (err, data) => {
+    fs.readFile('app/views/partials/_dashboard_sidebar.html.erb', 'utf8', (err, data) => {
       if (err) throw new Error(err)
       applicationHTML = data
       done()

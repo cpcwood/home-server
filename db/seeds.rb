@@ -45,4 +45,7 @@ CoverImage.create(
   description: 'CONTACT')
 
 
-About.create(name: 'owners name')
+About.create(section_title: 'About me',
+             name: 'admin',
+             location: 'London, UK',
+             contact_email: 'admin@example.com')

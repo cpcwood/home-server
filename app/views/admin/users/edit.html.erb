@@ -1,0 +1,11 @@
+<% content_for :section_subtitle do %>
+  User Settings
+<% end %>
+
+<div class='dashboard-item-container'>
+  <%= render 'admins/current_user_details'%>
+</div>
+<div class='dashboard-item-separator'></div>
+<div class='dashboard-item-container'>
+  <%= render partial: 'admin/users/edit_form' %>
+</div>
