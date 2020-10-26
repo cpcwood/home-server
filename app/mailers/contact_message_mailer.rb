@@ -3,9 +3,16 @@ class ContactMessageMailer < ApplicationMailer
 
   default from: Rails.application.credentials.email[:no_reply_email]
 
-  def send_contact_message
+  def contact_message
     assign_default_variables
-    mail(to: @user.email, subject: "New contact message: #{@subject}") do |format|
+    mail(to: params[:deliver_to], subject: "New contact message: #{@subject}") do |format|
+      format.html { render layout: 'default_email' }
+    end
+  end
+
+  def confirmation
+    assign_default_variables
+    mail(to: @from_email, subject: "Contact message sent: #{@subject}") do |format|
       format.html { render layout: 'default_email' }
     end
   end
