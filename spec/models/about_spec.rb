@@ -4,9 +4,12 @@
 #
 #  id            :bigint           not null, primary key
 #  about_me      :text
+#  contact_email :string           not null
 #  github_link   :string
 #  linkedin_link :string
-#  name          :string
+#  location      :string           not null
+#  name          :string           not null
+#  section_title :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
