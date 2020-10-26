@@ -9,6 +9,15 @@
 #  subject    :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  user_id    :bigint
+#
+# Indexes
+#
+#  index_contact_messages_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 
 RSpec.describe ContactMessage, type: :model do
@@ -61,6 +70,15 @@ RSpec.describe ContactMessage, type: :model do
         subject.content = 'a'
         expect(subject).to be_valid
       end
+    end
+  end
+
+  describe 'after_commit' do
+    describe '#send_contact_message' do
+      user =  create(:user)
+      message = build(:contact_message, user: user)
+      expect(NewContactMessageJob).to receive(:perform_later).with(message: message, user: user)
+      message.save
     end
   end
 end

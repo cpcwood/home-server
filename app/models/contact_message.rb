@@ -9,8 +9,20 @@
 #  subject    :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  user_id    :bigint
+#
+# Indexes
+#
+#  index_contact_messages_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 class ContactMessage < ApplicationRecord
+
+  belongs_to :user
+
   validates :from,
             length: { minimum: 1, message: 'From field cannot be blank' }
 
@@ -22,4 +34,10 @@ class ContactMessage < ApplicationRecord
 
   validates :content,
             length: { minimum: 1, message: 'Content cannot be blank' }
+
+  after_commit :send_contact_message
+
+  def send_contact_message
+    NewContactMessageJob.perform_later(message: self, to: @user)
+  end
 end

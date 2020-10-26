@@ -44,7 +44,8 @@ RSpec.describe 'ContactMessages', type: :request do
       expect{ post('/contact-messages', params: valid_params) }.to change{ ContactMessage.all.length }.from(0).to(1)
       expect(response).to redirect_to(contact_path)
       expect(flash[:notice]).to include('Message sent! You should receive a confirmation email shortly.')
-      # expect mailerjobs to be made
+      new_message = ContactMessage.first
+      expect(NewContactMessageJob).to have_been_enqueued.with(message: new_message, to: @user)
     end
 
     it 'save failure' do
