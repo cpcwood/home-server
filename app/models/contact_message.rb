@@ -38,6 +38,6 @@ class ContactMessage < ApplicationRecord
   after_commit :send_contact_message
 
   def send_contact_message
-    NewContactMessageJob.perform_later(message: self, user: self.user)
+    NewContactMessageJob.perform_later(message: self)
   end
 end
