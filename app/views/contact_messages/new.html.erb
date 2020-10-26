@@ -2,10 +2,15 @@
   Contact
 <% end %>
 
-<section class='reading-pane'>
+<div class='contact-details-container'>
+  <%= render partial: 'partials/contact_details', locals: { model: @about, contact_link: false } %>
+</div>
+
+<div class='contact-form-container'>
   <%= form_with(model: @contact_message, class: 'section-form', id: 'contact-messages-new-form') do |f| %>
 
     <%= render partial: 'contact_messages/form_components', locals: { f: f } %>
 
   <% end %>
 </div>
+
