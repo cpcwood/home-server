@@ -1,0 +1,7 @@
+<div class='contact-form-container'>
+  <%= form_with(model: contact_message, url: {action: 'create', controller: 'contact_messages'}, class: 'section-form', id: 'contact-messages-new-form') do |f| %>
+
+    <%= render partial: 'contact_messages/form_components', locals: { f: f } %>
+
+  <% end %>
+</div>
