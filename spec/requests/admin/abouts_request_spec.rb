@@ -21,7 +21,10 @@ RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
         section_title: 'new section name',
         about_me: 'new about me section',
         linkedin_link: 'http://example.com',
-        github_link: 'http://example.com'
+        github_link: 'http://example.com',
+        name: 'new name',
+        location: 'new location',
+        contact_email: 'new@example.com'
       }
     end
 
@@ -31,8 +34,7 @@ RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
       }
       expect(flash[:notice]).to include('Section title updated!')
       expect(flash[:notice]).to include('About me updated!')
-      expect(flash[:notice]).to include('Linkedin link updated!')
-      expect(flash[:notice]).to include('Github link updated!')
+      expect(flash[:notice].length).to eq(attribute_update.length)
       @about.reload
       expect(@about.section_title).to eq(attribute_update[:section_title])
       expect(@about.about_me).to eq(attribute_update[:about_me])

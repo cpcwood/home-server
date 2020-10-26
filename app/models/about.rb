@@ -25,10 +25,10 @@ class About < ApplicationRecord
 
   validates :name,
             length: { minimum: 1, message: 'Name cannot be blank' }
-  
+
   validates :location,
             length: { minimum: 1, message: 'Location cannot be blank' }
-  
+
   validates :contact_email,
             format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Email must be valid format' }
 
