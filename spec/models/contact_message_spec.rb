@@ -38,5 +38,17 @@ RSpec.describe ContactMessage, type: :model do
         expect(subject).to be_valid
       end
     end
+
+    describe 'subject' do
+      it 'format' do
+        subject.subject = nil
+        expect(subject).to_not be_valid
+        subject.subject = ''
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:subject]).to eq(['Subject cannot be blank'])
+        subject.subject = 'a'
+        expect(subject).to be_valid
+      end
+    end
   end
 end
