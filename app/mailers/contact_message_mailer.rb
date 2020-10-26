@@ -1,5 +1,6 @@
 class ContactMessageMailer < ApplicationMailer
   include AttachmentHelper
+  include DateHelper
 
   default from: Rails.application.credentials.email[:no_reply_email]
 
@@ -32,6 +33,7 @@ class ContactMessageMailer < ApplicationMailer
     @user = @contact_message.user
     @subject = @contact_message.subject
     @content = @contact_message.content
+    @datetime = full_date_and_time(@contact_message.created_at)
     header_image = SiteSetting.first.header_image
     @header_image_url = if header_image.image_file.attached?
                           Rails.application.routes.url_helpers.rails_blob_path(header_image.image_file)

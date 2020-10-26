@@ -1,4 +1,6 @@
 RSpec.describe ContactMessageMailer, type: :mailer do
+  include DateHelper
+  
   let(:about) { create(:about) }
   let(:user) { build_stubbed(:user) }
   let(:contact_message) { build_stubbed(:contact_message, user: user) }
@@ -40,7 +42,7 @@ RSpec.describe ContactMessageMailer, type: :mailer do
     end
 
     it 'renders message timestamp' do
-      expect(mail.body.encoded).to match(contact_message.created_at)
+      expect(mail.body.encoded).to match(full_date_and_time(contact_message.created_at))
     end
 
     it 'renders intro message' do
