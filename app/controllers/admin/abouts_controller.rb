@@ -2,7 +2,9 @@ module Admin
   class AboutsController < AdminBaseController
     before_action :assign_abouts
 
-    def edit; end
+    def edit
+      render layout: 'layouts/admin_dashboard'
+    end
 
     def update
       @notices = []

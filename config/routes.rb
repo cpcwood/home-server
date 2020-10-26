@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :site_settings, only: [:index, :update]
     resources :images, only: [:index]
+    resources :users, only: [:edit, :update]
     resources :header_images, only: [:update], path: '/header-images'
     resources :cover_images, only: [:update], path: '/cover-images'
     resource :about, only: [:edit, :update]

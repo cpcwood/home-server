@@ -2,17 +2,11 @@
   Site Settings
 <% end %>
 
-<div class='dashboard-container'>
-  <%= render 'admins/dashboard_sidebar' %>
-  <div class='dashboard-content'>
-    <div class='dashboard-item-container'>
-      <h3>
-        Update Site Settings
-      </h3>
-    </div>
-    <div class='dashboard-item-container'>
-      <%= render partial: 'admin/site_settings/edit_form', locals: {site_settings: @site_settings} %>
-    </div>
-    <div class='dashboard-item-separator'></div>
-  </div>
+<div class='dashboard-item-container'>
+  <h3>
+    Update Site Settings
+  </h3>
+</div>
+<div class='dashboard-item-container'>
+  <%= render partial: 'admin/site_settings/edit_form', locals: {site_settings: @site_settings} %>
 </div>

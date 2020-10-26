@@ -2,40 +2,36 @@
   General
 <% end %>
 
-<% content_for :dashboard_content do %>
-  <div class='dashboard-item-container'>
-    <h3>
-      System Messages
-    </h3>
-    <%= render partial: 'partials/system_messages', locals: { no_messages: true } %>
-  </div>
-  <div class='dashboard-item-separator'></div>
-  <div class='dashboard-item-container'>
-    <h3>
-      Last Login
-    </h3>
-    <strong>Time and Date:</strong> <%= @user.last_login_time.strftime("%H:%M %d-%m-%Y") %>
-    <br><br>
-    <strong>IP Address:</strong> <%= @user.last_login_ip %>
-  </div>
-  <div class='dashboard-item-separator'></div>
-  <div class='dashboard-item-container'>
-    <%= render 'admins/current_user_details'%>
-  </div>
-  <div class='dashboard-item-separator'></div>
-      <div class='dashboard-item-container'>
-    <h3>
-      Notifications
-    </h3>
-    Placeholder
-  </div>
-  <div class='dashboard-item-separator'></div>
-  <div class='dashboard-item-container'>
-    <h3>
-      Analytics
-    </h3>
-    Placeholder
-  </div>
-<% end %>
-
-<%= render template: "layouts/admin_dashboard" %>
+<div class='dashboard-item-container'>
+  <h3>
+    System Messages
+  </h3>
+  <%= render partial: 'partials/system_messages', locals: { no_messages: true } %>
+</div>
+<div class='dashboard-item-separator'></div>
+<div class='dashboard-item-container'>
+  <h3>
+    Last Login
+  </h3>
+  <strong>Time and Date:</strong> <%= @user.last_login_time.strftime("%H:%M %d-%m-%Y") %>
+  <br><br>
+  <strong>IP Address:</strong> <%= @user.last_login_ip %>
+</div>
+<div class='dashboard-item-separator'></div>
+<div class='dashboard-item-container'>
+  <%= render 'admins/current_user_details'%>
+</div>
+<div class='dashboard-item-separator'></div>
+    <div class='dashboard-item-container'>
+  <h3>
+    Notifications
+  </h3>
+  Placeholder
+</div>
+<div class='dashboard-item-separator'></div>
+<div class='dashboard-item-container'>
+  <h3>
+    Analytics
+  </h3>
+  Placeholder
+</div>

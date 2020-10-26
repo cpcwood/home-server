@@ -2,20 +2,15 @@
   Images
 <% end %>
 
-<div class='dashboard-container'>
-  <%= render 'admins/dashboard_sidebar' %>
-  <div class='dashboard-content'>
-    <div class='dashboard-item-container'>
-      <h3> 
-        Update site images
-      </h3>
-    </div>
-    <%= render partial: 'partials/system_messages'%>
-    <% @images.each do |image| %>
-      <div class='dashboard-item-container'>
-        <%= render partial: "admin/images/edit_image_form_entry", locals: {image: image} %>
-      </div>
-      <div class='dashboard-item-separator'></div>
-    <% end %>
-  </div>
+<div class='dashboard-item-container'>
+  <h3> 
+    Update site images
+  </h3>
 </div>
+<%= render partial: 'partials/system_messages'%>
+<% @images.each do |image| %>
+  <div class='dashboard-item-container'>
+    <%= render partial: "admin/images/edit_image_form_entry", locals: {image: image} %>
+  </div>
+  <div class='dashboard-item-separator'></div>
+<% end %>

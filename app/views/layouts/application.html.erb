@@ -19,7 +19,7 @@
       <div class='content-container' data-action='scroll->header-scroll#scrollHeaderImage' data-target='header-scroll.contentContainer'>
         <div class='content'>
           <%= render partial: 'partials/section_title' %>
-          <%= yield %>
+          <%= content_for?(:content) ? yield(:content) : yield %>
         </div>
       </div>
     </div>
