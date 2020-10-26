@@ -9,7 +9,7 @@ describe 'Views' do
 
       render template: 'admin/abouts/edit.html.erb'
 
-      expect(rendered).to match(about.name)
+      expect(rendered).to match(about.section_title)
       expect(rendered).to match(about.about_me)
       expect(rendered).to match(about.linkedin_link)
       expect(rendered).to match(about.github_link)

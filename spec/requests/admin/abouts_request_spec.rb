@@ -18,7 +18,7 @@ RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
   describe 'PUT /admin/about #update' do
     let(:attribute_update) do
       {
-        name: 'new section name',
+        section_title: 'new section name',
         about_me: 'new about me section',
         linkedin_link: 'http://example.com',
         github_link: 'http://example.com'
@@ -29,12 +29,12 @@ RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
       put '/admin/about', params: {
         about: attribute_update
       }
-      expect(flash[:notice]).to include('Name updated!')
+      expect(flash[:notice]).to include('Section title updated!')
       expect(flash[:notice]).to include('About me updated!')
       expect(flash[:notice]).to include('Linkedin link updated!')
       expect(flash[:notice]).to include('Github link updated!')
       @about.reload
-      expect(@about.name).to eq(attribute_update[:name])
+      expect(@about.section_title).to eq(attribute_update[:section_title])
       expect(@about.about_me).to eq(attribute_update[:about_me])
     end
 

@@ -39,7 +39,7 @@ module Admin
 
     def permitted_params
       params.require(:about).permit(
-        :name,
+        :section_title,
         :about_me,
         :linkedin_link,
         :github_link,
