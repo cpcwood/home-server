@@ -50,5 +50,17 @@ RSpec.describe ContactMessage, type: :model do
         expect(subject).to be_valid
       end
     end
+
+    describe 'content' do
+      it 'format' do
+        subject.content = nil
+        expect(subject).to_not be_valid
+        subject.content = ''
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:content]).to eq(['Content cannot be blank'])
+        subject.content = 'a'
+        expect(subject).to be_valid
+      end
+    end
   end
 end
