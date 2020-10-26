@@ -5,6 +5,7 @@
 
 .about-contact-container {
   display: flex;
+  flex-wrap: wrap;
   max-width: 550px;
   position: relative;
   width: 100%;
@@ -18,7 +19,6 @@
   }
 
   .profile-image {
-    align-self: flex-end;
     width: 50%;
 
     @include respond-to(tablet) {
@@ -27,40 +27,67 @@
   }
 }
 
-.about-contact-links-container {
-  align-items: center;
+.about-contact-details-container {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-left: 20px;
   position: relative;
   width: 50%;
 
   @include respond-to(tablet) {
-    flex-direction: row;
-    justify-content: space-evenly;
+    margin-top: 10px;
+    padding-left: 0;
     width: 100%;
+
+    .name {
+      font-size: 1.3em;
+    }
+
+    .location {
+      font-size: 1.1em;
+    }
+  }
+
+  .name {
+    font-size: 1.2em;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+
+  .location {
+    font-size: 1em;
+  }
+
+}
+
+
+.about-contact-links-section {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  position: relative;
+  width: 100%;
+
+  a {
+    display: inline;
+    line-height: 1em;
+    padding: 5px;
+    
+    + * {
+      margin-left: 10px;
+    }
   }
 
   .about-contact-link {
-    width: max-content;
+    flex: 0 1 50%;
+    height: fit-content;
+    padding: 15px 0;
 
-    @include respond-to(tablet) {
-      order: 1;
+    + * {
+      margin-left: 20px;
     }
-  }
-}
-
-.about-contact-external-links {
-  display: flex;
-  justify-content: space-evenly;
-  padding: 10px;
-
-  @include respond-to(tablet) {
-    flex: 1 1 100%;
-    order: 2;
-  }
-
-  a {
-    padding: 5px;
   }
 }
