@@ -2,10 +2,12 @@ module Admin
   class PostsController < AdminBaseController
     def index
       @posts = Post.order(date_published: :desc)
+      render layout: 'layouts/admin_dashboard'
     end
 
     def new
       @post = Post.new
+      render layout: 'layouts/admin_dashboard'
     end
 
     def create
@@ -38,6 +40,7 @@ module Admin
     def edit
       @post = find_post
       return redirect_to(admin_posts_path, alert: 'Post not found') unless @post
+      render layout: 'layouts/admin_dashboard'
     end
 
     def update

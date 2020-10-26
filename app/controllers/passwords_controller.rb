@@ -41,5 +41,3 @@ class PasswordsController < ApplicationController
     params.permit(:password, :password_confirmation)
   end
 end
-
-# @user.remove_password_reset!

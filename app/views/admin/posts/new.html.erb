@@ -1,12 +1,5 @@
-<% content_for :section_title do %>
-  Blog
-<% end %>
 <% content_for :section_subtitle do %>
-  Admin: New Blog Post
+  Blog: New Blog Post
 <% end %>
 
-<section class='reading-pane'>
-
-  <%= render partial: 'admin/posts/new_form', locals: { post: @post } %>
-
-</section>
+<%= render partial: 'admin/posts/new_form', locals: { post: @post } %>
