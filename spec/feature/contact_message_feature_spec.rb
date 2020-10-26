@@ -8,6 +8,7 @@ feature 'send contact message', feature: true do
       visit('/')
       click_on('CONTACT')
       expect(page).to have_current_path('/contact')
+      expect(page).to have_content(@about.name)
       fill_in('contact_message[from]', with: 'new from name')
       fill_in('contact_message[email]', with: 'email@example.com')
       fill_in('contact_message[subject]', with: 'new message')
