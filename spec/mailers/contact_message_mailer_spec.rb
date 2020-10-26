@@ -34,6 +34,10 @@ RSpec.describe ContactMessageMailer, type: :mailer do
     it 'Assigns greeting in email' do
       expect(mail.body.encoded).to match(/Hi[\w\W]+#{about.name}/)
     end
+
+    it 'Assigns intro message' do
+      expect(mail.body.encoded).to match(/You have received a new contact message from:[\w ]+#{contact_message.from}/)
+    end
   end
 
 
