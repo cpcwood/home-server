@@ -21,6 +21,9 @@ feature 'Admin update about section', feature: true do
       visit('/about')
       click_on('Admin Edit')
       fill_in('about[section_title]', with: 'new section name')
+      fill_in('about[name]', with: 'new about name')
+      fill_in('about[location]', with: 'new about location')
+      fill_in('about[contact_email]', with: 'new@example.com')
       fill_in('about[about_me]', with: "#new about me text in markdown\n
         ```ruby
           def some(code)
@@ -29,8 +32,13 @@ feature 'Admin update about section', feature: true do
       click_button('Update About')
       expect(page).to have_content('Section title updated!')
       expect(page).to have_content('About me updated!')
+      expect(page).to have_content('Name updated!')
+      expect(page).to have_content('Location updated!')
+      expect(page).to have_content('Contact email updated!')
       click_on('View Section')
       expect(page).to have_content('new section name')
+      expect(page).to have_content('new about name')
+      expect(page).to have_content('new about location')
       expect(page.html).to match('<h1>new about me text in markdown</h1>')
       expect(page).to have_selector('code')
       expect(page).to have_selector('img.profile-image')
