@@ -403,11 +403,30 @@
 
 .embedded-form-button-container {
   display: flex;
-  margin-left: 20px;
-  width: max-content;
+  float: right;
+  padding: 0px 20px;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  flex-direction: row-reverse;
 
   input,
   a {
-    margin: 0 10px 0 0;
+    margin: 0;
+  }
+
+  @include respond-to(tablet) {
+    padding: 0px;
+    margin: 0px 20px;
+    width: max-content;
+    justify-content: initial;
+    float: left;
+    flex-direction: row;
+
+
+    input,
+    a {
+      margin: 0 10px 0 0;
+    }
   }
 }
