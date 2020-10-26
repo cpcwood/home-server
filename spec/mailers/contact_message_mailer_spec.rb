@@ -45,11 +45,10 @@ RSpec.describe ContactMessageMailer, type: :mailer do
       expect(mail.body.encoded).to match(full_date_and_time(contact_message.created_at))
     end
 
-    it 'renders intro message' do
+    it 'renders message content' do
       expect(mail.body.encoded).to match(contact_message.content)
     end
   end
-
 
   describe '#confirmation' do
     let(:mail) { ContactMessageMailer.with(contact_message: contact_message).confirmation }
@@ -76,6 +75,10 @@ RSpec.describe ContactMessageMailer, type: :mailer do
 
     it 'renders message timestamp' do
       expect(mail.body.encoded).to match(full_date_and_time(contact_message.created_at))
+    end
+
+    it 'renders message content' do
+      expect(mail.body.encoded).to match(contact_message.content)
     end
   end
 end
