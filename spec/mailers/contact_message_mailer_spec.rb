@@ -33,7 +33,7 @@ RSpec.describe ContactMessageMailer, type: :mailer do
       expect(mail.subject).to eql("New contact message: #{contact_message.subject}")
     end
 
-    it 'assigns greeting in email' do
+    it 'renders greeting in email' do
       expect(mail.body.encoded).to match(/Hi[\w\W]+#{about.name}/)
     end
 
@@ -66,8 +66,16 @@ RSpec.describe ContactMessageMailer, type: :mailer do
       expect(mail.subject).to eql("Contact message sent: #{contact_message.subject}")
     end
 
-    it 'assigns greeting in email' do
+    it 'renders greeting in email' do
       expect(mail.body.encoded).to match(/Hi[\w\W]+#{contact_message.from}/)
+    end
+
+    it 'renders intro message' do
+      expect(mail.body.encoded).to match(/You sent a new contact message to:[\w ]+#{about.name}/)
+    end
+
+    it 'renders message timestamp' do
+      expect(mail.body.encoded).to match(full_date_and_time(contact_message.created_at))
     end
   end
 end

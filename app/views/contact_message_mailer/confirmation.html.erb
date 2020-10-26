@@ -5,3 +5,9 @@
 <%= content_for :username do %>
   <%= @to_name %>
 <% end %>
+
+<tr>
+  <td style='padding: 10px 0px;'>
+    You sent a new contact message to: <%= @user_name %>, at: <%= @datetime %>.
+  </td>
+</tr>
