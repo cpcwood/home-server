@@ -48,6 +48,11 @@ RSpec.describe ContactMessageMailer, type: :mailer do
     it 'renders message content' do
       expect(mail.body.encoded).to match(contact_message.content)
     end
+
+    it 'Renders attached header image path' do
+      header_image.image_file.attach(image_attachment)
+      expect(mail.body.encoded).to match(image_name)
+    end
   end
 
   describe '#confirmation' do
@@ -79,6 +84,11 @@ RSpec.describe ContactMessageMailer, type: :mailer do
 
     it 'renders message content' do
       expect(mail.body.encoded).to match(contact_message.content)
+    end
+
+    it 'Renders attached header image path' do
+      header_image.image_file.attach(image_attachment)
+      expect(mail.body.encoded).to match(image_name)
     end
   end
 end
