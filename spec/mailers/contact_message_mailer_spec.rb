@@ -15,28 +15,32 @@ RSpec.describe ContactMessageMailer, type: :mailer do
   describe '#contact_message' do
     let(:mail) { ContactMessageMailer.with(contact_message: contact_message).contact_message }
 
-    it 'Renders the receivers email' do
+    it 'renders the receivers email' do
       expect(mail.to).to eql([about.contact_email])
     end
 
-    it 'Renders the sender email correctly' do
+    it 'renders the sender email correctly' do
       expect(mail.from).to eql([Rails.application.credentials.email[:no_reply_email]])
     end
 
-    it 'Renders the reply to email' do
+    it 'renders the reply to email' do
       expect(mail.reply_to).to eql([contact_message.email])
     end
 
-    it 'Renders the subject' do
+    it 'renders the subject' do
       expect(mail.subject).to eql("New contact message: #{contact_message.subject}")
     end
 
-    it 'Assigns greeting in email' do
+    it 'assigns greeting in email' do
       expect(mail.body.encoded).to match(/Hi[\w\W]+#{about.name}/)
     end
 
-    it 'Assigns intro message' do
+    it 'renders intro message' do
       expect(mail.body.encoded).to match(/You have received a new contact message from:[\w ]+#{contact_message.from}/)
+    end
+
+    it 'renders intro message' do
+      expect(mail.body.encoded).to match(Regexp.escape(contact_message.content))
     end
   end
 
@@ -44,15 +48,15 @@ RSpec.describe ContactMessageMailer, type: :mailer do
   describe '#confirmation' do
     let(:mail) { ContactMessageMailer.with(contact_message: contact_message).confirmation }
 
-    it 'Renders the receivers email' do
+    it 'renders the receivers email' do
       expect(mail.to).to eql([contact_message.email])
     end
 
-    it 'Renders the sender email correctly' do
+    it 'renders the sender email correctly' do
       expect(mail.from).to eql([Rails.application.credentials.email[:no_reply_email]])
     end
 
-    it 'Renders the subject' do
+    it 'renders the subject' do
       expect(mail.subject).to eql("Contact message sent: #{contact_message.subject}")
     end
   end
