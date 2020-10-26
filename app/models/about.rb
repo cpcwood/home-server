@@ -23,6 +23,9 @@ class About < ApplicationRecord
   validates :github_link,
             url: { allow_blank: true, message: 'Github link is not valid' }
 
+  validates :name,
+            length: { minimum: 1, message: 'Name cannot be blank' }
+
   validates_associated :profile_image
 
   def change_messages

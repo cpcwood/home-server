@@ -38,6 +38,18 @@ RSpec.describe About, type: :model do
         expect(about).to be_valid
       end
     end
+
+    describe 'name' do
+      it 'presence' do
+        about.name = nil
+        expect(about).to_not be_valid
+        about.name = ''
+        expect(about).to_not be_valid
+        expect(about.errors.messages[:name]).to eq ['Name cannot be blank']
+        about.name = 'a'
+        expect(about).to be_valid
+      end
+    end
   end
 
   describe '#change_messages' do
@@ -48,7 +60,8 @@ RSpec.describe About, type: :model do
 
     it 'attribute changes' do
       about.update(name: 'new name', about_me: 'new description')
-      expect(about.change_messages).to eq(['Name updated!', 'About me updated!'])
+      expect(about.change_messages).to include('Name updated!')
+      expect(about.change_messages).to include('About me updated!')
     end
 
     it 'attachment changes' do
