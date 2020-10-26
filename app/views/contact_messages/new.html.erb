@@ -1,3 +1,11 @@
 <%= content_for :section_title do %>
   Contact
 <% end %>
+
+<section class='reading-pane'>
+  <%= form_with(model: @contact_message, class: 'section-form', id: 'contact-messages-new-form') do |f| %>
+
+    <%= render partial: 'contact_messages/form_components', locals: { f: f } %>
+
+  <% end %>
+</div>
