@@ -43,6 +43,9 @@ module Admin
         :about_me,
         :linkedin_link,
         :github_link,
+        :name,
+        :location,
+        :contact_email,
         profile_image_attributes: [:id, :image_file, :_destroy])
     end
 
