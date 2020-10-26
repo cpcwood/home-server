@@ -12,6 +12,9 @@
 #
 FactoryBot.define do
   factory :contact_message do
-    
+    from { 'another user' }
+    email { 'user@example.com' }
+    subject { 'new contact message' }
+    content { 'message content ' }
   end
 end

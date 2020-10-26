@@ -11,4 +11,8 @@
 #  updated_at :datetime         not null
 #
 class ContactMessage < ApplicationRecord
+
+  validates :from,
+            length: { minimum: 1, message: 'From field cannot be blank' }
+
 end
