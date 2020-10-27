@@ -1,10 +1,10 @@
 <nav class='navbar'>
   <div class='nav-title-container'>
-    <a href='/' title='homepage'><%= @site_settings.name %></a>
+    <a href='<%= root_path %>' title='homepage'><%= @site_settings.name %></a>
   </div>
   <% if @user %>
     <div class='username'>
-      <a href='/admin'>
+      <a href='<%= admin_path %>'>
         <%= @user.username %>
       </a>
     </div>
@@ -19,38 +19,38 @@
     </button>
     <div class='nav-sidebar' data-target='nav-menu.navSidebar'>
       <div class='upper'>
-        <a href='/' class='nav-item' title='home'>
+        <a href='<%= root_path %>' class='nav-item' title='home'>
           HOME
         </a>
-        <a href='/about' class='nav-item' title='about'>
+        <a href='<%= about_path %>' class='nav-item' title='about'>
           ABOUT
         </a>
         <a href='/projects' class='nav-item' title='projects'>
           PROJECTS
         </a>
-        <a href='/blog' class='nav-item' title='blog'>
+        <a href='<%= posts_path %>' class='nav-item' title='blog'>
           BLOG
         </a>
-        <a href='/say-hello' class='nav-item' title='say hello'>
-          SAY HELLO
+        <a href='/code-snippets' class='nav-item' title='code snippets'>
+          CODE SNIPPETS
         </a>
-        <a href='/gallery' class='nav-item' title='gallery'>
+        <a href='<%= gallery_images_path %>' class='nav-item' title='gallery'>
           GALLERY
         </a>
-        <a href='/contact' class='nav-item' title='contact'>
+        <a href='<%= contact_path %>' class='nav-item' title='contact'>
           CONTACT
         </a>
       </div>
       <div class='lower'>
         <% if @user %>
-        <a href='/admin' class='nav-item' title='admin'>
+        <a href='<%= admin_path %>' class='nav-item' title='admin'>
           ADMIN
         </a>
         <%= form_with(url: "/login", method: "delete", class: 'logout-form') do %>
           <%= submit_tag("LOGOUT", class: 'nav-item', id: 'logout-button') %>
         <% end %>
         <% else %>
-        <a href='/login' class='nav-item' id='login-button' title='login'>
+        <a href='<%= login_path %>' class='nav-item' id='login-button' title='login'>
           LOGIN
         </a>
         <% end %>
