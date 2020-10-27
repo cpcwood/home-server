@@ -54,5 +54,17 @@ RSpec.describe CodeSnippet, type: :model do
         expect(subject).to be_valid
       end
     end
+
+    describe 'snippet' do
+      it 'format' do
+        subject.snippet = nil
+        expect(subject).to_not be_valid
+        subject.snippet = ''
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:snippet]).to eq ['Code snippet cannot be blank']
+        subject.snippet = 'a'
+        expect(subject).to be_valid
+      end
+    end
   end
 end
