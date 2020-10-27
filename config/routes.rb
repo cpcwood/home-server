@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   root to: 'homepages#index'
   
-  get '/about', to: 'abouts#index'
-
   get '/login', to: 'sessions#login'
   post '/login', to: 'sessions#new'
   get '/2fa', to: 'sessions#send_2fa'
@@ -30,9 +28,10 @@ Rails.application.routes.draw do
     resources :posts, only: [:new, :create, :edit, :update, :destroy]
     resources :gallery_images, only: [:index], :path => "/gallery"
     resources :gallery_images, only: [:new, :create, :edit, :update, :destroy], path: '/gallery-images'
+    resources :posts, only: [:index], :path => "/blog"
   end
 
-  get '/say-hello', to: 'homepages#index'
+  resource :about, only: [:show]
 
   get '/contact', to: 'contact_messages#new'
   resources :contact_messages, only: [:new, :create], path: 'contact-messages'
