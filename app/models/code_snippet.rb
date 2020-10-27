@@ -3,6 +3,7 @@
 # Table name: code_snippets
 #
 #  id         :bigint           not null, primary key
+#  extension  :string           not null
 #  overview   :string           not null
 #  snippet    :text             not null
 #  text       :text
@@ -32,6 +33,9 @@ class CodeSnippet < ApplicationRecord
 
   validates :snippet,
             length: { minimum: 1, message: 'Code snippet cannot be blank' }
+
+  validates :extension,
+            length: { minimum: 1, message: 'Code extension cannot be blank' }
 
   after_commit :render_code_snippet
 

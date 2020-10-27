@@ -3,6 +3,7 @@
 # Table name: code_snippets
 #
 #  id         :bigint           not null, primary key
+#  extension  :string           not null
 #  overview   :string           not null
 #  snippet    :text             not null
 #  text       :text
@@ -63,6 +64,18 @@ RSpec.describe CodeSnippet, type: :model do
         expect(subject).to_not be_valid
         expect(subject.errors.messages[:snippet]).to eq ['Code snippet cannot be blank']
         subject.snippet = 'a'
+        expect(subject).to be_valid
+      end
+    end
+
+    describe 'extension' do
+      it 'format' do
+        subject.extension = nil
+        expect(subject).to_not be_valid
+        subject.extension = ''
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:extension]).to eq ['Code extension cannot be blank']
+        subject.extension = 'a'
         expect(subject).to be_valid
       end
     end

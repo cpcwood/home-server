@@ -3,6 +3,7 @@
 # Table name: code_snippets
 #
 #  id         :bigint           not null, primary key
+#  extension  :string           not null
 #  overview   :string           not null
 #  snippet    :text             not null
 #  text       :text
@@ -25,6 +26,7 @@ FactoryBot.define do
     overview { 'snippet overview' }
     snippet { "const codeSnippet = () => console.log('code snippet');" }
     text { 'some explaination for the snippet' }
+    extension { 'js' }
     user
   end
 end

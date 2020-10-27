@@ -35,6 +35,7 @@ feature 'code snippets feature', feature: true do
       fill_in('code_snippet[title]', with: 'code snippet title')
       fill_in('code_snippet[overview]', with: 'code snippet overview')
       fill_in('code_snippet[snippet]', with: 'def code_snippet; end')
+      fill_in('code_snippet[extension]', with: 'js')
       fill_in('code_snippet[text]', with: 'code snippet text content')
       click_button('Submit')
       expect(page).to have_content('Code snippet created')

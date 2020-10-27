@@ -96,6 +96,7 @@ module Admin
           :title,
           :overview,
           :snippet,
+          :extension,
           :text)
     end
 
