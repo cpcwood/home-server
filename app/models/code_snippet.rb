@@ -27,4 +27,7 @@ class CodeSnippet < ApplicationRecord
 
   validates :overview,
             length: { minimum: 1, maximum: 160, message: 'Overview length must be between 1 and 160 charaters' }
+
+  validates :snippet,
+            length: { minimum: 1, message: 'Code snippet cannot be blank' }
 end
