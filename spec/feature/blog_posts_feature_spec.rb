@@ -1,4 +1,4 @@
-feature 'admin update blog posts', feature: true do
+feature 'blog posts feature', feature: true do
   before(:each) do
     seed_user_and_settings
   end

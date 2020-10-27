@@ -24,11 +24,12 @@ Rails.application.routes.draw do
     resources :header_images, only: [:update], path: '/header-images'
     resources :cover_images, only: [:update], path: '/cover-images'
     resource :about, only: [:edit, :update]
-    resources :posts, only: [:index], :path => "/blog"
+    resources :posts, only: [:index], path: "/blog"
     resources :posts, only: [:new, :create, :edit, :update, :destroy]
-    resources :gallery_images, only: [:index], :path => "/gallery"
+    resources :gallery_images, only: [:index], path: "/gallery"
     resources :gallery_images, only: [:new, :create, :edit, :update, :destroy], path: '/gallery-images'
-    resources :posts, only: [:index], :path => "/blog"
+    resources :posts, only: [:index], path: "/blog"
+    resources :code_snippets, only: [:index], path: "/code-snippets"
   end
 
   resource :about, only: [:show]
@@ -38,7 +39,9 @@ Rails.application.routes.draw do
 
   resource :users, only: [:update]
 
-  resources :posts, only: [:index, :show], :path => "/blog"
+  resources :posts, only: [:index, :show], path: "/blog"
 
-  resources :gallery_images, only: [:index], :path => "/gallery"
+  resources :gallery_images, only: [:index], path: "/gallery"
+
+  resources :code_snippets, only: [:index], path: "/code-snippets"
 end
