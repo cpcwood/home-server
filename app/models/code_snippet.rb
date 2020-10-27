@@ -22,6 +22,8 @@
 class CodeSnippet < ApplicationRecord
   belongs_to :user
 
+  has_one :code_snippet_image, dependent: :destroy
+
   validates :title,
             length: { minimum: 1, maximum: 50, message: 'Title length must be between 1 and 50 charaters' }
 
