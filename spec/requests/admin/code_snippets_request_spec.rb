@@ -51,4 +51,18 @@ RSpec.describe 'AdminCodeSnippetsController', type: :request do
       expect(response.body).to include('general error')
     end
   end
+
+  describe 'GET /admin/code-snippets/:id/edit #new' do
+    it 'succesful request' do
+      code_snippet = create(:code_snippet, user: @user)
+      get("/admin/code-snippets/#{code_snippet.id}/edit")
+      expect(response).to render_template(:edit)
+    end
+
+    it 'invalid code snippet id' do
+      get('/admin/code-snippets/not-a-post-id/edit')
+      expect(response).to redirect_to(admin_code_snippets_path)
+      expect(flash[:alert]).to include('Code snippet not found')
+    end
+  end
 end
