@@ -12,12 +12,13 @@ RSpec.describe 'CodeSnippetsController', type: :request do
 
   describe 'GET /code-snippets/:id #show' do
     it 'succesful request' do
-      get('/code-snippets')
-      expect(response).to render_template(:index)
+      code_snippet = create(:code_snippet, user: @user)
+      get("/code-snippets/#{code_snippet.id}")
+      expect(response).to render_template(:show)
     end
 
     it 'invalid code snippet id' do
-      get('/code-snippet/not-a-post-id')
+      get('/code-snippets/not-a-post-id')
       expect(response).to redirect_to(code_snippets_path)
       expect(flash[:alert]).to include('Code snippet not found')
     end
