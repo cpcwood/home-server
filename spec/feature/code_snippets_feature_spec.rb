@@ -62,7 +62,7 @@ feature 'code snippets feature', feature: true do
       visit('/admin/code-snippets')
       first('.edit-button').click
       first('.destroy-button').click
-      expect(page).to have_content('Code snippet post removed')
+      expect(page).to have_content('Code snippet removed')
       expect(page).to have_content('There are no code snippets here...')
     end
   end

@@ -71,6 +71,22 @@ module Admin
       end
     end
 
+    def destroy
+      @notices = []
+      @alerts = []
+      begin
+        @code_snippet = find_model
+        return redirect_to(admin_code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
+        @code_snippet.destroy
+        @notices.push('Code snippet removed')
+      rescue StandardError => e
+        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
+        @alerts.push('Sorry, something went wrong!')
+        @alerts.push(e.message)
+      end
+      redirect_to(admin_code_snippets_path, notice: @notices, alert: @alerts)
+    end
+
     private
 
     def permitted_params
