@@ -25,23 +25,21 @@ export default class extends Controller {
     }
   }
 
-  teardown() {
-    if (!!window.grecaptcha) {
-      window.grecaptcha.reset()
-    }
+  removeScript() {
     const reCaptchaScript = document.head.querySelector('.recaptcha-script')
     if (!!reCaptchaScript) {
       document.head.removeChild(reCaptchaScript)
     }
+  }
+
+  teardown() {
+    this.removeScript()
     if (!!this.containerTarget) {
       this.containerTarget.parentNode.removeChild(this.containerTarget)
     }
   }
 
   disconnect() {
-    const reCaptchaScript = document.head.querySelector('.recaptcha-script')
-    if (!!reCaptchaScript) {
-      document.head.removeChild(reCaptchaScript)
-    }
+    this.removeScript()
   }
 }
