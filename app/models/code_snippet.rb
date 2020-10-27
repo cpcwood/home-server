@@ -20,4 +20,9 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class CodeSnippet < ApplicationRecord
+  belongs_to :user
+  
+  validates :title,
+            length: { minimum: 1, maximum: 100, message: 'Title length must be between 1 and 100 charaters' }
+
 end
