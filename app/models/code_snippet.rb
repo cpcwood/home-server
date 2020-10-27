@@ -21,8 +21,10 @@
 #
 class CodeSnippet < ApplicationRecord
   belongs_to :user
-  
-  validates :title,
-            length: { minimum: 1, maximum: 100, message: 'Title length must be between 1 and 100 charaters' }
 
+  validates :title,
+            length: { minimum: 1, maximum: 50, message: 'Title length must be between 1 and 50 charaters' }
+
+  validates :overview,
+            length: { minimum: 1, maximum: 160, message: 'Overview length must be between 1 and 160 charaters' }
 end
