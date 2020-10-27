@@ -4,7 +4,7 @@ RSpec.describe 'AdminCodeSnippetsController', type: :request do
       title: 'new code snippet',
       overview: 'code snippet overview',
       snippet: 'def code_snippet; end',
-      extension: 'rb',
+      extension: '.rb',
       text: 'code snippet content'
     }}
   end
@@ -43,7 +43,7 @@ RSpec.describe 'AdminCodeSnippetsController', type: :request do
 
     it 'validation failure' do
       post('/admin/code-snippets', params: invalid_attributes)
-      expect(response.body).to include('Code extension cannot be blank')
+      expect(response.body).to include('Code must be valid file extension')
     end
 
     it 'general error' do
