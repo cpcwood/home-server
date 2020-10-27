@@ -70,14 +70,9 @@ describe('recaptcha_controller', () => {
     })
 
     it('turbolinks:before-cache', () => {
-      mockGrecaptcha = jest.fn()
-      window.grecaptcha = {
-        reset: mockGrecaptcha
-      }
       window.dispatchEvent(new Event('turbolinks:before-cache'))
       expect(removeChildSpyHead).toHaveBeenCalled()
       expect(removeChildSpyContainer).toHaveBeenCalled()
-      expect(mockGrecaptcha).toHaveBeenCalled()
     })
   })
 
