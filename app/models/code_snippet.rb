@@ -35,7 +35,7 @@ class CodeSnippet < ApplicationRecord
             length: { minimum: 1, message: 'Code snippet cannot be blank' }
 
   validates :extension,
-            length: { minimum: 1, message: 'Code extension cannot be blank' }
+            format: { with: /\A\.[a-zA-Z0-9]+\z/, message: 'Code must be valid file extension' }
 
   after_commit :render_code_snippet
 
