@@ -28,7 +28,7 @@ feature 'code snippets feature', feature: true do
       seed_code_snippet
     end
 
-    scenario 'create code snippit' do
+    scenario 'create code snippet' do
       visit('/code-snippets')
       click_on('Admin Edit')
       click_on('Create New')
@@ -48,7 +48,7 @@ feature 'code snippets feature', feature: true do
       expect(page).to have_content('def code_snippet; end')
     end
 
-    scenario 'update blog post' do
+    scenario 'update code snippet' do
       visit('/admin/code-snippets')
       first('.edit-button').click
       expect(page).to have_content(@code_snippet.text)
@@ -56,6 +56,14 @@ feature 'code snippets feature', feature: true do
       click_button('Submit')
       expect(page).to have_content('Code snippet updated')
       expect(page).to have_content('new title')
+    end
+
+    scenario 'delete code snippet' do
+      visit('/admin/code-snippets')
+      first('.edit-button').click
+      first('.destroy-button').click
+      expect(page).to have_content('Code snippet post removed')
+      expect(page).to have_content('There are no code snippets here...')
     end
   end
 end
