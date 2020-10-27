@@ -1,0 +1,9 @@
+<a href='<%= edit_admin_code_snippet_path(code_snippet) %>' class='code-snippet-overview-container admin edit-button' title='<%= code_snippet.title %>' tabindex='<%=code_snippet_iteration.index + 1%>'>
+  <div class='code-snippet-image'></div>
+  <h3 class='code-snippet-title'>
+    <%= code_snippet.title %>
+  </h3>
+  <div class='code-snippet-overview'>
+    <%= code_snippet.overview %>
+  </div>
+</a>
