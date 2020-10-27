@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     resources :gallery_images, only: [:index], path: "/gallery"
     resources :gallery_images, only: [:new, :create, :edit, :update, :destroy], path: '/gallery-images'
     resources :posts, only: [:index], path: "/blog"
-    resources :code_snippets, only: [:index], path: "/code-snippets"
+    resources :code_snippets, only: [:index, :new, :edit], path: "/code-snippets"
   end
 
   resource :about, only: [:show]

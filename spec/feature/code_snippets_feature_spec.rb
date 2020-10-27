@@ -30,6 +30,11 @@ feature 'code snippets feature', feature: true do
     scenario 'create code snippit' do
       visit('/code-snippets')
       click_on('Admin Edit')
+      click_on('Create New')
+      fill_in('code_snippet[title]', with: 'code snippet  title')
+      fill_in('code_snippet[overview]', with: 'code snippet  overview')
+      fill_in('code_snippet[snippet]', with: 'def code_snippet; end')
+      fill_in('code_snippet[text]', with: 'code snippet text content')
     end
   end
 end
