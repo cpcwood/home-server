@@ -10,4 +10,11 @@ RSpec.describe 'AdminCodeSnippetsController', type: :request do
       expect(response).to render_template(:index)
     end
   end
+
+  describe 'GET /admin/code-snippets/new #new' do
+    it 'succesful request' do
+      get('/admin/code-snippets/new')
+      expect(response).to render_template(:new)
+    end
+  end
 end
