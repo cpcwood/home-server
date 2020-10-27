@@ -23,7 +23,7 @@ FactoryBot.define do
   factory :code_snippet do
     title { 'a code snippet' }
     overview { 'snippet overview' }
-    code { "const codeSnippet = () => console.log('code snippet');" }
+    snippet { "const codeSnippet = () => console.log('code snippet');" }
     text { 'some explaination for the snippet' }
     user
   end
