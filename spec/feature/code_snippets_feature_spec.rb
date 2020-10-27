@@ -25,6 +25,7 @@ feature 'code snippets feature', feature: true do
   context 'admin user' do
     before(:each) do
       login_feature
+      seed_code_snippet
     end
 
     scenario 'create code snippit' do
@@ -40,12 +41,21 @@ feature 'code snippets feature', feature: true do
       expect(page).to have_content('code snippet title')
       expect(page).to have_content('code snippet overview')
       click_on('View Section')
-      expect(page).to have_content('Code snippet created')
       expect(page).to have_content('code snippet title')
       expect(page).to have_content('code snippet overview')
       first('.show-button').click
       expect(page).to have_content('code snippet text content')
       expect(page).to have_content('def code_snippet; end')
+    end
+
+    scenario 'update blog post' do
+      visit('/admin/code-snippets')
+      first('.edit-button').click
+      expect(page).to have_content(@code_snippet.text)
+      fill_in('code_snippet[title]', with: 'new title')
+      click_button('Submit')
+      expect(page).to have_content('Code snippet updated')
+      expect(page).to have_content('new title')
     end
   end
 end

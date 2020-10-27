@@ -37,6 +37,12 @@ module Admin
       end
     end
 
+    def edit
+      @code_snippet = find_model(model: CodeSnippet)
+      return redirect_to(admin_code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
+      render layout: 'layouts/admin_dashboard'
+    end
+
     private
 
     def permitted_params
@@ -47,6 +53,11 @@ module Admin
           :overview,
           :snippet,
           :text)
+    end
+
+
+    def find_model(model:)
+      model.find_by(id: params[:id])
     end
 
     def update_model(model:, success_message:)
