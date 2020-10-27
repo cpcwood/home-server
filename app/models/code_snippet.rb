@@ -30,4 +30,12 @@ class CodeSnippet < ApplicationRecord
 
   validates :snippet,
             length: { minimum: 1, message: 'Code snippet cannot be blank' }
+
+  after_commit :render_code_snippit
+
+  private
+
+  def render_code_snippit
+    RenderCodeSnippetJob.perform_later(code_snippet: self)
+  end
 end

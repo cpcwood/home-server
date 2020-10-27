@@ -67,4 +67,14 @@ RSpec.describe CodeSnippet, type: :model do
       end
     end
   end
+
+  describe 'after_commit' do
+    describe '#render_snippit_image' do
+      it 'after model commited' do
+        code_snippet = build(:code_snippet)
+        expect(RenderCodeSnippetJob).to receive(:perform_later).with(code_snippet: code_snippet)
+        code_snippet.save
+      end
+    end
+  end
 end
