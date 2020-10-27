@@ -12,7 +12,7 @@
     <div class='options login'>
       <%= link_to "Forgotten Password", "/forgotten-password", class: 'option right' %>
     </div>
-    <div class='recaptcha' id='recaptcha' data-controller='recaptcha'></div>
+    <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-target='recaptcha.container' data-action="turbolinks:before-cache@window->recaptcha#teardown"></div>
     <%= f.submit("Login", class: 'input-submit') %>
   <% end %>
 <% end %>
