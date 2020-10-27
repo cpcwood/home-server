@@ -38,9 +38,37 @@ module Admin
     end
 
     def edit
-      @code_snippet = find_model(model: CodeSnippet)
+      @code_snippet = find_model
       return redirect_to(admin_code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
       render layout: 'layouts/admin_dashboard'
+    end
+
+    def update
+      @notices = []
+      @alerts = []
+      begin
+        @code_snippet = find_model
+        return redirect_to(admin_code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
+        update_model(model: @code_snippet, success_message: 'Code snippet updated')
+      rescue StandardError => e
+        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
+        @alerts.push('Sorry, something went wrong!')
+        @alerts.push(e.message)
+      end
+      if @alerts.any?
+        flash[:alert] = @alerts
+        render(
+          partial: 'partials/form_replacement',
+          locals: {
+            selector_id: 'admin-code-snippets-edit-form',
+            form_partial: 'admin/code_snippets/edit_form',
+            model: { code_snippet: @code_snippet }
+          },
+          formats: [:js])
+        flash[:alert] = nil
+      else
+        redirect_to(admin_code_snippets_path, notice: @notices)
+      end
     end
 
     private
@@ -56,8 +84,8 @@ module Admin
     end
 
 
-    def find_model(model:)
-      model.find_by(id: params[:id])
+    def find_model
+      CodeSnippet.find_by(id: params[:id])
     end
 
     def update_model(model:, success_message:)

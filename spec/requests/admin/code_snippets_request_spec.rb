@@ -65,4 +65,37 @@ RSpec.describe 'AdminCodeSnippetsController', type: :request do
       expect(flash[:alert]).to include('Code snippet not found')
     end
   end
+
+  describe 'PUT /admin/code-snippets/:id #update' do
+    it 'id invalid' do
+      put('/admin/code-snippets/not-a-post-id', params: valid_attributes)
+      expect(response).to redirect_to(admin_code_snippets_path)
+      expect(flash[:alert]).to include('Code snippet not found')
+    end
+
+    it 'update sucessful' do
+      code_snippet = create(:code_snippet, user: @user)
+      put("/admin/code-snippets/#{code_snippet.id}", params: valid_attributes)
+      expect(response).to redirect_to(admin_code_snippets_path)
+      expect(flash[:notice]).to include('Code snippet updated')
+      code_snippet.reload
+      expect(code_snippet.title).to eq(valid_attributes[:code_snippet][:title])
+      expect(code_snippet.overview).to eq(valid_attributes[:code_snippet][:overview])
+    end
+
+    it 'save failure' do
+      code_snippet = create(:code_snippet, user: @user)
+      put("/admin/code-snippets/#{code_snippet.id}", params: invalid_attributes)
+      expect(response).not_to redirect_to(admin_code_snippets_path)
+      expect(response.body).to include('Title length must be between 1 and 50 charaters')
+    end
+
+    it 'general error' do
+      code_snippet = create(:code_snippet, user: @user)
+      allow_any_instance_of(CodeSnippet).to receive(:save).and_raise('general error')
+      put("/admin/code-snippets/#{code_snippet.id}", params: valid_attributes)
+      expect(response).not_to redirect_to(admin_code_snippets_path)
+      expect(response.body).to include('general error')
+    end
+  end
 end

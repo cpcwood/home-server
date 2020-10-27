@@ -9,6 +9,10 @@ describe 'Views' do
       end
 
       it 'it renders code_snippets' do
+        expect(rendered).to match('code_snippet_title')
+        expect(rendered).to match('code_snippet_overview')
+        expect(rendered).to match('code_snippet_snippet')
+        expect(rendered).to match('code_snippet_text')
         expect(rendered).to match(code_snippet.title)
         expect(rendered).to match(code_snippet.overview)
         expect(rendered).to match(code_snippet.text)
