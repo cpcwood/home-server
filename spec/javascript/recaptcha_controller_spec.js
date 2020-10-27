@@ -6,30 +6,33 @@ describe('recaptcha_controller', () => {
   let mock
   let createElementSpy
   let appendChildSpy
-  let removeChildSpy
+  let removeChildSpyHead
+  let removeChildSpyContainer
+  let container
+  let mockGrecaptcha
 
   beforeAll(() => {
     application = Application.start()
     application.register('recaptcha', reCaptchaController)
   })
 
-  afterAll(() => {
-    jest.clearAllMocks()
-    application.unload('recaptcha')
-  })
-
-  beforeEach(() => {
-    appendChildSpy = jest.spyOn(document.head, 'appendChild').mockReturnValue(null)
-    removeChildSpy = jest.spyOn(document.head, 'removeChild').mockReturnValue(null)
-    mock = { src: null, className: null }
-    createElementSpy = jest.spyOn(document, 'createElement').mockReturnValue(mock)
-    document.body.innerHTML = `
-      <div class='recaptcha' id='recaptcha' data-controller='recaptcha'></div>
-    `
+  afterEach(() => {
+    jest.restoreAllMocks()
+    document.innerHTML = ''
+    window.grecaptcha = null
   })
 
   describe('#connect', () => {
-    it('loads requests google recaptcha script', () => {
+    beforeEach(() => {
+      appendChildSpy = jest.spyOn(document.head, 'appendChild').mockReturnValue(null)
+      mock = { src: null, className: null }
+      createElementSpy = jest.spyOn(document, 'createElement').mockReturnValue(mock)
+      document.body.innerHTML = `
+        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-target='recaptcha.container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
+      `
+    })
+
+    it('grecaptcha not loaded', () => {
       expect(createElementSpy).toHaveBeenCalledWith('script')
       expect(mock.src).toEqual('https://www.google.com/recaptcha/api.js?onload=reCaptchaOnload&render=explicit')
       expect(mock.className).toEqual('recaptcha-script')
@@ -37,13 +40,58 @@ describe('recaptcha_controller', () => {
     })
   })
 
+  describe('#connect', () => {
+    beforeEach(() => {
+      createElementSpy = jest.spyOn(document, 'createElement')
+      mockGrecaptcha = {
+        reset: jest.fn(),
+        render: jest.fn()
+      }
+      window.grecaptcha = mockGrecaptcha
+      document.body.innerHTML = `
+        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-target='recaptcha.container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
+      `
+    })
+
+    it('grecaptcha already loaded', () => {
+      expect(createElementSpy).not.toHaveBeenCalled()
+      expect(mockGrecaptcha.render).toHaveBeenCalled()
+    })
+  })
+
+  describe('#teardown', () => {
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-target='recaptcha.container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
+      `
+      container = document.querySelector('#recaptcha')
+      removeChildSpyHead = jest.spyOn(document.head, 'removeChild').mockReturnValue(null)
+      removeChildSpyContainer = jest.spyOn(container.parentNode, 'removeChild').mockReturnValue(null)
+    })
+
+    it('turbolinks:before-cache', () => {
+      mockGrecaptcha = jest.fn()
+      window.grecaptcha = {
+        reset: mockGrecaptcha
+      }
+      window.dispatchEvent(new Event('turbolinks:before-cache'))
+      expect(removeChildSpyHead).toHaveBeenCalled()
+      expect(removeChildSpyContainer).toHaveBeenCalled()
+      expect(mockGrecaptcha).toHaveBeenCalled()
+    })
+  })
+
   describe('#disconnect', () => {
     beforeEach(() => {
-      document.body.innerHTML = ''
+      removeChildSpyHead = jest.spyOn(document.head, 'removeChild').mockReturnValue(null)
+      document.body.innerHTML = `
+        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-target='recaptcha.container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
+      `
     })
 
     it('removes reCaptchaScript from head on disconnect', () => {
-      expect(removeChildSpy).toHaveBeenCalled()
+      application.unload('recaptcha')
+      expect(removeChildSpyHead).toHaveBeenCalled()
     })
   })
 })
