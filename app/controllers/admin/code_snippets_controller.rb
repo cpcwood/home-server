@@ -83,7 +83,6 @@ module Admin
           :text)
     end
 
-
     def find_model
       CodeSnippet.find_by(id: params[:id])
     end
