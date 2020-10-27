@@ -1,0 +1,12 @@
+<%= form_with(model: [:admin, code_snippet], method: 'put', class: 'section-form', id: 'admin-post-update-form') do |f| %>
+
+  <%= render partial: 'admin/posts/form_components', locals: { f: f } %>
+
+<% end %>
+
+<div class="embedded-form-button-container">
+  <%= link_to('Return', admin_code_snippets_path, class: 'standard-button input-submit') %>
+  <%= form_with(model: [:admin, code_snippet], method: 'delete') do |r| %>
+    <%= r.submit("Remove", class: 'input-submit destroy-button') %>
+  <% end %>
+</div>
