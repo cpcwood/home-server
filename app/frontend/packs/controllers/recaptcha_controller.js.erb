@@ -1,22 +1,45 @@
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  connect () {
-    var reCaptchaScript = document.createElement('script')
-    window.reCaptchaOnload = () => {
-      window.grecaptcha.render('recaptcha', {
+  static targets = ['container']
+
+  initialize () {
+    if (!window.grecaptcha) {
+      const reCaptchaScript = document.createElement('script')
+      window.reCaptchaOnload = () => {
+        window.grecaptcha.render(this.containerTarget, {
+          sitekey: '<%= Rails.application.credentials.recaptcha[:site_key] %>',
+          theme: 'light',
+          size: 'normal'
+        })
+      }
+      reCaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=reCaptchaOnload&render=explicit'
+      reCaptchaScript.className = 'recaptcha-script'
+      document.head.appendChild(reCaptchaScript)
+    } else {
+      window.grecaptcha.render(this.containerTarget, {
         sitekey: '<%= Rails.application.credentials.recaptcha[:site_key] %>',
         theme: 'light',
         size: 'normal'
       })
     }
-    reCaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=reCaptchaOnload&render=explicit'
-    reCaptchaScript.className = 'recaptcha-script'
-    document.head.appendChild(reCaptchaScript)
   }
 
-  disconnect () {
-    var reCaptchaScript = document.head.querySelector('.recaptcha-script')
-    document.head.removeChild(reCaptchaScript)
+  removeScript() {
+    const reCaptchaScript = document.head.querySelector('.recaptcha-script')
+    if (!!reCaptchaScript) {
+      document.head.removeChild(reCaptchaScript)
+    }
+  }
+
+  teardown() {
+    this.removeScript()
+    if (!!this.containerTarget) {
+      this.containerTarget.parentNode.removeChild(this.containerTarget)
+    }
+  }
+
+  disconnect() {
+    this.removeScript()
   }
 }
