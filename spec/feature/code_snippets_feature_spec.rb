@@ -11,7 +11,7 @@ feature 'code snippets feature', feature: true do
       expect(page).to have_content('There are no code snippets here...')
     end
 
-    scenario 'view blog post' do
+    scenario 'view code snippet' do
       seed_code_snippet
       visit('/code-snippets')
       expect(page).not_to have_button('Admin Edit')
@@ -31,10 +31,21 @@ feature 'code snippets feature', feature: true do
       visit('/code-snippets')
       click_on('Admin Edit')
       click_on('Create New')
-      fill_in('code_snippet[title]', with: 'code snippet  title')
-      fill_in('code_snippet[overview]', with: 'code snippet  overview')
+      fill_in('code_snippet[title]', with: 'code snippet title')
+      fill_in('code_snippet[overview]', with: 'code snippet overview')
       fill_in('code_snippet[snippet]', with: 'def code_snippet; end')
       fill_in('code_snippet[text]', with: 'code snippet text content')
+      click_button('Submit')
+      expect(page).to have_content('Code snippet created')
+      expect(page).to have_content('code snippet title')
+      expect(page).to have_content('code snippet overview')
+      click_on('View Section')
+      expect(page).to have_content('Code snippet created')
+      expect(page).to have_content('code snippet title')
+      expect(page).to have_content('code snippet overview')
+      first('.show-button').click
+      expect(page).to have_content('code snippet text content')
+      expect(page).to have_content('def code_snippet; end')
     end
   end
 end
