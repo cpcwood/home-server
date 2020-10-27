@@ -24,6 +24,10 @@ def seed_gallery_image
   @gallery_image = create(:gallery_image, user: @user)
 end
 
+def seed_code_snippet
+  @code_snippet = create(:code_snippet, user: @user)
+end
+
 def seed_user_and_settings
   seed_user
   seed_site_settings
