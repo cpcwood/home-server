@@ -31,8 +31,8 @@ CoverImage.create(
 
 CoverImage.create(
   site_setting: site_settings,
-  link: '/say-hello',
-  description: 'SAY HELLO')
+  link: '/code-snippets',
+  description: 'CODE SNIPPETS')
 
 CoverImage.create(
   site_setting: site_settings,
@@ -43,7 +43,6 @@ CoverImage.create(
   site_setting: site_settings,
   link: '/contact',
   description: 'CONTACT')
-
 
 About.create(section_title: 'About me',
              name: 'admin',
