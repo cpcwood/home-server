@@ -3,10 +3,13 @@
 <% end %>
 
 <section class='reading-pane'>
-  <div class='code-snippet-hero'></div>
   <h2><%= @code_snippet.title %></h2>
   <%= @code_snippet.user.username.humanize %> | Last updated: <%= full_date(@code_snippet.updated_at) %>
-  
+
+  <div class='code-snippet-snippet'>
+    <%= markdown_admin("```#{@code_snippet.snippet}```") %>
+  </div>
+
   <%= markdown_admin(@code_snippet.text) %>
   <a href='<%= code_snippets_path%>' class='standard-button'>Back to all snippets</a>
 </section>
