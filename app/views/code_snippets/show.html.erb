@@ -1,15 +1,16 @@
 <% content_for :section_title do %>
   Code Snippets
 <% end %>
-
 <section class='reading-pane'>
   <h2><%= @code_snippet.title %></h2>
   <%= @code_snippet.user.username.humanize %> | Last updated: <%= full_date(@code_snippet.updated_at) %>
+</section>
 
-  <div class='code-snippet-snippet'>
-    <%= markdown_admin("```#{@code_snippet.snippet}```") %>
-  </div>
+<div class='code-snippet-snippet'>
+  <%= markdown_admin("```#{@code_snippet.extension}\n#{@code_snippet.snippet}\n```") %>
+</div>
 
+<section class='reading-pane'>
   <%= markdown_admin(@code_snippet.text) %>
   <a href='<%= code_snippets_path%>' class='standard-button'>Back to all snippets</a>
 </section>

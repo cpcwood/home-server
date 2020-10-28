@@ -9,5 +9,7 @@
 <% if @code_snippets.empty? %>
   <%= render partial: 'code_snippets/no_code_snippets' %>
 <% else %>
-  <%= render partial: 'code_snippets/code_snippet_overview', collection: @code_snippets, as: :code_snippet %>
+  <section class='image-tile-container'>
+    <%= render partial: 'code_snippets/code_snippet_overview', collection: @code_snippets, as: :code_snippet %>
+  </section>
 <% end %>

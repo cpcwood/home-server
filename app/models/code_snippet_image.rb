@@ -19,20 +19,9 @@
 class CodeSnippetImage < Image
   belongs_to :code_snippet
 
-  X_DIM = 1000
-  Y_DIM = 750
-
   before_validation :set_defaults
 
   def set_defaults
     self.description ||= 'code-snippet-image'
-  end
-
-  def x_dim
-    X_DIM
-  end
-
-  def y_dim
-    Y_DIM
   end
 end

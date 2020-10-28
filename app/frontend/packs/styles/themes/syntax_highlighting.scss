@@ -1,6 +1,7 @@
 .code-block {
   background-color: #151515;
   color: #d0d0d0;
+  font-weight: 300;
   line-height: 1.25;
   overflow-x: scroll;
   padding: 25px 20px;
@@ -62,16 +63,14 @@
     background-color: #151515;
     color: #6a9fb5;
     font-weight: bold;
-    
-
-    
   }
   
   .k,
   .kn,
   .kp,
   .kr,
-  .kv {
+  .kv,
+  .si {
     color: #65adf1;
     
   }
@@ -111,11 +110,6 @@
     
   }
   
-  .si {
-    color: #8f5536;
-    
-  }
-  
   .se {
     color: #8f5536;
     
@@ -128,7 +122,7 @@
   
   .nc,
   .no {
-    color: #f5f0a0;
+    color: #fff9a6;
   }
 
   .na {
@@ -136,8 +130,7 @@
   }
 
   .nf {
-
-    color: #f4bf75;
+    color: #f5d5a5;
   }
   
   .m,
@@ -152,7 +145,7 @@
   }
   
   .ss {
-    color: #80bf70;
+    color: #5bd2cd;
     
   }
 }

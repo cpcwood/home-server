@@ -35,13 +35,11 @@ class CodeSnippet < ApplicationRecord
             length: { minimum: 1, message: 'Code snippet cannot be blank' }
 
   validates :extension,
-            format: { with: /\A\.[a-zA-Z0-9]+\z/, message: 'Code must be valid file extension' }
+            format: { with: /\A[a-zA-Z0-9]+\z/, message: 'Code must be valid file extension' }
 
   after_commit :render_code_snippet
 
-  private
-
   def render_code_snippet
-    RenderCodeSnippetJob.perform_later(code_snippet: self)
+    RenderCodeSnippetJob.perform_later(code_snippet: self) if snippet_previously_changed?
   end
 end
