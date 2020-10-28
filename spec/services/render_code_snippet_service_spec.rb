@@ -7,7 +7,7 @@ describe RenderCodeSnippetService do
       extension = 'rb'
       rails_root_mock = double(:rails, join: 'config-path.json')
       attachment_mock = double(:attachment)
-      tmp_code_file_mock = double(:tempfile, path: 'code-file-path-test', close: nil)
+      tmp_code_file_mock = double(:tempfile, path: 'code-file-path-test', close: nil, rewind: nil)
       tmp_image_file_mock = double(:tempfile, path: 'img-file-path-test', close: nil)
       io_mock = double(:io, close: nil)
 
@@ -36,7 +36,7 @@ describe RenderCodeSnippetService do
         @attachment_mock = double(:attachment, attach: nil)
         @extension = 'rb'
         rails_root_mock = double(:rails, join: 'config-path.json')
-        tmp_code_file_mock = double(:tempfile, path: 'code-file-path-test', close: nil, unlink: nil, write: nil)
+        tmp_code_file_mock = double(:tempfile, path: 'code-file-path-test', close: nil, unlink: nil, write: nil, rewind: nil)
         tmp_image_file_mock = double(:tempfile, path: 'img-file-path-test', close: nil, unlink: nil)
         allow(Rails).to receive(:root).and_return(rails_root_mock)
         allow(Tempfile).to receive(:new).with('code-snippet-image').and_return(tmp_image_file_mock)

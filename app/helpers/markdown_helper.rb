@@ -34,6 +34,10 @@ module MarkdownHelper
     encapsulate_markdown(html).html_safe
   end
 
+  def markdown_code(code:, extension:)
+    markdown_admin("```#{extension}\n#{code}\n```")
+  end
+
   def encapsulate_markdown(html)
     %(<div class="markdown">#{html}</div>)
   end

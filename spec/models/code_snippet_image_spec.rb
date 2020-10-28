@@ -19,18 +19,6 @@
 RSpec.describe CodeSnippetImage, type: :model do
   subject { create(:code_snippet_image) }
 
-  describe '#x_dim' do
-    it 'default_value' do
-      expect(subject.x_dim).to eq(CodeSnippetImage::X_DIM)
-    end
-  end
-
-  describe '#y_dim' do
-    it 'default_value' do
-      expect(subject.y_dim).to eq(CodeSnippetImage::Y_DIM)
-    end
-  end
-
   describe 'before_validation' do
     describe '#set_defaults' do
       it 'no description' do

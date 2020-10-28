@@ -74,10 +74,10 @@ RSpec.describe CodeSnippet, type: :model do
         expect(subject).to_not be_valid
         subject.extension = ''
         expect(subject).to_not be_valid
-        subject.extension = 'a'
+        subject.extension = '.a'
         expect(subject).to_not be_valid
         expect(subject.errors.messages[:extension]).to eq ['Code must be valid file extension']
-        subject.extension = '.a'
+        subject.extension = 'a'
         expect(subject).to be_valid
       end
     end
