@@ -3,6 +3,7 @@
 
 $header-font: 'Roboto Slab', Fallback, sans-serif;
 $general-font: 'Roboto', Fallback, sans-serif;
+$code-font: 'Inconsolata', Fallback, sans-serif;
 
 html {
   color: colors.$general-font;
@@ -100,4 +101,10 @@ strong {
 
 sup {
   top: -0.35em;
+}
+
+code {
+  font-family: $code-font;
+  font-weight: 400;
+  font-size: 1.2em;
 }
