@@ -17,7 +17,7 @@ describe('header_scroll_controller', () => {
 
     beforeEach(() => {
       document.body.innerHTML = `
-        <div data-controller='header-scroll' data-header-scroll-image-height='${imageHeight}' data-header-scroll-header-height='${headerHeight}'>
+        <div data-controller='header-scroll' data-action='turbolinks:before-cache@window->header-scroll#teardown' data-header-scroll-image-height='${imageHeight}' data-header-scroll-header-height='${headerHeight}'>
           <div class='header-image' data-target='header-scroll.headerImage'></div>
           <div class='content-container' data-action='scroll->header-scroll#scrollHeaderImage' data-target='header-scroll.contentContainer'></div>
         </div>
