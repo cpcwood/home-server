@@ -44,9 +44,19 @@
 }
 
 .code-snippet-snippet {
+  position: relative;
+  box-sizing: border-box;
   width: 100%;
-
+  justify-content: center;
+  display: flex;
+  
   .markdown {
     margin: 0;
+    width: 100%;
+
+    @include respond-to(tablet) {
+      width: max-content;
+      min-width: $reading-width - 20px;
+    }
   }
 }
