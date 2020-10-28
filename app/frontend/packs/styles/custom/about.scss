@@ -65,11 +65,13 @@
 
 .about-contact-links-section {
   align-items: center;
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   margin-top: 10px;
   position: relative;
   width: 100%;
+  // padding: 0px 5px;
 
   a {
     display: inline;

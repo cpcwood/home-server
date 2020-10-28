@@ -18,7 +18,11 @@ export default class extends Controller {
     }
   }
 
+  teardown () {
+    this.headerImageTarget.style.height = `${this.baseImageHeight}px`
+  }
+
   disconnect () {
-    this.headerImageTarget.style.height = this.baseImageHeight
+    this.teardown()
   }
 }
