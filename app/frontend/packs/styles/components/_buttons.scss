@@ -6,13 +6,11 @@
 .menu-button { 
   border: unset;
   box-sizing: border-box;
+  cursor: pointer;
   position: relative;
   text-decoration: none;
+  user-select: none;
   width: 100%;
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 .standard-button {
@@ -20,6 +18,7 @@
   border: unset;
   box-sizing: border-box;
   color: colors.$light;
+  cursor: pointer;
   font-size: inherit;
   font-weight: 300;
   line-height: 1em;
@@ -27,6 +26,7 @@
   position: relative;
   text-align: center;
   text-decoration: none;
+  user-select: none;
   vertical-align: middle;
   white-space: nowrap;
 }
@@ -34,19 +34,20 @@
 .input-submit {
   background-image: linear-gradient(to bottom right, colors.$dark, colors.$medium-dark);
   border: unset;
-  border-radius: 10px;
   box-sizing: border-box;
   color: colors.$light;
+  cursor: pointer;
   font-weight: 300;
   line-height: 1em;
   min-width: 110px;
   padding: 15px 25px;
-
-  &:hover {
-    cursor: pointer;
-  }
+  user-select: none;
 }
 
 .destroy-button {
   margin-top: 10px;
+}
+
+.return-button {
+  margin-top: 40px;
 }
