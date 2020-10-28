@@ -19,11 +19,15 @@ export default class extends Controller {
     }
   }
 
-  disconnect () {
+  teardown () {
     for (let i = 0; i < this.fadeTargets.length; i++) {
       const target = this.fadeTargets[i]
       target.classList.remove('fade-in')
       target.style.transitionDelay = null
     }
+  }
+
+  disconnect () {
+    this.teardown()
   }
 }

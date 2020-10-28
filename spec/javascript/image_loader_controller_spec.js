@@ -12,7 +12,7 @@ describe('touch_hover_tile_controller', () => {
 
   beforeEach(() => {
     document.body.innerHTML = `
-      <div data-controller="image-loader" data-target="image-loader.container">
+      <div data-controller="image-loader" data-target="image-loader.container" data-action='turbolinks:before-cache@window->image-loader#teardown'>
         <img class="fade-target" data-action="load->image-loader#imageLoaded" data-target="image-loader.fade">
         <img class="fade-target" data-action="load->image-loader#imageLoaded" data-target="image-loader.fade">
       </div>
@@ -39,8 +39,22 @@ describe('touch_hover_tile_controller', () => {
     })
   })
 
+  describe('#teardown', () => {
+    it('reset to cache safe state', () => {
+      fadeTargetOne.dispatchEvent(new Event('load'))
+      fadeTargetTwo.dispatchEvent(new Event('load'))
+      window.dispatchEvent(new Event('turbolinks:before-cache'))
+      expect(fadeTargetOne.classList).not.toContain('fade-in')
+      expect(fadeTargetTwo.classList).not.toContain('fade-in')
+      expect(fadeTargetOne.style.transitionDelay).toBe('')
+      expect(fadeTargetTwo.style.transitionDelay).toBe('')
+    })
+  })
+
   describe('#disconnect', () => {
     beforeEach(() => {
+      fadeTargetOne.dispatchEvent(new Event('load'))
+      fadeTargetTwo.dispatchEvent(new Event('load'))
       document.body.innerHTML = ''
     })
 
