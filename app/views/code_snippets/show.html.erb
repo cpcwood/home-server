@@ -7,7 +7,7 @@
 </section>
 
 <div class='code-snippet-snippet'>
-  <%= markdown_admin("```#{@code_snippet.extension}\n#{@code_snippet.snippet}\n```") %>
+  <%= markdown_code(code: @code_snippet.snippet, extension: @code_snippet.extension) %>
 </div>
 
 <section class='reading-pane'>

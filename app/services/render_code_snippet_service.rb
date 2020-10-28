@@ -32,6 +32,7 @@ module RenderCodeSnippetService
       @tmp_img_file = Tempfile.new('code-snippet-image')
       @tmp_code_file = Tempfile.new([@filename, @extension])
       @tmp_code_file.write(@text)
+      @tmp_code_file.rewind
       @tmp_img_file.close
       @tmp_img_file.close
     end
