@@ -3,17 +3,22 @@ import { Controller } from 'stimulus'
 export default class extends Controller {
   static targets = ['headerImage', 'contentContainer']
 
+  connect () {
+    this.baseImageHeight = parseInt(this.data.get('imageHeight'))
+    this.baseHeaderHeight = parseInt(this.data.get('headerHeight'))
+  }
+
   scrollHeaderImage () {
-    if (this.contentContainerTarget.scrollTop < 240) {
-      this.headerImageTarget.style.height = `${300 - this.contentContainerTarget.scrollTop}px`
+    if (this.contentContainerTarget.scrollTop < (this.baseImageHeight - this.baseHeaderHeight)) {
+      this.headerImageTarget.style.height = `${this.baseImageHeight - this.contentContainerTarget.scrollTop}px`
       this.headerImageTarget.style.zIndex = '-1'
     } else {
-      this.headerImageTarget.style.height = '60px'
+      this.headerImageTarget.style.height = `${this.baseHeaderHeight}px`
       this.headerImageTarget.style.zIndex = '2'
     }
   }
 
   disconnect () {
-    this.headerImageTarget.style.height = 300
+    this.headerImageTarget.style.height = this.baseImageHeight
   }
 }
