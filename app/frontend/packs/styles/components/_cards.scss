@@ -1,0 +1,75 @@
+// Modules
+@use '../base/colors';
+@use '../base/mixins' as *;
+@use '../base/typography';
+
+.card-container {
+  box-sizing: border-box;
+  display: flex;
+  margin-bottom: 20px;
+  min-width: 200px;
+  padding: 7px;
+  position: relative;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    margin-bottom: 0;
+    max-width: 50%;
+  }
+
+  @include respond-to(desktop) {
+    max-width: 33%;
+  }
+}
+
+.card-content {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  user-select: none;
+  width: 100%;
+  
+  &:link,
+  &:visited {
+    color: colors.$dark;
+    text-decoration: none;
+  }
+
+  &:focus,
+  &:active {
+    outline-offset: 2px;
+  }
+
+  &:hover {
+    outline: none;
+  }
+
+  h3 {
+    font-size: 1.3em;
+    margin: 0;
+    padding: 10px 5px;
+  }
+}
+
+.card-image {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  box-sizing: border-box;
+  flex: 0 0 200px;
+  overflow: hidden;
+
+  img {
+    height: 100%;
+    object-fit: cover;
+    object-position: 0% 0%;
+    width: 100%;
+  }
+}
+
+.card-overview {
+  color: colors.$darker-font;
+  flex: 1 0 auto;
+  font-size: 0.9em;
+  padding: 0 5px 10px;
+}

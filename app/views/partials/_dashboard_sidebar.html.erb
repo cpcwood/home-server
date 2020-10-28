@@ -2,7 +2,7 @@
   <h2>
     Dashboard
   </h2>
-  <a href='<% admin_path %>' class='dashboard-button menu-button'>
+  <a href='<%= admin_path %>' class='dashboard-button menu-button'>
     General
   </a>
   <a href='/admin/notifications' class='dashboard-button menu-button'>
@@ -14,10 +14,10 @@
   <a href='<%= edit_admin_user_path(@user) %>' class='dashboard-button menu-button'>
     User Settings
   </a>
-  <a href='<% admin_site_settings_path %>' class='dashboard-button menu-button'>
+  <a href='<%= admin_site_settings_path %>' class='dashboard-button menu-button'>
     Site Settings
   </a>
-  <a href='<% admin_images_path %>' class='dashboard-button menu-button'>
+  <a href='<%= admin_images_path %>' class='dashboard-button menu-button'>
     Images
   </a>
   <a href='<%= edit_admin_about_path %>' class='dashboard-button menu-button'>

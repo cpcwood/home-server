@@ -123,6 +123,7 @@ $btn-hover-animation: 0.2s;
   border: unset;
   box-sizing: border-box;
   color: colors.$dark;
+  cursor: pointer;
   font-size: 16px;
   font-weight: 450;
   height: 0;
@@ -133,6 +134,7 @@ $btn-hover-animation: 0.2s;
   text-decoration: none;
   transition: visibility $sidebar-transition/2 step-end,
     height $sidebar-transition step-end;
+  user-select: none;
   vertical-align: middle;
   visibility: hidden;
   white-space: nowrap;
@@ -185,7 +187,6 @@ $btn-hover-animation: 0.2s;
     &:hover {
       background-color: colors.$nav-button-hover;
       color: colors.$light;
-      cursor: pointer;
     }
   }
 

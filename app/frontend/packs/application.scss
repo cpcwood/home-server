@@ -25,6 +25,7 @@ Sass Styles
 |   |   |– _images.scss                   # Images
 |   |   |– _markdown.scss                 # Markdown
 |   |   |– _posts.scss                    # Posts
+|   |   |– _cards.scss                    # Cards
 |   |   ┴
 |   |
 |   |– custom/
@@ -68,6 +69,7 @@ Sass Styles
 @use 'styles/components/images';
 @use 'styles/components/markdown';
 @use 'styles/components/posts';
+@use 'styles/components/cards';
 
 // Custom page styles
 @use 'styles/custom/about.scss';
