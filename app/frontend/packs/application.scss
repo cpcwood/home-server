@@ -31,6 +31,7 @@ Sass Styles
 |   |   |– about.scss                     # Custom styles for /about
 |   |   |– gallery.scss                   # Custom styles for /gallery
 |   |   |– contact.scss                   # Custom styles for /contact
+|   |   |– code_snippets.scss             # Custom styles for /code-snippets
 |   |   |– overrides.scss                 # Overrides and dynamically added selectors
 |   |   ┴           
 |   |           
@@ -72,6 +73,7 @@ Sass Styles
 @use 'styles/custom/about.scss';
 @use 'styles/custom/gallery.scss';
 @use 'styles/custom/contact.scss';
+@use 'styles/custom/code_snippets.scss';
 
 // Site Wide Vendor
 @use 'styles/vendor/loaders';

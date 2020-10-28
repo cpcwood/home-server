@@ -4,7 +4,7 @@ RSpec.describe 'AdminCodeSnippetsController', type: :request do
       title: 'new code snippet',
       overview: 'code snippet overview',
       snippet: 'def code_snippet; end',
-      extension: '.rb',
+      extension: 'rb',
       text: 'code snippet content'
     }}
   end
