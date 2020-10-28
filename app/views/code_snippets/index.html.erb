@@ -9,7 +9,9 @@
 <% if @code_snippets.empty? %>
   <%= render partial: 'code_snippets/no_code_snippets' %>
 <% else %>
-  <section class='image-tile-container'>
-    <%= render partial: 'code_snippets/code_snippet_overview', collection: @code_snippets, as: :code_snippet %>
+  <section class='image-tile-container' data-controller="image-loader" data-target="image-loader.container">
+    <% @code_snippets.each_with_index do |code_snippet, index| %>
+      <%= render partial: 'code_snippets/code_snippet_overview', locals: {code_snippet: code_snippet, path: code_snippet_path(code_snippet), index: index} %>
+    <% end %>
   </section>
 <% end %>
