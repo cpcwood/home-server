@@ -5,7 +5,7 @@ describe ApplicationHelper do
         controller: 'homepages'
       }
       allow(helper).to receive(:params).and_return(mock_params)
-      expect(helper.header_height).to eq('300px')
+      expect(helper.header_height).to eq(300)
     end
 
     it 'admin path' do
@@ -13,7 +13,7 @@ describe ApplicationHelper do
         controller: 'admin'
       }
       allow(helper).to receive(:params).and_return(mock_params)
-      expect(helper.header_height).to eq('300px')
+      expect(helper.header_height).to eq(300)
     end
 
     it 'admin scope path' do
@@ -21,7 +21,7 @@ describe ApplicationHelper do
         controller: 'admin/gallery'
       }
       allow(helper).to receive(:params).and_return(mock_params)
-      expect(helper.header_height).to eq('300px')
+      expect(helper.header_height).to eq(300)
     end
 
     it 'other path' do
@@ -29,7 +29,7 @@ describe ApplicationHelper do
         controller: 'other'
       }
       allow(helper).to receive(:params).and_return(mock_params)
-      expect(helper.header_height).to eq('205px')
+      expect(helper.header_height).to eq(205)
     end
   end
 end
