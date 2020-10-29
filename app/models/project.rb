@@ -4,6 +4,7 @@
 #
 #  id          :bigint           not null, primary key
 #  date        :datetime         not null
+#  extension   :string
 #  github_link :string
 #  overview    :text
 #  site_link   :string
@@ -13,7 +14,6 @@
 #  updated_at  :datetime         not null
 #
 class Project < ApplicationRecord
-
   validates :title,
             length: { minimum: 1, message: 'Title cannot be empty' }
 

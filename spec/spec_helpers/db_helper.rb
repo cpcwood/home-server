@@ -28,6 +28,10 @@ def seed_code_snippet
   @code_snippet = create(:code_snippet, user: @user)
 end
 
+def seed_project
+  @project = create(:project)
+end
+
 def seed_user_and_settings
   seed_user
   seed_site_settings
