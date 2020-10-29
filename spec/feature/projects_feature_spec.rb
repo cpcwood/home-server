@@ -31,6 +31,12 @@ feature 'projects feature', feature: true do
       click_on('Admin Edit')
       expect(page).to have_current_path('/admin/projects')
       click_on('Create New')
+      fill_in('project[title]', with: 'project title')
+      fill_in('project[overview]', with: 'project overview')
+      fill_in('project[github_link]', with: 'https://example.com/github')
+      fill_in('project[site_link]', with: 'https://example.com/site')
+      fill_in('project[date]', with: DateTime.new(2020, 04, 19, 0, 0, 0))
+      click_on('Submit')
     end
   end
 end

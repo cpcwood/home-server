@@ -10,4 +10,11 @@ RSpec.describe 'AdminProjects', type: :request do
       expect(response).to render_template(:index)
     end
   end
+
+  describe 'GET /admin/projects/new #index' do
+    it 'sucessful request' do
+      get '/admin/projects/new'
+      expect(response).to render_template(:new)
+    end
+  end
 end
