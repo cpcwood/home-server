@@ -6,6 +6,6 @@ RSpec.describe 'Request Abouts', type: :request do
 
   it 'Renders about page' do
     get '/about'
-    expect(response).to render_template(:index)
+    expect(response).to render_template(:show)
   end
 end

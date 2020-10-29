@@ -2,10 +2,12 @@ module Admin
   class GalleryImagesController < AdminBaseController
     def index
       @gallery_images = GalleryImage.order(created_at: :desc)
+      render layout: 'layouts/admin_dashboard'
     end
 
     def new
       @gallery_image = GalleryImage.new
+      render layout: 'layouts/admin_dashboard'
     end
 
     def create
@@ -38,6 +40,7 @@ module Admin
     def edit
       @gallery_image = find_model
       return redirect_to(admin_gallery_images_path, alert: 'Gallery image not found') unless @gallery_image
+      render layout: 'layouts/admin_dashboard'
     end
 
     def update

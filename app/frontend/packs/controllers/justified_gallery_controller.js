@@ -43,7 +43,7 @@ export default class extends Controller {
     }
   }
 
-  disconnect () {
+  teardown () {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect()
     }
@@ -52,5 +52,9 @@ export default class extends Controller {
       target.classList.remove('fade-in')
       target.style.transitionDelay = null
     }
+  }
+
+  disconnect () {
+    this.teardown()
   }
 }

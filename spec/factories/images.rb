@@ -22,6 +22,11 @@ FactoryBot.define do
       about
     end
 
+    factory :code_snippet_image, class: 'CodeSnippetImage' do
+      description { 'code_snippet_image' }
+      code_snippet
+    end
+
     factory :gallery_image, class: 'GalleryImage' do
       description { 'gallery_image' }
       title { 'a nice picture' }

@@ -1,0 +1,22 @@
+// Modules
+@use '../base/colors';
+@use '../base/mixins' as *;
+@use '../base/typography';
+
+.code-snippet {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  
+  .markdown {
+    margin: 0;
+    width: 100%;
+
+    @include respond-to(tablet) {
+      min-width: $reading-width - 20px;
+      width: max-content;
+    }
+  }
+}

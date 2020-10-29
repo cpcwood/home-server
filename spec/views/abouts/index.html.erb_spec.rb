@@ -5,10 +5,10 @@ describe 'Views' do
   let(:about_attached_image) { build_stubbed(:about, profile_image: profile_image) }
 
   describe '/about rendering' do
-    it 'index view' do
+    it 'show view' do
       assign(:about, about)
 
-      render template: 'abouts/index.html.erb'
+      render template: 'abouts/show.html.erb'
 
       expect(rendered).to match(about.about_me)
       expect(rendered).to match(about.linkedin_link)
@@ -23,7 +23,7 @@ describe 'Views' do
       assign(:about, about)
       assign(:user, user)
 
-      render template: 'abouts/index.html.erb'
+      render template: 'abouts/show.html.erb'
       expect(rendered).to match('toolbar-container')
     end
   end

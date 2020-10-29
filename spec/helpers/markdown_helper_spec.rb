@@ -16,4 +16,13 @@ describe MarkdownHelper do
       expect(helper.markdown_admin('test')).to eq(%(<div class="markdown">#{test_html}</div>))
     end
   end
+
+  describe '#markdown_code' do
+    it 'encapsulates code' do
+      code = 'some code'
+      extension = 'rb'
+      expect(helper).to receive(:markdown_admin).with("```#{extension}\n#{code}\n```").and_return('rendered markdown')
+      expect(helper.markdown_code(code: code, extension: extension)).to eq('rendered markdown')
+    end
+  end
 end

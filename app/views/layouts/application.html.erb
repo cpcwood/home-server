@@ -12,11 +12,9 @@
   </head>
 
   <body>
-    <div class='page-container' data-controller='header-scroll'>
+    <div class='page-container' data-controller='header-scroll' data-header-scroll-image-height='<%= header_height %>' data-header-scroll-header-height='60' data-action='turbolinks:before-cache@window->header-scroll#teardown'>
       <%= render partial: 'partials/navigation' %>
-      <div class='header-image' data-target='header-scroll.headerImage'>
-        <%= image_tag(image_path_helper(image_model: @header_image), id: 'header-image', style: @header_image.custom_style)%>
-      </div>
+      <%= render partial: 'partials/header_image' %>
       <div class='content-container' data-action='scroll->header-scroll#scrollHeaderImage' data-target='header-scroll.contentContainer'>
         <div class='content'>
           <%= render partial: 'partials/section_title' %>

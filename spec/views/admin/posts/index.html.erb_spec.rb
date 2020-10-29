@@ -31,7 +31,7 @@ describe 'Views' do
       it 'no posts' do
         assign(:posts, [])
         assign(:user, user)
-        render template: 'posts/index.html.erb'
+        render template: 'admin/posts/index.html.erb'
         expect(rendered).to match('There are no posts here...')
       end
     end
