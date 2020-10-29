@@ -8,7 +8,7 @@ feature 'projects feature', feature: true do
       visit('/')
       click_on('PROJECTS')
       expect(page).to have_current_path('/projects')
-      expect(page).to have_content('There are projects here...')
+      expect(page).to have_content('There are no projects here...')
     end
   end
 end
