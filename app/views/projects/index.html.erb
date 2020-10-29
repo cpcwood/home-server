@@ -3,8 +3,13 @@
 <% end %>
 
 <section class='reading-pane'>
+  <%= render partial: 'partials/admin_toolbar', locals: { model: (@projects.empty? ? [Project.new] : @projects) } %>
+
   <%= render partial: 'partials/system_messages'%>
 
-  <%= render partial: 'partials/no_items', locals: {item: 'projects'} %>
-
+  <% if @projects.empty? %>
+    <%= render partial: 'partials/no_items', locals: {item: 'projects'} %>
+  <% else %>
+    <%= render partial: 'projects/project_overview', collection: @projects, as: :project, spacer_template: "partials/standard_ruler" %>
+  <% end %>
 </section>
