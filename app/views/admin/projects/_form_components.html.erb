@@ -41,6 +41,8 @@
   <%= f.text_field(:extension, class: 'input-box embedded-input-box', placeholder: 'Enter file extension such as `.rb`...') %>
 </div>
 
+<%= render partial: 'admin/projects/main_project_image_upload', locals: {project: project, form: f} %>
+
 <div class="embedded-form-entry-container submit-right">
   <%= f.submit("Submit", class: 'input-submit') %>
 </div>

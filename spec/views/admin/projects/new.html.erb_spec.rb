@@ -15,6 +15,7 @@ describe 'Views' do
         expect(rendered).to match('project_extension')
         expect(rendered).to match('project_github_link')
         expect(rendered).to match('project_site_link')
+        expect(rendered).to match('[main_project_image_attributes][image_file]')
         expect(rendered).to match(admin_projects_path(Project.new))
       end
     end

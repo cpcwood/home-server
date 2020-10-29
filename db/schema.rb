@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 2020_10_29_164957) do
   end
 
   create_table "project_images", force: :cascade do |t|
-    t.string "description", default: "project_image", null: false
+    t.string "description", default: "project-image", null: false
     t.string "title"
     t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false

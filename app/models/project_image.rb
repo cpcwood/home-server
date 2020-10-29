@@ -3,7 +3,7 @@
 # Table name: project_images
 #
 #  id          :bigint           not null, primary key
-#  description :string           default("project_image"), not null
+#  description :string           default("project-image"), not null
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
