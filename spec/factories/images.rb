@@ -37,8 +37,8 @@ FactoryBot.define do
     end
 
     factory :project_image, class: 'ProjectImage' do
-      description { "project_image" }
-      title { "project image" }
+      description { 'project_image' }
+      title { 'project image' }
       project
     end
   end

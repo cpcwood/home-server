@@ -23,11 +23,10 @@
 #  fk_rails_...  (main_image_id => project_images.id)
 #
 class Project < ApplicationRecord
-
   has_many :project_images, dependent: :destroy
   accepts_nested_attributes_for :project_images, allow_destroy: true
-  
-  belongs_to :main_project_image, class_name: 'ProjectImage', foreign_key: :main_image_id, optional: true
+
+  belongs_to :main_project_image, class_name: 'ProjectImage', foreign_key: :main_image_id, inverse_of: :main_project_image, optional: true
   accepts_nested_attributes_for :main_project_image, allow_destroy: true
 
   validates :title,

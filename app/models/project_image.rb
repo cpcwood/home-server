@@ -24,6 +24,10 @@ class ProjectImage < Image
 
   belongs_to :project
 
+  # rubocop:disable Rails/HasManyOrHasOneDependent
+  has_one :main_project_image, class_name: 'Project', inverse_of: :main_project_image
+  # rubocop:enable Rails/HasManyOrHasOneDependent
+
   def variant_sizes
     VARIANT_SIZES
   end
