@@ -17,8 +17,12 @@
 #
 #  fk_rails_...  (project_id => projects.id)
 #
-require 'rails_helper'
-
 RSpec.describe ProjectImage, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { create(:project_image) }
+
+  describe '#variant_sizes' do
+    it 'default_value' do
+      expect(subject.variant_sizes).to eq(ProjectImage::VARIANT_SIZES)
+    end
+  end
 end

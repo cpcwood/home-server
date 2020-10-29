@@ -36,9 +36,10 @@ FactoryBot.define do
       user
     end
 
-    factory :project_image do
+    factory :project_image, class: 'ProjectImage' do
       description { "project_image" }
       title { "project image" }
+      project
     end
   end
 end
