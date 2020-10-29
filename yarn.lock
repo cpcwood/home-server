@@ -8589,16 +8589,6 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
-pikaday-momentless@^1.8.5:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/pikaday-momentless/-/pikaday-momentless-1.8.5.tgz#3bf63a80350d9cf4c6294c389fed5740a23cec30"
-  integrity sha512-b7N4G5A4lFiEpQa7wJo/jPitHGQXZheLixL3MwGWgj2EkuvHTrki0hfOzYMONxgRjZeli1JBGpSG82jOwnEaow==
-
-pikaday@^1.8.2:
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/pikaday/-/pikaday-1.8.2.tgz#72cc73fab7ccc068cbdf7dcaa1ce400fcfd894e3"
-  integrity sha512-TNtsE+34BIax3WtkB/qqu5uepV1McKYEgvL3kWzU7aqPCpMEN6rBF3AOwu4WCwAealWlBGobXny/9kJb49C1ew==
-
 pinkie-promise@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/pinkie-promise/-/pinkie-promise-2.0.1.tgz#2135d6dfa7a358c069ac9b178776288228450ffa"
