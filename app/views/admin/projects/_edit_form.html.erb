@@ -1,4 +1,4 @@
-<%= form_with(model: [:admin, project], method: 'put', class: 'section-form', id: 'admin-projects-update-form') do |f| %>
+<%= form_with(model: [:admin, project], method: 'put', class: 'section-form', id: 'admin-projects-edit-form') do |f| %>
 
   <%= render partial: 'admin/projects/form_components', locals: { f: f, project: project } %>
 

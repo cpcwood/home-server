@@ -26,7 +26,7 @@
 
 <% else %>
 
-  <% image = project.build_main_project_image %>
+  <% image = ProjectImage.new %>
 
   <%= form.fields_for(:main_project_image, image) do |p| %>
     <div class="embedded-form-entry-container">
