@@ -6,6 +6,7 @@ before_install:
   - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
   - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
   - sudo apt-get update && sudo apt-get install yarn
+  - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 cache:
   bundler: true
   yarn: true
@@ -15,6 +16,7 @@ before_script:
   - yarn install
   - bundle exec rake db:create
   - bundle exec rake db:migrate
+  - bundle exec rails webpacker:compile
 script:
   - bundle exec rspec
   - bundle exec rubocop -a -c ./.rubocop.yml
