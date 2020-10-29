@@ -7,7 +7,7 @@ feature 'projects feature', feature: true do
     scenario 'no projects' do
       visit('/')
       click_on('PROJECTS')
-      expect(page).to have_current_path('/code-snippets')
+      expect(page).to have_current_path('/projects')
       expect(page).to have_content('There are projects here...')
     end
   end
