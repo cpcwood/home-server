@@ -35,5 +35,10 @@ FactoryBot.define do
       longitude { -0.116773 }
       user
     end
+
+    factory :project_image do
+      description { "project_image" }
+      title { "project image" }
+    end
   end
 end
