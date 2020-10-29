@@ -16,6 +16,10 @@ describe 'Views' do
       expect(rendered).to match(project2.title)
       expect(rendered).to match(project1.overview)
       expect(rendered).to match(project2.overview)
+      expect(rendered).to match(project1.github_link)
+      expect(rendered).to match(project2.github_link)
+      expect(rendered).to match(project1.site_link)
+      expect(rendered).to match(project2.site_link)
       expect(rendered).to match('toolbar-container')
     end
 
