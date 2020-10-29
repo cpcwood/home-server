@@ -5,6 +5,8 @@ before_install:
   - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
   - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
   - sudo apt update && sudo apt install yarn
+cache:
+  bundler: true
 before_script:
   - yarn install
   - bundle exec rake db:create
@@ -17,10 +19,5 @@ script:
   - yarn lint
 services:
   - postgresql
-addons:
-  postgresql: "12.1"
-env:
-  global:
-  - PGPORT=5433
 repo_token:
   secure: "MseuIag5/s4xStZ672b/XX56sx1s2e2CtbRFkp4DMXlUbP4/JjRJrvQgBD6DgesULQFiSUifBMDMsKDY4B7yR3tH5eSNmH03K1guIKCAlGyYOsHcRjeER5HPKgjwRO630TKaKGU/f00JZ6IV3xNDsbCo1CaAq/LZkYlHbQqJALrHlleq/ZINr2oI1d+GcNHbCnBz5OLypm+RwbFJv1X33XctpRuAOBJJaXgxaYanweKd1JHioeAjMq/fmunwmzPtTOFB0ylQhw4B/3EUulRvIT73nCyJJLfGOab72JJoazSsqez13OlsVXQbqoQtoX1pYBytQbUoj3BskNmTcLTrXzn0RNRaWjWcl6ktu5vwGMYl/ql3gWYLI/WIHbE2tQ6sRP3F2+QMwWfbI6J+xDdZNyCBf8460VGnriMNEIp8drgIWabF+Z3DboJcP8Hp4MYk7IGUwY6g36ImfbW6jRHk2HO4A6trcxJXY4IPGwTKFlyYvcM1QVx7NV5+fw/Hr2K+QUQ1CJ6fYXyvsgWJFbTdHjCG3lmiZE5q7qAC4/KlyB8KxHVNLHeIKKehZxr79HL8xd1L38NOcVdetCdTTpLafhYFRviR5bPzJwuHJi46jr2yGy3+/3yBPltYt47DV/y/jBhUVIJRPFexy4l/c6RUJTPubL1sBoNaePK6bsz4/HU="
