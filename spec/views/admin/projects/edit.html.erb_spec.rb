@@ -24,6 +24,7 @@ describe 'Views' do
         expect(rendered).to match(admin_project_path(project))
         expect(rendered).to match('Return')
         expect(rendered).to match(admin_projects_path)
+        expect(rendered).to match('Remove')
       end
     end
   end

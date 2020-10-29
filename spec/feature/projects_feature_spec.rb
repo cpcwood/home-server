@@ -58,5 +58,13 @@ feature 'projects feature', feature: true do
       expect(page).to have_content('Project updated')
       expect(page).to have_content('new title')
     end
+
+    scenario 'delete project' do
+      visit('/admin/projects')
+      first('.show-button').click
+      first('.destroy-button').click
+      expect(page).to have_content('Project removed')
+      expect(page).to have_content('There are no projects here...')
+    end
   end
 end
