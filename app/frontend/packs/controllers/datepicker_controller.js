@@ -1,5 +1,5 @@
 import { Controller } from 'stimulus'
-import Pikaday from 'pikaday/pikaday.js'
+const Pikaday = require('pikaday-momentless')
 
 export default class extends Controller {
   static targets = ['dateField']
