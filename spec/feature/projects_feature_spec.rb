@@ -19,4 +19,18 @@ feature 'projects feature', feature: true do
       expect(page).to have_content(@project.overview)
     end
   end
+
+  context 'admin user' do
+    before(:each) do
+      login_feature
+      seed_project
+    end
+
+    scenario 'create code snippet' do
+      visit('/projects')
+      click_on('Admin Edit')
+      expect(page).to have_current_path('/admin/projects')
+      click_on('Create New')
+    end
+  end
 end
