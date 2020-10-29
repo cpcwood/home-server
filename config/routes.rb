@@ -44,4 +44,6 @@ Rails.application.routes.draw do
   resources :gallery_images, only: [:index], path: "/gallery"
 
   resources :code_snippets, only: [:index, :show], path: "/code-snippets"
+
+  resources :projects, only: [:index]
 end
