@@ -18,4 +18,19 @@
 #  fk_rails_...  (project_id => projects.id)
 #
 class ProjectImage < Image
+  VARIANT_SIZES = {
+    thumbnail: { resize_to_limit: [700, 500] }
+  }.freeze
+
+  belongs_to :project
+
+  def variant_sizes
+    VARIANT_SIZES
+  end
+
+  def process_image(attached_image)
+    Image.image_processing_pipeline(image_path: attached_image) do |pipeline|
+      pipeline.resize_to_limit(MAX_DIM, MAX_DIM)
+    end
+  end
 end
