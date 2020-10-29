@@ -23,7 +23,6 @@ feature 'projects feature', feature: true do
   context 'admin user' do
     before(:each) do
       login_feature
-      seed_project
     end
 
     scenario 'create code snippet' do
@@ -37,6 +36,27 @@ feature 'projects feature', feature: true do
       fill_in('project[site_link]', with: 'https://example.com/site')
       fill_in('project[date]', with: DateTime.new(2020, 04, 19, 0, 0, 0))
       click_on('Submit')
+      expect(page).to have_content('Project created')
+      expect(page).to have_content('project title')
+      expect(page).to have_content('project overview')
+      expect(page.html).to include('https://example.com/github')
+      expect(page.html).to include('https://example.com/site')
+      click_on('View Section')
+      expect(page).to have_content('project title')
+      expect(page).to have_content('project overview')
+      expect(page.html).to include('https://example.com/github')
+      expect(page.html).to include('https://example.com/site')
+    end
+
+    scenario 'update project' do
+      seed_project
+      visit('/admin/projects')
+      first('.show-button').click
+      expect(page).to have_content(@project.text)
+      fill_in('project[title]', with: 'new title')
+      click_button('Submit')
+      expect(page).to have_content('Project updated')
+      expect(page).to have_content('new title')
     end
   end
 end
