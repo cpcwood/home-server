@@ -10,6 +10,7 @@
     "carbon-now-cli": "^1.4.0",
     "jest-erb-transformer": "1.0.1",
     "justified-layout": "^4.0.0",
+    "moment": "^2.29.1",
     "node-forge": "0.10.0",
     "object-path": "0.11.5",
     "pikaday": "^1.8.0",
