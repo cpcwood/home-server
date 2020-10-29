@@ -19,4 +19,7 @@ class Project < ApplicationRecord
 
   validates :date,
             timeliness: { message: 'Date format invalid' }
+  
+  validates :extension,
+            format: { with: /\A[a-zA-Z0-9]+\z/, message: 'File extension invalid' }
 end
