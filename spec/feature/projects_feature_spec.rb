@@ -35,7 +35,7 @@ feature 'projects feature', feature: true do
       fill_in('project[github_link]', with: 'https://example.com/github')
       fill_in('project[site_link]', with: 'https://example.com/site')
       fill_in('project[date]', with: DateTime.new(2020, 04, 19, 0, 0, 0))
-      find_field('project[main_image_attributes]').set(Rails.root.join('spec/files/sample_image.jpg'))
+      find_field('project[main_project_image_attributes]').set(Rails.root.join('spec/files/sample_image.jpg'))
       click_on('Submit')
       expect(page).to have_content('Project created')
       expect(page).to have_content('project title')
