@@ -43,6 +43,34 @@ module Admin
       render layout: 'layouts/admin_dashboard'
     end
 
+    def update
+      @notices = []
+      @alerts = []
+      begin
+        @project = find_model
+        return redirect_to(admin_projects_path, alert: 'Project not found') unless @project
+        update_model(model: @project, success_message: 'Project updated')
+      rescue StandardError => e
+        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
+        @alerts.push('Sorry, something went wrong!')
+        @alerts.push(e.message)
+      end
+      if @alerts.any?
+        flash[:alert] = @alerts
+        render(
+          partial: 'partials/form_replacement',
+          locals: {
+            selector_id: 'admin-projects-edit-form',
+            form_partial: 'admin/projects/edit_form',
+            model: { project: @project }
+          },
+          formats: [:js])
+        flash[:alert] = nil
+      else
+        redirect_to(admin_projects_path, notice: @notices)
+      end
+    end
+
     private
 
     def permitted_params

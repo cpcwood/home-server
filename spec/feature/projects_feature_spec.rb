@@ -52,7 +52,7 @@ feature 'projects feature', feature: true do
       seed_project
       visit('/admin/projects')
       first('.show-button').click
-      expect(page).to have_content(@project.text)
+      expect(page).to have_content(@project.overview)
       fill_in('project[title]', with: 'new title')
       click_button('Submit')
       expect(page).to have_content('Project updated')
