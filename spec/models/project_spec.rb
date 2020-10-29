@@ -4,6 +4,7 @@
 #
 #  id          :bigint           not null, primary key
 #  date        :datetime         not null
+#  extension   :string
 #  github_link :string
 #  overview    :text
 #  site_link   :string
@@ -14,7 +15,6 @@
 #
 
 RSpec.describe Project, type: :model do
-
   subject { build_stubbed(:project) }
 
   describe 'validation' do
