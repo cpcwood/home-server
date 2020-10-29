@@ -6,4 +6,7 @@
 
 <div class="embedded-form-button-container">
   <%= link_to('Return', admin_projects_path, class: 'standard-button input-submit') %>
+  <%= form_with(model: [:admin, project], method: 'delete') do |r| %>
+    <%= r.submit("Remove", class: 'input-submit destroy-button') %>
+  <% end %>
 </div>
