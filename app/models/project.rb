@@ -23,4 +23,10 @@ class Project < ApplicationRecord
   validates :extension,
             allow_blank: true,
             format: { with: /\A[a-zA-Z0-9]+\z/, message: 'File extension invalid' }
+
+  validates :github_link,
+            url: { allow_blank: true, message: 'Github link is not valid' }
+
+  validates :site_link,
+            url: { allow_blank: true, message: 'Site link is not valid' }
 end

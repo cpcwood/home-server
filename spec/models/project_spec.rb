@@ -55,5 +55,25 @@ RSpec.describe Project, type: :model do
         expect(subject).to be_valid
       end
     end
+
+    describe 'github_link' do
+      it 'is link' do
+        subject.github_link = 'not a link'
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:github_link]).to eq ['Github link is not valid']
+        subject.github_link = ''
+        expect(subject).to be_valid
+      end
+    end
+
+    describe 'site_link' do
+      it 'is link' do
+        subject.site_link = 'not a link'
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:site_link]).to eq ['Site link is not valid']
+        subject.site_link = ''
+        expect(subject).to be_valid
+      end
+    end
   end
 end
