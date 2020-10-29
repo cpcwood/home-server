@@ -82,7 +82,8 @@ describe('touch_hover_tile_controller', () => {
             horizontal: margin,
             vertical: 0
           },
-          containerWidth: containerWidth
+          containerWidth: containerWidth,
+          targetRowHeight: 302
         })
         expect(galleryItemTargetOne.width).toEqual(20)
         expect(galleryItemTargetOne.height).toEqual(30)
