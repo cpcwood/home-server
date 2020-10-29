@@ -13,7 +13,6 @@ before_install:
   - sudo apt update && sudo apt install yarn
 cache:
   bundler: true
-  yarn: true
 before_script:
   - yarn install
   - bundle exec rake db:create
