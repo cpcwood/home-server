@@ -18,8 +18,8 @@ FactoryBot.define do
     title { 'MyString' }
     overview { 'MyText' }
     date { '2020-10-29 11:59:27' }
-    github_link { 'MyString' }
-    site_link { 'MyString' }
+    github_link { 'https://github.com/' }
+    site_link { 'https://example.com/' }
     snippet { 'MyText' }
     extension { 'rb' }
   end
