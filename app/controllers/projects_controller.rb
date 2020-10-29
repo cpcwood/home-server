@@ -1,3 +1,5 @@
 class ProjectsController < ApplicationController
-  def index; end
+  def index
+    @projects = Project.order(date: :desc)
+  end
 end
