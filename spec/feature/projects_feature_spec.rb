@@ -60,6 +60,7 @@ feature 'projects feature', feature: true do
     end
 
     scenario 'delete project' do
+      seed_project
       visit('/admin/projects')
       first('.show-button').click
       first('.destroy-button').click
