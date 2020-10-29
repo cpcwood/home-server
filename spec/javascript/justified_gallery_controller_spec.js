@@ -33,7 +33,7 @@ describe('touch_hover_tile_controller', () => {
       }
     })
     document.body.innerHTML = `
-      <div class='gallery-container' data-controller="justified-gallery" data-target="justified-gallery.container" data-justified-gallery-margin="${margin}">
+      <div class='gallery-container' data-controller="justified-gallery" data-target="justified-gallery.container" data-justified-gallery-margin="${margin}" data-action='turbolinks:before-cache@window->justified-gallery#teardown'>
         <img class="gallery-item" data-action="load->justified-gallery#imageLoaded" data-target="justified-gallery.galleryItem" width=${galleryItemOneDimensions.width} height=${galleryItemOneDimensions.height}>
         <img class="gallery-item" data-action="load->justified-gallery#imageLoaded" data-target="justified-gallery.galleryItem" width=${galleryItemTwoDimensions.width} height=${galleryItemTwoDimensions.height}>
       </div>
@@ -92,12 +92,11 @@ describe('touch_hover_tile_controller', () => {
     })
   })
 
-  describe('#disconnect', () => {
-    beforeEach(() => {
-      document.body.innerHTML = ''
-    })
-
+  describe('#teardown', () => {
     it('reset to cache safe state', () => {
+      galleryItemTargetOne.dispatchEvent(new Event('load'))
+      galleryItemTargetTwo.dispatchEvent(new Event('load'))
+      window.dispatchEvent(new Event('turbolinks:before-cache'))
       expect(galleryItemTargetOne.classList).not.toContain('fade-in')
       expect(galleryItemTargetTwo.classList).not.toContain('fade-in')
       expect(galleryItemTargetOne.style.transitionDelay).toBe('')

@@ -50,19 +50,4 @@ describe('touch_hover_tile_controller', () => {
       expect(fadeTargetTwo.style.transitionDelay).toBe('')
     })
   })
-
-  describe('#disconnect', () => {
-    beforeEach(() => {
-      fadeTargetOne.dispatchEvent(new Event('load'))
-      fadeTargetTwo.dispatchEvent(new Event('load'))
-      document.body.innerHTML = ''
-    })
-
-    it('reset to cache safe state', () => {
-      expect(fadeTargetOne.classList).not.toContain('fade-in')
-      expect(fadeTargetTwo.classList).not.toContain('fade-in')
-      expect(fadeTargetOne.style.transitionDelay).toBe('')
-      expect(fadeTargetTwo.style.transitionDelay).toBe('')
-    })
-  })
 })

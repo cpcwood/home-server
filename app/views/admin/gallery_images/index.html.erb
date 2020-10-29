@@ -14,7 +14,7 @@
   <% if @gallery_images.empty? %>
     <%= render partial: 'gallery_images/no_images' %>
   <% else %>
-    <ul class='gallery-container' data-controller='justified-gallery' data-target='justified-gallery.container' data-justified-gallery-margin='2'>
+    <ul class='gallery-container' data-controller='justified-gallery' data-target='justified-gallery.container' data-justified-gallery-margin='2' data-action='turbolinks:before-cache@window->justified-gallery#teardown'>
       <%= render partial: 'admin/gallery_images/image_container', collection: @gallery_images, as: :gallery_image %>
     </ul>
   <% end %>
