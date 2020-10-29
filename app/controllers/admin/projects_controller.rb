@@ -98,8 +98,7 @@ module Admin
           :date,
           :github_link,
           :site_link,
-          :snippet,
-          :extension)
+          project_image_attributes: [:id, :image_file, :order, :_destroy])
     end
 
     def find_model

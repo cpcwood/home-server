@@ -18,6 +18,9 @@
 #  fk_rails_...  (project_id => projects.id)
 #
 class ProjectImage < Image
+
+  MAX_DIM = 2000
+
   VARIANT_SIZES = {
     thumbnail: { resize_to_limit: [700, 500] }
   }.freeze
