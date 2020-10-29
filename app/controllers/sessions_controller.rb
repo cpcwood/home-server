@@ -10,10 +10,7 @@ class SessionsController < ApplicationController
     @user ||= User.find_by(username: sanitize(params[:user]))
     return redirect_to(:login, alert: 'User not found') unless @user&.authenticate(sanitize(params[:password]))
     TwoFactorAuthService.start(session, @user)
-    if Rails.env.development?
-      log_user_in
-      return redirect_to(admin_path)
-    end
+    return log_user_in if Rails.env.development?
     redirect_to('/2fa')
   end
 
@@ -33,7 +30,6 @@ class SessionsController < ApplicationController
     return redirect_to('/2fa', alert: 'Verification code must be 6 digits long') unless TwoFactorAuthService.auth_code_format_valid?(auth_code)
     return redirect_to('/2fa', alert: '2fa code incorrect, please try again') unless TwoFactorAuthService.auth_code_valid?(session: session, auth_code: auth_code)
     log_user_in
-    redirect_to(:admin, notice: "#{@user.username} welcome back to your home-server!")
   end
 
   def reset_2fa
@@ -61,5 +57,6 @@ class SessionsController < ApplicationController
     reset_session
     session[:user_id] = @user.id
     @user.record_ip(request)
+    redirect_to(:admin, notice: "#{@user.username} welcome back to your home-server!")
   end
 end
