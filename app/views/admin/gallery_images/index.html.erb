@@ -1,8 +1,5 @@
-<% content_for :section_title do %>
-  Gallery
-<% end %>
 <% content_for :section_subtitle do %>
-  Admin: Index
+  Gallery: Index
 <% end %>
 
 <%= render partial: 'partials/admin_toolbar', locals: { model: (@gallery_images.empty? ? [GalleryImage.new] : @gallery_images) } %>

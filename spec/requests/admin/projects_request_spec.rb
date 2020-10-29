@@ -79,7 +79,7 @@ RSpec.describe 'AdminProjects', type: :request do
 
   describe 'PUT /admin/projects/:id #update' do
     it 'id invalid' do
-      put('/admin/projects/not-a-post-id', params: valid_attributes)
+      put('/admin/projects/not-a-project-id', params: valid_attributes)
       expect(response).to redirect_to(admin_projects_path)
       expect(flash[:alert]).to include('Project not found')
     end
@@ -107,6 +107,31 @@ RSpec.describe 'AdminProjects', type: :request do
       put("/admin/projects/#{project.id}", params: valid_attributes)
       expect(response).not_to redirect_to(admin_projects_path)
       expect(response.body).to include('general error')
+    end
+  end
+
+  describe 'DELETE /admin/projects/:id #destroy' do
+    it 'id invalid' do
+      delete('/admin/projects/not-a-project-id')
+      expect(response).to redirect_to(admin_projects_path)
+      expect(flash[:alert]).to include('Project not found')
+    end
+
+    it 'successful request' do
+      project = create(:project)
+      expect{ delete("/admin/projects/#{project.id}") }.to change{
+        Project.all.length
+      }.from(1).to(0)
+      expect(response).to redirect_to(admin_projects_path)
+      expect(flash[:notice]).to include('Project removed')
+    end
+
+    it 'general error' do
+      project = create(:project)
+      allow_any_instance_of(Project).to receive(:destroy).and_raise('general error')
+      delete("/admin/projects/#{project.id}")
+      expect(response).to redirect_to(admin_projects_path)
+      expect(flash[:alert]).to include('general error')
     end
   end
 end

@@ -71,6 +71,22 @@ module Admin
       end
     end
 
+    def destroy
+      @notices = []
+      @alerts = []
+      begin
+        @project = find_model
+        return redirect_to(admin_projects_path, alert: 'Project not found') unless @project
+        @project.destroy
+        @notices.push('Project removed')
+      rescue StandardError => e
+        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
+        @alerts.push('Sorry, something went wrong!')
+        @alerts.push(e.message)
+      end
+      redirect_to(admin_projects_path, notice: @notices, alert: @alerts)
+    end
+
     private
 
     def permitted_params
