@@ -11,7 +11,7 @@
 </div>
 
 <% if @code_snippets.empty? %>
-  <%= render partial: 'code_snippets/no_code_snippets' %>
+  <%= render partial: 'partials/no_items', locals: {item: 'code snippets'} %>
 <% else %>
   <section class='image-tile-container' data-controller="image-loader" data-target="image-loader.container" data-action='turbolinks:before-cache@window->image-loader#teardown'>
     <% @code_snippets.each_with_index do |code_snippet, index| %>

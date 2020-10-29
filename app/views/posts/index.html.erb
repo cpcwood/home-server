@@ -8,7 +8,7 @@
   <%= render partial: 'partials/system_messages'%>
 
   <% if @posts.empty? %>
-    <%= render partial: 'posts/no_posts' %>
+    <%= render partial: 'partials/no_items', locals: {item: 'posts'} %>
   <% else %>
     <%= render partial: 'posts/post_overview', collection: @posts, as: :post, spacer_template: "partials/standard_ruler" %>
   <% end %>
