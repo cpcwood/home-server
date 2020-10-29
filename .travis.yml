@@ -2,7 +2,7 @@ language: ruby
 rvm: 2.7.0
 before_install:
   - psql -c 'CREATE ROLE cpcwood SUPERUSER LOGIN CREATEDB;' -U postgres
-  - nvm install 12
+  - nvm install 14
   - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
   - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
   - sudo apt-get update && sudo apt-get install yarn
@@ -10,7 +10,6 @@ before_script:
   - yarn install
   - bundle exec rake db:create
   - bundle exec rake db:migrate
-  - bundle exec rails webpacker:compile
 script:
   - bundle exec rspec
   - bundle exec rubocop -a -c ./.rubocop.yml

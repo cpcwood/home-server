@@ -4,11 +4,12 @@ export default class extends Controller {
   static targets = ['container']
 
   initialize () {
+    const siteKey = `<%= "#{Rails.application.credentials.recaptcha[:site_key]}" %>`;
     if (!window.grecaptcha) {
       const reCaptchaScript = document.createElement('script')
       window.reCaptchaOnload = () => {
         window.grecaptcha.render(this.containerTarget, {
-          sitekey: `<%= "#{Rails.application.credentials.recaptcha[:site_key]}" %>`,
+          sitekey: siteKey,
           theme: 'light',
           size: 'normal'
         })
@@ -18,7 +19,7 @@ export default class extends Controller {
       document.head.appendChild(reCaptchaScript)
     } else {
       window.grecaptcha.render(this.containerTarget, {
-        sitekey: `<%= "#{Rails.application.credentials.recaptcha[:site_key]}" %>`,
+        sitekey: siteKey,
         theme: 'light',
         size: 'normal'
       })
