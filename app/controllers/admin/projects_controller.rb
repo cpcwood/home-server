@@ -37,6 +37,12 @@ module Admin
       end
     end
 
+    def edit
+      @project = find_model
+      return redirect_to(admin_projects_path, alert: 'Project not found') unless @project
+      render layout: 'layouts/admin_dashboard'
+    end
+
     private
 
     def permitted_params
@@ -50,6 +56,10 @@ module Admin
           :site_link,
           :snippet,
           :extension)
+    end
+
+    def find_model
+      Project.find_by(id: params[:id])
     end
 
     def update_model(model:, success_message:)

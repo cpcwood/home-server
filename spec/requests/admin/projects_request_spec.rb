@@ -62,4 +62,18 @@ RSpec.describe 'AdminProjects', type: :request do
       expect(response.body).to include('general error')
     end
   end
+
+  describe 'GET /admin/project/:id/edit #edit' do
+    it 'succesful request' do
+      project = create(:project)
+      get("/admin/projects/#{project.id}/edit")
+      expect(response).to render_template(:edit)
+    end
+
+    it 'invalid id' do
+      get('/admin/projects/not-a-project-id/edit')
+      expect(response).to redirect_to(admin_projects_path)
+      expect(flash[:alert]).to include('Project not found')
+    end
+  end
 end
