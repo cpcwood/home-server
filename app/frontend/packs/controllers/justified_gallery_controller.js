@@ -34,7 +34,8 @@ export default class extends Controller {
         horizontal: parseInt(this.data.get('margin')),
         vertical: 0
       },
-      containerWidth: this.containerTarget.clientWidth
+      containerWidth: this.containerTarget.clientWidth,
+      targetRowHeight: 302
     }
     const geometry = justifiedLayout(geometryInput, config)
     for (let i = 0; i < this.galleryItemTargets.length; i++) {
