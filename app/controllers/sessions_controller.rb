@@ -30,7 +30,6 @@ class SessionsController < ApplicationController
     return redirect_to('/2fa', alert: 'Verification code must be 6 digits long') unless TwoFactorAuthService.auth_code_format_valid?(auth_code)
     return redirect_to('/2fa', alert: '2fa code incorrect, please try again') unless TwoFactorAuthService.auth_code_valid?(session: session, auth_code: auth_code)
     log_user_in
-    redirect_to(:admin, notice: "#{@user.username} welcome back to your home-server!")
   end
 
   def reset_2fa
@@ -58,5 +57,6 @@ class SessionsController < ApplicationController
     reset_session
     session[:user_id] = @user.id
     @user.record_ip(request)
+    redirect_to(:admin, notice: "#{@user.username} welcome back to your home-server!")
   end
 end

@@ -1,6 +1,10 @@
+$text: rgb(226, 226, 226);
+$background: rgb(41, 42, 43);
+
 .code-block {
-  background-color: #151515;
-  color: #d0d0d0;
+  background-color: $background;
+  color: $text;
+  font-weight: 400;
   line-height: 1.25;
   overflow-x: scroll;
   padding: 25px 20px;
@@ -14,8 +18,8 @@
   }
   
   .w {
-    background-color: #151515;
-    color: #d0d0d0;
+    background-color: $background;
+    color: $text;
   }
   
   .c,
@@ -62,9 +66,6 @@
     background-color: #151515;
     color: #6a9fb5;
     font-weight: bold;
-    
-
-    
   }
   
   .k,
@@ -72,7 +73,7 @@
   .kp,
   .kr,
   .kv {
-    color: #65adf1;
+    color: rgb(255, 106, 172);
     
   }
   
@@ -101,18 +102,14 @@
   .sh,
   .sx,
   .s1,
+  .si,
   .err {
-    color: #50d550;
+    color: rgb(24, 248, 211);
     
   }
   
   .sr {
     color: #75b5aa;
-    
-  }
-  
-  .si {
-    color: #8f5536;
     
   }
   
@@ -123,12 +120,12 @@
   
   .nn {
     color: #f4bf75;
-    
   }
   
   .nc,
-  .no {
-    color: #f5f0a0;
+  .no,
+  .ss {
+    color: rgb(249, 5, 89);
   }
 
   .na {
@@ -136,8 +133,11 @@
   }
 
   .nf {
+    color: $text;
+  }
 
-    color: #f4bf75;
+  .n {
+    color: rgb(255, 175, 97);
   }
   
   .m,
@@ -149,10 +149,5 @@
   .mo,
   .mx {
     color: #e456b9;
-  }
-  
-  .ss {
-    color: #80bf70;
-    
   }
 }

@@ -1,66 +1,117 @@
 import { Application } from 'stimulus'
 import headerScrollController from 'controllers/header_scroll_controller'
-const fs = require('fs')
 
 describe('header_scroll_controller', () => {
   let headerImage
   let contentContainer
-  let applicationHTML
+  let application
 
-  beforeAll(done => {
-    const application = Application.start()
+  beforeAll(() => {
+    application = Application.start()
     application.register('header-scroll', headerScrollController)
-    fs.readFile('app/views/layouts/application.html.erb', 'utf8', (err, data) => {
-      if (err) throw new Error(err)
-      applicationHTML = data
-      done()
-    })
-  })
-
-  beforeEach(() => {
-    document.body.innerHTML = applicationHTML
-    headerImage = document.querySelector('.header-image')
-    contentContainer = document.querySelector('.content-container')
   })
 
   describe('#scrollHeaderImage', () => {
-    it('headerImage starts with height of 300px', () => {
-      contentContainer.scrollTop = 0
-      contentContainer.dispatchEvent(new Event('scroll'))
-      expect(headerImage.style.height).toEqual('300px')
+    const imageHeight = 300
+    const headerHeight = 60
+
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <div data-controller='header-scroll' data-action='turbolinks:before-cache@window->header-scroll#teardown' data-header-scroll-image-height='${imageHeight}' data-header-scroll-header-height='${headerHeight}'>
+          <div class='header-image' data-target='header-scroll.headerImage'></div>
+          <div class='content-container' data-action='scroll->header-scroll#scrollHeaderImage' data-target='header-scroll.contentContainer'></div>
+        </div>
+      `
+      headerImage = document.querySelector('.header-image')
+      contentContainer = document.querySelector('.content-container')
     })
 
-    it('headerImage height reduces proportionally with contentContainer scroll height', () => {
+    it('initial height', () => {
+      contentContainer.scrollTop = 0
+      contentContainer.dispatchEvent(new Event('scroll'))
+      expect(headerImage.style.height).toEqual(`${imageHeight}px`)
+    })
+
+    it('scroll', () => {
       contentContainer.scrollTop = 10
       contentContainer.dispatchEvent(new Event('scroll'))
-      expect(headerImage.style.height).toEqual('290px')
+      expect(headerImage.style.height).toEqual(`${imageHeight - 10}px`)
       contentContainer.scrollTop = 100
       contentContainer.dispatchEvent(new Event('scroll'))
-      expect(headerImage.style.height).toEqual('200px')
+      expect(headerImage.style.height).toEqual(`${imageHeight - 100}px`)
     })
 
-    it('if contentContainer scroll height >= 240, headerImage height is 60px', () => {
-      contentContainer.scrollTop = 240
+    it('scroll limit', () => {
+      contentContainer.scrollTop = imageHeight - headerHeight
       contentContainer.dispatchEvent(new Event('scroll'))
-      expect(headerImage.style.height).toEqual('60px')
-      contentContainer.scrollTop = 241
+      expect(headerImage.style.height).toEqual(`${headerHeight}px`)
+      contentContainer.scrollTop = imageHeight - headerHeight + 1
       contentContainer.dispatchEvent(new Event('scroll'))
-      expect(headerImage.style.height).toEqual('60px')
+      expect(headerImage.style.height).toEqual(`${headerHeight}px`)
     })
 
-    it('if contentContainer scroll height < 240, headerImage z-index = -1', () => {
+    it('z-index while scrolling', () => {
       contentContainer.scrollTop = 0
       contentContainer.dispatchEvent(new Event('scroll'))
       expect(headerImage.style.zIndex).toEqual('-1')
-      contentContainer.scrollTop = 239
+      contentContainer.scrollTop = imageHeight - headerHeight - 1
       contentContainer.dispatchEvent(new Event('scroll'))
       expect(headerImage.style.zIndex).toEqual('-1')
     })
 
-    it('if contentContainer scroll height >= 240, headerImage z-index = 2', () => {
-      contentContainer.scrollTop = 240
+    it('z-index at limit', () => {
+      contentContainer.scrollTop = imageHeight - headerHeight
       contentContainer.dispatchEvent(new Event('scroll'))
       expect(headerImage.style.zIndex).toEqual('2')
+    })
+  })
+
+  describe('#scrollHeaderImage', () => {
+    const imageHeight = 100
+    const headerHeight = 40
+
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <div data-controller='header-scroll' data-action='turbolinks:before-cache@window->headerScroll#disconnect' data-header-scroll-image-height='${imageHeight}' data-header-scroll-header-height='${headerHeight}'>
+          <div class='header-image' data-target='header-scroll.headerImage'></div>
+          <div class='content-container' data-action='scroll->header-scroll#scrollHeaderImage' data-target='header-scroll.contentContainer'></div>
+        </div>
+      `
+      headerImage = document.querySelector('.header-image')
+      contentContainer = document.querySelector('.content-container')
+    })
+
+    it('scroll - dynamic image and header height', () => {
+      contentContainer.scrollTop = 10
+      contentContainer.dispatchEvent(new Event('scroll'))
+      expect(headerImage.style.height).toEqual(`${imageHeight - 10}px`)
+      contentContainer.scrollTop = 20
+      contentContainer.dispatchEvent(new Event('scroll'))
+      expect(headerImage.style.height).toEqual(`${imageHeight - 20}px`)
+    })
+  })
+
+  describe('#teardown', () => {
+    const imageHeight = 100
+    const headerHeight = 40
+
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <div data-controller='header-scroll' data-action='turbolinks:before-cache@window->header-scroll#teardown' data-header-scroll-image-height='${imageHeight}' data-header-scroll-header-height='${headerHeight}'>
+          <div class='header-image' data-target='header-scroll.headerImage' style='height: ${imageHeight}px'></div>
+          <div class='content-container' data-action='scroll->header-scroll#scrollHeaderImage' data-target='header-scroll.contentContainer'></div>
+        </div>
+      `
+      contentContainer = document.querySelector('.content-container')
+      headerImage = document.querySelector('.header-image')
+    })
+
+    it('turbolinks:before-cache', () => {
+      contentContainer.scrollTop = 10
+      contentContainer.dispatchEvent(new Event('scroll'))
+      expect(headerImage.style.height).toEqual(`${imageHeight - 10}px`)
+      window.dispatchEvent(new Event('turbolinks:before-cache'))
+      expect(headerImage.style.height).toEqual(`${imageHeight}px`)
     })
   })
 })

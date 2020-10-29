@@ -1,0 +1,9 @@
+<%= form_with(model: [:admin, code_snippet], class: 'section-form', id: 'admin-code-snippets-new-form') do |f| %>
+
+  <%= render partial: 'admin/code_snippets/form_components', locals: { f: f } %>
+
+<% end %>
+
+<div class="embedded-form-button-container">
+  <%= link_to('Return', admin_code_snippets_path, class: 'standard-button input-submit') %>
+</div>

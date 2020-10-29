@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   root to: 'homepages#index'
   
-  get '/about', to: 'abouts#index'
-
   get '/login', to: 'sessions#login'
   post '/login', to: 'sessions#new'
   get '/2fa', to: 'sessions#send_2fa'
@@ -26,20 +24,24 @@ Rails.application.routes.draw do
     resources :header_images, only: [:update], path: '/header-images'
     resources :cover_images, only: [:update], path: '/cover-images'
     resource :about, only: [:edit, :update]
-    resources :posts, only: [:index], :path => "/blog"
+    resources :posts, only: [:index], path: "/blog"
     resources :posts, only: [:new, :create, :edit, :update, :destroy]
-    resources :gallery_images, only: [:index], :path => "/gallery"
+    resources :gallery_images, only: [:index], path: "/gallery"
     resources :gallery_images, only: [:new, :create, :edit, :update, :destroy], path: '/gallery-images'
+    resources :posts, only: [:index], path: "/blog"
+    resources :code_snippets, only: [:index, :new, :create, :edit, :update, :destroy], path: "/code-snippets"
   end
 
-  get '/say-hello', to: 'homepages#index'
+  resource :about, only: [:show]
 
   get '/contact', to: 'contact_messages#new'
   resources :contact_messages, only: [:new, :create], path: 'contact-messages'
 
   resource :users, only: [:update]
 
-  resources :posts, only: [:index, :show], :path => "/blog"
+  resources :posts, only: [:index, :show], path: "/blog"
 
-  resources :gallery_images, only: [:index], :path => "/gallery"
+  resources :gallery_images, only: [:index], path: "/gallery"
+
+  resources :code_snippets, only: [:index, :show], path: "/code-snippets"
 end

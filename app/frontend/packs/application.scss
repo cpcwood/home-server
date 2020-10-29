@@ -25,12 +25,14 @@ Sass Styles
 |   |   |– _images.scss                   # Images
 |   |   |– _markdown.scss                 # Markdown
 |   |   |– _posts.scss                    # Posts
+|   |   |– _cards.scss                    # Cards
 |   |   ┴
 |   |
 |   |– custom/
 |   |   |– about.scss                     # Custom styles for /about
 |   |   |– gallery.scss                   # Custom styles for /gallery
 |   |   |– contact.scss                   # Custom styles for /contact
+|   |   |– code_snippets.scss             # Custom styles for /code-snippets
 |   |   |– overrides.scss                 # Overrides and dynamically added selectors
 |   |   ┴           
 |   |           
@@ -67,15 +69,16 @@ Sass Styles
 @use 'styles/components/images';
 @use 'styles/components/markdown';
 @use 'styles/components/posts';
+@use 'styles/components/cards';
 
 // Custom page styles
 @use 'styles/custom/about.scss';
 @use 'styles/custom/gallery.scss';
 @use 'styles/custom/contact.scss';
+@use 'styles/custom/code_snippets.scss';
 
 // Site Wide Vendor
 @use 'styles/vendor/loaders';
-@use 'node_modules/pikaday/css/pikaday.css';
 @use 'node_modules/simplelightbox/src/simple-lightbox';
 
 // Themes
