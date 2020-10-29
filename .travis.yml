@@ -15,7 +15,6 @@ before_script:
   - yarn install
   - bundle exec rake db:create
   - bundle exec rake db:migrate
-  - bundle exec rails webpacker:compile
 script:
   - bundle exec rspec
   - bundle exec rubocop -a -c ./.rubocop.yml
