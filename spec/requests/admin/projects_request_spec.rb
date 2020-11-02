@@ -1,26 +1,30 @@
 RSpec.describe 'AdminProjects', type: :request do
+  let(:image_fixture) { fixture_file_upload(Rails.root.join('spec/files/sample_image.jpg'), 'image/png') }
+
   let(:valid_attributes) do
     { project: {
       title: 'new project',
       overview: 'project overview',
       date: DateTime.new(2020, 04, 19, 0, 0, 0),
       github_link: 'https://example.com/github',
-      site_link: 'https://example.com/site',
-      snippet: '',
-      extension: ''
+      site_link: 'https://example.com/site'
     }}
   end
 
+  let(:new_image_upload_attributes) do
+    new_image_upload_attributes = valid_attributes
+    new_image_upload_attributes[:new_project_images] = {
+      image_files: [
+        image_fixture
+      ]
+    }
+    new_image_upload_attributes
+  end
+
   let(:invalid_attributes) do
-    { project: {
-      title: '',
-      overview: 'project overview',
-      date: DateTime.new(2020, 04, 19, 0, 0, 0),
-      github_link: 'https://example.com/github',
-      site_link: 'https://example.com/site',
-      snippet: '',
-      extension: ''
-    }}
+    invalid_attributes = valid_attributes
+    invalid_attributes[:project][:title] = ''
+    invalid_attributes
   end
 
   before(:each) do
@@ -46,14 +50,30 @@ RSpec.describe 'AdminProjects', type: :request do
     it 'sucessful request' do
       expect{ post('/admin/projects', params: valid_attributes) }.to change{
         Project.all.length
-      }.by(1)
+      }.from(0).to(1)
       expect(response).to redirect_to(admin_projects_path)
       expect(flash[:notice]).to include('Project created')
     end
 
-    it 'save failure' do
+    it 'sucessful request - new image' do
+      expect{ post('/admin/projects', params: new_image_upload_attributes) }.to change{
+        ProjectImage.all.length
+      }.from(0).to(1)
+      expect(response).to redirect_to(admin_projects_path)
+      expect(flash[:notice]).to include('Project created')
+    end
+
+    it 'save failure - project' do
       post('/admin/projects', params: invalid_attributes)
       expect(response.body).to include('Title cannot be empty')
+    end
+
+    it 'save failure - image' do
+      allow(ProjectImage).to receive(:create).and_return(false)
+      post('/admin/projects', params: new_image_upload_attributes)
+      # expect(response.body).to include('Image upload error')
+      expect(Project.all.length).to eq(0)
+      expect(ProjectImage.all.length).to eq(0)
     end
 
     it 'general error' do
@@ -84,7 +104,7 @@ RSpec.describe 'AdminProjects', type: :request do
       expect(flash[:alert]).to include('Project not found')
     end
 
-    it 'update sucessful' do
+    it 'sucessful request' do
       project = create(:project)
       put("/admin/projects/#{project.id}", params: valid_attributes)
       expect(response).to redirect_to(admin_projects_path)
@@ -92,6 +112,25 @@ RSpec.describe 'AdminProjects', type: :request do
       project.reload
       expect(project.title).to eq(valid_attributes[:project][:title])
       expect(project.overview).to eq(valid_attributes[:project][:overview])
+    end
+
+    it 'sucessful - new image' do
+      project = create(:project)
+      expect{ put("/admin/projects/#{project.id}", params: new_image_upload_attributes) }.to change{
+        project.reload.project_images.length
+      }.by(1)
+    end
+
+    it 'sucessful request - remove image' do
+      project = create(:project)
+      project_image = project.project_images.create
+      remove_image_attributes = valid_attributes
+      remove_image_attributes[:project][:project_images_attributes] = [
+        { _destroy: '1', id: project_image.id }
+      ]
+      expect{ put("/admin/projects/#{project.id}", params: remove_image_attributes) }.to change{
+        project.reload.project_images.length
+      }.from(1).to(0)
     end
 
     it 'save failure' do

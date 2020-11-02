@@ -18,7 +18,5 @@ FactoryBot.define do
     date { '2020-10-29 11:59:27' }
     github_link { 'https://github.com/' }
     site_link { 'https://example.com/' }
-    snippet { 'MyText' }
-    extension { 'rb' }
   end
 end
