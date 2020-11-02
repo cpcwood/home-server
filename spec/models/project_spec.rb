@@ -40,20 +40,6 @@ RSpec.describe Project, type: :model do
       end
     end
 
-    describe 'extension' do
-      it 'format' do
-        subject.extension = '.a'
-        expect(subject).to_not be_valid
-        expect(subject.errors.messages[:extension]).to eq ['File extension invalid']
-        subject.extension = nil
-        expect(subject).to be_valid
-        subject.extension = ''
-        expect(subject).to be_valid
-        subject.extension = 'a'
-        expect(subject).to be_valid
-      end
-    end
-
     describe 'github_link' do
       it 'is link' do
         subject.github_link = 'not a link'

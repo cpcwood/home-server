@@ -23,3 +23,13 @@
     width: 40px;
   }
 }
+
+.project-image.admin {
+  height: 250px;
+  width: 300px;
+  object-fit: contain;
+
+  & {
+    overflow: hidden;
+  }
+}

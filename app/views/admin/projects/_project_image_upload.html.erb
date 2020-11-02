@@ -1,0 +1,24 @@
+
+<% images = project.project_images %>
+
+<div class="embedded-form-entry-container">
+  <h4 class="input-label embedded-label">
+    Project images
+  </h4>
+</div>
+
+<%= form.fields_for(:project_images) do |nested_image_form| %>
+  <div class="embedded-form-entry-container">
+    <%= image_tag(image_path_helper(image_model: nested_image_form.object), class: 'project-image admin')%>
+  </div>
+
+  <div class="embedded-form-entry-container">
+    <%= nested_image_form.label(:_destroy, 'Remove image', class: 'input-label embedded-label') %>
+    <%= nested_image_form.check_box(:_destroy, {class: 'input-check-box'}, 1, 0) %>
+  </div>
+<% end %>
+
+<div class="embedded-form-entry-container">
+  <%= label(:new_project_images, :image_files, 'Add project images', class: 'input-label embedded-label') %>
+  <%= file_field(:new_project_images, :image_files, accept: 'image/png,image/jpeg', multiple: true, class: 'input-box embedded-no-border') %>
+</div>

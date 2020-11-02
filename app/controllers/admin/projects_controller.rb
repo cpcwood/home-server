@@ -14,8 +14,11 @@ module Admin
       @notices = []
       @alerts = []
       begin
-        @project = Project.new
-        update_model(model: @project, success_message: 'Project created')
+        Project.transaction do
+          @project = Project.new
+          update_model(model: @project, success_message: 'Project created')
+          create_project_images(project: @project)
+        end
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
         @alerts.push('Sorry, something went wrong!')
@@ -23,6 +26,7 @@ module Admin
       end
       if @alerts.any?
         flash[:alert] = @alerts
+        @project = Project.new(project_params)
         render(
           partial: 'partials/form_replacement',
           locals: {
@@ -47,9 +51,12 @@ module Admin
       @notices = []
       @alerts = []
       begin
-        @project = find_model
-        return redirect_to(admin_projects_path, alert: 'Project not found') unless @project
-        update_model(model: @project, success_message: 'Project updated')
+        Project.transaction do
+          @project = find_model
+          return redirect_to(admin_projects_path, alert: 'Project not found') unless @project
+          update_model(model: @project, success_message: 'Project updated')
+          create_project_images(project: @project)
+        end
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
         @alerts.push('Sorry, something went wrong!')
@@ -57,6 +64,8 @@ module Admin
       end
       if @alerts.any?
         flash[:alert] = @alerts
+        @project = find_model
+        @project.assign_attributes(project_params)
         render(
           partial: 'partials/form_replacement',
           locals: {
@@ -89,7 +98,7 @@ module Admin
 
     private
 
-    def permitted_params
+    def project_params
       params
         .require(:project)
         .permit(
@@ -98,7 +107,14 @@ module Admin
           :date,
           :github_link,
           :site_link,
-          project_image_attributes: [:id, :image_file, :order, :_destroy])
+          project_images_attributes: [:id, :image_file, :order, :_destroy])
+    end
+
+    def new_project_images_params
+      params
+        .require(:new_project_images)
+        .permit(
+          image_files: [])
     end
 
     def find_model
@@ -106,10 +122,19 @@ module Admin
     end
 
     def update_model(model:, success_message:)
-      if model.update(permitted_params)
+      if model.update(project_params)
         @notices.push(success_message)
       else
         @alerts.push(model.errors.values.flatten.last)
+      end
+    end
+
+    def create_project_images(project:)
+      return unless params.dig(:new_project_images, :image_files)
+      new_project_images_params[:image_files].each do |image_param|
+        next if ProjectImage.create(image_file: image_param, project: project)
+        @alerts.push('Image upload error')
+        raise(ActiveRecord::Rollback, 'Image upload error')
       end
     end
   end
