@@ -1,3 +1,6 @@
-<a href='<%= edit_admin_project_path(project) %>' class='wide-card-container show-button' title='<%= project.title %>' tabindex='<%= project_iteration.index + 1%>'>
-  <%= render(partial: 'projects/project_overview_content', locals: {project: project}) %>
-</a>
+<div class='wide-card-container'>
+  <%= render(partial: 'admin/projects/project_overview_gallery', locals: {project: project}) %>
+  <a href='<%= edit_admin_project_path(project) %>' class='show-button' title='<%= project.title %>' tabindex='<%= project_iteration.index + 1%>'>
+    <%= render(partial: 'projects/project_overview_content', locals: {project: project}) %>
+  </a>
+</div>

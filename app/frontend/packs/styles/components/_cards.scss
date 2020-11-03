@@ -73,3 +73,21 @@
   font-size: 0.9em;
   padding: 0 5px 10px;
 }
+
+.embedded-gallery {
+  height: 400px;
+  opacity: 0;
+  position: relative;
+  width: 100%;
+
+  img {
+    display: none;
+  }
+
+  a:first-child img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+}

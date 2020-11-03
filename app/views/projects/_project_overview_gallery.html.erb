@@ -1,0 +1,12 @@
+<% project_images = project.project_images %>
+<% if project_images.any? %>
+  <div class='embedded-gallery' data-controller='gallery-lightbox' data-gallery-lightbox-item-selector='.embedded-gallery a'>
+    <% project_images.each do |project_image| %>
+      <a href="<%= rails_blob_url(project_image.image_file) if image_attached?(project_image) %>" class='view-gallery-image'>
+        <%= image_tag(image_path_helper(image_model: project_image, variant: :thumbnail), title: project_image.title, alt: project_image.description) %>
+      </a>
+    <% end %>
+    <button class="embedded-gallery-button prev">‹</button>
+    <button class="embedded-gallery-button next">›</button>
+  </div>
+<% end %>
