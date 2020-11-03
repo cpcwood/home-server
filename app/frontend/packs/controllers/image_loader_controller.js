@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ['fade', 'container']
 
   initialize () {
-    this.targetNumber = this.containerTarget.getElementsByTagName('img').length
+    this.targetNumber = this.fadeTargets.length
     this.imageCounter = 0
   }
 
