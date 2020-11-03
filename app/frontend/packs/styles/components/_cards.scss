@@ -81,13 +81,14 @@
 
   img {
     display: none;
-  }
-
-  a:first-child img {
-    display: block;
     height: 100%;
     object-fit: cover;
     width: 100%;
+  }
+
+  > img:first-child,
+  > a:first-child img {
+    display: block;
   }
 }
 
