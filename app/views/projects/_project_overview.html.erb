@@ -1,4 +1,4 @@
 <div class='wide-card-container fade-transition' data-target='image-loader.fade'>
-    <%= render(partial: 'projects/project_overview_gallery', locals: {project: project}) %>
+    <%= render(partial: 'projects/project_overview_gallery', locals: {project: project, project_index: project_iteration.index}) %>
     <%= render(partial: 'projects/project_overview_content', locals: {project: project}) %>
 </div>
