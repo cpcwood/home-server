@@ -1,8 +1,8 @@
 <% project_images = project.project_images %>
 <% if project_images.any? %>
   <div class='embedded-gallery'>
-    <% project_images.each do |project_image| %>
-      <%= image_tag(image_path_helper(image_model: project_image, variant: :thumbnail), title: project_image.title, alt: project_image.description) %>
+    <% project_images.each_with_index do |project_image, index| %>
+      <%= image_tag(image_path_helper(image_model: project_image, variant: :thumbnail), title: project_image.title, alt: project_image.description, data: {action: ("load->image-loader#imageLoaded" if index == 0)} ) %>
     <% end %>
     <button class="embedded-gallery-button prev">‹</button>
     <button class="embedded-gallery-button next">›</button>
