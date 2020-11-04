@@ -54,8 +54,10 @@ module Admin
         Project.transaction do
           @project = find_model
           return redirect_to(admin_projects_path, alert: 'Project not found') unless @project
-          update_model(model: @project, success_message: 'Project updated')
-          create_project_images(project: @project)
+          if render_code_snippet
+            update_model(model: @project, success_message: 'Project updated')
+            create_project_images(project: @project)
+          end
         end
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
@@ -107,7 +109,15 @@ module Admin
           :date,
           :github_link,
           :site_link,
-          project_images_attributes: [:id, :image_file, :order, :_destroy, :title])
+          project_images_attributes: [:id, :image_file, :_destroy, :title])
+    end
+
+    def snippet_params
+      params
+        .require(:snippet)
+        .permit(
+          :text,
+          :extension)
     end
 
     def new_project_images_params
@@ -135,6 +145,17 @@ module Admin
         next if ProjectImage.create(image_file: image_param, project: project)
         @alerts.push('Image upload error')
         raise(ActiveRecord::Rollback, 'Image upload error')
+      end
+    end
+
+    def render_code_snippet
+      return true unless params.dig(:snippet, :text) && params.dig(:snippet, :extension)
+      if @project.render_code_snippet(snippet_params.to_h.symbolize_keys)
+        @notices.push('Code snippet rendered')
+        true
+      else
+        @alerts.push('Code snippet invalid')
+        false
       end
     end
   end

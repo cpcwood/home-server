@@ -173,12 +173,20 @@
     flex-direction: row;
     margin: 20px 0;
   }
+
+  &.label {
+    margin-bottom: 0px;
+
+    & + .embedded-form-entry-container {
+      margin-top: 0px;
+    }
+  }
 }
 
 .embedded-label {
   box-sizing: border-box;
   font-size: inherit;
-  font-weight: 600;
+  font-weight: 500;
   height: inherit;
   margin-bottom: 10px;
   padding: 0;
@@ -203,10 +211,21 @@
   }
 }
 
+.embedded-label-full-width {
+  box-sizing: border-box;
+  font-size: inherit;
+  font-weight: 500;
+  height: inherit;
+  margin-bottom: 10px;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+
 .embedded-input-title {
   box-sizing: border-box;
   font-size: inherit;
-  font-weight: 600;
+  font-weight: 500;
   height: inherit;
   margin-bottom: 10px;
   padding: 0;
@@ -217,7 +236,7 @@
 .embedded-title {
   box-sizing: border-box;
   font-size: inherit;
-  font-weight: 600;
+  font-weight: 500;
   height: inherit;
   padding: 0;
   position: relative;
@@ -262,6 +281,7 @@
   max-width: 100%;
   min-height: 500px;
   padding: 3px;
+  margin: 0;
 
   @include respond-to(tablet) {
     padding: 10px 15px;

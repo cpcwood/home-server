@@ -54,6 +54,8 @@ feature 'projects feature', feature: true do
       first('.show-button').click
       expect(page).to have_content(@project.overview)
       fill_in('project[title]', with: 'new title')
+      fill_in('snippet[text]', with: 'new code snippet')
+      fill_in('snippet[extension]', with: 'rb')
       click_button('Submit')
       expect(page).to have_content('Project updated')
       expect(page).to have_content('new title')
