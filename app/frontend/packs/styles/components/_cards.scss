@@ -22,14 +22,7 @@
   }
 }
 
-.card-content {
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  user-select: none;
-  width: 100%;
-  
+@mixin link-outline {
   &:link,
   &:visited {
     color: colors.$dark;
@@ -44,6 +37,17 @@
   &:hover {
     outline: none;
   }
+}
+
+.card-content {
+  
+  @include link-outline;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  user-select: none;
+  width: 100%;
 
   h3 {
     font-size: 1.3em;
@@ -99,10 +103,8 @@
   color: colors.$general-font;
   text-decoration: none;
 
-  a:link,
-  a:visited {
-    color: colors.$general-font;
-    text-decoration: none;
+  a {
+    @include link-outline;
   }
 
   + .ruler {
