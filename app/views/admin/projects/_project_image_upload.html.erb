@@ -2,24 +2,31 @@
 <% images = project.project_images %>
 
 <div class="embedded-form-entry-container">
-  <h4 class="input-label embedded-label">
+  <h4 class="input-label embedded-label-full-width">
     Project images
   </h4>
 </div>
 
 <%= form.fields_for(:project_images) do |nested_image_form| %>
-  <div class="embedded-form-entry-container">
-    <%= image_tag(image_path_helper(image_model: nested_image_form.object), class: 'project-image admin')%>
-  </div>
 
-  <div class="embedded-form-entry-container">
-    <%= nested_image_form.label(:title, 'Title image', class: 'input-label embedded-label') %>
-    <%= nested_image_form.text_field(:title, class: 'input-box embedded-input-box', placeholder: 'Enter image title...') %>
-  </div>
+  <div class='draggable-image-item-container'>
+    <div class='drag-icon-container'>
+      __
+    </div>
 
-  <div class="embedded-form-entry-container">
-    <%= nested_image_form.label(:_destroy, 'Remove image', class: 'input-label embedded-label') %>
-    <%= nested_image_form.check_box(:_destroy, {class: 'input-check-box'}, 1, 0) %>
+    <div class="drag-image-container">
+      <%= image_tag(image_path_helper(image_model: nested_image_form.object))%>
+    </div>
+
+    <div class='drag-content'>
+        <%= nested_image_form.label(:title, 'Image title:', class: 'input-label embedded-label-full-width') %>
+        <%= nested_image_form.text_field(:title, class: 'input-box embedded-input-box full-width', placeholder: 'Enter image title...') %>
+
+      <div class="embedded-form-entry-container">
+        <%= nested_image_form.label(:_destroy, 'Remove image:', class: 'input-label inline-label') %>
+        <%= nested_image_form.check_box(:_destroy, {class: 'input-check-box'}, 1, 0) %>
+      </div>
+    </div>
   </div>
 <% end %>
 

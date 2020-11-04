@@ -213,43 +213,18 @@
 
 .embedded-label-full-width {
   box-sizing: border-box;
-  font-size: inherit;
   font-weight: 500;
-  height: inherit;
   margin-bottom: 10px;
   padding: 0;
   position: relative;
   width: 100%;
 }
 
-.embedded-input-title {
+.inline-label {
   box-sizing: border-box;
-  font-size: inherit;
   font-weight: 500;
-  height: inherit;
-  margin-bottom: 10px;
-  padding: 0;
-  position: relative;
-  width: 100%;
-}
-
-.embedded-title {
-  box-sizing: border-box;
-  font-size: inherit;
-  font-weight: 500;
-  height: inherit;
-  padding: 0;
-  position: relative;
-  width: 100%;
-
-  @include respond-to(tablet) {
-    font-weight: 500;
-    padding: 0 2% 0 0;
-  }
-  @include respond-to(desktop) {
-    font-weight: 500;
-    padding: 0 2% 0 0;
-  }
+  padding-right: 10px;
+  width: max-content;
 }
 
 .embedded-input-box {
@@ -271,6 +246,10 @@
   @include respond-to(desktop) {
     padding: 3px 10px;
     width: 65%;
+  }
+
+  &.full-width {
+    width: 100%;
   }
 }
 
@@ -449,5 +428,47 @@
     @include respond-to(tablet) {
       margin: 0 10px 0 0;
     }
+  }
+}
+
+.draggable-image-item-container {
+  border: rgba(171, 171, 171, 0.5) solid 1px;
+  border-radius: 5px;
+  display: grid;
+  grid-template-areas: 
+    'drag image image'
+    'drag content content';
+  grid-template-columns: 20px 250px auto;
+  grid-template-rows: auto auto;
+  justify-content: stretch;
+  justify-items: stretch;
+  margin: 10px 0;
+
+  @include respond-to(tablet) {
+    grid-template-areas: 
+      'drag image content'
+      'drag image content';
+  }
+
+  .drag-icon-container {
+    grid-area: drag;
+    padding: 5px;
+  }
+  
+  .drag-image-container {
+    grid-area: image;
+    padding: 5px;
+  
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+  
+  .drag-content {
+    display: flex;
+    flex-direction: column;
+    grid-area: content;
+    padding: 5px;
   }
 }
