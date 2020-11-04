@@ -144,14 +144,40 @@ RSpec.describe 'AdminProjects', type: :request do
       }.from(1).to(0)
     end
 
-    it 'save failure' do
+    it 'sucessful request - add code snippet' do
+      project = create(:project)
+      code_snippet_attributes = valid_attributes
+      code_snippet_attributes[:snippet] = {
+        text: 'new code snippet',
+        extension: 'rb'
+      }
+      expect_any_instance_of(Project).to receive(:render_code_snippet).with(code_snippet_attributes[:snippet]).and_return(true)
+      put("/admin/projects/#{project.id}", params: code_snippet_attributes)
+      expect(response).to redirect_to(admin_projects_path)
+      expect(flash[:notice]).to include('Code snippet rendered')
+    end
+
+    it 'failed request - save failure' do
       project = create(:project)
       put("/admin/projects/#{project.id}", params: invalid_attributes)
       expect(response).not_to redirect_to(admin_projects_path)
       expect(response.body).to include('Title cannot be empty')
     end
 
-    it 'general error' do
+    it 'failed request - invalid code snippet' do
+      project = create(:project)
+      code_snippet_attributes = valid_attributes
+      code_snippet_attributes[:snippet] = {
+        text: 'new code snippet',
+        extension: 'not-A\n-extens|on.'
+      }
+      expect_any_instance_of(Project).to receive(:render_code_snippet).with(code_snippet_attributes[:snippet]).and_return(false)
+      put("/admin/projects/#{project.id}", params: code_snippet_attributes)
+      expect(response).not_to redirect_to(admin_projects_path)
+      expect(response.body).to include('Code snippet invalid')
+    end
+
+    it 'failed request - general error' do
       project = create(:project)
       allow_any_instance_of(Project).to receive(:save).and_raise('general error')
       put("/admin/projects/#{project.id}", params: valid_attributes)

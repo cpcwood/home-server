@@ -28,6 +28,19 @@
   <%= f.text_field(:site_link, class: 'input-box embedded-input-box', placeholder: 'Enter site link...') %>
 </div>
 
+<div class="embedded-form-entry-container label">
+  <%= label(:snippet, :text, 'Render Code Snippet to Image', class: 'input-label embedded-label-full-width') %>
+</div>
+
+<div class="embedded-form-entry-container">
+  <%= text_area(:snippet, :text, class: 'input-box embedded-text-area', placeholder: 'Enter code snippet to be rendered into cover image...') %>
+</div>
+
+<div class="embedded-form-entry-container">
+  <%= label(:snippet, :extension, 'Code file extension', class: 'input-label embedded-label') %>
+  <%= text_field(:snippet, :extension, class: 'input-box embedded-input-box', placeholder: 'Enter file extension such as `rb`...') %>
+</div>
+
 <%= render partial: 'admin/projects/project_image_upload', locals: {project: project, form: f} %>
 
 <div class="embedded-form-entry-container submit-right">
