@@ -90,8 +90,8 @@
   img {
     height: 100%;
     object-fit: cover;
-    width: 100%;
     object-position: 0% 0%;
+    width: 100%;
   }
 }
 
@@ -103,6 +103,11 @@
   a:visited {
     color: colors.$general-font;
     text-decoration: none;
+  }
+
+  + .ruler {
+    margin-bottom: 50px;
+    margin-top: 20px;
   }
 }
 
@@ -116,10 +121,12 @@
   width: 100%;
 
   h3 {
+    flex: 1 1 100%;
     margin: 0;
   }
 
   .links-container {
+    display: flex;
     line-height: 1em;
   }
 
@@ -132,5 +139,5 @@
     + * {
       margin-left: 5px;
     }
-  } 
+  }
 }

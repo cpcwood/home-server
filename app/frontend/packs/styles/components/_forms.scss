@@ -175,10 +175,10 @@
   }
 
   &.label {
-    margin-bottom: 0px;
+    margin-bottom: 0;
 
-    & + .embedded-form-entry-container {
-      margin-top: 0px;
+    + .embedded-form-entry-container {
+      margin-top: 0;
     }
   }
 }
@@ -278,10 +278,10 @@
   border: 1px solid colors.$dark;
   border-radius: 0;
   font-size: 1em;
+  margin: 0;
   max-width: 100%;
   min-height: 500px;
   padding: 3px;
-  margin: 0;
 
   @include respond-to(tablet) {
     padding: 10px 15px;
