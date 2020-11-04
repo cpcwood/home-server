@@ -38,6 +38,8 @@ class Project < ApplicationRecord
   def code_snippet_valid?(text:, extension:)
     return false unless text.is_a?(String)
     return false unless text.length > 0
+    return false unless extension.is_a?(String)
+    return false unless /\A[a-zA-Z0-9]+\z/.match?(extension)
     true
   end
 end

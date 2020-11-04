@@ -74,6 +74,18 @@ RSpec.describe Project, type: :model do
           expect(subject.render_code_snippet(text: 'a', extension: 'rb')).to be(true)
         end
       end
+
+      describe 'extension' do
+        it 'type' do
+          expect(subject.render_code_snippet(text: 'code', extension: 1)).to be(false)
+          expect(subject.render_code_snippet(text: 'code', extension: 'string')).to be(true)
+        end
+
+        it 'format' do
+          expect(subject.render_code_snippet(text: 'code', extension: '.rb')).to be(false)
+          expect(subject.render_code_snippet(text: 'code', extension: 'rb')).to be(true)
+        end
+      end
     end
   end
 end
