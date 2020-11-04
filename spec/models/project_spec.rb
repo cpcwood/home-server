@@ -13,7 +13,7 @@
 #
 
 RSpec.describe Project, type: :model do
-  subject { build_stubbed(:project) }
+  subject { create(:project) }
 
   describe 'validation' do
     describe 'title' do
@@ -63,35 +63,38 @@ RSpec.describe Project, type: :model do
 
   describe '#render_code_snippet' do
     describe 'validations' do
-      describe 'text' do
+      describe 'snippet' do
         it 'type' do
-          expect(subject.render_code_snippet(text: 1, extension: 'rb')).to be(false)
-          expect(subject.render_code_snippet(text: 'string', extension: 'rb')).to be(true)
+          expect(subject.render_code_snippet(snippet: 1, extension: 'rb')).to be(false)
+          expect(subject.render_code_snippet(snippet: 'string', extension: 'rb')).to be(true)
         end
 
         it 'format' do
-          expect(subject.render_code_snippet(text: '', extension: 'rb')).to be(false)
-          expect(subject.render_code_snippet(text: 'a', extension: 'rb')).to be(true)
+          expect(subject.render_code_snippet(snippet: '', extension: 'rb')).to be(false)
+          expect(subject.render_code_snippet(snippet: 'a', extension: 'rb')).to be(true)
         end
       end
 
       describe 'extension' do
         it 'type' do
-          expect(subject.render_code_snippet(text: 'code', extension: 1)).to be(false)
-          expect(subject.render_code_snippet(text: 'code', extension: 'string')).to be(true)
+          expect(subject.render_code_snippet(snippet: 'code', extension: 1)).to be(false)
+          expect(subject.render_code_snippet(snippet: 'code', extension: 'string')).to be(true)
         end
 
         it 'format' do
-          expect(subject.render_code_snippet(text: 'code', extension: '.rb')).to be(false)
-          expect(subject.render_code_snippet(text: 'code', extension: 'rb')).to be(true)
+          expect(subject.render_code_snippet(snippet: 'code', extension: '.rb')).to be(false)
+          expect(subject.render_code_snippet(snippet: 'code', extension: 'rb')).to be(true)
         end
       end
     end
 
     it 'valid inputs' do
       project = create(:project)
-      project.render_code_snippet(text: 'code', extension: 'rb')
-      expect(RenderCodeSnippetJob).to have_been_enqueued.with(model: project, text: 'code', extension: 'rb')
+      mock_project_image = create(:project_image, project: project)
+      mock_collection = double(:collection, create: mock_project_image)
+      allow(project).to receive(:project_images).and_return(mock_collection)
+      project.render_code_snippet(snippet: 'code', extension: 'rb')
+      expect(RenderCodeSnippetJob).to have_been_enqueued.with(model: mock_project_image, snippet: 'code', extension: 'rb')
     end
   end
 end

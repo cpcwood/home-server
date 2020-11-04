@@ -116,7 +116,7 @@ module Admin
       params
         .require(:snippet)
         .permit(
-          :text,
+          :snippet,
           :extension)
     end
 
@@ -149,7 +149,7 @@ module Admin
     end
 
     def render_code_snippet
-      return true unless params.dig(:snippet, :text) && params.dig(:snippet, :extension)
+      return true unless params.dig(:snippet, :snippet) && params.dig(:snippet, :extension)
       if @project.render_code_snippet(snippet_params.to_h.symbolize_keys)
         @notices.push('Code snippet rendered')
         true
