@@ -30,7 +30,7 @@ class Project < ApplicationRecord
 
   def render_code_snippet(**kwargs)
     return false unless code_snippet_valid?(**kwargs)
-    RenderCodeSnippetJob.perform_later(model: self.project_images.create, **kwargs)
+    RenderCodeSnippetJob.perform_later(model: project_images.create, **kwargs)
     true
   end
 
