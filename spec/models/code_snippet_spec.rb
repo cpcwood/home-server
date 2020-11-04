@@ -87,8 +87,8 @@ RSpec.describe CodeSnippet, type: :model do
     describe '#render_snippet_image' do
       it 'after model commited' do
         code_snippet = build(:code_snippet)
-        expect(RenderCodeSnippetJob).to receive(:perform_later).with(code_snippet: code_snippet)
         code_snippet.save
+        expect(RenderCodeSnippetJob).to have_been_enqueued.with(model: code_snippet, text: code_snippet.text, extension: code_snippet.extension)
       end
     end
   end
