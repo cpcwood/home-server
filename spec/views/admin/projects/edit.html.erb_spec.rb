@@ -23,12 +23,13 @@ describe 'Views' do
 
       it 'project-image-attached' do
         project = create(:project)
-        project.project_images.create
+        project_image = project.project_images.create(title: 'test')
         assign(:project, project)
         render template: '/admin/projects/edit.html.erb'
 
         expect(rendered).to match('Project image')
         expect(rendered).to match('Remove image')
+        expect(rendered).to match(project_image.title)
       end
     end
   end
