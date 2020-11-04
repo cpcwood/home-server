@@ -60,4 +60,20 @@ RSpec.describe Project, type: :model do
       end
     end
   end
+
+  describe '#render_code_snippet' do
+    describe 'validations' do
+      describe 'text' do
+        it 'type' do
+          expect(subject.render_code_snippet(text: 1, extension: 'rb')).to be(false)
+          expect(subject.render_code_snippet(text: 'string', extension: 'rb')).to be(true)
+        end
+
+        it 'format' do
+          expect(subject.render_code_snippet(text: '', extension: 'rb')).to be(false)
+          expect(subject.render_code_snippet(text: 'a', extension: 'rb')).to be(true)
+        end
+      end
+    end
+  end
 end
