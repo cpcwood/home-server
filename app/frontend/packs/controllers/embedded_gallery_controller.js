@@ -44,6 +44,8 @@ export default class extends Controller {
     this.teardown()
   }
 
+  // private
+
   get position () {
     let currentPosition = parseInt(this.data.get('position'))
     if (currentPosition < -this.imageTargets.length || isNaN(currentPosition)) {
@@ -60,6 +62,7 @@ export default class extends Controller {
     const currentImage = this.imageTargets[this.position]
     currentImage.style.transition = ''
     currentImage.style.opacity = '1'
+    currentImage.style.zIndex = '1'
     currentImage.style.transition = `opacity ${this.transitionDuration / 1000}s cubic-bezier(0.76, 0.24, 0.26, 0.99)`
   }
 
@@ -70,6 +73,7 @@ export default class extends Controller {
         const image = this.imageTargets[i]
         image.style.transition = ''
         image.style.opacity = '0'
+        image.style.zIndex = null
         image.style.transition = `opacity ${this.transitionDuration / 1000}s cubic-bezier(0.76, 0.24, 0.26, 0.99)`
       }
     }
@@ -101,12 +105,14 @@ export default class extends Controller {
   fadeOutOriginalImage (originalPosition) {
     const originalImage = this.imageTargets[originalPosition]
     originalImage.style.opacity = '0'
+    originalImage.style.zIndex = null
     this.fadeInNextImageTimeout = setTimeout(this.fadeInNextImage.bind(this), Math.floor(this.transitionDuration * 0.25))
   }
 
   fadeInNextImage () {
     const nextImage = this.imageTargets[this.position]
     nextImage.style.opacity = '1'
+    nextImage.style.zIndex = '1'
     this.transitionCompleteTimeout = setTimeout(this.transitionComplete.bind(this), this.transitionDuration)
     this.fadeInNextImageTimeout = null
   }
