@@ -21,7 +21,7 @@ class ProjectImage < Image
   MAX_DIM = 2000
 
   VARIANT_SIZES = {
-    thumbnail: { resize_to_limit: [700, 500] }
+    thumbnail: { resize_to_limit: [1200, 850] }
   }.freeze
 
   belongs_to :project

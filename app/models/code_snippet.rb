@@ -17,7 +17,7 @@
 #  index_code_snippets_on_user_id  (user_id)
 #
 # Foreign Keys
-#git ad
+# git ad
 #  fk_rails_...  (user_id => users.id)
 #
 class CodeSnippet < ApplicationRecord
@@ -40,6 +40,6 @@ class CodeSnippet < ApplicationRecord
   after_commit :render_code_snippet
 
   def render_code_snippet
-    RenderCodeSnippetJob.perform_later(model: self.create_code_snippet_image, snippet: self.snippet, extension: self.extension) if snippet_previously_changed?
+    RenderCodeSnippetJob.perform_later(model: create_code_snippet_image, snippet: snippet, extension: extension) if snippet_previously_changed?
   end
 end
