@@ -16,39 +16,78 @@ export default class extends Controller {
   }
 
   quickDisplayCurrentImage () {
-    this.imageTargets[this.position].style.display = 'block'
+    const currentImage = this.imageTargets[this.position]
+    currentImage.style.transition = ''
+    currentImage.style.opacity = '1'
+    currentImage.style.transition = `opacity ${this.transitionDuration / 1000}s cubic-bezier(0.76, 0.24, 0.26, 0.99)`
   }
 
-  resetOtherImages () {
-    const currentPosition = this.position
+  applyBaseStylesToImages () {
     for (let i = 0; i < this.imageTargets.length; i += 1) {
-      if (i !== currentPosition) {
-        this.imageTargets[i].style.display = 'none'
-      }
+      const image = this.imageTargets[i]
+      image.style.transition = `opacity ${this.transitionDuration / 1000}s cubic-bezier(0.76, 0.24, 0.26, 0.99)`
+      image.style.opacity = '0'
+      image.style.display = 'block'
+      image.style.position = 'absolute'
     }
   }
 
+  fadeOutOriginalImage (originalPosition) {
+    const originalImage = this.imageTargets[originalPosition]
+    originalImage.style.opacity = '0'
+    this.fadeInNextImageTimeout = setTimeout(this.fadeInNextImage.bind(this), Math.floor(this.transitionDuration * 0.25))
+  }
+
+  fadeInNextImage () {
+    const nextImage = this.imageTargets[this.position]
+    nextImage.style.opacity = '1'
+    this.fadeInCompleteTimeout = setTimeout(this.fadeInComplete.bind(this), this.transitionDuration)
+    this.fadeInNextImageTimeout = null
+  }
+
+  fadeInComplete () {
+    this.fadeInCompleteTimeout = null
+  }
+
+  initialize () {
+    this.transitionDuration = 450
+  }
+
   connect () {
+    this.fadeInNextImageTimeout = null
+    this.fadeInCompleteTimeout = null
+    this.applyBaseStylesToImages()
     this.quickDisplayCurrentImage()
-    this.resetOtherImages()
   }
 
   next () {
+    const originalPosition = this.position
     this.position += 1
-    this.quickDisplayCurrentImage()
-    this.resetOtherImages()
+    if (!this.fadeInNextImageTimeout) {
+      this.fadeOutOriginalImage(originalPosition)
+    }
   }
 
   prev () {
+    const originalPosition = this.position
     this.position -= 1
-    this.quickDisplayCurrentImage()
-    this.resetOtherImages()
+    if (!this.fadeInNextImageTimeout) {
+      this.fadeOutOriginalImage(originalPosition)
+    }
   }
 
   teardown () {
     this.position = 0
+    if (this.fadeInNextImageTimeout) {
+      clearTimeout(this.fadeInNextImageTimeout)
+      this.fadeInNextImageTimeout = null
+    }
+    if (this.fadeInCompleteTimeout) {
+      clearTimeout(this.fadeInCompleteTimeout)
+      this.fadeInCompleteTimeout = null
+    }
+    this.applyBaseStylesToImages()
     this.quickDisplayCurrentImage()
-    this.resetOtherImages()
   }
 
   disconnect () {
