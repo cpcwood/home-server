@@ -44,4 +44,14 @@ export default class extends Controller {
     this.quickDisplayCurrentImage()
     this.resetOtherImages()
   }
+
+  teardown () {
+    this.position = 0
+    this.quickDisplayCurrentImage()
+    this.resetOtherImages()
+  }
+
+  disconnect () {
+    this.teardown()
+  }
 }

@@ -11,7 +11,7 @@ describe('embedded_gallery_controller', () => {
 
   function assignHTML () {
     document.body.innerHTML = `
-      <div id="container" data-controller="embedded-gallery" data-embedded-gallery-position="${startPosition}">
+      <div id="container" data-controller="embedded-gallery" data-embedded-gallery-position="${startPosition}" data-action='turbolinks:before-cache@window->embedded-gallery#teardown'>
         <img id='image1' data-target="embedded-gallery.image">
         <img id='image2' data-target="embedded-gallery.image">
         <img id='image3' data-target="embedded-gallery.image">
@@ -184,6 +184,22 @@ describe('embedded_gallery_controller', () => {
         prevButton.dispatchEvent(new Event('click'))
         expect(image1.style.display).toEqual('none')
         expect(image2.style.display).toEqual('block')
+        expect(image3.style.display).toEqual('none')
+      })
+    })
+  })
+
+  describe('#teardown', () => {
+    describe('reset position', () => {
+      beforeEach(() => {
+        startPosition = 2
+        assignHTML()
+      })
+
+      it('image styles', () => {
+        window.dispatchEvent(new Event('turbolinks:before-cache'))
+        expect(image1.style.display).toEqual('block')
+        expect(image2.style.display).toEqual('none')
         expect(image3.style.display).toEqual('none')
       })
     })
