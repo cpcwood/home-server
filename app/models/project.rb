@@ -28,5 +28,16 @@ class Project < ApplicationRecord
   validates :site_link,
             url: { allow_blank: true, message: 'Site link is not valid' }
 
-  def render_code_snippet(text:, extension:); end
+  def render_code_snippet(text:, extension:)
+    return false unless code_snippet_valid?(text: text, extension: extension)
+    true
+  end
+
+  private
+
+  def code_snippet_valid?(text:, extension:)
+    return false unless text.is_a?(String)
+    return false unless text.length > 0
+    true
+  end
 end
