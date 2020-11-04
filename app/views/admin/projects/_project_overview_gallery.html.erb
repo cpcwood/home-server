@@ -1,6 +1,6 @@
 <% project_images = project.project_images %>
 <% if project_images.any? %>
-  <div class='embedded-gallery' data-controller='embedded-gallery' data-embedded-gallery-position='0'>
+  <div class='embedded-gallery' data-controller='embedded-gallery' data-embedded-gallery-position='0' data-action='turbolinks:before-cache@window->embedded-gallery#teardown'>
     <% project_images.each_with_index do |project_image, index| %>
       <%= image_tag(image_path_helper(image_model: project_image, variant: :thumbnail), title: project_image.title, alt: project_image.description, data: {action: ("load->image-loader#imageLoaded" if index == 0), target: 'embedded-gallery.image'} ) %>
     <% end %>
