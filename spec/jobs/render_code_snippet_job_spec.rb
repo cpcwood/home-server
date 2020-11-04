@@ -14,6 +14,6 @@ RSpec.describe RenderCodeSnippetJob, type: :job do
         start_line: 0,
         end_line: 12)
 
-    RenderCodeSnippetJob.perform_now(code_snippet: code_snippet)
+    RenderCodeSnippetJob.perform_now(model: code_snippet.create_code_snippet_image, snippet: code_snippet.snippet, extension: code_snippet.extension)
   end
 end

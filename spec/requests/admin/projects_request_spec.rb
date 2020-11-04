@@ -148,7 +148,7 @@ RSpec.describe 'AdminProjects', type: :request do
       project = create(:project)
       code_snippet_attributes = valid_attributes
       code_snippet_attributes[:snippet] = {
-        text: 'new code snippet',
+        snippet: 'new code snippet',
         extension: 'rb'
       }
       expect_any_instance_of(Project).to receive(:render_code_snippet).with(code_snippet_attributes[:snippet]).and_return(true)
@@ -168,7 +168,7 @@ RSpec.describe 'AdminProjects', type: :request do
       project = create(:project)
       code_snippet_attributes = valid_attributes
       code_snippet_attributes[:snippet] = {
-        text: 'new code snippet',
+        snippet: 'new code snippet',
         extension: 'not-A\n-extens|on.'
       }
       expect_any_instance_of(Project).to receive(:render_code_snippet).with(code_snippet_attributes[:snippet]).and_return(false)

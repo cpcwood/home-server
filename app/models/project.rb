@@ -30,15 +30,15 @@ class Project < ApplicationRecord
 
   def render_code_snippet(**kwargs)
     return false unless code_snippet_valid?(**kwargs)
-    RenderCodeSnippetJob.perform_later(model: self, **kwargs)
+    RenderCodeSnippetJob.perform_later(model: self.project_images.create, **kwargs)
     true
   end
 
   private
 
-  def code_snippet_valid?(text:, extension:)
-    return false unless text.is_a?(String)
-    return false unless text.length > 0
+  def code_snippet_valid?(snippet:, extension:)
+    return false unless snippet.is_a?(String)
+    return false unless snippet.length > 0
     return false unless extension.is_a?(String)
     return false unless /\A[a-zA-Z0-9]+\z/.match?(extension)
     true
