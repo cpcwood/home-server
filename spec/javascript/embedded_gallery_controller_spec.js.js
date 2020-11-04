@@ -176,6 +176,22 @@ describe('embedded_gallery_controller', () => {
         expect(image3.style.opacity).toEqual('1')
       })
     })
+
+    describe('double click before next image fade in timer complete', () => {
+      beforeEach(() => {
+        startPosition = 0
+        assignHTML()
+      })
+
+      it('image styles', () => {
+        prevButton.dispatchEvent(new Event('click'))
+        jest.runOnlyPendingTimers()
+        prevButton.dispatchEvent(new Event('click'))
+        expect(image1.style.opacity).toEqual('0')
+        expect(image2.style.opacity).toEqual('1')
+        expect(image3.style.opacity).toEqual('0')
+      })
+    })
   })
 
   describe('#prev', () => {
