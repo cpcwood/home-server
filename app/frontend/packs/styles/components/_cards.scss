@@ -75,20 +75,22 @@
 }
 
 .embedded-gallery {
+  background-color: rgb(0, 0, 0);
   height: 400px;
+  overflow: hidden;
   position: relative;
   width: 100%;
 
-  img {
-    display: none;
+  a {
     height: 100%;
-    object-fit: cover;
+    position: absolute;
     width: 100%;
   }
 
-  > img:first-child,
-  > a:first-child img {
-    display: block;
+  img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
   }
 }
 

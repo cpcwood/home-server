@@ -68,7 +68,7 @@
   display: flex;
   font-size: 3rem;
   height: 100%;
-  opacity: 0.6;
+  opacity: 0.65;
   padding: 0 12px;
   position: absolute;
   top: 0;
@@ -80,12 +80,12 @@
   }
 
   &.prev {
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
     left: 0;
   }
   
   &.next {
-    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
     right: 0;
   }
 }

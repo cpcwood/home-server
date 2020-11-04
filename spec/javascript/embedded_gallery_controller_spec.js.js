@@ -1,6 +1,8 @@
 import { Application } from 'stimulus'
 import embeddedGalleryController from 'controllers/embedded_gallery_controller'
 
+jest.useFakeTimers()
+
 describe('embedded_gallery_controller', () => {
   let startPosition = 0
   let nextButton
@@ -42,9 +44,9 @@ describe('embedded_gallery_controller', () => {
       })
 
       it('image styles', () => {
-        expect(image1.style.display).toEqual('block')
-        expect(image2.style.display).toEqual('none')
-        expect(image3.style.display).toEqual('none')
+        expect(image1.style.opacity).toEqual('1')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('0')
       })
     })
 
@@ -55,9 +57,9 @@ describe('embedded_gallery_controller', () => {
       })
 
       it('image styles', () => {
-        expect(image1.style.display).toEqual('none')
-        expect(image2.style.display).toEqual('block')
-        expect(image3.style.display).toEqual('none')
+        expect(image1.style.opacity).toEqual('0')
+        expect(image2.style.opacity).toEqual('1')
+        expect(image3.style.opacity).toEqual('0')
       })
     })
 
@@ -68,9 +70,9 @@ describe('embedded_gallery_controller', () => {
       })
 
       it('image styles', () => {
-        expect(image1.style.display).toEqual('none')
-        expect(image2.style.display).toEqual('none')
-        expect(image3.style.display).toEqual('block')
+        expect(image1.style.opacity).toEqual('0')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('1')
       })
     })
 
@@ -81,9 +83,9 @@ describe('embedded_gallery_controller', () => {
       })
 
       it('image styles', () => {
-        expect(image1.style.display).toEqual('block')
-        expect(image2.style.display).toEqual('none')
-        expect(image3.style.display).toEqual('none')
+        expect(image1.style.opacity).toEqual('1')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('0')
       })
     })
 
@@ -94,9 +96,9 @@ describe('embedded_gallery_controller', () => {
       })
 
       it('image styles', () => {
-        expect(image1.style.display).toEqual('block')
-        expect(image2.style.display).toEqual('none')
-        expect(image3.style.display).toEqual('none')
+        expect(image1.style.opacity).toEqual('1')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('0')
       })
     })
   })
@@ -110,9 +112,13 @@ describe('embedded_gallery_controller', () => {
 
       it('image styles', () => {
         nextButton.dispatchEvent(new Event('click'))
-        expect(image1.style.display).toEqual('none')
-        expect(image2.style.display).toEqual('block')
-        expect(image3.style.display).toEqual('none')
+        expect(image1.style.opacity).toEqual('0')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('0')
+        jest.runOnlyPendingTimers()
+        expect(image1.style.opacity).toEqual('0')
+        expect(image2.style.opacity).toEqual('1')
+        expect(image3.style.opacity).toEqual('0')
       })
     })
 
@@ -124,9 +130,13 @@ describe('embedded_gallery_controller', () => {
 
       it('image styles', () => {
         nextButton.dispatchEvent(new Event('click'))
-        expect(image1.style.display).toEqual('none')
-        expect(image2.style.display).toEqual('none')
-        expect(image3.style.display).toEqual('block')
+        expect(image1.style.opacity).toEqual('0')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('0')
+        jest.runOnlyPendingTimers()
+        expect(image1.style.opacity).toEqual('0')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('1')
       })
     })
 
@@ -138,9 +148,13 @@ describe('embedded_gallery_controller', () => {
 
       it('image styles', () => {
         nextButton.dispatchEvent(new Event('click'))
-        expect(image1.style.display).toEqual('block')
-        expect(image2.style.display).toEqual('none')
-        expect(image3.style.display).toEqual('none')
+        expect(image1.style.opacity).toEqual('0')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('0')
+        jest.runOnlyPendingTimers()
+        expect(image1.style.opacity).toEqual('1')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('0')
       })
     })
   })
@@ -154,9 +168,13 @@ describe('embedded_gallery_controller', () => {
 
       it('image styles', () => {
         prevButton.dispatchEvent(new Event('click'))
-        expect(image1.style.display).toEqual('none')
-        expect(image2.style.display).toEqual('none')
-        expect(image3.style.display).toEqual('block')
+        expect(image1.style.opacity).toEqual('0')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('0')
+        jest.runOnlyPendingTimers()
+        expect(image1.style.opacity).toEqual('0')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('1')
       })
     })
 
@@ -168,9 +186,13 @@ describe('embedded_gallery_controller', () => {
 
       it('image styles', () => {
         prevButton.dispatchEvent(new Event('click'))
-        expect(image1.style.display).toEqual('block')
-        expect(image2.style.display).toEqual('none')
-        expect(image3.style.display).toEqual('none')
+        expect(image1.style.opacity).toEqual('0')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('0')
+        jest.runOnlyPendingTimers()
+        expect(image1.style.opacity).toEqual('1')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('0')
       })
     })
 
@@ -182,9 +204,13 @@ describe('embedded_gallery_controller', () => {
 
       it('image styles', () => {
         prevButton.dispatchEvent(new Event('click'))
-        expect(image1.style.display).toEqual('none')
-        expect(image2.style.display).toEqual('block')
-        expect(image3.style.display).toEqual('none')
+        expect(image1.style.opacity).toEqual('0')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('0')
+        jest.runOnlyPendingTimers()
+        expect(image1.style.opacity).toEqual('0')
+        expect(image2.style.opacity).toEqual('1')
+        expect(image3.style.opacity).toEqual('0')
       })
     })
   })
@@ -198,9 +224,9 @@ describe('embedded_gallery_controller', () => {
 
       it('image styles', () => {
         window.dispatchEvent(new Event('turbolinks:before-cache'))
-        expect(image1.style.display).toEqual('block')
-        expect(image2.style.display).toEqual('none')
-        expect(image3.style.display).toEqual('none')
+        expect(image1.style.opacity).toEqual('1')
+        expect(image2.style.opacity).toEqual('0')
+        expect(image3.style.opacity).toEqual('0')
       })
     })
   })
