@@ -15,6 +15,5 @@ export default class extends Controller {
       fadeSpeed: 150,
       captionClass: 'lightbox-caption'
     })
-    console.log(this.lightbox)
   }
 }
