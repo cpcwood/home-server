@@ -87,5 +87,11 @@ RSpec.describe Project, type: :model do
         end
       end
     end
+
+    it 'valid inputs' do
+      subject
+      expect(RenderCodeSnippetJob).to receive(:perform_later).with(model: subject, text: 'code', extension: 'rb')
+      subject.render_code_snippet(text: 'code', extension: 'rb')
+    end
   end
 end
