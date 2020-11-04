@@ -89,9 +89,9 @@ RSpec.describe Project, type: :model do
     end
 
     it 'valid inputs' do
-      subject
-      expect(RenderCodeSnippetJob).to receive(:perform_later).with(model: subject, text: 'code', extension: 'rb')
-      subject.render_code_snippet(text: 'code', extension: 'rb')
+      project = create(:project)
+      project.render_code_snippet(text: 'code', extension: 'rb')
+      expect(RenderCodeSnippetJob).to have_been_enqueued.with(model: project, text: 'code', extension: 'rb')
     end
   end
 end
