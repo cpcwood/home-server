@@ -1,7 +1,7 @@
 import { Application } from 'stimulus'
 import imageLoaderController from 'controllers/image_loader_controller'
 
-describe('touch_hover_tile_controller', () => {
+describe('image_loader_controller', () => {
   let fadeTargetOne
   let fadeTargetTwo
 

@@ -1,13 +1,13 @@
 <% project_images = project.project_images %>
 <% if project_images.any? %>
   <% gallery_id = "project-embedded-gallery-#{project_index}" %>
-  <div class='embedded-gallery' id='<%= gallery_id%>' data-controller='gallery-lightbox' data-gallery-lightbox-item-selector='#<%= gallery_id %>.embedded-gallery a'>
+  <div class='embedded-gallery' id='<%= gallery_id%>' data-controller='gallery-lightbox embedded-gallery' data-gallery-lightbox-item-selector='#<%= gallery_id %>.embedded-gallery a' data-embedded-gallery-position='0'>
     <% project_images.each_with_index do |project_image, index| %>
       <a href="<%= rails_blob_url(project_image.image_file) if image_attached?(project_image) %>" class='view-gallery-image'>
-        <%= image_tag(image_path_helper(image_model: project_image, variant: :thumbnail), title: project_image.title, alt: project_image.description, data: {action: ("load->image-loader#imageLoaded" if index == 0)} ) %>
+        <%= image_tag(image_path_helper(image_model: project_image, variant: :thumbnail), title: project_image.title, alt: project_image.description, data: {action: ("load->image-loader#imageLoaded" if index == 0), target: 'embedded-gallery.image'} ) %>
       </a>
     <% end %>
-    <button class="embedded-gallery-button prev">‹</button>
-    <button class="embedded-gallery-button next">›</button>
+    <button class="embedded-gallery-button prev" data-action='click->embedded-gallery#prev'>‹</button>
+    <button class="embedded-gallery-button next" data-action='click->embedded-gallery#next'>›</button>
   </div>
 <% end %>

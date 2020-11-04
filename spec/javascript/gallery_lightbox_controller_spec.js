@@ -8,7 +8,7 @@ jest.mock('simplelightbox', () => {
   })
 })
 
-describe('touch_hover_tile_controller', () => {
+describe('gallery_lightbox_controller', () => {
   const galleryContainerItemSelector = '.gallery-container a'
   const pathToGalleryItem = 'path-to-full-image.jpg'
   const galleryItemDescription = 'gallery item description'

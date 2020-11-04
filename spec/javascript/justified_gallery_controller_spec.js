@@ -5,7 +5,7 @@ import justifiedLayout from 'justified-layout'
 require('./__mocks__/ResizeObserver')
 jest.mock('justified-layout')
 
-describe('touch_hover_tile_controller', () => {
+describe('justified_gallery_controller', () => {
   let galleryItemTargetOne
   const galleryItemOneDimensions = {
     width: 100,
