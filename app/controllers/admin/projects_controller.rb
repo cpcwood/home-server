@@ -107,7 +107,7 @@ module Admin
           :date,
           :github_link,
           :site_link,
-          project_images_attributes: [:id, :image_file, :order, :_destroy])
+          project_images_attributes: [:id, :image_file, :order, :_destroy, :title])
     end
 
     def new_project_images_params

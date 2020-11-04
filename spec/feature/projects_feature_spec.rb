@@ -40,8 +40,6 @@ feature 'projects feature', feature: true do
       expect(page).to have_content('Project created')
       expect(page).to have_content('project title')
       expect(page).to have_content('project overview')
-      expect(page.html).to include('https://example.com/github')
-      expect(page.html).to include('https://example.com/site')
       expect(Project.first.project_images.length).to be(1)
       click_on('View Section')
       expect(page).to have_content('project title')
