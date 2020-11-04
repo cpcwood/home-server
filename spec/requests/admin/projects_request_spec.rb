@@ -71,7 +71,7 @@ RSpec.describe 'AdminProjects', type: :request do
     it 'save failure - image' do
       allow(ProjectImage).to receive(:create).and_return(false)
       post('/admin/projects', params: new_image_upload_attributes)
-      # expect(response.body).to include('Image upload error')
+      expect(response.body).to include('Image upload error')
       expect(Project.all.length).to eq(0)
       expect(ProjectImage.all.length).to eq(0)
     end
@@ -119,6 +119,17 @@ RSpec.describe 'AdminProjects', type: :request do
       expect{ put("/admin/projects/#{project.id}", params: new_image_upload_attributes) }.to change{
         project.reload.project_images.length
       }.by(1)
+    end
+
+    it 'sucessful request - update image title' do
+      project = create(:project)
+      project_image = project.project_images.create
+      update_image_attributes = valid_attributes
+      update_image_attributes[:project][:project_images_attributes] = [
+        { title: 'new title', id: project_image.id }
+      ]
+      put("/admin/projects/#{project.id}", params: update_image_attributes)
+      expect(project_image.reload.title).to eq('new title')
     end
 
     it 'sucessful request - remove image' do
