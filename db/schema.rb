@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_27_163921) do
+ActiveRecord::Schema.define(version: 2020_11_05_133838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,6 +131,26 @@ ActiveRecord::Schema.define(version: 2020_10_27_163921) do
     t.index ["about_id"], name: "index_profile_images_on_about_id"
   end
 
+  create_table "project_images", force: :cascade do |t|
+    t.string "description", default: "project-image", null: false
+    t.string "title"
+    t.bigint "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "order"
+    t.index ["project_id"], name: "index_project_images_on_project_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "overview"
+    t.datetime "date", null: false
+    t.string "github_link"
+    t.string "site_link"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "site_settings", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -167,4 +187,5 @@ ActiveRecord::Schema.define(version: 2020_10_27_163921) do
   add_foreign_key "header_images", "site_settings"
   add_foreign_key "posts", "users"
   add_foreign_key "profile_images", "abouts"
+  add_foreign_key "project_images", "projects"
 end

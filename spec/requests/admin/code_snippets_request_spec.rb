@@ -53,7 +53,7 @@ RSpec.describe 'AdminCodeSnippetsController', type: :request do
     end
   end
 
-  describe 'GET /admin/code-snippets/:id/edit #new' do
+  describe 'GET /admin/code-snippets/:id/edit #edit' do
     it 'succesful request' do
       code_snippet = create(:code_snippet, user: @user)
       get("/admin/code-snippets/#{code_snippet.id}/edit")

@@ -4,7 +4,7 @@
 
 <% content_for :form do %>
   <%= form_with(url: "/login", method: "post", class: 'floating-form') do |f| %>
-    <%= render partial: 'partials/system_messages'%>
+    <%= render partial: 'partials/system_messages' %>
     <%= f.text_field(:user, required: true, class: 'input-box', placeholder: 'Username or Email', autocomplete: "on") %>
     <div class='input-seperator'></div>
     <%= f.password_field(:password, required: true, class: 'input-box', placeholder: 'Password', autocomplete: "on") %>

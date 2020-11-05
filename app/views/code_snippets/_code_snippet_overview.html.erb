@@ -1,7 +1,7 @@
 <div class='card-container fade-transition' data-target="image-loader.fade">
-  <a href='<%= path %>' class='card-content show-button' title='<%= code_snippet.title %>' tabindex='<%= index + 1%>'>
+  <a href='<%= path %>' class='card-content show-button' title='<%= code_snippet.title %>' tabindex='<%= index + 1 %>'>
     <div class='card-image'>
-      <%= image_tag(image_path_helper(image_model: code_snippet.code_snippet_image), data: {action: "load->image-loader#imageLoaded"})%>
+      <%= image_tag(image_path_helper(image_model: code_snippet.code_snippet_image), data: {action: "load->image-loader#imageLoaded"}) %>
     </div>
     <h3>
       <%= code_snippet.title %>

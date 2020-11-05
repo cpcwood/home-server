@@ -1,0 +1,20 @@
+<div class='wide-card-title-container'>
+  <h3>
+    <%= project.title %>
+  </h3>
+  <div class='links-container'>
+    <% unless project.github_link.blank? %>
+      <a href='<%= project.github_link %>' class='logo-link' target='_blank' title='github link'>
+        <%= image_tag('icons/github-icon', alt: 'github logo') %>
+      </a>
+    <% end %>
+    <% unless project.site_link.blank? %>
+      <a href='<%= project.site_link %>' class='logo-link' target='_blank' title='website link'>
+        <%= image_tag('icons/external-link', alt: 'external link image') %>
+      </a>
+    <% end %>
+  </div>
+</div>
+<div class='wide-card-overview'>
+  <%= markdown_admin(project.overview) %>
+</div>

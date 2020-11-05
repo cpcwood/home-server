@@ -1,0 +1,9 @@
+<%= form_with(model: [:admin, project], class: 'section-form', id: 'admin-projects-new-form', multipart: true) do |f| %>
+
+  <%= render partial: 'admin/projects/form_components', locals: { f: f, project: project } %>
+
+<% end %>
+
+<div class="embedded-form-button-container">
+  <%= link_to('Return', admin_projects_path, class: 'standard-button input-submit') %>
+</div>

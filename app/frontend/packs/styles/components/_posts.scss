@@ -37,16 +37,11 @@
   padding: 0;
 }
 
-.post-overview-date {
+.post-date {
   color: colors.$medium-dark;
+  font-family: $general-font;
   font-size: 0.85em;
   font-weight: 400;
-}
-
-.ruler {
-  background-color: colors.$box-border-color;
-  height: 1px;
-  margin-bottom: 30px;
-  margin-top: 30px;
-  width: 100%;
+  line-height: 1em;
+  margin-bottom: 0;
 }
