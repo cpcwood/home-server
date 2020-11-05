@@ -59,11 +59,18 @@ export default class extends Controller {
     }
 
     dropZone.classList.remove('drag-over')
+    this.applyOrderToItems()
     return false
   }
 
   dragEnd (e) {
     this.dragItem.classList.remove('dragging')
     this.dragItem = null
+  }
+
+  applyOrderToItems () {
+    for (let i = 0; i < this.dragItemTargets.length; i += 1) {
+      this.dragItemTargets[i].querySelector('.item-order-position').value = i
+    }
   }
 }

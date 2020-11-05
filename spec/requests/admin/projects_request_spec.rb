@@ -126,7 +126,7 @@ RSpec.describe 'AdminProjects', type: :request do
       project_image = project.project_images.create
       update_image_attributes = valid_attributes
       update_image_attributes[:project][:project_images_attributes] = [
-        { title: 'new title', id: project_image.id }
+        { title: 'new title', id: project_image.id, order: '1' }
       ]
       put("/admin/projects/#{project.id}", params: update_image_attributes)
       expect(project_image.reload.title).to eq('new title')
@@ -137,7 +137,7 @@ RSpec.describe 'AdminProjects', type: :request do
       project_image = project.project_images.create
       remove_image_attributes = valid_attributes
       remove_image_attributes[:project][:project_images_attributes] = [
-        { _destroy: '1', id: project_image.id }
+        { _destroy: '1', id: project_image.id, order: '1' }
       ]
       expect{ put("/admin/projects/#{project.id}", params: remove_image_attributes) }.to change{
         project.reload.project_images.length

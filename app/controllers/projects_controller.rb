@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
   def index
-    @projects = Project.order(date: :desc)
+    @projects = Project.all_with_images
   end
 end
