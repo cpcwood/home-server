@@ -3,69 +3,72 @@ import { Controller } from 'stimulus'
 export default class extends Controller {
   static targets = ['dragItem']
 
-  connect () {
-    this.dragItem = null
-  }
-
-  disconnect () {
-    this.dragItem = null
-  }
-
   dragStart (e) {
-    // start drag on item
+    // save dragItem to state since dataTransfer not available in dragOver event and DOM manipulation temporary
     this.dragItem = e.currentTarget
-
     e.dataTransfer.effectAllowed = 'move'
-    e.dataTransfer.setData('text/html', this.dragItem.outerHTML)
-
     this.dragItem.classList.add('dragging')
   }
 
   dragOver (e) {
-    // pings while moving over valid drop target
-    if (e.preventDefault) {
-      e.preventDefault()
-    }
-
+    e.preventDefault()
     const dropZone = e.currentTarget
-    if (dropZone !== this.dragItem && dropZone !== this.dragItem.nextElementSibling.nextElementSibling && dropZone !== this.dragItem.nextElementSibling) {
+    if (dropZone !== this.dragItem && dropZone !== this.dragItem.nextElementSibling) {
       dropZone.classList.add('drag-over')
     }
-
     e.dataTransfer.dropEffect = 'move'
-    return false
   }
 
   dragLeave (e) {
-    // leaves valid drop target
     const dropZone = e.currentTarget
-    if (this.dragItem !== dropZone) {
+    if (dropZone !== this.dragItem && dropZone !== this.dragItem.nextElementSibling) {
       dropZone.classList.remove('drag-over')
     }
   }
 
   drop (e) {
-    // process drop
-    if (e.stopPropagation) {
-      e.stopPropagation()
-    }
-
+    e.stopPropagation()
     const dropZone = e.currentTarget
-
-    if (dropZone !== this.dragItem && dropZone !== this.dragItem.nextElementSibling.nextElementSibling && dropZone !== this.dragItem.nextElementSibling) {
-      dropZone.parentNode.removeChild(this.dragItem)
-      const dropHTML = e.dataTransfer.getData('text/html')
-      dropZone.insertAdjacentHTML('beforebegin', dropHTML)
+    if (dropZone !== this.dragItem && dropZone !== this.dragItem.nextElementSibling) {
+      const container = this.dragItem.parentNode
+      container.removeChild(this.dragItem)
+      container.insertBefore(this.dragItem, dropZone)
     }
-
     dropZone.classList.remove('drag-over')
-    this.applyOrderToItems()
-    return false
-  }
-
-  dragEnd (e) {
     this.dragItem.classList.remove('dragging')
     this.dragItem = null
+    this.applyOrderToItems()
+  }
+
+  moveUp (e) {
+    e.preventDefault()
+    const targetItemSelector = e.currentTarget.getAttribute('data-item-container-selector')
+    const targetItem = document.body.querySelector(targetItemSelector)
+    const listContainer = targetItem.parentElement
+    const sibling = targetItem.previousElementSibling
+    if (sibling) {
+      listContainer.removeChild(targetItem)
+      listContainer.insertBefore(targetItem, sibling)
+    }
+    this.applyOrderToItems()
+  }
+
+  moveDown (e) {
+    e.preventDefault()
+    const targetItemSelector = e.currentTarget.getAttribute('data-item-container-selector')
+    const targetItem = document.body.querySelector(targetItemSelector)
+    const listContainer = targetItem.parentElement
+    const nextSibling = targetItem.nextElementSibling
+    if (nextSibling) {
+      listContainer.removeChild(targetItem)
+      const insertBeforeSibling = nextSibling.nextElementSibling
+      if (insertBeforeSibling) {
+        listContainer.insertBefore(targetItem, insertBeforeSibling)
+      } else {
+        listContainer.appendChild(targetItem)
+      }
+    }
+    this.applyOrderToItems()
   }
 
   applyOrderToItems () {
