@@ -42,7 +42,7 @@ CoverImage.create(
 CoverImage.create(
   site_setting: site_settings,
   link: '/contact',
-  description: 'CONTACT')
+  description: 'TALK TO ME')
 
 About.create(section_title: 'About me',
              name: 'admin',
