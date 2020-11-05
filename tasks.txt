@@ -1,0 +1,17 @@
+SETUP
+  bundle install
+  yarn install
+  brew services start redis
+  brew services start psql
+
+PROD
+  sudo systemctl start home-server-rails.service
+  sudo systemctl start home-server-worker.service
+
+DEV
+  bundle exec rails s -b 0.0.0.0 -p 3000
+  bundle exec sidekiq -C config/sidekiq.yml
+
+TEST
+  bundle exec rpsec
+  yarn test
