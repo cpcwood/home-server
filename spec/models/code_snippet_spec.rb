@@ -30,12 +30,12 @@ RSpec.describe CodeSnippet, type: :model do
         expect(subject).to_not be_valid
         subject.title = ''
         expect(subject).to_not be_valid
-        subject.title = 'a' * 51
+        subject.title = 'a' * 61
         expect(subject).to_not be_valid
-        expect(subject.errors.messages[:title]).to eq ['Title length must be between 1 and 50 charaters']
+        expect(subject.errors.messages[:title]).to eq ['Title length must be between 1 and 60 charaters']
         subject.title = 'a'
         expect(subject).to be_valid
-        subject.title = 'a' * 50
+        subject.title = 'a' * 60
         expect(subject).to be_valid
       end
     end
