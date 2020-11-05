@@ -88,7 +88,7 @@ RSpec.describe 'AdminCodeSnippetsController', type: :request do
       code_snippet = create(:code_snippet, user: @user)
       put("/admin/code-snippets/#{code_snippet.id}", params: invalid_attributes)
       expect(response).not_to redirect_to(admin_code_snippets_path)
-      expect(response.body).to include('Title length must be between 1 and 50 charaters')
+      expect(response.body).to include('Title length must be between 1 and 60 charaters')
     end
 
     it 'general error' do

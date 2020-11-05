@@ -15,7 +15,6 @@
   <div class='post-date'>
     <%= @post.user.username.humanize %> | <%= full_date(@post.date_published) %>
   </div>
-
   <%= markdown_admin(@post.text) %>
 </section>
 
