@@ -10,12 +10,14 @@
   <%= @code_snippet.overview %>
 <% end %>
 
-<% content_for :meta_image_path do %>
-  <%= polymorphic_url(@code_snippet.code_snippet_image.image_file) %>
-<% end %>
+<% if @code_snippet.code_snippet_image&.image_file&.attached? %>
+  <% content_for :meta_image_path do %>
+    <%= polymorphic_url(@code_snippet.code_snippet_image.image_file) %>
+  <% end %>
 
-<% content_for :meta_image_alt do %>
-  <%= @code_snippet.code_snippet_image.description %>
+  <% content_for :meta_image_alt do %>
+    <%= @code_snippet.code_snippet_image.description %>
+  <% end %>
 <% end %>
 
 <section class='reading-pane'>
