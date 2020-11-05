@@ -26,7 +26,7 @@ RSpec.describe Post, type: :model do
 
   context 'validations' do
     describe 'date_published' do
-      it 'type' do
+      it 'format' do
         subject.date_published = nil
         expect(subject).to_not be_valid
         subject.date_published = 'not a date'
@@ -36,7 +36,7 @@ RSpec.describe Post, type: :model do
     end
 
     describe 'overview' do
-      it 'presence' do
+      it 'format' do
         subject.overview = nil
         expect(subject).to_not be_valid
         subject.overview = ''
@@ -46,7 +46,7 @@ RSpec.describe Post, type: :model do
     end
 
     describe 'title' do
-      it 'presence' do
+      it 'format' do
         subject.title = nil
         expect(subject).to_not be_valid
         subject.title = ''

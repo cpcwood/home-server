@@ -41,7 +41,6 @@
 // Input types
 .input-label {
   color: colors.$dark;
-  font-size: 20px;
   font-weight: 400;
 }
 
@@ -49,8 +48,6 @@
   border: unset;
   border-radius: 5px;
   box-sizing: border-box;
-  font-size: 16px;
-  font-weight: 400;
   height: 35px;
   margin: 10px 0 0;
   padding: 0 5px;
@@ -136,7 +133,6 @@
     background: rgba(0, 0, 0, 0);
     border: unset;
     color: colors.$dark;
-    font-size: 18px;
     font-weight: 300;
     text-decoration: none;
 
@@ -156,6 +152,11 @@
 
 // Embedded Forms
 
+.embedded-entry {
+  margin-top: 10px;
+  width: 100%;
+}
+
 .embedded-form-entry-container {
   align-content: flex-start;
   box-sizing: border-box;
@@ -164,6 +165,7 @@
   height: max-content;
   justify-content: flex-start;
   margin: 20px 0;
+  overflow: hidden;
   position: relative;
   width: 100%;
 
@@ -172,12 +174,19 @@
     flex-direction: row;
     margin: 20px 0;
   }
+
+  &.label {
+    margin-bottom: 0;
+
+    + .embedded-form-entry-container {
+      margin-top: 0;
+    }
+  }
 }
 
 .embedded-label {
   box-sizing: border-box;
-  font-size: inherit;
-  font-weight: 600;
+  font-weight: 500;
   height: inherit;
   margin-bottom: 10px;
   padding: 0;
@@ -194,6 +203,7 @@
       content: ':';
     }
   }
+
   @include respond-to(desktop) {
     font-weight: 500;
     margin: 0;
@@ -202,42 +212,26 @@
   }
 }
 
-.embedded-input-title {
+.embedded-label-full-width {
   box-sizing: border-box;
-  font-size: inherit;
-  font-weight: 600;
-  height: inherit;
+  font-weight: 500;
   margin-bottom: 10px;
   padding: 0;
   position: relative;
   width: 100%;
 }
 
-.embedded-title {
+.inline-label {
   box-sizing: border-box;
-  font-size: inherit;
-  font-weight: 600;
-  height: inherit;
-  padding: 0;
-  position: relative;
-  width: 100%;
-
-  @include respond-to(tablet) {
-    font-weight: 500;
-    padding: 0 2% 0 0;
-  }
-  @include respond-to(desktop) {
-    font-weight: 500;
-    padding: 0 2% 0 0;
-  }
+  font-weight: 500;
+  padding-right: 10px;
+  width: max-content;
 }
 
 .embedded-input-box {
   border: colors.$box-border-color 1px solid;
   border-radius: 0;
   box-sizing: border-box;
-  font-size: inherit;
-  height: inherit;
   margin: 0;
   max-width: 450px;
   padding: 3px;
@@ -252,12 +246,16 @@
     padding: 3px 10px;
     width: 65%;
   }
+
+  &.full-width {
+    width: 100%;
+  }
 }
 
 .embedded-text-area {
   border: 1px solid colors.$dark;
   border-radius: 0;
-  font-size: 1em;
+  margin: 0;
   max-width: 100%;
   min-height: 500px;
   padding: 3px;
@@ -270,8 +268,6 @@
 .embedded-no-border {
   border-radius: 0;
   box-sizing: border-box;
-  font-size: inherit;
-  height: inherit;
   margin: 0;
   max-width: 450px;
   padding: 3px 0;
@@ -289,9 +285,7 @@
 .embedded-current-value {
   border-radius: 0;
   box-sizing: border-box;
-  font-size: inherit;
   font-weight: 500;
-  height: inherit;
   margin: 0;
   max-width: 450px;
   padding: 3px 0;
@@ -321,10 +315,6 @@
   max-width: 300px;
   position: relative;
   width: fit-content;
-
-  input {
-    font-size: inherit;
-  }
 
   &:active + .default-loader {
     visibility: visible;

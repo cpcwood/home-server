@@ -1,0 +1,7 @@
+<% content_for :section_subtitle do %>
+  Projects: Edit Project
+<% end %>
+
+<section class='form-pane'>
+  <%= render partial: 'admin/projects/edit_form', locals: { project: @project } %>
+</section>

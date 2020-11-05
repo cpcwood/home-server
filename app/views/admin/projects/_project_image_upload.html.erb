@@ -1,0 +1,47 @@
+
+<% images = project.project_images %>
+
+<div class="embedded-form-entry-container">
+  <h4 class="input-label embedded-label-full-width">
+    Project images
+  </h4>
+</div>
+
+<ul class='drag-list' data-controller='form-draggable-list'>
+  <%= form.fields_for(:project_images, project.project_images.order_asc, include_id: false) do |nested_image_form| %>
+    <li class='draggable-item-container' id='draggable-item-container-<%= nested_image_form.object.id %>' draggable='true' data-target='form-draggable-list.dragItem' data-action='dragstart->form-draggable-list#dragStart dragover->form-draggable-list#dragOver dragleave->form-draggable-list#dragLeave drop->form-draggable-list#drop'>
+      <div class='drag-content'>
+        <div class='drag-icon-container'>
+          <button draggable='false' data-action='form-draggable-list#moveUp' data-item-container-selector='#draggable-item-container-<%= nested_image_form.object.id %>'>
+            ▲
+          </button>
+          <%= image_tag('icons/drag-icon', alt: 'drag icon', draggable: false ) %>
+          <button draggable='false' data-action='form-draggable-list#moveDown' data-item-container-selector='#draggable-item-container-<%= nested_image_form.object.id %>'>
+            ▼
+          </button>
+        </div>
+
+        <div class="drag-image-container" draggable='false'>
+          <%= image_tag(image_path_helper(image_model: nested_image_form.object, variant: :thumbnail), draggable: false) %>
+        </div>
+
+        <div class='drag-text' draggable='false'>
+            <%= nested_image_form.label(:title, 'Image title:', class: 'input-label embedded-label-full-width', draggable: false) %>
+            <%= nested_image_form.text_field(:title, class: 'input-box embedded-input-box full-width', placeholder: 'Enter image title...', draggable: false) %>
+
+          <div class="embedded-entry" draggable='false'>
+            <%= nested_image_form.label(:_destroy, 'Remove image:', class: 'input-label inline-label', draggable: false) %>
+            <%= nested_image_form.check_box(:_destroy, {draggable: false}, 1, 0) %>
+          </div>
+        </div>
+        <%= nested_image_form.hidden_field(:order, class: 'item-order-position') %>
+        <%= nested_image_form.hidden_field(:id) %>
+      </div>
+    </li>
+  <% end %>
+</ul>
+
+<div class="embedded-form-entry-container">
+  <%= label(:new_project_images, :image_files, 'Add project images', class: 'input-label embedded-label') %>
+  <%= file_field(:new_project_images, :image_files, accept: 'image/png,image/jpeg', multiple: true, class: 'input-box embedded-no-border') %>
+</div>

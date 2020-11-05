@@ -1,0 +1,12 @@
+<%= form_with(model: [:admin, project], method: 'put', class: 'section-form', id: 'admin-projects-edit-form', multipart: true) do |f| %>
+
+  <%= render partial: 'admin/projects/form_components', locals: { f: f, project: project } %>
+
+<% end %>
+
+<div class="embedded-form-button-container">
+  <%= link_to('Return', admin_projects_path, class: 'standard-button input-submit') %>
+  <%= form_with(model: [:admin, project], method: 'delete') do |r| %>
+    <%= r.submit("Remove", class: 'input-submit destroy-button') %>
+  <% end %>
+</div>

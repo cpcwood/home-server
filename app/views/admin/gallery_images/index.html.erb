@@ -1,18 +1,15 @@
-<% content_for :section_title do %>
-  Gallery
-<% end %>
 <% content_for :section_subtitle do %>
-  Admin: Index
+  Gallery: Index
 <% end %>
 
 <%= render partial: 'partials/admin_toolbar', locals: { model: (@gallery_images.empty? ? [GalleryImage.new] : @gallery_images) } %>
 
-<%= render partial: 'partials/system_messages'%>
+<%= render partial: 'partials/system_messages' %>
 
 <section class='gallery-container'>
 
   <% if @gallery_images.empty? %>
-    <%= render partial: 'gallery_images/no_images' %>
+    <%= render partial: 'partials/no_items', locals: {item: 'images'} %>
   <% else %>
     <ul class='gallery-container' data-controller='justified-gallery' data-target='justified-gallery.container' data-justified-gallery-margin='2' data-action='turbolinks:before-cache@window->justified-gallery#teardown'>
       <%= render partial: 'admin/gallery_images/image_container', collection: @gallery_images, as: :gallery_image %>

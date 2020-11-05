@@ -1,0 +1,103 @@
+@use '../base/colors';
+@use '../base/mixins' as *;
+@use '../base/typography';
+
+$drag-transition: 0.2s;
+
+.drag-list {
+  list-style-type: none;
+  margin-block-end: 0;
+  margin-block-start: 0;
+  margin-inline-end: 0;
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+}
+
+.draggable-item-container {
+  margin: 10px 0;
+  opacity: 1;
+  overflow: hidden;
+  position: relative;
+  transition: all $drag-transition ease;
+}
+
+.drag-content {
+  border: colors.$medium-light solid 1px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: grid;
+  grid-template-areas: 
+    'drag image'
+    'drag text';
+  grid-template-columns: 22px 1fr;
+  grid-template-rows: 175px;
+  justify-content: stretch;
+  justify-items: stretch;
+  position: relative;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    grid-template-areas: 'drag image text';
+    grid-template-columns: 35px fit-content(220px) auto;
+  }  
+}
+
+.drag-icon-container {
+  align-items: center;
+  box-sizing: border-box;
+  cursor: move;
+  display: flex;
+  flex-direction: column;
+  grid-area: drag;
+  justify-content: center;
+  margin: 5px 0 5px 5px;
+  user-select: none;
+
+  > * {
+    color: colors.$light-dark;
+  }
+
+  > * + * {
+    margin-top: 15px;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+.drag-image-container {
+  box-sizing: border-box;
+  grid-area: image;
+  margin: 5px;
+  overflow: hidden;
+  user-select: none;
+
+  img {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+  }
+}
+
+.drag-text {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  grid-area: text;
+  margin: 5px;
+  overflow: scroll;
+}
+
+.dragging {
+  opacity: 0.5;
+}
+
+.drag-over {
+  padding-top: 185px;
+}

@@ -3,6 +3,13 @@
 @use '../base/mixins' as *;
 @use '../base/typography';
 
+@mixin highlight-button-outline {
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
 .menu-button { 
   border: unset;
   box-sizing: border-box;
@@ -19,6 +26,7 @@
   box-sizing: border-box;
   color: colors.$light;
   cursor: pointer;
+  font-family: typography.$general-font;
   font-size: inherit;
   font-weight: 300;
   line-height: 1em;
@@ -51,3 +59,36 @@
 .return-button {
   margin-top: 40px;
 }
+
+.embedded-gallery-button {
+
+  @include highlight-button-outline;
+  align-items: center;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  display: flex;
+  font-size: 3rem;
+  height: 100%;
+  opacity: 0.65;
+  padding: 0 12px;
+  position: absolute;
+  top: 0;
+  transition: opacity 0.15s ease-in-out;
+  user-select: none;
+  z-index: 2;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.prev {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+    left: 0;
+  }
+  
+  &.next {
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+    right: 0;
+  }
+}
+

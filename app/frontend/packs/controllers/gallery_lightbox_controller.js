@@ -4,7 +4,7 @@ import SimpleLightbox from 'simplelightbox'
 export default class extends Controller {
   static targets = ['container']
 
-  initialize () {
+  connect () {
     this.lightbox = new SimpleLightbox(this.data.get('item-selector'), {
       showCounter: false,
       animationSpeed: 100,

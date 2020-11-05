@@ -22,14 +22,7 @@
   }
 }
 
-.card-content {
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  user-select: none;
-  width: 100%;
-  
+@mixin link-outline {
   &:link,
   &:visited {
     color: colors.$dark;
@@ -44,6 +37,16 @@
   &:hover {
     outline: none;
   }
+}
+
+.card-content {
+  @include link-outline;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  user-select: none;
+  width: 100%;
 
   h3 {
     font-size: 1.3em;
@@ -72,4 +75,71 @@
   flex: 1 0 auto;
   font-size: 0.9em;
   padding: 0 5px 10px;
+}
+
+.embedded-gallery {
+  background-color: rgb(0, 0, 0);
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  a {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
+
+  img {
+    height: 100%;
+    object-fit: cover;
+    object-position: 0% 0%;
+    width: 100%;
+  }
+}
+
+.wide-card-container {
+  color: colors.$general-font;
+  text-decoration: none;
+
+  a {
+    @include link-outline;
+  }
+
+  + .ruler {
+    margin-bottom: 50px;
+    margin-top: 10px;
+  }
+}
+
+.wide-card-title-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.7em;
+  margin-top: 1em;
+  position: relative;
+  width: 100%;
+
+  h3 {
+    flex: 1 1 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .links-container {
+    display: flex;
+    line-height: 1em;
+  }
+
+  .logo-link {
+    img {
+      height: 2.2em;
+      width: 2.2em;
+    }
+
+    + * {
+      margin-left: 5px;
+    }
+  }
 }
