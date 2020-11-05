@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -8,23 +9,23 @@
     <%= favicon_link_tag %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title><%= @site_settings.name %></title>
-    <meta property="og:site_name" content="<%= @site_settings.name %>"/>
-    <meta property="og:title" content="<%= content_for?(:meta_title) ? yield(:meta_title) : @site_settings.name %>"/>
-    <meta property="og:description" content="<%= content_for?(:meta_description) ? yield(:meta_description) : "#{@site_settings.name} - Portfolio, Blog, and RoR Sandbox" %>"/>
+    <meta property="og:site_name" content="<%= @site_settings.name %>">
+    <meta property="og:title" content="<%= content_for?(:meta_title) ? "#{yield(:meta_title)} - #{@site_settings.name}" : @site_settings.name %>">
+    <meta property="og:description" content="<%= content_for?(:meta_description) ? yield(:meta_description) : "Portfolio, Blog, and RoR Sandbox by #{@site_settings.name}" %>">
     <meta property="og:image" content='<%= content_for?(:meta_image_path) ? yield(:meta_image_path) :  image_url('site-logo.png')%>'>
-    <meta property="og:image:type" content='<%= content_for?(:meta_image_type) ? yield(:meta_image_type) :  'image/png' %>'/>
-    <meta property='og:image:alt' content='<%= content_for?(:meta_image_alt) ? yield(:meta_image_alt) :  "#{@site_settings.name} logo" %>'/>
-    <meta property="og:url" content='<%= request.original_url %>'/>
-    <meta property="og:type" content="website"/>
-    <meta name="twitter:title" content="<%= content_for?(:meta_title) ? yield(:meta_title) : @site_settings.name %>"/>
-    <meta name="twitter:description" content="<%= content_for?(:meta_description) ? yield(:meta_description) : "#{@site_settings.name} - Portfolio, Blog, and RoR Sandbox" %>"/>
-    <meta name="twitter:image" content='<%= content_for?(:meta_image_path) ? yield(:meta_image_path) :  image_url('site-logo.png')%>'/>
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:image:alt" content="<%= content_for?(:meta_image_alt) ? yield(:meta_image_alt) :  "#{@site_settings.name} logo" %>"/>
-    <meta name="twitter:site" content="<%= yield(:meta_twitter_account) if content_for?(:meta_twitter_account) %>"/>
-    <meta property="og:image:width" content="1200"/>
-    <meta property="og:image:height" content="630"/>
-    <link rel="apple-touch-icon" href='<%= image_url('favicon.ico') %>' />
+    <meta property="og:image:type" content='<%= content_for?(:meta_image_type) ? yield(:meta_image_type) :  'image/png' %>'>
+    <meta property='og:image:alt' content='<%= content_for?(:meta_image_alt) ? yield(:meta_image_alt) :  "#{@site_settings.name} logo" %>'>
+    <meta property="og:url" content='<%= request.original_url %>'>
+    <meta property="og:type" content="website">
+    <meta name="twitter:title" content="<%= content_for?(:meta_title) ? yield(:meta_title) : @site_settings.name %>">
+    <meta name="twitter:description" content="<%= content_for?(:meta_description) ? yield(:meta_description) : "#{@site_settings.name} - Portfolio, Blog, and RoR Sandbox" %>">
+    <meta name="twitter:image" content='<%= content_for?(:meta_image_path) ? yield(:meta_image_path) :  image_url('site-logo.png')%>'>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image:alt" content="<%= content_for?(:meta_image_alt) ? yield(:meta_image_alt) :  "#{@site_settings.name} logo" %>">
+    <meta name="twitter:site" content="<%= yield(:meta_twitter_account) if content_for?(:meta_twitter_account) %>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <link rel="apple-touch-icon" href='<%= image_url('favicon.ico') %>' >
     <%= yield(:head) %>
   </head>
 
