@@ -2,6 +2,14 @@
   <%= @about.section_title %>
 <% end %>
 
+<% content_for :meta_title do %>
+  <%= @about.section_title %>
+<% end %>
+
+<% content_for :meta_description do %>
+  Some stuff about me in CV style
+<% end %>
+
 <section class='reading-pane'>
   <%= render partial: 'partials/admin_toolbar', locals: { model: @about } %>
 

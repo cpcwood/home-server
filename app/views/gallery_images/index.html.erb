@@ -2,6 +2,14 @@
   Gallery
 <% end %>
 
+<% content_for :meta_title do %>
+  Gallery
+<% end %>
+
+<% content_for :meta_description do %>
+  An interesting selection if pictures I've taken
+<% end %>
+
 <%= render partial: 'partials/admin_toolbar', locals: { model: (@gallery_images.empty? ? [GalleryImage.new] : @gallery_images) } %>
 
 <%= render partial: 'partials/system_messages' %>

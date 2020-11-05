@@ -1,6 +1,25 @@
 <% content_for :section_title do %>
   Code Snippets
 <% end %>
+
+<% content_for :meta_title do %>
+  <%= @code_snippet.title %> - Code Snippet
+<% end %>
+
+<% content_for :meta_description do %>
+  <%= @code_snippet.overview %>
+<% end %>
+
+<% if @code_snippet.code_snippet_image&.image_file&.attached? %>
+  <% content_for :meta_image_path do %>
+    <%= polymorphic_url(@code_snippet.code_snippet_image.image_file) %>
+  <% end %>
+
+  <% content_for :meta_image_alt do %>
+    <%= @code_snippet.code_snippet_image.description %>
+  <% end %>
+<% end %>
+
 <section class='reading-pane'>
   <h2><%= @code_snippet.title %></h2>
   <%= @code_snippet.user.username.humanize %> | Last updated: <%= full_date(@code_snippet.updated_at) %>
