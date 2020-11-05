@@ -4,7 +4,7 @@
 
 <%= render partial: 'partials/admin_toolbar', locals: { model: (@code_snippets.empty? ? [CodeSnippet.new] : @code_snippets) } %>
 
-<%= render partial: 'partials/system_messages'%>
+<%= render partial: 'partials/system_messages' %>
 
 <% if @code_snippets.empty? %>
   <%= render partial: 'partials/no_items', locals: {item: 'code snippets'} %>

@@ -1,4 +1,4 @@
-<%= render partial: 'partials/system_messages'%>
+<%= render partial: 'partials/system_messages' %>
 
 <div class="embedded-form-entry-container">
   <%= f.label(:title, 'Title', class: 'input-label embedded-label') %>
@@ -42,7 +42,6 @@
   <%= label(:snippet, :extension, 'Code file extension', class: 'input-label embedded-label') %>
   <%= text_field(:snippet, :extension, class: 'input-box embedded-input-box', placeholder: 'Enter file extension such as `rb`...') %>
 </div>
-
 
 <div class="embedded-form-entry-container submit-right">
   <%= f.submit("Submit", class: 'input-submit') %>

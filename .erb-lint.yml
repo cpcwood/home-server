@@ -1,0 +1,20 @@
+glob: "**/*.html.erb"
+linters:
+  ErbSafety:
+    enabled: false
+  Rubocop:
+    enabled: false
+  FinalNewline:
+    enabled: true
+  RightTrim:
+    enabled: false
+  SpaceAroundErbTag:
+    enabled: true
+  NoJavascriptTagHelper:
+    enabled: true
+    correction_style: 'plain'
+  SelfClosingTag:
+    enabled: true
+    enforced_style: 'never'
+  AllowedScriptType:
+    enabled: false

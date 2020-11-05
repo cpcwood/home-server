@@ -1,4 +1,4 @@
-<a href='<%= edit_admin_post_path(post) %>' class='post-overview-container show-blog-post-button' title='<%= post.title %>' tabindex='<%=post_iteration.index + 1%>'>
+<a href='<%= edit_admin_post_path(post) %>' class='post-overview-container show-blog-post-button' title='<%= post.title %>' tabindex='<%= post_iteration.index + 1 %>'>
   <div class='post-overview-date'>
     <%= full_date(post.date_published) %>
   </div>

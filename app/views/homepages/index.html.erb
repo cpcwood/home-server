@@ -10,8 +10,8 @@
     <%= @site_settings.header_text %>
   <% end %>
   <% content_for :section_subtitle do %>
-    <%=  @site_settings.subtitle_text %>
-  <% end %> 
+    <%= @site_settings.subtitle_text %>
+  <% end %>
 <% end %>
 
 <%= render partial: 'partials/system_messages' %>

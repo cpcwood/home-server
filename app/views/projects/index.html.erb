@@ -5,7 +5,7 @@
 <section class='reading-pane' data-controller="image-loader" data-target='image-loader.container' data-action='turbolinks:before-cache@window->image-loader#teardown'>
   <%= render partial: 'partials/admin_toolbar', locals: { model: (@projects.empty? ? [Project.new] : @projects) } %>
 
-  <%= render partial: 'partials/system_messages'%>
+  <%= render partial: 'partials/system_messages' %>
 
   <% if @projects.empty? %>
     <%= render partial: 'partials/no_items', locals: {item: 'projects'} %>

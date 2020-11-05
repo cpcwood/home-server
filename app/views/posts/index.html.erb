@@ -5,7 +5,7 @@
 <section class='reading-pane'>
   <%= render partial: 'partials/admin_toolbar', locals: { model: (@posts.empty? ? [Post.new] : @posts) } %>
 
-  <%= render partial: 'partials/system_messages'%>
+  <%= render partial: 'partials/system_messages' %>
 
   <% if @posts.empty? %>
     <%= render partial: 'partials/no_items', locals: {item: 'posts'} %>

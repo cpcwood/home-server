@@ -64,6 +64,8 @@ group :development do
   gem 'letter_opener'
   # Static security testing
   gem 'brakeman'
+  # Lint erb
+  gem "erb_lint", "~> 0.0.35"
 end
 
 group :test do
@@ -84,3 +86,5 @@ group :test do
   # Clean up the messy database during tests
   gem 'database_cleaner-active_record', '>= 1.8.0', require: false
 end
+
+

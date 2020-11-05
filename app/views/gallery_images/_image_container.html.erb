@@ -1,5 +1,5 @@
 <li class='gallery-image-container'>
   <a href="<%= rails_blob_url(gallery_image.image_file) if image_attached?(gallery_image) %>" class='view-gallery-image'>
-    <%= render(partial: 'gallery_images/image_thumbnail', locals: {gallery_image: gallery_image})%>
+    <%= render(partial: 'gallery_images/image_thumbnail', locals: {gallery_image: gallery_image}) %>
   </a>
 </li>
