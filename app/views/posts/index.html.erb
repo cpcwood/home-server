@@ -2,6 +2,14 @@
   Blog
 <% end %>
 
+<% content_for :meta_title do %>
+  Blog
+<% end %>
+
+<% content_for :meta_description do %>
+  Browse my most recent blog posts
+<% end %>
+
 <section class='reading-pane'>
   <%= render partial: 'partials/admin_toolbar', locals: { model: (@posts.empty? ? [Post.new] : @posts) } %>
 
