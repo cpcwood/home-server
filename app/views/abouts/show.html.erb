@@ -2,6 +2,14 @@
   <%= @about.section_title %>
 <% end %>
 
+<% content_for :meta_title do %>
+  Blog
+<% end %>
+
+<% content_for :meta_description do %>
+  View my most recent blog posts
+<% end %>
+
 <section class='reading-pane'>
   <%= render partial: 'partials/admin_toolbar', locals: { model: @about } %>
 
