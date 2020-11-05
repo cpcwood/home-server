@@ -9,7 +9,7 @@
 
 <ul class='drag-list' data-controller='form-draggable-list'>
   <%= form.fields_for(:project_images) do |nested_image_form| %>
-    <li class='draggable-item-container' draggable='true' data-action='dragstart->form-draggable-list#dragStart dragover->form-draggable-list#dragOver dragleave->form-draggable-list#dragLeave drop->form-draggable-list#drop dragend->form-draggable-list#dragEnd'>
+    <li class='draggable-item-container' draggable='true' data-target='form-draggable-list.dragItem' data-action='dragstart->form-draggable-list#dragStart dragover->form-draggable-list#dragOver dragleave->form-draggable-list#dragLeave drop->form-draggable-list#drop dragend->form-draggable-list#dragEnd'>
       <div class='drag-content'>
         <div class='drag-icon-container'>
           <button draggable='false' >
@@ -33,6 +33,8 @@
             <%= nested_image_form.label(:_destroy, 'Remove image:', class: 'input-label inline-label', draggable: false) %>
             <%= nested_image_form.check_box(:_destroy, {draggable: false}, 1, 0) %>
           </div>
+
+          <%= nested_image_form.hidden_field(:order) %>
         </div>
       </div>
     </li>
