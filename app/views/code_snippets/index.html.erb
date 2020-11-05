@@ -2,6 +2,14 @@
   Code Snippets
 <% end %>
 
+<% content_for :meta_title do %>
+  Code Snippets
+<% end %>
+
+<% content_for :meta_description do %>
+  Browse my most recent code snippets
+<% end %>
+
 <%= render partial: 'partials/admin_toolbar', locals: { model: (@code_snippets.empty? ? [CodeSnippet.new] : @code_snippets) } %>
 
 <%= render partial: 'partials/system_messages' %>
