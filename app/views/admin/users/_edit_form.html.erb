@@ -2,7 +2,7 @@
   Update Details
 </h3>
 <%= form_with(model: [:admin, @user], method: "put") do |f| %>
-  <%= render partial: 'partials/system_messages'%>
+  <%= render partial: 'partials/system_messages' %>
   <div class="embedded-form-entry-container">
     <%= label(:username, :username, 'Username', class: 'input-label embedded-label') %>
     <%= text_field(:username, :username, {class: 'input-box embedded-input-box', placeholder: 'new username'}) %>

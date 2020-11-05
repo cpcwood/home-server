@@ -8,11 +8,11 @@
 </div>
 
 <div class="embedded-form-entry-container">
-  <%= image_tag(image_path_helper(image_model: gallery_image), class: 'embedded-full-width embedded-cover-image')%>
+  <%= image_tag(image_path_helper(image_model: gallery_image), class: 'embedded-full-width embedded-cover-image') %>
 </div>
 
 <%= form_with(model: [:admin, gallery_image], class: 'section-form', id: 'admin-gallery-images-edit-form') do |f| %>
-  
+
   <%= render partial: 'admin/gallery_images/form_components', locals: { f: f } %>
 
 <% end %>

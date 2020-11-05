@@ -1,6 +1,6 @@
 <%= form_with(model: site_settings, :url => admin_site_setting_path(site_settings), method: "put", id: "admin-site-settings-edit-form") do |f| %>
 
-    <%= render partial: 'partials/system_messages'%>
+    <%= render partial: 'partials/system_messages' %>
 
     <div class="embedded-form-entry-container">
       <%= f.label(:name, 'Site name', class: 'input-label embedded-label') %>

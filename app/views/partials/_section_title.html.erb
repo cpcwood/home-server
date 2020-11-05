@@ -1,13 +1,13 @@
 <% if content_for?(:typed_header) %>
   <header class='main-page-header' data-controller="typed-header" style='height: <%= header_height - 60 %>px'>
-    <div class="hidden" id="typed-strings-header" >
-      <p> 
+    <div class="hidden" id="typed-strings-header">
+      <p>
         <%= yield(:typed_header) %>
       </p>
     </div>
     <h1 id="typed-header" data-target="typed-header.typedHeader"></h1>
     <div class="hidden" id="typed-strings-subtitle">
-      <p> 
+      <p>
         <%= yield(:typed_header_sub) %>
       </p>
     </div>

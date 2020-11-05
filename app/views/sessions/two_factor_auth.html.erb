@@ -4,7 +4,7 @@
 
 <% content_for :form do %>
   <%= form_with(url: "/2fa", method: :post, class: 'floating-form') do |f| %>
-    <%= render partial: 'partials/system_messages'%>
+    <%= render partial: 'partials/system_messages' %>
     <%= f.text_field(:auth_code, required: true, class: 'input-box', placeholder: '2FA Code') %>
     <div class='input-seperator'></div>
     <%= f.submit("Login", class: 'input-submit') %>
