@@ -17,7 +17,7 @@
 #  index_code_snippets_on_user_id  (user_id)
 #
 # Foreign Keys
-# git ad
+#
 #  fk_rails_...  (user_id => users.id)
 #
 class CodeSnippet < ApplicationRecord

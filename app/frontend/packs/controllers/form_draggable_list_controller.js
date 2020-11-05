@@ -1,7 +1,7 @@
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = ['headerImage', 'contentContainer']
+  static targets = ['dragItem']
 
   connect () {
     this.dragItem = null
