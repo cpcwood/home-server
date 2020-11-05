@@ -4,13 +4,14 @@
 $header-font: 'Roboto Slab', Fallback, sans-serif;
 $general-font: 'Roboto', Fallback, sans-serif;
 $code-font: 'Inconsolata', Fallback, sans-serif;
+$reading-font: 'Merriweather Sans', 'Roboto', Fallback, sans-serif;
 
 html {
   color: colors.$general-font;
   font-family: $general-font;
   font-size: 14px;
   font-weight: 300;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04rem;
 
   @include respond-to(tablet) {
     font-size: 15px;
@@ -64,7 +65,7 @@ h1 {
 
 h2 {
   @include sub-header;
-  font-size: 3em;
+  font-size: 2.2em;
 }
 
 h3 {
@@ -85,6 +86,44 @@ h5 {
 h6 {
   @include sub-header;
   font-size: 1em;
+}
+
+@mixin reading-pane-header {
+  color: colors.$heading-font;
+  font-family: $general-font;
+  font-weight: 500;
+  letter-spacing: 0.04rem;
+}
+
+.reading-pane {
+  font-family: $reading-font;
+  letter-spacing: 0.02em;
+  line-height: 1.8em;
+  word-spacing: 0.1em;
+
+  h1 {
+    @include reading-pane-header;
+  }
+
+  h2 {
+    @include reading-pane-header;
+  }
+
+  h3 {
+    @include reading-pane-header;
+  }
+
+  h4 {
+    @include reading-pane-header;
+  }
+
+  h5 {
+    @include reading-pane-header;
+  }
+
+  h6 {
+    @include reading-pane-header;
+  }
 }
 
 
