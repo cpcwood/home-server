@@ -24,6 +24,7 @@ $drag-transition: 0.2s;
 .drag-content {
   border: colors.$medium-light solid 1px;
   border-radius: 5px;
+  box-sizing: border-box;
   cursor: pointer;
   display: grid;
   grid-template-areas: 

@@ -1,7 +1,7 @@
 module Admin
   class ProjectsController < AdminBaseController
     def index
-      @projects = Project.order(date: :desc)
+      @projects = Project.all_with_images
       render layout: 'layouts/admin_dashboard'
     end
 
@@ -109,7 +109,7 @@ module Admin
           :date,
           :github_link,
           :site_link,
-          project_images_attributes: [:id, :image_file, :_destroy, :title])
+          project_images_attributes: [:id, :image_file, :_destroy, :title, :order])
     end
 
     def snippet_params
@@ -149,7 +149,10 @@ module Admin
     end
 
     def render_code_snippet
-      return true unless params.dig(:snippet, :snippet) && params.dig(:snippet, :extension)
+      snippet = params.dig(:snippet, :snippet)
+      extension = params.dig(:snippet, :extension)
+      return true unless snippet && extension
+      return true unless snippet.length > 0 && extension.length > 0
       if @project.render_code_snippet(snippet_params.to_h.symbolize_keys)
         @notices.push('Code snippet rendered')
         true
