@@ -37,8 +37,11 @@
   padding: 0;
 }
 
-.post-overview-date {
+.post-date {
   color: colors.$medium-dark;
+  font-family: $general-font;
   font-size: 0.85em;
   font-weight: 400;
+  line-height: 1em;
+  margin-bottom: 0;
 }

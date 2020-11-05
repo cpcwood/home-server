@@ -65,7 +65,7 @@ group :development do
   # Static security testing
   gem 'brakeman'
   # Lint erb
-  gem "erb_lint", "~> 0.0.35"
+  gem 'erb_lint', '~> 0.0.35'
 end
 
 group :test do
