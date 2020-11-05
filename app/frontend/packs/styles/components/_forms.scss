@@ -450,6 +450,7 @@
   grid-area: drag;
   justify-content: center;
   padding: 5px 0 5px 5px;
+  user-select: none;
 
   > * {
     color: colors.$light-dark;
@@ -472,6 +473,7 @@
   box-sizing: border-box;
   grid-area: image;
   padding: 5px;
+  user-select: none;
 
   img {
     display: block;
