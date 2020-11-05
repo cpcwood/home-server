@@ -2,12 +2,19 @@
   Blog
 <% end %>
 
+<% content_for :meta_title do %>
+  <%= @post.title.length > 65 ? "#{@post.title[0..62]}..." : @post.title %>
+<% end %>
+
+<% content_for :meta_description do %>
+  <%= @post.overview %> - Blog post by <%= @post.user.username %>
+<% end %>
+
 <section class='reading-pane'>
   <h2><%= @post.title %></h2>
   <div class='post-date'>
     <%= @post.user.username.humanize %> | <%= full_date(@post.date_published) %>
   </div>
-
   <%= markdown_admin(@post.text) %>
 </section>
 

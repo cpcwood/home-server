@@ -2,6 +2,14 @@
   Contact
 <% end %>
 
+<% content_for :meta_title do %>
+  Contact
+<% end %>
+
+<% content_for :meta_description do %>
+  Talk to me
+<% end %>
+
 <div class='contact-details-container'>
   <%= render partial: 'partials/contact_details', locals: { model: @about, contact_link: false } %>
 </div>
