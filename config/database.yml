@@ -5,18 +5,17 @@ default: &default
   password: <%= Rails.application.credentials.psql[:password] %>
   host: localhost
 
+production:
+  <<: *default
+  pool: 5
+  timeout: 5000
+  host: <%= Rails.application.credentials.dig(:psql, :host) %>
+  database: <%= Rails.application.credentials.dig(:psql, :dbname_production) || 'home_server_production' %>
+
 development:
   <<: *default
-  database: <%= Rails.application.credentials.psql[:dbname_development] %>
+  database: <%= Rails.application.credentials.dig(:psql, :dbname_development) || 'home_server_development' %>
 
 test:
   <<: *default
-  database: <%= Rails.application.credentials.psql[:dbname_test] %>
-
-production:
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-  timeout: 5000
-  host: <%= Rails.application.credentials.psql[:host] %>
-  database: <%= Rails.application.credentials.psql[:dbname_production] %>
+  database: <%= Rails.application.credentials.dig(:psql, :dbname_test) || 'home_server_test' %>
