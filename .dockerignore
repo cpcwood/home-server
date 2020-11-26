@@ -1,0 +1,47 @@
+# OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+
+# Rails
+coverage
+log
+node_modules
+public/packs
+public/packs-test
+public/system
+spec
+tmp
+.bundle
+.ruby-version
+*.key
+
+
+# others
+.git
+.gitignore
+README.md
+.vscode
+.byebug_history
+.erb-lint.yml
+.eslintignore
+.eslintrc
+.rspec
+.rubocop.yml
+.stylelintignore
+.stylelint.json
+.travis.yml
+Profile.dev
+tasks.txt
+yarn-error.log
+logfile

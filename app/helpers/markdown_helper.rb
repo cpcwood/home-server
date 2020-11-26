@@ -10,6 +10,7 @@ module MarkdownHelper
   end
 
   def markdown_admin(text)
+    text ||= ''
     render_options = {
       hard_wrap: true,
       link_attributes: {

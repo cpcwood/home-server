@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: cpcwood
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports: 
+      - '5432:5432'
+    volumes:
+      - ~/db/psql/13:/var/lib/postgresql/data
+
+  web:
+    image: cpcwood/home-server-app-v1
+    depends_on:
+      - db
+    environment:
+      RAILS_ENV: production
+    ports:
+      - '80:5000'
