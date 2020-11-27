@@ -33,6 +33,8 @@ gem 'rouge'
 gem 'validate_url'
 # Validate dates in model
 gem 'validates_timeliness', '~> 5.0.0.beta1'
+# Timezone
+gem 'tzinfo-data'
 
 group :production do
   # AWS S3 for production storage

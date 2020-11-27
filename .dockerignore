@@ -21,11 +21,14 @@ public/packs
 public/packs-test
 public/system
 spec
+storage
 tmp
 .bundle
 .ruby-version
 *.key
-
+*.log
+*.state
+*.pid
 
 # others
 .git
