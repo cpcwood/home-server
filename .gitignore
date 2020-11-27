@@ -47,10 +47,7 @@ yarn-debug.log*
 # Keep empty directories
 !*.keep
 
-
-/config/credentials/test.key
-
-/config/credentials/production.key
+*.key
+*.env
 
 logfile
-.env
