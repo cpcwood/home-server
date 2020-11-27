@@ -37,7 +37,7 @@ RUN yarn install --check-files
 ADD . $APP_HOME
 
 ARG rails_credentials_key
-ENV RAILS_PRODUCTION_KEY=$rails_credentials_key
+ENV RAILS_MASTER_KEY=$rails_credentials_key
 
 RUN bundle exec rails assets:precompile && \
   rm -rf $APP_HOME/node_modules && \
@@ -55,7 +55,6 @@ FROM ruby:2.7.0-alpine
 
 RUN apk add --update --no-cache \
   tzdata \
-  build-base \
   libxml2-dev \
   libxslt-dev \
   postgresql-dev && \
