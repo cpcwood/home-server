@@ -63,9 +63,11 @@ FROM ruby:2.7.2-alpine
 
 RUN apk add --update --no-cache \
   tzdata \
+  imagemagick \
+  vips \
   libxml2-dev \
   libxslt-dev \
-  postgresql-dev && \
+  postgresql-client && \
   cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
   echo "Europe/London" > /etc/timezone
 
