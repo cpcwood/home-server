@@ -3,7 +3,7 @@ default: &default
   encoding: unicode
   username: <%= ENV['DB_USERNAME'] %>
   password: <%= ENV['DB_PASSWORD']  %>
-  host: <%= ENV.fetch('DB_HOST') { localhost } %>
+  host: <%= ENV.fetch('DB_HOST') { 'localhost' } %>
   pool: 5
   timeout: 5000
 

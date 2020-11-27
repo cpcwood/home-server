@@ -1,3 +1,5 @@
+ENV['RAILS_ENV'] ||= 'test'
+
 require 'dotenv'
 Dotenv.load('config/env/test.env')
 

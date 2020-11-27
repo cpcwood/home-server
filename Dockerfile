@@ -1,6 +1,6 @@
 # Compile Assets
 # ================
-FROM ruby:2.7.0-alpine as builder
+FROM ruby:2.7.2-alpine as builder
 
 RUN apk add --update --no-cache \
   tzdata \
@@ -41,9 +41,12 @@ ENV RAILS_MASTER_KEY=$rails_credentials_key
 
 RUN bundle exec rails assets:precompile && \
   rm -rf $APP_HOME/node_modules && \
-  rm -rf $APP_HOME/tmp/* && \
   rm -rf $APP_HOME/app/assets/images && \
-  rm -rf $APP_HOME/app/frontend/packs  && \
+  rm -rf $APP_HOME/app/frontend/packs && \
+  rm -rf $APP_HOME/log/* && \
+  rm -rf $APP_HOME/spec && \
+  rm -rf $APP_HOME/storage/* && \
+  rm -rf $APP_HOME/tmp/* && \
   rm -rf $APP_HOME/vendor/bundle/ruby/2.7.0/cache/*.gem && \
   find $APP_HOME/vendor/bundle/ruby/2.7.0/gems/ -name "*.c" -delete && \
   find $APP_HOME/vendor/bundle/ruby/2.7.0/gems/ -name "*.o" -delete
@@ -51,7 +54,7 @@ RUN bundle exec rails assets:precompile && \
 
 # Create App
 # ================
-FROM ruby:2.7.0-alpine
+FROM ruby:2.7.2-alpine
 
 RUN apk add --update --no-cache \
   tzdata \
