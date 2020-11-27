@@ -87,6 +87,8 @@ group :test do
   gem 'webmock', '~> 3.8.3', require: false
   # Clean up the messy database during tests
   gem 'database_cleaner-active_record', '>= 1.8.0', require: false
+  # Load test environment automatically
+  gem 'dotenv'
 end
 
 

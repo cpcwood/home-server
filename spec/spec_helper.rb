@@ -1,3 +1,6 @@
+require 'dotenv'
+Dotenv.load('config/env/test.env')
+
 require 'coveralls'
 Coveralls.wear!('rails')
 

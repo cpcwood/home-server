@@ -10,10 +10,10 @@ pidfile "#{shared_dir}/pids/puma.pid"
 state_path "#{shared_dir}/pids/puma.state"
 
 # Threads for serving requests
-threads 1, 2
+threads ENV.fetch('PUMA_STARTING_THREADS') { 1 }, ENV.fetch('PUMA_MAX_THREADS') { 1 }
 
 # Workers (cpu cores)
-workers ENV.fetch('WEB_CONCURRENCY') { 1 }
+workers ENV.fetch('PUMA_WEB_CONCURRENCY') { 1 }
 preload_app!
 
 # Unix socket to for nginix reverse proxy
