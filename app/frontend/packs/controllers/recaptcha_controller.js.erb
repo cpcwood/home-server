@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ['container']
 
   initialize () {
-    const siteKey = `<%= "#{Rails.application&.credentials&.recaptcha[:site_key]}" %>`;
+    const siteKey = `<%= ENV['GRECAPTCHA_SITE_KEY'] %>`;
     if (!window.grecaptcha) {
       const reCaptchaScript = document.createElement('script')
       window.reCaptchaOnload = () => {

@@ -1,7 +1,7 @@
 class PasswordMailer < ApplicationMailer
   include AttachmentHelper
 
-  default from: Rails.application.credentials.email[:no_reply_email]
+  default from: ENV['EMAIL_NO_REPLY_ADDRESS']
 
   def password_reset_email
     assign_default_variables

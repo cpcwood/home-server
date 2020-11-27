@@ -1,8 +1,8 @@
 User.create(
-  username: Rails.application.credentials.site[:admin_username],
-  email: Rails.application.credentials.site[:admin_email],
-  password: Rails.application.credentials.site[:admin_password],
-  mobile_number: Rails.application.credentials.twilio[:number])
+  username: ENV['ADMIN_USERNAME'],
+  email: ENV['ADMIN_EMAIL'],
+  password: ENV['ADMIN_PASSWORD'],
+  mobile_number: ENV['ADMIN_MOBILE_NUMBER'])
 
 site_settings = SiteSetting.create(
   name: 'home-server',

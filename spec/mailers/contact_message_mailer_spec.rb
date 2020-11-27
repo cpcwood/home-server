@@ -22,7 +22,7 @@ RSpec.describe ContactMessageMailer, type: :mailer do
     end
 
     it 'renders the sender email correctly' do
-      expect(mail.from).to eql([Rails.application.credentials.email[:no_reply_email]])
+      expect(mail.from).to eql([ENV['EMAIL_NO_REPLY_ADDRESS']])
     end
 
     it 'renders the reply to email' do
@@ -63,7 +63,7 @@ RSpec.describe ContactMessageMailer, type: :mailer do
     end
 
     it 'renders the sender email correctly' do
-      expect(mail.from).to eql([Rails.application.credentials.email[:no_reply_email]])
+      expect(mail.from).to eql([ENV['EMAIL_NO_REPLY_ADDRESS']])
     end
 
     it 'renders the subject' do
