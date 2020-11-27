@@ -13,13 +13,32 @@ services:
     volumes:
       - /var/db/psql/13:/var/lib/postgresql/data
 
-  web:
-    image: cpcwood/home-server-app-v4
+  redis:
+    image: redis
+    command: redis-server
+    volumes:
+      - /var/db/redis:/data
+
+  sidekiq:
+    image: cpcwood/home-server-app-v5
     depends_on:
       - db
+      - redis
+    command: bundle exec sidekiq -C config/sidekiq.yml
     environment:
       - RAILS_ENV=production
     env_file:
-     - ./config/env/docker.env
+      - ./config/env/docker.env
+
+  web:
+    image: cpcwood/home-server-app-v5
+    depends_on:
+      - db
+      - redis
+      - sidekiq
+    environment:
+      - RAILS_ENV=production
+    env_file:
+      - ./config/env/docker.env
     ports:
       - '80:5000'

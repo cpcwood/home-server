@@ -31,7 +31,7 @@ class Image < ApplicationRecord
     return unless attachment_changes['image_file']
     return unless respond_to?(:variant_sizes)
     variant_sizes&.each do |_size, process|
-      ProcessImageVariantJob.perform_later(model: self, variant: process)
+      ProcessImageVariantJob.set(wait: 5.seconds).perform_later(model: self, variant: process)
     end
   end
 
