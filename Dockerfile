@@ -13,6 +13,7 @@ RUN apk add --update --no-cache \
 
 ENV RAILS_ENV=production
 ENV NODE_ENV=production
+ENV SECRET_KEY_BASE=1234567890
 
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
@@ -73,10 +74,9 @@ WORKDIR $APP_HOME
 
 COPY --from=builder /app $APP_HOME
 
-ENV BUNDLE_PATH $APP_HOME/vendor/bundle
-ENV GEM_PATH $APP_HOME/vendor/bundle
-ENV GEM_HOME $APP_HOME/vendor/bundle
-COPY --from=builder /app/vendor/bundle $APP_HOME/vendor/bundle
+ENV BUNDLE_PATH=$APP_HOME/vendor/bundle
+ENV GEM_PATH=$APP_HOME/vendor/bundle
+ENV GEM_HOME=$APP_HOME/vendor/bundle
 RUN bundle config set path 'vendor/bundle' && \
   bundle config without development:test:assets
 
