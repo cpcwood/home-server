@@ -1,0 +1,16 @@
+# DOCKER TASKS
+
+# build app container
+sudo docker build --build-arg grecaptcha_site_key=<api-key> -t cpcwood/home-server-app-v<version-num> .
+
+# start standalone psql container
+sudo docker run -p 0.0.0.0:5432:5432/tcp \
+  -e POSTGRES_USER=cpcwood \
+  -e POSTGRES_PASSWORD=password \
+  -e PGDATA=/var/lib/postgresql/data/pgdata \
+  -v /var/db/psql/13:/var/lib/postgresql/data \
+  postgres
+
+
+# start prod compose
+sudo docker-compose upch

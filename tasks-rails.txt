@@ -16,5 +16,3 @@ TEST
   bundle exec rpsec
   yarn test
 
-DOCKER
-  docker build --build-arg rails_credentials_key=<production.key> -t cpcwood/home-server-app-v1 .

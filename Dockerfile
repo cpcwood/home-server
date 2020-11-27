@@ -1,3 +1,8 @@
+# home-server-app-v4
+# ================
+# build args =>
+#     grecaptcha_site_key
+
 # Compile Assets
 # ================
 FROM ruby:2.7.2-alpine as builder
@@ -19,8 +24,7 @@ ENV APP_HOME /app
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
-RUN mkdir $APP_HOME/vendor && \
-  mkdir $APP_HOME/vendor/bundle
+RUN mkdir -p $APP_HOME/vendor/bundle
 ENV BUNDLE_PATH $APP_HOME/vendor/bundle
 ENV GEM_PATH $APP_HOME/vendor/bundle
 ENV GEM_HOME $APP_HOME/vendor/bundle
@@ -37,8 +41,8 @@ RUN yarn install --check-files
 
 ADD . $APP_HOME
 
-ARG rails_credentials_key
-ENV RAILS_MASTER_KEY=$rails_credentials_key
+ARG grecaptcha_site_key
+ENV GRECAPTCHA_SITE_KEY=$grecaptcha_site_key
 
 RUN bundle exec rails assets:precompile && \
   rm -rf $APP_HOME/node_modules && \
@@ -81,4 +85,4 @@ RUN bundle config set path 'vendor/bundle' && \
   bundle config without development:test:assets
 
 EXPOSE 5000
-CMD ["bundle", "exec", "rails","server","-b","0.0.0.0", "-p", "5000"]
+CMD ["./scripts/docker-startup.sh"]
