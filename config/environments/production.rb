@@ -48,7 +48,7 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :warn
+  config.log_level = :warn 
 
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
@@ -109,19 +109,19 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
   # Active Mailer Settings
-  config.action_mailer.default_url_options = { host: Rails.application.credentials.email[:host] }
-  config.action_mailer.asset_host = Rails.application.credentials.email[:asset_host]
+  config.action_mailer.default_url_options = { host: ENV['SITE_HOST'] }
+  config.action_mailer.asset_host = ENV['EMAIL_ASSET_HOST']
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: Rails.application.credentials.email[:smtp_server_address],
-    port: Rails.application.credentials.email[:smtp_server_port],
-    user_name: Rails.application.credentials.email[:smtp_username],
-    password: Rails.application.credentials.email[:smtp_password],
-    domain: Rails.application.credentials.email[:helo_domain]
+    address: ENV['EMAIL_SMTP_SERVER_ADRESS'],
+    port: ENV['EMAIL_SMTP_SERVER_PORT'],
+    user_name: ENV['EMAIL_SMTP_USERNAME'],
+    password: ENV['EMAIL_SMTP_PASSWORD'],
+    domain: ENV['EMAIL_HELO_DOMAIN']
   }
 
   Rails.application.routes.default_url_options = { 
-    host: Rails.application.credentials.site[:domain], 
+    host: ENV['SITE_HOST'], 
     protocol: 'https' 
   }
 

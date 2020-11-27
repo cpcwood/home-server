@@ -12,4 +12,4 @@ const context = require.context("./controllers", true, /\.js(?:.erb)?$/)
 application.load(definitionsFromContext(context))
 
 // Welcome Message
-console.log('Welcome to <%= Rails.application.credentials.email[:host] %> :)')
+console.log('Welcome to <%= ENV['SITE_HOST'] %> :)')

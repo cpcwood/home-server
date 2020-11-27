@@ -16,7 +16,7 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Renders the sender email correctly' do
-      expect(mail.from).to eql([Rails.application.credentials.email[:no_reply_email]])
+      expect(mail.from).to eql([ENV['EMAIL_NO_REPLY_ADDRESS']])
     end
 
     it 'Renders the subject' do
@@ -33,11 +33,11 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Provides contact email' do
-      expect(mail.body.encoded).to match("please contact #{Rails.application.credentials.email[:default_email]}")
+      expect(mail.body.encoded).to match("please contact #{ENV['EMAIL_DEFAULT_ADDRESS']}")
     end
 
     it 'Renders signoff with company name' do
-      expect(mail.body.encoded).to match(/Thanks[\w\W]+<br>[\w\W]+<br>[\w\W]+#{Rails.application.credentials.email[:company_name]}/)
+      expect(mail.body.encoded).to match(/Thanks[\w\W]+<br>[\w\W]+<br>[\w\W]+#{ENV['EMAIL_COMPANY_NAME']}/)
     end
 
     it 'Renders attached header image path' do
@@ -58,7 +58,7 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Renders the sender email correctly' do
-      expect(mail.from).to eql([Rails.application.credentials.email[:no_reply_email]])
+      expect(mail.from).to eql([ENV['EMAIL_NO_REPLY_ADDRESS']])
     end
 
     it 'Renders the subject' do
@@ -70,11 +70,11 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Provides contact email' do
-      expect(mail.body.encoded).to match("please contact #{Rails.application.credentials.email[:default_email]}")
+      expect(mail.body.encoded).to match("please contact #{ENV['EMAIL_DEFAULT_ADDRESS']}")
     end
 
     it 'Renders signoff with company name' do
-      expect(mail.body.encoded).to match(/Thanks[\w\W]+<br>[\w\W]+<br>[\w\W]+#{Rails.application.credentials.email[:company_name]}/)
+      expect(mail.body.encoded).to match(/Thanks[\w\W]+<br>[\w\W]+<br>[\w\W]+#{ENV['EMAIL_COMPANY_NAME']}/)
     end
 
     it 'Renders time at which account was updated' do

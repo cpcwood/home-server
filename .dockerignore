@@ -29,10 +29,12 @@ tmp
 *.log
 *.state
 *.pid
+.env
 
 # others
 .git
 .gitignore
+.keep
 README.md
 .vscode
 .byebug_history
