@@ -37,7 +37,7 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Renders signoff with company name' do
-      expect(mail.body.encoded).to match(/Thanks[\w\W]+<br>[\w\W]+<br>[\w\W]+#{ENV['EMAIL_COMPANY_NAME']}/)
+      expect(mail.body.encoded).to match(/Thanks[\w\W]+<br>[\w\W]+<br>[\w\W]+#{ENV['EMAIL_DEFAULT_NAME']}/)
     end
 
     it 'Renders attached header image path' do
@@ -74,7 +74,7 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Renders signoff with company name' do
-      expect(mail.body.encoded).to match(/Thanks[\w\W]+<br>[\w\W]+<br>[\w\W]+#{ENV['EMAIL_COMPANY_NAME']}/)
+      expect(mail.body.encoded).to match(/Thanks[\w\W]+<br>[\w\W]+<br>[\w\W]+#{ENV['EMAIL_DEFAULT_NAME']}/)
     end
 
     it 'Renders time at which account was updated' do
