@@ -127,5 +127,4 @@ Rails.application.configure do
 
   # Active Job Settings
   config.active_job.queue_adapter = :sidekiq
-  config.active_storage.variant_processor = :vips
 end
