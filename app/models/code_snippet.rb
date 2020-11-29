@@ -40,6 +40,6 @@ class CodeSnippet < ApplicationRecord
   after_commit :render_code_snippet
 
   def render_code_snippet
-    RenderCodeSnippetJob.perform_later(model: create_code_snippet_image, snippet: snippet, extension: extension) if snippet_previously_changed?
+    RenderCodeSnippetJob.set(wait: 5.seconds).perform_later(model: create_code_snippet_image, snippet: snippet, extension: extension) if snippet_previously_changed?
   end
 end
