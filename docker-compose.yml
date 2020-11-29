@@ -20,7 +20,7 @@ services:
       - /var/db/redis:/data
 
   sidekiq:
-    image: cpcwood/home-server-sidekiq-v2
+    image: cpcwood/home-server-sidekiq-v3
     depends_on:
       - db
       - redis
