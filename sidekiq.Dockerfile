@@ -22,6 +22,7 @@ RUN apk add --no-cache \
   ttf-freefont \
   nodejs \
   yarn \
+  imagemagick \
   git && \
   cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
   echo "Europe/London" > /etc/timezone
