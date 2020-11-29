@@ -20,7 +20,7 @@ services:
       - /var/db/redis:/data
 
   sidekiq:
-    image: cpcwood/home-server-sidekiq-v1
+    image: cpcwood/home-server-sidekiq-v2
     depends_on:
       - db
       - redis
@@ -30,7 +30,7 @@ services:
     env_file:
       - ./config/env/docker.env
     security_opt:
-      - seccomp:"./chrome.json"
+      - seccomp:"./config/chrome.json"
 
   web:
     image: cpcwood/home-server-app-v5
