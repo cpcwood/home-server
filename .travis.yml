@@ -3,9 +3,8 @@ rvm: 2.7.2
 env:
   - DB_USERNAME='cpcwood' DB_PASSWORD='password'
 before_install:
-  - echo $DB_USERNAME
-  - echo $DB_PASSWORD
-  - psql -c "CREATE USER $($DB_USERNAME) SUPERUSER LOGIN CREATEDB UNENCRYPTED PASSWORD $($DB_PASSWORD);" -U postgres
+  - echo "CREATE USER $($DB_USERNAME) SUPERUSER LOGIN CREATEDB UNENCRYPTED PASSWORD '$($DB_PASSWORD)';"
+  - psql -c "CREATE USER $($DB_USERNAME) SUPERUSER LOGIN CREATEDB UNENCRYPTED PASSWORD '$($DB_PASSWORD)';" -U postgres
   - nvm install 14
   - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
   - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
