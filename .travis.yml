@@ -1,5 +1,7 @@
 language: ruby
 rvm: 2.7.2
+env:
+  - DB_USERNAME=cpcwood DB_PASSWORD=password
 before_install:
   - psql -c 'CREATE ROLE cpcwood SUPERUSER LOGIN CREATEDB PASSWORD password;' -U postgres
   - nvm install 14
@@ -12,9 +14,6 @@ cache:
   yarn: true
   directories:
     - node_modules
-env:
-  - DB_USERNAME=cpcwood
-  - DB_PASSWORD=password
 before_script:
   - bundle install --without development
   - yarn install
