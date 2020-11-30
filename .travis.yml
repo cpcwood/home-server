@@ -3,7 +3,7 @@ rvm: 2.7.2
 env:
   - DB_USERNAME=cpcwood DB_PASSWORD=password
 before_install:
-  - psql -c 'CREATE ROLE cpcwood SUPERUSER LOGIN CREATEDB PASSWORD 'password';' -U postgres
+  - psql -c 'CREATE ROLE cpcwood SUPERUSER LOGIN CREATEDB UNENCRYPTED PASSWORD 'password';' -U postgres
   - nvm install 14
   - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
   - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
