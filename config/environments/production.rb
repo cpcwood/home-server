@@ -113,11 +113,12 @@ Rails.application.configure do
   config.action_mailer.asset_host = ENV['EMAIL_ASSET_HOST']
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV['EMAIL_SMTP_SERVER_ADRESS'],
+    address: ENV['EMAIL_SMTP_SERVER_ADDRESS'],
     port: ENV['EMAIL_SMTP_SERVER_PORT'],
     user_name: ENV['EMAIL_SMTP_USERNAME'],
     password: ENV['EMAIL_SMTP_PASSWORD'],
-    domain: ENV['EMAIL_HELO_DOMAIN']
+    domain: ENV['EMAIL_HELO_DOMAIN'],
+    tls: true
   }
 
   Rails.application.routes.default_url_options = { 
