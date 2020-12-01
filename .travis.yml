@@ -25,7 +25,7 @@ script:
   - yarn test
   - yarn lint
 after_success: 
-  - ./scripts/merge_script.sh
+  - ./scripts/travis-ci-merge-script.sh
 services:
   - postgresql
 repo_token:
