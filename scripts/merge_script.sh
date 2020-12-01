@@ -16,7 +16,7 @@ git checkout "$TRAVIS_BRANCH"
 
 printf 'Merging %s\n' "$TRAVIS_PULL_REQUEST_BRANCH"
 commit_messsage="TRAVIS-CI auto-merge $TRAVIS_PULL_REQUEST_BRANCH into $TRAVIS_BRANCH"
-git merge -m "$commit_messsage" "$TRAVIS_PULL_REQUEST_BRANCH"
+git merge -m "$commit_messsage" "$TRAVIS_PULL_REQUEST_SHA"
 
 printf 'Pushing to %s\n' "$TRAVIS_REPO_SLUG"
 push_uri="https://$GITHUB_SECRET_TOKEN@github.com/$TRAVIS_REPO_SLUG"
