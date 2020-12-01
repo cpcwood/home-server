@@ -1,35 +1,25 @@
 
 #!/bin/bash -e
-echo test
-printenv
-: "$TRAVIS_COMMIT" "$TRAVIS_BRANCH"
-: "$BRANCHES_TO_MERGE_REGEX" "$BRANCH_TO_MERGE_INTO"
-: "$GITHUB_REPO"
-: "$GIT_COMMITTER_EMAIL" "$GIT_COMMITTER_NAME"
+: "
+Repo: $TRAVIS_REPO_SLUG 
+Merging: $TRAVIS_BRANCH << $TRAVIS_PULL_REQUEST_BRANCH
+User: $GIT_COMMITTER_EMAIL $GIT_COMMITTER_NAME
+"
 
-# if ! grep -q "$BRANCHES_TO_MERGE_REGEX" <<< "$TRAVIS_BRANCH"; then
-#     printf "Current branch %s doesn't match regex %s, exiting\\n" \
-#         "$TRAVIS_BRANCH" "$BRANCHES_TO_MERGE_REGEX" >&2
-#     exit 0
-# fi
+# Checkout full repo
+repo_temp=$(mktemp -d)
+git clone "https://github.com/$TRAVIS_REPO_SLUG" "$repo_temp"
+cd $repo_temp
 
-# # Since Travis does a partial checkout, we need to get the whole thing
-# repo_temp=$(mktemp -d)
-# git clone "https://github.com/$GITHUB_REPO" "$repo_temp"
+printf 'Checking out %s\n' $TRAVIS_BRANCH
+git checkout $TRAVIS_BRANCH
 
-# # shellcheck disable=SC2164
-# cd "$repo_temp"
+printf 'Merging %s\n' $TRAVIS_PULL_REQUEST_BRANCH
+commit_messsage="TRAVIS-CI auto-merge $TRAVIS_PULL_REQUEST_BRANCH into $TRAVIS_BRANCH"
+git merge -m $commit_messsage $TRAVIS_PULL_REQUEST_BRANCH
 
-# printf 'Checking out %s\n' "$BRANCH_TO_MERGE_INTO" >&2
-# git checkout "$BRANCH_TO_MERGE_INTO"
+printf 'Pushing to %s\n' $TRAVIS_REPO_SLUG
+push_uri="https://$GITHUB_SECRET_TOKEN@github.com/$TRAVIS_REPO_SLUG"
 
-# printf 'Merging %s\n' "$TRAVIS_COMMIT" >&2
-# git merge --ff-only "$TRAVIS_COMMIT"
-
-# printf 'Pushing to %s\n' "$GITHUB_REPO" >&2
-
-# push_uri="https://$GITHUB_SECRET_TOKEN@github.com/$GITHUB_REPO"
-
-# # Redirect to /dev/null to avoid secret leakage
-# git push "$push_uri" "$BRANCH_TO_MERGE_INTO" >/dev/null 2>&1
-# git push "$push_uri" :"$TRAVIS_BRANCH" >/dev/null 2>&1
+# Redirect to /dev/null to avoid secret leakage
+git push $push_uri $BRANCH_TO_MERGE_INTO >/dev/null 2>&1
