@@ -1,7 +1,7 @@
 
 #!/bin/bash -e
 # TravisCI Automerge PR Script
-
+printenv
 if [ -z "$TRAVIS_REPO_SLUG" ] || \
     [ -z "$TRAVIS_PULL_REQUEST_BRANCH" ] || \
     [ -z "$TRAVIS_BRANCH" ] || \
