@@ -1,7 +1,17 @@
 language: ruby
 rvm: 2.7.2
 env:
-  - DB_USERNAME=cpcwood DB_PASSWORD=password
+  global:
+    - secure: "ih+67Qt0YioAn+F++HzxXCXLd+QxoqGmgOb1OeN+gA+HtpoMFH50hTfvGBJcClClYjGXy8ELmoenCrRPVlAQBIlLuN2Tgfxr5cB1AqkRKyt0/z3+DF/DeZZbI7hziQDvOnPUa3f7pQgoOJ3u/j2sKgU9ZY93Uk6whCTFu1wBR9F8K4vmKtUpUc0PhfuXBwUqNAwVzBpwq3pou3UW6y3u3bqL0YveBWqls4q00+4hQQ/LpE47MIyga0D5X1TU00q9XxoItWafXX6l6UT/DYIhFKB4BwpTe+Bsd7ER4fPPq4gKu8YWOXOXjyfBZyv7UCPeX4ZP70R32UzlfXlpJb55TRkCTgXPZXMdaq/4oLp11Ytzpqr2PF5SKOvefjfnz6DcaG5n+AhIOFThE4rFVqrN+Om8nLi6Rn3DBzWwoM1iEoOePxovUVsUBWZU9Jq02GYEPLaOzwQqxyTkZoopy/RtBSyjrTN6EQX++KyoRZC05tC/pIOzUs+yhgqneIKiR9TCaodx2ABlX/eQwDI8voNoFYpnurMKWQu5cUIDIxoKlPnWH1Oa9e/SkrHMlwifGdHo/ugaJHsPxVjnR8sn0u7zdMwc6P2Nrv7reCsnYRnMA/ena/Mm7cRvDnxSo6lrZNu6iY7M7m2rlb4Ardas6fRBNoMb/IXCDPA3Q2x3de3ZT4Q="
+  jobs:
+    - DB_USERNAME=cpcwood DB_PASSWORD=password
+services:
+  - postgresql
+cache:
+  bundler: true
+  yarn: true
+  directories:
+    - node_modules
 before_install:
   - psql -c "CREATE ROLE $DB_USERNAME SUPERUSER LOGIN CREATEDB UNENCRYPTED PASSWORD '$DB_PASSWORD';" -U postgres
   - nvm install 14
@@ -9,11 +19,6 @@ before_install:
   - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
   - sudo apt-get update && sudo apt-get install yarn
   - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-cache:
-  bundler: true
-  yarn: true
-  directories:
-    - node_modules
 before_script:
   - bundle install --without development
   - yarn install
@@ -26,6 +31,3 @@ script:
   - yarn lint
 after_success: 
   - ./scripts/travis-ci-merge-script.sh
-services:
-  - postgresql
-secure: "ih+67Qt0YioAn+F++HzxXCXLd+QxoqGmgOb1OeN+gA+HtpoMFH50hTfvGBJcClClYjGXy8ELmoenCrRPVlAQBIlLuN2Tgfxr5cB1AqkRKyt0/z3+DF/DeZZbI7hziQDvOnPUa3f7pQgoOJ3u/j2sKgU9ZY93Uk6whCTFu1wBR9F8K4vmKtUpUc0PhfuXBwUqNAwVzBpwq3pou3UW6y3u3bqL0YveBWqls4q00+4hQQ/LpE47MIyga0D5X1TU00q9XxoItWafXX6l6UT/DYIhFKB4BwpTe+Bsd7ER4fPPq4gKu8YWOXOXjyfBZyv7UCPeX4ZP70R32UzlfXlpJb55TRkCTgXPZXMdaq/4oLp11Ytzpqr2PF5SKOvefjfnz6DcaG5n+AhIOFThE4rFVqrN+Om8nLi6Rn3DBzWwoM1iEoOePxovUVsUBWZU9Jq02GYEPLaOzwQqxyTkZoopy/RtBSyjrTN6EQX++KyoRZC05tC/pIOzUs+yhgqneIKiR9TCaodx2ABlX/eQwDI8voNoFYpnurMKWQu5cUIDIxoKlPnWH1Oa9e/SkrHMlwifGdHo/ugaJHsPxVjnR8sn0u7zdMwc6P2Nrv7reCsnYRnMA/ena/Mm7cRvDnxSo6lrZNu6iY7M7m2rlb4Ardas6fRBNoMb/IXCDPA3Q2x3de3ZT4Q="
