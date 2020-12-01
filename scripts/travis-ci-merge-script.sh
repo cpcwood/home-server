@@ -36,3 +36,4 @@ push_uri="https://$GITHUB_SECRET_TOKEN@github.com/$TRAVIS_REPO_SLUG"
 
 # Redirect to /dev/null to avoid secret leakage
 git push "$push_uri" "$TRAVIS_BRANCH" >/dev/null 2>&1
+git push "$push_uri" :"$TRAVIS_PULL_REQUEST_BRANCH" >/dev/null 2>&1
