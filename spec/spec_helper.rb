@@ -1,6 +1,7 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require 'dotenv'
+Dotenv.load('config/env/test-defaults.env')
 Dotenv.load('config/env/test.env')
 
 require 'coveralls'
