@@ -2,13 +2,13 @@
 #!/bin/bash -e
 # TravisCI Automerge PR Script
 
-if [[ -z ${$TRAVIS_REPO_SLUG+x} || \
-    -z ${$TRAVIS_PULL_REQUEST_BRANCH+x} || \
-    -z ${$TRAVIS_BRANCH+x} || \
-    -z ${$TRAVIS_PULL_REQUEST_SHA+x} || \
-    -z ${$GITHUB_SECRET_TOKEN+x} || \
-    -z ${$GIT_COMMITTER_EMAIL+x} || \
-    -z ${$GIT_COMMITTER_NAME+x} ]]; then
+if [ -z "$TRAVIS_REPO_SLUG" ] || \
+    [ -z "$TRAVIS_PULL_REQUEST_BRANCH" ] || \
+    [ -z "$TRAVIS_BRANCH" ] || \
+    [ -z "$TRAVIS_PULL_REQUEST_SHA" ] || \
+    [ -z "$GITHUB_SECRET_TOKEN" ] || \
+    [ -z "$GIT_COMMITTER_EMAIL" ] || \
+    [ -z "$GIT_COMMITTER_NAME" ]; then
     >&2 echo 'Required variable unset, automerging failed'
     exit 1
 fi
