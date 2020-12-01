@@ -1,9 +1,9 @@
 
 #!/bin/bash -e
 echo : "
+Travis-ci automerge pull request script
 Repo: $TRAVIS_REPO_SLUG 
-Merging: $TRAVIS_BRANCH << $TRAVIS_PULL_REQUEST_BRANCH
-User: $GIT_COMMITTER_NAME
+Merging: $TRAVIS_PULL_REQUEST_BRANCH >> $TRAVIS_BRANCH 
 "
 
 # Checkout full repo
@@ -22,4 +22,4 @@ printf 'Pushing to %s\n' "$TRAVIS_REPO_SLUG"
 push_uri="https://$GITHUB_SECRET_TOKEN@github.com/$TRAVIS_REPO_SLUG"
 
 # Redirect to /dev/null to avoid secret leakage
-git push "$push_uri" "$BRANCH_TO_MERGE_INTO" >/dev/null 2>&1
+git push "$push_uri" "$TRAVIS_BRANCH" >/dev/null 2>&1
