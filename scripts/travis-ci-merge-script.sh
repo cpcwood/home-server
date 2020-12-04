@@ -1,6 +1,11 @@
 
-#!/bin/bash -e
+#!/bin/bash -ev
 # TravisCI Automerge PR Script
+
+if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
+    >&2 echo 'Not in pull request, skipping automerge'
+    exit 1
+fi
 
 if [ -z "$TRAVIS_REPO_SLUG" ] || \
     [ -z "$TRAVIS_PULL_REQUEST_BRANCH" ] || \
