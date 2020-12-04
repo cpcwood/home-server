@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-server-db-deployment
+  labels:
+    cpcwood.com/name: postgres
+    cpcwood.com/instance: postgres-13
+    cpcwood.com/version: '13'
+    cpcwood.com/component: database
+    cpcwood.com/part-of: home-server
+    cpcwood.com/managed-by: cpcwood
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: home-server-db
+  template:
+    metadata:
+      labels:
+        app: home-server-db
+    spec:
+      containers:
+        - name: home-server-db
+          image: postgres:13-alpine
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: home-server-db-storage
+          env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          envFrom:
+            - configMapRef:
+                name: home-server-db-config
+      volumes:
+        - name: home-server-db-storage
+          persistentVolumeClaim:
+            claimName: home-server-db-volume-claim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: home-server-db-service
+spec:
+  selector:
+    app: home-server-db
+  ports:
+    - name: psql
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
+
+---

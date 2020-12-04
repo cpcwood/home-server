@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-server-app-deployment
+  labels:
+    cpcwood.com/name: home-server-app
+    cpcwood.com/instance: home-server-app-v5
+    cpcwood.com/version: "5.0.0"
+    cpcwood.com/component: application-server
+    cpcwood.com/part-of: home-server
+    cpcwood.com/managed-by: cpcwood
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: home-server-app
+  template:
+    metadata:
+      labels:
+        app: home-server-app
+    spec:
+      containers:
+      - name: home-server-app
+        image: cpcwood/home-server-app-v5
+        ports:
+        - containerPort: 5000
+        envFrom:
+          - configMapRef:
+              name: home-server-app-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: home-server-app-service
+spec:
+  selector:
+    app: home-server-app
+  ports:
+    - name: http-proxy
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+
+---

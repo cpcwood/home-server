@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-server-sidekiq-deployment
+  labels:
+    cpcwood.com/name: home-server-sidekiq
+    cpcwood.com/instance: home-server-sidekiq-v4
+    cpcwood.com/version: '4.0.0'
+    cpcwood.com/component: background-worker
+    cpcwood.com/part-of: home-server
+    cpcwood.com/managed-by: cpcwood
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: home-server-sidekiq
+  template:
+    metadata:
+      labels:
+        app: home-server-sidekiq
+    spec:
+      containers:
+        - name: home-server-sidekiq
+          image: cpcwood/home-server-sidekiq-v4
+          envFrom:
+            - configMapRef:
+                name: home-server-app-config
