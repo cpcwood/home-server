@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,13 +21,13 @@ spec:
         app: home-server-app
     spec:
       containers:
-      - name: home-server-app
-        image: cpcwood/home-server-app-v5
-        ports:
-        - containerPort: 5000
-        envFrom:
-          - configMapRef:
-              name: home-server-app-config
+        - name: home-server-app
+          image: cpcwood/home-server-app-v5
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: home-server-app-config
 
 ---
 apiVersion: v1
