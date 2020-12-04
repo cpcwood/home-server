@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -5,3 +6,5 @@ metadata:
 data:
   POSTGRES_USER: <prod-psql-user>
   POSTGRES_PASSWORD: <prod-psql-password>
+
+---

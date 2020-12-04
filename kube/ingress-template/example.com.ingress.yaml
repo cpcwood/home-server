@@ -17,12 +17,12 @@ spec:
     - host: example.com
       http:
         paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: home-server-app-service
-              port:
-                number: 5000
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: home-server-app-service
+                port:
+                  number: 5000
 
 ---
