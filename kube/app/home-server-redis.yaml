@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-server-redis-deployment
+  labels:
+    cpcwood.com/name: redis
+    cpcwood.com/instance: redis-latest
+    cpcwood.com/version: 'latest'
+    cpcwood.com/component: key-value-store
+    cpcwood.com/part-of: home-server
+    cpcwood.com/managed-by: cpcwood
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: home-server-redis
+  template:
+    metadata:
+      labels:
+        app: home-server-redis
+    spec:
+      containers:
+        - name: home-server-redis
+          image: redis:alpine
+          command:
+            - redis-server
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - mountPath: /data
+              name: home-server-redis-storage
+      volumes:
+        - name: home-server-redis-storage
+          persistentVolumeClaim:
+            claimName: home-server-redis-volume-claim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: home-server-redis-service
+spec:
+  selector:
+    app: home-server-redis
+  ports:
+    - name: redis
+      protocol: TCP
+      port: 6379
+      targetPort: 6379
+---
