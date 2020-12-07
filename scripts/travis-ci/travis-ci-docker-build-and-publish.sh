@@ -9,20 +9,23 @@ if [ -z "$DOCKER_IMAGE_NAME" ] || \
     exit 1
 fi
 
+branch_head_commit=$(git rev-parse --short=6 HEAD)
+full_docker_image_name="$DOCKER_IMAGE_NAME:$branch_head_commit"
+
 echo : "
-Travis-ci docker build and publishscript
+Travis-ci docker build and publish script
 Repo: $TRAVIS_REPO_SLUG
-Image: $DOCKER_IMAGE_NAME
+Image: $full_docker_image_name
 "
 
 # Clean repo
 git clean
 
 # Build image
-docker build -t "$DOCKER_IMAGE_NAME" .
+docker build -t "$full_docker_image_name" .
 
 # Login to docker
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
 
 # Publish to dockerhub
-docker push "$DOCKER_IMAGE_NAME"
+docker push "$full_docker_image_name"
