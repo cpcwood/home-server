@@ -13,7 +13,7 @@ branch_head_commit=$(git rev-parse --short=6 HEAD)
 full_docker_image_name="$DOCKER_IMAGE_NAME:$branch_head_commit"
 
 echo : "
-Travis-ci docker build and publish script
+Travis-CI docker build and publish script
 Repo: $TRAVIS_REPO_SLUG
 Image: $full_docker_image_name
 "
