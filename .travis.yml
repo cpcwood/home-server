@@ -33,7 +33,11 @@ script:
 after_success:
   - ./scripts/travis-ci/travis-ci-merge-script.sh
 deploy:
-  provider: script
-  script: bash ./scripts/travis-ci/travis-ci-docker-build-and-publish.sh
-  on:
-    branch: master
+  - provider: script
+    script: bash ./scripts/travis-ci/travis-ci-docker-build-and-publish.sh
+    on:
+      branch: master
+  - provider: script
+    script: bash ./scripts/travis-ci-kube-autodeploy.sh
+    on:
+      branch: master
