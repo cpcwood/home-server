@@ -5,7 +5,7 @@
 
 # Compile Assets
 # ================
-FROM alpine:latest as server-rails-assets
+FROM alpine:edge as server-rails-assets
 
 RUN apk add --no-cache \
   build-base \
@@ -63,7 +63,7 @@ RUN addgroup -S home-server && \
 
 # Create Server NodeJS Assets
 # ================
-FROM alpine:latest as server-nodejs-assets
+FROM alpine:edge as server-nodejs-assets
 
 RUN apk add --no-cache \
   nodejs \
@@ -87,7 +87,7 @@ RUN addgroup -S home-server && \
 
 # Create App
 # ================
-FROM alpine:latest
+FROM alpine:edge
 
 RUN apk add --no-cache \
   tzdata \

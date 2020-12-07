@@ -6,7 +6,7 @@
 
 # Compile Assets
 # ================
-FROM alpine:latest as server-rails-assets
+FROM alpine:edge as server-rails-assets
 
 RUN apk add --no-cache \
   build-base \
@@ -64,7 +64,7 @@ RUN addgroup -S home-server && \
 
 # Create App
 # ================
-FROM alpine:latest
+FROM alpine:edge
 
 RUN apk add --no-cache \
   tzdata \
