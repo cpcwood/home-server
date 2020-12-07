@@ -1,6 +1,5 @@
-
 #!/bin/bash -ev
-# TravisCI Automerge PR Script
+# TravisCI Automerge GitHub PR Script
 
 if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
     >&2 echo 'Not in pull request, skipping automerge'

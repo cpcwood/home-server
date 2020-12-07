@@ -2,34 +2,38 @@ language: ruby
 rvm: 2.7.2
 env:
   global:
-  - secure: haAd+u+eApObQEJwW5LP5I0hx8QihSdiRuyHBd5F/obQRA8WToSG0iWKw0dwjjHAmfOUe+9SA8ZMXf+WYsf7L1qcYQwMFDMttl6vZ8hVzOY0beww9MUZ0Y/siu1T99+fAst4kmHeQ1aTZHUJn0U7CLB0yBjGjdhVi34DuyM5zD9OTFb1aJ514ApXVWTkVinOEcnsE4S1Up3fuGtU0Az+HsVBeTztwbJy8IT1FFbJ+jtQUlf+J4YSdBlpP2P7BfxaAc7KpLttBlCHMo6OJv20uueAu877sJAWoW+zO9pbatl309JDULPmEln+bmVzeE7qQ9PUw9pfL5TKJvXuZlyF1rBN4I+/ph3vACAWgsf09Tvgfcz+sMNSP6AZAR++60DIsmeNxWY9oIZHIm/lhTjXbW1IZBSXw+/nbPR/8ZUhBp1jW2wkX6KqJqNfatfK/yE8f9E32/O63/GQrd9GHPb8LbDmGg5E7J4Uu2KH3smwlz38Ppcs3rymH1ZjPUTRCIaH36SP7O1hlQR5L5vT+pTvhJHIe4/Z5RbSzWNWwMtqxo7+huAvwKbPm6k77mMF+orPdBB3c5IT16AW3Rc0l1i0n+ti2JaoFFStuNCCBOUxT/ZsJAoFQARWRTgJsygIZohYCP7R10DVs1EXRHPDTZS60KT2Z0y6ziQvBLZEusRbB7g=
-  jobs:
-  - DB_USERNAME=cpcwood DB_PASSWORD=password
+    - secure: "haAd+u+eApObQEJwW5LP5I0hx8QihSdiRuyHBd5F/obQRA8WToSG0iWKw0dwjjHAmfOUe+9SA8ZMXf+WYsf7L1qcYQwMFDMttl6vZ8hVzOY0beww9MUZ0Y/siu1T99+fAst4kmHeQ1aTZHUJn0U7CLB0yBjGjdhVi34DuyM5zD9OTFb1aJ514ApXVWTkVinOEcnsE4S1Up3fuGtU0Az+HsVBeTztwbJy8IT1FFbJ+jtQUlf+J4YSdBlpP2P7BfxaAc7KpLttBlCHMo6OJv20uueAu877sJAWoW+zO9pbatl309JDULPmEln+bmVzeE7qQ9PUw9pfL5TKJvXuZlyF1rBN4I+/ph3vACAWgsf09Tvgfcz+sMNSP6AZAR++60DIsmeNxWY9oIZHIm/lhTjXbW1IZBSXw+/nbPR/8ZUhBp1jW2wkX6KqJqNfatfK/yE8f9E32/O63/GQrd9GHPb8LbDmGg5E7J4Uu2KH3smwlz38Ppcs3rymH1ZjPUTRCIaH36SP7O1hlQR5L5vT+pTvhJHIe4/Z5RbSzWNWwMtqxo7+huAvwKbPm6k77mMF+orPdBB3c5IT16AW3Rc0l1i0n+ti2JaoFFStuNCCBOUxT/ZsJAoFQARWRTgJsygIZohYCP7R10DVs1EXRHPDTZS60KT2Z0y6ziQvBLZEusRbB7g="
+    - secure: "lC3bB2/zUKrGMucolhPwtn0ytzlIsMbI7GM6e66tHU/CaZ2HtcCNuUCPdykRi2bOoYMjrcBuYnhY4zb8qO0FwvLpet/VDvXzyOg4GfHaCA2n37zMj23DVQQ3hBSIchF8zSl3IQqaXRwWrVhL4LO3DAKOyCP/7PAdpx57tL1nNTkBzlxTJIXyjWGNPZnQUgu6/jAFKy9IYd82LqwTyKGyaBeH2/d22T5BYCA9paWEnQc8WwRL/RopbZEdJcLibDe/fxzoe5DvAl6i021GoihHRZGD5HRtwXrK24CBfh0f41Adg85Ckwt+ChhqlNql95yrP1NdnNpqTi+OCcLY7fFm5oNhrNFlhjcARcQYZ2dgP9IxDrPohfFy2hH0votP2r/uXmn/O5Tr058XySKVbQtif7BhOtsg29PrLPVFYLyIes+kM0XBkU1/lWvs5e3/6MIPTvbHznF050Awt6raIwIlyM6lm3hMURFEy/lpnrgJQ/Vb2hKnHMRAzXRRKQRcaWsxVQ+M1TucwvMaLALJXOpQ2NXL3xGMm4YV5VsM1CW49JT1MiSWOyI3I6tsIhCxk6ArkPv/+oYnUWUp96eZdwzWxEnKGX9EuHel1UdYcMtwECbTJDId0L5QSE+6CJeJN9jB7SMXrcdfImw73P+jVRFI1BnMUfUyzE64BuLvVwLZk6U="
+    - DB_USERNAME=cpcwood DB_PASSWORD=password DOCKER_IMAGE_NAME=cpcwood/home-server-app DOCKER_USERNAME=cpcwood 
 services:
 - postgresql
 cache:
   bundler: true
   yarn: true
   directories:
-  - node_modules
+    - node_modules
 before_install:
-- psql -c "CREATE ROLE $DB_USERNAME SUPERUSER LOGIN CREATEDB UNENCRYPTED PASSWORD
-  '$DB_PASSWORD';" -U postgres
-- nvm install 14
-- curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-- echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-- sudo apt-get update && sudo apt-get install yarn
-- echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl
-  -p
+  - psql -c "CREATE ROLE $DB_USERNAME SUPERUSER LOGIN CREATEDB UNENCRYPTED PASSWORD
+    '$DB_PASSWORD';" -U postgres
+  - nvm install 14
+  - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+  - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+  - sudo apt-get update && sudo apt-get install yarn
+  - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 before_script:
-- bundle install --without development
-- yarn install
-- bundle exec rails db:create db:migrate
-- bundle exec rails webpacker:compile
+  - bundle install --without development
+  - yarn install
+  - bundle exec rails db:create db:migrate
+  - bundle exec rails webpacker:compile
 script:
-- bundle exec rspec
-- bundle exec rubocop -a -c ./.rubocop.yml
-- yarn test
-- yarn lint
+  - bundle exec rspec
+  - bundle exec rubocop -a -c ./.rubocop.yml
+  - yarn test
+  - yarn lint
 after_success:
-- "./scripts/travis-ci-merge-script.sh"
+  - ./scripts/travis-ci/travis-ci-merge-script.sh
+deploy:
+  provider: script
+  script: ./scripts/travis-ci/travis-ci-docker-build-and-publish.sh
+  on:
+    branch: master
