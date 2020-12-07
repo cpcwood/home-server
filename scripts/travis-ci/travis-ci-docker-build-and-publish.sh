@@ -5,7 +5,8 @@
 if [ -z "$DOCKER_IMAGE_NAME_APP" ] || \
     [ -z "$DOCKER_IMAGE_NAME_SIDEKIQ" ] || \
     [ -z "$DOCKER_USERNAME" ] || \
-    [ -z "$DOCKER_PASSWORD" ]; then
+    [ -z "$DOCKER_PASSWORD" ] || \
+    [ -z "$GRECAPTCHA_SITE_KEY" ]; then
     >&2 echo 'Required variable unset, docker build and deploy failed'
     exit 1
 fi
@@ -17,19 +18,22 @@ full_docker_image_name_sidekiq="$DOCKER_IMAGE_NAME_SIDEKIQ:$branch_head_commit"
 echo : "
 Travis-CI docker build and publish script
 Repo: $TRAVIS_REPO_SLUG
-Images: 
+Images:
   - $full_docker_image_name_app
   - $full_docker_image_name_sidekiq
 "
 
-# Clean repo
-git clean
-
 # Build app image
-docker build -t "$full_docker_image_name_app" .
+echo "Building Image: $full_docker_image_name_app"
+docker build -t "$full_docker_image_name_app" \
+    --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
+    .
 
 # Build worker image
-docker build -t "$full_docker_image_name_sidekiq" ./sidekiq.Dockerfile
+echo "Building Image: $full_docker_image_name_sidekiq"
+docker build -t "$full_docker_image_name_sidekiq" \
+    --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
+    -f ./sidekiq.Dockerfile
 
 # Login to docker
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
