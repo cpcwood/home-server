@@ -14,15 +14,15 @@ Temporary Items
 
 
 # Rails
-coverage
-log
-node_modules
-public/packs
-public/packs-test
+coverage/
+log/
+node_modules/
+public/packs/
+public/packs-test/
 public/system
-spec
-storage
-tmp
+spec/
+storage/
+tmp/
 .bundle
 .ruby-version
 *.key
@@ -32,10 +32,10 @@ tmp
 .env
 
 # others
+kube/
 .git
 .gitignore
 .keep
-README.md
 .vscode
 .byebug_history
 .erb-lint.yml
@@ -50,3 +50,4 @@ Profile.dev
 tasks.txt
 yarn-error.log
 logfile
+
