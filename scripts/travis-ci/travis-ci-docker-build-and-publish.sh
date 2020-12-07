@@ -15,6 +15,9 @@ Repo: $TRAVIS_REPO_SLUG
 Image: $DOCKER_IMAGE_NAME
 "
 
+# Clean repo
+git clean
+
 # Build image
 docker build -t "$DOCKER_IMAGE_NAME" .
 
