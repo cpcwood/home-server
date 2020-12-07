@@ -11,7 +11,7 @@ if [ -z "$DOCKER_IMAGE_NAME_APP" ] || \
     exit 1
 fi
 
-branch_head_commit=$(git rev-parse --short=6 HEAD)
+branch_head_commit=$(git rev-parse --short=8 HEAD)
 full_docker_image_name_app="$DOCKER_IMAGE_NAME_APP:$branch_head_commit"
 full_docker_image_name_sidekiq="$DOCKER_IMAGE_NAME_SIDEKIQ:$branch_head_commit"
 
@@ -35,7 +35,6 @@ docker build -t "$full_docker_image_name_sidekiq" \
     --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
     -f ./sidekiq.Dockerfile \
     .
-
 
 # Login to docker
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
