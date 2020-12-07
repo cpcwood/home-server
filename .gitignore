@@ -50,6 +50,7 @@ yarn-debug.log*
 
 *.key
 *.env
+*.crt
 
 !test-defaults.env
 
