@@ -5,7 +5,7 @@
 if [ -z "$DOCKER_IMAGE_NAME" ] || \
     [ -z "$DOCKER_USERNAME" ] || \
     [ -z "$DOCKER_PASSWORD" ]; then
-    >&2 echo 'Required variable unset, automerging failed'
+    >&2 echo 'Required variable unset, docker build and deploy failed'
     exit 1
 fi
 
