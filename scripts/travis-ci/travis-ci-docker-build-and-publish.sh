@@ -33,7 +33,9 @@ docker build -t "$full_docker_image_name_app" \
 echo "Building Image: $full_docker_image_name_sidekiq"
 docker build -t "$full_docker_image_name_sidekiq" \
     --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
-    -f ./sidekiq.Dockerfile
+    -f ./sidekiq.Dockerfile \
+    .
+
 
 # Login to docker
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
