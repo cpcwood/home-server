@@ -1,8 +1,6 @@
 #!/bin/bash -ev
 # TravisCI Docker Build and Publish Script
 
-printenv
-
 # Ensure all required environment variables are present
 if [ -z "$DOCKER_IMAGE_NAME" ] || \
     [ -z "$DOCKER_USERNAME" ] || \
