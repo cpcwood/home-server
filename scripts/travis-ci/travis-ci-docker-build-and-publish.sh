@@ -1,6 +1,20 @@
 #!/bin/bash -ev
 # TravisCI Docker Build and Publish Script
 
+# Ensure all required environment variables are present
+if [ -z "$DOCKER_IMAGE_NAME" ] || \
+    [ -z "$DOCKER_USERNAME" ] || \
+    [ -z "$DOCKER_PASSWORD" ]; then
+    >&2 echo 'Required variable unset, automerging failed'
+    exit 1
+fi
+
+echo : "
+Travis-ci docker build and publishscript
+Repo: $TRAVIS_REPO_SLUG
+Image: $DOCKER_IMAGE_NAME
+"
+
 # Build image
 docker build -t "$DOCKER_IMAGE_NAME" .
 
