@@ -5,8 +5,7 @@ metadata:
   name: home-server-app-deployment
   labels:
     cpcwood.com/name: home-server-app
-    cpcwood.com/instance: home-server-app-v5
-    cpcwood.com/version: "5.0.0"
+    cpcwood.com/version: "1.0.0"
     cpcwood.com/component: application-server
     cpcwood.com/part-of: home-server
     cpcwood.com/managed-by: cpcwood
@@ -22,7 +21,7 @@ spec:
     spec:
       containers:
         - name: home-server-app
-          image: cpcwood/home-server-app-v5
+          image: cpcwood/home-server-app:CONTAINER_VERSION
           ports:
             - containerPort: 5000
           envFrom:
