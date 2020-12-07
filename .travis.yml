@@ -34,6 +34,6 @@ after_success:
   - ./scripts/travis-ci/travis-ci-merge-script.sh
 deploy:
   provider: script
-  script: ./scripts/travis-ci/travis-ci-docker-build-and-publish.sh
+  script: bash ./scripts/travis-ci/travis-ci-docker-build-and-publish.sh
   on:
     branch: master
