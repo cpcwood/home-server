@@ -42,10 +42,11 @@ export default class extends Controller {
   disconnect () {
     if (this.typedSubtitle) {
       this.typedSubtitle.destroy()
+      this.typedSubtitleTarget.classList.remove('typed-cursor')
     }
     if (this.typedHeader) {
       this.typedHeader.destroy()
+      this.typedHeaderTarget.classList.remove('typed-cursor')
     }
-    this.typedHeaderTarget.parentElement.parentElement.innerHTML = ''
   }
 }

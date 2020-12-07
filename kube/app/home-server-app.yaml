@@ -10,7 +10,7 @@ metadata:
     cpcwood.com/part-of: home-server
     cpcwood.com/managed-by: cpcwood
 spec:
-  replicas: 2 
+  replicas: 1 
   selector:
     matchLabels:
       app: home-server-app
