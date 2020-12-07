@@ -34,19 +34,21 @@ printf 'Checking out %s\n' "$TRAVIS_BRANCH"
 git checkout "$TRAVIS_BRANCH"
 
 # Ensure checkout commit is the same as the tested PR commit
-current_commit=${git rev-parse --short HEAD}
-if [ $current_commit != $TRAVIS_PULL_REQUEST_SHA]; then
-    >&2 echo 'Pull request and merge commit do not match, automerge failed'
+current_commit="${git rev-parse --short HEAD}"
+if [ "$current_commit" != "$TRAVIS_PULL_REQUEST_SHA"]; then
+    >&2 echo "Pull request commit '$TRAVIS_PULL_REQUEST_SHA' and merge '$current_commit' commit do not match, automerge failed"
     exit 1
 fi
 
-printf 'Merging %s\n' "$TRAVIS_PULL_REQUEST_BRANCH"
-git merge "$TRAVIS_PULL_REQUEST_SHA"
+>&2 echo "Pull request commit '$TRAVIS_PULL_REQUEST_SHA' and merge '$current_commit' commit do not match, automerge failed"
 
-printf 'Pushing to %s\n' "$TRAVIS_REPO_SLUG"
-push_uri="https://$GITHUB_SECRET_TOKEN@github.com/$TRAVIS_REPO_SLUG"
+# printf 'Merging %s\n' "$TRAVIS_PULL_REQUEST_BRANCH"
+# git merge "$TRAVIS_PULL_REQUEST_SHA"
 
-# Push to github to complete merge
-# Redirect to /dev/null to avoid secret leakage
-git push "$push_uri" "$TRAVIS_BRANCH" >/dev/null 2>&1
-git push "$push_uri" :"$TRAVIS_PULL_REQUEST_BRANCH" >/dev/null 2>&1
+# printf 'Pushing to %s\n' "$TRAVIS_REPO_SLUG"
+# push_uri="https://$GITHUB_SECRET_TOKEN@github.com/$TRAVIS_REPO_SLUG"
+
+# # Push to github to complete merge
+# # Redirect to /dev/null to avoid secret leakage
+# git push "$push_uri" "$TRAVIS_BRANCH" >/dev/null 2>&1
+# git push "$push_uri" :"$TRAVIS_PULL_REQUEST_BRANCH" >/dev/null 2>&1
