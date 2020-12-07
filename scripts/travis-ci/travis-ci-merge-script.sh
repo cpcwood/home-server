@@ -19,7 +19,7 @@ if [ -z "$TRAVIS_REPO_SLUG" ] || \
 fi
 
 echo : "
-Travis-ci automerge pull request script
+Travis-CI automerge pull request script
 Repo: $TRAVIS_REPO_SLUG 
 Merging: $TRAVIS_PULL_REQUEST_BRANCH >> $TRAVIS_BRANCH 
 "
