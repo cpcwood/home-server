@@ -34,4 +34,4 @@ kubectl --kubeconfig=/dev/null \
   --certificate-authority=cert.crt \
   --server=$KUBERNETES_SERVER \
   --token=$KUBERNETES_SERVICE_ACC_TOKEN \
-  apply -f ./kube/app/
+  apply -Rf ./kube/app/

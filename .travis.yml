@@ -39,6 +39,6 @@ deploy:
     on:
       branch: master
   - provider: script
-    script: bash ./scripts/travis-ci-kube-autodeploy.sh
+    script: bash ./scripts/travis-ci/travis-ci-kube-autodeploy.sh
     on:
       branch: master
