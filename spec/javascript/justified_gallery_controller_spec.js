@@ -4,6 +4,7 @@ import justifiedLayout from 'justified-layout'
 
 require('./__mocks__/ResizeObserver')
 jest.mock('justified-layout')
+jest.useFakeTimers()
 
 describe('justified_gallery_controller', () => {
   let galleryItemTargetOne
@@ -51,6 +52,7 @@ describe('justified_gallery_controller', () => {
     describe('not all images loaded', () => {
       it('controller waiting', () => {
         galleryItemTargetOne.dispatchEvent(new Event('load'))
+        jest.runOnlyPendingTimers()
         expect(galleryItemTargetOne.classList).not.toContain('fade-in')
         expect(galleryItemTargetTwo.classList).not.toContain('fade-in')
         expect(justifiedLayout).not.toHaveBeenCalled()
@@ -61,6 +63,7 @@ describe('justified_gallery_controller', () => {
       it('fade in', () => {
         galleryItemTargetOne.dispatchEvent(new Event('load'))
         galleryItemTargetTwo.dispatchEvent(new Event('load'))
+        jest.runOnlyPendingTimers()
         expect(galleryItemTargetOne.classList).toContain('fade-in')
         expect(galleryItemTargetTwo.classList).toContain('fade-in')
       })
@@ -73,6 +76,7 @@ describe('justified_gallery_controller', () => {
           .mockImplementation(() => containerWidth)
         galleryItemTargetOne.dispatchEvent(new Event('load'))
         galleryItemTargetTwo.dispatchEvent(new Event('load'))
+        jest.runOnlyPendingTimers()
 
         expect(justifiedLayout).toHaveBeenCalledWith([
           galleryItemOneDimensions,
@@ -83,7 +87,7 @@ describe('justified_gallery_controller', () => {
             vertical: 0
           },
           containerWidth: containerWidth,
-          targetRowHeight: 302
+          targetRowHeight: 295
         })
         expect(galleryItemTargetOne.width).toEqual(20)
         expect(galleryItemTargetOne.height).toEqual(30)
@@ -97,6 +101,7 @@ describe('justified_gallery_controller', () => {
     it('reset to cache safe state', () => {
       galleryItemTargetOne.dispatchEvent(new Event('load'))
       galleryItemTargetTwo.dispatchEvent(new Event('load'))
+      jest.runOnlyPendingTimers()
       window.dispatchEvent(new Event('turbolinks:before-cache'))
       expect(galleryItemTargetOne.classList).not.toContain('fade-in')
       expect(galleryItemTargetTwo.classList).not.toContain('fade-in')
