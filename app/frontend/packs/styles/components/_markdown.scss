@@ -8,15 +8,28 @@
   
   ul {
     margin-top: 0;
+    margin-bottom: 1.5em;
   }
 
   li {
-    line-height: 1.55em;
     margin-top: 0;
+    margin-bottom: 0.5em;
+
+    code {
+      background: #f3f3f3;
+      border-radius: 0.2em;
+      padding: 0.25em 0.4em;
+    }  
   }
 
   p {
-    margin-bottom: 5px;
-    margin-top: 10px;
+    margin-bottom: 1.2em;
+    margin-top: 0.7em;
+
+    code {
+      background: #f3f3f3;
+      border-radius: 0.2em;
+      padding: 0.25em 0.4em;
+    }  
   }
 }

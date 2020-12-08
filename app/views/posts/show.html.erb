@@ -12,8 +12,8 @@
 
 <section class='reading-pane'>
   <h2><%= @post.title %></h2>
-  <div class='post-date'>
-    <%= @post.user.username.humanize %> | <%= full_date(@post.date_published) %>
+  <div class='reading-pane-subtitle'>
+    <%= @post.user.username %> | <%= full_date(@post.date_published) %>
   </div>
   <%= markdown_admin(@post.text) %>
 </section>

@@ -65,7 +65,7 @@ h1 {
 
 h2 {
   @include sub-header;
-  font-size: 2.2em;
+  font-size: 2.5em;
 }
 
 h3 {
@@ -97,8 +97,8 @@ h6 {
 
 .reading-pane {
   font-family: $reading-font;
-  letter-spacing: 0.02em;
-  line-height: 1.8em;
+  letter-spacing: 0.01em;
+  line-height: 1.65em;
   word-spacing: 0.1em;
 
   h1 {
@@ -144,6 +144,5 @@ sup {
 
 code {
   font-family: $code-font;
-  font-size: 1.2em;
   font-weight: 400;
 }

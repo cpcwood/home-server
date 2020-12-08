@@ -11,6 +11,7 @@
   padding: 7px;
   position: relative;
   width: 100%;
+  height: fit-content;
 
   @include respond-to(tablet) {
     margin-bottom: 0;
@@ -47,6 +48,7 @@
   position: relative;
   user-select: none;
   width: 100%;
+  height: auto;
 
   h3 {
     font-size: 1.3em;
@@ -61,11 +63,13 @@
   box-sizing: border-box;
   flex: 0 0 200px;
   overflow: hidden;
+  position: relative;
 
   img {
     height: 100%;
     object-fit: cover;
     object-position: 0% 0%;
+    position: relative;
     width: 100%;
   }
 }
