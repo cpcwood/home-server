@@ -4,8 +4,11 @@ export default class extends Controller {
   static targets = ['fade', 'container']
 
   connect () {
-    this.targetNumber = this.fadeTargets.length
-    this.imagesLoadedCounter = this.fadeTargets.reduce((acc, img) => img.complete && img.naturalHeight !== 0 ? ++acc : acc, 0)
+    this.numberOfTargets = this.fadeTargets.length
+    this.imagesLoadedCounter = this.fadeTargets.reduce((acc, target) => {
+      const image = target.tagName === 'IMG' ? target : target.querySelector('img')
+      return image.complete && image.naturalHeight !== 0 ? ++acc : acc
+    }, 0)
     if (this.isImageLoadRequired()) {
       this.evaluateLoadProgress()
     }
@@ -21,7 +24,9 @@ export default class extends Controller {
   }
 
   evaluateLoadProgress () {
-    if (this.imagesLoadedCounter === this.targetNumber && !this.isPreview) {
+    console.log('this.imagesLoadedCounter', this.imagesLoadedCounter)
+    console.log('this.numberOfTargets', this.numberOfTargets)
+    if (this.imagesLoadedCounter === this.numberOfTargets && !this.isPreview) {
       this.fadeInTargets()
     }
   }
