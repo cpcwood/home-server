@@ -24,8 +24,8 @@ export default class extends Controller {
     const headerOptions = {
       stringsElement: '#typed-strings-header',
       showCursor: false,
-      typeSpeed: 50,
-      startDelay: 1700,
+      typeSpeed: 55,
+      startDelay: 1200,
       preStringTyped: () => {
         this.typedHeaderTarget.classList.add('typed-cursor')
       },
