@@ -3,14 +3,12 @@ import { Controller } from 'stimulus'
 export default class extends Controller {
   static targets = ['fade', 'container']
 
-  fadeInTargets () {
-    this.fadeInTimeout = setTimeout(() => {
-      for (let i = 0; i < this.fadeTargets.length; i++) {
-        const target = this.fadeTargets[i]
-        target.style.transitionDelay = `${i * 0.1}s`
-        target.classList.add('fade-in')
-      }
-    }, 1)
+  connect () {
+    this.targetNumber = this.fadeTargets.length
+    this.imagesLoadedCounter = this.fadeTargets.reduce((acc, img) => img.complete && img.naturalHeight !== 0 ? ++acc : acc, 0)
+    if (this.isImageLoadRequired()) {
+      this.evaluateLoadProgress()
+    }
   }
 
   isImageLoadRequired () {
@@ -22,24 +20,27 @@ export default class extends Controller {
     return true
   }
 
-  evaluateImageLoad () {
-    if (this.imageCounter === this.targetNumber && !this.isPreview) {
+  evaluateLoadProgress () {
+    if (this.imagesLoadedCounter === this.targetNumber && !this.isPreview) {
       this.fadeInTargets()
     }
   }
 
-  connect () {
-    this.targetNumber = this.fadeTargets.length
-    const numberOfLoadedImages = this.fadeTargets.reduce((acc, img) => img.complete && img.naturalHeight !== 0 ? ++acc : acc, 0)
-    this.imageCounter = numberOfLoadedImages
-    if (this.isImageLoadRequired()) {
-      this.evaluateImageLoad()
+  fadeInTargets () {
+    const fadeIn = () => {
+      for (let i = 0; i < this.fadeTargets.length; i++) {
+        const target = this.fadeTargets[i]
+        target.style.transitionDelay = `${i * 0.1}s`
+        target.classList.add('fade-in')
+        this.fadeInTimeout = null
+      }
     }
+    this.fadeInTimeout = setTimeout(fadeIn, 1)
   }
 
   imageLoaded () {
-    this.imageCounter += 1
-    this.evaluateImageLoad()
+    this.imagesLoadedCounter += 1
+    this.evaluateLoadProgress()
   }
 
   teardown () {

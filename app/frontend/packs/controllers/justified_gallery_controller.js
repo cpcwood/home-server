@@ -4,21 +4,29 @@ import justifiedLayout from 'justified-layout'
 export default class extends Controller {
   static targets = ['galleryItem', 'container']
 
-  initialize () {
-    this.targetNumber = this.containerTarget.getElementsByTagName('img').length
-    this.imageCounter = 0
+  connect () {
+    this.targetNumber = this.galleryItemTargets.length
+    this.imagesLoadedCounter = this.galleryItemTargets.reduce((acc, img) => img.complete && img.naturalHeight !== 0 && img.naturalWidth !== 0 ? ++acc : acc, 0)
+    this.evaluateLoadProgress()
   }
 
-  imageLoaded () {
-    this.imageCounter += 1
-    if (this.imageCounter === this.targetNumber) {
-      this.resizeObserver = new ResizeObserver(this.renderGallery.bind(this)).observe(this.containerTarget)
+  evaluateLoadProgress () {
+    if (this.imagesLoadedCounter === this.targetNumber && !this.isPreview) {
+      this.displayGalleryItemTargets()
+    }
+  }
+
+  displayGalleryItemTargets () {
+    const fadeIn = () => {
+      this.resizeObserver = new ResizeObserver(this.renderGallery.bind(this))
+      this.resizeObserver.observe(this.containerTarget)
       for (let i = 0; i < this.galleryItemTargets.length; i++) {
         const target = this.galleryItemTargets[i]
-        target.classList.add('fade-in')
         target.style.transitionDelay = `${i * 0.1}s`
+        target.classList.add('fade-in')
       }
     }
+    this.fadeInTimeout = setTimeout(fadeIn, 1)
   }
 
   renderGallery () {
@@ -35,16 +43,27 @@ export default class extends Controller {
         vertical: 0
       },
       containerWidth: this.containerTarget.clientWidth,
-      targetRowHeight: 302
+      targetRowHeight: 295
     }
+    console.log('geometry input', geometryInput)
+    console.log('config input', config)
     const geometry = justifiedLayout(geometryInput, config)
+    console.log(geometry)
     for (let i = 0; i < this.galleryItemTargets.length; i++) {
       this.galleryItemTargets[i].width = geometry.boxes[i].width
       this.galleryItemTargets[i].height = geometry.boxes[i].height
     }
   }
 
+  imageLoaded () {
+    this.imagesLoadedCounter += 1
+    this.evaluateLoadProgress()
+  }
+
   teardown () {
+    if (this.fadeInTimeout) {
+      clearTimeout(this.fadeInTimeout)
+    }
     if (this.resizeObserver) {
       this.resizeObserver.disconnect()
     }
@@ -57,5 +76,9 @@ export default class extends Controller {
 
   disconnect () {
     this.teardown()
+  }
+
+  get isPreview () {
+    return document.documentElement.hasAttribute('data-turbolinks-preview')
   }
 }
