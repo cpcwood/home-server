@@ -13,6 +13,7 @@
   .markdown {
     margin: 0;
     width: 100%;
+    font-size: 1.2em;
 
     @include respond-to(tablet) {
       min-width: $reading-width;
