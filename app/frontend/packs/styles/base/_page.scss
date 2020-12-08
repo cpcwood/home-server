@@ -103,7 +103,10 @@
 }
 
 .reading-pane-subtitle {
-  font-size: 0.9em;
+  color: colors.$heading-font;
+  font-size: 0.85em;
+  line-height: 1em;
+  margin-bottom: 0;
 }
 
 .form-pane {
