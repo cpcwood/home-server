@@ -102,6 +102,13 @@
   width: 100%;
 }
 
+.reading-pane-subtitle {
+  color: colors.$heading-font;
+  font-size: 0.85em;
+  line-height: 1em;
+  margin-bottom: 0;
+}
+
 .form-pane {
   font-size: 1.2em;
   max-width: $reading-width;
