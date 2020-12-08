@@ -1,5 +1,5 @@
 import { Controller } from 'stimulus'
-
+// asd
 export default class extends Controller {
   static targets = ['fade', 'container']
 
@@ -7,6 +7,9 @@ export default class extends Controller {
     this.numberOfTargets = this.fadeTargets.length
     this.imagesLoadedCounter = this.fadeTargets.reduce((acc, target) => {
       const image = target.tagName === 'IMG' ? target : target.querySelector('img')
+      if (!image) {
+        return ++acc
+      }
       return image.complete && image.naturalHeight !== 0 ? ++acc : acc
     }, 0)
     if (this.isImageLoadRequired()) {
@@ -24,8 +27,6 @@ export default class extends Controller {
   }
 
   evaluateLoadProgress () {
-    console.log('this.imagesLoadedCounter', this.imagesLoadedCounter)
-    console.log('this.numberOfTargets', this.numberOfTargets)
     if (this.imagesLoadedCounter === this.numberOfTargets && !this.isPreview) {
       this.fadeInTargets()
     }

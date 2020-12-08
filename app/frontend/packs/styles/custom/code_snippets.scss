@@ -11,14 +11,14 @@
   width: 100%;
   
   .markdown {
+    font-size: 1.2em;
     margin: 0;
     width: 100%;
-    font-size: 1.2em;
 
     @include respond-to(tablet) {
+      max-width: 90%;
       min-width: $reading-width;
       width: max-content;
-      max-width: 90%;
     }
   }
 }

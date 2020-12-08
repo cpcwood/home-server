@@ -56,19 +56,19 @@
 }
 
 .card-image {
-  position: relative;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   box-sizing: border-box;
   flex: 0 0 200px;
   overflow: hidden;
+  position: relative;
 
   img {
-    position: relative;
     height: 100%;
-    width: 100%;
     object-fit: cover;
     object-position: 0% 0%;
+    position: relative;
+    width: 100%;
   }
 }
 
