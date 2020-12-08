@@ -4,6 +4,7 @@ export default class extends Controller {
   static targets = ['headerImage', 'contentContainer']
 
   connect () {
+    this.contentContainerTarget.scrollTop = 0
     this.baseImageHeight = parseInt(this.data.get('imageHeight'))
     this.baseHeaderHeight = parseInt(this.data.get('headerHeight'))
   }
@@ -19,6 +20,7 @@ export default class extends Controller {
   }
 
   teardown () {
+    this.contentContainerTarget.scrollTop = 0
     this.headerImageTarget.style.height = `${this.baseImageHeight}px`
   }
 
