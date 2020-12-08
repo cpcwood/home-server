@@ -5,13 +5,13 @@
         <%= yield(:typed_header) %>
       </p>
     </div>
-    <h1 id="typed-header" data-target="typed-header.typedHeader"></h1>
+    <h1 id="typed-header" data-typed-header-target="typedHeader"></h1>
     <div class="hidden" id="typed-strings-subtitle">
       <p>
         <%= yield(:typed_header_sub) %>
       </p>
     </div>
-    <p class="subtitle" id="typed-subtitle" data-target="typed-header.typedSubtitle"></p>
+    <p class="subtitle" id="typed-subtitle" data-typed-header-target="typedSubtitle"></p>
   </header>
 <% else %>
   <header class='main-page-header' style='height: <%= header_height - 60 %>px'>

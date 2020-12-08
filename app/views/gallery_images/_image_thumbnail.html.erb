@@ -1,1 +1,1 @@
-<%= image_tag(image_path_helper(image_model: gallery_image, variant: :thumbnail), class: 'gallery-image-thumbnail', title: gallery_image.title, alt: gallery_image.description, data: {action: "load->justified-gallery#imageLoaded", target: 'justified-gallery.galleryItem'}) %>
+<%= image_tag(image_path_helper(image_model: gallery_image, variant: :thumbnail), class: 'gallery-image-thumbnail', title: gallery_image.title, alt: gallery_image.description, data: {action: "load->justified-gallery#imageLoaded", 'justified-gallery-target': 'galleryItem'}) %>

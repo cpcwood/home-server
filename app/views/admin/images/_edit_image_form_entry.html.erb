@@ -30,21 +30,21 @@
   <div class="embedded-form-entry-container" data-controller="slider">
     <label class="input-label embedded-label" for="image_x_loc">
       x location
-      <span class="slider-value" data-target="slider.value">
+      <span class="slider-value" data-slider-target="value">
         <%= image.x_loc %>
       </span>
     </label>
-    <%= f.range_field(:x_loc, min: 0, max: 100, value: image.x_loc, class: "slider embedded-input-box", step: "1", data: { action: "input->slider#update", target: 'slider.input' }) %>
+    <%= f.range_field(:x_loc, min: 0, max: 100, value: image.x_loc, class: "slider embedded-input-box", step: "1", data: { action: "input->slider#update", 'slider-target': 'input' }) %>
   </div>
 
   <div class="embedded-form-entry-container" data-controller="slider">
     <label class="input-label embedded-label" for="image_y_loc">
       y location
-      <span class="slider-value" data-target="slider.value">
+      <span class="slider-value" data-slider-target="value">
         <%= image.y_loc %>
       </span>
     </label>
-    <%= f.range_field(:y_loc, min: 0, max: 100, value: image.y_loc, class: "slider embedded-input-box", step: "1", data: { action: "input->slider#update", target: 'slider.input' }) %>
+    <%= f.range_field(:y_loc, min: 0, max: 100, value: image.y_loc, class: "slider embedded-input-box", step: "1", data: { action: "input->slider#update", 'slider-target': 'input' }) %>
   </div>
 
   <div class="embedded-form-entry-container">

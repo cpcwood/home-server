@@ -20,8 +20,8 @@ describe('slider_controller', () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <div data-controller="slider">
-        <input min="0" max="100" value="50" class="slider-input" data-action="input->slider#update" data-target="slider.input" type="range">
-        <span class="slider-value" data-target="slider.value">50</span>
+        <input min="0" max="100" value="50" class="slider-input" data-action="input->slider#update" data-slider-target="input" type="range">
+        <span class="slider-value" data-slider-target="value">50</span>
       </div>
     `
     sliderInput = document.querySelector('.slider-input')

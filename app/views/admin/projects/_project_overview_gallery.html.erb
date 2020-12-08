@@ -2,7 +2,7 @@
 <% if project_images.any? %>
   <div class='embedded-gallery' data-controller='embedded-gallery' data-embedded-gallery-position='0' data-action='turbolinks:before-cache@window->embedded-gallery#teardown'>
     <% project_images.each_with_index do |project_image, index| %>
-      <%= image_tag(image_path_helper(image_model: project_image, variant: :thumbnail), title: project_image.title, alt: project_image.description, data: {action: ("load->image-loader#imageLoaded" if index == 0), target: 'embedded-gallery.image'} ) %>
+      <%= image_tag(image_path_helper(image_model: project_image, variant: :thumbnail), title: project_image.title, alt: project_image.description, data: {action: ("load->image-loader#imageLoaded" if index == 0), 'embedded-gallery-target': 'image'} ) %>
     <% end %>
     <button class="embedded-gallery-button prev" data-action='click->embedded-gallery#prev'>‹</button>
     <button class="embedded-gallery-button next" data-action='click->embedded-gallery#next'>›</button>

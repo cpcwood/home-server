@@ -34,9 +34,9 @@ describe('justified_gallery_controller', () => {
       }
     })
     document.body.innerHTML = `
-      <div class='gallery-container' data-controller="justified-gallery" data-target="justified-gallery.container" data-justified-gallery-margin="${margin}" data-action='turbolinks:before-cache@window->justified-gallery#teardown'>
-        <img class="gallery-item" data-action="load->justified-gallery#imageLoaded" data-target="justified-gallery.galleryItem" width=${galleryItemOneDimensions.width} height=${galleryItemOneDimensions.height}>
-        <img class="gallery-item" data-action="load->justified-gallery#imageLoaded" data-target="justified-gallery.galleryItem" width=${galleryItemTwoDimensions.width} height=${galleryItemTwoDimensions.height}>
+      <div class='gallery-container' data-controller="justified-gallery" data-justified-gallery-target="container" data-justified-gallery-margin="${margin}" data-action='turbolinks:before-cache@window->justified-gallery#teardown'>
+        <img class="gallery-item" data-action="load->justified-gallery#imageLoaded" data-justified-gallery-target="galleryItem" width=${galleryItemOneDimensions.width} height=${galleryItemOneDimensions.height}>
+        <img class="gallery-item" data-action="load->justified-gallery#imageLoaded" data-justified-gallery-target="galleryItem" width=${galleryItemTwoDimensions.width} height=${galleryItemTwoDimensions.height}>
       </div>
     `
     const galleryItemTargets = document.getElementsByClassName('gallery-item')

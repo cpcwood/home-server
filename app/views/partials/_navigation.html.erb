@@ -10,14 +10,14 @@
     </div>
   <% end %>
   <div class='nav-menu' data-controller='nav-menu' data-nav-menu-open='false'>
-    <button class='hamburger-container' title='toggle navigation menu' data-action='click->nav-menu#menuToggle' data-target='nav-menu.navHamburger'>
+    <button class='hamburger-container' title='toggle navigation menu' data-action='click->nav-menu#menuToggle' data-nav-menu-target='navHamburger'>
       <div class='hamburger'>
         <div class='hamburger-bar' id='hamburger-crown'></div>
         <div class='hamburger-bar' id='hamburger-patty'></div>
         <div class='hamburger-bar' id='hamburger-heel'></div>
       </div>
     </button>
-    <div class='nav-sidebar' data-target='nav-menu.navSidebar'>
+    <div class='nav-sidebar' data-nav-menu-target='navSidebar'>
       <div class='upper'>
         <a href='<%= root_path %>' class='nav-item' title='home'>
           HOME

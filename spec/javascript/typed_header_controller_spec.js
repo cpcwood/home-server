@@ -18,11 +18,11 @@ describe('typed_header_controller', () => {
         <div id="typed-strings-header">
           <p> Typed header </p>
         </div>
-        <span id="typed-header" data-target="typed-header.typedHeader"></span>
+        <span id="typed-header" data-typed-header-target="typedHeader"></span>
         <div id="typed-strings-subtitle">
           <p> Typed subtitle </p>
         </div>
-        <span id="typed-subtitle" data-target="typed-header.typedSubtitle"></span>
+        <span id="typed-subtitle" data-typed-header-target="typedSubtitle"></span>
       </div>
     </div>
     `

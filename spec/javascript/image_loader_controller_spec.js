@@ -15,9 +15,9 @@ describe('image_loader_controller', () => {
   describe('images present', () => {
     beforeEach(() => {
       document.body.innerHTML = `
-        <div data-controller="image-loader" data-target="image-loader.container" data-action='turbolinks:before-cache@window->image-loader#teardown'>
-          <img class="fade-target" data-action="load->image-loader#imageLoaded" data-target="image-loader.fade">
-          <img class="fade-target" data-action="load->image-loader#imageLoaded" data-target="image-loader.fade">
+        <div data-controller="image-loader" data-image-loader-target="container" data-action='turbolinks:before-cache@window->image-loader#teardown'>
+          <img class="fade-target" data-action="load->image-loader#imageLoaded" data-image-loader-target="fade">
+          <img class="fade-target" data-action="load->image-loader#imageLoaded" data-image-loader-target="fade">
         </div>
       `
       const fadeTargets = document.getElementsByClassName('fade-target')
@@ -63,8 +63,8 @@ describe('image_loader_controller', () => {
 
     beforeEach(() => {
       document.body.innerHTML = `
-        <div data-controller="image-loader" data-target="image-loader.container" data-action='turbolinks:before-cache@window->image-loader#teardown'>
-          <div id="fade-target" data-target="image-loader.fade">
+        <div data-controller="image-loader" data-image-loader-target="container" data-action='turbolinks:before-cache@window->image-loader#teardown'>
+          <div id="fade-target" data-image-loader-target="fade">
             I still need fading in
           </div>
         </div>
