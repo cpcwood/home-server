@@ -30,8 +30,8 @@
   display: flex;
   height: calc(100vh - 60px);
   justify-content: center;
-  -ms-overflow-style: none;
   overflow: hidden;
+  -ms-overflow-style: none;
   overflow-y: scroll;
   position: fixed;
   top: 60px;
