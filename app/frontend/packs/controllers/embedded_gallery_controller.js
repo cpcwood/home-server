@@ -3,11 +3,8 @@ import { Controller } from 'stimulus'
 export default class extends Controller {
   static targets = ['image', 'container']
 
-  initialize () {
-    this.transitionDuration = 450
-  }
-
   connect () {
+    this.transitionDuration = 450
     this.fadeInNextImageTimeout = null
     this.fadeInCompleteTimeout = null
     this.applyBaseStylesToImages()
