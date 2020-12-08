@@ -15,8 +15,9 @@
     width: 100%;
 
     @include respond-to(tablet) {
-      min-width: $reading-width - 20px;
+      min-width: $reading-width;
       width: max-content;
+      max-width: 90%;
     }
   }
 }
