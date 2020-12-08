@@ -4,25 +4,27 @@ export default class extends Controller {
   static targets = ['container']
 
   initialize () {
-    const siteKey = `<%= ENV['GRECAPTCHA_SITE_KEY'] %>`;
-    if (!window.grecaptcha) {
-      const reCaptchaScript = document.createElement('script')
-      window.reCaptchaOnload = () => {
+    if (!this.isPreview) {
+      const siteKey = `<%= ENV['GRECAPTCHA_SITE_KEY'] %>`;
+      if (!window.grecaptcha) {
+        const reCaptchaScript = document.createElement('script')
+        window.reCaptchaOnload = () => {
+          window.grecaptcha.render(this.containerTarget, {
+            sitekey: siteKey,
+            theme: 'light',
+            size: 'normal'
+          })
+        }
+        reCaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=reCaptchaOnload&render=explicit'
+        reCaptchaScript.className = 'recaptcha-script'
+        document.head.appendChild(reCaptchaScript)
+      } else {
         window.grecaptcha.render(this.containerTarget, {
           sitekey: siteKey,
           theme: 'light',
           size: 'normal'
         })
       }
-      reCaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=reCaptchaOnload&render=explicit'
-      reCaptchaScript.className = 'recaptcha-script'
-      document.head.appendChild(reCaptchaScript)
-    } else {
-      window.grecaptcha.render(this.containerTarget, {
-        sitekey: siteKey,
-        theme: 'light',
-        size: 'normal'
-      })
     }
   }
 
@@ -35,12 +37,16 @@ export default class extends Controller {
 
   teardown() {
     this.removeScript()
-    if (!!this.containerTarget) {
-      this.containerTarget.parentNode.removeChild(this.containerTarget)
+    if (this.containerTarget) {
+      this.containerTarget.innerHTML = ''
     }
   }
 
   disconnect() {
-    this.removeScript()
+    this.teardown()
+  }
+
+  get isPreview () {
+    return document.documentElement.hasAttribute('data-turbolinks-preview')
   }
 }

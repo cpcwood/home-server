@@ -7,7 +7,6 @@ describe('recaptcha_controller', () => {
   let createElementSpy
   let appendChildSpy
   let removeChildSpyHead
-  let removeChildSpyContainer
   let container
   let mockGrecaptcha
 
@@ -66,13 +65,12 @@ describe('recaptcha_controller', () => {
       `
       container = document.querySelector('#recaptcha')
       removeChildSpyHead = jest.spyOn(document.head, 'removeChild').mockReturnValue(null)
-      removeChildSpyContainer = jest.spyOn(container.parentNode, 'removeChild').mockReturnValue(null)
     })
 
     it('turbolinks:before-cache', () => {
       window.dispatchEvent(new Event('turbolinks:before-cache'))
       expect(removeChildSpyHead).toHaveBeenCalled()
-      expect(removeChildSpyContainer).toHaveBeenCalled()
+      expect(container.innerHTML).toBe('')
     })
   })
 
