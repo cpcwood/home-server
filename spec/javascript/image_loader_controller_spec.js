@@ -1,5 +1,6 @@
 import { Application } from 'stimulus'
 import imageLoaderController from 'controllers/image_loader_controller'
+
 jest.useFakeTimers()
 
 describe('image_loader_controller', () => {
