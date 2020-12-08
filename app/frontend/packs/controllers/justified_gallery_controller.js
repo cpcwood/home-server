@@ -45,10 +45,13 @@ export default class extends Controller {
       containerWidth: this.containerTarget.clientWidth,
       targetRowHeight: 295
     }
+    console.log('this.containerTarget.parentElement.clientWidth', this.containerTarget.parentElement.clientWidth)
+    console.log('this.containerTarget.clientWidth', this.containerTarget.clientWidth)
     const geometry = justifiedLayout(geometryInput, config)
     for (let i = 0; i < this.galleryItemTargets.length; i++) {
       this.galleryItemTargets[i].width = geometry.boxes[i].width
       this.galleryItemTargets[i].height = geometry.boxes[i].height
+      this.galleryItemTargets[i].style.position = 'relative'
     }
   }
 
