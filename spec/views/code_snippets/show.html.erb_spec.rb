@@ -12,7 +12,7 @@ describe 'Views' do
       render template: 'code_snippets/show.html.erb'
 
       expect(rendered).to match(code_snippet.title)
-      expect(rendered).to match(user.username.humanize)
+      expect(rendered).to match(user.username)
       expect(rendered).to match('some markdown')
       expect(rendered).to match('highlighted snippet')
       expect(rendered).to match('updated_date')
