@@ -12,18 +12,7 @@ export default class extends Controller {
       }
       return image.complete && image.naturalHeight !== 0 ? ++acc : acc
     }, 0)
-    if (this.isImageLoadRequired()) {
-      this.evaluateLoadProgress()
-    }
-  }
-
-  isImageLoadRequired () {
-    const numberOfImages = this.containerTarget.getElementsByTagName('img').length
-    if (numberOfImages === 0 && !this.isPreview) {
-      this.fadeInTargets()
-      return false
-    }
-    return true
+    this.evaluateLoadProgress()
   }
 
   evaluateLoadProgress () {
