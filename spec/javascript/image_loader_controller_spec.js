@@ -1,5 +1,6 @@
 import { Application } from 'stimulus'
 import imageLoaderController from 'controllers/image_loader_controller'
+jest.useFakeTimers()
 
 describe('image_loader_controller', () => {
   let fadeTargetOne
@@ -26,6 +27,7 @@ describe('image_loader_controller', () => {
     describe('#imageLoaded', () => {
       it('not all images loaded', () => {
         fadeTargetOne.dispatchEvent(new Event('load'))
+        jest.runOnlyPendingTimers()
         expect(fadeTargetOne.classList).not.toContain('fade-in')
         expect(fadeTargetTwo.classList).not.toContain('fade-in')
       })
@@ -33,6 +35,7 @@ describe('image_loader_controller', () => {
       it('all images loaded', () => {
         fadeTargetOne.dispatchEvent(new Event('load'))
         fadeTargetTwo.dispatchEvent(new Event('load'))
+        jest.runOnlyPendingTimers()
         expect(fadeTargetOne.classList).toContain('fade-in')
         expect(fadeTargetTwo.classList).toContain('fade-in')
         expect(fadeTargetOne.style.transitionDelay).toBe('0s')
@@ -44,6 +47,7 @@ describe('image_loader_controller', () => {
       it('reset to cache safe state', () => {
         fadeTargetOne.dispatchEvent(new Event('load'))
         fadeTargetTwo.dispatchEvent(new Event('load'))
+        jest.runOnlyPendingTimers()
         window.dispatchEvent(new Event('turbolinks:before-cache'))
         expect(fadeTargetOne.classList).not.toContain('fade-in')
         expect(fadeTargetTwo.classList).not.toContain('fade-in')
@@ -69,6 +73,7 @@ describe('image_loader_controller', () => {
 
     describe('#initialize', () => {
       it('fade in still occurs', () => {
+        jest.runOnlyPendingTimers()
         expect(fadeTarget.classList).toContain('fade-in')
       })
     })
