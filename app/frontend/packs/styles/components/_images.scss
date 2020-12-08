@@ -1,6 +1,7 @@
 @use '../base/mixins' as *;
 
 .profile-image {
+  height: 100%;
   position: relative;
   width: 50%;
 
