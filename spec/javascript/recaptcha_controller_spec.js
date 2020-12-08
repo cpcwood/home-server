@@ -27,7 +27,7 @@ describe('recaptcha_controller', () => {
       mock = { src: null, className: null }
       createElementSpy = jest.spyOn(document, 'createElement').mockReturnValue(mock)
       document.body.innerHTML = `
-        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-target='recaptcha.container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
+        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
       `
     })
 
@@ -48,7 +48,7 @@ describe('recaptcha_controller', () => {
       }
       window.grecaptcha = mockGrecaptcha
       document.body.innerHTML = `
-        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-target='recaptcha.container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
+        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
       `
     })
 
@@ -61,7 +61,7 @@ describe('recaptcha_controller', () => {
   describe('#teardown', () => {
     beforeEach(() => {
       document.body.innerHTML = `
-        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-target='recaptcha.container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
+        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
       `
       container = document.querySelector('#recaptcha')
       removeChildSpyHead = jest.spyOn(document.head, 'removeChild').mockReturnValue(null)
@@ -78,7 +78,7 @@ describe('recaptcha_controller', () => {
     beforeEach(() => {
       removeChildSpyHead = jest.spyOn(document.head, 'removeChild').mockReturnValue(null)
       document.body.innerHTML = `
-        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-target='recaptcha.container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
+        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
       `
     })
 

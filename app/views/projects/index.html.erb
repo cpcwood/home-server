@@ -10,7 +10,7 @@
   Checkout my most recent projects
 <% end %>
 
-<section class='reading-pane' data-controller="image-loader" data-target='image-loader.container' data-action='turbolinks:before-cache@window->image-loader#teardown'>
+<section class='reading-pane' data-controller="image-loader" data-image-loader-target='container' data-action='turbolinks:before-cache@window->image-loader#teardown'>
   <%= render partial: 'partials/admin_toolbar', locals: { model: (@projects.empty? ? [Project.new] : @projects) } %>
 
   <%= render partial: 'partials/system_messages' %>

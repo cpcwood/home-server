@@ -15,7 +15,7 @@ describe('touch_hover_tile_controller', () => {
       <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
         <img class="cover-image">
         <a href="/one">
-          <span class="cover-title" data-target="touch-hover-tile.coverTitle">
+          <span class="cover-title" data-touch-hover-tile-target="coverTitle">
             <span>flexTileOne</span>
           </span>
         </a>
@@ -23,7 +23,7 @@ describe('touch_hover_tile_controller', () => {
       <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
         <img class="cover-image">
         <a href="/two">
-          <span class="cover-title" data-target="touch-hover-tile.coverTitle">
+          <span class="cover-title" data-touch-hover-tile-target="coverTitle">
             <span>flexTileTwo</span>
           </span>
         </a>

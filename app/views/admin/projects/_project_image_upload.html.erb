@@ -9,7 +9,7 @@
 
 <ul class='drag-list' data-controller='form-draggable-list'>
   <%= form.fields_for(:project_images, project.project_images.order_asc, include_id: false) do |nested_image_form| %>
-    <li class='draggable-item-container' id='draggable-item-container-<%= nested_image_form.object.id %>' draggable='true' data-target='form-draggable-list.dragItem' data-action='dragstart->form-draggable-list#dragStart dragover->form-draggable-list#dragOver dragleave->form-draggable-list#dragLeave drop->form-draggable-list#drop'>
+    <li class='draggable-item-container' id='draggable-item-container-<%= nested_image_form.object.id %>' draggable='true' data-form-draggable-list-target='dragItem' data-action='dragstart->form-draggable-list#dragStart dragover->form-draggable-list#dragOver dragleave->form-draggable-list#dragLeave drop->form-draggable-list#drop'>
       <div class='drag-content'>
         <div class='drag-icon-container'>
           <button draggable='false' data-action='form-draggable-list#moveUp' data-item-container-selector='#draggable-item-container-<%= nested_image_form.object.id %>'>
