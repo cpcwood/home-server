@@ -13,3 +13,28 @@ application.load(definitionsFromContext(context))
 
 // Welcome Message
 console.log('Welcome to <%= ENV.fetch('SITE_HOST') { 'home-server' } %> :)')
+
+document.addEventListener("turbolinks:click", function() {
+  console.log('click')
+})
+document.addEventListener("turbolinks:visit", function() {
+  console.log('visit')
+})
+document.addEventListener("turbolinks:request-start", function() {
+  console.log('request-start')
+})
+document.addEventListener("turbolinks:request-end", function() {
+  console.log('request-end')
+})
+document.addEventListener("turbolinks:before-cache", function() {
+  console.log('before:cache')
+})
+document.addEventListener("turbolinks:before-render", function() {
+  console.log('before:render')
+})
+document.addEventListener("turbolinks:render", function() {
+  console.log('render')
+})
+document.addEventListener("turbolinks:load", function() {
+  console.log('turboload')
+})
