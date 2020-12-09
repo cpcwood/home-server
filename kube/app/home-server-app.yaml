@@ -29,6 +29,9 @@ spec:
           image: cpcwood/home-server-app:CONTAINER_VERSION
           ports:
             - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: home-server-app-config
           livenessProbe:
             httpGet:
               path: /
@@ -43,10 +46,10 @@ spec:
             initialDelaySeconds: 20
             periodSeconds: 5
             timeoutSeconds: 4
-          envFrom:
-            - configMapRef:
-                name: home-server-app-config
-
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 5"]
 
 ---
 apiVersion: v1
