@@ -22,6 +22,7 @@ export default class extends Controller {
   teardown () {
     this.contentContainerTarget.scrollTop = 0
     this.headerImageTarget.style.height = `${this.baseImageHeight}px`
+    this.headerImageTarget.style.zIndex = '-1'
   }
 
   disconnect () {

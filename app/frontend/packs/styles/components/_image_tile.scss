@@ -56,11 +56,13 @@
 .cover-title {
   align-items: center;
   background: rgba(0, 0, 0, 0.7);
+  box-sizing: border-box;
   display: flex;
   height: 100%;
   justify-content: center;
   left: 0;
   opacity: 0;
+  padding: 20px;
   position: absolute;
   top: 0;
   transition: opacity 0.2s ease-in-out 0s;
