@@ -26,5 +26,24 @@ spec:
           envFrom:
             - configMapRef:
                 name: home-server-app-config
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 7433
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 4
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 7433
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 4
+          lifecycle:
+            preStop:
+              exec:
+                command: ["./scripts/kube/sidekiq_quiet"]
+      terminationGracePeriodSeconds: 60
 
 ---
