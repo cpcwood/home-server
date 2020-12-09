@@ -276,6 +276,8 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
+    sidekiq_alive (2.0.4)
+      sidekiq
     simplecov (0.16.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -380,6 +382,7 @@ DEPENDENCIES
   rubocop-performance (~> 1.5.2)
   rubocop-rails (~> 2.5.2)
   sidekiq (< 7)
+  sidekiq_alive
   simplecov (~> 0.16.1)
   simplecov-console (~> 0.7.2)
   spring
