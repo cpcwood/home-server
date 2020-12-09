@@ -35,6 +35,8 @@ gem 'validate_url'
 gem 'validates_timeliness', '~> 5.0.0.beta1'
 # Timezone
 gem 'tzinfo-data'
+# Ensure sidekiq stays alive in k8s
+gem 'sidekiq_alive'
 
 group :production do
   # AWS S3 for production storage

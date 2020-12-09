@@ -28,15 +28,16 @@ spec:
             httpGet:
               path: /
               port: 5000
-            initialDelaySeconds: 10
+            initialDelaySeconds: 20
             periodSeconds: 5
-            failureThreshold: 2
+            timeoutSeconds: 4
           readinessProbe:
             httpGet:
               path: /
               port: 5000
-            initialDelaySeconds: 5
+            initialDelaySeconds: 20
             periodSeconds: 5
+            timeoutSeconds: 4
           envFrom:
             - configMapRef:
                 name: home-server-app-config
