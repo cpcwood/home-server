@@ -57,13 +57,13 @@ RUN apk add --no-cache \
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
-RUN addgroup --system $USER && \
-  adduser --system --disabled-password --gecos '' --ingroup $USER $USER && \
+COPY --from=cpcwood/home-server-base:latest $APP_HOME $APP_HOME
+COPY --from=server-nodejs-assets $APP_HOME/node_modules $APP_HOME/node_modules
+
+RUN addgroup -S $USER && \
+  adduser -S- G $USER $USER && \
   chown -R $USER $APP_HOME
 
 USER $USER
-
-COPY --from=cpcwood/home-server-base:latest $APP_HOME $APP_HOME
-COPY --from=server-nodejs-assets $APP_HOME/node_modules $APP_HOME/node_modules
 
 CMD ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
