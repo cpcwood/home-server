@@ -24,9 +24,23 @@ spec:
           image: cpcwood/home-server-app:CONTAINER_VERSION
           ports:
             - containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 2
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 5
           envFrom:
             - configMapRef:
                 name: home-server-app-config
+
 
 ---
 apiVersion: v1
