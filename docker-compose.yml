@@ -20,11 +20,10 @@ services:
       - /var/db/redis:/data
 
   sidekiq:
-    image: cpcwood/home-server-sidekiq-v4
+    image: cpcwood/home-server-worker
     depends_on:
       - db
       - redis
-    command: bundle exec sidekiq -C config/sidekiq.yml
     environment:
       - RAILS_ENV=production
     env_file:
@@ -33,7 +32,7 @@ services:
       - seccomp:"./config/chrome.json"
 
   web:
-    image: cpcwood/home-server-app-v5
+    image: cpcwood/home-server-app
     depends_on:
       - db
       - redis
