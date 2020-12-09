@@ -20,7 +20,7 @@ services:
       - /var/db/redis:/data
 
   sidekiq:
-    image: cpcwood/home-server-worker
+    image: cpcwood/home-server-worker:latest
     depends_on:
       - db
       - redis
@@ -32,7 +32,7 @@ services:
       - seccomp:"./config/chrome.json"
 
   web:
-    image: cpcwood/home-server-app
+    image: cpcwood/home-server-app:latest
     depends_on:
       - db
       - redis
