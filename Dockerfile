@@ -28,13 +28,13 @@ RUN apk add --no-cache \
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
-RUN addgroup --system $USER && \
-  adduser --system --disabled-password --gecos '' --ingroup $USER $USER && \
+COPY --from=cpcwood/home-server-base:latest $APP_HOME $APP_HOME
+
+RUN addgroup -S $USER && \
+  adduser -S -G $USER $USER && \
   chown -R $USER $APP_HOME
 
 USER $USER
-
-COPY --from=cpcwood/home-server-base:latest $APP_HOME $APP_HOME
 
 EXPOSE 5000
 CMD ["./scripts/docker-startup.sh"]
