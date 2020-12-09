@@ -42,7 +42,7 @@ ADD . $APP_HOME
 
 RUN addgroup --system $USER && \
   adduser --system --disabled-password --gecos '' --ingroup $USER $USER && \
-  chown -R $USER $APP_HOME/shared $APP_HOME/tmp
+  chown -R $USER $APP_HOME
 
 ARG grecaptcha_site_key
 ENV GRECAPTCHA_SITE_KEY=$grecaptcha_site_key \
