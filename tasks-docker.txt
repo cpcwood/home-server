@@ -1,7 +1,26 @@
 # DOCKER TASKS
 
-# build app container
-sudo docker build --build-arg grecaptcha_site_key=<api-key> -t cpcwood/home-server-app-v<version-num> .
+# build home-server-base image
+sudo docker build \
+  --build-arg grecaptcha_site_key=<api-key> \
+  -t cpcwood/home-server-base:latest \
+  -t cpcwood/home-server-base \
+  -f base.Dockerfile \
+  .
+
+# build home-server-app container
+sudo docker build \
+  -t cpcwood/home-server-app:latest \
+  -t cpcwood/home-server-app \
+  .
+
+# build home-server-worker container
+sudo docker build \
+  -t cpcwood/home-server-worker:latest \
+  -t cpcwood/home-server-worker \
+  -f worker.Dockerfile \
+  .
+
 
 # start standalone psql container
 sudo docker run -d \
@@ -12,10 +31,12 @@ sudo docker run -d \
   -v /var/db/psql/13:/var/lib/postgresql/data \
   postgres
 
+# start standalone redis container
 sudo docker run -d \
   -p 6379:6379/tcp \
   -v /var/db/redis:/data \
   redis
 
+
 # start prod compose
-sudo docker-compose upch
+sudo docker-compose up
