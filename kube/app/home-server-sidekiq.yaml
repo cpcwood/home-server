@@ -12,6 +12,11 @@ metadata:
     cpcwood.com/managed-by: cpcwood
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 2
   selector:
     matchLabels:
       app: home-server-worker
