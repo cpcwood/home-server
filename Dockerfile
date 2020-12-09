@@ -31,8 +31,7 @@ WORKDIR $APP_HOME
 COPY --from=cpcwood/home-server-base:latest $APP_HOME $APP_HOME
 
 RUN addgroup -S $USER && \
-  adduser -S -G $USER $USER && \
-  chown -R $USER $APP_HOME
+  adduser -S -G $USER $USER
 
 USER $USER
 

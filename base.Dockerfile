@@ -40,6 +40,10 @@ RUN yarn install --production=true
 
 ADD . $APP_HOME
 
+RUN addgroup -S $USER && \
+  adduser -S -G $USER $USER && \
+  chown -R $USER:$USER $APP_HOME
+
 ARG grecaptcha_site_key
 ENV GRECAPTCHA_SITE_KEY=$grecaptcha_site_key \
   SECRET_KEY_BASE=1234567890
@@ -54,9 +58,5 @@ RUN bundle exec rails assets:precompile && \
   rm -rf $APP_HOME/vendor/bundle/ruby/2.7.0/cache/ && \
   find $APP_HOME/vendor/bundle/ruby/2.7.0/gems/ -name "*.c" -delete && \
   find $APP_HOME/vendor/bundle/ruby/2.7.0/gems/ -name "*.o" -delete
-
-RUN addgroup -S $USER && \
-  adduser -S -G $USER $USER && \
-  chown -R $USER $APP_HOME
 
 USER $USER

@@ -61,8 +61,7 @@ COPY --from=cpcwood/home-server-base:latest $APP_HOME $APP_HOME
 COPY --from=server-nodejs-assets $APP_HOME/node_modules $APP_HOME/node_modules
 
 RUN addgroup -S $USER && \
-  adduser -S- G $USER $USER && \
-  chown -R $USER $APP_HOME
+  adduser -S -G $USER $USER
 
 USER $USER
 
