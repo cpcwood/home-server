@@ -112,6 +112,7 @@ describe('header_scroll_controller', () => {
       expect(headerImage.style.height).toEqual(`${imageHeight - 10}px`)
       window.dispatchEvent(new Event('turbolinks:before-cache'))
       expect(headerImage.style.height).toEqual(`${imageHeight}px`)
+      expect(headerImage.style.zIndex).toEqual('-1')
     })
   })
 })
