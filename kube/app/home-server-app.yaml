@@ -38,14 +38,14 @@ spec:
               port: 5000
             initialDelaySeconds: 20
             periodSeconds: 5
-            timeoutSeconds: 4
+            timeoutSeconds: 2
           readinessProbe:
             httpGet:
               path: /
               port: 5000
             initialDelaySeconds: 20
             periodSeconds: 5
-            timeoutSeconds: 4
+            timeoutSeconds: 2
           lifecycle:
             preStop:
               exec:
