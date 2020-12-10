@@ -36,15 +36,15 @@ spec:
               path: /
               port: 7433
             initialDelaySeconds: 20
-            periodSeconds: 5
-            timeoutSeconds: 4
+            periodSeconds: 60
+            timeoutSeconds: 5
           readinessProbe:
             httpGet:
               path: /
               port: 7433
             initialDelaySeconds: 20
-            periodSeconds: 5
-            timeoutSeconds: 4
+            periodSeconds: 60
+            timeoutSeconds: 5
           lifecycle:
             preStop:
               exec:
