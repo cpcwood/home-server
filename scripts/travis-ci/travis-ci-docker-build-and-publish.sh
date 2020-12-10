@@ -28,12 +28,12 @@ Images:
 
 # Pull latest base image
 echo "Pulling latest $DOCKER_IMAGE_NAME_BASE"
-docker pull "$DOCKER_IMAGE_NAME_BASE"
+docker pull "$DOCKER_IMAGE_NAME_BASE" || true
 
 # Build base image
 echo "Building Image: $full_docker_image_name_base"
 docker build \
-    -t "$DOCKER_IMAGE_NAME_BASE" \
+    --cache-from "$DOCKER_IMAGE_NAME_BASE" \
     -t "$full_docker_image_name_base" \
     -t "$DOCKER_IMAGE_NAME_BASE:latest" \
     --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
@@ -42,24 +42,24 @@ docker build \
 
 # Pull latest app image
 echo "Pulling latest $DOCKER_IMAGE_NAME_APP"
-docker pull "$DOCKER_IMAGE_NAME_APP"
+docker pull "$DOCKER_IMAGE_NAME_APP" || true
 
 # Build app image
 echo "Building Image: $full_docker_image_name_app"
 docker build \
-    -t "$DOCKER_IMAGE_NAME_APP" \
+    --cache-from "$DOCKER_IMAGE_NAME_APP" \
     -t "$full_docker_image_name_app" \
     -t "$DOCKER_IMAGE_NAME_APP:latest" \
     .
 
 # Pull latest worker image
-echo "Pulling latest $DOCKER_IMAGE_NAME_WORKER"
-docker pull "$DOCKER_IMAGE_NAME_WORKER"
+echo "Pulling latest $DOCKER_IMAGE_NAME_WORKER" 
+docker pull "$DOCKER_IMAGE_NAME_WORKER" || true
 
 # Build worker image
 echo "Building Image: $full_docker_image_name_worker"
 docker build \
-    -t "$DOCKER_IMAGE_NAME_WORKER" \
+    --cache-from "$DOCKER_IMAGE_NAME_WORKER" \
     -t "$full_docker_image_name_worker" \
     -t "$DOCKER_IMAGE_NAME_WORKER:latest" \
     -f ./worker.Dockerfile \
