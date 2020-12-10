@@ -70,6 +70,6 @@ echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/
 
 # Publish to dockerhub
 echo 'Pushing images to docker'
-docker push "$full_docker_image_name_base"
-docker push "$full_docker_image_name_app"
-docker push "$full_docker_image_name_worker"
+docker push "$DOCKER_IMAGE_NAME_BASE"
+docker push "$DOCKER_IMAGE_NAME_APP"
+docker push "$DOCKER_IMAGE_NAME_WORKER"
