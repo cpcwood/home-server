@@ -11,7 +11,6 @@ FROM ruby:2.7.2-alpine
 ENV RAILS_ENV=production \
   NODE_ENV=production \
   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-  USER=home-server-user \
   APP_HOME=/opt/app
 
 ENV BUNDLE_PATH=$APP_HOME/vendor/bundle \
@@ -38,11 +37,10 @@ RUN gem install bundler:2.1.4 && \
 COPY package.json yarn.lock $APP_HOME/
 RUN yarn install --production=true
 
-ADD . $APP_HOME
+RUN addgroup -S docker && \
+  adduser -S -G docker docker
 
-RUN addgroup -S $USER && \
-  adduser -S -G $USER $USER && \
-  chown -R $USER:$USER $APP_HOME
+COPY --chown=docker:docker . $APP_HOME
 
 ARG grecaptcha_site_key
 ENV GRECAPTCHA_SITE_KEY=$grecaptcha_site_key \
@@ -59,4 +57,4 @@ RUN bundle exec rails assets:precompile && \
   find $APP_HOME/vendor/bundle/ruby/2.7.0/gems/ -name "*.c" -delete && \
   find $APP_HOME/vendor/bundle/ruby/2.7.0/gems/ -name "*.o" -delete
 
-USER $USER
+USER docker

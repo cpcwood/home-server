@@ -33,6 +33,7 @@ docker pull "$DOCKER_IMAGE_NAME_BASE"
 # Build base image
 echo "Building Image: $full_docker_image_name_base"
 docker build \
+    -t "$DOCKER_IMAGE_NAME_BASE" \
     -t "$full_docker_image_name_base" \
     -t "$DOCKER_IMAGE_NAME_BASE:latest" \
     --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
@@ -46,6 +47,7 @@ docker pull "$DOCKER_IMAGE_NAME_APP"
 # Build app image
 echo "Building Image: $full_docker_image_name_app"
 docker build \
+    -t "$DOCKER_IMAGE_NAME_APP" \
     -t "$full_docker_image_name_app" \
     -t "$DOCKER_IMAGE_NAME_APP:latest" \
     .
@@ -57,6 +59,7 @@ docker pull "$DOCKER_IMAGE_NAME_WORKER"
 # Build worker image
 echo "Building Image: $full_docker_image_name_worker"
 docker build \
+    -t "$DOCKER_IMAGE_NAME_WORKER" \
     -t "$full_docker_image_name_worker" \
     -t "$DOCKER_IMAGE_NAME_WORKER:latest" \
     -f ./worker.Dockerfile \

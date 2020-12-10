@@ -9,7 +9,6 @@ FROM alpine:latest as server-nodejs-assets
 ENV RAILS_ENV=production \
   NODE_ENV=production \
   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-  USER=home-server-user \
   APP_HOME=/opt/app
 
 RUN apk add --no-cache \
@@ -20,11 +19,11 @@ RUN apk add --no-cache \
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
-RUN addgroup --system $USER && \
-  adduser --system --disabled-password --gecos '' --ingroup $USER $USER && \
-  chown -R $USER $APP_HOME
+RUN addgroup -S docker && \
+  adduser -S -G docker docker && \
+  chown -R docker:docker $APP_HOME
 
-USER $USER
+USER docker
 
 RUN yarn add carbon-now-cli
 
@@ -36,7 +35,6 @@ FROM ruby:2.7.2-alpine
 ENV RAILS_ENV=production \
   NODE_ENV=production \
   PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
-  USER=home-server-user \
   APP_HOME=/opt/app
 
 ENV BUNDLE_PATH=$APP_HOME/vendor/bundle \
@@ -57,12 +55,12 @@ RUN apk add --no-cache \
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
-COPY --from=cpcwood/home-server-base:latest $APP_HOME $APP_HOME
-COPY --from=server-nodejs-assets $APP_HOME/node_modules $APP_HOME/node_modules
+RUN addgroup -S docker && \
+  adduser -S -G docker docker
 
-RUN addgroup -S $USER && \
-  adduser -S -G $USER $USER
+USER docker
 
-USER $USER
+COPY --chown=docker:docker --from=cpcwood/home-server-base $APP_HOME $APP_HOME
+COPY --chown=docker:docker --from=server-nodejs-assets $APP_HOME/node_modules $APP_HOME/node_modules
 
 CMD ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
