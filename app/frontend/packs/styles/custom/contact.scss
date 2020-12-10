@@ -5,9 +5,9 @@
 
 
 .contact-details-container {
+  margin-top: 10px;
   position: relative;
   width: 100%;
-  margin-top: 10px;
   @include respond-to(tablet) {
     width: unset;
   }
@@ -62,7 +62,7 @@
 }
 
 #contact-messages-new-form {
-  padding: 0px;
+  padding: 0;
   @include respond-to(tablet) {
     padding-left: 20px;
   }

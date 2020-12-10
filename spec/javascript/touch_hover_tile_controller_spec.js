@@ -12,7 +12,7 @@ describe('touch_hover_tile_controller', () => {
 
   beforeEach(() => {
     document.body.innerHTML = `
-      <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
+      <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#touchStart touchend->touch-hover-tile#touchEnd mouseenter->touch-hover-tile#applyHoverToTarget mouseleave->touch-hover-tile#teardown turbolinks:before-cache@window->touch-hover-tile#teardown">
         <img class="cover-image">
         <a href="/one">
           <span class="cover-title" data-touch-hover-tile-target="coverTitle">
@@ -20,7 +20,7 @@ describe('touch_hover_tile_controller', () => {
           </span>
         </a>
       </div>
-      <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#checkTouch touchend->touch-hover-tile#addHover">
+      <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#touchStart touchend->touch-hover-tile#touchEnd mouseenter->touch-hover-tile#applyHoverToTarget mouseleave->touch-hover-tile#teardown turbolinks:before-cache@window->touch-hover-tile#teardown">
         <img class="cover-image">
         <a href="/two">
           <span class="cover-title" data-touch-hover-tile-target="coverTitle">
@@ -38,34 +38,64 @@ describe('touch_hover_tile_controller', () => {
     jest.resetAllMocks()
   })
 
-  describe('#addHover', () => {
-    it("touch < 250ms adds 'hover' class to child coverTile", () => {
-      jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2020-04-19T00:00:00.000')).mockReturnValue(new Date('2020-04-19T00:00:00.249'))
+  describe('touch events', () => {
+    const touchTime = 249
+
+    it('touch < touchTime', () => {
+      jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2020-04-19T00:00:00.000')).mockReturnValue(new Date(`2020-04-19T00:00:00.${touchTime}`))
       flexImageTileOne.dispatchEvent(new Event('touchstart'))
       flexImageTileOne.dispatchEvent(new Event('touchend'))
 
       expect(flexImageTileOne.querySelector('.cover-title').classList).toContain('hover')
     })
 
-    it('touch >= 250ms performs default', () => {
-      jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2020-04-19T00:00:00.000')).mockReturnValue(new Date('2020-04-19T00:00:00.250'))
+    it('touch >= touchTime', () => {
+      jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2020-04-19T00:00:00.000')).mockReturnValue(new Date(`2020-04-19T00:00:00.${touchTime + 1}`))
       flexImageTileOne.dispatchEvent(new Event('touchstart'))
       flexImageTileOne.dispatchEvent(new Event('touchend'))
 
       expect(flexImageTileOne.querySelector('.cover-title').classList).not.toContain('hover')
     })
 
-    it("if another tile contains class 'hover' it is removed, and added to tile clicked", () => {
-      let dateMock = jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2020-04-19T00:00:00.000')).mockReturnValue(new Date('2020-04-19T00:00:00.249'))
+    it('other tile already being hovered on', () => {
+      let dateMock = jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2020-04-19T00:00:00.000')).mockReturnValue(new Date(`2020-04-19T00:00:00.${touchTime}`))
       flexImageTileOne.dispatchEvent(new Event('touchstart'))
       flexImageTileOne.dispatchEvent(new Event('touchend'))
 
       dateMock.mockRestore()
-      dateMock = jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2020-04-19T00:00:00.000')).mockReturnValue(new Date('2020-04-19T00:00:00.249'))
+      dateMock = jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2020-04-19T00:00:00.000')).mockReturnValue(new Date(`2020-04-19T00:00:00.${touchTime}`))
       flexImageTileTwo.dispatchEvent(new Event('touchstart'))
       flexImageTileTwo.dispatchEvent(new Event('touchend'))
 
       expect(flexImageTileTwo.querySelector('.cover-title').classList).toContain('hover')
+      expect(flexImageTileOne.querySelector('.cover-title').classList).not.toContain('hover')
+    })
+  })
+
+  describe('mouse events', () => {
+    it('mouseenter event', () => {
+      flexImageTileOne.dispatchEvent(new Event('mouseenter'))
+      expect(flexImageTileOne.querySelector('.cover-title').classList).toContain('hover')
+    })
+
+    it('mouseleave event', () => {
+      flexImageTileOne.dispatchEvent(new Event('mouseenter'))
+      flexImageTileOne.dispatchEvent(new Event('mouseleave'))
+      expect(flexImageTileOne.querySelector('.cover-title').classList).not.toContain('hover')
+    })
+
+    it('other tile already being hovered on', () => {
+      flexImageTileOne.dispatchEvent(new Event('mouseenter'))
+      flexImageTileTwo.dispatchEvent(new Event('mouseenter'))
+      expect(flexImageTileOne.querySelector('.cover-title').classList).not.toContain('hover')
+      expect(flexImageTileTwo.querySelector('.cover-title').classList).toContain('hover')
+    })
+  })
+
+  describe('#teardown', () => {
+    it('tile being hovered on', () => {
+      flexImageTileOne.dispatchEvent(new Event('mouseenter'))
+      window.dispatchEvent(new Event('turbolinks:before-cache'))
       expect(flexImageTileOne.querySelector('.cover-title').classList).not.toContain('hover')
     })
   })
