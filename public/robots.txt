@@ -1,1 +1,8 @@
 # See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+UserAgent: *
+Disallow: /admin
+Disallow: /admin/
+Disallow: /login
+Disallow: /2fa
+Disallow: /forgotten-password
+Disallow: /reset-password
