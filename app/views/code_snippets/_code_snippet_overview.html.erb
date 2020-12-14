@@ -1,13 +1,14 @@
-<div class='card-container fade-transition' data-image-loader-target="fade">
+<div class='card-container fade-transition' data-image-loader-target="fade" itemscope itemtype="https://schema.org/TechArticle">
   <a href='<%= path %>' class='card-content show-button' title='<%= code_snippet.title %>' tabindex='<%= index + 1 %>'>
-    <div class='card-image'>
-      <%= image_tag(image_path_helper(image_model: code_snippet.code_snippet_image), data: {action: "load->image-loader#imageLoaded"}) %>
+    <div class='card-image' itemprop='image' itemscope itemtype="https://schema.org/ImageObject">
+      <%= image_tag(image_path_helper(image_model: code_snippet.code_snippet_image), data: {action: "load->image-loader#imageLoaded"}, itemprop: 'contentUrl') %>
     </div>
-    <h3>
+    <h3 class='headline'>
       <%= code_snippet.title %>
     </h3>
-    <div class='card-overview'>
+    <div class='card-overview' class='abstract'>
       <%= code_snippet.overview %>
     </div>
+    <link itemprop="isPartOf" itemscope itemtype="https://schema.org/Collection" itemid="<%= code_snippets_path %>" />
   </a>
 </div>
