@@ -1,20 +1,20 @@
 <div class='wide-card-title-container'>
-  <h3>
+  <h3 itemprop='headline'>
     <%= project.title %>
   </h3>
   <div class='links-container'>
     <% unless project.github_link.blank? %>
-      <a href='<%= project.github_link %>' class='logo-link' target='_blank' title='github link'>
+      <a href='<%= project.github_link %>' class='logo-link' target='_blank' title='github link' itemprop='codeRepository'>
         <%= image_tag('icons/github-icon.svg', alt: 'github logo') %>
       </a>
     <% end %>
     <% unless project.site_link.blank? %>
-      <a href='<%= project.site_link %>' class='logo-link' target='_blank' title='website link'>
+      <a href='<%= project.site_link %>' class='logo-link' target='_blank' title='website link' itemprop='url'>
         <%= image_tag('icons/external-link.svg', alt: 'external link image') %>
       </a>
     <% end %>
   </div>
 </div>
-<div class='wide-card-overview'>
+<div class='wide-card-overview' itemprop='description'>
   <%= markdown_admin(project.overview) %>
 </div>
