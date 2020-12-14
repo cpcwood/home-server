@@ -1,11 +1,14 @@
-<a href='<%= post_path(post) %>' class='post-overview-container show-blog-post-button' title='<%= post.title %>' tabindex='<%= post_iteration.index + 1 %>'>
-  <div class='post-date'>
-    <%= full_date(post.date_published) %>
-  </div>
-  <h3 class='post-overview-title'>
-    <%= post.title %>
-  </h3>
-  <div class='post-overview-overview'>
-    <%= post.overview %>
-  </div>
-</a>
+<li itemprop='blogPost' itemscope itemtype="https://schema.org/BlogPosting">
+  <a href='<%= post_path(post) %>' class='post-overview-container show-blog-post-button' title='<%= post.title %>' tabindex='<%= post_iteration.index + 1 %>' itemprop="url">
+    <time class='post-date' datetime="<%= post.date_published.strftime("%Y-%m-%d")%>">
+      <%= full_date(post.date_published) %>
+    </time>
+    <h3 class='post-overview-title' class='headline'>
+      <%= post.title %>
+    </h3>
+    <div class='post-overview-overview' class='abstract'>
+      <%= post.overview %>
+    </div>
+    <link itemprop="isPartOf" itemscope itemtype="https://schema.org/Blog" itemid="<%= posts_path %>" />
+  </a>
+</li>
