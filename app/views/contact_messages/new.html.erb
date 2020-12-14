@@ -10,8 +10,10 @@
   Talk to me
 <% end %>
 
-<div class='contact-details-container'>
-  <%= render partial: 'partials/contact_details', locals: { model: @about, contact_link: false } %>
-</div>
+<section itemscope itemtype="https://schema.org/ContactPage">
+  <div class='contact-details-container' >
+    <%= render partial: 'partials/contact_details', locals: { model: @about, contact_link: false } %>
+  </div>
 
-<%= render partial: 'contact_messages/new_form', locals: {contact_message: @contact_message} %>
+  <%= render partial: 'contact_messages/new_form', locals: {contact_message: @contact_message} %>
+</section>
