@@ -35,6 +35,7 @@
   <section class='reading-pane' itemprop='description'>
     <%= markdown_admin(@code_snippet.text) %>
   </section>
+  <link itemprop="isPartOf" itemscope itemtype="https://schema.org/Collection" itemid="<%= code_snippets_path %>" />
 </div>
 
 <section class='reading-pane reading-footer'>

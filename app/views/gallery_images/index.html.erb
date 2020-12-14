@@ -19,7 +19,7 @@
   <% if @gallery_images.empty? %>
     <%= render partial: 'partials/no_items', locals: {item: 'images'} %>
   <% else %>
-    <ul class='gallery-container' data-controller='justified-gallery gallery-lightbox' data-justified-gallery-target='container' data-justified-gallery-margin='2' data-gallery-lightbox-item-selector='.gallery-container a' data-action='turbolinks:before-cache@window->justified-gallery#teardown'>
+    <ul class='gallery-container' data-controller='justified-gallery gallery-lightbox' data-justified-gallery-target='container' data-justified-gallery-margin='2' data-gallery-lightbox-item-selector='.gallery-container a' data-action='turbolinks:before-cache@window->justified-gallery#teardown' itemscope itemtype="https://schema.org/ImageGallery">
       <%= render partial: 'gallery_images/image_container', collection: @gallery_images, as: :gallery_image %>
     </ul>
   <% end %>
