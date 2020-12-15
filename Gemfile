@@ -33,16 +33,19 @@ gem 'rouge'
 gem 'validate_url'
 # Validate dates in model
 gem 'validates_timeliness', '~> 5.0.0.beta1'
-# Timezone
-gem 'tzinfo-data'
-# Ensure sidekiq stays alive in k8s
-gem 'sidekiq_alive'
-# Dynamically generate sitemaps
-gem 'sitemap_generator'
+
 
 group :production do
   # AWS S3 for production storage
   gem 'aws-sdk-s3', require: false
+  # Timezone
+  gem 'tzinfo-data'
+  # Ensure sidekiq stays alive in k8s
+  gem 'sidekiq_alive'
+  # Dynamically generate sitemaps
+  gem 'sitemap_generator'
+  # Manage cron
+  gem 'whenever', require: false
 end
 
 group :development, :test do
