@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   resource :about, only: [:show]
 
   get '/contact', to: 'contact_messages#new'
-  resources :contact_messages, only: [:new, :create], path: 'contact-messages'
+  resources :contact_messages, only: [:create], path: 'contact-messages'
 
   resource :users, only: [:update]
 

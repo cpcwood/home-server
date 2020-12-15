@@ -37,6 +37,8 @@ gem 'validates_timeliness', '~> 5.0.0.beta1'
 gem 'tzinfo-data'
 # Ensure sidekiq stays alive in k8s
 gem 'sidekiq_alive'
+# Dynamically generate sitemaps
+gem 'sitemap_generator'
 
 group :production do
   # AWS S3 for production storage
