@@ -7,7 +7,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.7.2-node          
+      - image: circleci/ruby:2.7.2-node-browsers
     steps:
       - checkout
       - ruby/install-deps
@@ -18,7 +18,7 @@ jobs:
   test:
     parallelism: 3 
     docker:
-      - image: circleci/ruby:2.7.2-node 
+      - image: circleci/ruby:2.7.2-node-browsers 
       - image: circleci/postgres:alpine
         environment:
           POSTGRES_USER: cpcwood-circleci
