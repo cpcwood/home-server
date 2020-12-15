@@ -1,4 +1,3 @@
-# Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = ENV.fetch('SITE_HOST') { "http://www.example.com" } 
 SitemapGenerator.verbose = false
 
