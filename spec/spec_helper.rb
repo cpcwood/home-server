@@ -19,7 +19,10 @@ require 'database_cleaner/active_record'
 Capybara.default_driver = :rack_test
 Capybara.javascript_driver = :selenium_chrome_headless
 
-SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+SimpleCov::Formatter::LcovFormatter.config do |c|
+  c.report_with_single_file = true
+  c.lcov_file_name = 'home-server.lcov'
+end
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::Console, Coveralls::SimpleCov::Formatter, SimpleCov::Formatter::LcovFormatter])
 SimpleCov.start 'rails' do
   add_filter 'app/channels'
