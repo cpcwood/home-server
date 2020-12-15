@@ -86,9 +86,9 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers', '~> 4.3', require: false
   # Coverage with simplecov
-  gem 'simplecov', '~> 0.16.1', require: false
-  gem 'simplecov-console', '~> 0.7.2', require: false
-  gem 'simplecov-lcov'
+  gem 'simplecov', require: false
+  gem 'simplecov-console', require: false
+  gem 'simplecov-lcov', require: false
   # Coverage badge with coveralls
   gem 'coveralls', '~> 0.8.23', require: false
   # Mock HTTP Requests
