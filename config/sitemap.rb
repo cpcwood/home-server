@@ -1,4 +1,4 @@
-SitemapGenerator::Sitemap.default_host = ENV.fetch('SITE_HOST') { "http://www.example.com" } 
+SitemapGenerator::Sitemap.default_host = "https://#{ENV['SITE_HOST']}"
 SitemapGenerator.verbose = false
 
 SitemapGenerator::Sitemap.create(:compress => false) do
