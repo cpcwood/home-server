@@ -146,3 +146,14 @@
   margin-inline-start: 0;
   padding-inline-start: 0;
 }
+
+.item-content {
+  align-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow-wrap: break-word;
+  width: 100%;
+}
