@@ -34,6 +34,19 @@ jobs:
           name: Database setup
           command: bundle exec rails db:schema:load --trace
       - ruby/rspec-test
+      - run:
+          name: Rubocop Linter
+          command: bundle exec rubocop -a
+      - run:
+          name: JavaScript Testing
+          command: yarn test
+      - run: 
+          name: JavaScript Linting
+          command: yarn lint
+      - run:
+          name: Automerge Branch
+          command: ./scripts/circle-ci/circle-ci-auto-merge.sh
+
 
 workflows:
   version: 2
