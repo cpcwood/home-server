@@ -137,3 +137,23 @@
   margin-top: 30px;
   width: 100%;
 }
+
+.unstyled-list {
+  list-style-type: none;
+  margin-block-end: 0;
+  margin-block-start: 0;
+  margin-inline-end: 0;
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+}
+
+.item-content {
+  align-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow-wrap: break-word;
+  width: 100%;
+}

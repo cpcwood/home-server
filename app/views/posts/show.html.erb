@@ -10,12 +10,15 @@
   <%= @post.overview %> - Blog post by <%= @post.user.username %>
 <% end %>
 
-<section class='reading-pane'>
-  <h2><%= @post.title %></h2>
+<section class='reading-pane' itemscope itemtype="https://schema.org/BlogPosting">
+  <h2 itemprop='headline'><%= @post.title %></h2>
   <div class='reading-pane-subtitle'>
-    <%= @post.user.username %> | <%= full_date(@post.date_published) %>
+    <span itemprop='author'> <%= @post.user.username %> </span> | <time datetime="<%= @post.date_published.strftime("%Y-%m-%d")%>" itemprop='dateModified'> <%= full_date(@post.date_published) %> </time>
   </div>
-  <%= markdown_admin(@post.text) %>
+  <div itemprop='articleBody'>
+    <%= markdown_admin(@post.text) %>
+  </div>
+  <link itemprop="isPartOf" itemscope itemtype="https://schema.org/Blog" itemid="<%= posts_path %>" />
 </section>
 
 <section class='reading-pane reading-footer'>
