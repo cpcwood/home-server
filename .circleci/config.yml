@@ -44,8 +44,9 @@ jobs:
           name: JavaScript Linting
           command: yarn lint
       - run:
-          name: Automerge Branch
+          name: Automerge PR
           command: |
+            set +e
             ./scripts/circle-ci/circle-ci-auto-merge.sh
             if [ $? = 0 ]; then
                 echo 'Merge successful'
