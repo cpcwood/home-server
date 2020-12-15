@@ -290,6 +290,7 @@ GEM
       simplecov
       terminal-table
     simplecov-html (0.10.2)
+    simplecov-lcov (0.8.0)
     sitemap_generator (6.1.2)
       builder (~> 3.0)
     smart_properties (1.15.0)
@@ -393,6 +394,7 @@ DEPENDENCIES
   sidekiq_alive
   simplecov (~> 0.16.1)
   simplecov-console (~> 0.7.2)
+  simplecov-lcov
   sitemap_generator
   spring
   spring-watcher-listen (~> 2.0.0)
