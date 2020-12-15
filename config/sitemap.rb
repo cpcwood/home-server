@@ -1,7 +1,7 @@
 SitemapGenerator::Sitemap.default_host = ENV.fetch('SITE_HOST') { "http://www.example.com" } 
 SitemapGenerator.verbose = false
 
-SitemapGenerator::Sitemap.create do
+SitemapGenerator::Sitemap.create(:compress => false) do
   add root_path
   add about_path
   add contact_path
