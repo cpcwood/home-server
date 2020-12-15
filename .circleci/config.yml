@@ -19,16 +19,18 @@ jobs:
     parallelism: 3 
     docker:
       - image: circleci/ruby:2.7.2-node 
-      - image: circleci/postgres:9.5-alpine
+      - image: circleci/postgres:alpine
         environment:
           POSTGRES_USER: cpcwood-circleci
           POSTGRES_PASSWORD: "test"
+          POSTGRES_DB: home_server_test
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
       PGHOST: 127.0.0.1
       PGUSER: cpcwood-circleci
       PGPASSWORD: "test"
+      DB_NAME_TEST: home_server_test
       RAILS_ENV: test
     steps:
       - checkout 
