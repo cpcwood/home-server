@@ -29,8 +29,7 @@ RUN mkdir -p $APP_HOME $APP_HOME/vendor/bundle $APP_HOME/tmp
 WORKDIR $APP_HOME
 
 COPY Gemfile* $APP_HOME/
-RUN gem install bundler:2.1.4 && \
-  bundle config set without development:test:assets && \
+RUN bundle config set without development:test:assets && \
   bundle config set bin $GEM_PATH/bin && \
   bundle install
 
