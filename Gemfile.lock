@@ -392,8 +392,8 @@ DEPENDENCIES
   rubocop-rails (~> 2.5.2)
   sidekiq (< 7)
   sidekiq_alive
-  simplecov (~> 0.16.1)
-  simplecov-console (~> 0.7.2)
+  simplecov
+  simplecov-console
   simplecov-lcov
   sitemap_generator
   spring
