@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   ruby: circleci/ruby@1.0 
   node: circleci/node@2
+  coveralls: coveralls/coveralls@1.0.4
 
 jobs:
   build:
@@ -45,6 +46,8 @@ jobs:
           name: Database setup
           command: bundle exec rails db:schema:load --trace
       - ruby/rspec-test
+      - coveralls/upload:
+          path_to_lcov: ./coverage/lcov/project.lcov
 
 workflows:
   version: 2
