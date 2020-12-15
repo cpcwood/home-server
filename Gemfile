@@ -96,6 +96,8 @@ group :test do
   gem 'database_cleaner-active_record', '>= 1.8.0', require: false
   # Load test environment automatically
   gem 'dotenv', require: false
+  # Format tests for circleci
+  gem 'rspec_junit_formatter'
 end
 
 
