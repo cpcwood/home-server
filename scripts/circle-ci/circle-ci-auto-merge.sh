@@ -1,4 +1,4 @@
-#!/bin/bash -ev
+#!/bin/bash -e
 # CircleCI Automerge GitHub PR Script
 
 if [ -z "${CIRCLE_PULL_REQUEST}" ]; then
