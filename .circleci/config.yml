@@ -16,8 +16,6 @@ jobs:
           cache-key: "yarn.lock"
           
   test:
-    override:
-      - RAILS_ENV=test bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml
     parallelism: 3 
     docker:
       - image: circleci/ruby:2.7.2-node 
