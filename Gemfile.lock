@@ -246,6 +246,8 @@ GEM
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
     rspec-support (3.10.0)
+    rspec_junit_formatter (0.4.1)
+      rspec-core (>= 2, < 4, != 2.12.0)
     rubocop (0.93.1)
       parallel (~> 1.10)
       parser (>= 2.7.1.5)
@@ -384,6 +386,7 @@ DEPENDENCIES
   redcarpet
   rouge
   rspec-rails (~> 4.0)
+  rspec_junit_formatter
   rubocop-performance (~> 1.5.2)
   rubocop-rails (~> 2.5.2)
   sidekiq (< 7)
