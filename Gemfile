@@ -88,7 +88,6 @@ group :test do
   # Coverage with simplecov
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
-  gem 'simplecov-lcov', require: false
   # Coverage badge with coveralls
   gem 'coveralls', '~> 0.8.23', require: false
   # Mock HTTP Requests
