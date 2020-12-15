@@ -1,7 +1,7 @@
 #!/bin/bash -ev
 # CircleCI Automerge GitHub PR Script
 
-if [ -n "${CIRCLE_PULL_REQUEST}" ]; then
+if [ -z "${CIRCLE_PULL_REQUEST}" ]; then
     >&2 echo 'Not in pull request, skipping automerge'
     exit 1
 fi
