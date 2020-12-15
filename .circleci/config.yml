@@ -45,7 +45,9 @@ jobs:
           command: yarn lint
       - run:
           name: Automerge Branch
-          command: ./scripts/circle-ci/circle-ci-auto-merge.sh
+          command: |
+            set +e
+            ./scripts/circle-ci/circle-ci-auto-merge.sh
 
 
 workflows:
