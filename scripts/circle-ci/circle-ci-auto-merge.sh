@@ -20,7 +20,7 @@ fi
 
 # Extract GitHub PR number
 github_pr_number="$(echo "$CIRCLE_PULL_REQUEST" | sed -n 's/^.*\/\([0-9]\+\)$/\1/p')"
-if [ -z "$github_pr_number" ] || \
+if [ -z "$github_pr_number" ]; then
     >&2 echo 'GitHub PR number not found'
     exit 1
 fi
@@ -30,7 +30,7 @@ curl -L "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" -o 
 chmod +x jq
 url="https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/$github_pr_number"
 target_branch=$(curl -H "Authorization: $GITHUB_SECRET_TOKEN" "$url" | ./jq '.base.ref' | tr -d '"')
-if [ -z "$target_branch" ] || \
+if [ -z "$target_branch" ]; then
     >&2 echo 'Failed to fetch GitHub PR target branch'
     exit 1
 fi
