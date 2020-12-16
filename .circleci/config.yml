@@ -57,6 +57,6 @@ jobs:
 
 workflows:
   version: 2
-  test_and_upload:
+  test_and_merge:
     jobs:
       - test
