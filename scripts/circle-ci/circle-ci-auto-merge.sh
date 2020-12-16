@@ -46,6 +46,6 @@ Merging: $CIRCLE_BRANCH >> $target_branch
 curl \
   -X PUT \
   -H "Accept: application/vnd.github.v3+json" \
-  -H "Authorization: $GITHUB_SECRET_TOKEN" \
+  -H "Authorization: token $GITHUB_SECRET_TOKEN" \
   "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/$github_pr_number/merge" \
   -d '{"commit_title":"CircleCI automerge '"$CIRCLE_BRANCH >> $target_branch"'", "sha": "'"$CIRCLE_SHA1"'"}'
