@@ -3,6 +3,8 @@ version: 2.1
 orbs:
   ruby: circleci/ruby@1.0 
   node: circleci/node@2
+  docker: circleci/docker@1.5.0
+  kubernetes: circleci/kubernetes@0.11.2
 
 workflows:
   version: 2
@@ -24,6 +26,15 @@ workflows:
       - build_worker:
           requires:
             - build_base
+          filters:
+             branches:
+               only: master
+      - deploy:
+          requires:
+            - test
+            - build_base
+            - build_app
+            - build_worker
           filters:
              branches:
                only: master
@@ -212,4 +223,28 @@ jobs:
           key: home-server-docker-worker-dependencies-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/home-server-worker-dependencies.tar
-
+  deploy:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - kubernetes/install-kubectl
+      - run:
+          name: 'Update config files in ./kube with current container version'
+          command: find ./kube/ -type f | xargs sed -i "s/CONTAINER_VERSION/$(echo $CIRCLE_SHA1 | head -c8)/g"
+      - run:
+          name: 'Creating cluster certificate from ENV'
+          command: |
+            "$KUBERNETES_CLUSTER_CERTIFICATE" | base64 --decode > cert.crt
+      - run:
+          name: 'Apply Kubernetes config to server'
+          command: |
+            kubectl --kubeconfig=/dev/null \
+              --certificate-authority=cert.crt \
+              --server=$KUBERNETES_SERVER \
+              --token=$KUBERNETES_SERVICE_ACC_TOKEN \
+              apply -Rf ./kube/app/
+      - run:
+          name: 'Remove cluster certificate artifact'
+          command: rm -f cert.crt
+          when: always
