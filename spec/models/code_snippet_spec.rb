@@ -94,4 +94,11 @@ RSpec.describe CodeSnippet, type: :model do
       end
     end
   end
+
+  describe 'to_param' do
+    it 'human title' do
+      code_snippet = create(:code_snippet)
+      expect(code_snippet.to_param).to eq("#{code_snippet.id}-#{code_snippet.title.parameterize}")
+    end
+  end
 end

@@ -44,7 +44,6 @@ class CodeSnippet < ApplicationRecord
   end
 
   def to_param
-    return '' if new_record?
-    "#{id}-#{title&.parameterize}"
+    "#{id}-#{title.parameterize}"
   end
 end
