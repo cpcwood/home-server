@@ -100,7 +100,7 @@ jobs:
           command: |
             set +o pipefail
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
-            docker pull home-server-base || true
+            docker pull $DOCKER_USERNAME/home-server-base | true
       - run:
           name: Build application base Docker image
           command: |
@@ -127,8 +127,8 @@ jobs:
           command: |
             set +o pipefail
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
-            docker pull home-server-base || true
-            docker pull home-server-app || true
+            docker pull $DOCKER_USERNAME/home-server-base | true
+            docker pull $DOCKER_USERNAME/home-server-app | true
       - run:
           name: Build application Docker image
           command: |
@@ -153,9 +153,9 @@ jobs:
           command: |
             set +o pipefail
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
-            docker pull home-server-base || true
-            docker pull home-server-worker-dependencies || true
-            docker pull home-server-worker || true
+            docker pull $DOCKER_USERNAME/home-server-base | true
+            docker pull $DOCKER_USERNAME/home-server-worker-dependencies | true
+            docker pull $DOCKER_USERNAME/home-server-worker | true
       - run:
           name: Build worker dependencies Docker image
           command: |
