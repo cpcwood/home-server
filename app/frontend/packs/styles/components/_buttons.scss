@@ -61,12 +61,11 @@
 }
 
 .embedded-gallery-button {
-
   @include highlight-button-outline;
   align-items: center;
   color: rgb(255, 255, 255);
   cursor: pointer;
-  display: flex;
+  display: none;
   font-size: 3rem;
   height: 100%;
   opacity: 0.65;
