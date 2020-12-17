@@ -12,7 +12,7 @@
 
   <div class='about-contact-links-section'>
     <% if contact_link %>
-      <%= link_to('Contact', contact_path, class: 'standard-button about-contact-link', alt: 'profile picture', itemprop: 'significantLink') %>
+      <%= link_to('Contact', contact_path, class: 'standard-button about-contact-link', itemprop: 'significantLink') %>
     <% end %>
     <a href='<%= model.linkedin_link %>' class='logo-link' target='_blank' title='LinkedIn link' itemprop='significantLink'>
       <%= image_tag('icons/linkedin-icon.svg', alt: 'LinkedIn logo') %>

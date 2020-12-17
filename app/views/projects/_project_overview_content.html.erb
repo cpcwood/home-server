@@ -4,12 +4,12 @@
   </h3>
   <div class='links-container'>
     <% unless project.github_link.blank? %>
-      <a href='<%= project.github_link %>' class='logo-link' target='_blank' title='github link' itemprop='codeRepository'>
+      <a href='<%= project.github_link %>' class='logo-link' target='_blank' title='Github link' itemprop='codeRepository'>
         <%= image_tag('icons/github-icon.svg', alt: 'github logo') %>
       </a>
     <% end %>
     <% unless project.site_link.blank? %>
-      <a href='<%= project.site_link %>' class='logo-link' target='_blank' title='website link' itemprop='url'>
+      <a href='<%= project.site_link %>' class='logo-link' target='_blank' title='Website link' itemprop='url'>
         <%= image_tag('icons/external-link.svg', alt: 'external link image') %>
       </a>
     <% end %>
