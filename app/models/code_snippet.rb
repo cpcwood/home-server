@@ -42,4 +42,9 @@ class CodeSnippet < ApplicationRecord
   def render_code_snippet
     RenderCodeSnippetJob.set(wait: 5.seconds).perform_later(model: create_code_snippet_image, snippet: snippet, extension: extension) if snippet_previously_changed?
   end
+
+  def to_param
+    parameterized_title = "-#{title.parameterize}" if title&.present?
+    "#{id}#{parameterized_title}"
+  end
 end

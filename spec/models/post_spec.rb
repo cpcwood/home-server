@@ -62,4 +62,11 @@ RSpec.describe Post, type: :model do
       end
     end
   end
+
+  describe 'to_param' do
+    it 'human title' do
+      post = create(:post)
+      expect(post.to_param).to eq("#{post.id}-#{post.title.parameterize}")
+    end
+  end
 end

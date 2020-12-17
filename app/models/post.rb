@@ -30,4 +30,9 @@ class Post < ApplicationRecord
 
   validates :title,
             length: { minimum: 1, message: 'Blog post title cannot be empty' }
+
+  def to_param
+    parameterized_title = "-#{title.parameterize}" if title&.present?
+    "#{id}#{parameterized_title}"
+  end
 end
