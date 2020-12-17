@@ -76,7 +76,7 @@ jobs:
             fi
   build:
     docker:
-      - image: cimg/base:stable
+      - image: docker
     steps:
       - checkout
       - setup_remote_docker:
@@ -86,7 +86,6 @@ jobs:
           name: 'Build home-server-base image'
           command: |
             docker build \
-                --cache-from=$DOCKER_USERNAME/home-server-base \
                 -t "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-base:latest \
                 --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
@@ -96,7 +95,6 @@ jobs:
           name: 'Build home-server-app image'
           command: |
             docker build \
-                --cache-from=$DOCKER_USERNAME/home-server-app \
                 -t "$DOCKER_USERNAME/home-server-app:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-app:latest \
                 .
@@ -104,7 +102,6 @@ jobs:
           name: 'Build home-server-worker-dependencies image'
           command: |
             docker build \
-                --cache-from=$DOCKER_USERNAME/home-server-worker-dependencies \
                 -t "$DOCKER_USERNAME/home-server-worker-dependencies:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-worker-dependencies:latest \
                 -f ./worker-dependencies.Dockerfile \
@@ -113,7 +110,6 @@ jobs:
           name: 'Build home-server-worker image'
           command: |
             docker build \
-                --cache-from=$DOCKER_USERNAME/home-server-worker \
                 -t "$DOCKER_USERNAME/home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-worker:latest \
                 -f ./worker.Dockerfile \
