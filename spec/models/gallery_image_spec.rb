@@ -28,14 +28,12 @@ RSpec.describe GalleryImage, type: :model do
 
   context 'validations' do
     describe 'date_taken' do
-      it 'format' do
+      it 'default value' do
+        travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
         subject.date_taken = nil
-        expect(subject).to_not be_valid
-        subject.date_taken = 'not an iso date'
-        expect(subject).to_not be_valid
-        expect(subject.errors.messages[:date_taken]).to eq ['Date taken must be date']
-        subject.date_taken = DateTime.new(2020, 04, 19, 0, 0, 0)
         expect(subject).to be_valid
+        subject.save
+        expect(subject.date_taken).to eq(DateTime.new(2020, 04, 19, 0, 0, 0))
       end
     end
 
@@ -120,16 +118,25 @@ RSpec.describe GalleryImage, type: :model do
           expect(subject.date_taken).to eq(DateTime.new(2020, 04, 19))
         end
 
-        it 'latitude attribute missing' do
-          subject.latitude = nil
-          subject.save
-          expect(subject.latitude).to eq(3)
+        it 'date_taken error extracting' do
+          allow(DateTime).to receive(:parse).and_throw('error')
+          subject.date_taken = nil
+          expect(subject.save).to eq(false)
         end
 
-        it 'longitude attribute missing' do
+        it 'extract gps coordinates attribute missing' do
+          subject.latitude = nil
           subject.longitude = nil
           subject.save
+          expect(subject.latitude).to eq(3)
           expect(subject.longitude).to eq(-3)
+        end
+
+        it 'extract gps coordinates error' do
+          allow_any_instance_of(GalleryImage).to receive(:parse_exif_dms).and_throw('error')
+          subject.latitude = nil
+          subject.longitude = nil
+          expect(subject).to be_valid
         end
       end
     end
