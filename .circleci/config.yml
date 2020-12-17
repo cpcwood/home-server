@@ -4,7 +4,31 @@ orbs:
   ruby: circleci/ruby@1.0 
   node: circleci/node@2
 
-jobs:         
+workflows:
+  version: 2
+  test_build_deploy:
+    jobs:
+      - test
+      - build_base:
+          requires:
+            - test
+          filters:
+             branches:
+               only: master
+      - build_app:
+          requires:
+            - build_base
+          filters:
+             branches:
+               only: master
+      - build_worker:
+          requires:
+            - build_base
+          filters:
+             branches:
+               only: master
+
+jobs:     
   test:
     docker:
       - image: circleci/ruby:2.7.2-node-browsers 
@@ -53,10 +77,148 @@ jobs:
             else
                 echo 'No merge'
             fi
+  build_base:
+    docker:
+      - image: docker
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Set environment variables
+          command: export GIT_COMMIT=$(echo $CIRCLE_SHA1 | head -c8)
+      - restore_cache:
+          keys:
+            - home-server-docker-base-{{ .Branch }}
+      - run:
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/home-server-base.tar | true
+      - run:
+          name: Build application base Docker image
+          command: |
+            docker build \
+              --cache-from=home-server-base \
+              -t "home-server-base:$GIT_COMMIT" \
+              -t "home-server-base:latest" \
+              --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
+              -f ./base.Dockerfile \
+              .
+      - run:
+          name: Publish Docker image
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
+            docker push home-server-base
+          background: true
+      - run:
+          name: Save Docker image layer cache
+          command: |
+            mkdir -p /caches
+            docker save -o /caches/home-server-base.tar home-server-base
+      - save_cache:
+          key: home-server-docker-base-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/home-server-base.tar
+  build_app:
+    docker:
+      - image: docker
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Set environment variables
+          command: export GIT_COMMIT=$(echo $CIRCLE_SHA1 | head -c8)
+      - restore_cache:
+          keys:
+            - home-server-docker-base-{{ .Branch }}
+            - home-server-docker-app-{{ .Branch }}
+      - run:
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/home-server-base.tar | true
+            docker load -i /caches/home-server-app.tar | true
+      - run:
+          name: Build application Docker image
+          command: |
+            docker build \
+              --cache-from=home-server-app \
+              -t "home-server-app:$GIT_COMMIT" \
+              -t "home-server-app:latest" \
+              .
+      - run:
+          name: Publish Docker image
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
+            docker push home-server-app
+          background: true
+      - run:
+          name: Save Docker image layer cache
+          command: |
+            mkdir -p /caches
+            docker save -o /caches/home-server-app.tar home-server-app
+      - save_cache:
+          key: home-server-docker-app-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/home-server-app.tar
+  build_worker:
+    docker:
+      - image: docker
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Set environment variables
+          command: export GIT_COMMIT=$(echo $CIRCLE_SHA1 | head -c8)
+      - restore_cache:
+          keys:
+            - home-server-docker-base-{{ .Branch }}
+            - home-server-docker-worker-{{ .Branch }}
+            - home-server-docker-worker-dependencies-{{ .Branch }}
+      - run:
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/home-server-base.tar | true
+            docker load -i /caches/home-server-worker.tar | true
+            docker load -i /caches/home-server-worker-dependencies.tar | true
+      - run:
+          name: Build worker dependencies Docker image
+          command: |
+            docker build \
+              --cache-from=home-server-worker-dependencies \
+              -t "home-server-worker:$GIT_COMMIT" \
+              -t "home-server-worker:latest" \
+              -f ./worker-dependencies.Dockerfile \
+              .
+      - run:
+          name: Build worker Docker image
+          command: |
+            docker build \
+              --cache-from=home-server-worker-dependencies \
+              -t "home-server-worker:$GIT_COMMIT" \
+              -t "home-server-worker:latest" \
+              -f ./worker.Dockerfile \
+              .
+      - run:
+          name: Publish Docker image
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
+            docker push home-server-worker
+            docker push home-server-dependencies
+          background: true
+      - run:
+          name: Save Docker image layer cache
+          command: |
+            mkdir -p /caches
+            docker save -o /caches/home-server-worker.tar home-server-worker
+            docker save -o /caches/home-server-worker-dependencies.tar home-server-worker-dependencies
+      - save_cache:
+          key: home-server-docker-worker-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/home-server-worker.tar
+      - save_cache:
+          key: home-server-docker-worker-dependencies-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/home-server-worker-dependencies.tar
 
-
-workflows:
-  version: 2
-  test_and_merge:
-    jobs:
-      - test
