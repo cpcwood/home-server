@@ -118,7 +118,6 @@ jobs:
           command: |
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
             docker push $DOCKER_USERNAME/home-server-base
-          background: true
       - run:
           name: Save Docker image layer cache
           command: |
@@ -158,7 +157,6 @@ jobs:
           command: |
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
             docker push $DOCKER_USERNAME/home-server-app
-          background: true
       - run:
           name: Save Docker image layer cache
           command: |
@@ -211,7 +209,6 @@ jobs:
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
             docker push $DOCKER_USERNAME/home-server-worker-dependencies
             docker push $DOCKER_USERNAME/home-server-worker
-          background: true
       - run:
           name: Save Docker image layer cache
           command: |
