@@ -11,16 +11,30 @@ workflows:
   test_build_deploy:
     jobs:
       - test
-      - build:
+      - build_base:
           requires:
             - test
+          filters:
+             branches:
+               only: master
+      - build_app:
+          requires:
+            - build_base
+          filters:
+             branches:
+               only: master
+      - build_worker:
+          requires:
+            - build_base
           filters:
              branches:
                only: master
       - deploy:
           requires:
             - test
-            - build
+            - build_base
+            - build_app
+            - build_worker
           filters:
              branches:
                only: master
@@ -44,37 +58,37 @@ jobs:
       RAILS_ENV: test
     steps:
       - checkout 
-      # - ruby/install-deps 
-      # - node/install-packages:
-      #     pkg-manager: yarn
-      #     cache-key: "yarn.lock"
-      # - run:
-      #     name: Wait for DB
-      #     command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      # - run:
-      #     name: Database setup
-      #     command: bundle exec rails db:schema:load --trace
-      # - ruby/rspec-test
-      # - run:
-      #     name: Rubocop Linter
-      #     command: bundle exec rubocop -a
-      # - run:
-      #     name: JavaScript Testing
-      #     command: yarn test
-      # - run: 
-      #     name: JavaScript Linting
-      #     command: yarn lint
-      # - run:
-      #     name: Automerge PR
-      #     command: |
-      #       set +e
-      #       ./scripts/circle-ci/circle-ci-auto-merge.sh
-      #       if [ $? = 0 ]; then
-      #           echo 'Merge successful'
-      #       else
-      #           echo 'No merge'
-      #       fi
-  build:
+      - ruby/install-deps 
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-key: "yarn.lock"
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Database setup
+          command: bundle exec rails db:schema:load --trace
+      - ruby/rspec-test
+      - run:
+          name: Rubocop Linter
+          command: bundle exec rubocop -a
+      - run:
+          name: JavaScript Testing
+          command: yarn test
+      - run: 
+          name: JavaScript Linting
+          command: yarn lint
+      - run:
+          name: Automerge PR
+          command: |
+            set +e
+            ./scripts/circle-ci/circle-ci-auto-merge.sh
+            if [ $? = 0 ]; then
+                echo 'Merge successful'
+            else
+                echo 'No merge'
+            fi
+  build_base:
     docker:
       - image: cimg/base:stable
     steps:
@@ -85,49 +99,80 @@ jobs:
           name: Build application base Docker image
           command: |
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
-            docker pull "$DOCKER_USERNAME/home-server-base:latest" || true
+            docker pull $DOCKER_USERNAME/home-server-base || true
             docker build \
-                --cache-from="$DOCKER_USERNAME/home-server-base:latest" \
-                -t "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)" \
-                -t "$DOCKER_USERNAME/home-server-base:latest" \
-                --build-arg grecaptcha_site_key="$GRECAPTCHA_SITE_KEY" \
-                -f ./base.Dockerfile \
-                .
-      - run:
-          name: Build application app Docker image
-          command: |
-            docker pull "$DOCKER_USERNAME/home-server-app:latest" || true
-            docker build \
-                --cache-from="$DOCKER_USERNAME/home-server-app:latest" \
-                -t "$DOCKER_USERNAME/home-server-app:$(echo $CIRCLE_SHA1 | head -c8)" \
-                -t "$DOCKER_USERNAME/home-server-app:latest" \
-                .
-      - run:
-          name: Build application worker Docker image
-          command: |
-            docker pull "$DOCKER_USERNAME/home-server-worker-dependencies:latest" || true
-            docker pull "$DOCKER_USERNAME/home-server-worker:latest" || true
-            echo 'test'
-
-            docker build \
-                --cache-from="$DOCKER_USERNAME/home-server-worker-dependencies:latest" \
-                -t "$DOCKER_USERNAME/home-server-worker-dependencies:$(echo $CIRCLE_SHA1 | head -c8)" \
-                -t "$DOCKER_USERNAME/home-server-worker-dependencies:latest" \
-                -f ./worker-dependencies.Dockerfile .
-                
-            docker build \
-                --cache-from="$DOCKER_USERNAME/home-server-worker:latest \
-                -t "$DOCKER_USERNAME/home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)" \
-                -t "$DOCKER_USERNAME/home-server-worker:latest" \
-                -f ./worker.Dockerfile .
-                
+              --cache-from=$DOCKER_USERNAME/home-server-base \
+              -t "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)" \
+              -t "$DOCKER_USERNAME/home-server-base:latest" \
+              --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
+              -f ./base.Dockerfile \
+              .
       - run:
           name: Publish Docker image
           command: |
-            docker push "$DOCKER_USERNAME/home-server-base"
-            docker push "$DOCKER_USERNAME/home-server-app"
-            docker push "$DOCKER_USERNAME/home-server-worker-dependencies"
-            docker push "$DOCKER_USERNAME/home-server-worker"
+            docker push $DOCKER_USERNAME/home-server-base
+  build_app:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Load Docker image layer
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
+            docker pull $DOCKER_USERNAME/home-server-base || true
+            docker pull $DOCKER_USERNAME/home-server-app || true
+      - run:
+          name: Build application app Docker image
+          command: |
+            docker build \
+              --cache-from=$DOCKER_USERNAME/home-server-app \
+              -t "$DOCKER_USERNAME/home-server-app:$(echo $CIRCLE_SHA1 | head -c8)" \
+              -t "$DOCKER_USERNAME/home-server-app:latest" \
+              .
+      - run:
+          name: Publish Docker image
+          command: |
+            docker push $DOCKER_USERNAME/home-server-app
+  build_worker:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Load Docker image layer
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
+            docker pull $DOCKER_USERNAME/home-server-base || true
+            docker pull $DOCKER_USERNAME/home-server-worker-dependencies || true
+            docker pull $DOCKER_USERNAME/home-server-worker || true
+      - run:
+          name: Build worker dependencies Docker image
+          command: |
+            docker build \
+              --cache-from=$DOCKER_USERNAME/home-server-worker-dependencies \
+              -t "$DOCKER_USERNAME/home-server-worker-dependencies:$(echo $CIRCLE_SHA1 | head -c8)" \
+              -t "$DOCKER_USERNAME/home-server-worker-dependencies:latest" \
+              -f ./worker-dependencies.Dockerfile \
+              .
+      - run:
+          name: Build worker Docker image
+          command: |
+            docker build \
+              --cache-from=$DOCKER_USERNAME/home-server-worker \
+              -t "$DOCKER_USERNAME/home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)" \
+              -t "$DOCKER_USERNAME/home-server-worker:latest" \
+              -f ./worker.Dockerfile \
+              .
+      - run:
+          name: Publish Docker image
+          command: |
+            docker push $DOCKER_USERNAME/home-server-worker-dependencies
+            docker push $DOCKER_USERNAME/home-server-worker
   deploy:
     docker:
       - image: cimg/base:stable
