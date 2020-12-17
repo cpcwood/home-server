@@ -1,4 +1,4 @@
-RSpec.describe 'Request Admin:SiteSettings', type: :request, slow: true do
+RSpec.describe 'Admin:SiteSettingsController', type: :request, slow: true do
   before(:each) do
     seed_user_and_settings
     login

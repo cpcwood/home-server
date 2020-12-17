@@ -1,4 +1,4 @@
-RSpec.describe 'AdminCodeSnippetsController', type: :request do
+RSpec.describe 'Admin::CodeSnippetsController', type: :request do
   let(:valid_attributes) do
     { code_snippet: {
       title: 'new code snippet',

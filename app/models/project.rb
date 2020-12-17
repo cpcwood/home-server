@@ -35,7 +35,7 @@ class Project < ApplicationRecord
   end
 
   def self.all_with_images
-    includes(:project_images).order('project_images.order ASC')
+    order(date: :desc).includes(:project_images).order('project_images.order ASC')
   end
 
   private

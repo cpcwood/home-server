@@ -1,4 +1,4 @@
-RSpec.describe 'Request Admin:Abouts', type: :request, slow: true do
+RSpec.describe 'Admin::AboutsController', type: :request, slow: true do
   let(:image_fixture) { fixture_file_upload(Rails.root.join('spec/files/sample_image.jpg'), 'image/png') }
 
   before(:each) do
