@@ -235,7 +235,7 @@ jobs:
       - run:
           name: 'Creating cluster certificate from ENV'
           command: |
-            "$KUBERNETES_CLUSTER_CERTIFICATE" | base64 --decode > cert.crt
+            echo "$KUBERNETES_CLUSTER_CERTIFICATE" | base64 --decode > cert.crt >/dev/null 2>&1
       - run:
           name: 'Apply Kubernetes config to server'
           command: |
