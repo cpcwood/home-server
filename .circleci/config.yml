@@ -102,7 +102,7 @@ jobs:
           name: Load Docker image layer cache
           command: |
             set +o pipefail
-            docker load -i /caches/home-server-base.tar | true
+            docker load -i /tmp/circleci-caches/home-server-base.tar | true
       - run:
           name: Build application base Docker image
           command: |
@@ -122,12 +122,12 @@ jobs:
       - run:
           name: Save Docker image layer cache
           command: |
-            mkdir -p /caches
-            docker save -o /caches/home-server-base.tar $DOCKER_USERNAME/home-server-base
+            mkdir -p /tmp/circleci-caches
+            docker save -o /tmp/circleci-caches/home-server-base.tar $DOCKER_USERNAME/home-server-base
       - save_cache:
           key: home-server-base-v2-{{ .Branch }}-{{ epoch }}
           paths:
-            - /caches/home-server-base.tar
+            - /tmp/circleci-caches/home-server-base.tar
   build_app:
     docker:
       - image: cimg/base:stable
@@ -143,8 +143,8 @@ jobs:
           name: Load Docker image layer cache
           command: |
             set +o pipefail
-            docker load -i /caches/home-server-base.tar | true
-            docker load -i /caches/home-server-app.tar | true
+            docker load -i /tmp/circleci-caches/home-server-base.tar | true
+            docker load -i /tmp/circleci-caches/home-server-app.tar | true
       - run:
           name: Build application Docker image
           command: |
@@ -162,12 +162,12 @@ jobs:
       - run:
           name: Save Docker image layer cache
           command: |
-            mkdir -p /caches
-            docker save -o /caches/home-server-app.tar $DOCKER_USERNAME/home-server-app
+            mkdir -p /tmp/circleci-caches
+            docker save -o /tmp/circleci-caches/home-server-app.tar $DOCKER_USERNAME/home-server-app
       - save_cache:
           key: home-server-app-v2-{{ .Branch }}-{{ epoch }}
           paths:
-            - /caches/home-server-app.tar
+            - /tmp/circleci-caches/home-server-app.tar
   build_worker:
     docker:
       - image: cimg/base:stable
@@ -184,9 +184,9 @@ jobs:
           name: Load Docker image layer cache
           command: |
             set +o pipefail
-            docker load -i /caches/home-server-base.tar | true
-            docker load -i /caches/home-server-worker-dependencies.tar | true
-            docker load -i /caches/home-server-worker.tar | true
+            docker load -i /tmp/circleci-caches/home-server-base.tar | true
+            docker load -i /tmp/circleci-caches/home-server-worker-dependencies.tar | true
+            docker load -i /tmp/circleci-caches/home-server-worker.tar | true
       - run:
           name: Build worker dependencies Docker image
           command: |
@@ -215,17 +215,17 @@ jobs:
       - run:
           name: Save Docker image layer cache
           command: |
-            mkdir -p /caches
-            docker save -o /caches/home-server-worker-dependencies.tar $DOCKER_USERNAME/home-server-worker-dependencies
-            docker save -o /caches/home-server-worker.tar $DOCKER_USERNAME/home-server-worker
+            mkdir -p /tmp/circleci-caches
+            docker save -o /tmp/circleci-caches/home-server-worker-dependencies.tar $DOCKER_USERNAME/home-server-worker-dependencies
+            docker save -o /tmp/circleci-caches/home-server-worker.tar $DOCKER_USERNAME/home-server-worker
       - save_cache:
           key: home-server-worker-dependencies-v2-{{ .Branch }}-{{ epoch }}
           paths:
-            - /caches/home-server-worker-dependencies.tar
+            - /tmp/circleci-caches/home-server-worker-dependencies.tar
       - save_cache:
           key: home-server-worker-v2-{{ .Branch }}-{{ epoch }}
           paths:
-            - /caches/home-server-worker.tar
+            - /tmp/circleci-caches/home-server-worker.tar
   deploy:
     docker:
       - image: cimg/base:stable
