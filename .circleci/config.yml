@@ -83,11 +83,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: Set environment variables
-          command: |
-            echo 'GIT_COMMIT="$(echo $CIRCLE_SHA1 | head -c8)"' >> $BASH_ENV
-            source $BASH_ENV
       - restore_cache:
           keys:
             - home-server-docker-base-{{ .Branch }}
@@ -101,7 +96,7 @@ jobs:
           command: |
             docker build \
               --cache-from=home-server-base \
-              -t "home-server-base:$GIT_COMMIT" \
+              -t "home-server-base:$(echo $CIRCLE_SHA1 | head -c8)" \
               -t "home-server-base:latest" \
               --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
               -f ./base.Dockerfile \
@@ -127,11 +122,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: Set environment variables
-          command: |
-            echo 'GIT_COMMIT="$(echo $CIRCLE_SHA1 | head -c8)"' >> $BASH_ENV
-            source $BASH_ENV
       - restore_cache:
           keys:
             - home-server-docker-base-{{ .Branch }}
@@ -147,7 +137,7 @@ jobs:
           command: |
             docker build \
               --cache-from=home-server-app \
-              -t "home-server-app:$GIT_COMMIT" \
+              -t "home-server-app:$(echo $CIRCLE_SHA1 | head -c8)" \
               -t "home-server-app:latest" \
               .
       - run:
@@ -171,11 +161,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: Set environment variables
-          command: |
-            echo 'GIT_COMMIT="$(echo $CIRCLE_SHA1 | head -c8)"' >> $BASH_ENV
-            source $BASH_ENV
       - restore_cache:
           keys:
             - home-server-docker-base-{{ .Branch }}
@@ -193,7 +178,7 @@ jobs:
           command: |
             docker build \
               --cache-from=home-server-worker-dependencies \
-              -t "home-server-worker:$GIT_COMMIT" \
+              -t "home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)" \
               -t "home-server-worker:latest" \
               -f ./worker-dependencies.Dockerfile \
               .
@@ -202,7 +187,7 @@ jobs:
           command: |
             docker build \
               --cache-from=home-server-worker-dependencies \
-              -t "home-server-worker:$GIT_COMMIT" \
+              -t "home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)" \
               -t "home-server-worker:latest" \
               -f ./worker.Dockerfile \
               .
