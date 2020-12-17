@@ -1,4 +1,4 @@
-RSpec.describe 'Request Homepages', type: :request do
+RSpec.describe 'HomepagesController', type: :request do
   before(:each) do
     seed_user_and_settings
   end

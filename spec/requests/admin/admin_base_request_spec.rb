@@ -1,4 +1,4 @@
-RSpec.describe 'Request Admin:Base', type: :request do
+RSpec.describe 'Admin::AdminBaseController', type: :request do
   before(:each) do
     seed_user_and_settings
   end
