@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Trigger CircleCI PR Build'
+        env:
+          CIRCLECI_API_TOKEN: ${{ secrets.CIRCLECI_API_TOKEN }}
         run: |
           curl -X POST \
             -H "Circle-Token: $CIRCLECI_API_TOKEN" \
