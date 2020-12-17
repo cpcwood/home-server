@@ -81,14 +81,7 @@ jobs:
       - checkout
       - setup_remote_docker:
           version: 19.03.13
-      - run:
-          name: 'Pull docker images'
-          command: |
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
-            docker pull $DOCKER_USERNAME/home-server-base || true
-            docker pull $DOCKER_USERNAME/home-server-app || true
-            docker pull $DOCKER_USERNAME/home-server-worker-dependencies || true
-            docker pull $DOCKER_USERNAME/home-server-worker || true
+          docker_layer_caching: true
       - run:
           name: 'Build home-server-base image'
           command: |
@@ -111,7 +104,7 @@ jobs:
           name: 'Build home-server-worker-dependencies image'
           command: |
             docker build \
-                --cache-from=$DOCKER_USERNAME/home-server-worker-dependencies:latest \
+                --cache-from=$DOCKER_USERNAME/home-server-worker-dependencies \
                 -t "$DOCKER_USERNAME/home-server-worker-dependencies:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-worker-dependencies:latest \
                 -f ./worker-dependencies.Dockerfile \
@@ -123,11 +116,12 @@ jobs:
                 --cache-from=$DOCKER_USERNAME/home-server-worker \
                 -t "$DOCKER_USERNAME/home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-worker:latest \
-                -f ./worker.Dockerfile \ 
+                -f ./worker.Dockerfile \
                 .
       - run:
           name: 'Publish images'
           command: |
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
             docker push "$DOCKER_USERNAME/home-server-base"
             docker push "$DOCKER_USERNAME/home-server-app"
             docker push "$DOCKER_USERNAME/home-server-worker-dependencies"
