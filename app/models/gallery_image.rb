@@ -68,6 +68,7 @@ class GalleryImage < Image
 
   def set_defaults
     self.description ||= 'gallery-image'
+    self.date_taken ||= DateTime.current
   end
 
   def process_image(attached_image)
@@ -81,23 +82,27 @@ class GalleryImage < Image
     return unless image_upload&.attachable.instance_of?(ActionDispatch::Http::UploadedFile)
     image_meta_data = MiniMagick::Image.new(image_upload.attachable.tempfile.path).exif
     extract_date_taken(image_meta_data)
-    extract_latitude(image_meta_data)
-    extract_longitude(image_meta_data)
+    extract_gps_coordinates(image_meta_data)
   end
 
   def extract_date_taken(image_meta_data)
     return unless date_taken.blank? && image_meta_data['DateTimeOriginal']
-    self.date_taken = DateTime.parse(image_meta_data['DateTimeOriginal'].gsub(':', '-'))
+    begin
+      self.date_taken = DateTime.parse(image_meta_data['DateTimeOriginal'].gsub(':', '-'))
+    rescue StandardError
+      self.date_taken = nil
+    end
   end
 
-  def extract_latitude(image_meta_data)
-    return unless latitude.blank? && image_meta_data['GPSLatitude'] && image_meta_data['GPSLatitudeRef']
-    self.latitude = parse_exif_dms(coordinate: image_meta_data['GPSLatitude'], ref: image_meta_data['GPSLatitudeRef'])
-  end
-
-  def extract_longitude(image_meta_data)
-    return unless longitude.blank? && image_meta_data['GPSLongitude'] && image_meta_data['GPSLongitudeRef']
-    self.longitude = parse_exif_dms(coordinate: image_meta_data['GPSLongitude'], ref: image_meta_data['GPSLongitudeRef'])
+  def extract_gps_coordinates(image_meta_data)
+    return unless longitude.blank? && latitude.blank? && image_meta_data['GPSLatitude'] && image_meta_data['GPSLatitudeRef']
+    begin
+      self.latitude = parse_exif_dms(coordinate: image_meta_data['GPSLatitude'], ref: image_meta_data['GPSLatitudeRef'])
+      self.longitude = parse_exif_dms(coordinate: image_meta_data['GPSLongitude'], ref: image_meta_data['GPSLongitudeRef'])
+    rescue StandardError
+      self.latitude = nil
+      self.longitude = nil
+    end
   end
 
   def parse_exif_dms(coordinate:, ref:)

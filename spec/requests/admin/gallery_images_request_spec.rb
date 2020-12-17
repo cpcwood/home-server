@@ -16,7 +16,7 @@ RSpec.describe 'Admin::GalleryImagesController', type: :request do
   let(:invalid_attributes) do
     {
       gallery_image: {
-        date_taken: ''
+        latitude: '&£!!@£^'
       }
     }
   end
@@ -50,7 +50,7 @@ RSpec.describe 'Admin::GalleryImagesController', type: :request do
 
     it 'validation failure' do
       post('/admin/gallery-images', params: invalid_attributes)
-      expect(response.body).to include('Date taken must be date')
+      expect(response.body).to include('Latitude must be a (10, 6) decimal')
       expect(response).not_to redirect_to(admin_gallery_images_path)
     end
 
@@ -100,7 +100,7 @@ RSpec.describe 'Admin::GalleryImagesController', type: :request do
       gallery_image = create(:gallery_image, user: @user)
       put("/admin/gallery-images/#{gallery_image.id}", params: invalid_attributes)
       expect(response).not_to redirect_to(admin_gallery_images_path)
-      expect(response.body).to include('Date taken must be date')
+      expect(response.body).to include('Latitude must be a (10, 6) decimal')
     end
 
     it 'general error' do
