@@ -21,7 +21,7 @@ Capybara.javascript_driver = :selenium_chrome_headless
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::Console, Coveralls::SimpleCov::Formatter])
 SimpleCov.start 'rails' do
   add_filter 'app/channels'
-  add_filter "/spec/"
+  add_filter '/spec/'
 end
 
 require 'webmock/rspec'
