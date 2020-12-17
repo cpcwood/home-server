@@ -9,10 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Trigger CircleCI PR Build'
+        env:
+          CIRCLECI_API_TOKEN: ${{ secrets.CIRCLECI_API_TOKEN }}
         run: |
           curl -X POST \
-          -H 'Circle-Token: ${CIRCLECI_API_TOKEN}' \
-          -H 'Content-Type: application/json' \
-          -H 'Accept: application/json' \
-          -d "{\"branch\":\"${GITHUB_HEAD_REF}\"}" \
-          https://circleci.com/api/v2/project/gh/$GITHUB_REPOSITORY/pipeline
+            -H "Circle-Token: $CIRCLECI_API_TOKEN" \
+            -H 'Content-Type: application/json' \
+            -H 'Accept: application/json' \
+            -d "{\"branch\":\"$GITHUB_HEAD_REF\"}" \
+            "https://circleci.com/api/v2/project/gh/$GITHUB_REPOSITORY/pipeline"
