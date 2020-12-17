@@ -32,7 +32,7 @@ class Post < ApplicationRecord
             length: { minimum: 1, message: 'Blog post title cannot be empty' }
 
   def to_param
-    return '' if new_record?
-    "#{id}-#{title&.parameterize}"
+    parameterized_title = "-#{title.parameterize}" if title&.present?
+    "#{id}#{parameterized_title}"
   end
 end

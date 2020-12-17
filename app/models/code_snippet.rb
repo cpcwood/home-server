@@ -44,6 +44,7 @@ class CodeSnippet < ApplicationRecord
   end
 
   def to_param
-    "#{id}-#{title.parameterize}"
+    parameterized_title = "-#{title.parameterize}" if title&.present?
+    "#{id}#{parameterized_title}"
   end
 end
