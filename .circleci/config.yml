@@ -97,7 +97,7 @@ jobs:
           version: 19.03.13
       - restore_cache:
           keys:
-            - home-server-base-{{ .Branch }}
+            - home-server-base-v2-{{ .Branch }}
       - run:
           name: Load Docker image layer cache
           command: |
@@ -125,7 +125,7 @@ jobs:
             mkdir -p /caches
             docker save -o /caches/home-server-base.tar $DOCKER_USERNAME/home-server-base
       - save_cache:
-          key: home-server-base-{{ .Branch }}-{{ epoch }}
+          key: home-server-base-v2-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/home-server-base.tar
   build_app:
@@ -137,8 +137,8 @@ jobs:
           version: 19.03.13
       - restore_cache:
           keys:
-            - home-server-base-{{ .Branch }}
-            - home-server-app-{{ .Branch }}
+            - home-server-base-v2-{{ .Branch }}
+            - home-server-app-v2-{{ .Branch }}
       - run:
           name: Load Docker image layer cache
           command: |
@@ -165,7 +165,7 @@ jobs:
             mkdir -p /caches
             docker save -o /caches/home-server-app.tar $DOCKER_USERNAME/home-server-app
       - save_cache:
-          key: home-server-app-{{ .Branch }}-{{ epoch }}
+          key: home-server-app-v2-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/home-server-app.tar
   build_worker:
@@ -177,9 +177,9 @@ jobs:
           version: 19.03.13
       - restore_cache:
           keys:
-            - home-server-base-{{ .Branch }}
-            - home-server-worker-dependencies-{{ .Branch }}
-            - home-server-worker-{{ .Branch }}
+            - home-server-base-v2-{{ .Branch }}
+            - home-server-worker-dependencies-v2-{{ .Branch }}
+            - home-server-worker-v2-{{ .Branch }}
       - run:
           name: Load Docker image layer cache
           command: |
@@ -219,11 +219,11 @@ jobs:
             docker save -o /caches/home-server-worker-dependencies.tar $DOCKER_USERNAME/home-server-worker-dependencies
             docker save -o /caches/home-server-worker.tar $DOCKER_USERNAME/home-server-worker
       - save_cache:
-          key: home-server-worker-dependencies-{{ .Branch }}-{{ epoch }}
+          key: home-server-worker-dependencies-v2-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/home-server-worker-dependencies.tar
       - save_cache:
-          key: home-server-worker-{{ .Branch }}-{{ epoch }}
+          key: home-server-worker-v2-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/home-server-worker.tar
   deploy:
