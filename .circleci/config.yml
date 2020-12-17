@@ -84,42 +84,37 @@ jobs:
       - run:
           name: Build application base Docker image
           command: |
-            set +o pipefail
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
-            docker pull $DOCKER_USERNAME/home-server-base || true
+            docker pull "$DOCKER_USERNAME/home-server-base:latest" || true
             docker build \
-              --cache-from=$DOCKER_USERNAME/home-server-base \
+              --cache-from="$DOCKER_USERNAME/home-server-base" \
               -t "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)" \
               -t "$DOCKER_USERNAME/home-server-base:latest" \
-              --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
+              --build-arg grecaptcha_site_key="$GRECAPTCHA_SITE_KEY" \
               -f ./base.Dockerfile \
               .
       - run:
-          name: Build application Docker image
+          name: Build application app Docker image
           command: |
-            set +o pipefail
-            docker pull $DOCKER_USERNAME/home-server-base || true
-            docker pull $DOCKER_USERNAME/home-server-app || true
+            docker pull "$DOCKER_USERNAME/home-server-app:latest" || true
             docker build \
-              --cache-from=$DOCKER_USERNAME/home-server-app \
+              --cache-from="$DOCKER_USERNAME/home-server-app" \
               -t "$DOCKER_USERNAME/home-server-app:$(echo $CIRCLE_SHA1 | head -c8)" \
               -t "$DOCKER_USERNAME/home-server-app:latest" \
               .
       - run:
-          name: Build worker dependencies Docker image
+          name: Build application worker Docker image
           command: |
-            set +o pipefail
-            docker pull $DOCKER_USERNAME/home-server-base || true
-            docker pull $DOCKER_USERNAME/home-server-worker-dependencies || true
-            docker pull $DOCKER_USERNAME/home-server-worker || true
+            docker pull "$DOCKER_USERNAME/home-server-worker-dependencies:latest" || true
+            docker pull "$DOCKER_USERNAME/home-server-worker:latest" || true
             docker build \
-              --cache-from=$DOCKER_USERNAME/home-server-worker-dependencies \
+              --cache-from="$DOCKER_USERNAME/home-server-worker-dependencies" \
               -t "$DOCKER_USERNAME/home-server-worker-dependencies:$(echo $CIRCLE_SHA1 | head -c8)" \
               -t "$DOCKER_USERNAME/home-server-worker-dependencies:latest" \
               -f ./worker-dependencies.Dockerfile \     
               .
             docker build \
-              --cache-from=$DOCKER_USERNAME/home-server-worker \
+              --cache-from="$DOCKER_USERNAME/home-server-worker" \
               -t "$DOCKER_USERNAME/home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)" \
               -t "$DOCKER_USERNAME/home-server-worker:latest" \
               -f ./worker.Dockerfile \
@@ -127,10 +122,10 @@ jobs:
       - run:
           name: Publish Docker image
           command: |
-            docker push $DOCKER_USERNAME/home-server-base
-            docker push $DOCKER_USERNAME/home-server-app
-            docker push $DOCKER_USERNAME/home-server-worker-dependencies
-            docker push $DOCKER_USERNAME/home-server-worker
+            docker push "$DOCKER_USERNAME/home-server-base"
+            docker push "$DOCKER_USERNAME/home-server-app"
+            docker push "$DOCKER_USERNAME/home-server-worker-dependencies"
+            docker push "$DOCKER_USERNAME/home-server-worker"
   deploy:
     docker:
       - image: cimg/base:stable
