@@ -11,8 +11,8 @@ jobs:
       - name: 'Trigger CircleCI PR Build'
         run: |
           curl -X POST \
-            -H "Circle-Token: ${CIRCLECI_API_TOKEN}" \
+            -H "Circle-Token: $CIRCLECI_API_TOKEN" \
             -H 'Content-Type: application/json' \
             -H 'Accept: application/json' \
-            -d "{\"branch\":\"${GITHUB_HEAD_REF}\"}" \
+            -d "{\"branch\":\"$GITHUB_HEAD_REF\"}" \
             "https://circleci.com/api/v2/project/gh/$GITHUB_REPOSITORY/pipeline"
