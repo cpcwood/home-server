@@ -1,4 +1,4 @@
-RSpec.describe 'Request Abouts', type: :request do
+RSpec.describe 'AboutsController', type: :request do
   before(:each) do
     seed_user_and_settings
     seed_about

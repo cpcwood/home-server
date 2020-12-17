@@ -1,4 +1,4 @@
-RSpec.describe 'Admin::GalleryImages', type: :request do
+RSpec.describe 'Admin::GalleryImagesController', type: :request do
   let(:image_fixture) { fixture_file_upload(Rails.root.join('spec/files/sample_image.jpg'), 'image/png') }
 
   let(:valid_attributes) do

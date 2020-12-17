@@ -1,4 +1,4 @@
-RSpec.describe 'Posts', type: :request do
+RSpec.describe 'PostsController', type: :request do
   before(:each) do
     seed_user_and_settings
   end
