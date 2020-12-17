@@ -13,7 +13,6 @@ describe 'Views' do
         expect(rendered).to match('post_overview')
         expect(rendered).to match('post_text')
         expect(rendered).to match('post_date_published')
-        expect(rendered).to match(admin_posts_path(Post.new))
       end
     end
   end
