@@ -85,7 +85,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Set environment variables
-          command: export GIT_COMMIT=$(echo $CIRCLE_SHA1 | head -c8)
+          command: export GIT_COMMIT="$(echo $CIRCLE_SHA1 | head -c8)"
       - restore_cache:
           keys:
             - home-server-docker-base-{{ .Branch }}
@@ -127,7 +127,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Set environment variables
-          command: export GIT_COMMIT=$(echo $CIRCLE_SHA1 | head -c8)
+          command: export GIT_COMMIT="$(echo $CIRCLE_SHA1 | head -c8)"
       - restore_cache:
           keys:
             - home-server-docker-base-{{ .Branch }}
@@ -169,7 +169,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Set environment variables
-          command: export GIT_COMMIT=$(echo $CIRCLE_SHA1 | head -c8)
+          command: export GIT_COMMIT="$(echo $CIRCLE_SHA1 | head -c8)"
       - restore_cache:
           keys:
             - home-server-docker-base-{{ .Branch }}
