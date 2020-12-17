@@ -88,12 +88,13 @@ jobs:
             docker pull $DOCKER_USERNAME/home-server-base || true
             docker pull $DOCKER_USERNAME/home-server-app || true
             docker pull $DOCKER_USERNAME/home-server-worker-dependencies || true
+            docker pull $DOCKER_USERNAME/home-server-worker || true
       - run:
           name: 'Build home-server-base image'
           command: |
             docker build \
                 --cache-from=$DOCKER_USERNAME/home-server-base \
-                -t "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8") \
+                -t "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-base:latest \
                 --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
                 -f ./base.Dockerfile \
