@@ -1,6 +1,6 @@
 <nav class='navbar'>
   <div class='nav-title-container'>
-    <a href='<%= root_path %>' title='homepage'><%= @site_settings.name %></a>
+    <a href='<%= root_path %>'><%= @site_settings.name %></a>
   </div>
   <% if @user %>
     <div class='username'>
@@ -10,7 +10,7 @@
     </div>
   <% end %>
   <div class='nav-menu' data-controller='nav-menu' data-nav-menu-open='false'>
-    <button class='hamburger-container' title='toggle navigation menu' data-action='click->nav-menu#menuToggle' data-nav-menu-target='navHamburger'>
+    <button class='hamburger-container' data-action='click->nav-menu#menuToggle' data-nav-menu-target='navHamburger'>
       <div class='hamburger'>
         <div class='hamburger-bar' id='hamburger-crown'></div>
         <div class='hamburger-bar' id='hamburger-patty'></div>
@@ -19,38 +19,38 @@
     </button>
     <div class='nav-sidebar' data-nav-menu-target='navSidebar'>
       <div class='upper'>
-        <a href='<%= root_path %>' class='nav-item' title='home'>
+        <a href='<%= root_path %>' class='nav-item'>
           HOME
         </a>
-        <a href='<%= about_path %>' class='nav-item' title='about'>
+        <a href='<%= about_path %>' class='nav-item'>
           ABOUT
         </a>
-        <a href='<%= projects_path %>' class='nav-item' title='projects'>
+        <a href='<%= projects_path %>' class='nav-item'>
           PROJECTS
         </a>
-        <a href='<%= posts_path %>' class='nav-item' title='blog'>
+        <a href='<%= posts_path %>' class='nav-item'>
           BLOG
         </a>
-        <a href='<%= code_snippets_path %>' class='nav-item' title='code snippets'>
+        <a href='<%= code_snippets_path %>' class='nav-item'>
           CODE SNIPPETS
         </a>
-        <a href='<%= gallery_images_path %>' class='nav-item' title='gallery'>
+        <a href='<%= gallery_images_path %>' class='nav-item'>
           GALLERY
         </a>
-        <a href='<%= contact_path %>' class='nav-item' title='contact'>
+        <a href='<%= contact_path %>' class='nav-item'>
           CONTACT
         </a>
       </div>
       <div class='lower'>
         <% if @user %>
-        <a href='<%= admin_path %>' class='nav-item' title='admin'>
+        <a href='<%= admin_path %>' class='nav-item'>
           ADMIN
         </a>
         <%= form_with(url: "/login", method: "delete", class: 'logout-form') do %>
           <%= submit_tag("LOGOUT", class: 'nav-item', id: 'logout-button') %>
         <% end %>
         <% else %>
-        <a href='<%= login_path %>' class='nav-item' id='login-button' title='login'>
+        <a href='<%= login_path %>' class='nav-item' id='login-button'>
           LOGIN
         </a>
         <% end %>
