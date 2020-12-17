@@ -21,7 +21,7 @@
 #
 class CoverImage < SiteImage
   X_DIM = 1450
-  Y_DIM = 680
+  Y_DIM = 1000
 
   def default_image
     'default_images/default_cover_image.jpg'
