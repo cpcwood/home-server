@@ -99,6 +99,7 @@ jobs:
           name: Load Docker image layer
           command: |
             set +o pipefail
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
             docker pull home-server-base || true
       - run:
           name: Build application base Docker image
@@ -113,7 +114,6 @@ jobs:
       - run:
           name: Publish Docker image
           command: |
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
             docker push $DOCKER_USERNAME/home-server-base
   build_app:
     docker:
@@ -126,6 +126,7 @@ jobs:
           name: Load Docker image layer
           command: |
             set +o pipefail
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
             docker pull home-server-base || true
             docker pull home-server-app || true
       - run:
@@ -139,7 +140,6 @@ jobs:
       - run:
           name: Publish Docker image
           command: |
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
             docker push $DOCKER_USERNAME/home-server-app
   build_worker:
     docker:
@@ -152,6 +152,7 @@ jobs:
           name: Load Docker image layer
           command: |
             set +o pipefail
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
             docker pull home-server-base || true
             docker pull home-server-worker-dependencies || true
             docker pull home-server-worker || true
@@ -176,7 +177,6 @@ jobs:
       - run:
           name: Publish Docker image
           command: |
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
             docker push $DOCKER_USERNAME/home-server-worker-dependencies
             docker push $DOCKER_USERNAME/home-server-worker
   deploy:
