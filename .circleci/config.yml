@@ -58,36 +58,36 @@ jobs:
       RAILS_ENV: test
     steps:
       - checkout 
-      - ruby/install-deps 
-      - node/install-packages:
-          pkg-manager: yarn
-          cache-key: "yarn.lock"
-      - run:
-          name: Wait for DB
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      - run:
-          name: Database setup
-          command: bundle exec rails db:schema:load --trace
-      - ruby/rspec-test
-      - run:
-          name: Rubocop Linter
-          command: bundle exec rubocop -a
-      - run:
-          name: JavaScript Testing
-          command: yarn test
-      - run: 
-          name: JavaScript Linting
-          command: yarn lint
-      - run:
-          name: Automerge PR
-          command: |
-            set +e
-            ./scripts/circle-ci/circle-ci-auto-merge.sh
-            if [ $? = 0 ]; then
-                echo 'Merge successful'
-            else
-                echo 'No merge'
-            fi
+      # - ruby/install-deps 
+      # - node/install-packages:
+      #     pkg-manager: yarn
+      #     cache-key: "yarn.lock"
+      # - run:
+      #     name: Wait for DB
+      #     command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      # - run:
+      #     name: Database setup
+      #     command: bundle exec rails db:schema:load --trace
+      # - ruby/rspec-test
+      # - run:
+      #     name: Rubocop Linter
+      #     command: bundle exec rubocop -a
+      # - run:
+      #     name: JavaScript Testing
+      #     command: yarn test
+      # - run: 
+      #     name: JavaScript Linting
+      #     command: yarn lint
+      # - run:
+      #     name: Automerge PR
+      #     command: |
+      #       set +e
+      #       ./scripts/circle-ci/circle-ci-auto-merge.sh
+      #       if [ $? = 0 ]; then
+      #           echo 'Merge successful'
+      #       else
+      #           echo 'No merge'
+      #       fi
   build_base:
     docker:
       - image: cimg/base:stable
@@ -96,14 +96,12 @@ jobs:
       - setup_remote_docker:
           version: 19.03.13
       - run:
-          name: Load Docker image layer
-          command: |
-            set +o pipefail
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
-            docker pull $DOCKER_USERNAME/home-server-base | true
-      - run:
           name: Build application base Docker image
           command: |
+            set +v
+            set +o pipefail
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
+            docker pull $DOCKER_USERNAME/home-server-base || true
             docker build \
               --cache-from=$DOCKER_USERNAME/home-server-base \
               -t "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)" \
