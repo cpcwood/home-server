@@ -1,4 +1,4 @@
-RSpec.describe 'Request Admin:Posts', type: :request do
+RSpec.describe 'Admin::PostsController', type: :request do
   let(:valid_post_attributes) do
     { post: {
       title: 'new blog post',

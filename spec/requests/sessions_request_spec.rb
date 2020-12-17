@@ -1,4 +1,4 @@
-RSpec.describe 'Request Sessions', type: :request do
+RSpec.describe 'SessionsController', type: :request do
   before(:each) do
     seed_user_and_settings
   end
