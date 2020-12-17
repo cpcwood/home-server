@@ -87,7 +87,7 @@ jobs:
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
             docker pull "$DOCKER_USERNAME/home-server-base:latest" || true
             docker build \
-                --cache-from="$DOCKER_USERNAME/home-server-base" \
+                --cache-from="$DOCKER_USERNAME/home-server-base:latest" \
                 -t "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t "$DOCKER_USERNAME/home-server-base:latest" \
                 --build-arg grecaptcha_site_key="$GRECAPTCHA_SITE_KEY" \
@@ -98,7 +98,7 @@ jobs:
           command: |
             docker pull "$DOCKER_USERNAME/home-server-app:latest" || true
             docker build \
-                --cache-from="$DOCKER_USERNAME/home-server-app" \
+                --cache-from="$DOCKER_USERNAME/home-server-app:latest" \
                 -t "$DOCKER_USERNAME/home-server-app:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t "$DOCKER_USERNAME/home-server-app:latest" \
                 .
@@ -110,13 +110,13 @@ jobs:
             echo 'test'
 
             docker build \
-                --cache-from="$DOCKER_USERNAME/home-server-worker-dependencies" \
+                --cache-from="$DOCKER_USERNAME/home-server-worker-dependencies:latest" \
                 -t "$DOCKER_USERNAME/home-server-worker-dependencies:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t "$DOCKER_USERNAME/home-server-worker-dependencies:latest" \
                 -f ./worker-dependencies.Dockerfile .
                 
             docker build \
-                --cache-from="$DOCKER_USERNAME/home-server-worker" \
+                --cache-from="$DOCKER_USERNAME/home-server-worker:latest \
                 -t "$DOCKER_USERNAME/home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t "$DOCKER_USERNAME/home-server-worker:latest" \
                 -f ./worker.Dockerfile .
