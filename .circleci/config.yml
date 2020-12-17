@@ -90,10 +90,11 @@ jobs:
             fi
   build_base:
     docker:
-      - image: docker
+      - image: cimg/base:stable
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - restore_cache:
           keys:
             - home-server-base-{{ .Branch }}
@@ -129,10 +130,11 @@ jobs:
             - /caches/home-server-base.tar
   build_app:
     docker:
-      - image: docker
+      - image: cimg/base:stable
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - restore_cache:
           keys:
             - home-server-base-{{ .Branch }}
@@ -168,10 +170,11 @@ jobs:
             - /caches/home-server-app.tar
   build_worker:
     docker:
-      - image: docker
+      - image: cimg/base:stable
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - restore_cache:
           keys:
             - home-server-base-{{ .Branch }}
@@ -225,7 +228,7 @@ jobs:
             - /caches/home-server-worker.tar
   deploy:
     docker:
-      - image: 'cimg/base:stable'
+      - image: cimg/base:stable
     steps:
       - checkout
       - kubernetes/install-kubectl
