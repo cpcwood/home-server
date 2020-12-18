@@ -1,7 +1,7 @@
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = ['image', 'container']
+  static targets = ['navButton', 'image', 'container']
 
   connect () {
     this.transitionDuration = 450
@@ -9,6 +9,7 @@ export default class extends Controller {
     this.fadeInCompleteTimeout = null
     this.applyBaseStylesToImages()
     this.quickDisplayCurrentImage()
+    this.addNavButtons()
   }
 
   next () {
@@ -35,6 +36,7 @@ export default class extends Controller {
     }
     this.resetOtherImages()
     this.quickDisplayCurrentImage()
+    this.hideNavButtons()
   }
 
   disconnect () {
@@ -43,16 +45,14 @@ export default class extends Controller {
 
   // private
 
-  get position () {
-    let currentPosition = parseInt(this.data.get('position'))
-    if (currentPosition < -this.imageTargets.length || isNaN(currentPosition)) {
-      currentPosition = 0
+  applyBaseStylesToImages () {
+    for (let i = 0; i < this.imageTargets.length; i += 1) {
+      const image = this.imageTargets[i]
+      image.style.transition = `opacity ${this.transitionDuration / 1000}s cubic-bezier(0.76, 0.24, 0.26, 0.99)`
+      image.style.opacity = '0'
+      image.style.display = 'block'
+      image.style.position = 'absolute'
     }
-    return (currentPosition + this.imageTargets.length) % this.imageTargets.length
-  }
-
-  set position (newPosition) {
-    this.data.set('position', Math.abs((newPosition + this.imageTargets.length) % this.imageTargets.length))
   }
 
   quickDisplayCurrentImage () {
@@ -63,26 +63,12 @@ export default class extends Controller {
     currentImage.style.transition = `opacity ${this.transitionDuration / 1000}s cubic-bezier(0.76, 0.24, 0.26, 0.99)`
   }
 
-  resetOtherImages () {
-    const currentImageId = this.position
-    for (let i = 0; i < this.imageTargets.length; i += 1) {
-      if (i !== currentImageId) {
-        const image = this.imageTargets[i]
-        image.style.transition = ''
-        image.style.opacity = '0'
-        image.style.zIndex = null
-        image.style.transition = `opacity ${this.transitionDuration / 1000}s cubic-bezier(0.76, 0.24, 0.26, 0.99)`
+  addNavButtons () {
+    if (this.imageTargets.length > 1) {
+      for (let i = 0; i < this.navButtonTargets.length; i += 1) {
+        const navButton = this.navButtonTargets[i]
+        navButton.style.display = 'flex'
       }
-    }
-  }
-
-  applyBaseStylesToImages () {
-    for (let i = 0; i < this.imageTargets.length; i += 1) {
-      const image = this.imageTargets[i]
-      image.style.transition = `opacity ${this.transitionDuration / 1000}s cubic-bezier(0.76, 0.24, 0.26, 0.99)`
-      image.style.opacity = '0'
-      image.style.display = 'block'
-      image.style.position = 'absolute'
     }
   }
 
@@ -103,7 +89,7 @@ export default class extends Controller {
     const originalImage = this.imageTargets[originalPosition]
     originalImage.style.opacity = '0'
     originalImage.style.zIndex = null
-    this.fadeInNextImageTimeout = setTimeout(this.fadeInNextImage.bind(this), Math.floor(this.transitionDuration * 0.25))
+    this.fadeInNextImageTimeout = setTimeout(this.fadeInNextImage.bind(this), Math.floor(this.transitionDuration * 0.1))
   }
 
   fadeInNextImage () {
@@ -114,7 +100,39 @@ export default class extends Controller {
     this.fadeInNextImageTimeout = null
   }
 
+  resetOtherImages () {
+    const currentImageId = this.position
+    for (let i = 0; i < this.imageTargets.length; i += 1) {
+      if (i !== currentImageId) {
+        const image = this.imageTargets[i]
+        image.style.transition = ''
+        image.style.opacity = '0'
+        image.style.zIndex = null
+        image.style.transition = `opacity ${this.transitionDuration / 1000}s cubic-bezier(0.76, 0.24, 0.26, 0.99)`
+      }
+    }
+  }
+
   transitionComplete () {
     this.transitionCompleteTimeout = null
+  }
+
+  hideNavButtons () {
+    for (let i = 0; i < this.navButtonTargets.length; i += 1) {
+      const navButton = this.navButtonTargets[i]
+      navButton.style.display = 'none'
+    }
+  }
+
+  get position () {
+    let currentPosition = parseInt(this.data.get('position'))
+    if (currentPosition < -this.imageTargets.length || isNaN(currentPosition)) {
+      currentPosition = 0
+    }
+    return (currentPosition + this.imageTargets.length) % this.imageTargets.length
+  }
+
+  set position (newPosition) {
+    this.data.set('position', Math.abs((newPosition + this.imageTargets.length) % this.imageTargets.length))
   }
 }
