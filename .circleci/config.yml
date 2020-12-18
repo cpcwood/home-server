@@ -118,10 +118,14 @@ jobs:
           name: 'Publish images'
           command: |
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
-            docker push "$DOCKER_USERNAME/home-server-base"
-            docker push "$DOCKER_USERNAME/home-server-app"
-            docker push "$DOCKER_USERNAME/home-server-worker-dependencies"
-            docker push "$DOCKER_USERNAME/home-server-worker"
+            docker push "$DOCKER_USERNAME/home-server-base:latest"
+            docker push "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)"
+            docker push "$DOCKER_USERNAME/home-server-app:latest"
+            docker push "$DOCKER_USERNAME/home-server-app:$(echo $CIRCLE_SHA1 | head -c8)"
+            docker push "$DOCKER_USERNAME/home-server-worker-dependencies:latest"
+            docker push "$DOCKER_USERNAME/home-server-worker-dependencies:$(echo $CIRCLE_SHA1 | head -c8)"
+            docker push "$DOCKER_USERNAME/home-server-worker:latest"
+            docker push "$DOCKER_USERNAME/home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)"
   deploy:
     docker:
       - image: cimg/base:stable
