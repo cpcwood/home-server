@@ -63,6 +63,7 @@
 .embedded-gallery-button {
   @include highlight-button-outline;
   align-items: center;
+  background: rgba(0, 0, 0, 0);
   color: rgb(255, 255, 255);
   cursor: pointer;
   display: none;
@@ -72,41 +73,42 @@
   top: 0;
   user-select: none;
   z-index: 2;
-  background: rgba(0, 0, 0, 0);
 
   .background {
-    position: absolute;
-    top: 0;
-    right: 0;
     bottom: 0;
     left: 0;
     opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
     transition: opacity 0.2s ease-in-out;
   }
 
   .nav-icon {
-    z-index: 3;
-    opacity: 0.85;
-    transition: opacity 0.2s ease-in-out;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
     font-family: Arial;
+    opacity: 0.85;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+    transition: opacity 0.2s ease-in-out;
+    z-index: 3;
   }
 
-  &:active .nav-icon{
+  &:active .nav-icon {
     color: rgba(225, 225, 225);
   }
 
   &.prev {
     left: 0;
     padding: 0 15px 0 11px;
+
     .background {
-      background: linear-gradient(to right, rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0.02) 75%,  rgba(0, 0, 0, 0.005) 90%, rgba(0, 0, 0, 0));
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0.02) 75%, rgba(0, 0, 0, 0.005) 90%, rgba(0, 0, 0, 0));
     }
   }
   
   &.next {
-    right: 0;
     padding: 0 11px 0 15px;
+    right: 0;
+
     .background {
       background: linear-gradient(to left, rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0.02) 75%, rgba(0, 0, 0, 0.005) 90%, rgba(0, 0, 0, 0));
     }
@@ -116,6 +118,7 @@
     .nav-icon {
       opacity: 1;
     }
+
     .background {
       opacity: 1;
     }

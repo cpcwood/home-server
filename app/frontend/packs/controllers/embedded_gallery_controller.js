@@ -1,7 +1,7 @@
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = ['navButtons', 'image', 'container']
+  static targets = ['navButton', 'image', 'container']
 
   connect () {
     this.transitionDuration = 450
@@ -65,8 +65,8 @@ export default class extends Controller {
 
   addNavButtons () {
     if (this.imageTargets.length > 1) {
-      for (let i = 0; i < this.navButtonsTargets.length; i += 1) {
-        const navButton = this.navButtonsTargets[i]
+      for (let i = 0; i < this.navButtonTargets.length; i += 1) {
+        const navButton = this.navButtonTargets[i]
         navButton.style.display = 'flex'
       }
     }
@@ -118,8 +118,8 @@ export default class extends Controller {
   }
 
   hideNavButtons () {
-    for (let i = 0; i < this.navButtonsTargets.length; i += 1) {
-      const navButton = this.navButtonsTargets[i]
+    for (let i = 0; i < this.navButtonTargets.length; i += 1) {
+      const navButton = this.navButtonTargets[i]
       navButton.style.display = 'none'
     }
   }
