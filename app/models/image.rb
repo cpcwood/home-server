@@ -47,7 +47,7 @@ class Image < ApplicationRecord
     pipeline
       .strip
       .saver(quality: quality)
-      .convert('jp2')
+      .convert('jpg')
       .call
   end
 

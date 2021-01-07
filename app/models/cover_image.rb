@@ -20,8 +20,8 @@
 #  fk_rails_...  (site_setting_id => site_settings.id)
 #
 class CoverImage < SiteImage
-  X_DIM = 1450
-  Y_DIM = 1000
+  X_DIM = 1100
+  Y_DIM = 600
 
   def default_image
     'default_images/default_cover_image.jpg'
