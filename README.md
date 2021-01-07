@@ -15,8 +15,8 @@ General portfolio style website and a place to prototype new rails features I fi
 
 ## Technology
 
-- Ruby 2.7.0
-- Ruby on Rails 6.0
+- Ruby 2.7.2
+- Ruby on Rails 6
 - StimulusJS
 - PostgreSQL v12.1
 - Google reCaptcha
@@ -65,8 +65,8 @@ Admin sections:
 
 #### Prerequisites and Dependencies
 
-The application has been developed using Ruby v2.6.5, Ruby on Rails v6.0.2.2, and PostgreSQL 12.1. To setup the application please ensure you have the [Homebrew](https://brew.sh/) or other similar package manager and install the following:
-- [Ruby](https://www.ruby-lang.org/en/) v2.6.5 (can be installed from the terminal using the ruby package manager [RVM](https://rvm.io/rvm/install) command ```rvm install 2.6.5```)
+The application has been developed using Ruby v2.7.2, Ruby on Rails v6.0.2.2, and PostgreSQL 12.1. To setup the application please ensure you have the [Homebrew](https://brew.sh/) or other similar package manager and install the following:
+- [Ruby](https://www.ruby-lang.org/en/) v2.6.5 (can be installed from the terminal using the ruby package manager [RVM](https://rvm.io/rvm/install) command ```rvm install 2.7.2```)
 - [PostgreSQL](https://www.postgresql.org/) v12.1 (can be installed from the terminal using homebrew ```brew install postgres@12.1```)
 - [Yarn](https://yarnpkg.com/) v1.22 (can be installed from the terminal using homebrew ```brew install yarn```)
 - [Bundler](https://bundler.io/) v2.1.4 (can be installed from the terminal once ruby is installed using ruby gems ```gem install bundler```)
@@ -115,13 +115,11 @@ To check everything is setup correctly, RSpec and Capybara are used to run unit 
 
 To run tests run `rspec` in the command line
 
-#### How to Start the Server
+#### How to Start the Development Server
 
-```bundle exec sidekiq -C config/sidekiq.yml```
-```brew services start redis```
-
-To start the server run ```rails server``` in the relevant RAILS_ENV environment.
-
+Start redis: ```brew services start redis```
+Start background worker: ```bundle exec sidekiq -C config/sidekiq.yml```
+Start dev server: ```rails server -b 0.0.0.0 -p 5000 -e development```
 
 #### Adding Personal Details and Images
 

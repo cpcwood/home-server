@@ -1,5 +1,5 @@
 <div class='card-container fade-transition' data-image-loader-target="fade" itemscope itemtype="https://schema.org/TechArticle">
-  <a href='<%= path %>' class='card-content show-button' tabindex='<%= index + 1 %>'>
+  <a href='<%= path %>' class='card-content show-button'>
     <div class='card-image' itemprop='image' itemscope itemtype="https://schema.org/ImageObject">
       <%= image_tag(image_path_helper(image_model: code_snippet.code_snippet_image), data: {action: "load->image-loader#imageLoaded"}, alt: 'render of code snippet', itemprop: 'contentUrl') %>
     </div>
