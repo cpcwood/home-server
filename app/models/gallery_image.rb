@@ -72,7 +72,7 @@ class GalleryImage < Image
   end
 
   def process_image(attached_image)
-    Image.image_processing_pipeline(image_path: attached_image) do |pipeline|
+    Image.image_processing_pipeline(image_path: attached_image, quality: 80) do |pipeline|
       pipeline.resize_to_limit(MAX_DIM, MAX_DIM)
     end
   end
