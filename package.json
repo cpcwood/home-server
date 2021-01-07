@@ -1,6 +1,13 @@
 {
   "name": "home_server",
   "private": true,
+  "scripts": {
+    "test": "jest --no-cache",
+    "lint": "eslint --fix . && stylelint --fix \"**/*.scss\""
+  },
+  "engines": {
+    "node": "^14.15.4"
+  },
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
@@ -39,10 +46,6 @@
     "stylelint-config-sass-guidelines": "^7.1.0",
     "stylelint-config-standard": "^20.0.0",
     "webpack-dev-server": "^3.10.3"
-  },
-  "scripts": {
-    "test": "jest --no-cache",
-    "lint": "eslint --fix . && stylelint --fix \"**/*.scss\""
   },
   "jest": {
     "testRegex": ".*_spec.js",

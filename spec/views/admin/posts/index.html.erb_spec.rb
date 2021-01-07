@@ -21,8 +21,6 @@ describe 'Views' do
         expect(rendered).to match(post2.title)
         expect(rendered).to match(post1.overview)
         expect(rendered).to match(post2.overview)
-        expect(rendered).to match(post1.date_published)
-        expect(rendered).to match(post1.date_published)
         expect(rendered).to match('toolbar-container')
         expect(rendered).to match(edit_admin_post_path(post1))
         expect(rendered).to match(edit_admin_post_path(post2))
