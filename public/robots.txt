@@ -1,17 +1,8 @@
-UserAgent: *
+User-agent: *
 Disallow: /admin
-
-UserAgent: *
 Disallow: /admin/
-
-UserAgent: *
 Disallow: /login
-
-UserAgent: *
 Disallow: /2fa
-
-UserAgent: *
 Disallow: /forgotten-password
-
-UserAgent: *
 Disallow: /reset-password
+Sitemap: https://cpcwood.com/sitemap.xml
