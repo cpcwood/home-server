@@ -234,9 +234,9 @@ RSpec.describe User, type: :model do
   end
 
   describe '#record_ip' do
-    let(:remote_ip_1) { '192.168.1.1' }
-    let(:remote_ip_2) { '192.168.1.2' }
-    let(:request) { double(:request, remote_ip: remote_ip_1) }
+    let(:remoteip1) { '192.168.1.1' }
+    let(:remoteip2) { '192.168.1.2' }
+    let(:request) { double(:request, remote_ip: remoteip1) }
 
     it 'update user' do
       travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
@@ -246,16 +246,16 @@ RSpec.describe User, type: :model do
       expect(subject.last_login_time).to eq(time1)
       expect(subject.last_login_ip).to eq(User::DEFAULT_REMOTE_IP)
       expect(subject.current_login_time).to eq(time1)
-      expect(subject.current_login_ip).to eq(remote_ip_1)
+      expect(subject.current_login_ip).to eq(remoteip1)
       travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
       time2 = Time.zone.now
-      allow(request).to receive(:remote_ip).and_return(remote_ip_2)
+      allow(request).to receive(:remote_ip).and_return(remoteip2)
       subject.record_ip(request)
       subject.reload
       expect(subject.last_login_time).to eq(time1)
-      expect(subject.last_login_ip).to eq(remote_ip_1)
+      expect(subject.last_login_ip).to eq(remoteip1)
       expect(subject.current_login_time).to eq(time2)
-      expect(subject.current_login_ip).to eq(remote_ip_2)
+      expect(subject.current_login_ip).to eq(remoteip2)
     end
   end
 end

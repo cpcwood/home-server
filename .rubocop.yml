@@ -15,6 +15,7 @@ AllCops:
     - 'vendor/**/*'
     - '*.js.erb'
   NewCops: enable
+  SuggestExtensions: false
 
 Bundler/OrderedGems:
   Enabled: false
