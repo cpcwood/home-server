@@ -15,7 +15,7 @@
   <div class='reading-pane-subtitle'>
     <span itemprop='author'> <%= @post.user.username %> </span> | <time datetime="<%= @post.date_published.strftime("%Y-%m-%d")%>" itemprop='dateModified'> <%= full_date(@post.date_published) %> </time>
   </div>
-  <div itemprop='articleBody'>
+  <div class='post-container' itemprop='articleBody'>
     <%= markdown_admin(@post.text) %>
   </div>
   <link itemprop="isPartOf" itemscope itemtype="https://schema.org/Blog" itemid="<%= posts_path %>" />
