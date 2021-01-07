@@ -8,6 +8,8 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= favicon_link_tag %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="<%= content_for?(:meta_description) ? yield(:meta_description) : "#{@site_settings.name} - Portfolio, Blog, and RoR Sandbox" %>">
+    <meta name="theme-color" content="#000000">
     <title><%= content_for?(:meta_title) ? "#{yield(:meta_title)} - #{@site_settings.name}" : @site_settings.name %></title>
     <meta property="og:site_name" content="<%= @site_settings.name %>">
     <meta property="og:title" content="<%= content_for?(:meta_title) ? "#{yield(:meta_title)} - #{@site_settings.name}" : @site_settings.name %>">
