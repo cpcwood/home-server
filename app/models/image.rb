@@ -41,13 +41,13 @@ class Image < ApplicationRecord
     image.valid?
   end
 
-  def self.image_processing_pipeline(image_path:, quality: 70)
+  def self.image_processing_pipeline(image_path:, quality: 60)
     pipeline = initalize_image(image_path)
     pipeline = yield(pipeline) if block_given?
     pipeline
       .strip
       .saver(quality: quality)
-      .convert('jpg')
+      .convert('jp2')
       .call
   end
 

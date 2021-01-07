@@ -1,5 +1,5 @@
 <li itemprop='blogPost' itemscope itemtype="https://schema.org/BlogPosting">
-  <a href='<%= post_path(post) %>' class='post-overview-container show-blog-post-button' tabindex='<%= post_iteration.index + 1 %>' itemprop="url">
+  <a href='<%= post_path(post) %>' class='post-overview-container show-blog-post-button' itemprop="url">
     <time class='post-date' datetime="<%= post.date_published.strftime("%Y-%m-%d")%>">
       <%= full_date(post.date_published) %>
     </time>
