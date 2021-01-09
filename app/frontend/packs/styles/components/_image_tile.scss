@@ -33,6 +33,11 @@
   }
 }
 
+@keyframes display-item {
+  from {visibility: hidden;}
+  to {visibility: visible;}
+}
+
 .cover-image {
   height: 100%;
   object-fit: cover;
@@ -51,7 +56,13 @@
   &.top-left {
     object-position: 0% 0%;
   }
+
+  &.fade-in + a .cover-title {
+    animation: display-item 0.7s step-end;
+    animation-fill-mode: forwards;
+  }
 }
+
 
 .cover-title {
   align-items: center;
@@ -66,6 +77,7 @@
   position: absolute;
   top: 0;
   transition: opacity 0.2s ease-in-out 0s;
+  visibility: hidden;
   width: 100%;
   z-index: 1;
 
