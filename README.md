@@ -102,10 +102,14 @@ To run the test suite run ```yarn test``` in the command line.
 ### Development
 #### Start the Development Server
 
+##### macOS
 Start redis: ```brew services start redis```
+Start postgresql: ```brew services start postgresql```
 Start background worker: ```bundle exec sidekiq -C config/sidekiq.yml```
 Start dev server: ```rails server -b 0.0.0.0 -p 5000 -e development```
 
+##### Docker
+The file [tasks-docker.txt](tasks-docker.txt) contains the commands required to start the containers for the application.
 
 ### Production
 #### Build the Application Containers
@@ -117,7 +121,9 @@ The application requires four containers to run:
 - psql - database storage
 
 
-The file [tasks-docker.txt](tasks-docker.txt) contains the commands requured to build the containers for the application.
+The file [tasks-docker.txt](tasks-docker.txt) contains the commands required to build the containers for the application. 
+
+Note: Replace ```cpcwood``` with your dockerhub username and ensure mounted paths are correct.
 
 #### Adding Personal Details and Images
 

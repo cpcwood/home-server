@@ -11,20 +11,21 @@ sudo docker build \
   --build-arg grecaptcha_site_key=<api-key> \
   -t cpcwood/home-server-base:latest \
   -t cpcwood/home-server-base \
-  -f base.Dockerfile \
+  -f ./docker/base.Dockerfile \
   .
 
 # build home-server-app container
 sudo docker build \
   -t cpcwood/home-server-app:latest \
   -t cpcwood/home-server-app \
+  -f ./docker/Dockerfile \
   .
 
 # build home-server-worker container
 sudo docker build \
   -t cpcwood/home-server-worker:latest \
   -t cpcwood/home-server-worker \
-  -f worker.Dockerfile \
+  -f ./docker/worker.Dockerfile \
   .
 
 
