@@ -16,7 +16,7 @@ threads ENV.fetch('PUMA_STARTING_THREADS') { 1 }, ENV.fetch('PUMA_MAX_THREADS') 
 workers ENV.fetch('PUMA_WEB_CONCURRENCY') { 1 }
 preload_app!
 
-# Unix socket to for nginix reverse proxy
+# Unix socket to for reverse proxy
 # bind "unix://#{shared_dir}/sockets/puma.sock"
 port 3000
 
