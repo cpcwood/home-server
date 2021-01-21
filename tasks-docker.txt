@@ -1,4 +1,10 @@
+# ========================
 # DOCKER TASKS
+# ========================
+# ========================
+
+## Build Application Containers
+# ========================
 
 # build home-server-base image
 sudo docker build \
@@ -22,6 +28,9 @@ sudo docker build \
   .
 
 
+## Start Application Containers
+# ========================
+
 # start standalone psql container
 sudo docker run -d \
   -p 0.0.0.0:5432:5432/tcp \
@@ -36,7 +45,6 @@ sudo docker run -d \
   -p 6379:6379/tcp \
   -v /var/db/redis:/data \
   redis
-
 
 # start prod compose
 sudo docker-compose up
