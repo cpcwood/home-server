@@ -18,7 +18,7 @@ preload_app!
 
 # Unix socket to for reverse proxy
 # bind "unix://#{shared_dir}/sockets/puma.sock"
-port 3000
+port 5000
 
 # Debugging
 debug

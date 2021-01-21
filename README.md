@@ -54,7 +54,7 @@ bundle install
 yarn install
 ```
 
-The following services should be running before the start of the server:
+Unless using the docker-compose development method, the following services should be running before the start of the server:
 - [Sidekiq](https://github.com/mperham/sidekiq) v6 - should be running before start of server (already installed via Gemfile, started using ```bundle exec sidekiq -C config/sidekiq.yml``` either automatically using systemd (or other process manager) or in terminal window)
 - [Redis](https://redislabs.com/get-started-with-redis/) v5 - required for persistent jobs with sidekiq in case of server shutdown (can be installed from the terminal using homebrew ```brew install redis```, then started using ```brew services start redis```)
 
@@ -80,7 +80,7 @@ Note: For your personal admin login details either: edit the database seed in ``
 
 #### Server Configuration
 
-The application uses Ruby on Rails default application server: Puma. The configuration for the puma server are in ```config/puma.rb```. By default the server is setup to listen for requests on ```http://localhost:3000/```.
+The application uses Ruby on Rails default application server: Puma. The configuration for the puma server are in ```config/puma.rb```. By default the server is setup to listen for requests on ```http://localhost:5000/```.
 
 ## Tests
 
@@ -109,7 +109,10 @@ Start background worker: ```bundle exec sidekiq -C config/sidekiq.yml```
 Start dev server: ```rails server -b 0.0.0.0 -p 5000 -e development```
 
 ##### Docker
-The file [tasks-docker.txt](tasks-docker.txt) contains the commands required to start the containers for the application.
+
+To start the development server using docker, run: ```sudo docker-compose up```
+
+Make sure that the database and redis volume mounts are correct.
 
 ### Production
 #### Build the Application Containers
