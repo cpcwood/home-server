@@ -37,4 +37,4 @@ USER docker
 COPY --chown=docker:docker --from=cpcwood/home-server-base $APP_HOME $APP_HOME
 COPY --chown=docker:docker --from=cpcwood/home-server-worker-dependencies $APP_HOME/node_modules $APP_HOME/node_modules
 
-CMD ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
+CMD ["./scripts/docker-startup-worker.sh"]
