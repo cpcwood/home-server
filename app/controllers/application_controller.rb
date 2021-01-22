@@ -11,5 +11,6 @@ class ApplicationController < ActionController::Base
   def assign_site_setings
     @site_settings = SiteSetting.first
     @header_image = @site_settings.header_image
+    @footer_links = About.first.footer_links
   end
 end

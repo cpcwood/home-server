@@ -89,7 +89,7 @@ jobs:
                 -t "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-base:latest \
                 --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
-                -f ./base.Dockerfile \
+                -f ./docker/base.Dockerfile \
                 .
       - run:
           name: 'Build home-server-app image'
@@ -97,6 +97,7 @@ jobs:
             docker build \
                 -t "$DOCKER_USERNAME/home-server-app:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-app:latest \
+                -f ./docker/Dockerfile \
                 .
       - run:
           name: 'Build home-server-worker-dependencies image'
@@ -104,7 +105,7 @@ jobs:
             docker build \
                 -t "$DOCKER_USERNAME/home-server-worker-dependencies:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-worker-dependencies:latest \
-                -f ./worker-dependencies.Dockerfile \
+                -f ./docker/worker-dependencies.Dockerfile \
                 .
       - run:
           name: 'Build home-server-worker image'
@@ -112,7 +113,7 @@ jobs:
             docker build \
                 -t "$DOCKER_USERNAME/home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-worker:latest \
-                -f ./worker.Dockerfile \
+                -f ./docker/worker.Dockerfile \
                 .
       - run:
           name: 'Publish images'

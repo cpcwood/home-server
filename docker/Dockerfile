@@ -1,14 +1,14 @@
-# home-server-worker
+# home-server-app
 # ================
-# requires cpcwood/home-server-base to have been created
+# build args =>
+#     grecaptcha_site_key
 
-# Create Worker App
+# Create App
 # ================
 FROM ruby:2.7.2-alpine
 
 ENV RAILS_ENV=production \
   NODE_ENV=production \
-  PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
   APP_HOME=/opt/app
 
 ENV BUNDLE_PATH=$APP_HOME/vendor/bundle \
@@ -19,10 +19,8 @@ ENV BUNDLE_PATH=$APP_HOME/vendor/bundle \
 
 RUN apk add --no-cache \
   tzdata \
-  postgresql-client \
-  nodejs \
   imagemagick \
-  chromium && \
+  postgresql-client && \
   cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
   echo "Europe/London" > /etc/timezone
 
@@ -35,6 +33,6 @@ RUN addgroup -S docker && \
 USER docker
 
 COPY --chown=docker:docker --from=cpcwood/home-server-base $APP_HOME $APP_HOME
-COPY --chown=docker:docker --from=cpcwood/home-server-worker-dependencies $APP_HOME/node_modules $APP_HOME/node_modules
 
-CMD ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
+EXPOSE 5000
+CMD ["./scripts/docker-startup-app.sh"]

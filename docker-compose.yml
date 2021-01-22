@@ -1,8 +1,43 @@
 version: "3.7"
 
 services:
+  app:
+    build: 
+      context: ./
+      dockerfile: ./docker/dev.Dockerfile
+    environment:
+      - REDIS_HOST=redis
+      - DB_HOST=postgres
+      - CHROMEDRIVER=/usr/bin/chromedriver
+    volumes:
+      - ./:/opt/app/
+    depends_on:
+      - postgres
+      - redis
+    container_name: home-server-dev-app
+    command: './scripts/docker-startup-app.dev.sh'
+    ports:
+      - '5000:5000'
 
-  db:
+  worker:
+    build: 
+      context: ./
+      dockerfile: ./docker/dev.Dockerfile
+    environment:
+      - REDIS_HOST=redis
+      - DB_HOST=postgres
+    volumes:
+      - ./:/opt/app/
+    depends_on:
+      - postgres
+      - redis
+      - app
+    container_name: home-server-dev-worker
+    command: ['./scripts/docker-startup-worker.dev.sh']
+    security_opt:
+      - seccomp:"./config/chrome.json"
+
+  postgres:
     image: postgres:13
     environment:
       POSTGRES_USER: cpcwood
@@ -12,34 +47,20 @@ services:
       - '5432:5432'
     volumes:
       - /var/db/psql/13:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready -U cpcwood -h 127.0.0.1
+      interval: 5s
 
   redis:
-    image: redis
+    image: redis:5-alpine
     command: redis-server
     volumes:
       - /var/db/redis:/data
+    ports: 
+      - '6379:6379'
+    healthcheck:
+      test: redis-cli ping
+      interval: 1s
+      timeout: 3s
+      retries: 30
 
-  sidekiq:
-    image: cpcwood/home-server-worker:latest
-    depends_on:
-      - db
-      - redis
-    environment:
-      - RAILS_ENV=production
-    env_file:
-      - ./config/env/docker.env
-    security_opt:
-      - seccomp:"./config/chrome.json"
-
-  web:
-    image: cpcwood/home-server-app:latest
-    depends_on:
-      - db
-      - redis
-      - sidekiq
-    environment:
-      - RAILS_ENV=production
-    env_file:
-      - ./config/env/docker.env
-    ports:
-      - '80:5000'
