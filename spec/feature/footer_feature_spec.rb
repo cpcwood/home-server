@@ -1,19 +1,13 @@
-feature 'Footer', feature: true, js: true do
+feature 'Footer', feature: true do
   before(:each) do
     seed_user_and_settings
-    seed_about
   end
 
   scenario 'links are rendered' do
     visit('/')
     expect(page).to have_css('footer .footer-links')
-    github_link = page.find(:css, '.footer-links a.github-link')
-    expect(github_link).to have_link(nil, href: @about.github_link)
-
-    linkedin_link = page.find(:css, '.footer-links a.linkedin-link')
-    expect(linkedin_link).to have_link(nil, href: @about.linkedin_link)
-
-    homepage_link = page.find(:css, '.footer-links a.homepage-link')
-    expect(homepage_link).to have_link(nil, href: root_path)
+    expect(page).to have_selector(:css, "a.github-link[href='#{@about.github_link}']")
+    expect(page).to have_selector(:css, "a.linkedin-link[href='#{@about.linkedin_link}']")
+    expect(page).to have_selector(:css, "a.homepage-link[href='#{root_path}']")
   end
 end

@@ -99,11 +99,9 @@ RSpec.describe About, type: :model do
   describe '#footer_links' do
     it 'array of footer links' do
       expect(about.footer_links).to eq({
-        {
-          github_link: about.github_link,
-          linkedin_link: about.linkedin_link
-        }
-      })
+                                         github_link: about.github_link,
+                                         linkedin_link: about.linkedin_link
+                                       })
     end
   end
 end
