@@ -6,12 +6,14 @@
     "lint": "eslint --fix . && stylelint --fix \"**/*.scss\""
   },
   "dependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.12.1",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "^5.0.1",
     "@testing-library/dom": "^7.21.4",
     "carbon-now-cli": "^1.4.0",
+    "core-js": "3",
     "jpeg-js": "^0.4.2",
     "justified-layout": "^4.0.0",
     "node-forge": "0.10.0",
@@ -38,7 +40,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "html-loader-jest": "^0.2.1",
     "jest": "^26.0.1",
-    "jest-erb-transformer": "^1.0.3",
+    "jest-erb-transformer": "^1.2.1",
     "stylelint": "^13.7.2",
     "stylelint-config-sass-guidelines": "^7.1.0",
     "stylelint-config-standard": "^20.0.0",
@@ -63,11 +65,11 @@
       "\\.(css|less)$": "<rootDir>/spec/javascript/__mocks__/styleMock.js"
     },
     "transform": {
-      "^.+\\.js(?:\\.erb)?$": "babel-jest",
-      "^.+\\.erb$": [
+      "^.+\\.js(?:\\.erb)?$": [
         "jest-erb-transformer",
         {
-          "application": "rails"
+          "application": "rails",
+          "babelConfig": true
         }
       ]
     }

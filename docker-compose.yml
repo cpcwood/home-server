@@ -8,13 +8,14 @@ services:
     environment:
       - REDIS_HOST=redis
       - DB_HOST=postgres
+      - CHROMEDRIVER=/usr/bin/chromedriver
     volumes:
       - ./:/opt/app/
     depends_on:
       - postgres
       - redis
     container_name: home-server-dev-app
-    command: ['./scripts/docker-startup-app.sh']
+    command: './scripts/docker-startup-app.dev.sh'
     ports:
       - '5000:5000'
 
@@ -30,8 +31,9 @@ services:
     depends_on:
       - postgres
       - redis
+      - app
     container_name: home-server-dev-worker
-    command: ['./scripts/docker-startup-worker.sh']
+    command: ['./scripts/docker-startup-worker.dev.sh']
     security_opt:
       - seccomp:"./config/chrome.json"
 

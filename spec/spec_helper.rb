@@ -4,6 +4,8 @@ require 'dotenv'
 Dotenv.load('config/env/test-defaults.env')
 Dotenv.load('config/env/test.env')
 
+`bundle exec rake db:exists && bundle exec rake db:migrate || bundle exec rake db:setup`
+
 require 'coveralls'
 Coveralls.wear!('rails')
 
@@ -15,8 +17,16 @@ require 'webdrivers'
 require 'sidekiq/testing'
 require 'database_cleaner/active_record'
 
+Selenium::WebDriver::Chrome::Service.driver_path = ENV['CHROMEDRIVER'] if ENV['CHROMEDRIVER']
+
+Capybara.register_driver :headless_chrome_driver do |app|
+  options = ::Selenium::WebDriver::Chrome::Options.new(args: ['--headless', '--no-sandbox'])
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
+Capybara.server = :puma, { Silent: true }
 Capybara.default_driver = :rack_test
-Capybara.javascript_driver = :selenium_chrome_headless
+Capybara.javascript_driver = :headless_chrome_driver
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::Console, Coveralls::SimpleCov::Formatter])
 SimpleCov.start 'rails' do
@@ -39,6 +49,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.before(:suite) do
+    `bin/webpack`
     DatabaseCleaner.clean_with(:truncation)
   end
 
