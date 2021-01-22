@@ -26,10 +26,10 @@ General portfolio style website and a place to prototype new rails features I fi
 | Blog            | Notifications               |
 | Code Snippets   | Website analytics           |
 | Gallery         | Contact messages            |
-| Contact         |
+| Contact         |                             |
 
 
------------
+
 ## Setup
 
 ### Prerequisites
@@ -42,7 +42,7 @@ Make sure [docker](https://www.docker.com/) v20 is installed, clone or download 
 
 The application is set up to have three different environments: production, development, test.
 
-Since the application is designed to be containerized, the configuration is passed through environment variables. A template for the required variables can be found in ```config/env/.env.template```
+Since the application is designed to be containerized, the configuration is passed through environment variables. A template for the required variables can be found in [```config/env/.env.template```](/config/env/.env.template)
 
 To make things more managable in development and test environments, .env files are loaded from ```config/env/.env``` and ```config/env/test.env``` respectively. Create these files from the template using your env specific credentials.
 
@@ -102,7 +102,7 @@ Make sure to inject your configuration enviroment variables into the container o
 
 Sample kubernetes configuration files can be found in [```kube/```](kube/).
 
------------
+
 ## Tests
 
 #### Server Tests
@@ -117,7 +117,7 @@ Jest is used to test the client frontend JavaScript.
 
 To run the test suite run ```./scripts/yarn test``` in the command line.
 
------------
+
 ## Usage
 
 #### Adding Personal Details and Images
@@ -131,13 +131,13 @@ Click on the site settings tab and add the values or upload:
 - images for the homepage tiles 
 - images for the header
 
------------
+
 
 ## Contributing
 
 Any pull requests are welcome. If you have a question or find a bug, create a GitHub issue.
 
------------
+
 ## LICENSE
 
 This software is distributed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License.
