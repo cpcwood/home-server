@@ -12,4 +12,11 @@ const context = require.context("./controllers", true, /\.js(?:.erb)?$/)
 application.load(definitionsFromContext(context))
 
 // Welcome Message
-console.log('Welcome to <%= ENV.fetch('SITE_HOST') { 'home-server' } %> :)')
+console.log(`Welcome to
+ _  _  ___  __  __ ___    ___ ___ _____   _____ ___ 
+| || |/ _ \\|  \\/  | __|__/ __| __| _ \\ \\ / / __| _ \\
+| __ | (_) | |\\/| | _|___\\__ \\ _||   /\\ V /| _||   /
+|_||_|\\___/|_|  |_|___|  |___/___|_|_\\ \\_/ |___|_|_\\
+
+Created by Chris Wood - cpcwood.com                                           
+`)
