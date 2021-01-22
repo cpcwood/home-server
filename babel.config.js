@@ -66,7 +66,7 @@ module.exports = function (api) {
           async: false
         }
       ],
-      isTestEnv && "@babel/plugin-transform-modules-commonjs"
+      isTestEnv && '@babel/plugin-transform-modules-commonjs'
     ].filter(Boolean)
   }
 }

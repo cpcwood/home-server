@@ -1,8 +1,9 @@
 import { Controller } from 'stimulus'
 import Typed from 'typed.js'
+import Cookies from 'js-cookie'
 
 export default class extends Controller {
-  static targets = ['typedHeader', 'typedSubtitle']
+  static targets = ['typedHeader', 'typedSubtitle', 'typedHeaderText', 'typedSubtitleText']
 
   connect () {
     const subtitleOptions = {
@@ -34,9 +35,15 @@ export default class extends Controller {
       }
     }
 
-    if (!this.isPreview) {
+    const isHeaderTyped = Cookies.get('header-typed')
+
+    if (!this.isPreview && !isHeaderTyped) {
       this.typedHeader = new Typed('#typed-header', headerOptions)
+    } else {
+      this.setHeader()
     }
+
+    Cookies.set('header-typed', 'true', { expires: 0.02 })
   }
 
   disconnect () {
@@ -52,5 +59,10 @@ export default class extends Controller {
 
   get isPreview () {
     return document.documentElement.hasAttribute('data-turbolinks-preview')
+  }
+
+  setHeader () {
+    this.typedHeaderTarget.textContent = this.typedHeaderTextTarget.textContent
+    this.typedSubtitleTarget.textContent = this.typedSubtitleTextTarget.textContent
   }
 }
