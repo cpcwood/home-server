@@ -30,7 +30,6 @@ module.exports = function (api) {
         {
           forceAllTransforms: true,
           useBuiltIns: 'entry',
-          corejs: 3,
           modules: false,
           exclude: ['transform-typeof-symbol']
         }
@@ -57,8 +56,7 @@ module.exports = function (api) {
         '@babel/plugin-transform-runtime',
         {
           helpers: false,
-          regenerator: true,
-          corejs: false
+          regenerator: true
         }
       ],
       [
@@ -66,7 +64,8 @@ module.exports = function (api) {
         {
           async: false
         }
-      ]
+      ],
+      isTestEnv && "@babel/plugin-transform-modules-commonjs"
     ].filter(Boolean)
   }
 }
