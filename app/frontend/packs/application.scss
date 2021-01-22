@@ -27,6 +27,7 @@ Sass Styles
 |   |   |– _posts.scss                    # Posts
 |   |   |– _cards.scss                    # Cards
 |   |   |– _drag_list.scss                # Draggable lists
+|   |   |– _footer.scss                   # Footer
 |   |   ┴
 |   |
 |   |– custom/
@@ -72,6 +73,7 @@ Sass Styles
 @use 'styles/components/posts';
 @use 'styles/components/cards';
 @use 'styles/components/drag_list';
+@use 'styles/components/footer';
 
 // Custom page styles
 @use 'styles/custom/about.scss';

@@ -27,7 +27,7 @@ $btn-hover-animation: 0.2s;
 .navbar {
   align-items: center;
   display: flex;
-  height: 60px;
+  height: $header-height;
   justify-content: space-between;
   min-width: 200px;
   position: fixed;
@@ -100,7 +100,7 @@ $btn-hover-animation: 0.2s;
   flex-direction: column;
   justify-content: space-between;
   overflow-y: scroll;
-  padding-top: 60px;
+  padding-top: $header-height;
   position: fixed;
   right: 0;
   top: 0;

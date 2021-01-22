@@ -42,6 +42,7 @@
           <%= render partial: 'partials/section_title' %>
           <%= content_for?(:content) ? yield(:content) : yield %>
         </main>
+        <%= render partial: 'partials/footer' %>
       </div>
     </div>
     <div id='background'></div>
