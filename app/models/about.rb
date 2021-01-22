@@ -41,4 +41,11 @@ class About < ApplicationRecord
     messages.push('Profile image updated!') if profile_image&.change_messages&.any?
     messages
   end
+
+  def footer_links
+    {
+      github_link: github_link,
+      linkedin_link: linkedin_link
+    }
+  end
 end
