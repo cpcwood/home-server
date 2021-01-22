@@ -3,42 +3,43 @@
 @use '../base/typography';
 
 footer {
-  width: 100%;
-  position: relative;
-  height: $footer-height;
   align-content: center;
   align-items: center;
-  justify-content: center;
   box-sizing: border-box;
   display: flex;
-  margin-top: $footer-offset;
   flex-wrap: wrap;
+  height: $footer-height;
+  justify-content: center;
+  margin-top: $footer-offset;
+  position: relative;
+  width: 100%;
 }
 
 .footer-links {
-  width: 100%;
-  display: flex;
-  position: relative;
   align-items: center;
+  display: flex;
   justify-content: center;
+  position: relative;
+  width: 100%;
   
   a {
-    position: relative;
-    padding: 4px;
-    width: 40px;
+    box-sizing: border-box;
     height: 40px;
     margin: 0 20px;
-    box-sizing: border-box;
+    padding: 4px;
+    position: relative;
+    width: 40px;
 
     img {
       display: block;
+      height: 100%;
       position: relative;
       width: 100%;
-      height: 100%;
     }
   }
 
-  a:link, a:visited {
+  a:link,
+  a:visited {
     color: inherit;
     text-decoration: none;
   }
@@ -49,19 +50,20 @@ footer {
 }
 
 .footer-text {
-  width: 100%;
-  text-align: center;
+  color: colors.$light-dark;
   font-size: 0.7em;
   margin-top: 40px;
-  color: colors.$light-dark;
+  text-align: center;
+  width: 100%;
 
-  a:link, a:visited {
+  a:link,
+  a:visited {
     color: inherit;
     text-decoration: none;
   }
 
   a:hover {
-    text-decoration: underline;
     color: colors.$darker-font;
+    text-decoration: underline;
   }
 }
