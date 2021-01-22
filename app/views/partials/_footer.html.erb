@@ -1,0 +1,21 @@
+<footer>
+  <div class='footer-links'>
+    <% if @footer_links && @footer_links[:github_link] %>
+      <a href='<%= @footer_links[:github_link] %>' class='github-link' target='_blank' rel="noreferrer" aria-label='GitHub Link'>
+        <%= image_tag('icons/github-icon.svg', alt: 'Github logo') %>
+      </a>
+    <% end %>
+    <a href='<%= root_path %>' class='homepage-link' aria-label='Homepage Link'>
+      <%= image_tag('icons/grid-icon.svg', alt: 'Homepage Icon') %>
+    </a>
+    <% if @footer_links && @footer_links[:linkedin_link] %>
+      <a href='<%= @footer_links[:linkedin_link] %>' class='linkedin-link' target='_blank' rel="noreferrer" aria-label='Linkedin Link'>
+        <%= image_tag('icons/linkedin-icon-black.svg', alt: 'LinkedIn logo') %>
+      </a>
+    <% end %>
+  </div>
+
+  <div class='footer-text'>
+    <a href='https://linkedin.com/in/cpcwood' target='_blank' rel="noreferrer">CHRIS WOOD</a> © <%= Date.current.year %>, <a href='https://github.com/cpcwood/home-server' target='_blank' rel="noreferrer">HOME-SERVER</a> 
+  </div>
+</footer>

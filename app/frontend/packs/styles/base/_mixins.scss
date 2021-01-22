@@ -11,6 +11,9 @@ $breakpoints: (
 );
 
 $reading-width: 767px;
+$header-height: 60px;
+$footer-height: 150px;
+$footer-offset: 60px;
  
 @mixin respond-to($name) {
   @if map-has-key($breakpoints, $name) {

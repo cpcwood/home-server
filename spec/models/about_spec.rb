@@ -95,4 +95,13 @@ RSpec.describe About, type: :model do
       expect(about.change_messages).to eq(['Profile image updated!'])
     end
   end
+
+  describe '#footer_links' do
+    it 'array of footer links' do
+      expect(about.footer_links).to eq({
+                                         github_link: about.github_link,
+                                         linkedin_link: about.linkedin_link
+                                       })
+    end
+  end
 end
