@@ -1,0 +1,15 @@
+@use '../base/colors';
+@use '../base/mixins' as *;
+@use '../base/typography';
+
+footer {
+  width: 100%;
+  position: relative;
+  height: $footer-height;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  display: flex;
+  margin-top: $footer-offset;
+}
