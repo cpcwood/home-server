@@ -37,6 +37,8 @@ gem 'validate_url'
 gem 'validates_timeliness', '~> 5.0.0.beta1'
 # Timezone
 gem 'tzinfo-data'
+# JSON API serializer
+gem 'jsonapi-serializer'
 
 group :production do
   # AWS S3 for production storage
