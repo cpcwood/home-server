@@ -22,7 +22,9 @@ export default class extends Controller {
     this.isLoading = true
     try {
       this.injectLoadingIcon()
-      const response = await fetch(`${this.apiUrlValue}.json?page=${this.pageValue + 1}`)
+      this.fetchController = new AbortController()
+      const response = await fetch(`${this.apiUrlValue}.json?page=${this.pageValue + 1}`, { signal: this.fetchController.signal })
+      this.fetchController = null
       this.pageValue = this.pageValue + 1
       const imagesData = await response.json()
       const numberOfImages = imagesData.data.length
@@ -36,6 +38,7 @@ export default class extends Controller {
     } catch (error) {
       console.error(error)
       this.isLoading = false
+      this.fetchController = null
     }
   }
 
@@ -111,6 +114,10 @@ export default class extends Controller {
 
   disconnect () {
     document.removeEventListener('scroll', this.handleScrollBind, true)
+    if (this.fetchController) {
+      this.fetchController.abort()
+    }
+    this.removeLoadingIcon()
   }
 
   get isPreview () {
