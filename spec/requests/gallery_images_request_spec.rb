@@ -28,13 +28,15 @@ RSpec.describe 'GalleryImagesController', type: :request do
       end
 
       it 'paginaton' do
-        15.times{ create(:gallery_image, user: @user) }
+        seed_images = 15
+        seed_images.times{ create(:gallery_image, user: @user) }
+        seeded_images = 1 + seed_images
         get('/gallery.json')
         parsed_body = JSON.parse(response.body)
-        expect(parsed_body['data'].length).to eq(12)
+        expect(parsed_body['data'].length).to eq([GalleryImagesController::PAGE_SIZE, seeded_images].min)
         get('/gallery.json?page=2')
         parsed_body = JSON.parse(response.body)
-        expect(parsed_body['data'].length).to eq(4)
+        expect(parsed_body['data'].length).to eq([seeded_images - GalleryImagesController::PAGE_SIZE, 0].max)
       end
     end
   end
