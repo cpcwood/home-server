@@ -16,3 +16,7 @@
   bottom: initial !important;
   top: 100% !important;
 }
+
+.simple-lightbox:focus {
+  outline: none;
+}

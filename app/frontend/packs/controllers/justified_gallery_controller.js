@@ -2,7 +2,7 @@ import { Controller } from 'stimulus'
 import justifiedLayout from 'justified-layout'
 
 export default class extends Controller {
-  static targets = ['galleryItem', 'container']
+  static targets = ['galleryItem']
 
   connect () {
     this.targetNumber = this.galleryItemTargets.length
@@ -19,7 +19,7 @@ export default class extends Controller {
   displayGalleryItemTargets () {
     const fadeIn = () => {
       this.resizeObserver = new ResizeObserver(this.renderGallery.bind(this))
-      this.resizeObserver.observe(this.containerTarget)
+      this.resizeObserver.observe(this.element)
       for (let i = 0; i < this.galleryItemTargets.length; i++) {
         const target = this.galleryItemTargets[i]
         target.style.transitionDelay = `${i * 0.1}s`
@@ -42,7 +42,7 @@ export default class extends Controller {
         horizontal: parseInt(this.data.get('margin')),
         vertical: 0
       },
-      containerWidth: this.containerTarget.clientWidth,
+      containerWidth: this.element.clientWidth,
       targetRowHeight: 295
     }
     const geometry = justifiedLayout(geometryInput, config)

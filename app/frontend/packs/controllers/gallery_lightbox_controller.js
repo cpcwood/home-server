@@ -2,8 +2,6 @@ import { Controller } from 'stimulus'
 import SimpleLightbox from 'simplelightbox'
 
 export default class extends Controller {
-  static targets = ['container']
-
   connect () {
     this.lightbox = new SimpleLightbox(this.data.get('item-selector'), {
       showCounter: false,
@@ -15,5 +13,16 @@ export default class extends Controller {
       fadeSpeed: 150,
       captionClass: 'lightbox-caption'
     })
+  }
+
+  reConnect () {
+    this.lightbox.destroy()
+    this.connect()
+  }
+
+  disconnect () {
+    if (this.lightbox) {
+      this.lightbox.destroy()
+    }
   }
 }
