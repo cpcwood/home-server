@@ -30,6 +30,10 @@
     display: flex;
     position: relative;
   }
+
+  &.hidden {
+    margin: 0;
+  }
 }
 
 .gallery-image-thumbnail {

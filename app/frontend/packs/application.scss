@@ -28,6 +28,7 @@ Sass Styles
 |   |   |– _cards.scss                    # Cards
 |   |   |– _drag_list.scss                # Draggable lists
 |   |   |– _footer.scss                   # Footer
+|   |   |– _custom_loaders.scss           # Custom Loaders
 |   |   ┴
 |   |
 |   |– custom/
@@ -74,6 +75,7 @@ Sass Styles
 @use 'styles/components/cards';
 @use 'styles/components/drag_list';
 @use 'styles/components/footer';
+@use 'styles/components/custom_loaders';
 
 // Custom page styles
 @use 'styles/custom/about.scss';
