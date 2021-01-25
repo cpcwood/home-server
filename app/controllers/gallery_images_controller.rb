@@ -1,5 +1,5 @@
 class GalleryImagesController < ApplicationController
-  PAGE_SIZE = 10
+  PAGE_SIZE = 12
 
   def index
     @gallery_images = GalleryImage.order(date_taken: :desc).includes(image_file_attachment: :blob).limit(PAGE_SIZE).offset(calc_offset)
