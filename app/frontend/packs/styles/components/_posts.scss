@@ -4,7 +4,7 @@
 @use '../base/typography' as *;
 
 .post-overview-container {
-  color: colors.$dark;
+  color: colors.$darker-font;
   display: flex;
   flex-direction: column;
   height: max-content;
@@ -39,4 +39,8 @@
 
 .post-container .markdown {
   margin-top: 2em;
+}
+
+.post-overview-overview {
+
 }

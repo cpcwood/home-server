@@ -7,10 +7,14 @@ $background: rgb(41, 42, 43);
   color: $text;
   font-weight: 400;
   line-height: 1.25;
-  margin: 1em 0 1.5em;
+  margin: 1em 0 2.5em;
   overflow-x: scroll;
   padding: 1em 1.1em;
   word-wrap: initial;
+
+  + .code-block {
+    margin-bottom: 1.5em;
+  }
 
   table td {
     padding: 5px;
@@ -106,7 +110,7 @@ $background: rgb(41, 42, 43);
   .s1,
   .si,
   .err {
-    color: rgb(24, 248, 211);
+    color: #18f8d3;
     
   }
   
@@ -151,5 +155,9 @@ $background: rgb(41, 42, 43);
   .mo,
   .mx {
     color: #e456b9;
+  }
+
+  &.shell .nv {
+    color: #18f8d3;
   }
 }
