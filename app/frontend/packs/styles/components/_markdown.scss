@@ -5,10 +5,16 @@
 
 .markdown {
   margin-bottom: 2em;
+
+  a, a:visited, a:link {
+    color: colors.$link-color;
+    text-decoration: none;
+  }
   
   ul {
-    margin-bottom: 1.5em;
+    margin-bottom: 1.75em;
     margin-top: 0;
+    padding-inline-start: 50px;
   }
 
   li {
@@ -30,5 +36,10 @@
       border-radius: 0.2em;
       padding: 0.25em 0.4em;
     }  
+  }
+
+  ol {
+    margin-block-end: 1.5em;
+    padding-inline-start: 50px;
   }
 }
