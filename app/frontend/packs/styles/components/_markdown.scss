@@ -6,7 +6,9 @@
 .markdown {
   margin-bottom: 2em;
 
-  a, a:visited, a:link {
+  a,
+  a:visited,
+  a:link {
     color: colors.$link-color;
     text-decoration: none;
   }
