@@ -59,8 +59,6 @@ h1 {
 @mixin sub-header {
   font-weight: 500;
   line-height: initial;
-  margin-bottom: 0.25em;
-  margin-top: 0.5em;
 }
 
 h2 {
@@ -70,24 +68,33 @@ h2 {
 
 h3 {
   @include sub-header;
-  font-size: 1.75em;
-  margin-bottom: 1em;
-  margin-top: 0;
+  font-size: 2em;
+  margin-bottom: 0.5em;
+  margin-top: 1.5em;
+
+  + h4 {
+    margin-top: 1em;
+  } 
 }
 
 h4 {
   @include sub-header;
   font-size: 1.5em;
+  margin-top: 1.25em;
 }
 
 h5 {
   @include sub-header;
   font-size: 1.2em;
+  margin-bottom: 0.75em;
+  margin-top: 1.25em;
 }
 
 h6 {
   @include sub-header;
   font-size: 1em;
+  margin-bottom: 0.25em;
+  margin-top: 0.5em;
 }
 
 @mixin reading-pane-header {
@@ -113,6 +120,7 @@ h6 {
 
   h3 {
     @include reading-pane-header;
+    font-weight: 600;
   }
 
   h4 {
