@@ -10,13 +10,15 @@ export default class extends Controller {
   }
 
   scrollHeaderImage () {
-    if (this.contentContainerTarget.scrollTop < (this.baseImageHeight - this.baseHeaderHeight)) {
-      this.headerImageTarget.style.height = `${this.baseImageHeight - this.contentContainerTarget.scrollTop}px`
-      this.headerImageTarget.style.zIndex = '-1'
-    } else {
-      this.headerImageTarget.style.height = `${this.baseHeaderHeight}px`
-      this.headerImageTarget.style.zIndex = '2'
-    }
+    window.requestAnimationFrame(() => {
+      if (this.contentContainerTarget.scrollTop < (this.baseImageHeight - this.baseHeaderHeight)) {
+        this.headerImageTarget.style.height = `${this.baseImageHeight - this.contentContainerTarget.scrollTop}px`
+        this.headerImageTarget.style.zIndex = '-1'
+      } else {
+        this.headerImageTarget.style.height = `${this.baseHeaderHeight}px`
+        this.headerImageTarget.style.zIndex = '2'
+      }
+    });
   }
 
   teardown () {
