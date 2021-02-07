@@ -3,17 +3,16 @@ $background: rgb(41, 42, 43);
 
 .code-block {
   background-color: $background;
-  border-radius: 0.2em;
   color: $text;
   font-weight: 400;
   line-height: 1.25;
-  margin: 1em 0 2.5em;
+  margin: 1em 0 1.75em;
   overflow-x: scroll;
   padding: 1em 1.1em;
   word-wrap: initial;
 
   + .code-block {
-    margin-bottom: 1.5em;
+    margin-bottom: 2em;
   }
 
   table td {
