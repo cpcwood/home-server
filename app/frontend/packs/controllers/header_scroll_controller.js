@@ -18,7 +18,7 @@ export default class extends Controller {
         this.headerImageTarget.style.height = `${this.baseHeaderHeight}px`
         this.headerImageTarget.style.zIndex = '2'
       }
-    });
+    })
   }
 
   teardown () {

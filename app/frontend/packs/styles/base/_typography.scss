@@ -32,12 +32,12 @@ html {
 }
 
 @mixin sub-header {
-  font-weight: 500;
-  line-height: initial;
-  font-family: $general-font;
   box-sizing: border-box;
   color: colors.$heading-font;
+  font-family: $general-font;
+  font-weight: 500;
   letter-spacing: 0.04rem;
+  line-height: initial;
   padding: 0;
 }
 
@@ -86,8 +86,8 @@ header h1 {
   h2 {
     @include sub-header;
     font-size: 1.5em;
-    margin: 1.35em 0 0;
     font-weight: 700;
+    margin: 1.35em 0 0;
   
     @include respond-to(tablet) {
       font-size: 1.6em;
@@ -106,9 +106,9 @@ header h1 {
   
   h4 {
     @include sub-header;
+    color: colors.$general-font;
     font-size: 1em;
     margin: 1.25em 0 0;
-    color: colors.$general-font;
   }
   
   h5 {
