@@ -7,6 +7,11 @@ module MarkdownHelper
     def rouge_formatter(lexer)
       Rouge::Formatters::HTMLLegacy.new(css_class: "code-block #{lexer.tag}")
     end
+
+    def auto_link(link, link_type)
+      link = CGI::escapeHTML(link)
+      "<a href=\"#{link}\" target=\"_blank\">#{link}</a>"
+    end
   end
 
   def markdown_admin(text)
@@ -14,7 +19,8 @@ module MarkdownHelper
     render_options = {
       hard_wrap: true,
       link_attributes: {
-        rel: 'nofollow'
+        rel: 'nofollow',
+        target: '_blank'
       }
     }
 
