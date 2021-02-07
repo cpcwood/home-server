@@ -29,6 +29,10 @@
     padding: 30px;
     width: 400px;
   }
+
+  .submit-right {
+    margin: 0;
+  }
 }
 
 
@@ -109,12 +113,10 @@
 }
 
 // Option links
-
 .options {
   box-sizing: border-box;
-  margin: 25px 0 0;
   overflow: hidden;
-  padding: 0 5px;
+  padding: 20px 5px 0;
   width: 100%;
 
   &.login {
@@ -326,10 +328,6 @@
   max-width: 300px;
   position: relative;
   width: fit-content;
-}
-
-#input-submit-tag {
-  display: none;
 }
 
 .input-submit:active,

@@ -27,9 +27,8 @@ export default class extends Controller {
   }
 
   teardown () {
-    for (let i = 0; i < this.headerImageTarget.length; i++) {
+    for (let i = 0; i < this.headerImageTargets.length; i++) {
       this.headerImageTargets[i].style.height = `${this.baseImageHeight}px`
-      this.headerImageTargets[i].style.zIndex = '-1'
     }
   }
 

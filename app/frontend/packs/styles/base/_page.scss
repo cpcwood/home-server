@@ -68,18 +68,8 @@ nav .header-image {
   flex-wrap: wrap;
   justify-content: center;
   min-height: calc(100vh - #{$header-height});
-  // overflow: hidden;
-  -ms-overflow-style: none;
-
   padding-top: $header-height;
-  // overflow-y: scroll;
-  // position: fixed;
-  // top: $header-height;
   width: 100%;
-
-  // &::-webkit-scrollbar {
-  //   display: none;
-  // }
 }
 
 .content {
