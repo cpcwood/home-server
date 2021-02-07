@@ -17,12 +17,10 @@ export default class extends Controller {
       if (scrollTop < (baseImageHeight - baseHeaderHeight)) {
         for (let i = 0; i < headerImages.length; i++) {
           headerImages[i].style.height = `${baseImageHeight - scrollTop}px`
-          headerImages[i].style.zIndex = '-1'
         }
       } else {
         for (let i = 0; i < headerImages.length; i++) {
           headerImages[i].style.height = `${baseHeaderHeight}px`
-          headerImages[i].style.zIndex = '2'
         }
       }
     })
