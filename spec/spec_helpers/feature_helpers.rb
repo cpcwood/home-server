@@ -8,7 +8,8 @@ def login_feature
   page.find(:css, '#login-button').click
   fill_in('user', with: @user.username)
   fill_in('password', with: @user_password)
-  click_button('Login')
+  find('label', :text => 'Login').click
+  save_page
   fill_in('auth_code', with: '123456')
-  click_button('Login')
+  find('label', :text => 'Login').click
 end

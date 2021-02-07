@@ -33,4 +33,12 @@ class HeaderImage < SiteImage
   def y_dim
     Y_DIM
   end
+
+  private
+
+  def process_image(attached_image)
+    Image.image_processing_pipeline(image_path: attached_image, quality: 45) do |pipeline|
+      pipeline.resize_to_fill(x_dim, y_dim, gravity: 'north-west')
+    end
+  end
 end
