@@ -4,12 +4,13 @@
 @use '../base/typography' as *;
 
 .post-overview {
+  box-sizing: border-box;
   position: relative;
   width: 100%;
-  box-sizing: border-box;
 }
 
 .post-overview-container {
+  box-sizing: border-box;
   color: colors.$darker-font;
   display: flex;
   flex-direction: column;
@@ -19,7 +20,6 @@
   text-align: left;
   text-decoration: none;
   width: 100%;
-  box-sizing: border-box;
 
   &:link,
   &:visited {
@@ -58,8 +58,8 @@
   }  
 
   .post-date {
-    font-size: 0.9em;
     color: colors.$heading-font;
+    font-size: 0.9em;
   }
 }
 

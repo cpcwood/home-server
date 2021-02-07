@@ -1,16 +1,27 @@
 $loader-size: 4em;
 $loader-width: 0.8em;
-$loader-background: rgba(0, 0, 0, 0.3);
-$loader-color: rgba(0, 0, 0, 0.7);
+$loader-background: rgba(255, 255, 255, 0.3);
+$loader-color: rgba(255, 255, 255, 0.7);
 
+.loader-container {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  display: none;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
 
 .default-loader {
   border-radius: 50%;
-  height: $loader-size;
-  margin: 0 10px;
+  height: 3.5em;
+  margin: 0;
   transition: visibility 0.1s linear 0.1s;
-  visibility: hidden;
-  width: $loader-size;
+  width: 3.5em;
 }
 
 .default-loader {
