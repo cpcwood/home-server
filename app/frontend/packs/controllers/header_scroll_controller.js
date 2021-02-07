@@ -1,30 +1,38 @@
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = ['headerImage', 'contentContainer']
+  static targets = ['headerImage']
 
   connect () {
-    this.contentContainerTarget.scrollTop = 0
     this.baseImageHeight = parseInt(this.data.get('imageHeight'))
     this.baseHeaderHeight = parseInt(this.data.get('headerHeight'))
   }
 
   scrollHeaderImage () {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    const headerImages = this.headerImageTargets
+    const baseImageHeight = this.baseImageHeight
+    const baseHeaderHeight = this.baseHeaderHeight
     window.requestAnimationFrame(() => {
-      if (this.contentContainerTarget.scrollTop < (this.baseImageHeight - this.baseHeaderHeight)) {
-        this.headerImageTarget.style.height = `${this.baseImageHeight - this.contentContainerTarget.scrollTop}px`
-        this.headerImageTarget.style.zIndex = '-1'
+      if (scrollTop < (baseImageHeight - baseHeaderHeight)) {
+        for (let i = 0; i < headerImages.length; i++) {
+          headerImages[i].style.height = `${baseImageHeight - scrollTop}px`
+          headerImages[i].style.zIndex = '-1'
+        }
       } else {
-        this.headerImageTarget.style.height = `${this.baseHeaderHeight}px`
-        this.headerImageTarget.style.zIndex = '2'
+        for (let i = 0; i < headerImages.length; i++) {
+          headerImages[i].style.height = `${baseHeaderHeight}px`
+          headerImages[i].style.zIndex = '2'
+        }
       }
     })
   }
 
   teardown () {
-    this.contentContainerTarget.scrollTop = 0
-    this.headerImageTarget.style.height = `${this.baseImageHeight}px`
-    this.headerImageTarget.style.zIndex = '-1'
+    for (let i = 0; i < this.headerImageTarget.length; i++) {
+      this.headerImageTargets[i].style.height = `${this.baseImageHeight}px`
+      this.headerImageTargets[i].style.zIndex = '-1'
+    }
   }
 
   disconnect () {
