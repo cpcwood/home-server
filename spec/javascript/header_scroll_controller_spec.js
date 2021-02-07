@@ -11,6 +11,14 @@ describe('header_scroll_controller', () => {
     application.register('header-scroll', headerScrollController)
   })
 
+  beforeEach(() => {
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => cb());
+  });
+  
+  afterEach(() => {
+    window.requestAnimationFrame.mockRestore();
+  });
+
   describe('#scrollHeaderImage', () => {
     const imageHeight = 300
     const headerHeight = 60
