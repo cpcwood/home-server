@@ -29,18 +29,30 @@
   &:hover {
     outline: none;
   }
+
+  .post-overview-title {
+    font-size: 1.5em;
+    margin: 10px 0;
+    padding: 0;
+    @include respond-to(tablet) {
+      font-size: 1.7em;
+    }
+    @include respond-to(desktop) {
+      font-size: 1.8em;
+    }
+  }
+  
+  .post-container .markdown {
+    margin-top: 2em;
+  }
+  
+  .post-overview-overview {
+    margin-top: 0.7em;
+  }  
+
+  .post-date {
+    font-size: 0.9em;
+    color: colors.$heading-font;
+  }
 }
 
-.post-overview-title {
-  font-size: 2.5em;
-  margin: 10px 0;
-  padding: 0;
-}
-
-.post-container .markdown {
-  margin-top: 2em;
-}
-
-.post-overview-overview {
-  margin-top: 0.7em;
-}
