@@ -3,6 +3,12 @@
 @use '../base/mixins' as *;
 @use '../base/typography' as *;
 
+.post-overview {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .post-overview-container {
   color: colors.$darker-font;
   display: flex;
@@ -13,6 +19,7 @@
   text-align: left;
   text-decoration: none;
   width: 100%;
+  box-sizing: border-box;
 
   &:link,
   &:visited {
@@ -35,7 +42,7 @@
     margin: 10px 0;
     padding: 0;
     @include respond-to(tablet) {
-      font-size: 1.7em;
+      font-size: 1.65em;
     }
     @include respond-to(desktop) {
       font-size: 1.8em;

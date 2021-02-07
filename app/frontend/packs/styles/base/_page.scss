@@ -137,9 +137,11 @@
   margin-bottom: 30px;
   margin-top: 30px;
   width: 100%;
+  border-style: none;
 }
 
 .unstyled-list {
+  box-sizing: border-box;
   list-style-type: none;
   margin-block-end: 0;
   margin-block-start: 0;

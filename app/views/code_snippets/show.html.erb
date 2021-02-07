@@ -21,23 +21,23 @@
 <% end %>
 
 <article class='item-content' itemscope itemtype="https://schema.org/TechArticle">
-  <section class='reading-pane'>
+  <div class='reading-pane'>
     <h2 itemprop='headline'><%= @code_snippet.title %></h2>
     <div class='reading-pane-subtitle'>
     <span itemprop='author'> <%=  @code_snippet.user.username %> </span> | Last updated: <time datetime="<%= @code_snippet.updated_at.strftime("%Y-%m-%d")%>" itemprop='dateModified'> <%= full_date(@code_snippet.updated_at) %> </time>
     </div>
-  </section>
+  </div>
 
   <div class='code-snippet' itemprop='articleBody'>
     <%= markdown_code(code: @code_snippet.snippet, extension: @code_snippet.extension) %>
   </div>
 
-  <section class='reading-pane' itemprop='description'>
+  <div class='reading-pane' itemprop='description'>
     <%= markdown_admin(@code_snippet.text) %>
-  </section>
+  </div>
   <link itemprop="isPartOf" itemscope itemtype="https://schema.org/Collection" itemid="<%= code_snippets_path %>" />
 </article>
 
-<section class='reading-pane reading-footer'>
+<div class='reading-pane reading-footer'>
   <a href='<%= code_snippets_path %>' class='standard-button'>Back to all snippets</a>
-</section>
+</div>

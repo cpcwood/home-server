@@ -10,7 +10,7 @@
   Browse my most recent blog posts
 <% end %>
 
-<section class='reading-pane' itemscope itemtype="https://schema.org/Blog">
+<div class='reading-pane' itemscope itemtype="https://schema.org/Blog">
   <%= render partial: 'partials/admin_toolbar', locals: { model: (@posts.empty? ? [Post.new] : @posts) } %>
 
   <%= render partial: 'partials/system_messages' %>
@@ -22,4 +22,4 @@
       <%= render partial: 'posts/post_overview', collection: @posts, as: :post, spacer_template: "partials/standard_ruler" %>
     </ul>
   <% end %>
-</section>
+</div>
