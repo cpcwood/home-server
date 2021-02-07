@@ -16,7 +16,7 @@
 
 <%= render partial: 'partials/system_messages' %>
 
-<section class="image-tile-container" data-controller="image-loader" data-image-loader-target='container' data-action='turbolinks:before-cache@window->image-loader#teardown'>
+<div class="image-tile-container" data-controller="image-loader" data-image-loader-target='container' data-action='turbolinks:before-cache@window->image-loader#teardown'>
   <% @cover_images.each_with_index do |image, index| %>
     <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#touchStart touchend->touch-hover-tile#touchEnd mouseenter->touch-hover-tile#applyHoverToTarget mouseleave->touch-hover-tile#teardown turbolinks:before-cache@window->touch-hover-tile#teardown">
       <%= image_tag(image_path_helper(image_model: image), class: "cover-image", style: image.custom_style, alt: image.description, data: {action: "load->image-loader#imageLoaded", 'image-loader-target': 'fade'} ) %>
@@ -27,4 +27,4 @@
       </a>
     </div>
   <% end %>
-</section>
+</div>
