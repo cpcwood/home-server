@@ -108,6 +108,7 @@ header h1 {
     @include sub-header;
     font-size: 1em;
     margin: 1.25em 0 0;
+    color: colors.$general-font;
   }
   
   h5 {
