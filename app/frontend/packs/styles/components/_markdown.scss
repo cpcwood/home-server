@@ -10,13 +10,17 @@
   a:visited,
   a:link {
     color: colors.$link-color;
-    text-decoration: none;
+    text-decoration: underline;
   }
   
   ul {
     margin-bottom: 1.75em;
     margin-top: 0;
-    padding-inline-start: 50px;
+    padding-inline-start: 25px;
+
+    @include respond-to(tablet) {
+      padding-inline-start: 50px;
+    }  
   }
 
   li {
