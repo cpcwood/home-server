@@ -11,7 +11,7 @@
     <%= render partial: 'partials/system_messages' %>
     <%= f.text_field(:auth_code, required: true, class: 'input-box', placeholder: '2FA Code') %>
     <div class='input-seperator'></div>
-    <%= f.submit("Login", class: 'input-submit') %>
+    <%= render partial: "partials/submit_right", locals: {form: f, button_text: 'Login'} %>
   <% end %>
   <div class='options'>
     <%= form_tag('/2fa', method: :put) do %>
