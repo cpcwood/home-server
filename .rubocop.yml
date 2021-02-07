@@ -69,3 +69,6 @@ Rails/SkipsModelValidations:
 
 Rails/OutputSafety:
   Enabled: false
+
+Rails/DynamicFindBy:
+  Enabled: false
