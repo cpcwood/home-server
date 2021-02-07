@@ -46,7 +46,7 @@
         <a href='<%= admin_path %>' class='nav-item'>
           ADMIN
         </a>
-        <%= form_with(url: "/login", method: "delete", class: 'logout-form') do %>
+        <%= form_with(url: '/login', method: :delete, class: 'logout-form') do %>
           <%= submit_tag("LOGOUT", class: 'nav-item', id: 'logout-button') %>
         <% end %>
         <% else %>

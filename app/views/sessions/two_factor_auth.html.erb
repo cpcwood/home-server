@@ -17,7 +17,7 @@
     <%= form_tag('/2fa', method: :put) do %>
       <%= submit_tag("Resend 2fa code", class: 'option left') %>
     <% end %>
-    <%= form_with(url: "/login", method: "delete") do %>
+    <%= form_with(url: "/login", method: 'delete') do %>
       <%= submit_tag("Cancel Login", class: 'option right') %>
     <% end %>
   </div>
