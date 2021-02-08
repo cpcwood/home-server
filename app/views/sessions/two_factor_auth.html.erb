@@ -13,7 +13,7 @@
     <div class='input-seperator'></div>
     <%= render partial: "partials/submit_right", locals: {form: f, button_text: 'Login'} %>
   <% end %>
-  <div class='options'>
+  <div class='options two-fa'>
     <%= form_tag('/2fa', method: :put) do %>
       <%= submit_tag("Resend 2fa code", class: 'option left') %>
     <% end %>
