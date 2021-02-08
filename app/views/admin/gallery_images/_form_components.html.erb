@@ -25,6 +25,6 @@
   <%= f.number_field(:longitude, class: 'input-box embedded-input-box', placeholder: 'Enter longitude...') %>
 </div>
 
-<div class="embedded-form-entry-container submit-right">
-  <%= f.submit("Submit", class: 'input-submit') %>
+<div class="embedded-form-entry-container">
+  <%= render partial: "partials/submit_right", locals: {form: f, button_text: 'Submit'} %>
 </div>

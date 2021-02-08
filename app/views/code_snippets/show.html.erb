@@ -21,21 +21,21 @@
 <% end %>
 
 <article class='item-content' itemscope itemtype="https://schema.org/TechArticle">
-  <section class='reading-pane'>
-    <h2 itemprop='headline'><%= @code_snippet.title %></h2>
-    <div class='reading-pane-subtitle'>
-    <span itemprop='author'> <%=  @code_snippet.user.username %> </span> | Last updated: <time datetime="<%= @code_snippet.updated_at.strftime("%Y-%m-%d")%>" itemprop='dateModified'> <%= full_date(@code_snippet.updated_at) %> </time>
+    <div class='reading-pane'>
+      <h1 itemprop='headline'><%= @code_snippet.title %></h1>
+      <div class='reading-pane-subtitle'>
+      <span itemprop='author'> <%=  @code_snippet.user.username %> </span> | Last updated: <time datetime="<%= @code_snippet.updated_at.strftime("%Y-%m-%d")%>" itemprop='dateModified'> <%= full_date(@code_snippet.updated_at) %> </time>
+      </div>
     </div>
-  </section>
 
-  <div class='code-snippet' itemprop='articleBody'>
-    <%= markdown_code(code: @code_snippet.snippet, extension: @code_snippet.extension) %>
-  </div>
+    <div class='code-snippet' itemprop='articleBody'>
+      <%= markdown_code(code: @code_snippet.snippet, extension: @code_snippet.extension) %>
+    </div>
 
-  <section class='reading-pane' itemprop='description'>
-    <%= markdown_admin(@code_snippet.text) %>
-  </section>
-  <link itemprop="isPartOf" itemscope itemtype="https://schema.org/Collection" itemid="<%= code_snippets_path %>" />
+    <div class='reading-pane' itemprop='description'>
+      <%= markdown_admin(@code_snippet.text) %>
+    </div>
+    <link itemprop="isPartOf" itemscope itemtype="https://schema.org/Collection" itemid="<%= code_snippets_path %>" />
 </article>
 
 <section class='reading-pane reading-footer'>

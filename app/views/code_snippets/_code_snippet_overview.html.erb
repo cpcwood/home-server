@@ -1,14 +1,14 @@
-<div class='card-container fade-transition' data-image-loader-target="fade" itemscope itemtype="https://schema.org/TechArticle">
+<section class='card-container fade-transition' data-image-loader-target="fade" itemscope itemtype="https://schema.org/TechArticle">
   <a href='<%= path %>' class='card-content show-button'>
     <div class='card-image' itemprop='image' itemscope itemtype="https://schema.org/ImageObject">
       <%= image_tag(image_path_helper(image_model: code_snippet.code_snippet_image), data: {action: "load->image-loader#imageLoaded"}, alt: 'render of code snippet', itemprop: 'contentUrl') %>
     </div>
-    <h3 class='headline'>
+    <h1 class='headline'>
       <%= code_snippet.title %>
-    </h3>
+    </h1>
     <div class='card-overview' class='abstract'>
       <%= code_snippet.overview %>
     </div>
     <link itemprop="isPartOf" itemscope itemtype="https://schema.org/Collection" itemid="<%= code_snippets_path %>" />
   </a>
-</div>
+</section>

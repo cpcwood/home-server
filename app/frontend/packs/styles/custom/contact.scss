@@ -55,12 +55,6 @@
   width: 26%;
 }
 
-.recaptcha.contact {
-  display: flex;
-  flex-direction: row-reverse;
-  margin-bottom: 0;
-}
-
 #contact-messages-new-form {
   padding: 0;
   @include respond-to(tablet) {

@@ -7,12 +7,12 @@
 <% end %>
 
 <% content_for :content do %>
-  <section class='dashboard-container'>
+  <div class='dashboard-container'>
     <%= render partial: 'partials/dashboard_sidebar' %>
-    <section class='dashboard-content'>
+    <div class='dashboard-content'>
       <%= yield %>
-    </section>
-  </section>
+    </div>
+  </div>
 <% end %>
 
 <%= render template: 'layouts/application' %>

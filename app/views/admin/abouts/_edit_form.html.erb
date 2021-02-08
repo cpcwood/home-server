@@ -42,11 +42,8 @@
     <%= f.text_area(:about_me, class: 'input-box embedded-text-area', placeholder: 'Add about me text (you can use markdown)...') %>
   </div>
 
-  <div class="embedded-form-entry-container submit-right">
-  <div class="form-submit-container">
-    <%= f.submit("Update About", class: 'input-submit') %>
-  </div>
-  <div class="default-loader"></div>
+  <div class="embedded-form-entry-container">
+    <%= render partial: "partials/submit_right", locals: {form: f, button_text: 'Update About'} %>
   </div>
 
 <% end %>

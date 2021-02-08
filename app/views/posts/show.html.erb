@@ -10,17 +10,22 @@
   <%= @post.overview %> - Blog post by <%= @post.user.username %>
 <% end %>
 
+
 <article class='reading-pane' itemscope itemtype="https://schema.org/BlogPosting">
-  <h2 itemprop='headline'><%= @post.title %></h2>
-  <div class='reading-pane-subtitle'>
-    <span itemprop='author'> <%= @post.user.username %> </span> | <time datetime="<%= @post.date_published.strftime("%Y-%m-%d")%>" itemprop='dateModified'> <%= full_date(@post.date_published) %> </time>
-  </div>
-  <div class='post-container' itemprop='articleBody'>
-    <%= markdown_admin(@post.text) %>
-  </div>
-  <link itemprop="isPartOf" itemscope itemtype="https://schema.org/Blog" itemid="<%= posts_path %>" />
+  <section>
+    <h1 itemprop='headline'><%= @post.title %></h1>
+    <div class='reading-pane-subtitle'>
+      <span itemprop='author'> <%= @post.user.username %> </span> | <time datetime="<%= @post.date_published.strftime("%Y-%m-%d")%>" itemprop='dateModified'> <%= full_date(@post.date_published) %> </time>
+    </div>
+    <div class='post-container' itemprop='articleBody'>
+      <%= markdown_admin(@post.text) %>
+    </div>
+  </section>
+  <section>
+    <link itemprop="isPartOf" itemscope itemtype="https://schema.org/Blog" itemid="<%= posts_path %>" />
+  </section>  
 </article>
 
-<section class='reading-pane reading-footer'>
+<div class='reading-pane reading-footer'>
   <a href='<%= posts_path %>' class='standard-button'>Back to all posts</a>
-</section>
+</div>
