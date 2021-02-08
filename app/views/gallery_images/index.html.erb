@@ -14,7 +14,7 @@
 
 <%= render partial: 'partials/system_messages' %>
 
-<section class='gallery'>
+<div class='gallery'>
 
   <% if @gallery_images.empty? %>
     <%= render partial: 'partials/no_items', locals: {item: 'images'} %>
@@ -31,4 +31,4 @@
     </ul>
   <% end %>
 
-</section>
+</div>

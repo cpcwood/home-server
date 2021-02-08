@@ -24,6 +24,6 @@
   <%= f.text_area(:text, class: 'input-box embedded-text-area', placeholder: 'Add post content (you can use markdown)...') %>
 </div>
 
-<div class="embedded-form-entry-container submit-right">
-  <%= f.submit("Submit", class: 'input-submit') %>
+<div class="embedded-form-entry-container">
+  <%= render partial: "partials/submit_right", locals: {form: f, button_text: 'Submit'} %>
 </div>

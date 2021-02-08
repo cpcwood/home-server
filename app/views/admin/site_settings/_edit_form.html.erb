@@ -25,10 +25,7 @@
     <br>
 
     <div class="embedded-form-entry-container">
-      <div class="form-submit-container">
-        <%= f.submit('Update site settings', class: 'input-submit') %>
-      </div>
-      <div class="default-loader"></div>
+      <%= render partial: "partials/submit_right", locals: {form: f, button_text: 'Update site settings'} %>
     </div>
 
 <% end %>

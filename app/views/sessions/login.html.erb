@@ -17,7 +17,9 @@
       <%= link_to "Forgotten Password", "/forgotten-password", class: 'option right' %>
     </div>
     <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container' data-action="turbolinks:before-cache@window->recaptcha#teardown"></div>
-    <%= f.submit("Login", class: 'input-submit') %>
+    <div class='form-entry-container'>
+      <%= render partial: "partials/submit_right", locals: {form: f, button_text: 'Login'} %>
+    </div>
   <% end %>
 <% end %>
 

@@ -31,7 +31,17 @@ html {
   width: 100%;
 }
 
-h1 {
+@mixin sub-header {
+  box-sizing: border-box;
+  color: colors.$heading-font;
+  font-family: $general-font;
+  font-weight: 500;
+  letter-spacing: 0.04rem;
+  line-height: initial;
+  padding: 0;
+}
+
+header h1 {
   @include main-heading;
   font-size: 3.2em;
   @include respond-to(tablet) {
@@ -56,54 +66,6 @@ h1 {
   }
 }
 
-@mixin sub-header {
-  font-weight: 500;
-  line-height: initial;
-}
-
-h2 {
-  @include sub-header;
-  font-size: 3em;
-}
-
-h3 {
-  @include sub-header;
-  font-size: 2em;
-  margin-bottom: 0.5em;
-  margin-top: 1.5em;
-
-  + h4 {
-    margin-top: 1em;
-  } 
-}
-
-h4 {
-  @include sub-header;
-  font-size: 1.5em;
-  margin-top: 1.25em;
-}
-
-h5 {
-  @include sub-header;
-  font-size: 1.2em;
-  margin-bottom: 0.75em;
-  margin-top: 1.25em;
-}
-
-h6 {
-  @include sub-header;
-  font-size: 1em;
-  margin-bottom: 0.25em;
-  margin-top: 0.5em;
-}
-
-@mixin reading-pane-header {
-  color: colors.$heading-font;
-  font-family: $general-font;
-  font-weight: 500;
-  letter-spacing: 0.04rem;
-}
-
 .reading-pane {
   font-family: $reading-font;
   letter-spacing: 0.01em;
@@ -111,31 +73,50 @@ h6 {
   word-spacing: 0.1em;
 
   h1 {
-    @include reading-pane-header;
+    @include sub-header;
+    font-size: 1.75em;
+    font-weight: 700;
+    margin-bottom: 0;
+
+    @include respond-to(tablet) {
+      font-size: 2.25em;
+    }
   }
 
   h2 {
-    @include reading-pane-header;
+    @include sub-header;
+    font-size: 1.5em;
+    font-weight: 700;
+    margin: 1.35em 0 0;
+  
+    @include respond-to(tablet) {
+      font-size: 1.6em;
+    }
+  
+    + h3 {
+      margin-top: 1em;
+    }
   }
-
+  
   h3 {
-    @include reading-pane-header;
-    font-weight: 600;
+    @include sub-header;
+    font-size: 1.25em;
+    margin: 1.25em 0 0;
   }
-
+  
   h4 {
-    @include reading-pane-header;
+    @include sub-header;
+    color: colors.$general-font;
+    font-size: 1em;
+    margin: 1.25em 0 0;
   }
-
+  
   h5 {
-    @include reading-pane-header;
-  }
-
-  h6 {
-    @include reading-pane-header;
+    @include sub-header;
+    font-size: 1em;
+    margin: 0.5em 0 0.25em;
   }
 }
-
 
 b,
 strong {

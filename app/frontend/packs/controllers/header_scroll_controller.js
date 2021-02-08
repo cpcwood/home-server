@@ -1,28 +1,35 @@
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = ['headerImage', 'contentContainer']
+  static targets = ['headerImage']
 
   connect () {
-    this.contentContainerTarget.scrollTop = 0
     this.baseImageHeight = parseInt(this.data.get('imageHeight'))
     this.baseHeaderHeight = parseInt(this.data.get('headerHeight'))
   }
 
   scrollHeaderImage () {
-    if (this.contentContainerTarget.scrollTop < (this.baseImageHeight - this.baseHeaderHeight)) {
-      this.headerImageTarget.style.height = `${this.baseImageHeight - this.contentContainerTarget.scrollTop}px`
-      this.headerImageTarget.style.zIndex = '-1'
-    } else {
-      this.headerImageTarget.style.height = `${this.baseHeaderHeight}px`
-      this.headerImageTarget.style.zIndex = '2'
-    }
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    const headerImages = this.headerImageTargets
+    const baseImageHeight = this.baseImageHeight
+    const baseHeaderHeight = this.baseHeaderHeight
+    window.requestAnimationFrame(() => {
+      if (scrollTop < (baseImageHeight - baseHeaderHeight)) {
+        for (let i = 0; i < headerImages.length; i++) {
+          headerImages[i].style.height = `${baseImageHeight - scrollTop}px`
+        }
+      } else {
+        for (let i = 0; i < headerImages.length; i++) {
+          headerImages[i].style.height = `${baseHeaderHeight}px`
+        }
+      }
+    })
   }
 
   teardown () {
-    this.contentContainerTarget.scrollTop = 0
-    this.headerImageTarget.style.height = `${this.baseImageHeight}px`
-    this.headerImageTarget.style.zIndex = '-1'
+    for (let i = 0; i < this.headerImageTargets.length; i++) {
+      this.headerImageTargets[i].style.height = `${this.baseImageHeight}px`
+    }
   }
 
   disconnect () {

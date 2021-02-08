@@ -1,4 +1,5 @@
 <nav class='navbar'>
+  <%= render partial: 'partials/header_image' %>
   <div class='nav-title-container'>
     <a href='<%= root_path %>'><%= @site_settings.name %></a>
   </div>
@@ -9,7 +10,7 @@
       </a>
     </div>
   <% end %>
-  <div class='nav-menu' data-controller='nav-menu' data-nav-menu-open='false'>
+  <section class='nav-menu' data-controller='nav-menu' data-nav-menu-open='false'>
     <button class='hamburger-container' data-action='click->nav-menu#menuToggle' data-nav-menu-target='navHamburger' aria-label="Open Navigiation Menu">
       <div class='hamburger'>
         <div class='hamburger-bar' id='hamburger-crown'></div>
@@ -46,7 +47,7 @@
         <a href='<%= admin_path %>' class='nav-item'>
           ADMIN
         </a>
-        <%= form_with(url: "/login", method: "delete", class: 'logout-form') do %>
+        <%= form_with(url: '/login', method: :delete, class: 'logout-form') do %>
           <%= submit_tag("LOGOUT", class: 'nav-item', id: 'logout-button') %>
         <% end %>
         <% else %>
@@ -57,5 +58,5 @@
       </div>
     </div>
     <div class='nav-screen-cover' data-action='click->nav-menu#closeMenu'></div>
-  </div>
+  </section>
 </nav>

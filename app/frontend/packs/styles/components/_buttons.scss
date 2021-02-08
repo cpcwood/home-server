@@ -40,15 +40,20 @@
 }
 
 .input-submit {
+  align-items: center;
   background-image: linear-gradient(to bottom right, colors.$dark, colors.$medium-dark);
   border: unset;
   box-sizing: border-box;
   color: colors.$light;
   cursor: pointer;
+  display: flex;
   font-weight: 300;
+  height: 3em;
+  justify-content: center;
   line-height: 1em;
   min-width: 110px;
   padding: 15px 25px;
+  position: relative;
   user-select: none;
 }
 

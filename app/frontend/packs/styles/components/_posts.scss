@@ -3,7 +3,14 @@
 @use '../base/mixins' as *;
 @use '../base/typography' as *;
 
+.post-overview {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+}
+
 .post-overview-container {
+  box-sizing: border-box;
   color: colors.$darker-font;
   display: flex;
   flex-direction: column;
@@ -29,18 +36,30 @@
   &:hover {
     outline: none;
   }
+
+  .post-overview-title {
+    font-size: 1.5em;
+    margin: 10px 0;
+    padding: 0;
+    @include respond-to(tablet) {
+      font-size: 1.65em;
+    }
+    @include respond-to(desktop) {
+      font-size: 1.8em;
+    }
+  }
+  
+  .post-container .markdown {
+    margin-top: 2em;
+  }
+  
+  .post-overview-overview {
+    margin-top: 0.7em;
+  }  
+
+  .post-date {
+    color: colors.$heading-font;
+    font-size: 0.9em;
+  }
 }
 
-.post-overview-title {
-  font-size: 2.5em;
-  margin: 10px 0;
-  padding: 0;
-}
-
-.post-container .markdown {
-  margin-top: 2em;
-}
-
-.post-overview-overview {
-  margin-top: 0.7em;
-}

@@ -29,6 +29,10 @@
     padding: 30px;
     width: 400px;
   }
+
+  .submit-right {
+    margin: 0;
+  }
 }
 
 
@@ -98,24 +102,34 @@
 
 .recaptcha {
   box-sizing: border-box;
-  margin: 20px 0;
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 20px 0 0;
   width: 100%;
 
   @include respond-to(tablet) {
-    margin: 30px 0;
+    margin: 30px 0 0;
   }
-  @include respond-to(desktop) {
-    margin: 30px 0;
+}
+
+.form-entry-container {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  margin: 20px 0 0;
+  position: relative;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    margin: 30px 0 0;
   }
 }
 
 // Option links
-
 .options {
   box-sizing: border-box;
-  margin: 25px 0 0;
   overflow: hidden;
-  padding: 0 5px;
+  padding: 5px 5px 0;
   width: 100%;
 
   &.login {
@@ -124,9 +138,10 @@
     @include respond-to(tablet) {
       margin-top: -10px;
     }
-    @include respond-to(desktop) {
-      margin-top: -10px;
-    }
+  }
+
+  &.two-fa {
+    padding-top: 15px;
   }
 
   .option {
@@ -321,13 +336,23 @@
 
 .form-submit-container {
   box-sizing: border-box;
+  display: flex;
   flex: 0 1 auto;
+  flex-direction: row-reverse;
   max-width: 300px;
   position: relative;
   width: fit-content;
+}
 
-  &:active + .default-loader {
-    visibility: visible;
+.input-submit:active,
+ 
+.input-submit:focus {
+  .loader-container {
+    display: flex;
+  }
+
+  .button-text {
+    visibility: hidden;
   }
 }
 
@@ -398,9 +423,11 @@
 }
 
 .submit-right {
+  display: flex;
   flex-direction: row-reverse;
   float: right;
   width: fit-content;
+  width: 100%;
 }
 
 .embedded-form-button-container {

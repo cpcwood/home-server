@@ -52,11 +52,7 @@
     <%= check_box(:attachment, :reset, class: 'input-check-box') %>
   </div>
 
-  <div class="embedded-form-entry-container submit-right">
-    <div class="form-submit-container">
-      <%= f.submit("Update #{image.description.humanize(capitalize: false)}", class: 'input-submit') %>
-    </div>
-    <div class="default-loader"></div>
+  <div class="embedded-form-entry-container">
+    <%= render partial: "partials/submit_right", locals: {form: f, button_text: "Update #{image.description.humanize(capitalize: false)}"} %>
   </div>
-
 <% end %>

@@ -14,7 +14,8 @@ module MarkdownHelper
     render_options = {
       hard_wrap: true,
       link_attributes: {
-        rel: 'nofollow'
+        rel: 'nofollow',
+        target: '_blank'
       }
     }
 
