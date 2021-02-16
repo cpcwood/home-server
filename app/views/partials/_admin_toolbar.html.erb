@@ -1,12 +1,13 @@
+<% singular = false if local_assigns[:singular].nil? %>
 <% if @user %>
   <div class='toolbar-container'>
     <% if in_admin_scope? %>
-      <%= link_to('View Section', admin_link_helper_section_path(model), class: 'standard-button view-section') %>
+      <%= link_to('View Section', admin_link_helper_section_path(model, singular), class: 'standard-button view-section') %>
     <% end %>
     <% if model.new_record? %>
       <%= link_to('Create New', admin_link_helper_new_path(model), class: 'standard-button new') %>
     <% else %>
-      <% singular = false if local_assigns[:singular].nil? %>
+      
       <%= link_to('Edit', admin_link_helper_admin_path(model, singular), class: 'standard-button edit') %>
     <% end %>
   </div>
