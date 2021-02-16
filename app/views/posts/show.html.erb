@@ -10,6 +10,7 @@
   <%= @post.overview %> - Blog post by <%= @post.user.username %>
 <% end %>
 
+<%= render partial: 'partials/admin_toolbar', locals: { model: @post } %>
 
 <article class='reading-pane' itemscope itemtype="https://schema.org/BlogPosting">
   <section>
@@ -20,8 +21,6 @@
     <div class='post-container' itemprop='articleBody'>
       <%= markdown_admin(@post.text) %>
     </div>
-  </section>
-  <section>
     <link itemprop="isPartOf" itemscope itemtype="https://schema.org/Blog" itemid="<%= posts_path %>" />
   </section>  
 </article>
