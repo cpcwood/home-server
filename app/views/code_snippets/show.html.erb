@@ -10,6 +10,8 @@
   <%= @code_snippet.overview %>
 <% end %>
 
+<%= render partial: 'partials/admin_toolbar', locals: { model: @code_snippet } %>
+
 <% if @code_snippet.code_snippet_image&.image_file&.attached? %>
   <% content_for :meta_image_path do %>
     <%= polymorphic_url(@code_snippet.code_snippet_image.image_file) %>
