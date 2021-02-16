@@ -11,7 +11,7 @@
 <% end %>
 
 <div class='reading-pane' data-controller="image-loader" data-image-loader-target='container' data-action='turbolinks:before-cache@window->image-loader#teardown' itemscope itemtype="https://schema.org/Collection">
-  <%= render partial: 'partials/admin_toolbar', locals: { model: (@projects.empty? ? [Project.new] : @projects) } %>
+  <%= render partial: 'partials/admin_toolbar', locals: { model: Project.new } %>
 
   <%= render partial: 'partials/system_messages' %>
 

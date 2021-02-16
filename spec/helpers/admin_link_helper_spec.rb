@@ -8,8 +8,12 @@ describe AdminLinkHelper do
   end
 
   describe '#admin_link_helper_admin_path' do
-    it 'singular model' do
-      expect(helper.admin_link_helper_admin_path(about)).to eq(edit_admin_about_path)
+    it 'singular resource' do
+      expect(helper.admin_link_helper_admin_path(about, true)).to eq(edit_admin_about_path)
+    end
+
+    it 'resources' do
+      expect(helper.admin_link_helper_admin_path(about)).to eq(edit_admin_about_path(about))
     end
 
     it 'collection' do

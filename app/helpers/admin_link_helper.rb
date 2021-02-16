@@ -1,9 +1,11 @@
 module AdminLinkHelper
-  def admin_link_helper_admin_path(model)
+  def admin_link_helper_admin_path(model, singular = false)
     if model.is_a?(Enumerable)
       send("admin_#{model.first.model_name.plural}_path")
-    else
+    elsif singular
       send("edit_admin_#{model.model_name.singular}_path")
+    else
+      send("edit_admin_#{model.model_name.singular}_path", model)
     end
   end
 
