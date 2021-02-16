@@ -8,7 +8,7 @@ def login_feature
   page.find(:css, '#login-button').click
   fill_in('user', with: @user.username)
   fill_in('password', with: @user_password)
-  find_by_id('input-submit-tag').click
+  find('.input-submit-tag', visible: false).click
   fill_in('auth_code', with: '123456')
-  find_by_id('input-submit-tag').click
+  find('.input-submit-tag', visible: false).click
 end
