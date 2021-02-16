@@ -16,7 +16,7 @@ module AdminLinkHelper
   end
 
   def admin_link_helper_new_path(model)
-    send("new_admin_#{model.first.model_name.singular}_path")
+    send("new_admin_#{model.model_name.singular}_path")
   end
 
   def in_admin_scope?

@@ -1,10 +1,5 @@
 module Admin
   class CodeSnippetsController < ApplicationController
-    def index
-      @code_snippets = CodeSnippet.order(created_at: :desc)
-      render layout: 'layouts/admin_dashboard'
-    end
-
     def new
       @code_snippet = CodeSnippet.new
       render layout: 'layouts/admin_dashboard'
@@ -33,13 +28,13 @@ module Admin
           formats: [:js])
         flash[:alert] = nil
       else
-        redirect_to(admin_code_snippets_path, notice: @notices)
+        redirect_to(code_snippets_path, notice: @notices)
       end
     end
 
     def edit
       @code_snippet = find_model
-      return redirect_to(admin_code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
+      return redirect_to(code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
       render layout: 'layouts/admin_dashboard'
     end
 
@@ -48,7 +43,7 @@ module Admin
       @alerts = []
       begin
         @code_snippet = find_model
-        return redirect_to(admin_code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
+        return redirect_to(code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
         update_model(model: @code_snippet, success_message: 'Code snippet updated')
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
@@ -67,7 +62,7 @@ module Admin
           formats: [:js])
         flash[:alert] = nil
       else
-        redirect_to(admin_code_snippets_path, notice: @notices)
+        redirect_to(code_snippet_path(@code_snippet), notice: @notices)
       end
     end
 
@@ -76,7 +71,7 @@ module Admin
       @alerts = []
       begin
         @code_snippet = find_model
-        return redirect_to(admin_code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
+        return redirect_to(code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
         @code_snippet.destroy
         @notices.push('Code snippet removed')
       rescue StandardError => e
@@ -84,7 +79,7 @@ module Admin
         @alerts.push('Sorry, something went wrong!')
         @alerts.push(e.message)
       end
-      redirect_to(admin_code_snippets_path, notice: @notices, alert: @alerts)
+      redirect_to(code_snippets_path, notice: @notices, alert: @alerts)
     end
 
     private
