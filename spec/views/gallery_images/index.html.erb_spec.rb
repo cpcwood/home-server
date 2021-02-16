@@ -4,7 +4,7 @@ describe 'Views' do
   let(:gallery_image2) { build_stubbed(:gallery_image, user: user) }
   let(:gallery_images) { [gallery_image1, gallery_image2] }
 
-  describe '/blog rendering' do
+  describe '/gallery rendering' do
     it 'index view' do
       assign(:gallery_images, gallery_images)
 
