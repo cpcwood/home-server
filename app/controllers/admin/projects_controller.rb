@@ -1,10 +1,5 @@
 module Admin
   class ProjectsController < AdminBaseController
-    def index
-      @projects = Project.all_with_images
-      render layout: 'layouts/admin_dashboard'
-    end
-
     def new
       @project = Project.new
       render layout: 'layouts/admin_dashboard'
@@ -37,13 +32,13 @@ module Admin
           formats: [:js])
         flash[:alert] = nil
       else
-        redirect_to(admin_projects_path, notice: @notices)
+        redirect_to(projects_path, notice: @notices)
       end
     end
 
     def edit
       @project = find_model
-      return redirect_to(admin_projects_path, alert: 'Project not found') unless @project
+      return redirect_to(projects_path, alert: 'Project not found') unless @project
       render layout: 'layouts/admin_dashboard'
     end
 
@@ -53,7 +48,7 @@ module Admin
       begin
         Project.transaction do
           @project = find_model
-          return redirect_to(admin_projects_path, alert: 'Project not found') unless @project
+          return redirect_to(projects_path, alert: 'Project not found') unless @project
           if render_code_snippet
             update_model(model: @project, success_message: 'Project updated')
             create_project_images(project: @project)
@@ -78,7 +73,7 @@ module Admin
           formats: [:js])
         flash[:alert] = nil
       else
-        redirect_to(admin_projects_path, notice: @notices)
+        redirect_to(projects_path, notice: @notices)
       end
     end
 
@@ -87,7 +82,7 @@ module Admin
       @alerts = []
       begin
         @project = find_model
-        return redirect_to(admin_projects_path, alert: 'Project not found') unless @project
+        return redirect_to(projects_path, alert: 'Project not found') unless @project
         @project.destroy
         @notices.push('Project removed')
       rescue StandardError => e
@@ -95,7 +90,7 @@ module Admin
         @alerts.push('Sorry, something went wrong!')
         @alerts.push(e.message)
       end
-      redirect_to(admin_projects_path, notice: @notices, alert: @alerts)
+      redirect_to(projects_path, notice: @notices, alert: @alerts)
     end
 
     private

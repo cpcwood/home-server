@@ -11,7 +11,7 @@
 <% end %>
 
 <section class='reading-pane' itemscope itemtype="http://schema.org/AboutPage">
-  <%= render partial: 'partials/admin_toolbar', locals: { model: @about } %>
+  <%= render partial: 'partials/admin_toolbar', locals: { model: @about, singular: true } %>
 
   <%= render partial: 'partials/contact_details', locals: { model: @about, contact_link: true } %>
 
