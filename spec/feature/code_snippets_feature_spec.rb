@@ -48,6 +48,7 @@ feature 'code snippets feature', feature: true do
     scenario 'update code snippet' do
       visit('/code-snippets')
       first('.show-button').click
+      click_on('Edit')
       expect(page).to have_content(@code_snippet.text)
       fill_in('code_snippet[title]', with: 'new title')
       click_button('Submit')
@@ -58,6 +59,7 @@ feature 'code snippets feature', feature: true do
     scenario 'delete code snippet' do
       visit('/code-snippets')
       first('.show-button').click
+      click_on('Edit')
       first('.destroy-button').click
       expect(page).to have_content('Code snippet removed')
       expect(page).to have_content('There are no code snippets here...')

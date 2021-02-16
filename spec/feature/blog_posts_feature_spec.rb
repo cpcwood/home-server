@@ -30,7 +30,6 @@ feature 'blog posts feature', feature: true do
 
     scenario 'create blog post' do
       visit('/blog')
-      click_on('Admin Edit')
       click_on('Create New')
       fill_in('post[title]', with: 'post title')
       fill_in('post[overview]', with: 'post overview')
@@ -39,18 +38,15 @@ feature 'blog posts feature', feature: true do
       click_button('Submit')
       expect(page).to have_content('Blog post created')
       expect(page).to have_content('post title')
-      expect(page).to have_content('post overview')
       expect(page).to have_content('April 19th, 2020')
-      click_on('View Section')
-      expect(page).to have_content('post title')
+      first('.reading-footer .standard-button').click
       expect(page).to have_content('post overview')
-      expect(page).to have_content('April 19th, 2020')
     end
 
     scenario 'update blog post' do
       visit('/blog')
-      click_on('Admin Edit')
       first('.show-blog-post-button').click
+      click_on('Edit')
       expect(page).to have_content(@blog_post.text)
       fill_in('post[title]', with: 'new title')
       click_button('Submit')
@@ -60,8 +56,8 @@ feature 'blog posts feature', feature: true do
 
     scenario 'delete blog post' do
       visit('/blog')
-      click_on('Admin Edit')
       first('.show-blog-post-button').click
+      click_on('Edit')
       first('.destroy-button').click
       expect(page).to have_content('Blog post removed')
       expect(page).to have_content('There are no posts here...')

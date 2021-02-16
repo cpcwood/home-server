@@ -19,13 +19,6 @@ RSpec.describe 'Admin::PostsController', type: :request do
     login
   end
 
-  describe 'GET /admin/blog #index' do
-    it 'valid request' do
-      get '/admin/blog'
-      expect(response).to render_template(:index)
-    end
-  end
-
   describe 'GET /admin/posts/:id/edit #edit' do
     it 'valid request' do
       post = create(:post, user: @user)
@@ -35,7 +28,7 @@ RSpec.describe 'Admin::PostsController', type: :request do
 
     it 'invalid id' do
       get '/admin/posts/not-a-post-id/edit'
-      expect(response).to redirect_to(admin_posts_path)
+      expect(response).to redirect_to(posts_path)
       expect(flash[:alert]).to include('Post not found')
     end
   end
@@ -52,21 +45,19 @@ RSpec.describe 'Admin::PostsController', type: :request do
 
     it 'create sucessful' do
       post('/admin/posts', params: valid_post_attributes)
-      expect(response).to redirect_to(admin_posts_path)
+      new_post = Post.first
+      expect(response).to redirect_to(post_path(new_post))
       expect(flash[:notice]).to include('Blog post created')
-      expect(Post.first).not_to be_nil
     end
 
     it 'save failure' do
       post('/admin/posts', params: invalid_post_attributes)
-      expect(response).not_to redirect_to(admin_posts_path)
       expect(response.body).to include('Blog post title cannot be empty')
     end
 
     it 'general error' do
       allow_any_instance_of(Post).to receive(:save).and_raise('general error')
       post('/admin/posts', params: valid_post_attributes)
-      expect(response).not_to redirect_to(admin_posts_path)
       expect(response.body).to include('general error')
     end
   end
@@ -74,16 +65,16 @@ RSpec.describe 'Admin::PostsController', type: :request do
   describe 'PUT /admin/posts/:id #update' do
     it 'post id invalid' do
       put('/admin/posts/not-a-post-id', params: valid_post_attributes)
-      expect(response).to redirect_to(admin_posts_path)
+      expect(response).to redirect_to(posts_path)
       expect(flash[:alert]).to include('Post not found')
     end
 
     it 'update sucessful' do
       post = create(:post, user: @user)
       put("/admin/posts/#{post.id}", params: valid_post_attributes)
-      expect(response).to redirect_to(admin_posts_path)
-      expect(flash[:notice]).to include('Blog post updated')
       post.reload
+      expect(response).to redirect_to(post_path(post))
+      expect(flash[:notice]).to include('Blog post updated')
       expect(post.title).to eq(valid_post_attributes[:post][:title])
       expect(post.overview).to eq(valid_post_attributes[:post][:overview])
     end
@@ -91,7 +82,6 @@ RSpec.describe 'Admin::PostsController', type: :request do
     it 'save failure' do
       post = create(:post, user: @user)
       put("/admin/posts/#{post.id}", params: invalid_post_attributes)
-      expect(response).not_to redirect_to(admin_posts_path)
       expect(response.body).to include('Blog post title cannot be empty')
     end
 
@@ -99,7 +89,6 @@ RSpec.describe 'Admin::PostsController', type: :request do
       post = create(:post, user: @user)
       allow_any_instance_of(Post).to receive(:save).and_raise('general error')
       put("/admin/posts/#{post.id}", params: valid_post_attributes)
-      expect(response).not_to redirect_to(admin_posts_path)
       expect(response.body).to include('general error')
     end
   end
@@ -107,14 +96,14 @@ RSpec.describe 'Admin::PostsController', type: :request do
   describe 'DELETE /admin/posts/:id #destroy' do
     it 'post id invalid' do
       delete('/admin/posts/not-a-post-id')
-      expect(response).to redirect_to(admin_posts_path)
+      expect(response).to redirect_to(posts_path)
       expect(flash[:alert]).to include('Post not found')
     end
 
     it 'successful request' do
       post = create(:post, user: @user)
       delete("/admin/posts/#{post.id}")
-      expect(response).to redirect_to(admin_posts_path)
+      expect(response).to redirect_to(posts_path)
       expect(flash[:notice]).to include('Blog post removed')
       expect(Post.find_by(id: post.id)).to be_nil
     end
@@ -123,7 +112,7 @@ RSpec.describe 'Admin::PostsController', type: :request do
       post = create(:post, user: @user)
       allow_any_instance_of(Post).to receive(:destroy).and_raise('general error')
       delete("/admin/posts/#{post.id}")
-      expect(response).to redirect_to(admin_posts_path)
+      expect(response).to redirect_to(posts_path)
       expect(flash[:alert]).to include('general error')
     end
   end

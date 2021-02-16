@@ -5,7 +5,7 @@
 <% end %>
 
 <div class="embedded-form-button-container">
-  <%= link_to('Return', admin_posts_path, class: 'standard-button input-submit') %>
+  <%= link_to('Return', post_path(post), class: 'standard-button input-submit') %>
   <%= form_with(model: [:admin, post], method: :delete) do |r| %>
     <%= r.submit("Remove", class: 'input-submit destroy-button', data: {confirm: "Are you sure?"}) %>
   <% end %>
