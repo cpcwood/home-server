@@ -21,18 +21,18 @@
 .gallery-image-container {
   box-sizing: border-box;
   display: flex;
+  height: fit-content;
   margin: 2px;
   overflow: hidden;
   position: relative;
   width: fit-content;
-  height: fit-content;
 
   a {
     box-sizing: border-box;
     display: flex;
+    height: fit-content;
     position: relative;
     width: fit-content;
-    height: fit-content;
   }
 
   &.hidden {

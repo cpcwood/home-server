@@ -25,6 +25,7 @@ describe('justified_gallery_controller', () => {
   })
 
   beforeEach(() => {
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => cb())
     justifiedLayout.mockImplementation(() => {
       return {
         boxes: [
@@ -42,10 +43,17 @@ describe('justified_gallery_controller', () => {
     const galleryItemTargets = document.getElementsByClassName('gallery-item')
     galleryItemTargetOne = galleryItemTargets[0]
     galleryItemTargetTwo = galleryItemTargets[1]
+    galleryItemTargetOne.addEventListener('load', () => {
+      jest.spyOn(galleryItemTargetOne, 'naturalHeight', 'get').mockReturnValue(1)
+    })
+    galleryItemTargetTwo.addEventListener('load', () => {
+      jest.spyOn(galleryItemTargetTwo, 'naturalHeight', 'get').mockReturnValue(1)
+    })
   })
 
   afterEach(() => {
     jest.clearAllMocks()
+    window.requestAnimationFrame.mockRestore()
   })
 
   describe('#imageLoaded', () => {
