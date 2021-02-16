@@ -54,6 +54,8 @@ Style/ZeroLengthPredicate:
   Enabled: false
 Style/NumericLiteralPrefix:
   Enabled: false
+Style/OptionalBooleanParameter:
+  Enabled: false
 
 Metrics/BlockLength:
   Enabled: false
