@@ -38,10 +38,7 @@ $background: rgb(41, 42, 43);
     color: #848383;
   }
   
-  .cp {
-    color: #f4bf75;
-  }
-  
+  .cp,
   .nt {
     color: #f4bf75;
   }
@@ -79,7 +76,6 @@ $background: rgb(41, 42, 43);
   .kr,
   .kv {
     color: rgb(255, 106, 172);
-    
   }
   
   .kc {
@@ -110,12 +106,10 @@ $background: rgb(41, 42, 43);
   .si,
   .err {
     color: #18f8d3;
-    
   }
   
   .sr {
     color: #75b5aa;
-    
   }
   
   .se {
@@ -127,10 +121,14 @@ $background: rgb(41, 42, 43);
     color: #f4bf75;
   }
   
-  .nc,
   .no,
-  .ss {
+  .ss,
+  .nc {
     color: rgb(249, 5, 89);
+  }
+
+  .n {
+    color: rgb(231 206 168);
   }
 
   .na {
@@ -139,10 +137,6 @@ $background: rgb(41, 42, 43);
 
   .nf {
     color: $text;
-  }
-
-  .n {
-    color: rgb(255, 175, 97);
   }
   
   .m,
@@ -156,7 +150,17 @@ $background: rgb(41, 42, 43);
     color: #e456b9;
   }
 
-  &.shell .nv {
-    color: #18f8d3;
+  &.shell {
+    .nv {
+      color: #18f8d3;
+    }
+
+    .nc {
+      color: rgb(249, 5, 89);
+    }
+
+    .nt {
+      color: rgb(255, 106, 172);
+    }
   }
 }
