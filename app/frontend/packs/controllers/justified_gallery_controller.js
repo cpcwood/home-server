@@ -33,8 +33,8 @@ export default class extends Controller {
       const geometryInput = []
       for (let i = 0; i < this.galleryItemTargets.length; i++) {
         geometryInput.push({
-          width: this.galleryItemTargets[i].naturalWidth,
-          height: this.galleryItemTargets[i].naturalHeight
+          width: this.galleryItemTargets[i].width,
+          height: this.galleryItemTargets[i].height
         })
       }
       const config = {
@@ -53,7 +53,7 @@ export default class extends Controller {
           this.galleryItemTargets[i].style.position = 'relative'
         }
       })
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
   }
