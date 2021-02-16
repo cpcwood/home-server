@@ -1,16 +1,12 @@
 describe 'Views' do
   let(:user) { create(:user) }
-  let(:singular) { build_stubbed(:about) }
-  let(:collection) do
-    create(:post, user: user)
-    create(:post, user: user)
-    Post.all
-  end
+  let(:new_model) { build(:post, user: user) }
+  let(:exisiting_model) { create(:about) }
 
   describe 'admin toolbar rendering' do
     context('user unassigned') do
       it 'no render' do
-        render partial: 'partials/admin_toolbar.html.erb', locals: { model: singular }
+        render partial: 'partials/admin_toolbar.html.erb', locals: { model: exisiting_model }
         expect(rendered).not_to match('toolbar-container')
       end
     end
@@ -23,15 +19,8 @@ describe 'Views' do
 
       context 'admin scope' do
         it 'singular model' do
-          render partial: 'partials/admin_toolbar.html.erb', locals: { model: singular }
+          render partial: 'partials/admin_toolbar.html.erb', locals: { model: exisiting_model }
           expect(rendered).to match('View Section')
-          expect(rendered).not_to match('Create New')
-        end
-
-        it 'collection' do
-          render partial: 'partials/admin_toolbar.html.erb', locals: { model: collection }
-          expect(rendered).to match('View Section')
-          expect(rendered).to match('Create New')
         end
       end
 
@@ -40,11 +29,14 @@ describe 'Views' do
           allow_any_instance_of(AdminLinkHelper).to receive(:current_path).and_return('/test')
         end
 
-        it 'renders buttons' do
-          render partial: 'partials/admin_toolbar.html.erb', locals: { model: singular }
-          expect(rendered).not_to match('View Section')
-          expect(rendered).not_to match('Create New')
-          expect(rendered).to match('Admin Edit')
+        it 'new model' do
+          render partial: 'partials/admin_toolbar.html.erb', locals: { model: new_model }
+          expect(rendered).to match('Create New')
+        end
+
+        it 'edit model' do
+          render partial: 'partials/admin_toolbar.html.erb', locals: { model: exisiting_model }
+          expect(rendered).to match('Edit')
         end
       end
     end

@@ -11,7 +11,7 @@
 <% end %>
 
 <div class='reading-pane' itemscope itemtype="https://schema.org/Blog">
-  <%= render partial: 'partials/admin_toolbar', locals: { model: (@posts.empty? ? [Post.new] : @posts) } %>
+  <%= render partial: 'partials/admin_toolbar', locals: { model: (@posts.empty? ? [] : @posts) } %>
 
   <%= render partial: 'partials/system_messages' %>
 
