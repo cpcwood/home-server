@@ -19,7 +19,7 @@ feature 'Admin update about section', feature: true do
     scenario 'Update about settings' do
       login_feature
       visit('/about')
-      click_on('Admin Edit')
+      click_on('Edit')
       fill_in('about[section_title]', with: 'new section name')
       fill_in('about[name]', with: 'new about name')
       fill_in('about[location]', with: 'new about location')
@@ -35,7 +35,7 @@ feature 'Admin update about section', feature: true do
       expect(page).to have_content('Name updated!')
       expect(page).to have_content('Location updated!')
       expect(page).to have_content('Contact email updated!')
-      click_on('View Section')
+      click_on('Return')
       expect(page).to have_content('new section name')
       expect(page).to have_content('new about name')
       expect(page).to have_content('new about location')
