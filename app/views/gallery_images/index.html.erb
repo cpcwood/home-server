@@ -10,7 +10,11 @@
   An interesting selection if pictures I've taken
 <% end %>
 
-<%= render partial: 'partials/admin_toolbar', locals: { model: (@gallery_images.empty? ? [GalleryImage.new] : @gallery_images) } %>
+<% if @user %>
+  <div class='toolbar-container'>
+    <%= link_to('Admin Edit', admin_gallery_images_path, class: 'standard-button view-section') %>
+  </div>
+<% end %>
 
 <%= render partial: 'partials/system_messages' %>
 

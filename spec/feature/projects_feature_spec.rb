@@ -27,8 +27,6 @@ feature 'projects feature', feature: true do
 
     scenario 'create code snippet' do
       visit('/projects')
-      click_on('Admin Edit')
-      expect(page).to have_current_path('/admin/projects')
       click_on('Create New')
       fill_in('project[title]', with: 'project title')
       fill_in('project[overview]', with: 'project overview')
@@ -41,7 +39,6 @@ feature 'projects feature', feature: true do
       expect(page).to have_content('project title')
       expect(page).to have_content('project overview')
       expect(Project.first.project_images.length).to be(1)
-      click_on('View Section')
       expect(page).to have_content('project title')
       expect(page).to have_content('project overview')
       expect(page.html).to include('https://example.com/github')
@@ -50,8 +47,8 @@ feature 'projects feature', feature: true do
 
     scenario 'update project' do
       seed_project
-      visit('/admin/projects')
-      first('.show-button').click
+      visit('/projects')
+      first('.standard-button.edit').click
       expect(page).to have_content(@project.overview)
       fill_in('project[title]', with: 'new title')
       fill_in('snippet[snippet]', with: 'new code snippet')
@@ -63,8 +60,8 @@ feature 'projects feature', feature: true do
 
     scenario 'delete project' do
       seed_project
-      visit('/admin/projects')
-      first('.show-button').click
+      visit('/projects')
+      first('.standard-button.edit').click
       first('.destroy-button').click
       expect(page).to have_content('Project removed')
       expect(page).to have_content('There are no projects here...')

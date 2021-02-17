@@ -10,9 +10,13 @@
   <%= @post.overview %> - Blog post by <%= @post.user.username %>
 <% end %>
 
+<%= render partial: 'partials/admin_toolbar', locals: { model: @post } %>
 
-<article class='reading-pane' itemscope itemtype="https://schema.org/BlogPosting">
-  <section>
+
+<section class='reading-pane'>
+  <%= render partial: 'partials/system_messages' %>
+
+  <article class='reading-pane' itemscope itemtype="https://schema.org/BlogPosting">
     <h1 itemprop='headline'><%= @post.title %></h1>
     <div class='reading-pane-subtitle'>
       <span itemprop='author'> <%= @post.user.username %> </span> | <time datetime="<%= @post.date_published.strftime("%Y-%m-%d")%>" itemprop='dateModified'> <%= full_date(@post.date_published) %> </time>
@@ -20,12 +24,11 @@
     <div class='post-container' itemprop='articleBody'>
       <%= markdown_admin(@post.text) %>
     </div>
-  </section>
-  <section>
     <link itemprop="isPartOf" itemscope itemtype="https://schema.org/Blog" itemid="<%= posts_path %>" />
-  </section>  
-</article>
+  </article>
 
-<div class='reading-pane reading-footer'>
-  <a href='<%= posts_path %>' class='standard-button'>Back to all posts</a>
-</div>
+  <div class='reading-footer'>
+    <a href='<%= posts_path %>' class='standard-button'>Back to all posts</a>
+  </div>
+</section>
+

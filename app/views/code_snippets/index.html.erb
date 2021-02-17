@@ -10,7 +10,7 @@
   Browse my most recent code snippets
 <% end %>
 
-<%= render partial: 'partials/admin_toolbar', locals: { model: (@code_snippets.empty? ? [CodeSnippet.new] : @code_snippets) } %>
+<%= render partial: 'partials/admin_toolbar', locals: { model: CodeSnippet.new } %>
 
 <%= render partial: 'partials/system_messages' %>
 
