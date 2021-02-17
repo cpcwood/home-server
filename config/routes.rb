@@ -24,13 +24,11 @@ Rails.application.routes.draw do
     resources :header_images, only: [:update], path: '/header-images'
     resources :cover_images, only: [:update], path: '/cover-images'
     resource :about, only: [:edit, :update]
-    resources :posts, only: [:index], path: "/blog"
     resources :posts, only: [:new, :create, :edit, :update, :destroy]
     resources :gallery_images, only: [:index], path: "/gallery"
     resources :gallery_images, only: [:new, :create, :edit, :update, :destroy], path: '/gallery-images'
-    resources :posts, only: [:index], path: "/blog"
     resources :code_snippets, only: [:new, :create, :edit, :update, :destroy], path: "/code-snippets"
-    resources :projects, only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :projects, only: [:new, :create, :edit, :update, :destroy]
   end
 
   resource :about, only: [:show]
