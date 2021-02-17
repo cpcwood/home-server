@@ -2,7 +2,7 @@
   Gallery: Index
 <% end %>
 
-<%= render partial: 'partials/admin_toolbar', locals: { model: (@gallery_images.empty? ? [GalleryImage.new] : @gallery_images) } %>
+<%= render partial: 'partials/admin_toolbar', locals: { model: GalleryImage.new } %>
 
 <%= render partial: 'partials/system_messages' %>
 

@@ -1,10 +1,5 @@
 module Admin
   class PostsController < AdminBaseController
-    def index
-      @posts = Post.order(date_published: :desc)
-      render layout: 'layouts/admin_dashboard'
-    end
-
     def new
       @post = Post.new
       render layout: 'layouts/admin_dashboard'
@@ -33,13 +28,13 @@ module Admin
           formats: [:js])
         flash[:alert] = nil
       else
-        redirect_to(admin_posts_path, notice: @notices)
+        redirect_to(post_path(@post), notice: @notices)
       end
     end
 
     def edit
       @post = find_post
-      return redirect_to(admin_posts_path, alert: 'Post not found') unless @post
+      return redirect_to(posts_path, alert: 'Post not found') unless @post
       render layout: 'layouts/admin_dashboard'
     end
 
@@ -48,7 +43,7 @@ module Admin
       @alerts = []
       begin
         @post = find_post
-        return redirect_to(admin_posts_path, alert: 'Post not found') unless @post
+        return redirect_to(posts_path, alert: 'Post not found') unless @post
         update_post(post: @post, success_message: 'Blog post updated')
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
@@ -67,7 +62,7 @@ module Admin
           formats: [:js])
         flash[:alert] = nil
       else
-        redirect_to(admin_posts_path, notice: @notices)
+        redirect_to(post_path(@post), notice: @notices)
       end
     end
 
@@ -76,7 +71,7 @@ module Admin
       @alerts = []
       begin
         @post = find_post
-        return redirect_to(admin_posts_path, alert: 'Post not found') unless @post
+        return redirect_to(posts_path, alert: 'Post not found') unless @post
         @post.destroy
         @notices.push('Blog post removed')
       rescue StandardError => e
@@ -84,7 +79,7 @@ module Admin
         @alerts.push('Sorry, something went wrong!')
         @alerts.push(e.message)
       end
-      redirect_to(admin_posts_path, notice: @notices, alert: @alerts)
+      redirect_to(posts_path, notice: @notices, alert: @alerts)
     end
 
     private

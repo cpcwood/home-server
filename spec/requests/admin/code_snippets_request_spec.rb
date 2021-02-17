@@ -20,13 +20,6 @@ RSpec.describe 'Admin::CodeSnippetsController', type: :request do
     login
   end
 
-  describe 'GET /admin/code-snippets #index' do
-    it 'succesful request' do
-      get('/admin/code-snippets')
-      expect(response).to render_template(:index)
-    end
-  end
-
   describe 'GET /admin/code-snippets/new #new' do
     it 'succesful request' do
       get('/admin/code-snippets/new')
@@ -38,7 +31,7 @@ RSpec.describe 'Admin::CodeSnippetsController', type: :request do
     it 'successful request' do
       post('/admin/code-snippets', params: valid_attributes)
       expect(flash[:notice]).to include('Code snippet created')
-      expect(response).to redirect_to(admin_code_snippets_path)
+      expect(response).to redirect_to(code_snippets_path)
     end
 
     it 'validation failure' do
@@ -62,7 +55,7 @@ RSpec.describe 'Admin::CodeSnippetsController', type: :request do
 
     it 'invalid code snippet id' do
       get('/admin/code-snippets/not-a-post-id/edit')
-      expect(response).to redirect_to(admin_code_snippets_path)
+      expect(response).to redirect_to(code_snippets_path)
       expect(flash[:alert]).to include('Code snippet not found')
     end
   end
@@ -70,16 +63,16 @@ RSpec.describe 'Admin::CodeSnippetsController', type: :request do
   describe 'PUT /admin/code-snippets/:id #update' do
     it 'id invalid' do
       put('/admin/code-snippets/not-a-post-id', params: valid_attributes)
-      expect(response).to redirect_to(admin_code_snippets_path)
+      expect(response).to redirect_to(code_snippets_path)
       expect(flash[:alert]).to include('Code snippet not found')
     end
 
     it 'update sucessful' do
       code_snippet = create(:code_snippet, user: @user)
       put("/admin/code-snippets/#{code_snippet.id}", params: valid_attributes)
-      expect(response).to redirect_to(admin_code_snippets_path)
-      expect(flash[:notice]).to include('Code snippet updated')
       code_snippet.reload
+      expect(response).to redirect_to(code_snippet_path(code_snippet))
+      expect(flash[:notice]).to include('Code snippet updated')
       expect(code_snippet.title).to eq(valid_attributes[:code_snippet][:title])
       expect(code_snippet.overview).to eq(valid_attributes[:code_snippet][:overview])
     end
@@ -87,7 +80,7 @@ RSpec.describe 'Admin::CodeSnippetsController', type: :request do
     it 'save failure' do
       code_snippet = create(:code_snippet, user: @user)
       put("/admin/code-snippets/#{code_snippet.id}", params: invalid_attributes)
-      expect(response).not_to redirect_to(admin_code_snippets_path)
+      expect(response).not_to redirect_to(code_snippet_path(code_snippet))
       expect(response.body).to include('Title length must be between 1 and 60 charaters')
     end
 
@@ -95,7 +88,7 @@ RSpec.describe 'Admin::CodeSnippetsController', type: :request do
       code_snippet = create(:code_snippet, user: @user)
       allow_any_instance_of(CodeSnippet).to receive(:save).and_raise('general error')
       put("/admin/code-snippets/#{code_snippet.id}", params: valid_attributes)
-      expect(response).not_to redirect_to(admin_code_snippets_path)
+      expect(response).not_to redirect_to(code_snippet_path(code_snippet))
       expect(response.body).to include('general error')
     end
   end
@@ -103,14 +96,14 @@ RSpec.describe 'Admin::CodeSnippetsController', type: :request do
   describe 'DELETE /admin/code-snippets/:id #destroy' do
     it 'id invalid' do
       delete('/admin/code-snippets/not-a-post-id')
-      expect(response).to redirect_to(admin_code_snippets_path)
+      expect(response).to redirect_to(code_snippets_path)
       expect(flash[:alert]).to include('Code snippet not found')
     end
 
     it 'successful request' do
       code_snippet = create(:code_snippet, user: @user)
       delete("/admin/code-snippets/#{code_snippet.id}")
-      expect(response).to redirect_to(admin_code_snippets_path)
+      expect(response).to redirect_to(code_snippets_path)
       expect(flash[:notice]).to include('Code snippet removed')
       expect(CodeSnippet.find_by(id: code_snippet.id)).to be_nil
     end
@@ -119,7 +112,7 @@ RSpec.describe 'Admin::CodeSnippetsController', type: :request do
       code_snippet = create(:code_snippet, user: @user)
       allow_any_instance_of(CodeSnippet).to receive(:destroy).and_raise('general error')
       delete("/admin/code-snippets/#{code_snippet.id}")
-      expect(response).to redirect_to(admin_code_snippets_path)
+      expect(response).to redirect_to(code_snippets_path)
       expect(flash[:alert]).to include('general error')
     end
   end

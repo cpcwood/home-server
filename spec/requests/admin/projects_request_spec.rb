@@ -32,14 +32,7 @@ RSpec.describe 'Admin::ProjectsController', type: :request do
     login
   end
 
-  describe 'GET /admin/projects #index' do
-    it 'succesful request' do
-      get('/admin/projects')
-      expect(response).to render_template(:index)
-    end
-  end
-
-  describe 'GET /admin/projects/new #index' do
+  describe 'GET /admin/projects/new #new' do
     it 'sucessful request' do
       get '/admin/projects/new'
       expect(response).to render_template(:new)
@@ -51,7 +44,7 @@ RSpec.describe 'Admin::ProjectsController', type: :request do
       expect{ post('/admin/projects', params: valid_attributes) }.to change{
         Project.all.length
       }.from(0).to(1)
-      expect(response).to redirect_to(admin_projects_path)
+      expect(response).to redirect_to(projects_path)
       expect(flash[:notice]).to include('Project created')
     end
 
@@ -59,7 +52,7 @@ RSpec.describe 'Admin::ProjectsController', type: :request do
       expect{ post('/admin/projects', params: new_image_upload_attributes) }.to change{
         ProjectImage.all.length
       }.from(0).to(1)
-      expect(response).to redirect_to(admin_projects_path)
+      expect(response).to redirect_to(projects_path)
       expect(flash[:notice]).to include('Project created')
     end
 
@@ -92,7 +85,7 @@ RSpec.describe 'Admin::ProjectsController', type: :request do
 
     it 'invalid id' do
       get('/admin/projects/not-a-project-id/edit')
-      expect(response).to redirect_to(admin_projects_path)
+      expect(response).to redirect_to(projects_path)
       expect(flash[:alert]).to include('Project not found')
     end
   end
@@ -100,16 +93,16 @@ RSpec.describe 'Admin::ProjectsController', type: :request do
   describe 'PUT /admin/projects/:id #update' do
     it 'id invalid' do
       put('/admin/projects/not-a-project-id', params: valid_attributes)
-      expect(response).to redirect_to(admin_projects_path)
+      expect(response).to redirect_to(projects_path)
       expect(flash[:alert]).to include('Project not found')
     end
 
     it 'sucessful request' do
       project = create(:project)
       put("/admin/projects/#{project.id}", params: valid_attributes)
-      expect(response).to redirect_to(admin_projects_path)
-      expect(flash[:notice]).to include('Project updated')
       project.reload
+      expect(response).to redirect_to(projects_path)
+      expect(flash[:notice]).to include('Project updated')
       expect(project.title).to eq(valid_attributes[:project][:title])
       expect(project.overview).to eq(valid_attributes[:project][:overview])
     end
@@ -153,14 +146,13 @@ RSpec.describe 'Admin::ProjectsController', type: :request do
       }
       expect_any_instance_of(Project).to receive(:render_code_snippet).with(code_snippet_attributes[:snippet]).and_return(true)
       put("/admin/projects/#{project.id}", params: code_snippet_attributes)
-      expect(response).to redirect_to(admin_projects_path)
+      expect(response).to redirect_to(projects_path)
       expect(flash[:notice]).to include('Code snippet rendered')
     end
 
     it 'failed request - save failure' do
       project = create(:project)
       put("/admin/projects/#{project.id}", params: invalid_attributes)
-      expect(response).not_to redirect_to(admin_projects_path)
       expect(response.body).to include('Title cannot be empty')
     end
 
@@ -173,7 +165,6 @@ RSpec.describe 'Admin::ProjectsController', type: :request do
       }
       expect_any_instance_of(Project).to receive(:render_code_snippet).with(code_snippet_attributes[:snippet]).and_return(false)
       put("/admin/projects/#{project.id}", params: code_snippet_attributes)
-      expect(response).not_to redirect_to(admin_projects_path)
       expect(response.body).to include('Code snippet invalid')
     end
 
@@ -181,7 +172,6 @@ RSpec.describe 'Admin::ProjectsController', type: :request do
       project = create(:project)
       allow_any_instance_of(Project).to receive(:save).and_raise('general error')
       put("/admin/projects/#{project.id}", params: valid_attributes)
-      expect(response).not_to redirect_to(admin_projects_path)
       expect(response.body).to include('general error')
     end
   end
@@ -189,7 +179,7 @@ RSpec.describe 'Admin::ProjectsController', type: :request do
   describe 'DELETE /admin/projects/:id #destroy' do
     it 'id invalid' do
       delete('/admin/projects/not-a-project-id')
-      expect(response).to redirect_to(admin_projects_path)
+      expect(response).to redirect_to(projects_path)
       expect(flash[:alert]).to include('Project not found')
     end
 
@@ -198,7 +188,7 @@ RSpec.describe 'Admin::ProjectsController', type: :request do
       expect{ delete("/admin/projects/#{project.id}") }.to change{
         Project.all.length
       }.from(1).to(0)
-      expect(response).to redirect_to(admin_projects_path)
+      expect(response).to redirect_to(projects_path)
       expect(flash[:notice]).to include('Project removed')
     end
 
@@ -206,7 +196,7 @@ RSpec.describe 'Admin::ProjectsController', type: :request do
       project = create(:project)
       allow_any_instance_of(Project).to receive(:destroy).and_raise('general error')
       delete("/admin/projects/#{project.id}")
-      expect(response).to redirect_to(admin_projects_path)
+      expect(response).to redirect_to(projects_path)
       expect(flash[:alert]).to include('general error')
     end
   end

@@ -12,6 +12,14 @@ describe('image_loader_controller', () => {
     application.register('image-loader', imageLoaderController)
   })
 
+  beforeEach(() => {
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => cb())
+  })
+
+  afterEach(() => {
+    window.requestAnimationFrame.mockRestore()
+  })
+
   describe('images present', () => {
     beforeEach(() => {
       document.body.innerHTML = `
@@ -23,6 +31,12 @@ describe('image_loader_controller', () => {
       const fadeTargets = document.getElementsByClassName('fade-target')
       fadeTargetOne = fadeTargets[0]
       fadeTargetTwo = fadeTargets[1]
+      fadeTargetOne.addEventListener('load', () => {
+        jest.spyOn(fadeTargetOne, 'naturalHeight', 'get').mockReturnValue(1)
+      })
+      fadeTargetTwo.addEventListener('load', () => {
+        jest.spyOn(fadeTargetTwo, 'naturalHeight', 'get').mockReturnValue(1)
+      })
     })
 
     describe('#imageLoaded', () => {

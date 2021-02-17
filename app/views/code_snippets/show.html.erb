@@ -20,6 +20,13 @@
   <% end %>
 <% end %>
 
+
+<%= render partial: 'partials/admin_toolbar', locals: { model: @code_snippet } %>
+
+<div class='reading-pane'>
+  <%= render partial: 'partials/system_messages' %>
+</div>
+
 <article class='item-content' itemscope itemtype="https://schema.org/TechArticle">
     <div class='reading-pane'>
       <h1 itemprop='headline'><%= @code_snippet.title %></h1>
