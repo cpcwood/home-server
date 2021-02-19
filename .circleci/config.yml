@@ -82,9 +82,21 @@ jobs:
       - setup_remote_docker:
           version: 19.03.13
       - run:
+          name: 'Docker Login'
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
+      - run:
+          name: 'Pull previous images for cache'
+          command: |
+            docker pull home-server-base || true
+            docker pull home-server-app || true
+            docker pull home-server-worker-dependencies || true
+            docker pull home-server-worker || true
+      - run:
           name: 'Build home-server-base image'
           command: |
             docker build \
+                --cache-from home-server-base \
                 -t "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-base:latest \
                 --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
@@ -94,6 +106,7 @@ jobs:
           name: 'Build home-server-app image'
           command: |
             docker build \
+                --cache-from home-server-app \
                 -t "$DOCKER_USERNAME/home-server-app:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-app:latest \
                 -f ./docker/Dockerfile \
@@ -102,6 +115,7 @@ jobs:
           name: 'Build home-server-worker-dependencies image'
           command: |
             docker build \
+                --cache-from home-server-worker-dependencies \
                 -t "$DOCKER_USERNAME/home-server-worker-dependencies:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-worker-dependencies:latest \
                 -f ./docker/worker-dependencies.Dockerfile \
@@ -110,6 +124,7 @@ jobs:
           name: 'Build home-server-worker image'
           command: |
             docker build \
+                --cache-from home-server-worker \
                 -t "$DOCKER_USERNAME/home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-worker:latest \
                 -f ./docker/worker.Dockerfile \
@@ -117,7 +132,6 @@ jobs:
       - run:
           name: 'Publish images'
           command: |
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin >/dev/null 2>&1
             docker push "$DOCKER_USERNAME/home-server-base:latest"
             docker push "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)"
             docker push "$DOCKER_USERNAME/home-server-app:latest"
