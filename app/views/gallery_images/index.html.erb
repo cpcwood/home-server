@@ -29,7 +29,7 @@
         data-gallery-lightbox-item-selector='.gallery-container a' 
         data-gallery-scroll-load-page-value='1'
         data-gallery-scroll-load-api-url-value='<%= gallery_images_path %>'
-        data-action='turbolinks:before-cache@window->justified-gallery#teardown renderGallery->justified-gallery#renderGallery reConnectLightbox->gallery-lightbox#reConnect'
+        data-action='turbolinks:before-cache@window->justified-gallery#teardown renderGallery->justified-gallery#renderGallery reConnectLightbox->gallery-lightbox#reConnect galleryRendered->gallery-scroll-load#initializeScrollLoad'
         itemscope itemtype="https://schema.org/ImageGallery">
       <%= render partial: 'gallery_images/image_container', collection: @gallery_images, as: :gallery_image %>
     </ul>

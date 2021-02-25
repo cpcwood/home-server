@@ -24,6 +24,7 @@ export default class extends Controller {
         target.style.transitionDelay = `${i * 0.1}s`
         target.classList.add('fade-in')
       }
+      this.element.dispatchEvent(new Event('galleryRendered'))
     }
     this.fadeInTimeout = setTimeout(fadeIn, 1)
   }
@@ -50,7 +51,6 @@ export default class extends Controller {
         for (let i = 0; i < this.galleryItemTargets.length; i++) {
           this.galleryItemTargets[i].width = geometry.boxes[i].width
           this.galleryItemTargets[i].height = geometry.boxes[i].height
-          this.galleryItemTargets[i].style.position = 'relative'
         }
       })
     } catch (error) {
@@ -70,11 +70,7 @@ export default class extends Controller {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect()
     }
-    for (let i = 0; i < this.galleryItemTargets.length; i++) {
-      const target = this.galleryItemTargets[i]
-      target.classList.remove('fade-in')
-      target.style.transitionDelay = null
-    }
+    while (this.element.firstChild) { this.element.removeChild(this.element.firstChild) }
   }
 
   disconnect () {
