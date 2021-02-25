@@ -7,6 +7,7 @@ jest.mock('justified-layout')
 jest.useFakeTimers()
 
 describe('justified_gallery_controller', () => {
+  let galleryContainer
   let galleryItemTargetOne
   const galleryItemOneDimensions = {
     width: 100,
@@ -40,6 +41,7 @@ describe('justified_gallery_controller', () => {
         <img class="gallery-item" data-action="load->justified-gallery#imageLoaded" data-justified-gallery-target="galleryItem" width=${galleryItemTwoDimensions.width} height=${galleryItemTwoDimensions.height}>
       </div>
     `
+    galleryContainer = document.querySelector('.gallery-container')
     const galleryItemTargets = document.getElementsByClassName('gallery-item')
     galleryItemTargetOne = galleryItemTargets[0]
     galleryItemTargetTwo = galleryItemTargets[1]
@@ -74,6 +76,17 @@ describe('justified_gallery_controller', () => {
         jest.runOnlyPendingTimers()
         expect(galleryItemTargetOne.classList).toContain('fade-in')
         expect(galleryItemTargetTwo.classList).toContain('fade-in')
+      })
+
+      it('galleryRendered Event', () => {
+        let eventTriggered = false
+        galleryContainer.addEventListener('galleryRendered', () => {
+          eventTriggered = true
+        })
+        galleryItemTargetOne.dispatchEvent(new Event('load'))
+        galleryItemTargetTwo.dispatchEvent(new Event('load'))
+        jest.runOnlyPendingTimers()
+        expect(eventTriggered).toBe(true)
       })
 
       it('images justified', () => {
@@ -111,10 +124,8 @@ describe('justified_gallery_controller', () => {
       galleryItemTargetTwo.dispatchEvent(new Event('load'))
       jest.runOnlyPendingTimers()
       window.dispatchEvent(new Event('turbolinks:before-cache'))
-      expect(galleryItemTargetOne.classList).not.toContain('fade-in')
-      expect(galleryItemTargetTwo.classList).not.toContain('fade-in')
-      expect(galleryItemTargetOne.style.transitionDelay).toBe('')
-      expect(galleryItemTargetTwo.style.transitionDelay).toBe('')
+      const galleryItemTargets = document.getElementsByClassName('gallery-item')
+      expect(galleryItemTargets).toHaveLength(0)
     })
   })
 })
