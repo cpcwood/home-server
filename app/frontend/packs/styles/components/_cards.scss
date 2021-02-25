@@ -60,11 +60,11 @@
 .card-image {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15);
   box-sizing: border-box;
   height: 200px;
   overflow: hidden;
   position: relative;
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.15);
 
   img {
     height: 100%;
@@ -84,11 +84,11 @@
 
 .embedded-gallery {
   background-color: rgb(0, 0, 0);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15);
   height: 400px;
   overflow: hidden;
   position: relative;
   width: 100%;
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.15);
 
   a {
     height: 100%;
