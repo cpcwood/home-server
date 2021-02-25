@@ -1,10 +1,10 @@
 @use '../base/mixins' as *;
 
 .profile-image {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15);
   height: 100%;
   position: relative;
   width: 50%;
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.15);
 
   &.about {
     float: right;

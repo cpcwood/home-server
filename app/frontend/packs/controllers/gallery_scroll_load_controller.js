@@ -13,7 +13,7 @@ export default class extends Controller {
 
   handleScroll () {
     const isBottomVisible = (this.element.getBoundingClientRect().bottom <= window.innerHeight)
-    if (isBottomVisible && !this.isLoading && !this.isPreview && this.isRemainingPages) {
+    if (isBottomVisible && !this.isLoading && !this.isPreview && this.isRemainingPages && this.data.get('isGalleryRendered')) {
       this.loadNextPage()
     }
   }
@@ -104,6 +104,10 @@ export default class extends Controller {
     </div>
     `
     this.element.insertAdjacentElement('afterend', this.loadingIcon)
+  }
+
+  initializeScrollLoad () {
+    this.data.set('isGalleryRendered', true)
   }
 
   removeLoadingIcon () {
