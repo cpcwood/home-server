@@ -1,7 +1,5 @@
-# home-server-base-image
+# home-server-dev-image
 # ================
-# build args =>
-#     grecaptcha_site_key
 
 # Compile Assets
 # ================

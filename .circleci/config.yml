@@ -88,10 +88,10 @@ jobs:
       - run:
           name: 'Pull previous images for cache'
           command: |
-            docker pull home-server-base || true
-            docker pull home-server-app || true
-            docker pull home-server-worker-dependencies || true
-            docker pull home-server-worker || true
+            docker pull "$DOCKER_USERNAME/home-server-base" || true
+            docker pull "$DOCKER_USERNAME/home-server-app" || true
+            docker pull "$DOCKER_USERNAME/home-server-worker-dependencies" || true
+            docker pull "$DOCKER_USERNAME/home-server-worker" || true
       - run:
           name: 'Build home-server-base image'
           command: |
@@ -132,14 +132,10 @@ jobs:
       - run:
           name: 'Publish images'
           command: |
-            docker push "$DOCKER_USERNAME/home-server-base:latest"
-            docker push "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)"
-            docker push "$DOCKER_USERNAME/home-server-app:latest"
-            docker push "$DOCKER_USERNAME/home-server-app:$(echo $CIRCLE_SHA1 | head -c8)"
-            docker push "$DOCKER_USERNAME/home-server-worker-dependencies:latest"
-            docker push "$DOCKER_USERNAME/home-server-worker-dependencies:$(echo $CIRCLE_SHA1 | head -c8)"
-            docker push "$DOCKER_USERNAME/home-server-worker:latest"
-            docker push "$DOCKER_USERNAME/home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)"
+            docker push --all-tags "$DOCKER_USERNAME/home-server-base"
+            docker push --all-tags "$DOCKER_USERNAME/home-server-app"
+            docker push --all-tags "$DOCKER_USERNAME/home-server-worker-dependencies"
+            docker push --all-tags "$DOCKER_USERNAME/home-server-worker"
   deploy:
     docker:
       - image: cimg/base:stable
