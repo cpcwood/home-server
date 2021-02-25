@@ -1,7 +1,6 @@
 # home-server-app
 # ================
-# build args =>
-#     grecaptcha_site_key
+# requires cpcwood/home-server-base to have been created
 
 # Create App
 # ================
