@@ -43,6 +43,7 @@ $btn-hover-animation: 0.2s;
   font-weight: 300;
   letter-spacing: 0.06em;
   margin: 0 20px;
+  z-index: 3;
 
   @include respond-to(tablet) {
     font-size: 28px;
@@ -68,6 +69,7 @@ $btn-hover-animation: 0.2s;
 
 .username {
   margin-left: auto;
+  z-index: 3;
 
   a,
   a:link,
@@ -91,6 +93,7 @@ $btn-hover-animation: 0.2s;
   display: flex;
   flex-direction: column;
   padding: 5px 10px;
+  z-index: 3;
 }
 
 .nav-sidebar {
