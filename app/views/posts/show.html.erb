@@ -16,7 +16,7 @@
 <section class='reading-pane'>
   <%= render partial: 'partials/system_messages' %>
 
-  <article class='reading-pane' itemscope itemtype="https://schema.org/BlogPosting">
+  <article itemscope itemtype="https://schema.org/BlogPosting">
     <h1 itemprop='headline'><%= @post.title %></h1>
     <div class='reading-pane-subtitle'>
       <span itemprop='author'> <%= @post.user.username %> </span> | <time datetime="<%= @post.date_published.strftime("%Y-%m-%d")%>" itemprop='dateModified'> <%= full_date(@post.date_published) %> </time>
