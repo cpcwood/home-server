@@ -9,6 +9,7 @@ services:
       - REDIS_HOST=redis
       - DB_HOST=postgres
       - CHROMEDRIVER=/usr/bin/chromedriver
+      - DB_USERNAME=cpcwood
     volumes:
       - ./:/opt/app/
     depends_on:
@@ -26,6 +27,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - DB_HOST=postgres
+      - DB_USERNAME=cpcwood
     volumes:
       - ./:/opt/app/
     depends_on:

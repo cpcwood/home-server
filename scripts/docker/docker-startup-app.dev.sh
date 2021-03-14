@@ -1,8 +1,12 @@
 #!/bin/sh
-bundle install --quiet
-kill -INT $(cat ./tmp/pids/server.pid) > /dev/null 2>&1
-rm -f ./tmp/pids/server.pid > /dev/null 2>&1
 
+while ! pg_isready -U "$DB_USERNAME" -h "$DB_HOST" ; do
+  sleep 1
+done
+
+bundle install --quiet
+kill -INT "$(cat ./tmp/pids/server.pid)" >/dev/null 2>&1
+rm -f ./tmp/pids/server.pid >/dev/null 2>&1
 
 if bundle exec rails db:exists ; then
   bundle exec rails db:migrate

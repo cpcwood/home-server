@@ -1,5 +1,19 @@
 #!/bin/sh
-bundle exec rake db:exists && bundle exec rake db:migrate || bundle exec rake db:setup
+
+until pg_isready -U "$DB_USERNAME" -h "$DB_HOST" ; do
+    echo 'waiting for database...'
+    sleep 1
+done
+
+if bundle exec rails db:exists ; then
+  	bundle exec rails db:migrate
+else
+	bundle exec rails db:create
+	bundle exec rails db:migrate
+	bundle exec rails db:seed
+fi
+
 bundle exec rails sitemap:refresh:no_ping
 bundle exec rails whenever --update-crontab
+
 bundle exec rails server -b 0.0.0.0 -p 5000
