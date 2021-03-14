@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_05_133838) do
+ActiveRecord::Schema.define(version: 2021_02_23_110127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,15 @@ ActiveRecord::Schema.define(version: 2020_11_05_133838) do
     t.index ["site_setting_id"], name: "index_header_images_on_site_setting_id"
   end
 
+  create_table "post_images", force: :cascade do |t|
+    t.string "description", default: "post-image", null: false
+    t.string "title"
+    t.bigint "post_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_post_images_on_post_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "date_published", null: false
@@ -185,6 +194,7 @@ ActiveRecord::Schema.define(version: 2020_11_05_133838) do
   add_foreign_key "cover_images", "site_settings"
   add_foreign_key "gallery_images", "users"
   add_foreign_key "header_images", "site_settings"
+  add_foreign_key "post_images", "posts"
   add_foreign_key "posts", "users"
   add_foreign_key "profile_images", "abouts"
   add_foreign_key "project_images", "projects"

@@ -1,6 +1,8 @@
 #!/bin/sh
-until $(curl --output /dev/null --silent --head http://app:5000); do
+
+until curl --output /dev/null --silent --head http://app:5000 ; do
     echo 'waiting for app...'
-    sleep 3
+    sleep 1
 done
+
 bundle exec sidekiq -C config/sidekiq.yml

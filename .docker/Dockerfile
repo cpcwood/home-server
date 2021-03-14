@@ -34,4 +34,4 @@ USER docker
 COPY --chown=docker:docker --from=cpcwood/home-server-base $APP_HOME $APP_HOME
 
 EXPOSE 5000
-CMD ["./scripts/docker-startup-app.sh"]
+CMD ["./scripts/docker/docker-startup-app.sh"]
