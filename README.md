@@ -63,15 +63,16 @@ Then run the following commands to install the application dependencies:
 
 Note: The above scripts are used instead of running the commands directly so that the commands are run inside the application docker image, allowing for a consistent environment. The following scripts are current provided:
 - ```./scripts/run``` - run any shell command
-- ```./scripts/rspec``` - ```bundle exec rspec``` in test env
-- ```./scripts/yarn``` - ```yarn```
-- ```./scripts/rails``` - ```bundle exec rails```
-
+- ```./scripts/rspec``` - ```bundle exec rspec $@``` in test env
+- ```./scripts/yarn``` - ```yarn $@```
+- ```./scripts/rails``` - ```bundle exec rails $@```
+- ```./scripts/exec``` - ```bundle exec $@```
+  
 To run other commands use the docker-compose run syntax 
 
 #### Setup Database
 
-The app development container image [startup script](./scripts/docker-startup-worker.dev.sh) will the database setup commands on start.
+The app development container image [startup script](./scripts/docker/docker-startup-worker.dev.sh) will the database setup commands on start.
 
 Note: For your personal admin login details either: edit the database seed in ```db/seeds.rb```, update the credentials on the site, or manually add admin profile to the database.
 
@@ -100,7 +101,7 @@ Deploy the application using your container orchestration software, such as [kub
 
 Make sure to inject your configuration enviroment variables into the container on creation.
 
-Sample kubernetes configuration files can be found in [```kube/```](kube/).
+Sample kubernetes configuration files can be found in [```.kube/```](.kube/).
 
 
 ## Tests

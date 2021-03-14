@@ -11,14 +11,14 @@ sudo docker build \
   --build-arg grecaptcha_site_key=6LckG_AUAAAAAEi3QUA6OJ6p4M7JMNkXQOi-RZLe \
   -t cpcwood/home-server-base:latest \
   -t cpcwood/home-server-base \
-  -f ./docker/base.Dockerfile \
+  -f ./.docker/base.Dockerfile \
   .
 
 # build home-server-app container
 sudo docker build \
   -t cpcwood/home-server-app:latest \
   -t cpcwood/home-server-app \
-  -f ./docker/Dockerfile \
+  -f ./.docker/Dockerfile \
   .
 
 # build home-server-worker container
@@ -26,13 +26,13 @@ sudo docker build \
 sudo docker build \
   -t cpcwood/home-server-worker-dependencies:latest \
   -t cpcwood/home-server-worker-dependencies \
-  -f ./docker/worker-dependencies.Dockerfile \
+  -f ./.docker/worker-dependencies.Dockerfile \
   .
 
 sudo docker build \
   -t cpcwood/home-server-worker:latest \
   -t cpcwood/home-server-worker \
-  -f ./docker/worker.Dockerfile \
+  -f ./.docker/worker.Dockerfile \
   .
 
 
