@@ -49,6 +49,9 @@ group :production do
   gem 'sitemap_generator'
   # Manage cron
   gem 'whenever', require: false
+  # Error Reporting
+  gem "sentry-ruby"
+  gem "sentry-rails"
 end
 
 group :development, :test do

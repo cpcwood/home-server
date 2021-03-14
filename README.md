@@ -66,7 +66,7 @@ Note: The above scripts are used instead of running the commands directly so tha
 - ```./scripts/rspec``` - ```bundle exec rspec $@``` in test env
 - ```./scripts/yarn``` - ```yarn $@```
 - ```./scripts/rails``` - ```bundle exec rails $@```
-- ```./scripts/exec``` - ```bundle exec $@```
+- ```./scripts/bundle``` - ```bundle $@```
   
 To run other commands use the docker-compose run syntax 
 
