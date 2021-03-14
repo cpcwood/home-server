@@ -100,7 +100,7 @@ jobs:
                 -t "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-base:latest \
                 --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
-                -f ./docker/base.Dockerfile \
+                -f ./.docker/base.Dockerfile \
                 .
       - run:
           name: 'Build home-server-app image'
@@ -109,7 +109,7 @@ jobs:
                 --cache-from "$DOCKER_USERNAME/home-server-app" \
                 -t "$DOCKER_USERNAME/home-server-app:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-app:latest \
-                -f ./docker/Dockerfile \
+                -f ./.docker/Dockerfile \
                 .
       - run:
           name: 'Build home-server-worker-dependencies image'
@@ -118,7 +118,7 @@ jobs:
                 --cache-from "$DOCKER_USERNAME/home-server-worker-dependencies" \
                 -t "$DOCKER_USERNAME/home-server-worker-dependencies:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-worker-dependencies:latest \
-                -f ./docker/worker-dependencies.Dockerfile \
+                -f ./.docker/worker-dependencies.Dockerfile \
                 .
       - run:
           name: 'Build home-server-worker image'
@@ -127,7 +127,7 @@ jobs:
                 --cache-from "$DOCKER_USERNAME/home-server-worker" \
                 -t "$DOCKER_USERNAME/home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-worker:latest \
-                -f ./docker/worker.Dockerfile \
+                -f ./.docker/worker.Dockerfile \
                 .
       - run:
           name: 'Publish images'
@@ -144,7 +144,7 @@ jobs:
       - kubernetes/install-kubectl
       - run:
           name: 'Update config files in ./kube with current container version'
-          command: find ./kube/ -type f | xargs sed -i "s/CONTAINER_VERSION/$(echo $CIRCLE_SHA1 | head -c8)/g"
+          command: find ./.kube/ -type f | xargs sed -i "s/CONTAINER_VERSION/$(echo $CIRCLE_SHA1 | head -c8)/g"
       - run:
           name: 'Creating cluster certificate from ENV'
           command: echo "$KUBERNETES_CLUSTER_CERTIFICATE" | base64 --decode > cert.crt
@@ -155,7 +155,7 @@ jobs:
               --certificate-authority=cert.crt \
               --server=$KUBERNETES_SERVER \
               --token=$KUBERNETES_SERVICE_ACC_TOKEN \
-              apply -Rf ./kube/app/
+              apply -Rf ./.kube/app/
       - run:
           name: 'Remove cluster certificate artifact'
           command: rm -f cert.crt

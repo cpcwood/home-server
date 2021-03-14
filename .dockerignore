@@ -32,7 +32,7 @@ tmp/
 .env
 
 # others
-kube/
+.kube/
 .git
 .gitignore
 .keep
