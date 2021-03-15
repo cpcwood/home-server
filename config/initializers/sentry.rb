@@ -3,6 +3,6 @@ if Rails.env.production?
     config.dsn = ENV['SENTRY_DSN']
     config.breadcrumbs_logger = [:active_support_logger]
 
-    config.traces_sample_rate = 1
+    config.traces_sample_rate = 0.001
   end
 end
