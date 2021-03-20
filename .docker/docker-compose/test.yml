@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  app:
+    image: home-server-app-dev
+    build: 
+      context: ../..
+      dockerfile: .docker/dockerfiles/dev.Dockerfile
+    environment:
+      - REDIS_HOST=redis
+      - DB_HOST=postgres
+      - DB_USERNAME=cpcwood
+      - CHROMEDRIVER=/usr/bin/chromedriver
+    env_file:
+      - ../../config/env/test.env
+    volumes:
+      - ../..:/opt/app/
+    depends_on:
+      - postgres
+    container_name: home-server-app-test
+    command: './scripts/docker/docker-startup-app.dev.sh'
+    ports:
+      - 5000:5000
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: cpcwood
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports: 
+      - 5432:5432
+    volumes:
+      - /var/db/psql/13:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready -U cpcwood -h 127.0.0.1
+      interval: 5s
+

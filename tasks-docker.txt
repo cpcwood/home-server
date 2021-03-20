@@ -11,7 +11,7 @@ sudo docker build \
   --build-arg grecaptcha_site_key=<google-recaptcha-v2-site-key> \
   -t cpcwood/home-server-base:latest \
   -t cpcwood/home-server-base \
-  -f ./.docker/dockerfiles/base.docker/dockerfilesfile \
+  -f ./.docker/dockerfiles/base.dockerfile \
   .
 
 
@@ -27,14 +27,14 @@ sudo docker build \
 sudo docker build \
   -t cpcwood/home-server-worker-dependencies:latest \
   -t cpcwood/home-server-worker-dependencies \
-  -f ./.docker/dockerfiles/worker-dependencies.docker/dockerfilesfile \
+  -f ./.docker/dockerfiles/worker-dependencies.dockerfile \
   .
 
 
 sudo docker build \
   -t cpcwood/home-server-worker:latest \
   -t cpcwood/home-server-worker \
-  -f ./.docker/dockerfiles/worker.docker/dockerfilesfile \
+  -f ./.docker/dockerfiles/worker.dockerfile \
   .
 
 
