@@ -8,7 +8,7 @@ describe 'Views' do
     it 'index view' do
       assign(:code_snippets, code_snippets)
 
-      render template: 'code_snippets/index.html.erb'
+      render template: 'code_snippets/index'
 
       expect(rendered).to match(code_snippet1.title)
       expect(rendered).to match(code_snippet2.title)
@@ -23,13 +23,13 @@ describe 'Views' do
       assign(:code_snippets, code_snippets)
       assign(:user, user)
 
-      render template: 'code_snippets/index.html.erb'
+      render template: 'code_snippets/index'
       expect(rendered).to match('toolbar-container')
     end
 
     it 'no code_snippets' do
       assign(:code_snippets, [])
-      render template: 'code_snippets/index.html.erb'
+      render template: 'code_snippets/index'
       expect(rendered).to match('There are no code snippets here...')
     end
   end

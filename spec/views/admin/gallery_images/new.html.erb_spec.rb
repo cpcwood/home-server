@@ -5,7 +5,7 @@ describe 'Views' do
     context 'new view' do
       before(:each) do
         assign(:gallery_image, gallery_image)
-        render template: '/admin/gallery_images/new.html.erb'
+        render template: '/admin/gallery_images/new'
       end
 
       it 'gallery image form' do

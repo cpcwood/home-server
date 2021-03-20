@@ -7,7 +7,7 @@ describe 'Views' do
     it 'default view' do
       assign(:about, about)
 
-      render template: 'admin/abouts/edit.html.erb'
+      render template: 'admin/abouts/edit'
 
       expect(rendered).to match(about.section_title)
       expect(rendered).to match(about.about_me)
@@ -24,7 +24,7 @@ describe 'Views' do
       about.profile_image = nil
       assign(:about, about)
 
-      render template: 'admin/abouts/edit.html.erb'
+      render template: 'admin/abouts/edit'
 
       expect(rendered).to match('New image')
       expect(rendered).not_to match('Update image')
@@ -34,7 +34,7 @@ describe 'Views' do
     it 'image attached' do
       assign(:about, about_attached_image)
 
-      render template: 'admin/abouts/edit.html.erb'
+      render template: 'admin/abouts/edit'
 
       expect(rendered).to match('Update image')
       expect(rendered).to match('Remove image')

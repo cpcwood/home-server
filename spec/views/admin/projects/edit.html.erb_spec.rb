@@ -4,7 +4,7 @@ describe 'Views' do
       it 'it renders projects' do
         project = create(:project)
         assign(:project, project)
-        render template: '/admin/projects/edit.html.erb'
+        render template: '/admin/projects/edit'
 
         expect(rendered).to match(project.title)
         expect(rendered).to match(project.overview)
@@ -20,7 +20,7 @@ describe 'Views' do
         project = create(:project)
         project_image = project.project_images.create(title: 'test')
         assign(:project, project)
-        render template: '/admin/projects/edit.html.erb'
+        render template: '/admin/projects/edit'
 
         expect(rendered).to match('Project image')
         expect(rendered).to match('Remove image')

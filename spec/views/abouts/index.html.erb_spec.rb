@@ -8,7 +8,7 @@ describe 'Views' do
     it 'show view' do
       assign(:about, about)
 
-      render template: 'abouts/show.html.erb'
+      render template: 'abouts/show'
 
       expect(rendered).to match(about.about_me)
       expect(rendered).to match(about.linkedin_link)
@@ -23,7 +23,7 @@ describe 'Views' do
       assign(:about, about)
       assign(:user, user)
 
-      render template: 'abouts/show.html.erb'
+      render template: 'abouts/show'
       expect(rendered).to match('toolbar-container')
     end
   end
