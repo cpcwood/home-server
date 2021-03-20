@@ -98,7 +98,7 @@ class User < ApplicationRecord
   end
 
   def remove_password_reset
-    update(password_reset_token: nil, password_reset_expiry: nil) if previous_changes.keys.include?('password_digest') && password_reset_token && password_reset_expiry
+    update(password_reset_token: nil, password_reset_expiry: nil) if previous_changes.key?('password_digest') && password_reset_token && password_reset_expiry
   end
 
   def generate_hashed_token
