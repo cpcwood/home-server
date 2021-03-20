@@ -29,7 +29,7 @@ tmp/
 *.log
 *.state
 *.pid
-.env
+*.env
 
 # others
 .kube/

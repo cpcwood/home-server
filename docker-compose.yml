@@ -4,12 +4,14 @@ services:
   app:
     build: 
       context: ./
-      dockerfile: ./.docker/dev.Dockerfile
+      dockerfile: ./.docker/dockerfiles/dev.docker/dockerfilesfile
     environment:
       - REDIS_HOST=redis
       - DB_HOST=postgres
-      - CHROMEDRIVER=/usr/bin/chromedriver
       - DB_USERNAME=cpcwood
+      - CHROMEDRIVER=/usr/bin/chromedriver
+    env_file:
+      - config/env/.env
     volumes:
       - ./:/opt/app/
     depends_on:
@@ -18,16 +20,18 @@ services:
     container_name: home-server-dev-app
     command: './scripts/docker/docker-startup-app.dev.sh'
     ports:
-      - '5000:5000'
+      - 5000:5000
 
   worker:
     build: 
       context: ./
-      dockerfile: ./.docker/dev.Dockerfile
+      dockerfile: ./.docker/dockerfiles/dev.docker/dockerfilesfile
     environment:
       - REDIS_HOST=redis
       - DB_HOST=postgres
       - DB_USERNAME=cpcwood
+    env_file:
+      - config/env/.env
     volumes:
       - ./:/opt/app/
     depends_on:
@@ -35,7 +39,7 @@ services:
       - redis
       - app
     container_name: home-server-dev-worker
-    command: ['./scripts/docker/docker-startup-worker.dev.sh']
+    command: './scripts/docker/docker-startup-worker.dev.sh'
     security_opt:
       - seccomp:"./config/chrome.json"
 
@@ -46,7 +50,7 @@ services:
       POSTGRES_PASSWORD: password
       PGDATA: /var/lib/postgresql/data/pgdata
     ports: 
-      - '5432:5432'
+      - 5432:5432
     volumes:
       - /var/db/psql/13:/var/lib/postgresql/data
     healthcheck:
@@ -59,7 +63,7 @@ services:
     volumes:
       - /var/db/redis:/data
     ports: 
-      - '6379:6379'
+      - 6379:6379
     healthcheck:
       test: redis-cli ping
       interval: 1s
