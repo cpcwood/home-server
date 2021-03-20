@@ -9,7 +9,7 @@ describe 'Views' do
       expect_any_instance_of(MarkdownHelper).to receive(:markdown_code).with(code: code_snippet.snippet, extension: code_snippet.extension).and_return('highlighted snippet')
       expect_any_instance_of(DateHelper).to receive(:full_date).with(code_snippet.updated_at).and_return('updated_date')
 
-      render template: 'code_snippets/show.html.erb'
+      render template: 'code_snippets/show'
 
       expect(rendered).to match(code_snippet.title)
       expect(rendered).to match(user.username)

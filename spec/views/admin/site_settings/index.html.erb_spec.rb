@@ -5,7 +5,7 @@ describe 'Views' do
     it 'Displays current site name' do
       assign(:site_settings, site_setting)
 
-      render template: 'admin/site_settings/index.html.erb'
+      render template: 'admin/site_settings/index'
 
       expect(rendered).to match('Site name')
       expect(rendered).to match(Regexp.escape(site_setting.name))
