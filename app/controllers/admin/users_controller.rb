@@ -34,7 +34,7 @@ module Admin
       if result
         @notices.push("#{section_name} updated!")
       else
-        @alerts.push(@user.errors.values.flatten.last)
+        @alerts.push(@user.errors.messages.to_a.flatten.last)
         @user.reload
       end
     end

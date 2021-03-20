@@ -46,7 +46,7 @@ class ContactMessagesController < ApplicationController
     if model.update(permitted_params)
       @notices.push(success_message)
     else
-      @alerts.push(model.errors.values.flatten.last)
+      @alerts.push(model.errors.messages.to_a.flatten.last)
     end
   end
 

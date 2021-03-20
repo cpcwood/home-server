@@ -37,7 +37,7 @@ RSpec.describe 'Admin::UsersController', type: :request do
               password: ''
             }
           })
-      expect(flash[:alert]).to eq('Enter current password to update details')
+      expect(flash[:alert]).to include('Enter current password to update details')
     end
 
     it 'Username can be updated' do

@@ -27,7 +27,7 @@ RSpec.describe 'PasswordsController', type: :request do
       allow(ReCaptchaService).to receive(:recaptcha_valid?).and_return(false)
       post '/forgotten-password', params: { email: @user.email, 'g-recaptcha-response' => 'test' }
       expect(response).to redirect_to(:forgotten_password)
-      expect(flash[:alert]).to eq('reCaptcha failed, please try again')
+      expect(flash[:alert]).to include('reCaptcha failed, please try again')
     end
 
     it 'valid forgotten password request' do
@@ -42,7 +42,7 @@ RSpec.describe 'PasswordsController', type: :request do
     it 'invalid reset_token' do
       get '/reset-password', params: { reset_token: 'invalid-token' }
       expect(response).to redirect_to(:login)
-      expect(flash[:alert]).to eq('Password reset token expired')
+      expect(flash[:alert]).to include('Password reset token expired')
     end
 
     it 'valid reset_token' do
@@ -65,7 +65,7 @@ RSpec.describe 'PasswordsController', type: :request do
     it 'no reset_token in session' do
       post '/reset-password', params: { password: 'unauthorized-password', password_confirmation: 'unauthorized-password' }
       expect(response).to redirect_to(:login)
-      expect(flash[:alert]).to eq('Password reset token expired')
+      expect(flash[:alert]).to include('Password reset token expired')
     end
 
     it 'password confirmations do not match' do
@@ -73,7 +73,7 @@ RSpec.describe 'PasswordsController', type: :request do
       get '/reset-password', params: { reset_token: @user.password_reset_token }
       post '/reset-password', params: { password: 'Securepassword1', password_confirmation: 'not-the-same-password' }
       expect(response).to redirect_to(:reset_password)
-      expect(flash[:alert]).to eq('Passwords do not match')
+      expect(flash[:alert]).to include('Passwords do not match')
     end
 
     it 'invalid password' do
@@ -81,7 +81,7 @@ RSpec.describe 'PasswordsController', type: :request do
       get '/reset-password', params: { reset_token: @user.password_reset_token }
       post '/reset-password', params: { password: 'passwor', password_confirmation: 'passwor' }
       expect(response).to redirect_to(:reset_password)
-      expect(flash[:alert]).to eq('The password must have at least 8 characters')
+      expect(flash[:alert]).to include('The password must have at least 8 characters')
     end
 
     it 'valid password reset request' do

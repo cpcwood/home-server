@@ -55,7 +55,7 @@ module Admin
       if @about.update(permitted_params)
         update_messages
       else
-        @alerts.push(@about.errors.values.flatten.last)
+        @alerts.push(@about.errors.messages.to_a.flatten.last)
       end
     end
 
