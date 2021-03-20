@@ -19,7 +19,7 @@ services:
       - postgres
       - redis
     container_name: home-server-app-dev
-    command: './scripts/docker/docker-startup-app.dev.sh'
+    command: './.docker/scripts/startup-app.dev.sh'
     ports:
       - 5000:5000
 
@@ -41,7 +41,7 @@ services:
       - redis
       - app
     container_name: home-server-worker-dev
-    command: './scripts/docker/docker-startup-worker.dev.sh'
+    command: './.docker/scripts/startup-worker.dev.sh'
     security_opt:
       - seccomp:"./config/chrome.json"
 
