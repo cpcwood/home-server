@@ -2,43 +2,45 @@ version: "3.7"
 
 services:
   app:
+    image: home-server-app-dev
     build: 
-      context: ./
-      dockerfile: ./.docker/dockerfiles/dev.docker/dockerfilesfile
+      context: ../..
+      dockerfile: .docker/dockerfiles/dev.Dockerfile
     environment:
       - REDIS_HOST=redis
       - DB_HOST=postgres
       - DB_USERNAME=cpcwood
       - CHROMEDRIVER=/usr/bin/chromedriver
     env_file:
-      - config/env/.env
+      - ../../config/env/.env
     volumes:
-      - ./:/opt/app/
+      - ../..:/opt/app/
     depends_on:
       - postgres
       - redis
-    container_name: home-server-dev-app
+    container_name: home-server-app-dev
     command: './scripts/docker/docker-startup-app.dev.sh'
     ports:
       - 5000:5000
 
   worker:
+    image: home-server-worker-dev
     build: 
-      context: ./
-      dockerfile: ./.docker/dockerfiles/dev.docker/dockerfilesfile
+      context: ../../
+      dockerfile: .docker/dockerfiles/dev.Dockerfile
     environment:
       - REDIS_HOST=redis
       - DB_HOST=postgres
       - DB_USERNAME=cpcwood
     env_file:
-      - config/env/.env
+      - ../../config/env/.env
     volumes:
-      - ./:/opt/app/
+      - ../..:/opt/app/
     depends_on:
       - postgres
       - redis
       - app
-    container_name: home-server-dev-worker
+    container_name: home-server-worker-dev
     command: './scripts/docker/docker-startup-worker.dev.sh'
     security_opt:
       - seccomp:"./config/chrome.json"
