@@ -58,20 +58,18 @@ Rails.application.configure do
   config.log_level = :debug
 
   # Active Mailer Settings
-  config.action_mailer.default_url_options = { host: 'http://localhost:3000' }
-  config.action_mailer.asset_host = 'http://localhost:3000'
+  config.action_mailer.default_url_options = { host: ENV['SITE_HOST'] }
+  config.action_mailer.asset_host = ENV['EMAIL_ASSET_HOST']
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
   config.action_mailer.perform_caching = false
   config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 
   Rails.application.routes.default_url_options = { 
-    host: 'localhost:3000', 
+    host: ENV['SITE_HOST'], 
     protocol: 'http' 
   }
 
   # Active Job Settings
   config.active_job.queue_adapter = :sidekiq
-
-  config.hosts << "cpcwood-dev"
 end
