@@ -102,7 +102,7 @@ module Admin
       if post.update(permitted_params)
         @notices.push(success_message)
       else
-        @alerts.push(post.errors.values.flatten.last)
+        @alerts.push(post.errors.messages.to_a.flatten.last)
       end
     end
   end
