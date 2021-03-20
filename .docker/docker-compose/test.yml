@@ -18,7 +18,7 @@ services:
     depends_on:
       - postgres
     container_name: home-server-app-test
-    command: './scripts/docker/docker-startup-app.dev.sh'
+    command: './.docker/scripts/startup-app.dev.sh'
     ports:
       - 5000:5000
 

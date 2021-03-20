@@ -74,7 +74,7 @@ Notes:
 
 #### Setup Database
 
-The container image [startup script](./scripts/docker/docker-startup-worker.dev.sh) will automatically create and seed the database on start.
+The container image [startup script](./.docker/scripts/startup-worker.dev.sh) will automatically create and seed the database on start.
 
 For your personal admin login details either: 
 - edit the database seed in [```db/seeds.rb```](db/seeds.rb)
