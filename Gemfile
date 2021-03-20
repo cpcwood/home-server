@@ -1,18 +1,17 @@
 source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.2'
 
 # Bundler for running commands in containers
-gem 'bundler', '~>2.1.4'
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3'
+gem 'bundler', '~> 2.1.4'
+# Rails
+gem 'rails', '~> 6.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 4.1'
+gem 'puma'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.0.1'
+gem 'webpacker', '~> 5'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Use Active Model has_secure_password
@@ -50,8 +49,8 @@ group :production do
   # Manage cron
   gem 'whenever', require: false
   # Error Reporting
-  gem "sentry-ruby"
-  gem "sentry-rails"
+  gem 'sentry-ruby'
+  gem 'sentry-rails'
 end
 
 group :development, :test do

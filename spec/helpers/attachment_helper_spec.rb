@@ -96,14 +96,14 @@ describe AttachmentHelper do
 
     it 'image attached' do
       allow(mock_image_file).to receive(:attached?).and_return(true)
-      expect(helper.fetch_image_url(image_model: header_image)).to eq('/rails/active_storage/blobs/test-id/test-name')
+      expect(helper.fetch_image_url(image_model: header_image)).to eq('/rails/active_storage/blobs/redirect/test-id/test-name')
     end
 
     it 'variant passed' do
       allow(mock_image_file).to receive(:attached?).and_return(true)
       allow(header_image).to receive(:variant_sizes).and_return({ thumbnail: { resize_to_limit: [100, 100] }})
       allow(mock_image_file).to receive(:variant).with({ resize_to_limit: [100, 100] }).and_return(mock_image_variant)
-      expect(helper.fetch_image_url(image_model: header_image, variant: :thumbnail)).to eq('/rails/active_storage/representations/test-id/test-variant/test-name')
+      expect(helper.fetch_image_url(image_model: header_image, variant: :thumbnail)).to eq('/rails/active_storage/representations/redirect/test-id/test-variant/test-name')
     end
   end
 end

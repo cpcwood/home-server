@@ -64,7 +64,7 @@ class Image < ApplicationRecord
 
   def validate_image(image_attachment)
     return if Image.valid?(image_attachment.tempfile.path)
-    errors[:base].push('Image invalid, please upload a jpeg or png file!')
+    errors.add(:base, :blank, message: 'Image invalid, please upload a jpeg or png file!')
     throw(:abort)
   end
 
