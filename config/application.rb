@@ -1,8 +1,3 @@
-if ENV['RAILS_ENV'] == 'development'
-  require 'dotenv'
-  Dotenv.load('config/env/.env')
-end
-
 require_relative "boot"
 
 require "rails/all"
