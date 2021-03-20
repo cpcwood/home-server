@@ -100,8 +100,6 @@ group :test do
   gem 'webmock', require: false
   # Clean up the messy database during tests
   gem 'database_cleaner-active_record', '>= 1.8.0', require: false
-  # Load test environment automatically
-  gem 'dotenv', require: false
   # Format tests for circleci
   gem 'rspec_junit_formatter'
 end

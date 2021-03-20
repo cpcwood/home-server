@@ -1,9 +1,5 @@
 ENV['RAILS_ENV'] ||= 'test'
 
-require 'dotenv'
-Dotenv.load('config/env/test-defaults.env')
-Dotenv.load('config/env/test.env')
-
 `bundle exec rake db:exists && bundle exec rake db:migrate || bundle exec rake db:setup`
 
 require 'coveralls'
