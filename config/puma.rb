@@ -5,6 +5,11 @@ shared_dir = "#{app_dir}/shared"
 # Specifies the `environment` that Puma will run in.
 environment ENV.fetch('RAILS_ENV') { 'development' }
 
+# Specifies the `worker_timeout` threshold that Puma will use to wait before
+# terminating a worker in development environments.
+#
+worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
+
 # pidfile and state
 pidfile "#{shared_dir}/pids/puma.pid"
 state_path "#{shared_dir}/pids/puma.state"
@@ -18,18 +23,15 @@ preload_app!
 
 # Unix socket to for reverse proxy
 # bind "unix://#{shared_dir}/sockets/puma.sock"
-port 5000
+port  ENV.fetch("PORT") { 5000 }
 
 # Debugging
 debug
 
-# Logging
+# Redirect logging
 # stdout_redirect "#{app_dir}/log/puma.stdout.log", "#{app_dir}/log/puma.stderr.log", true
 
 activate_control_app
 
-# on_worker_boot do
-#   require "active_record"
-#   ActiveRecord::Base.connection.disconnect! raise ActiveRecord::ConnectionNotEstablished
-#   ActiveRecord::Base.establish_connection(YAML.load_file("#{app_dir}/config/database.yml")[rails_env])
-# end
+# Allow puma to be restarted by `rails restart` command.
+plugin :tmp_restart
