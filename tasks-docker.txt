@@ -8,11 +8,12 @@
 
 # build home-server-base image
 sudo docker build \
-  --build-arg grecaptcha_site_key=6LckG_AUAAAAAEi3QUA6OJ6p4M7JMNkXQOi-RZLe \
+  --build-arg grecaptcha_site_key=<google-recaptcha-v2-site-key> \
   -t cpcwood/home-server-base:latest \
   -t cpcwood/home-server-base \
   -f ./.docker/base.Dockerfile \
   .
+
 
 # build home-server-app container
 sudo docker build \
@@ -21,13 +22,14 @@ sudo docker build \
   -f ./.docker/Dockerfile \
   .
 
-# build home-server-worker container
 
+# build home-server-worker container
 sudo docker build \
   -t cpcwood/home-server-worker-dependencies:latest \
   -t cpcwood/home-server-worker-dependencies \
   -f ./.docker/worker-dependencies.Dockerfile \
   .
+
 
 sudo docker build \
   -t cpcwood/home-server-worker:latest \
@@ -48,11 +50,13 @@ sudo docker run -d \
   -v /var/db/psql/13:/var/lib/postgresql/data \
   postgres
 
+
 # start standalone redis container
 sudo docker run -d \
   -p 6379:6379/tcp \
   -v /var/db/redis:/data \
   redis
+
 
 ## Start Dev Containers
 # ========================
