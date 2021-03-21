@@ -88,7 +88,7 @@ class GalleryImage < Image
   def extract_date_taken(image_meta_data)
     return unless date_taken.blank? && image_meta_data['DateTimeOriginal']
     begin
-      self.date_taken = DateTime.parse(image_meta_data['DateTimeOriginal'].gsub(':', '-'))
+      self.date_taken = DateTime.parse(image_meta_data['DateTimeOriginal'].tr(':', '-'))
     rescue StandardError
       self.date_taken = nil
     end

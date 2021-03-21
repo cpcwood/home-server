@@ -37,4 +37,4 @@ USER docker
 COPY --chown=docker:docker --from=cpcwood/home-server-base $APP_HOME $APP_HOME
 COPY --chown=docker:docker --from=cpcwood/home-server-worker-dependencies $APP_HOME/node_modules $APP_HOME/node_modules
 
-CMD ["./scripts/docker/docker-startup-worker.sh"]
+CMD ["./.docker/scripts/startup-worker.sh"]

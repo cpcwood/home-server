@@ -5,7 +5,7 @@ describe 'Views' do
     context 'edit view' do
       before(:each) do
         assign(:post, post)
-        render template: '/admin/posts/edit.html.erb'
+        render template: '/admin/posts/edit'
       end
 
       it 'it renders posts' do

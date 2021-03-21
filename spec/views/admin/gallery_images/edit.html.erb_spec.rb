@@ -6,7 +6,7 @@ describe 'Views' do
       before(:each) do
         gallery_image
         assign(:gallery_image, gallery_image)
-        render template: 'admin/gallery_images/edit.html.erb'
+        render template: 'admin/gallery_images/edit'
       end
 
       it 'it renders posts' do

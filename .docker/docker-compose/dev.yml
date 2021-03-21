@@ -2,40 +2,46 @@ version: "3.7"
 
 services:
   app:
+    image: home-server-app-dev
     build: 
-      context: ./
-      dockerfile: ./.docker/dev.Dockerfile
+      context: ../..
+      dockerfile: .docker/dockerfiles/dev.Dockerfile
     environment:
       - REDIS_HOST=redis
       - DB_HOST=postgres
-      - CHROMEDRIVER=/usr/bin/chromedriver
       - DB_USERNAME=cpcwood
+      - CHROMEDRIVER=/usr/bin/chromedriver
+    env_file:
+      - ../../config/env/.env
     volumes:
-      - ./:/opt/app/
+      - ../..:/opt/app/
     depends_on:
       - postgres
       - redis
-    container_name: home-server-dev-app
-    command: './scripts/docker/docker-startup-app.dev.sh'
+    container_name: home-server-app-dev
+    command: './.docker/scripts/startup-app.dev.sh'
     ports:
-      - '5000:5000'
+      - 5000:5000
 
   worker:
+    image: home-server-worker-dev
     build: 
-      context: ./
-      dockerfile: ./.docker/dev.Dockerfile
+      context: ../../
+      dockerfile: .docker/dockerfiles/dev.Dockerfile
     environment:
       - REDIS_HOST=redis
       - DB_HOST=postgres
       - DB_USERNAME=cpcwood
+    env_file:
+      - ../../config/env/.env
     volumes:
-      - ./:/opt/app/
+      - ../..:/opt/app/
     depends_on:
       - postgres
       - redis
       - app
-    container_name: home-server-dev-worker
-    command: ['./scripts/docker/docker-startup-worker.dev.sh']
+    container_name: home-server-worker-dev
+    command: './.docker/scripts/startup-worker.dev.sh'
     security_opt:
       - seccomp:"./config/chrome.json"
 
@@ -46,9 +52,9 @@ services:
       POSTGRES_PASSWORD: password
       PGDATA: /var/lib/postgresql/data/pgdata
     ports: 
-      - '5432:5432'
+      - 5432:5432
     volumes:
-      - /var/db/psql/13:/var/lib/postgresql/data
+      - "${DOCKER_DATA_DB}:/var/lib/postgresql/data"
     healthcheck:
       test: pg_isready -U cpcwood -h 127.0.0.1
       interval: 5s
@@ -57,9 +63,9 @@ services:
     image: redis:5-alpine
     command: redis-server
     volumes:
-      - /var/db/redis:/data
+      - "${DOCKER_DATA_REDIS}:/data"
     ports: 
-      - '6379:6379'
+      - 6379:6379
     healthcheck:
       test: redis-cli ping
       interval: 1s

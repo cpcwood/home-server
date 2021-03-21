@@ -47,4 +47,4 @@ WORKDIR $APP_HOME
 
 EXPOSE $PORT
 
-ENTRYPOINT ["./scripts/docker/docker-dev-entrypoint.sh"]
+ENTRYPOINT ["./.docker/scripts/entrypoint-dev.sh"]

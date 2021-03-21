@@ -5,7 +5,7 @@ describe 'Views' do
     it 'Displays username' do
       assign(:user, user)
 
-      render template: 'passwords/reset_password.html.erb'
+      render template: 'passwords/reset_password'
 
       expect(rendered).to match(Regexp.escape("User: #{user.username}"))
     end

@@ -8,7 +8,7 @@ describe 'Views' do
     it 'index view' do
       assign(:projects, projects)
 
-      render template: 'projects/index.html.erb'
+      render template: 'projects/index'
 
       expect(rendered).to match(project1.title)
       expect(rendered).to match(project2.title)
@@ -23,7 +23,7 @@ describe 'Views' do
 
     it 'no projects' do
       assign(:projects, [])
-      render template: 'projects/index.html.erb'
+      render template: 'projects/index'
       expect(rendered).to match('There are no projects here...')
     end
 
@@ -31,7 +31,7 @@ describe 'Views' do
       assign(:projects, projects)
       assign(:user, user)
 
-      render template: 'projects/index.html.erb'
+      render template: 'projects/index'
       expect(rendered).to match('toolbar-container')
     end
   end

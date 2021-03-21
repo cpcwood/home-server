@@ -43,8 +43,8 @@ jobs:
       DB_NAME_TEST: home_server_test
       RAILS_ENV: test
     steps:
-      - checkout 
-      - ruby/install-deps 
+      - checkout
+      - ruby/install-deps
       - node/install-packages:
           pkg-manager: yarn
           cache-key: "yarn.lock"
@@ -100,7 +100,7 @@ jobs:
                 -t "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-base:latest \
                 --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
-                -f ./.docker/base.Dockerfile \
+                -f ./.docker/dockerfiles/base.dockerfile \
                 .
       - run:
           name: 'Build home-server-app image'
@@ -109,7 +109,7 @@ jobs:
                 --cache-from "$DOCKER_USERNAME/home-server-app" \
                 -t "$DOCKER_USERNAME/home-server-app:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-app:latest \
-                -f ./.docker/Dockerfile \
+                -f ./.docker/dockerfiles/Dockerfile \
                 .
       - run:
           name: 'Build home-server-worker-dependencies image'
@@ -118,7 +118,7 @@ jobs:
                 --cache-from "$DOCKER_USERNAME/home-server-worker-dependencies" \
                 -t "$DOCKER_USERNAME/home-server-worker-dependencies:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-worker-dependencies:latest \
-                -f ./.docker/worker-dependencies.Dockerfile \
+                -f ./.docker/dockerfiles/worker-dependencies.dockerfile \
                 .
       - run:
           name: 'Build home-server-worker image'
@@ -127,7 +127,7 @@ jobs:
                 --cache-from "$DOCKER_USERNAME/home-server-worker" \
                 -t "$DOCKER_USERNAME/home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-worker:latest \
-                -f ./.docker/worker.Dockerfile \
+                -f ./.docker/dockerfiles/worker.dockerfile \
                 .
       - run:
           name: 'Publish images'

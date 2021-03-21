@@ -16,8 +16,8 @@ class Image < ApplicationRecord
   def change_messages
     messages = []
     messages += (previous_changes.keys - ['updated_at'])
-    messages.map!{ |key| "#{description.humanize.gsub('-', ' ')} #{key.humanize(capitalize: false)} updated!" }
-    messages.push("#{description.humanize.gsub('-', ' ')} updated!") if image_file&.attachment&.blob&.previous_changes&.any?
+    messages.map!{ |key| "#{description.humanize.tr('-', ' ')} #{key.humanize(capitalize: false)} updated!" }
+    messages.push("#{description.humanize.tr('-', ' ')} updated!") if image_file&.attachment&.blob&.previous_changes&.any?
     messages
   end
 
@@ -64,7 +64,7 @@ class Image < ApplicationRecord
 
   def validate_image(image_attachment)
     return if Image.valid?(image_attachment.tempfile.path)
-    errors[:base].push('Image invalid, please upload a jpeg or png file!')
+    errors.add(:base, :blank, message: 'Image invalid, please upload a jpeg or png file!')
     throw(:abort)
   end
 
