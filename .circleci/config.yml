@@ -43,8 +43,8 @@ jobs:
       DB_NAME_TEST: home_server_test
       RAILS_ENV: test
     steps:
-      - checkout 
-      - ruby/install-deps 
+      - checkout
+      - ruby/install-deps
       - node/install-packages:
           pkg-manager: yarn
           cache-key: "yarn.lock"
