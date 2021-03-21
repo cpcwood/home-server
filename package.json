@@ -2,7 +2,7 @@
   "name": "home_server",
   "private": true,
   "scripts": {
-    "test": "jest --no-cache",
+    "test": "NODE_ENV=test jest --no-cache",
     "lint": "eslint --fix . && stylelint --fix \"**/*.scss\""
   },
   "dependencies": {
@@ -66,12 +66,13 @@
       "\\.(css|less)$": "<rootDir>/spec/javascript/__mocks__/styleMock.js"
     },
     "transform": {
-      "^.+\\.js(?:\\.erb)?$": "babel-jest",
+      "^.+\\.js$": "babel-jest",
       "^.+\\.erb$": [
         "jest-erb-transformer",
         {
           "application": "rails",
-          "timeout": 10000
+          "timeout": 10000,
+          "babelConfig": true
         }
       ]
     }

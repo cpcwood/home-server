@@ -54,7 +54,7 @@ services:
     ports: 
       - 5432:5432
     volumes:
-      - /var/db/psql/13:/var/lib/postgresql/data
+      - "${DOCKER_DATA_DB}:/var/lib/postgresql/data"
     healthcheck:
       test: pg_isready -U cpcwood -h 127.0.0.1
       interval: 5s
@@ -63,7 +63,7 @@ services:
     image: redis:5-alpine
     command: redis-server
     volumes:
-      - /var/db/redis:/data
+      - "${DOCKER_DATA_REDIS}:/data"
     ports: 
       - 6379:6379
     healthcheck:
