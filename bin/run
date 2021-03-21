@@ -1,2 +1,0 @@
-#!/bin/sh
-sudo docker-compose run ./.docker/docker-compose/dev.yml app "$*"

@@ -10,6 +10,7 @@ services:
       - REDIS_HOST=redis
       - DB_HOST=postgres
       - DB_USERNAME=cpcwood
+      - DB_PASSWORD=password
       - CHROMEDRIVER=/usr/bin/chromedriver
     env_file:
       - ../../config/env/test.env
