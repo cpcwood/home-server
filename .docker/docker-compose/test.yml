@@ -13,7 +13,7 @@ services:
       - DB_PASSWORD=password
       - CHROMEDRIVER=/usr/bin/chromedriver
     env_file:
-      - ../../config/env/test.env
+      - ../../config/env/test-defaults.env
     volumes:
       - ../..:/opt/app/
     depends_on:
