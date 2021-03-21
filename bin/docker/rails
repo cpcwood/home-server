@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo docker-compose -f ./.docker/docker-compose/dev.yml run app "bundle exec rails $@"
+sudo docker-compose -p home-server-dev -f ./.docker/docker-compose/dev.yml run app "bundle exec rails $@"
