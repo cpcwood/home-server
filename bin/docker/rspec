@@ -1,2 +1,6 @@
 #!/bin/sh
-sudo docker-compose -f ./.docker/docker-compose/test.yml run app "bundle exec rspec $@"
+sudo docker-compose -p home-server-dev \
+    -f ./.docker/docker-compose/test.yml \
+    run \
+    -e RAILS_ENV=test \
+    app "bundle exec rspec $@"
