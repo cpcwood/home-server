@@ -100,7 +100,7 @@ jobs:
                 -t "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-base:latest \
                 --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
-                -f ./.docker/dockerfiles/base.dockerfile \
+                -f ./.docker/dockerfiles/base.Dockerfile \
                 .
       - run:
           name: 'Build home-server-app image'
@@ -118,7 +118,7 @@ jobs:
                 --cache-from "$DOCKER_USERNAME/home-server-worker-dependencies" \
                 -t "$DOCKER_USERNAME/home-server-worker-dependencies:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-worker-dependencies:latest \
-                -f ./.docker/dockerfiles/worker-dependencies.dockerfile \
+                -f ./.docker/dockerfiles/worker-dependencies.Dockerfile \
                 .
       - run:
           name: 'Build home-server-worker image'
@@ -127,7 +127,7 @@ jobs:
                 --cache-from "$DOCKER_USERNAME/home-server-worker" \
                 -t "$DOCKER_USERNAME/home-server-worker:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-worker:latest \
-                -f ./.docker/dockerfiles/worker.dockerfile \
+                -f ./.docker/dockerfiles/worker.Dockerfile \
                 .
       - run:
           name: 'Publish images'
