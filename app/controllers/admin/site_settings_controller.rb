@@ -45,7 +45,7 @@ module Admin
       if @site_settings.update(permitted_params)
         @notices += @site_settings.change_messages
       else
-        @alerts.push(@site_settings.errors.values.flatten.last)
+        @alerts.push(@site_settings.errors.messages.to_a.flatten.last)
       end
     end
   end

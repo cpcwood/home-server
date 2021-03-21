@@ -8,7 +8,7 @@ describe 'Views' do
     it 'index view' do
       assign(:posts, posts)
 
-      render template: 'posts/index.html.erb'
+      render template: 'posts/index'
 
       expect(rendered).to match(post1.title)
       expect(rendered).to match(post2.title)
@@ -23,13 +23,13 @@ describe 'Views' do
       assign(:posts, posts)
       assign(:user, user)
 
-      render template: 'posts/index.html.erb'
+      render template: 'posts/index'
       expect(rendered).to match('toolbar-container')
     end
 
     it 'no posts' do
       assign(:posts, [])
-      render template: 'posts/index.html.erb'
+      render template: 'posts/index'
       expect(rendered).to match('There are no posts here...')
     end
   end

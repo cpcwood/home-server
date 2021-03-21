@@ -1,4 +1,6 @@
-require: rubocop-rails
+require: 
+  - rubocop-rails
+  - rubocop-performance
 
 AllCops:
   TargetRubyVersion: 2.7.2
@@ -7,7 +9,6 @@ AllCops:
     - 'config/**/*'
     - 'coverage/**/*'
     - 'db/**/*'
-    - 'lib/**/*'
     - 'log/**/*'
     - 'node_modules/**/*'
     - 'shared/**/*'
@@ -68,9 +69,10 @@ Metrics/ClassLength:
 
 Rails/SkipsModelValidations:
   Enabled: false
-
 Rails/OutputSafety:
   Enabled: false
-
 Rails/DynamicFindBy:
+  Enabled: false
+
+Performance/Caller:
   Enabled: false

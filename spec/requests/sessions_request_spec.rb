@@ -31,14 +31,14 @@ RSpec.describe 'SessionsController', type: :request do
     it 'Blocks login if user not found' do
       password_athenticate_admin(user: @user.username, password: 'nopass')
       expect(response).to redirect_to login_path
-      expect(flash[:alert]).to eq('User not found')
+      expect(flash[:alert]).to include('User not found')
     end
 
     it 'Blocks login if captcha incorrect' do
       allow(ReCaptchaService).to receive(:recaptcha_valid?).and_return(false)
       post '/login', params: { user: @user.username, password: @user_password, 'g-recaptcha-response': 'test' }
       expect(response).to redirect_to login_path
-      expect(flash[:alert]).to eq('reCaptcha failed, please try again')
+      expect(flash[:alert]).to include('reCaptcha failed, please try again')
     end
   end
 
@@ -82,14 +82,14 @@ RSpec.describe 'SessionsController', type: :request do
       allow(TwoFactorAuthService).to receive(:auth_code_format_valid?).and_return(false)
       post '/2fa', params: { auth_code: auth_code }
       expect(response).to redirect_to('/2fa')
-      expect(flash[:alert]).to eq('Verification code must be 6 digits long')
+      expect(flash[:alert]).to include('Verification code must be 6 digits long')
     end
 
     it 'invalid auth code' do
       password_athenticate_admin(user: @user.username, password: @user_password)
       allow(TwoFactorAuthService).to receive(:auth_code_valid?).and_return(false)
       post '/2fa', params: { auth_code: auth_code }
-      expect(flash[:alert]).to eq('2fa code incorrect, please try again')
+      expect(flash[:alert]).to include('2fa code incorrect, please try again')
     end
 
     it 'successful login' do

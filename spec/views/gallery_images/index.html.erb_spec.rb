@@ -8,7 +8,7 @@ describe 'Views' do
     it 'index view' do
       assign(:gallery_images, gallery_images)
 
-      render template: 'gallery_images/index.html.erb'
+      render template: 'gallery_images/index'
 
       expect(rendered).to match(gallery_image1.description)
       expect(rendered).to match(gallery_image2.description)
@@ -19,13 +19,13 @@ describe 'Views' do
       assign(:gallery_images, gallery_images)
       assign(:user, user)
 
-      render template: 'gallery_images/index.html.erb'
+      render template: 'gallery_images/index'
       expect(rendered).to match('toolbar-container')
     end
 
     it 'no gallery_images' do
       assign(:gallery_images, [])
-      render template: 'gallery_images/index.html.erb'
+      render template: 'gallery_images/index'
       expect(rendered).to match('There are no images here...')
     end
   end

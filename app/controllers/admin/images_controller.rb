@@ -11,7 +11,7 @@ module Admin
       return @alerts.push('Image not found') unless @image
       return if image_reset?
       return if image_updated?
-      @alerts.push(@image.errors.values.flatten.last)
+      @alerts.push(@image.errors.messages.to_a.flatten.last)
     end
 
     def image_reset?

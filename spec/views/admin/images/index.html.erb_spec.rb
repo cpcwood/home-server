@@ -7,7 +7,7 @@ describe 'Views' do
 
       assign(:images, site_images)
 
-      render template: 'admin/images/index.html.erb'
+      render template: 'admin/images/index'
 
       expect(rendered).to match('Header image')
       expect(rendered).to match('Current image')

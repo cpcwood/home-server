@@ -6,7 +6,7 @@ describe 'Views' do
       # Placeholder spec
       assign(:user, user)
 
-      render template: 'admins/analytics.html.erb'
+      render template: 'admins/analytics'
 
       expect(rendered).to match(/Website hits/)
     end

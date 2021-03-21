@@ -7,7 +7,7 @@ describe 'Views' do
       before(:each) do
         assign(:contact_message, contact_message)
         assign(:about, about)
-        render template: '/contact_messages/new.html.erb'
+        render template: '/contact_messages/new'
       end
 
       it 'it renders form' do

@@ -34,6 +34,12 @@ Rails.application.configure do
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
+  # Raise exceptions for disallowed deprecations.
+  config.active_support.disallowed_deprecation = :raise
+
+  # Tell Active Support which deprecation messages to disallow.
+  config.active_support.disallowed_deprecation_warnings = []
+
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
@@ -58,20 +64,19 @@ Rails.application.configure do
   config.log_level = :debug
 
   # Active Mailer Settings
-  config.action_mailer.default_url_options = { host: 'http://localhost:3000' }
-  config.action_mailer.asset_host = 'http://localhost:3000'
+  config.action_mailer.default_url_options = { host: ENV['SITE_HOST'] }
+  config.action_mailer.asset_host = ENV['EMAIL_ASSET_HOST']
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
   config.action_mailer.perform_caching = false
   config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
-
+  config.action_mailer.raise_delivery_errors = false
+ 
   Rails.application.routes.default_url_options = { 
-    host: 'localhost:3000', 
+    host: ENV['SITE_HOST'], 
     protocol: 'http' 
   }
 
   # Active Job Settings
   config.active_job.queue_adapter = :sidekiq
-
-  config.hosts << "cpcwood-dev"
 end

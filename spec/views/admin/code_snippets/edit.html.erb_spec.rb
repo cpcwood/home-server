@@ -5,7 +5,7 @@ describe 'Views' do
     context 'edit view' do
       before(:each) do
         assign(:code_snippet, code_snippet)
-        render template: '/admin/code_snippets/edit.html.erb'
+        render template: '/admin/code_snippets/edit'
       end
 
       it 'it renders code_snippets' do

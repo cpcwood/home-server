@@ -4,7 +4,7 @@ describe 'Views' do
       it 'it renders projects' do
         project = build(:project)
         assign(:project, project)
-        render template: '/admin/projects/new.html.erb'
+        render template: '/admin/projects/new'
 
         expect(rendered).to match('project_title')
         expect(rendered).to match('project_overview')

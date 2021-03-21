@@ -6,7 +6,7 @@ describe 'Views' do
       # Placeholder spec
       assign(:user, user)
 
-      render template: 'admins/notifications.html.erb'
+      render template: 'admins/notifications'
 
       expect(rendered).to match(/Contact Emails/)
     end
@@ -15,7 +15,7 @@ describe 'Views' do
       # Placeholder spec
       assign(:user, user)
 
-      render template: 'admins/notifications.html.erb'
+      render template: 'admins/notifications'
 
       expect(rendered).to match(/Blog Comments/)
     end
@@ -24,7 +24,7 @@ describe 'Views' do
       # Placeholder spec
       assign(:user, user)
 
-      render template: 'admins/notifications.html.erb'
+      render template: 'admins/notifications'
 
       expect(rendered).to match(/Blog Comments/)
     end
@@ -33,7 +33,7 @@ describe 'Views' do
       # Placeholder spec
       assign(:user, user)
 
-      render template: 'admins/notifications.html.erb'
+      render template: 'admins/notifications'
 
       expect(rendered).to match(/Say Hellos/)
     end

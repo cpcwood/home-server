@@ -13,7 +13,7 @@ describe 'Views' do
       before(:each) do
         assign(:gallery_images, gallery_images)
         assign(:user, user)
-        render template: '/admin/gallery_images/index.html.erb'
+        render template: '/admin/gallery_images/index'
       end
 
       it 'it renders gallery_images' do
@@ -25,7 +25,7 @@ describe 'Views' do
       it 'no gallery_images' do
         assign(:gallery_images, [])
         assign(:user, user)
-        render template: 'gallery_images/index.html.erb'
+        render template: 'gallery_images/index'
         expect(rendered).to match('There are no images here...')
       end
     end

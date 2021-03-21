@@ -9,7 +9,7 @@ describe 'Views' do
       assign(:cover_images, [])
       assign(:header_image, header_image)
 
-      render template: 'homepages/index.html.erb', layout: 'layouts/application'
+      render template: 'homepages/index', layout: 'layouts/application'
 
       expect(rendered).to match(Regexp.escape(site_setting.header_text))
       expect(rendered).to match(Regexp.escape(site_setting.subtitle_text))
@@ -22,7 +22,7 @@ describe 'Views' do
       assign(:cover_images, [])
       assign(:header_image, header_image)
 
-      render template: 'homepages/index.html.erb', layout: 'layouts/application'
+      render template: 'homepages/index', layout: 'layouts/application'
       expect(rendered).to match(/id="typed-strings-header"/)
       expect(rendered).to match(/id="typed-strings-header"/)
     end
