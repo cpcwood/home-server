@@ -7,11 +7,13 @@ services:
       context: ../..
       dockerfile: .docker/dockerfiles/dev.Dockerfile
     environment:
-      - REDIS_HOST=redis
-      - DB_HOST=postgres
-      - DB_USERNAME=cpcwood
-      - DB_PASSWORD=password
-      - CHROMEDRIVER=/usr/bin/chromedriver
+      REDIS_HOST: redis
+      DB_HOST: postgres
+      DB_USERNAME: cpcwood
+      DB_PASSWORD: password
+      DB_PORT: 5433
+      PGPORT: 5433
+      CHROMEDRIVER: /usr/bin/chromedriver
     env_file:
       - ../../config/env/test-defaults.env
     volumes:
@@ -26,8 +28,11 @@ services:
       POSTGRES_USER: cpcwood
       POSTGRES_PASSWORD: password
       PGDATA: /var/lib/postgresql/data/pgdata
+      PGPORT: 5433
     volumes:
-      - /var/db/psql/13:/var/lib/postgresql/data
+      - "${DOCKER_DATA_DB_TEST}:/var/lib/postgresql/data"
+    ports:
+      - 5433:5433
     healthcheck:
       test: pg_isready -U cpcwood -h 127.0.0.1
       interval: 5s

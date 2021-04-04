@@ -7,10 +7,10 @@ services:
       context: ../..
       dockerfile: .docker/dockerfiles/dev.Dockerfile
     environment:
-      - REDIS_HOST=redis
-      - DB_HOST=postgres
-      - DB_USERNAME=cpcwood
-      - CHROMEDRIVER=/usr/bin/chromedriver
+      REDIS_HOST: redis
+      DB_HOST: postgres
+      DB_USERNAME: cpcwood
+      CHROMEDRIVER: /usr/bin/chromedriver
     env_file:
       - ../../config/env/.env
     volumes:
@@ -29,9 +29,9 @@ services:
       context: ../../
       dockerfile: .docker/dockerfiles/dev.Dockerfile
     environment:
-      - REDIS_HOST=redis
-      - DB_HOST=postgres
-      - DB_USERNAME=cpcwood
+      REDIS_HOST: redis
+      DB_HOST: postgres
+      DB_USERNAME: cpcwood
     env_file:
       - ../../config/env/.env
     volumes:
@@ -54,7 +54,7 @@ services:
     ports: 
       - 5432:5432
     volumes:
-      - "${DOCKER_DATA_DB}:/var/lib/postgresql/data"
+      - "${DOCKER_DATA_DB_DEV}:/var/lib/postgresql/data"
     healthcheck:
       test: pg_isready -U cpcwood -h 127.0.0.1
       interval: 5s

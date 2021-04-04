@@ -5,7 +5,7 @@ Dotenv.load('config/env/test-defaults.env')
 
 `
 if bundle exec rake db:exists; then
-    bundle exec rake db:migrate 
+    bundle exec rake db:migrate
 else
     bundle exec rake db:setup
 fi
