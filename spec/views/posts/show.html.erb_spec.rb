@@ -6,7 +6,7 @@ describe 'Views' do
 
   describe '/blog/:id rendering' do
     it 'show view' do
-      assign(:post, post)
+      assign(:post, post.reload)
       expect_any_instance_of(MarkdownHelper).to receive(:markdown_admin).with(post_section_1.text).and_return("markdown #{post_section_1.text} markdown")
       expect_any_instance_of(MarkdownHelper).to receive(:markdown_admin).with(post_section_2.text).and_return("markdown #{post_section_2.text} markdown")
 

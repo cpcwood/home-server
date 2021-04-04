@@ -20,7 +20,10 @@
 #
 class Post < ApplicationRecord
   belongs_to :user
+  
   has_many :post_sections, -> { order(:order => :asc) }, dependent: :destroy
+  accepts_nested_attributes_for :post_sections, allow_destroy: true
+  validates_associated :post_sections
 
   validates :date_published,
             timeliness: { message: 'Date published must be date' }

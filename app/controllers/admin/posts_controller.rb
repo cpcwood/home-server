@@ -11,6 +11,7 @@ module Admin
       begin
         @post = @user.posts.new
         update_post(post: @post, success_message: 'Blog post created')
+        update_post_sections(post: @post)
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
         @alerts.push('Sorry, something went wrong!')
@@ -45,6 +46,7 @@ module Admin
         @post = find_post
         return redirect_to(posts_path, alert: 'Post not found') unless @post
         update_post(post: @post, success_message: 'Blog post updated')
+        update_post_sections(post: @post)
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
         @alerts.push('Sorry, something went wrong!')
@@ -84,26 +86,36 @@ module Admin
 
     private
 
-    def permitted_params
+    def post_params
       params
         .require(:post)
         .permit(
           :title,
           :overview,
-          :date_published,
-          :text)
+          :date_published)
+    end
+
+    def post_section_params
+      params
+        .require(:post)
+        .permit(
+          post_sections_attributes: [:id, :_destroy, :text, :order])
     end
 
     def find_post
-      Post.find_by(id: params[:id])
+      Post.includes(:post_sections).find_by(id: params[:id])
     end
 
     def update_post(post:, success_message:)
-      if post.update(permitted_params)
+      if post.update(post_params)
         @notices.push(success_message)
       else
         @alerts.push(post.errors.messages.to_a.flatten.last)
       end
+    end
+
+    def update_post_sections(post:)
+      post.update(post_section_params)
     end
   end
 end
