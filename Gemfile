@@ -38,6 +38,8 @@ gem 'validates_timeliness', '~> 5.0.0.beta1'
 gem 'tzinfo-data'
 # JSON API serializer
 gem 'jsonapi-serializer'
+# mime types
+gem 'mimemagic'
 
 group :production do
   # AWS S3 for production storage
