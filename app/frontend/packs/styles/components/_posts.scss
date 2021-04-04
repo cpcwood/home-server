@@ -63,3 +63,26 @@
   }
 }
 
+
+.blog-post-section {
+  &.destroy {
+    .text-area-container.visible-on-edit .embedded-text-area {
+      max-height: 4em;
+      min-height: unset;
+      opacity: 0.3;
+      text-decoration: line-through;
+    }
+
+    .post-editior-toolbar .visible-on-edit {
+      display: none;
+    }
+
+    .post-editior-toolbar .visible-on-destroy {
+      display: unset;
+    }
+  }
+
+  .visible-on-destroy {
+    display: none;
+  }
+}

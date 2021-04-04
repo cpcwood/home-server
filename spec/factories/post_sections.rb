@@ -19,7 +19,7 @@
 #
 FactoryBot.define do
   factory :post_section do
-    text { "MyText" }
+    text { 'MyText' }
     order { 1 }
     post
   end

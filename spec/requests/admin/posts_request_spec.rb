@@ -4,8 +4,6 @@ RSpec.describe 'Admin::PostsController', type: :request do
     login
   end
 
-
-
   describe 'GET /admin/posts/:id/edit #edit' do
     it 'valid request' do
       post = create(:post, user: @user)
@@ -19,8 +17,6 @@ RSpec.describe 'Admin::PostsController', type: :request do
       expect(flash[:alert]).to include('Post not found')
     end
   end
-
-
 
   describe 'POST /admin/posts #create' do
     let(:valid_post_attributes) do
@@ -40,7 +36,7 @@ RSpec.describe 'Admin::PostsController', type: :request do
         }
       }}
     end
-  
+
     let(:invalid_post_attributes) do
       invalid_post_attribubtes = valid_post_attributes
       invalid_post_attribubtes[:post][:title] = ''
@@ -67,8 +63,6 @@ RSpec.describe 'Admin::PostsController', type: :request do
     end
   end
 
-
-
   describe 'PUT /admin/posts/:id #update' do
     let(:valid_post_attributes) do
       { post: {
@@ -87,7 +81,7 @@ RSpec.describe 'Admin::PostsController', type: :request do
         }
       }}
     end
-  
+
     let(:invalid_post_attributes) do
       invalid_post_attribubtes = valid_post_attributes
       invalid_post_attribubtes[:post][:title] = ''
@@ -127,8 +121,6 @@ RSpec.describe 'Admin::PostsController', type: :request do
       expect(response.body).to include('general error')
     end
   end
-
-
 
   describe 'DELETE /admin/posts/:id #destroy' do
     it 'post id invalid' do

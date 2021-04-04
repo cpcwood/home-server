@@ -12,7 +12,7 @@
 #  updated_at  :datetime         not null
 #
 class Project < ApplicationRecord
-  has_many :project_images, -> { order(:order => :asc) }, dependent: :destroy
+  has_many :project_images, -> { order(order: :asc) }, dependent: :destroy, inverse_of: :project
   accepts_nested_attributes_for :project_images, allow_destroy: true
   validates_associated :project_images
 

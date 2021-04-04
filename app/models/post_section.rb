@@ -21,5 +21,5 @@ class PostSection < ApplicationRecord
   belongs_to :post
 
   validates :order,
-    presence: { message: 'Post Section order cannot be nil' }
+            presence: { message: 'Post Section order cannot be nil' }
 end
