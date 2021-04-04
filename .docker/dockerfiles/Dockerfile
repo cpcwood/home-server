@@ -19,7 +19,8 @@ ENV BUNDLE_PATH=$APP_HOME/vendor/bundle \
 RUN apk add --no-cache \
   tzdata \
   imagemagick \
-  postgresql-client && \
+  postgresql-client \
+  shared-mime-info && \
   cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
   echo "Europe/London" > /etc/timezone
 

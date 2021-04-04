@@ -18,7 +18,6 @@ ENV BUNDLE_APP_CONFIG=$APP_HOME/vendor/bundle \
   PATH=$APP_HOME/vendor/bundle/bin:$APP_HOME/vendor/bundle:$APP_HOME/node_modules/.bin:$PATH
 
 RUN apk add \
-  tzdata \
   build-base \
   postgresql-dev postgresql-client \
   imagemagick \
@@ -28,8 +27,9 @@ RUN apk add \
   git \
   libffi-dev zlib-dev libxml2-dev libxslt-dev readline-dev \
   python3 python3-dev py3-pip \
-  chromium-chromedriver chromium \
-  libnotify-dev && \
+  chromium-chromedriver chromium libnotify-dev \
+  shared-mime-info \
+  tzdata && \
   cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
   echo "Europe/London" > /etc/timezone
 
