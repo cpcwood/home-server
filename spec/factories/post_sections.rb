@@ -3,7 +3,7 @@
 # Table name: post_sections
 #
 #  id         :bigint           not null, primary key
-#  order      :integer          not null
+#  order      :integer          default(0), not null
 #  text       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
