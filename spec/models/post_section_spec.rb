@@ -7,6 +7,15 @@
 #  text       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  post_id    :bigint
+#
+# Indexes
+#
+#  index_post_sections_on_post_id  (post_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (post_id => posts.id)
 #
 RSpec.describe PostSection, type: :model do
   subject { create(:post_section) }
