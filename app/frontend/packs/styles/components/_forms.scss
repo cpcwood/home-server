@@ -197,6 +197,10 @@
       margin-top: 0;
     }
   }
+
+  &.right {
+    flex-direction: row-reverse;
+  }
 }
 
 .embedded-label {

@@ -1,9 +1,0 @@
-<%= form.fields_for(:post_sections, post_sections, multiple: true) do |nested_post_section_form| %>
-
-  <div class="embedded-form-entry-container">
-    <%= nested_post_section_form.text_area(:text, class: 'input-box embedded-text-area post', placeholder: 'Add text content (you can use markdown)...') %>
-  </div>
-
-  <%= nested_post_section_form.hidden_field(:order, class: 'item-order-position') %>
-
-<% end %>
