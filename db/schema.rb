@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_20_153612) do
+ActiveRecord::Schema.define(version: 2021_04_04_160338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,10 +122,17 @@ ActiveRecord::Schema.define(version: 2021_03_20_153612) do
   create_table "post_images", force: :cascade do |t|
     t.string "description", default: "post-image", null: false
     t.string "title"
-    t.bigint "project_id", null: false
+    t.bigint "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["project_id"], name: "index_post_images_on_project_id"
+    t.index ["post_id"], name: "index_post_images_on_post_id"
+  end
+
+  create_table "post_sections", force: :cascade do |t|
+    t.text "text"
+    t.integer "order", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "posts", force: :cascade do |t|
@@ -202,7 +209,7 @@ ActiveRecord::Schema.define(version: 2021_03_20_153612) do
   add_foreign_key "cover_images", "site_settings"
   add_foreign_key "gallery_images", "users"
   add_foreign_key "header_images", "site_settings"
-  add_foreign_key "post_images", "projects"
+  add_foreign_key "post_images", "posts"
   add_foreign_key "posts", "users"
   add_foreign_key "profile_images", "abouts"
   add_foreign_key "project_images", "projects"
