@@ -71,7 +71,7 @@
         "jest-erb-transformer",
         {
           "application": "rails",
-          "timeout": 10000,
+          "timeout": 20000,
           "babelConfig": true
         }
       ]

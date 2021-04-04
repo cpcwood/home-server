@@ -151,4 +151,4 @@ Any pull requests are welcome. If you have a question or find a bug, create a Gi
 
 ## LICENSE
 
-This software is distributed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License.
+This software is distributed under the MIT license
