@@ -20,8 +20,8 @@
 #
 class Post < ApplicationRecord
   belongs_to :user
-  
-  has_many :post_sections, -> { order(:order => :asc) }, dependent: :destroy
+
+  has_many :post_sections, -> { order(order: :asc) }, dependent: :destroy, inverse_of: :post
   accepts_nested_attributes_for :post_sections, allow_destroy: true
   validates_associated :post_sections
 
