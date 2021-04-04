@@ -18,7 +18,7 @@ feature 'blog posts feature', feature: true do
       expect(page).to have_content(@blog_post.title)
       expect(page).to have_content(@blog_post.overview)
       first('.show-blog-post-button').click
-      expect(page).to have_content(@blog_post.text)
+      expect(page).to have_content(@blog_post_section.text)
     end
   end
 
@@ -33,7 +33,7 @@ feature 'blog posts feature', feature: true do
       click_on('Create New')
       fill_in('post[title]', with: 'post title')
       fill_in('post[overview]', with: 'post overview')
-      fill_in('post[text]', with: 'post text content')
+      fill_in('post[post_sections_attributes][0][text]', with: 'post text content')
       fill_in('post[date_published]', with: DateTime.new(2020, 04, 19, 0, 0, 0))
       click_button('Submit')
       expect(page).to have_content('Blog post created')
@@ -47,7 +47,7 @@ feature 'blog posts feature', feature: true do
       visit('/blog')
       first('.show-blog-post-button').click
       click_on('Edit')
-      expect(page).to have_content(@blog_post.text)
+      expect(page).to have_content(@blog_post_section.text)
       fill_in('post[title]', with: 'new title')
       click_button('Submit')
       expect(page).to have_content('Blog post updated')

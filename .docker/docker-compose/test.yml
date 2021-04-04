@@ -2,6 +2,8 @@ version: "3.7"
 
 services:
   app:
+    stdin_open: true
+    tty: true
     image: home-server-app-dev
     build: 
       context: ../..

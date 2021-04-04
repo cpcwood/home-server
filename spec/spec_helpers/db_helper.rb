@@ -17,7 +17,9 @@ def seed_about
 end
 
 def seed_blog_post
-  @blog_post = create(:post, user: @user)
+  @blog_post = create(:post, user: @user) do |post|
+    @blog_post_section = create(:post_section, post: post)
+  end
 end
 
 def seed_gallery_image

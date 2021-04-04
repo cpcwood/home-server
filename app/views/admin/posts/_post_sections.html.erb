@@ -1,0 +1,14 @@
+<% post = form.object %>
+<% post_sections = form.object.post_sections %>
+
+<% if post_sections.any? %>
+
+  <%= render partial: 'admin/posts/post_section', locals: { form: form, post_sections: post_sections } %>
+
+<% else %>
+
+  <% post_section = PostSection.new(order: 0) %>
+
+  <%= render partial: 'admin/posts/post_section', locals: { form: form, post_sections: [post_section] } %>
+
+<% end %>

@@ -34,6 +34,8 @@ Capybara.default_driver = :rack_test
 Capybara.javascript_driver = :headless_chrome_driver
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::Console, Coveralls::SimpleCov::Formatter])
+SimpleCov::Formatter::Console.max_rows = 4
+SimpleCov::Formatter::Console.missing_len = 50
 SimpleCov.start 'rails' do
   add_filter 'app/channels'
   add_filter '/spec/'
