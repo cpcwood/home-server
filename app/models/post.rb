@@ -21,6 +21,7 @@
 #
 class Post < ApplicationRecord
   belongs_to :user
+  has_many :post_sections
 
   validates :date_published,
             timeliness: { message: 'Date published must be date' }
