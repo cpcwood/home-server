@@ -27,8 +27,6 @@ class ProjectImage < Image
 
   belongs_to :project
 
-  scope :order_asc, -> { order(order: :asc) }
-
   def variant_sizes
     VARIANT_SIZES
   end
