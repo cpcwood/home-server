@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find_by(id: sanitize(params[:id]))
+    @post = Post.includes(:post_sections).find_by(id: sanitize(params[:id]))
     redirect_to(posts_path, alert: 'Post not found') unless @post
   end
 

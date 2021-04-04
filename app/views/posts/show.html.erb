@@ -22,7 +22,7 @@
       <span itemprop='author'> <%= @post.user.username %> </span> | <time datetime="<%= @post.date_published.strftime("%Y-%m-%d")%>" itemprop='dateModified'> <%= full_date(@post.date_published) %> </time>
     </div>
     <div class='post-container' itemprop='articleBody'>
-      <%= markdown_admin(@post.text) %>
+      <%= render partial: "posts/post_section", collection: @post.post_sections, as: :post_section %>
     </div>
     <link itemprop="isPartOf" itemscope itemtype="https://schema.org/Blog" itemid="<%= posts_path %>" />
   </article>
