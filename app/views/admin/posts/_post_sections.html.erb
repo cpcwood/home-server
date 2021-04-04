@@ -1,14 +1,44 @@
 <% post = form.object %>
 <% post_sections = form.object.post_sections %>
+<% post_sections = [PostSection.new(order: 0)] unless post_sections.any? %>
 
-<% if post_sections.any? %>
+<div class="embedded-form-entry-container">
+  <p class='input-label embedded-label'>
+    Post Content
+  </p>
+</div>
 
-  <%= render partial: 'admin/posts/post_section', locals: { form: form, post_sections: post_sections } %>
+<div data-controller='blog-post-editor' data-blog-post-editor-current-sections-count-value='<%= post_sections.length %>'>
+  
+  <% post_sections.each_with_index do |post_section, index| %>
 
-<% else %>
+    <div class='blog-post-section' data-blog-post-editor-target='postSection'>
+      <%= form.fields_for(:post_sections, post_section, multiple: true) do |nested_post_section_form| %> 
+        <div class='form-fields'>
+          <hr class='ruler <%= 'hidden' if index == 0 %>'/>
+          
+          <div class="embedded-form-entry-container">
+            <%= nested_post_section_form.text_area(:text, class: 'input-box embedded-text-area post', placeholder: 'Add text content (you can use markdown)...') %>
+          </div>
 
-  <% post_section = PostSection.new(order: 0) %>
+          <%= nested_post_section_form.hidden_field(:order, class: 'item-order-position') %>
 
-  <%= render partial: 'admin/posts/post_section', locals: { form: form, post_sections: [post_section] } %>
+          <section class='post-editior-toolbar embedded-form-entry-container right' data-value="targetId">
+            <button class='post-editor-toolbar-button' 
+                data-action='click->blog-post-editor#newPostSection'
+                type='button'>
+              + New Section
+            </button>
+            <button class='post-editor-toolbar-button' 
+                data-action='click->blog-post-editor#newPostSection' 
+                type='button'>
+              - Remove Section
+            </button>
+          </section>
+        </div>
+      <% end %>
+    </div>
 
-<% end %>
+  <% end %>
+
+</div>
