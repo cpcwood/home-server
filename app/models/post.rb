@@ -5,7 +5,6 @@
 #  id             :bigint           not null, primary key
 #  date_published :datetime         not null
 #  overview       :string           not null
-#  text           :text
 #  title          :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
