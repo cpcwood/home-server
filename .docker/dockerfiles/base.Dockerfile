@@ -23,7 +23,8 @@ RUN apk add --no-cache \
   postgresql-dev \
   nodejs \
   yarn \
-  git
+  git \
+  shared-mime-info
 
 RUN mkdir -p $APP_HOME $APP_HOME/vendor/bundle $APP_HOME/tmp
 WORKDIR $APP_HOME

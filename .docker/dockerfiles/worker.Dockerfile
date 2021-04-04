@@ -22,7 +22,8 @@ RUN apk add --no-cache \
   postgresql-client \
   nodejs \
   imagemagick \
-  chromium && \
+  chromium \
+  shared-mime-info && \
   cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
   echo "Europe/London" > /etc/timezone
 
