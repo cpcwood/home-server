@@ -11,7 +11,6 @@ describe 'Views' do
       it 'it renders posts' do
         expect(rendered).to match('post_title')
         expect(rendered).to match('post_overview')
-        expect(rendered).to match('post_text')
         expect(rendered).to match('post_date_published')
       end
     end

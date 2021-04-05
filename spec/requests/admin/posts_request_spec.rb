@@ -1,19 +1,4 @@
 RSpec.describe 'Admin::PostsController', type: :request do
-  let(:valid_post_attributes) do
-    { post: {
-      title: 'new blog post',
-      overview: 'post overview',
-      date_published: DateTime.new(2020, 04, 19, 0, 0, 0),
-      text: 'post content'
-    }}
-  end
-
-  let(:invalid_post_attributes) do
-    invalid_post_attribubtes = valid_post_attributes
-    invalid_post_attribubtes[:post][:title] = ''
-    invalid_post_attribubtes
-  end
-
   before(:each) do
     seed_user_and_settings
     login
@@ -39,8 +24,23 @@ RSpec.describe 'Admin::PostsController', type: :request do
         title: 'new blog post',
         overview: 'post overview',
         date_published: DateTime.new(2020, 04, 19, 0, 0, 0),
-        text: 'post content'
+        post_sections_attributes: {
+          '0': {
+            text: 'new post section text 1',
+            order: '0'
+          },
+          '1': {
+            text: 'new post section text 2',
+            order: '1'
+          }
+        }
       }}
+    end
+
+    let(:invalid_post_attributes) do
+      invalid_post_attribubtes = valid_post_attributes
+      invalid_post_attribubtes[:post][:title] = ''
+      invalid_post_attribubtes
     end
 
     it 'create sucessful' do
@@ -48,6 +48,7 @@ RSpec.describe 'Admin::PostsController', type: :request do
       new_post = Post.first
       expect(response).to redirect_to(post_path(new_post))
       expect(flash[:notice]).to include('Blog post created')
+      expect(new_post.post_sections.length).to eq(2)
     end
 
     it 'save failure' do
@@ -63,6 +64,30 @@ RSpec.describe 'Admin::PostsController', type: :request do
   end
 
   describe 'PUT /admin/posts/:id #update' do
+    let(:valid_post_attributes) do
+      { post: {
+        title: 'a current blog post',
+        overview: 'post overview',
+        date_published: DateTime.new(2020, 04, 19, 0, 0, 0),
+        post_sections_attributes: {
+          '0': {
+            text: 'new post section text 1',
+            order: '0'
+          },
+          '1': {
+            text: 'new post section text 2',
+            order: '1'
+          }
+        }
+      }}
+    end
+
+    let(:invalid_post_attributes) do
+      invalid_post_attribubtes = valid_post_attributes
+      invalid_post_attribubtes[:post][:title] = ''
+      invalid_post_attribubtes
+    end
+
     it 'post id invalid' do
       put('/admin/posts/not-a-post-id', params: valid_post_attributes)
       expect(response).to redirect_to(posts_path)
@@ -71,12 +96,16 @@ RSpec.describe 'Admin::PostsController', type: :request do
 
     it 'update sucessful' do
       post = create(:post, user: @user)
+      post_section = create(:post_section, post: post, text: 'post section text')
+      valid_post_attributes[:post][:post_sections_attributes][:'0'][:id] = post_section.id
       put("/admin/posts/#{post.id}", params: valid_post_attributes)
       post.reload
       expect(response).to redirect_to(post_path(post))
       expect(flash[:notice]).to include('Blog post updated')
       expect(post.title).to eq(valid_post_attributes[:post][:title])
       expect(post.overview).to eq(valid_post_attributes[:post][:overview])
+      expect(post.post_sections.first.text).to eq('new post section text 1')
+      expect(post.post_sections.length).to eq(2)
     end
 
     it 'save failure' do

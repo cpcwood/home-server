@@ -1,0 +1,50 @@
+<% post = form.object %>
+<% post_sections = form.object.post_sections %>
+<% post_sections = [PostSection.new(order: 0)] unless post_sections.any? %>
+
+<h3>
+  Post Content
+</h3>
+
+<div data-controller='blog-post-editor' data-blog-post-editor-current-sections-count-value='<%= post_sections.length %>'>
+  
+  <% post_sections.each_with_index do |post_section, index| %>
+
+    <div class='blog-post-section' data-blog-post-editor-target='postSection'>
+      <%= form.fields_for(:post_sections, post_section, multiple: true) do |nested_post_section_form| %> 
+        <div class='form-fields'>
+          <hr class='ruler <%= 'hidden' if index == 0 %>'/>
+          
+          <%= render partial: 'admin/posts/post_section_image', locals: {form: nested_post_section_form, post_section: post_section} %>
+
+          <div class="embedded-form-entry-container visible-on-edit text-area-container">
+            <%= nested_post_section_form.text_area(:text, class: 'input-box embedded-text-area post', placeholder: 'Add text content (you can use markdown)...') %>
+          </div>
+
+          <%= nested_post_section_form.hidden_field(:order, class: 'item-order-position') %>
+          <%= nested_post_section_form.hidden_field(:_destroy, class: 'destroy-post-section', value: 0) %>
+
+          <section class='post-editior-toolbar embedded-form-entry-container right' data-value="targetId">
+            <button class='post-editor-toolbar-button new-section'
+                data-action='click->blog-post-editor#newPostSection'
+                type='button'>
+              + New Section
+            </button>
+            <button class='post-editor-toolbar-button visible-on-edit remove-section' 
+                data-action='click->blog-post-editor#destroyPostSection'
+                type='button'>
+              - Remove Section
+            </button>
+            <button class='post-editor-toolbar-button visible-on-destroy restore-section' 
+                data-action='click->blog-post-editor#restorePostSection'
+                type='button'>
+              ^ Restore Section
+            </button>
+          </section>
+        </div>
+      <% end %>
+    </div>
+
+  <% end %>
+
+</div>

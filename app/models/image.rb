@@ -10,7 +10,6 @@ class Image < ApplicationRecord
             length: { minimum: 1, message: 'Description cannot be blank' }
 
   before_save :process_new_image_attachment
-
   after_commit :process_variants
 
   def change_messages

@@ -5,7 +5,6 @@
 #  id             :bigint           not null, primary key
 #  date_published :datetime         not null
 #  overview       :string           not null
-#  text           :text
 #  title          :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -23,7 +22,6 @@ FactoryBot.define do
   factory :post do
     date_published { DateTime.new(2020, 04, 19, 0, 0, 0) }
     overview { 'test blog post overview' }
-    text { 'test blog post content' }
     title { 'test blog post title' }
     user
   end

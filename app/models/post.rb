@@ -5,7 +5,6 @@
 #  id             :bigint           not null, primary key
 #  date_published :datetime         not null
 #  overview       :string           not null
-#  text           :text
 #  title          :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -21,6 +20,10 @@
 #
 class Post < ApplicationRecord
   belongs_to :user
+
+  has_many :post_sections, -> { order(order: :asc) }, dependent: :destroy, inverse_of: :post
+  accepts_nested_attributes_for :post_sections, allow_destroy: true
+  validates_associated :post_sections
 
   validates :date_published,
             timeliness: { message: 'Date published must be date' }

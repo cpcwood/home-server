@@ -60,24 +60,24 @@ The psql database and redis containers require persistent storage in development
 
 #### Install Dependencies
 
-Build the development container images, using ```bin/docker/build```
+Build the development container images, using ```bin/d/build```
 
 Then run the following commands to install the application dependencies:
 
 ```bash
-.bin/docker/bundle install
-bin/docker/yarn install
+.bin/d/bundle install
+bin/d/yarn install
 ```
 
 Note: Sripts are used instead of running the commands directly so the commands run inside the application container, allowing for a consistent environment. The following scripts are current provided:
-- ```bin/docker/up``` - start the application
-- ```bin/docker/down``` - stop the application
-- ```bin/docker/build``` - build the application containers
-- ```bin/docker/run``` - run any shell command
-- ```bin/docker/rspec``` - rspec test suite
-- ```bin/docker/yarn``` - yarn
-- ```bin/docker/rails``` - rails
-- ```bin/docker/bundle``` - bundler
+- ```bin/d/up``` - start the application
+- ```bin/d/down``` - stop the application
+- ```bin/d/build``` - build the application containers
+- ```bin/d/run``` - run any shell command
+- ```bin/d/rspec``` - rspec test suite
+- ```bin/d/yarn``` - yarn
+- ```bin/d/rails``` - rails
+- ```bin/d/bundle``` - bundler
 
 Notes:
 - Arguments added to the scripts are passed through.
@@ -89,7 +89,7 @@ The container image [startup script](./.docker/scripts/startup-worker.dev.sh) wi
 
 #### Start the Development Server
 
-To start the development server using docker-compose, run: ```bin/docker/up```
+To start the development server using docker-compose, run: ```bin/d/up```
 
 The server should now be running on ```http://0.0.0.0:5000```
 
@@ -121,13 +121,13 @@ Sample kubernetes configuration files can be found in [```.kube/```](.kube/).
 
 RSpec and Capybara are used to run unit and feature tests on the appliation. 
 
-To run test suite, run ```bin/docker/rspec``` in the command line.
+To run test suite, run ```bin/d/rspec``` in the command line.
 
 #### Frontend Tests
 
 Jest is used to test the client frontend JavaScript.
 
-To run the test suite run ```bin/docker/yarn test``` in the command line.
+To run the test suite run ```bin/d/yarn test``` in the command line.
 
 
 ## Usage

@@ -197,6 +197,10 @@
       margin-top: 0;
     }
   }
+
+  &.right {
+    flex-direction: row-reverse;
+  }
 }
 
 .embedded-label {
@@ -278,6 +282,7 @@
   margin: 0;
   max-width: 100%;
   min-height: 500px;
+  min-width: 100%;
   padding: 3px;
 
   @include respond-to(tablet) {
@@ -287,6 +292,10 @@
   &:focus {
     border: 1px solid colors.$theme-color;
     box-shadow: inset 0 0 2px colors.$theme-color;
+  }
+
+  &.post {
+    min-height: 250px;
   }
 }
 

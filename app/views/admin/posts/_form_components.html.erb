@@ -1,5 +1,9 @@
 <%= render partial: 'partials/system_messages' %>
 
+<h3>
+  Post Details
+</h3>
+
 <div class="embedded-form-entry-container">
   <%= f.label(:title, 'Title', class: 'input-label embedded-label') %>
   <%= f.text_field(:title, class: 'input-box embedded-input-box', placeholder: 'Enter title...') %>
@@ -15,13 +19,7 @@
   <%= f.date_field(:date_published, class: 'input-box embedded-input-box', placeholder: 'Enter date published...', autocomplete: "off") %>
 </div>
 
-<div class="embedded-form-entry-container">
-  <%= f.label(:text, 'Post content', class: 'input-label embedded-label') %>
-</div>
-
-<div class="embedded-form-entry-container">
-  <%= f.text_area(:text, class: 'input-box embedded-text-area', placeholder: 'Add post content (you can use markdown)...') %>
-</div>
+<%= render partial: "admin/posts/post_sections", locals: {form: f} %>
 
 <div class="embedded-form-entry-container">
   <%= render partial: "partials/submit_right", locals: {form: f, button_text: 'Submit'} %>
