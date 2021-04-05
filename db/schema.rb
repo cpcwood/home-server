@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_04_163732) do
+ActiveRecord::Schema.define(version: 2021_04_05_135744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,13 +128,22 @@ ActiveRecord::Schema.define(version: 2021_04_04_163732) do
     t.index ["post_id"], name: "index_post_images_on_post_id"
   end
 
+  create_table "post_section_images", force: :cascade do |t|
+    t.string "description", default: "post-image", null: false
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "post_sections", force: :cascade do |t|
     t.text "text"
     t.integer "order", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "post_id"
+    t.bigint "post_section_image_id"
     t.index ["post_id"], name: "index_post_sections_on_post_id"
+    t.index ["post_section_image_id"], name: "index_post_sections_on_post_section_image_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -211,6 +220,7 @@ ActiveRecord::Schema.define(version: 2021_04_04_163732) do
   add_foreign_key "gallery_images", "users"
   add_foreign_key "header_images", "site_settings"
   add_foreign_key "post_images", "posts"
+  add_foreign_key "post_sections", "post_section_images"
   add_foreign_key "post_sections", "posts"
   add_foreign_key "posts", "users"
   add_foreign_key "profile_images", "abouts"
