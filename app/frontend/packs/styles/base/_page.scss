@@ -158,3 +158,9 @@ nav .header-image {
   overflow-wrap: break-word;
   width: 100%;
 }
+
+.flex-justified {
+  &.between {
+    justify-content: space-between;
+  }
+}

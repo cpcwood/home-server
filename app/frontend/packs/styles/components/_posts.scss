@@ -63,3 +63,50 @@
   }
 }
 
+
+.blog-post-section {
+  &.destroy {
+    .text-area-container.visible-on-edit .embedded-text-area {
+      max-height: 4em;
+      min-height: unset;
+      opacity: 0.3;
+      text-decoration: line-through;
+    }
+
+    .post-editior-toolbar .visible-on-edit {
+      display: none;
+    }
+
+    .post-editior-toolbar .visible-on-destroy {
+      display: unset;
+    }
+
+    .post-section-images-container {
+      display: none;
+    }
+  }
+
+  .visible-on-destroy {
+    display: none;
+  }
+}
+
+.post-section-image-lightbox {
+  display: flex;
+  height: fit-content;
+  width: 100%;
+
+  .post-section-image-thumbnail {
+    position: relative;
+    width: 100%;
+  }
+}
+
+.post-section-image-caption {
+  font-size: 0.8em;
+  font-weight: 500;
+  overflow-wrap: normal;
+  padding-bottom: 2em;
+  padding-top: 0.25em;
+  width: 100%;
+}

@@ -106,6 +106,8 @@ group :test do
   gem 'rspec_junit_formatter'
   # Load spec env
   gem 'dotenv'
+  # Screenshot failed feature specs
+  gem 'capybara-screenshot'
 end
 
 

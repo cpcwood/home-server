@@ -25,15 +25,25 @@ require 'database_cleaner/active_record'
 Selenium::WebDriver::Chrome::Service.driver_path = ENV['CHROMEDRIVER'] if ENV['CHROMEDRIVER']
 
 Capybara.register_driver :headless_chrome_driver do |app|
-  options = ::Selenium::WebDriver::Chrome::Options.new(args: ['--headless', '--no-sandbox'])
+  options = ::Selenium::WebDriver::Chrome::Options.new(args: ['--headless', '--no-sandbox', '--window-size=1920,1080'])
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
+Capybara.default_max_wait_time = 0.5
 Capybara.server = :puma, { Silent: true }
 Capybara.default_driver = :rack_test
 Capybara.javascript_driver = :headless_chrome_driver
 
+require 'capybara-screenshot'
+require 'capybara-screenshot/rspec'
+
+Capybara::Screenshot.register_driver(:headless_chrome_driver) do |driver, path|
+  driver.browser.save_screenshot(path)
+end
+
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::Console, Coveralls::SimpleCov::Formatter])
+SimpleCov::Formatter::Console.max_rows = 4
+SimpleCov::Formatter::Console.missing_len = 50
 SimpleCov.start 'rails' do
   add_filter 'app/channels'
   add_filter '/spec/'
