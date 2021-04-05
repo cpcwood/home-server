@@ -86,3 +86,25 @@
     display: none;
   }
 }
+
+
+.post-section-image-lightbox {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+
+  img {
+    position: relative;
+    width: 100%;
+  }
+}
+
+
+.post-section-image-caption {
+  font-size: 0.8em;
+  font-weight: 500;
+  padding-bottom: 2em;
+  padding-top: 0.25em;
+  width: 100%;
+  overflow-wrap: normal;
+}

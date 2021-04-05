@@ -121,7 +121,7 @@ module Admin
     end
 
     def find_post
-      Post.includes(:post_sections).find_by(id: params[:id])
+      Post.includes(post_sections: [:post_section_image]).find_by(id: params[:id])
     end
 
     def update_post(post:, success_message:)
