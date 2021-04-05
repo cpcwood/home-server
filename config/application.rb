@@ -35,5 +35,9 @@ module HomeServer
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| 
       html_tag
     }
+
+    config.autoload_paths += Dir[Rails.root.join('app', 'jobs', '**/')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'models', '**/')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'mailers', '**/')]
   end
 end
