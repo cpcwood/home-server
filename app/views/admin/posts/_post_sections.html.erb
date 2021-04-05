@@ -2,11 +2,9 @@
 <% post_sections = form.object.post_sections %>
 <% post_sections = [PostSection.new(order: 0)] unless post_sections.any? %>
 
-<div class="embedded-form-entry-container">
-  <p class='input-label embedded-label'>
-    Post Content
-  </p>
-</div>
+<h3>
+  Post Content
+</h3>
 
 <div data-controller='blog-post-editor' data-blog-post-editor-current-sections-count-value='<%= post_sections.length %>'>
   
@@ -17,6 +15,8 @@
         <div class='form-fields'>
           <hr class='ruler <%= 'hidden' if index == 0 %>'/>
           
+          <%= render partial: 'admin/posts/post_section_image', locals: {form: nested_post_section_form, post_section: post_section} %>
+
           <div class="embedded-form-entry-container visible-on-edit text-area-container">
             <%= nested_post_section_form.text_area(:text, class: 'input-box embedded-text-area post', placeholder: 'Add text content (you can use markdown)...') %>
           </div>
