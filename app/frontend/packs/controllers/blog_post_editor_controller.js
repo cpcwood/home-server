@@ -14,7 +14,6 @@ export default class extends Controller {
 
   newPostSection (event) {
     const postSectionContainer = event.target.closest('.blog-post-section')
-    this.currentSectionsCountValue += 1
     const clonedContainer = postSectionContainer.cloneNode()
     const clonedForm = postSectionContainer.querySelector('.form-fields').cloneNode(true)
 
@@ -43,6 +42,8 @@ export default class extends Controller {
     postSectionContainer.after(clonedContainer)
 
     this.applyOrderToItems()
+
+    this.currentSectionsCountValue += 1
   }
 
   destroyPostSection (event) {
