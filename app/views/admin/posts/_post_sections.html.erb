@@ -25,17 +25,17 @@
           <%= nested_post_section_form.hidden_field(:_destroy, class: 'destroy-post-section', value: 0) %>
 
           <section class='post-editior-toolbar embedded-form-entry-container right' data-value="targetId">
-            <button class='post-editor-toolbar-button'
+            <button class='post-editor-toolbar-button new-section'
                 data-action='click->blog-post-editor#newPostSection'
                 type='button'>
               + New Section
             </button>
-            <button class='post-editor-toolbar-button visible-on-edit' 
+            <button class='post-editor-toolbar-button visible-on-edit remove-section' 
                 data-action='click->blog-post-editor#destroyPostSection'
                 type='button'>
               - Remove Section
             </button>
-            <button class='post-editor-toolbar-button visible-on-destroy' 
+            <button class='post-editor-toolbar-button visible-on-destroy restore-section' 
                 data-action='click->blog-post-editor#restorePostSection'
                 type='button'>
               ^ Restore Section
