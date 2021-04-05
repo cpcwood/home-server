@@ -41,5 +41,11 @@ FactoryBot.define do
       title { 'project image' }
       project
     end
+
+    factory :post_section_image, class: 'PostSectionImage' do
+      description { 'post_section_image_description' }
+      title { 'post section image title' }
+      post_section
+    end
   end
 end

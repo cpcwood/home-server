@@ -107,7 +107,8 @@ module Admin
             post_section_image_attributes: [
               :id,
               :_destroy,
-              :image_file
+              :image_file,
+              :title
             ]
           ]
         )
