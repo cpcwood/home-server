@@ -99,7 +99,18 @@ module Admin
       params
         .require(:post)
         .permit(
-          post_sections_attributes: [:id, :_destroy, :text, :order])
+          post_sections_attributes: [
+            :id, 
+            :_destroy, 
+            :text, 
+            :order,
+            post_section_image_attributes: [
+              :id,
+              :_destroy,
+              :image_file
+            ]
+          ]
+        )
     end
 
     def find_post

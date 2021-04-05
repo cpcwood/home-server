@@ -1,0 +1,24 @@
+<% post_section_image = post_section.post_section_image || post_section.build_post_section_image %>
+<% image_label_text = post_section_image.new_record? ? 'Add image' : 'Update image' %>
+
+<div class='post-section-images-container'>
+  <%= form.fields_for(:post_section_image, post_section_image) do |post_section_image_form| %> 
+    <% unless post_section_image.new_record? %>
+      <div class="embedded-form-entry-container">
+        <%= image_tag(image_path_helper(image_model: post_section_image), class: 'embedded-full-width embedded-cover-image') %>
+      </div>
+    <% end %>
+
+    <div class="embedded-form-entry-container">
+      <%= post_section_image_form.label(:image_file, image_label_text, class: 'input-label embedded-label') %>
+      <%= post_section_image_form.file_field(:image_file, accept: 'image/png,image/jpeg', class: 'input-box embedded-no-border') %>
+    </div>
+    
+    <% unless post_section_image.new_record? %>
+      <div class="embedded-form-entry-container">
+        <%= post_section_image_form.label(:_destroy, 'Remove image:', class: 'input-label inline-label', draggable: false) %>
+        <%= post_section_image_form.check_box(:_destroy, {draggable: false}, 1, 0) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
