@@ -96,7 +96,7 @@ module Admin
     end
 
     def post_section_params
-      params
+      permitted_params = params
         .require(:post)
         .permit(
           post_sections_attributes: [
@@ -111,6 +111,12 @@ module Admin
             ]
           ]
         )
+      permitted_params[:post_sections_attributes].each do |key, post_section| \
+        if post_section[:post_section_image_attributes].values.all?(&:blank?)
+          post_section.delete(:post_section_image_attributes)
+        end
+      end
+      permitted_params
     end
 
     def find_post
