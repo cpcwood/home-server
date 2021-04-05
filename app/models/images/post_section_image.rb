@@ -21,6 +21,8 @@ class PostSectionImage < Image
 
   belongs_to :post_section
 
+  before_save :assign_description_from_title
+
   MAX_DIM = 3000
 
   VARIANT_SIZES = {
@@ -37,5 +39,9 @@ class PostSectionImage < Image
     Image.image_processing_pipeline(image_path: attached_image, quality: 80) do |pipeline|
       pipeline.resize_to_limit(MAX_DIM, MAX_DIM)
     end
+  end
+
+  def assign_description_from_title
+    self.description = self.title if self.title
   end
 end

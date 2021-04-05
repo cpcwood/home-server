@@ -20,5 +20,25 @@
 require 'rails_helper'
 
 RSpec.describe PostSectionImage, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { create(:post_section_image) }
+
+  describe '#variant_sizes' do
+    it 'default_value' do
+      expect(subject.variant_sizes).to eq(PostSectionImage::VARIANT_SIZES)
+    end
+  end
+
+  describe '#description' do
+    it 'if title present' do
+      subject.title = 'test title'
+      subject.description = 'test description'
+      subject.save
+      expect(subject.description).to eq(subject.title)
+    end
+
+    it 'if title nil' do
+      subject.title = nil
+      expect {subject.save}.not_to change { subject.description }
+    end
+  end
 end
