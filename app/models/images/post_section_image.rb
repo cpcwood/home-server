@@ -18,7 +18,6 @@
 #  fk_rails_...  (post_section_id => post_sections.id)
 #
 class PostSectionImage < Image
-
   belongs_to :post_section
 
   before_save :assign_description_from_title
@@ -42,6 +41,6 @@ class PostSectionImage < Image
   end
 
   def assign_description_from_title
-    self.description = self.title unless self.title.nil? || self.title&.blank?
+    self.description = title unless title.nil? || title&.blank?
   end
 end

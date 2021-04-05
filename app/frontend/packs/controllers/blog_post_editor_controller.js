@@ -22,6 +22,7 @@ export default class extends Controller {
     const ruler = clonedForm.querySelector('.ruler')
     ruler.classList.remove('hidden')
 
+    // post_section
     const textField = clonedForm.querySelector('.embedded-text-area.post')
     textField.value = ''
     textField.disabled = false
@@ -38,11 +39,34 @@ export default class extends Controller {
     destroyField.name = `post[post_sections_attributes][${this.currentSectionsCountValue}][_destroy]`
     destroyField.id = `post_post_sections_attributes_${this.currentSectionsCountValue}_destroy`
 
+    // post_section_image
+    const imageDestroyField = clonedForm.querySelector('.post-section-image-destroy-container')
+    const imageThumbnail = clonedForm.querySelector('.post-section-image-thumbnail-container')
+    if (imageDestroyField) {
+      imageDestroyField.remove()
+    }
+    if (imageThumbnail) {
+      imageThumbnail.remove()
+    }
+
+    const imageFileField = clonedForm.querySelector('.post-section-image-file-field')
+    imageFileField.value = ''
+    imageFileField.name = `post[post_sections_attributes][${this.currentSectionsCountValue}][post_section_image_attributes][image_file]`
+    imageFileField.id = `post_post_sections_attributes_${this.currentSectionsCountValue}_post_section_image_attributes_image_file`
+
+    const imageTitleField = clonedForm.querySelector('.post-section-image-title-field')
+    imageTitleField.value = ''
+    imageTitleField.name = `post[post_sections_attributes][${this.currentSectionsCountValue}][post_section_image_attributes][title]`
+    imageTitleField.id = `post_post_sections_attributes_${this.currentSectionsCountValue}_post_section_image_attributes_title`
+
+    const imageFieldsContainer = clonedForm.querySelector('.post-section-images-fields-container')
+    const imagesContainer = clonedForm.querySelector('.post-section-images-container')
+    imagesContainer.innerHTML = ''
+    imagesContainer.appendChild(imageFieldsContainer)
+
     clonedContainer.appendChild(clonedForm)
     postSectionContainer.after(clonedContainer)
-
     this.applyOrderToItems()
-
     this.currentSectionsCountValue += 1
   }
 

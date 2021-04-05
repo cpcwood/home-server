@@ -38,12 +38,12 @@ RSpec.describe PostSectionImage, type: :model do
 
     it 'if title nil' do
       subject.title = nil
-      expect {subject.save}.not_to change { subject.description }
+      expect{ subject.save }.not_to(change{ subject.description })
     end
 
     it 'if title blank' do
       subject.title = ''
-      expect {subject.save}.not_to change { subject.description }
+      expect{ subject.save }.not_to(change{ subject.description })
     end
   end
 end

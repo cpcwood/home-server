@@ -3,27 +3,29 @@
 
 <div class='post-section-images-container'>
   <%= form.fields_for(:post_section_image, post_section_image) do |post_section_image_form| %> 
-    <% unless post_section_image.new_record? %>
-      <div class="embedded-form-entry-container">
-        <%= image_tag(image_path_helper(image_model: post_section_image), class: 'embedded-full-width') %>
-      </div>
-    <% end %>
+    <div class='post-section-images-fields-container'>
+      <% unless post_section_image.new_record? %>
+        <div class="embedded-form-entry-container post-section-image-thumbnail-container">
+          <%= image_tag(image_path_helper(image_model: post_section_image), class: 'embedded-full-width') %>
+        </div>
+      <% end %>
 
-    <div class="embedded-form-entry-container">
-      <%= post_section_image_form.label(:image_file, image_label_text, class: 'input-label embedded-label') %>
-      <%= post_section_image_form.file_field(:image_file, accept: 'image/png,image/jpeg', class: 'input-box embedded-no-border') %>
-    </div>
-
-    <div class="embedded-form-entry-container">
-      <%= post_section_image_form.label(:title, 'Caption', class: 'input-label embedded-label') %>
-      <%= post_section_image_form.text_field(:title, class: 'input-box embedded-input-box', placeholder: 'Enter image caption...') %>
-    </div>
-    
-    <% unless post_section_image.new_record? %>
       <div class="embedded-form-entry-container">
-        <%= post_section_image_form.label(:_destroy, 'Remove image:', class: 'input-label inline-label', draggable: false) %>
-        <%= post_section_image_form.check_box(:_destroy, {draggable: false}, 1, 0) %>
+        <%= post_section_image_form.label(:image_file, image_label_text, class: 'input-label embedded-label') %>
+        <%= post_section_image_form.file_field(:image_file, accept: 'image/png,image/jpeg', class: 'input-box embedded-no-border post-section-image-file-field') %>
       </div>
-    <% end %>
+
+      <div class="embedded-form-entry-container">
+        <%= post_section_image_form.label(:title, 'Caption', class: 'input-label embedded-label') %>
+        <%= post_section_image_form.text_field(:title, class: 'input-box embedded-input-box post-section-image-title-field', placeholder: 'Enter image caption...') %>
+      </div>
+      
+      <% unless post_section_image.new_record? %>
+        <div class="embedded-form-entry-container post-section-image-destroy-container">
+          <%= post_section_image_form.label(:_destroy, 'Remove image:', class: 'input-label inline-label', draggable: false) %>
+          <%= post_section_image_form.check_box(:_destroy, value: 0) %>
+        </div>
+      <% end %>
+    </div>
   <% end %>
 </div>

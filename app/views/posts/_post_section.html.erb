@@ -6,10 +6,10 @@
         itemprop='image' 
         itemscope 
         itemtype="https://schema.org/ImageObject">
-      <%= image_tag(image_path_helper(image_model: post_section.post_section_image, variant: :thumbnail), title: post_section.post_section_image.title, alt: post_section.post_section_image.description, itemprop: 'contentUrl') %>
+      <%= image_tag(image_path_helper(image_model: post_section.post_section_image, variant: :thumbnail), class: 'post-section-image-thumbnail', title: post_section.post_section_image.title, alt: post_section.post_section_image.description, itemprop: 'contentUrl') %>
     </a>
     <div class='post-section-image-caption'>
-      <%= post_section.post_section_image.description %>
+      <%= post_section.post_section_image.title %>
     </div>
   <% end %>
 
