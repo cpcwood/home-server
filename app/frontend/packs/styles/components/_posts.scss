@@ -80,6 +80,10 @@
     .post-editior-toolbar .visible-on-destroy {
       display: unset;
     }
+
+    .post-section-images-container {
+      display: none;
+    }
   }
 
   .visible-on-destroy {
@@ -87,24 +91,22 @@
   }
 }
 
-
 .post-section-image-lightbox {
-  width: 100%;
-  height: fit-content;
   display: flex;
+  height: fit-content;
+  width: 100%;
 
-  img {
+  .post-section-image-thumbnail {
     position: relative;
     width: 100%;
   }
 }
 
-
 .post-section-image-caption {
   font-size: 0.8em;
   font-weight: 500;
+  overflow-wrap: normal;
   padding-bottom: 2em;
   padding-top: 0.25em;
   width: 100%;
-  overflow-wrap: normal;
 }

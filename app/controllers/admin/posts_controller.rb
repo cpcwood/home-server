@@ -97,25 +97,22 @@ module Admin
 
     def post_section_params
       permitted_params = params
-        .require(:post)
-        .permit(
-          post_sections_attributes: [
-            :id, 
-            :_destroy, 
-            :text, 
-            :order,
-            post_section_image_attributes: [
-              :id,
-              :_destroy,
-              :image_file,
-              :title
-            ]
-          ]
-        )
-      permitted_params[:post_sections_attributes].each do |key, post_section| \
-        if post_section[:post_section_image_attributes].values.all?(&:blank?)
-          post_section.delete(:post_section_image_attributes)
-        end
+                         .require(:post)
+                         .permit(
+                           post_sections_attributes: [
+                             :id,
+                             :_destroy,
+                             :text,
+                             :order,
+                             { post_section_image_attributes: [
+                               :id,
+                               :_destroy,
+                               :image_file,
+                               :title
+                             ] }
+                           ])
+      permitted_params[:post_sections_attributes].each do |_key, post_section|
+        post_section.delete(:post_section_image_attributes) if post_section[:post_section_image_attributes]&.values&.all?(&:blank?)
       end
       permitted_params
     end

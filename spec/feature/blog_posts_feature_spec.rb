@@ -44,6 +44,8 @@ feature 'blog posts feature', feature: true do
       # add third post section
       all('.post-editor-toolbar-button.new-section')[1].click
       fill_in('post[post_sections_attributes][2][text]', with: 'post section text content 3')
+      find_field('post[post_sections_attributes][0][post_section_image_attributes][image_file]').set(Rails.root.join('spec/files/sample_image.jpg'))
+      fill_in('post[post_sections_attributes][0][post_section_image_attributes][title]', with: 'post section image caption 3')
 
       # remove second post section
       all('.post-editor-toolbar-button.remove-section')[1].click
@@ -57,9 +59,13 @@ feature 'blog posts feature', feature: true do
       expect(page).to have_content('Blog post created')
       expect(page).to have_content('post title')
       expect(page).to have_content('April 19th, 2020')
+
       expect(page).to have_content('post section text content 1')
-      expect(page).to have_content('post section text content 3')
       expect(page).not_to have_content('post section text content 2')
+      expect(page).to have_content('post section text content 3')
+      expect(page).to have_selector('img.post-section-image-thumbnail')
+      expect(page).to have_content('post section image caption 3')
+
       first('.reading-footer .standard-button').click
       expect(page).to have_content('post overview')
     end
