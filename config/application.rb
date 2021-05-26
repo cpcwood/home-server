@@ -39,5 +39,18 @@ module HomeServer
     config.autoload_paths += Dir[Rails.root.join('app', 'jobs', '**/')]
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '**/')]
     config.autoload_paths += Dir[Rails.root.join('app', 'mailers', '**/')]
+
+    # email
+    config.email_default_name = ENV['EMAIL_DEFAULT_NAME']
+    config.email_default_address = ENV['EMAIL_DEFAULT_ADDRESS']
+    config.email_no_reply_address = ENV['EMAIL_NO_REPLY_ADDRESS']
+
+    # google recaptcha
+    config.grecaptcha_site_secret = ENV['GRECAPTCHA_SITE_SECRET']
+
+    # twilio
+    config.twilio_account_sid = ENV['TWILIO_ACCOUNT_SID']
+    config.twilio_auth_token = ENV['TWILIO_AUTH_TOKEN']
+    config.twilio_verify_service_sid = ENV['TWILIO_VERIFY_SERVICE_SID']
   end
 end

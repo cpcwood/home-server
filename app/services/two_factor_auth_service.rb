@@ -60,9 +60,9 @@ module TwoFactorAuthService
 
     def twilio_client
       @twilio_client ||= Twilio::REST::Client
-                         .new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+                         .new(Rails.configuration.twilio_account_sid, Rails.configuration.twilio_auth_token)
                          .verify
-                         .services(ENV['TWILIO_VERIFY_SERVICE_SID'])
+                         .services(Rails.configuration.twilio_verify_service_sid)
     end
 
     def auth_code_sent?(session)

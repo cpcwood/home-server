@@ -7,7 +7,7 @@ module ReCaptchaService
   class << self
     def recaptcha_valid?(client_response)
       response = Faraday.post('https://www.google.com/recaptcha/api/siteverify') do |request|
-        request.params['secret'] = ENV['GRECAPTCHA_SITE_SECRET']
+        request.params['secret'] = Rails.configuration.grecaptcha_site_secret
         request.params['response'] = client_response
       end
       JSON.parse(response.body)['success'] == true
