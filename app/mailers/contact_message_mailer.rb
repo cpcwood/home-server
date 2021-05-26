@@ -2,7 +2,7 @@ class ContactMessageMailer < ApplicationMailer
   include AttachmentHelper
   include DateHelper
 
-  default from: ENV['EMAIL_NO_REPLY_ADDRESS']
+  default from: Rails.configuration.email_no_reply_address
 
   def contact_message
     assign_default_variables
