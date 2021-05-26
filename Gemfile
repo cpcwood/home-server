@@ -1,15 +1,15 @@
 source 'https://rubygems.org'
 
-ruby '2.7.2'
+ruby '2.7.3'
 
 # Bundler for running commands in containers
-gem 'bundler', '~> 2.1.4'
+gem 'bundler', '~> 2'
 # Rails
 gem 'rails', '~> 6.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma'
+gem 'puma', '~> 5'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 5'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks

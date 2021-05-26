@@ -53,11 +53,6 @@ Since the application is designed to be containerized, its configuration is pass
 
 Development environment variables will be loaded from ```config/env/.env``` by docker-compose. Create the ```config/env/.env``` file from the template of required variables in [```config/env/.env.template```](/config/env/.env.template).
 
-##### Docker Compose
-
-The psql database and redis containers require persistent storage in development. Create data directories for both of these containers, then use the template [```.env.template```](./.env)to create a ```.env``` file in the root directory with these data directories.
-
-
 #### Install Dependencies
 
 Build the development container images, using ```bin/d/build```

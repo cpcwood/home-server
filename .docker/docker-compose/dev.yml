@@ -8,6 +8,7 @@ services:
     build: 
       context: ../..
       dockerfile: .docker/dockerfiles/dev.Dockerfile
+    container_name: home-server-app-dev
     environment:
       REDIS_HOST: redis
       DB_HOST: postgres
@@ -20,7 +21,6 @@ services:
     depends_on:
       - postgres
       - redis
-    container_name: home-server-app-dev
     command: './.docker/scripts/startup-app.dev.sh'
     ports:
       - 5000:5000
@@ -56,7 +56,7 @@ services:
     ports: 
       - 5432:5432
     volumes:
-      - "${DOCKER_DATA_DB_DEV}:/var/lib/postgresql/data"
+      - data-home-server-dev-postgres:/var/lib/postgresql/data
     healthcheck:
       test: pg_isready -U cpcwood -h 127.0.0.1
       interval: 5s
@@ -65,7 +65,7 @@ services:
     image: redis:5-alpine
     command: redis-server
     volumes:
-      - "${DOCKER_DATA_REDIS}:/data"
+      - data-home-server-dev-redis:/data
     ports: 
       - 6379:6379
     healthcheck:
@@ -74,3 +74,6 @@ services:
       timeout: 3s
       retries: 30
 
+volumes:
+  data-home-server-dev-postgres:
+  data-home-server-dev-redis:
