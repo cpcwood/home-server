@@ -1,6 +1,6 @@
 # Home Server
 
-[![Coverage Status](https://img.shields.io/coveralls/github/cpcwood/home-server?style=flat-square&color=sucess)](https://coveralls.io/github/cpcwood/home-server?branch=master) [![CircleCI](https://img.shields.io/circleci/build/gh/cpcwood/home-server?style=flat-square&color=sucess)](https://travis-ci.com/github/cpcwood/home-server) [![JavaScript Style Guide](https://img.shields.io/badge/JS_code_style-standard-informational.svg?style=flat-square)](https://standardjs.com)
+[![Coverage Status](https://img.shields.io/coveralls/github/cpcwood/home-server?style=flat-square&color=sucess)](https://coveralls.io/github/cpcwood/home-server?branch=master) [![CircleCI](https://img.shields.io/circleci/build/gh/cpcwood/home-server?style=flat-square&color=sucess)](https://app.circleci.com/pipelines/github/cpcwood/home-server) [![JavaScript Style Guide](https://img.shields.io/badge/JS_code_style-standard-informational.svg?style=flat-square)](https://standardjs.com)
 
 ## Overview
 
@@ -8,7 +8,7 @@ General portfolio style website and a place to prototype new rails features I fi
 
 ### Technology
 
-- Ruby v2.7.2 \w Ruby on Rails v6 & PostgreSQL
+- Ruby v2.7 \w Ruby on Rails v6 & PostgreSQL
 - Stimulus
 - Google reCaptcha
 - Twilio SMS Verification
@@ -52,11 +52,6 @@ The application is set up to have three different environments: production, deve
 Since the application is designed to be containerized, its configuration is passed through environment variables. 
 
 Development environment variables will be loaded from ```config/env/.env``` by docker-compose. Create the ```config/env/.env``` file from the template of required variables in [```config/env/.env.template```](/config/env/.env.template).
-
-##### Docker Compose
-
-The psql database and redis containers require persistent storage in development. Create data directories for both of these containers, then use the template [```.env.template```](./.env)to create a ```.env``` file in the root directory with these data directories.
-
 
 #### Install Dependencies
 

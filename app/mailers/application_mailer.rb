@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: %("#{ENV['EMAIL_DEFAULT_NAME']}" <#{ENV['EMAIL_DEFAULT_ADDRESS']}>)
+  default from: %("#{Rails.configuration.email_default_name}" <#{Rails.configuration.email_default_address}>)
   layout 'mailer'
 end

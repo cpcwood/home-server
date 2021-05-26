@@ -119,15 +119,6 @@ ActiveRecord::Schema.define(version: 2021_04_05_132316) do
     t.index ["site_setting_id"], name: "index_header_images_on_site_setting_id"
   end
 
-  create_table "post_images", force: :cascade do |t|
-    t.string "description", default: "post-image", null: false
-    t.string "title"
-    t.bigint "post_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["post_id"], name: "index_post_images_on_post_id"
-  end
-
   create_table "post_section_images", force: :cascade do |t|
     t.string "description", default: "post-image", null: false
     t.string "title"
@@ -219,7 +210,6 @@ ActiveRecord::Schema.define(version: 2021_04_05_132316) do
   add_foreign_key "cover_images", "site_settings"
   add_foreign_key "gallery_images", "users"
   add_foreign_key "header_images", "site_settings"
-  add_foreign_key "post_images", "posts"
   add_foreign_key "post_section_images", "post_sections"
   add_foreign_key "post_sections", "posts"
   add_foreign_key "posts", "users"
