@@ -107,7 +107,7 @@ class GalleryImage < Image
 
   def parse_exif_dms(coordinate:, ref:)
     d, m, s = coordinate.split(', ').map(&:to_r)
-    dd = d + m / 60 + s / 3600
+    dd = d + (m / 60) + (s / 3600)
     dd *= -1 if %w[S W].include?(ref)
     dd
   end
