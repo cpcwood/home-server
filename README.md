@@ -34,7 +34,7 @@ General portfolio style website and a place to prototype new rails features I fi
 
 ### Prerequisites
 
-The application is designed to run a containerized workflow to allow for the best runtime conisitency across environments. 
+The application is designed to run a containerized workflow to allow for the best runtime consistency across environments. 
 
 Make sure [docker](https://www.docker.com/) v20+ is installed, clone or download the git repository, then move to the project root directory.
 
@@ -64,7 +64,7 @@ Then run the following commands to install the application dependencies:
 bin/d/yarn install
 ```
 
-Note: Sripts are used instead of running the commands directly so the commands run inside the application container, allowing for a consistent environment. The following scripts are current provided:
+Note: Scripts are used instead of running the commands directly so the commands run inside the application container, allowing for a consistent environment. The following scripts are current provided:
 - ```bin/d/up``` - start the application
 - ```bin/d/down``` - stop the application
 - ```bin/d/build``` - build the application containers
