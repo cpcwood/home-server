@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Application } from 'stimulus'
 import justifiedGalleryController from 'controllers/justified_gallery_controller'
 import justifiedLayout from 'justified-layout'

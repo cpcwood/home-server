@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Application } from 'stimulus'
 import sliderController from 'controllers/slider_controller'
 import { fireEvent } from '@testing-library/dom'

@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Application } from 'stimulus'
 import imageLoaderController from 'controllers/image_loader_controller'
 

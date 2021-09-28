@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Application } from 'stimulus'
 import reCaptchaController from 'controllers/recaptcha_controller'
 
