@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Application } from 'stimulus'
 import headerScrollController from 'controllers/header_scroll_controller'
 
