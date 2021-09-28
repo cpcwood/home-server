@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Application } from 'stimulus'
 import touchHoverTileController from 'controllers/touch_hover_tile_controller'
 

@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Application } from 'stimulus'
 import Typed from 'typed.js'
 import Cookies from 'js-cookie'
