@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Application } from 'stimulus'
 import embeddedGalleryController from 'controllers/embedded_gallery_controller'
 

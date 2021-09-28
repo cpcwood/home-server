@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Application } from 'stimulus'
 import dashboardSidebarController from 'controllers/dashboard_sidebar_controller'
 const fs = require('fs')
