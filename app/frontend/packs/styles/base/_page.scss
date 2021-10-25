@@ -40,12 +40,13 @@
   height: 300px;
   left: 0;
   overflow: hidden;
-  position: fixed;
+  position: absolute;
   top: 0;
   width: 100%;
   z-index: 1;
   
   img {
+    bottom: 0;
     height: 100%;
     object-fit: none;
     object-position: 50% 50%;
@@ -60,9 +61,9 @@
   }
 }
 
-nav .header-image {
-  position: absolute;
-}
+// nav .header-image {
+//   position: absolute;
+// }
 
 .content-container {
   box-sizing: border-box;
