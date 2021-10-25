@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   ruby: circleci/ruby@1.0
   node: circleci/node@2
-  docker: circleci/docker@1.5.0
+  docker: circleci/docker@1.7.0
   kubernetes: circleci/kubernetes@0.11.2
 
 workflows:
@@ -80,7 +80,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
+          version: 20.10.6
       - run:
           name: 'Docker Login'
           command: |
