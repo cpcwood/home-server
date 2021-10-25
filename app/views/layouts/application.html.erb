@@ -36,7 +36,7 @@
   <body data-controller='header-scroll' data-action='scroll@window->header-scroll#scrollHeaderImage turbolinks:before-cache@window->header-scroll#teardown' data-header-scroll-image-height='<%= header_height %>' data-header-scroll-header-height='60'>
     <div class='page-container'>
       <%= render partial: 'partials/navigation' %>
-      <%= render partial: 'partials/header_image' %>
+      <%= render partial: 'partials/header_image', locals: { scrollTarget: 'headerImage' } %>
       <div class='content-container'>
         <main class='content'>
           <%= render partial: 'partials/section_title' %>

@@ -1,7 +1,7 @@
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = ['headerImage']
+  static targets = ['headerImage', 'navImage']
 
   connect () {
     this.baseImageHeight = parseInt(this.data.get('imageHeight'))
@@ -10,26 +10,32 @@ export default class extends Controller {
 
   scrollHeaderImage () {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-    const headerImages = this.headerImageTargets
     const baseImageHeight = this.baseImageHeight
     const baseHeaderHeight = this.baseHeaderHeight
+
+    let parallaxOffset
+    let headerBottomOffset
+    let navTopOffset
+
+    if (scrollTop < (baseImageHeight - baseHeaderHeight)) {
+      parallaxOffset = scrollTop / 3
+      headerBottomOffset = `${-parallaxOffset}px`
+      navTopOffset = `${-(scrollTop - parallaxOffset)}px`
+    } else {
+      parallaxOffset = (baseImageHeight - baseHeaderHeight) / 3
+      headerBottomOffset = `${-parallaxOffset}px`
+      navTopOffset = `${-((baseImageHeight - baseHeaderHeight) - parallaxOffset)}px`
+    }
+
     window.requestAnimationFrame(() => {
-      if (scrollTop < (baseImageHeight - baseHeaderHeight)) {
-        for (let i = 0; i < headerImages.length; i++) {
-          headerImages[i].style.height = `${baseImageHeight - scrollTop}px`
-        }
-      } else {
-        for (let i = 0; i < headerImages.length; i++) {
-          headerImages[i].style.height = `${baseHeaderHeight}px`
-        }
-      }
+      this.headerImageTarget.style.bottom = headerBottomOffset
+      this.navImageTarget.style.top = navTopOffset
     })
   }
 
   teardown () {
-    for (let i = 0; i < this.headerImageTargets.length; i++) {
-      this.headerImageTargets[i].style.height = `${this.baseImageHeight}px`
-    }
+    this.headerImageTarget.style.bottom = '0px'
+    this.navImageTarget.style.top = '0px'
   }
 
   disconnect () {
