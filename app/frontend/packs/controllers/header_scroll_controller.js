@@ -10,26 +10,32 @@ export default class extends Controller {
 
   scrollHeaderImage () {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-    const headerImage = this.headerImageTarget
-    const navImage = this.navImageTarget
     const baseImageHeight = this.baseImageHeight
     const baseHeaderHeight = this.baseHeaderHeight
+
+    let parallaxOffset
+    let headerBottomOffset
+    let navTopOffset
+
+    if (scrollTop < (baseImageHeight - baseHeaderHeight)) {
+      parallaxOffset = scrollTop / 3
+      headerBottomOffset = `${-parallaxOffset}px`
+      navTopOffset = `${-(scrollTop - parallaxOffset)}px`
+    } else {
+      parallaxOffset = (baseImageHeight - baseHeaderHeight) / 3
+      headerBottomOffset = `${-parallaxOffset}px`
+      navTopOffset = `${-((baseImageHeight - baseHeaderHeight) - parallaxOffset)}px`
+    }
+
     window.requestAnimationFrame(() => {
-      if (scrollTop < (baseImageHeight - baseHeaderHeight)) {
-        let parallaxOffset = scrollTop/3
-        headerImage.style.bottom = `${-parallaxOffset}px`
-        navImage.style.top = `${-(scrollTop-parallaxOffset)}px`
-      } else {
-        let parallaxOffset = (baseImageHeight - baseHeaderHeight)/3
-        headerImage.style.bottom = `${-parallaxOffset}px`
-        navImage.style.top = `${-((baseImageHeight - baseHeaderHeight)-parallaxOffset)}px`
-      }
+      this.headerImageTarget.style.bottom = headerBottomOffset
+      this.navImageTarget.style.top = navTopOffset
     })
   }
 
   teardown () {
-    headerImage.style.bottom = `0px`
-    navImage.style.top = `0px`
+    this.headerImageTarget.style.bottom = '0px'
+    this.navImageTarget.style.top = '0px'
   }
 
   disconnect () {
