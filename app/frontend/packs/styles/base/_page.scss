@@ -46,6 +46,7 @@
   z-index: 1;
   
   img {
+    bottom: 0;
     height: 100%;
     object-fit: none;
     object-position: 50% 50%;
@@ -53,7 +54,6 @@
     position: relative;
     width: 100%;
     z-index: inherit;
-    bottom: 0;
     
     @include respond-to(extra-wide) {
       object-fit: cover;
