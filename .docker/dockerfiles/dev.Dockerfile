@@ -4,7 +4,7 @@
 # Compile Assets
 # ================
 
-FROM ruby:2.7.4-alpine3.14
+FROM ruby:2.7.5-alpine3.15
 
 ENV RAILS_ENV=development \
   NODE_ENV=development \
@@ -26,7 +26,7 @@ RUN apk add \
   curl \
   git \
   libffi-dev zlib-dev libxml2-dev libxslt-dev readline-dev \
-  python3 python3-dev py3-pip \
+  rust cargo python3 python3-dev py3-pip \
   chromium-chromedriver chromium libnotify-dev \
   shared-mime-info \
   tzdata && \
