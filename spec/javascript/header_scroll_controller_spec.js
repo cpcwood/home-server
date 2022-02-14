@@ -49,27 +49,27 @@ describe('header_scroll_controller', () => {
       let scrollTop = 10
       window.pageYOffset = scrollTop
       window.dispatchEvent(new Event('scroll'))
-      expect(headerImage.style.bottom).toEqual(`${-scrollTop / 3}px`)
-      expect(navImage.style.top).toEqual(`${-(scrollTop - scrollTop / 3)}px`)
+      expect(headerImage.style.bottom).toEqual(`${-scrollTop / 3.5}px`)
+      expect(navImage.style.top).toEqual(`${-(scrollTop - scrollTop / 3.5)}px`)
 
       scrollTop = 100
       window.pageYOffset = scrollTop
       window.dispatchEvent(new Event('scroll'))
-      expect(headerImage.style.bottom).toEqual(`${-scrollTop / 3}px`)
-      expect(navImage.style.top).toEqual(`${-(scrollTop - scrollTop / 3)}px`)
+      expect(headerImage.style.bottom).toEqual(`${-scrollTop / 3.5}px`)
+      expect(navImage.style.top).toEqual(`${-(scrollTop - scrollTop / 3.5)}px`)
     })
 
     it('scroll limit', () => {
       const scrollLimit = imageHeight - headerHeight
       window.pageYOffset = scrollLimit
       window.dispatchEvent(new Event('scroll'))
-      expect(headerImage.style.bottom).toEqual(`${-scrollLimit / 3}px`)
-      expect(navImage.style.top).toEqual(`${-(scrollLimit - scrollLimit / 3)}px`)
+      expect(headerImage.style.bottom).toEqual(`${-scrollLimit / 3.5}px`)
+      expect(navImage.style.top).toEqual(`${-(scrollLimit - scrollLimit / 3.5)}px`)
 
       window.pageYOffset = scrollLimit + 1
       window.dispatchEvent(new Event('scroll'))
-      expect(headerImage.style.bottom).toEqual(`${-scrollLimit / 3}px`)
-      expect(navImage.style.top).toEqual(`${-(scrollLimit - scrollLimit / 3)}px`)
+      expect(headerImage.style.bottom).toEqual(`${-scrollLimit / 3.5}px`)
+      expect(navImage.style.top).toEqual(`${-(scrollLimit - scrollLimit / 3.5)}px`)
     })
   })
 
@@ -92,8 +92,8 @@ describe('header_scroll_controller', () => {
       const scrollTop = 10
       window.pageYOffset = scrollTop
       window.dispatchEvent(new Event('scroll'))
-      expect(headerImage.style.bottom).toEqual(`${-scrollTop / 3}px`)
-      expect(navImage.style.top).toEqual(`${-(scrollTop - scrollTop / 3)}px`)
+      expect(headerImage.style.bottom).toEqual(`${-scrollTop / 3.5}px`)
+      expect(navImage.style.top).toEqual(`${-(scrollTop - scrollTop / 3.5)}px`)
 
       window.dispatchEvent(new Event('turbolinks:before-cache'))
       expect(headerImage.style.bottom).toEqual('0px')

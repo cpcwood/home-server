@@ -18,11 +18,11 @@ export default class extends Controller {
     let navTopOffset
 
     if (scrollTop < (baseImageHeight - baseHeaderHeight)) {
-      parallaxOffset = scrollTop / 3
+      parallaxOffset = scrollTop / 3.5
       headerBottomOffset = `${-parallaxOffset}px`
       navTopOffset = `${-(scrollTop - parallaxOffset)}px`
     } else {
-      parallaxOffset = (baseImageHeight - baseHeaderHeight) / 3
+      parallaxOffset = (baseImageHeight - baseHeaderHeight) / 3.5
       headerBottomOffset = `${-parallaxOffset}px`
       navTopOffset = `${-((baseImageHeight - baseHeaderHeight) - parallaxOffset)}px`
     }
