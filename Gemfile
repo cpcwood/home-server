@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.7.4'
+ruby '2.7.5'
 
 # Bundler for running commands in containers
 gem 'bundler', '~> 2'
