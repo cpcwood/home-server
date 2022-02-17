@@ -15,14 +15,14 @@
     <meta property="og:site_name" content="<%= @site_settings.name %>">
     <meta property="og:title" content="<%= content_for?(:meta_title) ? "#{yield(:meta_title)} - #{@site_settings.name}" : @site_settings.name %>">
     <meta property="og:description" content="<%= content_for?(:meta_description) ? yield(:meta_description) : "Portfolio, Blog, and RoR Sandbox by #{@site_settings.name}" %>">
-    <meta property="og:image" content='<%= content_for?(:meta_image_path) ? yield(:meta_image_path) :  image_url('site-logo.png')%>'>
+    <meta property="og:image" content='<%= content_for?(:meta_image_path) ? yield(:meta_image_path) :  image_url('site-logo.jpg')%>'>
     <meta property="og:image:type" content='<%= content_for?(:meta_image_type) ? yield(:meta_image_type) :  'image/png' %>'>
     <meta property='og:image:alt' content='<%= content_for?(:meta_image_alt) ? yield(:meta_image_alt) :  "#{@site_settings.name} logo" %>'>
     <meta property="og:url" content='<%= request.original_url %>'>
     <meta property="og:type" content="website">
     <meta name="twitter:title" content="<%= content_for?(:meta_title) ? yield(:meta_title) : @site_settings.name %>">
     <meta name="twitter:description" content="<%= content_for?(:meta_description) ? yield(:meta_description) : "#{@site_settings.name} - Portfolio, Blog, and RoR Sandbox" %>">
-    <meta name="twitter:image" content='<%= content_for?(:meta_image_path) ? yield(:meta_image_path) :  image_url('site-logo.png')%>'>
+    <meta name="twitter:image" content='<%= content_for?(:meta_image_path) ? yield(:meta_image_path) :  image_url('site-logo.jpg')%>'>
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image:alt" content="<%= content_for?(:meta_image_alt) ? yield(:meta_image_alt) :  "#{@site_settings.name} logo" %>">
     <meta name="twitter:site" content="<%= yield(:meta_twitter_account) if content_for?(:meta_twitter_account) %>">
