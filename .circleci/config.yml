@@ -29,7 +29,7 @@ jobs:
   test:
     docker:
       - image: cimg/ruby:2.7.6-browsers 
-      - image: cimg/postgres:alpine
+      - image: cimg/postgres:13.7
         environment:
           POSTGRES_USER: cpcwood-circleci
           POSTGRES_PASSWORD: "test"
