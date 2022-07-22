@@ -1,4 +1,0 @@
-#!/bin/sh
-sudo docker-compose -p home-server-test \
-    -f ./.docker/docker-compose/test.yml \
-    down

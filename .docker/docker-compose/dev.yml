@@ -1,32 +1,36 @@
-version: "3.7"
+version: "3.8"
 
 services:
   app:
     stdin_open: true
     tty: true
-    image: home-server-app-dev
-    build: 
+    image: cpcwood/home-server-app-dev
+    container_name: home-server-app-dev
+    build:
       context: ../..
       dockerfile: .docker/dockerfiles/dev.Dockerfile
-    container_name: home-server-app-dev
     environment:
       REDIS_HOST: redis
       DB_HOST: postgres
       DB_USERNAME: cpcwood
       CHROMEDRIVER: /usr/bin/chromedriver
+      GEM_PATH: /usr/local/bundle
     env_file:
       - ../../config/env/.env
     volumes:
       - ../..:/opt/app/
+      - data-home-server-dev-app-gems:/usr/local/bundle
+    user: "${FIXUID:-1000}:${FIXGID:-1000}"
     depends_on:
       - postgres
       - redis
-    command: './.docker/scripts/startup-app.dev.sh'
+    command: './.docker/scripts/startup-app-dev'
     ports:
       - 5000:5000
 
   worker:
-    image: home-server-worker-dev
+    image: cpcwood/home-server-worker-dev
+    container_name: home-server-worker-dev
     build: 
       context: ../../
       dockerfile: .docker/dockerfiles/dev.Dockerfile
@@ -34,18 +38,20 @@ services:
       REDIS_HOST: redis
       DB_HOST: postgres
       DB_USERNAME: cpcwood
+      GEM_PATH: /gems
     env_file:
       - ../../config/env/.env
     volumes:
       - ../..:/opt/app/
+      - data-home-server-dev-worker-gems:/usr/local/bundle
+    user: "${FIXUID:-1000}:${FIXGID:-1000}"
     depends_on:
       - postgres
       - redis
       - app
-    container_name: home-server-worker-dev
-    command: './.docker/scripts/startup-worker.dev.sh'
+    command: './.docker/scripts/startup-worker-dev'
     security_opt:
-      - seccomp:"./config/chrome.json"
+      - seccomp:"./.docker/config/chrome.json"
 
   postgres:
     image: postgres:13
@@ -77,3 +83,5 @@ services:
 volumes:
   data-home-server-dev-postgres:
   data-home-server-dev-redis:
+  data-home-server-dev-app-gems:
+  data-home-server-dev-worker-gems:

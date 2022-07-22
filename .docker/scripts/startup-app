@@ -1,12 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
 until pg_isready -U "$DB_USERNAME" -h "$DB_HOST" ; do
-    echo 'waiting for database...'
-    sleep 1
+	echo 'waiting for database...'
+	sleep 1
 done
 
 if bundle exec rails db:exists ; then
-  	bundle exec rails db:migrate
+	bundle exec rails db:migrate
 else
 	bundle exec rails db:create
 	bundle exec rails db:migrate

@@ -5,9 +5,9 @@ Dotenv.load('config/env/test-defaults.env')
 
 `
 if bundle exec rake db:exists; then
-    bundle exec rake db:migrate
+  bundle exec rake db:migrate
 else
-    bundle exec rake db:setup
+  bundle exec rake db:setup
 fi
 `
 
@@ -26,7 +26,7 @@ Selenium::WebDriver::Chrome::Service.driver_path = ENV['CHROMEDRIVER'] if ENV['C
 
 Capybara.register_driver :headless_chrome_driver do |app|
   options = ::Selenium::WebDriver::Chrome::Options.new(args: ['--headless', '--no-sandbox', '--window-size=1920,1080'])
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+  Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: [options])
 end
 
 Capybara.default_max_wait_time = 0.5

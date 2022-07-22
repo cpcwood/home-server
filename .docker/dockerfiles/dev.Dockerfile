@@ -1,10 +1,7 @@
 # home-server-dev-image
 # ================
 
-# Compile Assets
-# ================
-
-FROM ruby:2.7.5-alpine3.15
+FROM ruby:2.7.6-alpine3.15
 
 ENV RAILS_ENV=development \
   NODE_ENV=development \
@@ -13,9 +10,12 @@ ENV RAILS_ENV=development \
   APP_HOME=/opt/app \
   PORT=5000
 
-ENV BUNDLE_APP_CONFIG=$APP_HOME/vendor/bundle \
-  BUNDLE_PATH=$APP_HOME/vendor/bundle \
-  PATH=$APP_HOME/vendor/bundle/bin:$APP_HOME/vendor/bundle:$APP_HOME/node_modules/.bin:$PATH
+ARG GEM_PATH=/gems
+ENV BUNDLE_PATH=$GEM_PATH \
+  GEM_PATH=$GEM_PATH \
+  GEM_HOME=$GEM_PATH \
+  BUNDLE_APP_CONFIG=$GEM_PATH \
+  PATH=$GEM_PATH/bin:$APP_HOME/node_modules/.bin:$PATH
 
 RUN apk add \
   build-base \
@@ -29,22 +29,30 @@ RUN apk add \
   rust cargo python3 python3-dev py3-pip \
   chromium-chromedriver chromium libnotify-dev \
   shared-mime-info \
+  bash \
   tzdata && \
   cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
   echo "Europe/London" > /etc/timezone
 
-RUN pip3 install -U selenium && \
-  gem install rake
-
-RUN mkdir -p $APP_HOME && \
+RUN mkdir -p $APP_HOME $GEM_PATH && \
   addgroup --gid 1000 --system docker && \
-  adduser --uid 1000 --system -G docker docker && \
-  chown -R docker:docker $APP_HOME
+  adduser --uid 1000  --home /home/docker --system -G docker -D docker && \
+  chown -R docker:docker $APP_HOME && \
+  chown docker:docker $GEM_PATH
+
+RUN USER=docker && \
+  GROUP=docker && \
+  curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5.1/fixuid-0.5.1-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+  chown root:root /usr/local/bin/fixuid && \
+  chmod 4755 /usr/local/bin/fixuid && \
+  mkdir -p /etc/fixuid && \
+  printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
 
 USER docker
+
+RUN pip3 install -U selenium
 
 WORKDIR $APP_HOME
 
 EXPOSE $PORT
-
-ENTRYPOINT ["./.docker/scripts/entrypoint-dev.sh"]
+ENTRYPOINT ["./.docker/scripts/entrypoint-dev"]

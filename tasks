@@ -1,0 +1,135 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+COMPOSE_PROJECT_NAME=home-server-development
+APP_SERVICE_NAME=app
+APP_HEALTHCHECK_URL=http://0.0.0.0:5000
+
+function build {
+  docker-compose \
+    -p $COMPOSE_PROJECT_NAME \
+    -f ./.docker/docker-compose/dev.yml \
+    build
+}
+
+function up {
+  FIXUID="$(id -u)" FIXGID="$(id -g)" \
+  docker-compose \
+    -p $COMPOSE_PROJECT_NAME \
+    -f ./.docker/docker-compose/dev.yml \
+    up "$@"
+}
+
+function down {
+	docker-compose \
+    -p $COMPOSE_PROJECT_NAME \
+    -f ./.docker/docker-compose/dev.yml \
+    down "$@"
+}
+
+function run {
+  FIXUID="$(id -u)" FIXGID="$(id -g)" \
+	docker-compose \
+    -p $COMPOSE_PROJECT_NAME \
+    -f ./.docker/docker-compose/dev.yml \
+    run $APP_SERVICE_NAME /bin/bash --init-file ./.docker/scripts/entrypoint-dev "$@"
+}
+
+function exec {
+	ensure_app_container_running
+	docker-compose \
+		-p $COMPOSE_PROJECT_NAME \
+		-f ./.docker/docker-compose/dev.yml \
+		exec $APP_SERVICE_NAME /bin/bash -c "source ./.docker/scripts/entrypoint-dev && $*"
+}
+
+function bash {
+	ensure_app_container_running
+	docker-compose \
+		-p $COMPOSE_PROJECT_NAME \
+		-f ./.docker/docker-compose/dev.yml \
+		exec $APP_SERVICE_NAME /bin/bash --init-file ./.docker/scripts/entrypoint-dev
+}
+
+function console {
+	exec bundle exec rails console
+}
+
+function yarn {
+	exec yarn "$@"
+}
+
+function bundle {
+	exec bundle "$@"
+}
+
+function rubocop {
+	exec bundle exec rubocop "$@"
+}
+
+function rspec {
+	ensure_app_container_running
+  docker-compose \
+		-p $COMPOSE_PROJECT_NAME \
+		-f ./.docker/docker-compose/dev.yml \
+		exec -e RAILS_ENV=test $APP_SERVICE_NAME \
+    /bin/bash -c "source ./.docker/scripts/entrypoint-dev && bundle exec rspec $*"
+}
+
+function ensure_app_container_running {
+	(! (docker ps | grep -q $COMPOSE_PROJECT_NAME)) && up -d
+  until curl --output /dev/null --silent --head "$APP_HEALTHCHECK_URL" ; do
+    echo 'waiting for app...'
+    sleep 2.5
+  done
+}
+
+function build-all-images {
+  build-images-base
+  build-images-app
+  build-images-worker
+  build
+}
+
+function build-images-base {
+  source ./config/env/.env
+  [ -z "$GRECAPTCHA_SITE_KEY" ] && echo "GRECAPTCHA_SITE_KEY empty" && exit 1
+
+  GIT_SHA="$(git rev-parse HEAD | head -c8)"
+
+  docker build \
+    --build-arg grecaptcha_site_key="$GRECAPTCHA_SITE_KEY" \
+    -t cpcwood/home-server-base:latest \
+    -t cpcwood/home-server-base:"$GIT_SHA" \
+    -f ./.docker/dockerfiles/base.Dockerfile \
+    .
+}
+
+function build-images-app {
+  GIT_SHA="$(git rev-parse HEAD | head -c8)"
+
+  docker build \
+    -t cpcwood/home-server-app:latest \
+    -t cpcwood/home-server-app:"$GIT_SHA" \
+    -f ./.docker/dockerfiles/Dockerfile \
+    .
+}
+
+function build-images-worker {
+  GIT_SHA="$(git rev-parse HEAD | head -c8)"
+
+  docker build \
+    -t cpcwood/home-server-worker-dependencies:latest \
+    -t cpcwood/home-server-worker-dependencies:"$GIT_SHA" \
+    -f ./.docker/dockerfiles/worker-dependencies.Dockerfile \
+    .
+
+  docker build \
+    -t cpcwood/home-server-worker:latest \
+    -t cpcwood/home-server-worker:"$GIT_SHA" \
+    -f ./.docker/dockerfiles/worker.Dockerfile \
+    .
+}
+
+TIMEFORMAT="Task completed in %3lR"
+time "${@:-default}"
