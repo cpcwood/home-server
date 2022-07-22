@@ -5,6 +5,7 @@ orbs:
   node: circleci/node@2
   docker: circleci/docker@1.7.0
   kubernetes: circleci/kubernetes@0.11.2
+  browser-tools: circleci/browser-tools@1.4.0
 
 workflows:
   version: 2
@@ -43,6 +44,7 @@ jobs:
       DB_NAME_TEST: home_server_test
       RAILS_ENV: test
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - ruby/install-deps
       - node/install-packages:
