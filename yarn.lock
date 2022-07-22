@@ -2705,7 +2705,7 @@ capture-stack-trace@^1.0.0:
   resolved "https://registry.yarnpkg.com/capture-stack-trace/-/capture-stack-trace-1.0.1.tgz#a6c0bbe1f38f3aa0b92238ecb6ff42c344d4135d"
   integrity sha512-mYQLZnx5Qt1JgB1WEiMCf2647plpGeQ2NMR/5L0HNZzGQo4fuSPnK+wjfPnKZV0aiJDgzmWqqkV/g7JD+DW0qw==
 
-carbon-now-cli@^1.4.0:
+carbon-now-cli@1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/carbon-now-cli/-/carbon-now-cli-1.4.0.tgz#6559252d2dd71ac42c9a15b61cd1d12c458636ac"
   integrity sha512-VVwArD/VAKG2p7Om8x5E7eEHNS/7b2agp8o7zM6i0XXento1XTkLynaQRsuwCtjJwSSvOvNTyRN/akiFQhGBDA==

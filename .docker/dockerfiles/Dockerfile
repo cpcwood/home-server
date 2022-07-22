@@ -4,7 +4,7 @@
 
 # Create App
 # ================
-FROM ruby:2.7.5-alpine3.15
+FROM ruby:2.7.6-alpine3.15
 
 ENV RAILS_ENV=production \
   NODE_ENV=production \
@@ -17,6 +17,7 @@ ENV BUNDLE_PATH=$APP_HOME/vendor/bundle \
   PATH=$APP_HOME/vendor/bundle/bin:$APP_HOME/vendor/bundle:$APP_HOME/node_modules/.bin:$PATH
 
 RUN apk add --no-cache \
+  bash \
   tzdata \
   imagemagick \
   postgresql-client \
