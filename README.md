@@ -61,9 +61,8 @@ In order for commands to run inside the application containers scripts are used 
 - ```./tasks/up``` - start the application
 - ```./tasks/down``` - stop the application
 - ```./tasks/build``` - build the application containers
-- ```./tasks/run``` - enter shell or run command in new container by passing arguments
 - ```./tasks/exec``` - run command in application container
-- ```./tasks/exec``` - enter shell in application container
+- ```./tasks/bash``` - enter shell in application container
 - ```./tasks/rspec``` - rspec test suite
 - ```./tasks/yarn``` - yarn
 - ```./tasks/rails``` - rails

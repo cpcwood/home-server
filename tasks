@@ -27,14 +27,6 @@ function down {
     down "$@"
 }
 
-function run {
-  FIXUID="$(id -u)" FIXGID="$(id -g)" \
-	docker-compose \
-    -p $COMPOSE_PROJECT_NAME \
-    -f ./.docker/docker-compose/dev.yml \
-    run $APP_SERVICE_NAME /bin/bash --init-file ./.docker/scripts/entrypoint-dev "$@"
-}
-
 function exec {
 	ensure_app_container_running
 	docker-compose \
