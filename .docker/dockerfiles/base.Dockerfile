@@ -6,7 +6,7 @@
 # Compile Assets
 # ================
 
-FROM ruby:2.7.5-alpine3.15
+FROM ruby:2.7.6-alpine3.15
 
 ENV RAILS_ENV=production \
   NODE_ENV=production \
@@ -18,7 +18,7 @@ ENV BUNDLE_PATH=$APP_HOME/vendor/bundle \
   GEM_HOME=$APP_HOME/vendor/bundle \
   BUNDLE_APP_CONFIG=$APP_HOME/vendor/bundle
 
-RUN apk add --no-cache \
+RUN apk add --update --no-cache \
   build-base \
   postgresql-dev \
   nodejs \

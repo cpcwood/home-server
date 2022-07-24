@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '2.7.5'
+ruby '2.7.6'
 
 # Bundler for running commands in containers
-gem 'bundler', '~> 2'
+gem 'bundler', '2.1.4'
 # Rails
 gem 'rails', '~> 6.1'
 # Use postgresql as the database for Active Record
@@ -40,6 +40,8 @@ gem 'tzinfo-data'
 gem 'jsonapi-serializer'
 # mime types
 gem 'mimemagic'
+# Tasks
+gem 'rake'
 
 group :production do
   # AWS S3 for production storage
