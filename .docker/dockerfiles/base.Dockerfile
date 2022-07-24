@@ -35,7 +35,8 @@ RUN bundle config set without development:test:assets && \
   bundle install
 
 COPY package.json yarn.lock $APP_HOME/
-RUN yarn install --production=true
+RUN yarn install --production=true && \
+  rm -rf /usr/local/share/.cache/yarn
 
 RUN addgroup -S docker && \
   adduser -S -G docker docker
