@@ -34,9 +34,9 @@ General portfolio style website and a place to prototype new rails features I fi
 
 ### Prerequisites
 
-The application is designed to run a containerized workflow to allow for the best runtime consistency across environments. 
+The application is designed to run in a containerized workflow to allow for good runtime consistency across environments. 
 
-Make sure [docker](https://www.docker.com/) v20+ is installed, clone or download the git repository, then move to the project root directory.
+Make sure [docker](https://www.docker.com/) v20.10+ is installed, clone or download the git repository, then move to the project root directory.
 
 ### Environment
 
@@ -51,28 +51,26 @@ The application is set up to have three different environments: production, deve
 
 Since the application is designed to be containerized, its configuration is passed through environment variables. 
 
-Development environment variables will be loaded from ```config/env/.env``` by docker-compose. Create the ```config/env/.env``` file from the template of required variables in [```config/env/.env.template```](/config/env/.env.template).
+Development environment variables are loaded from ```config/env/.env``` by docker-compose. Create the ```config/env/.env``` file from the template of required variables in [```config/env/.env.template```](/config/env/.env.template).
 
 #### Install Dependencies
 
-Build the development container images, using ```bin/d/build```
+Build the development container images, using ```./tasks build```
 
-Then run the following commands to install the application dependencies:
+In order for commands to run inside the application containers scripts are used instead of calling the commands directly. Scripts are run from the [`tasks`](./tasks) file and the following scripts are current provided:
+- ```./tasks/up``` - start the application
+- ```./tasks/down``` - stop the application
+- ```./tasks/build``` - build the application containers
+- ```./tasks/run``` - enter shell or run command in new container by passing arguments
+- ```./tasks/exec``` - run command in application container
+- ```./tasks/exec``` - enter shell in application container
+- ```./tasks/rspec``` - rspec test suite
+- ```./tasks/yarn``` - yarn
+- ```./tasks/rails``` - rails
+- ```./tasks/bundle``` - bundler
+- ```./tasks/rubocop``` - run ruby code linter
 
-```bash
-.bin/d/bundle install
-bin/d/yarn install
-```
-
-Note: Scripts are used instead of running the commands directly so the commands run inside the application container, allowing for a consistent environment. The following scripts are current provided:
-- ```bin/d/up``` - start the application
-- ```bin/d/down``` - stop the application
-- ```bin/d/build``` - build the application containers
-- ```bin/d/run``` - run any shell command
-- ```bin/d/rspec``` - rspec test suite
-- ```bin/d/yarn``` - yarn
-- ```bin/d/rails``` - rails
-- ```bin/d/bundle``` - bundler
+Then container start up scripts will install the application dependencies automatically on the first run. Updates to dependencies, such as adding a new gem, should be performed manually.
 
 Notes:
 - Arguments added to the scripts are passed through.
@@ -84,7 +82,7 @@ The container image [startup script](./.docker/scripts/startup-worker.dev.sh) wi
 
 #### Start the Development Server
 
-To start the development server using docker-compose, run: ```bin/d/up```
+To start the development server using docker-compose, run: ```./tasks up```
 
 The server should now be running on ```http://0.0.0.0:5000```
 
@@ -97,9 +95,9 @@ The application requires four containers to run:
 - redis - job storage
 - psql - database storage
 
-The file [tasks-docker.txt](tasks-docker.txt) contains the commands required to build the containers for the application. The circle-ci [```.config```](./.circleci/config.yml) is set to build and push the containers automatically during the CI/CD pipeline.
+Production containers are expected to be built and pushed to a container repository through CI, see the [CircleCI config file](./.circleci/config.yml). The [`tasks`](./tasks) file also has commands which can be used to build the production containers. 
 
-Note: Make sure to replace ```cpcwood``` with your dockerhub username and ensure mounted paths are correct for your machine.
+Note: Make sure to replace the ```cpcwood``` in the container tags with your container repository username and ensure mounted paths are correct for your machine.
 
 #### Deploy
 
@@ -114,15 +112,15 @@ Sample kubernetes configuration files can be found in [```.kube/```](.kube/).
 
 #### Server Tests
 
-RSpec and Capybara are used to run unit and feature tests on the appliation. 
+RSpec and Capybara are used to run unit and feature tests on the application. 
 
-To run test suite, run ```bin/d/rspec``` in the command line.
+To run test suite, run ```./tasks rspec``` in the command line.
 
 #### Frontend Tests
 
 Jest is used to test the client frontend JavaScript.
 
-To run the test suite run ```bin/d/yarn test``` in the command line.
+To run the test suite run ```./tasks yarn test``` in the command line.
 
 
 ## Usage
@@ -146,4 +144,4 @@ Any pull requests are welcome. If you have a question or find a bug, create a Gi
 
 ## LICENSE
 
-This software is distributed under the MIT license
+This software is distributed under the MIT license.
