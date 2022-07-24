@@ -10,7 +10,7 @@
     "@rails/activestorage": "^6.1.0",
     "@rails/ujs": "^6.1.0",
     "@rails/webpacker": "^5.4.3",
-    "carbon-now-cli": "^1.4.0",
+    "carbon-now-cli": "1.4.0",
     "core-js": "^3.18.1",
     "jpeg-js": "^0.4.4",
     "js-cookie": "^2.0.0",

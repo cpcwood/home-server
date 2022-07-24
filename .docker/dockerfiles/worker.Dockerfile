@@ -4,7 +4,7 @@
 
 # Create Worker App
 # ================
-FROM ruby:2.7.5-alpine3.15
+FROM ruby:2.7.6-alpine3.15
 
 ENV RAILS_ENV=production \
   NODE_ENV=production \
@@ -18,6 +18,7 @@ ENV BUNDLE_PATH=$APP_HOME/vendor/bundle \
   PATH=$APP_HOME/vendor/bundle/bin:$APP_HOME/vendor/bundle:$APP_HOME/node_modules/.bin:$PATH
 
 RUN apk add --no-cache \
+  bash \
   tzdata \
   postgresql-client \
   nodejs \
@@ -32,10 +33,10 @@ WORKDIR $APP_HOME
 
 RUN addgroup -S docker && \
   adduser -S -G docker docker
-
+  
 USER docker
 
 COPY --chown=docker:docker --from=cpcwood/home-server-base $APP_HOME $APP_HOME
 COPY --chown=docker:docker --from=cpcwood/home-server-worker-dependencies $APP_HOME/node_modules $APP_HOME/node_modules
 
-CMD ["./.docker/scripts/startup-worker.sh"]
+CMD ["./.docker/scripts/startup-worker"]

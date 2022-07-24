@@ -5,6 +5,7 @@ orbs:
   node: circleci/node@2
   docker: circleci/docker@1.7.0
   kubernetes: circleci/kubernetes@0.11.2
+  browser-tools: circleci/browser-tools@1.4.0
 
 workflows:
   version: 2
@@ -28,8 +29,8 @@ workflows:
 jobs:     
   test:
     docker:
-      - image: circleci/ruby:2.7.5-node-browsers 
-      - image: circleci/postgres:alpine
+      - image: cimg/ruby:2.7.6-browsers 
+      - image: cimg/postgres:13.7
         environment:
           POSTGRES_USER: cpcwood-circleci
           POSTGRES_PASSWORD: "test"
@@ -43,6 +44,7 @@ jobs:
       DB_NAME_TEST: home_server_test
       RAILS_ENV: test
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - ruby/install-deps
       - node/install-packages:
@@ -68,7 +70,7 @@ jobs:
           name: 'Automerge PR'
           command: |
             set +e
-            ./scripts/circle-ci/circle-ci-auto-merge.sh
+            ./scripts/circle-ci/circle-ci-auto-merge
             if [ $? = 0 ]; then
                 echo 'Merge successful'
             else

@@ -3,7 +3,7 @@
 
 # Create Server NodeJS Assets
 # ================
-FROM alpine:3.14 as server-nodejs-assets
+FROM alpine:3.15 as server-nodejs-assets
 
 ENV RAILS_ENV=production \
   NODE_ENV=production \
@@ -18,11 +18,16 @@ RUN apk add --no-cache \
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
+COPY package.json yarn.lock ./
+
 RUN addgroup -S docker && \
   adduser -S -G docker docker && \
   chown -R docker:docker $APP_HOME
 
 USER docker
 
-RUN yarn add carbon-now-cli && \
-  ls | grep -v node_modules$| xargs rm -rf
+RUN PACKAGE_NAME='carbon-now-cli' && \
+  LINE_NUMBER="$(cat yarn.lock | grep -n "$PACKAGE_NAME@.*:" | cut -f1 -d:)" && \
+  VERSION="$(cat yarn.lock | sed -n $((LINE_NUMBER + 1))p | sed 's/.*version \"\(.*\)\"/\1/')" && \
+  yarn add ${PACKAGE_NAME}@${VERSION} && \
+  ls | grep -v node_modules | xargs rm -rf
