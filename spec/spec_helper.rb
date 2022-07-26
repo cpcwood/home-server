@@ -14,11 +14,11 @@ fi
 require 'coveralls'
 Coveralls.wear!('rails')
 
-require 'simplecov'
-require 'simplecov-console'
+require 'webdrivers'
+Webdrivers.install_dir = './vendor'
+
 require 'rails_helper'
 require 'capybara'
-require 'webdrivers'
 require 'sidekiq/testing'
 require 'database_cleaner/active_record'
 
@@ -41,13 +41,14 @@ Capybara::Screenshot.register_driver(:headless_chrome_driver) do |driver, path|
   driver.browser.save_screenshot(path)
 end
 
+require 'simplecov'
+require 'simplecov-console'
+
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::Console, Coveralls::SimpleCov::Formatter])
 SimpleCov::Formatter::Console.max_rows = 4
 SimpleCov::Formatter::Console.missing_len = 50
-SimpleCov.start 'rails' do
-  add_filter 'app/channels'
-  add_filter '/spec/'
-end
+SimpleCov.add_filter 'app/channels'
+SimpleCov.add_filter '/spec/'
 
 require 'webmock/rspec'
 

@@ -25,8 +25,8 @@ class Post < ApplicationRecord
   accepts_nested_attributes_for :post_sections, allow_destroy: true
   validates_associated :post_sections
 
-  validates :date_published,
-            timeliness: { message: 'Date published must be date' }
+  validates :date_published, 
+            date: { message: 'Date published must be date' }
 
   validates :overview,
             length: { minimum: 1, message: 'Blog post overview cannot be empty' }

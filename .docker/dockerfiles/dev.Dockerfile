@@ -1,7 +1,7 @@
 # home-server-dev-image
 # ================
 
-FROM ruby:2.7.6-alpine3.15
+FROM ruby:3.1.2-alpine3.15
 
 ENV RAILS_ENV=development \
   NODE_ENV=development \
@@ -14,8 +14,9 @@ ARG GEM_PATH=/gems
 ENV BUNDLE_PATH=$GEM_PATH \
   GEM_PATH=$GEM_PATH \
   GEM_HOME=$GEM_PATH \
-  BUNDLE_APP_CONFIG=$GEM_PATH \
-  PATH=$GEM_PATH/bin:$APP_HOME/node_modules/.bin:$PATH
+  BUNDLE_APP_CONFIG=$GEM_PATH
+
+RUN export PATH="$(ruby -e 'print Gem.user_dir')/bin":$APP_HOME/node_modules/.bin:$PATH
 
 RUN apk add \
   build-base \
@@ -36,9 +37,15 @@ RUN apk add \
 
 RUN mkdir -p $APP_HOME $GEM_PATH && \
   addgroup --gid 1000 --system docker && \
-  adduser --uid 1000  --home /home/docker --system -G docker -D docker && \
+  adduser --uid 1000 --system -G docker -D docker && \
   chown -R docker:docker $APP_HOME && \
   chown docker:docker $GEM_PATH
+
+RUN echo $GEM_PATH
+
+RUN chown docker $GEM_PATH
+
+RUN ls -al /
 
 RUN USER=docker && \
   GROUP=docker && \

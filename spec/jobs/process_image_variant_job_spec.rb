@@ -1,5 +1,5 @@
 RSpec.describe ProcessImageVariantJob, type: :job do
-  let(:image_file_upload) { fixture_file_upload(Rails.root.join('spec/files/sample_image.jpg'), 'image/jpg') }
+  let(:image_file_upload) { fixture_file_upload(Rails.root.join('spec/files/sample_image.jpg'), 'image/jpeg') }
   let(:image) { create(:gallery_image, image_file: image_file_upload) }
 
   before(:each) do
