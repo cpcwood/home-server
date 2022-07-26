@@ -27,6 +27,13 @@ function down {
     down "$@"
 }
 
+function run {
+	docker-compose \
+		-p $COMPOSE_PROJECT_NAME \
+		-f ./.docker/docker-compose/dev.yml \
+		run $APP_SERVICE_NAME /bin/bash -c "source ./.docker/scripts/entrypoint-dev && $*"
+}
+
 function exec {
 	ensure_app_container_running
 	docker-compose \

@@ -1,7 +1,6 @@
 require_relative "boot"
 
 require "rails/all"
-require "sprockets/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -10,7 +9,7 @@ Bundler.require(*Rails.groups)
 module HomeServer
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+    config.load_defaults 7.0
     config.middleware.use Rack::Attack
 
     config.generators do |g|
@@ -52,5 +51,8 @@ module HomeServer
     config.twilio_account_sid = ENV['TWILIO_ACCOUNT_SID']
     config.twilio_auth_token = ENV['TWILIO_AUTH_TOKEN']
     config.twilio_verify_service_sid = ENV['TWILIO_VERIFY_SERVICE_SID']
+
+    # Image processing
+    config.active_storage.variant_processor = :mini_magick
   end
 end

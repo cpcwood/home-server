@@ -190,7 +190,7 @@ RSpec.describe User, type: :model do
     it 'Adds a password reset expiry to user' do
       travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
       subject.send_password_reset_email!
-      expect(subject.password_reset_expiry).to eq(Time.zone.now + 1.hour)
+      expect(subject.password_reset_expiry).to eq(1.hour.from_now)
     end
 
     it 'Password reset email requested to be sent' do
@@ -203,7 +203,7 @@ RSpec.describe User, type: :model do
     it 'Returns user if reset token matches and in date' do
       travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
       subject.update_attribute(:password_reset_token, 'test-token')
-      subject.update_attribute(:password_reset_expiry, Time.zone.now + 1.hour)
+      subject.update_attribute(:password_reset_expiry, 1.hour.from_now)
       travel_to Time.zone.local(2020, 04, 19, 00, 59, 00)
       expect(User.user_from_password_reset_token('test-token')).to eq(subject)
     end
@@ -211,7 +211,7 @@ RSpec.describe User, type: :model do
     it 'Returns nil if reset token matches and but not in date' do
       travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
       subject.update_attribute(:password_reset_token, 'test-token')
-      subject.update_attribute(:password_reset_expiry, Time.zone.now + 1.hour)
+      subject.update_attribute(:password_reset_expiry, 1.hour.from_now)
       travel_to Time.zone.local(2020, 04, 19, 01, 01, 00)
       expect(User.user_from_password_reset_token('test-token')).to eq(nil)
     end

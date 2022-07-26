@@ -19,8 +19,8 @@ class Project < ApplicationRecord
   validates :title,
             length: { minimum: 1, message: 'Title cannot be empty' }
 
-  validates :date,
-            timeliness: { message: 'Date format invalid' }
+  validates :date, 
+            date: { message: 'Date format invalid' }
 
   validates :github_link,
             url: { allow_blank: true, message: 'Github link is not valid' }

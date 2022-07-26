@@ -15,7 +15,7 @@
 #
 
 RSpec.describe About, type: :model do
-  let(:image_file_upload) { fixture_file_upload(Rails.root.join('spec/files/sample_image.jpg'), 'image/jpg') }
+  let(:image_file_upload) { fixture_file_upload(Rails.root.join('spec/files/sample_image.jpg'), 'image/jpeg') }
   let(:about) { create(:about) }
 
   context 'validations' do

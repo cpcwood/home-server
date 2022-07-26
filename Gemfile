@@ -1,11 +1,14 @@
 source 'https://rubygems.org'
 
-ruby '2.7.6'
+ruby '3.1.2'
 
 # Bundler for running commands in containers
-gem 'bundler', '2.1.4'
+gem 'bundler', '~> 2.3.18'
+
 # Rails
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.0'
+# Ensure assets pipeline from v6 still works
+gem 'sprockets-rails'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -33,7 +36,7 @@ gem 'rouge'
 # Validate urls in model
 gem 'validate_url'
 # Validate dates in model
-gem 'validates_timeliness', '~> 5.0.0.beta1'
+gem 'date_validator'
 # Timezone
 gem 'tzinfo-data'
 # JSON API serializer

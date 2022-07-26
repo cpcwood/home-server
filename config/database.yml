@@ -1,7 +1,6 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  database: home_server_<%= Rails.env %>
   username: <%= ENV['DB_USERNAME'] %>
   password: <%= ENV['DB_PASSWORD']  %>
   host: <%= ENV.fetch('DB_HOST') { 'localhost' } %>
@@ -11,9 +10,12 @@ default: &default
 
 production:
   <<: *default
+  database: home_server_production
 
 development:
   <<: *default
+  database: home_server_development
 
 test:
   <<: *default
+  database: home_server_test
