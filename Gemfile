@@ -9,14 +9,14 @@ gem 'bundler', '~> 2.3.18'
 gem 'rails', '~> 7.0'
 # Ensure assets pipeline from v6 still works
 gem 'sprockets-rails'
+# Turbo rails
+gem 'turbo-rails'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 5'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 5'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3'
 # Throttle excessive requests
@@ -82,8 +82,6 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Annotate models for quick reference
   gem 'annotate'
-  # Catch and check mail in real time
-  gem 'letter_opener'
   # Static security testing
   gem 'brakeman'
   # Lint erb

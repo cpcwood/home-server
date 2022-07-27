@@ -26,6 +26,7 @@ services:
     depends_on:
       - postgres
       - redis
+      - mailcatcher
     command: './.docker/scripts/startup-app-dev'
     ports:
       - 5000:5000
@@ -78,6 +79,12 @@ services:
     command: './.docker/scripts/startup-worker-dev'
     security_opt:
       - seccomp:"./.docker/config/chrome.json"
+
+  mailcatcher:
+    image: sj26/mailcatcher
+    ports:
+      - 1025:1025
+      - 1080:1080
 
   postgres:
     image: postgres:13
