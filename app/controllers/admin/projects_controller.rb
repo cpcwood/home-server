@@ -46,9 +46,9 @@ module Admin
       @notices = []
       @alerts = []
       begin
+        @project = find_model
+        return redirect_to(projects_path, alert: 'Project not found') unless @project
         Project.transaction do
-          @project = find_model
-          return redirect_to(projects_path, alert: 'Project not found') unless @project
           if render_code_snippet
             update_model(model: @project, success_message: 'Project updated')
             create_project_images(project: @project)

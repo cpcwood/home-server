@@ -19,7 +19,6 @@ module Admin
       end
 
       if flash[:alert].any?
-        flash[:alert] = flash[:alert]
         render(partial: 'admin/abouts/edit_form',
                status: :unprocessable_entity,
                locals: {

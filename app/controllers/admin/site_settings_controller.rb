@@ -6,25 +6,20 @@ module Admin
 
     def update
       @notices = []
-      @alerts = []
+      flash[:alert] = []
+
       begin
         update_settings
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-        @alerts.push('Sorry, something went wrong!')
-        @alerts.push(e.message)
+        flash[:alert].push('Sorry, something went wrong!')
+        flash[:alert].push(e.message)
       end
-      if @alerts.any?
-        @site_settings.assign_attributes(permitted_params)
-        flash[:alert] = @alerts
-        render(
-          partial: 'partials/form_replacement',
-          locals: {
-            selector_id: 'admin-site-settings-edit-form',
-            form_partial: 'admin/site_settings/edit_form',
-            model: { site_settings: @site_settings }
-          },
-          formats: [:js])
+
+      if flash[:alert].any?
+        render(partial: 'admin/site_settings/edit_form',
+               status: :unprocessable_entity,
+               locals: { site_settings: @site_settings })
         flash[:alert] = nil
       else
         redirect_to(admin_site_settings_path, notice: @notices)
@@ -45,7 +40,7 @@ module Admin
       if @site_settings.update(permitted_params)
         @notices += @site_settings.change_messages
       else
-        @alerts.push(@site_settings.errors.messages.to_a.flatten.last)
+        flash[:alert].push(@site_settings.errors.messages.to_a.flatten.last)
       end
     end
   end

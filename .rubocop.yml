@@ -76,3 +76,6 @@ Rails/DynamicFindBy:
 
 Performance/Caller:
   Enabled: false
+
+Rails/I18nLocaleTexts:
+  Enabled: false
