@@ -21,7 +21,7 @@ class ContactMessagesController < ApplicationController
              locals: {
                contact_message: @contact_message
              })
-      flash[:alert] = []
+      flash[:alert] = nil
     else
       redirect_to(contact_path, notice: @notices)
     end
@@ -49,23 +49,10 @@ class ContactMessagesController < ApplicationController
       flash[:alert].push(@contact_message.errors.messages.to_a.flatten.last)
     end
   end
-  
+
   def recaptcha_valid?
     return true if ReCaptchaService.recaptcha_valid?(params['g-recaptcha-response'])
     flash[:alert].push('reCaptcha failed, please try again')
     false
-  end
-
-  def render_form_alerts
-    flash[:alert] = flash[:alert]
-    render(
-      partial: 'partials/form_replacement',
-      locals: {
-        selector_id: 'contact-messages-new-form',
-        form_partial: 'contact_messages/new_form',
-        model: { contact_message: @contact_message }
-      },
-      formats: [:js])
-    flash[:alert] = nil
   end
 end
