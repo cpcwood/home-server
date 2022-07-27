@@ -16,8 +16,8 @@ class ContactMessagesController < ApplicationController
     end
 
     if flash[:alert].any?
-      render(partial: 'contact_messages/new_form', 
-             status: :unprocessable_entity, 
+      render(partial: 'contact_messages/new_form',
+             status: :unprocessable_entity,
              locals: {
                contact_message: @contact_message
              })
