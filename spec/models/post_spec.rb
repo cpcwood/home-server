@@ -30,10 +30,10 @@ RSpec.describe Post, type: :model do
           subject.date_published = nil
           subject.valid?
           expect(subject).to_not be_valid
-        rescue => e
+        rescue StandardError => e
           ap e.backtrace
         end
-       
+
         subject.date_published = 'not a date'
         expect(subject).to_not be_valid
         expect(subject.errors.messages[:date_published]).to eq ['Date published must be date']

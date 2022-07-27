@@ -19,7 +19,7 @@ class Project < ApplicationRecord
   validates :title,
             length: { minimum: 1, message: 'Title cannot be empty' }
 
-  validates :date, 
+  validates :date,
             date: { message: 'Date format invalid' }
 
   validates :github_link,
