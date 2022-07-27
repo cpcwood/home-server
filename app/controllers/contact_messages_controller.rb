@@ -6,17 +6,22 @@ class ContactMessagesController < ApplicationController
 
   def create
     @notices = []
-    @alerts = []
+    flash[:alert] = []
+
     begin
-      @contact_message = User.first.contact_messages.new
-      return unless recaptcha_valid?
-      update_model(model: @contact_message, success_message: 'Message sent! You should receive a confirmation email shortly.')
+      create_message!
     rescue StandardError => e
       logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-      @alerts.push('Sorry, something went wrong!')
+      flash[:alert].push('Sorry, something went wrong!')
     end
-    if @alerts.any?
-      render_form_alerts
+
+    if flash[:alert].any?
+      render(partial: 'contact_messages/new_form', 
+             status: :unprocessable_entity, 
+             locals: {
+               contact_message: @contact_message
+             })
+      flash[:alert] = []
     else
       redirect_to(contact_path, notice: @notices)
     end
@@ -34,24 +39,25 @@ class ContactMessagesController < ApplicationController
         :content)
   end
 
+  def create_message!
+    @contact_message = User.first.contact_messages.new(permitted_params)
+    return unless recaptcha_valid?
+
+    if @contact_message.save
+      @notices.push('Message sent! You should receive a confirmation email shortly.')
+    else
+      flash[:alert].push(@contact_message.errors.messages.to_a.flatten.last)
+    end
+  end
+  
   def recaptcha_valid?
     return true if ReCaptchaService.recaptcha_valid?(params['g-recaptcha-response'])
-    @alerts.push('reCaptcha failed, please try again')
-    @contact_message.assign_attributes(permitted_params)
-    render_form_alerts
+    flash[:alert].push('reCaptcha failed, please try again')
     false
   end
 
-  def update_model(model:, success_message:)
-    if model.update(permitted_params)
-      @notices.push(success_message)
-    else
-      @alerts.push(model.errors.messages.to_a.flatten.last)
-    end
-  end
-
   def render_form_alerts
-    flash[:alert] = @alerts
+    flash[:alert] = flash[:alert]
     render(
       partial: 'partials/form_replacement',
       locals: {

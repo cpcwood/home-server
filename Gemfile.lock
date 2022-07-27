@@ -364,9 +364,10 @@ GEM
     timeout (0.3.0)
     tins (1.31.1)
       sync
-    turbolinks (5.2.1)
-      turbolinks-source (~> 5.2)
-    turbolinks-source (5.2.0)
+    turbo-rails (1.1.1)
+      actionpack (>= 6.0.0)
+      activejob (>= 6.0.0)
+      railties (>= 6.0.0)
     twilio-ruby (5.70.0)
       faraday (>= 0.9, < 3.0)
       jwt (>= 1.5, <= 2.5)
@@ -455,7 +456,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   sprockets-rails
-  turbolinks (~> 5)
+  turbo-rails
   twilio-ruby (~> 5)
   tzinfo-data
   validate_url
