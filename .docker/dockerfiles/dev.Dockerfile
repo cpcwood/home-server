@@ -16,7 +16,8 @@ ENV BUNDLE_PATH=$GEM_PATH \
   GEM_HOME=$GEM_PATH \
   BUNDLE_APP_CONFIG=$GEM_PATH
 
-RUN export PATH="$(ruby -e 'print Gem.user_dir')/bin":$APP_HOME/node_modules/.bin:$PATH
+RUN export GEM_BIN="$(ruby -e 'print Gem.user_dir')/bin"
+ENV PATH=$GEM_BIN:$APP_HOME/node_modules/.bin:$PATH
 
 RUN apk add \
   build-base \
@@ -40,12 +41,6 @@ RUN mkdir -p $APP_HOME $GEM_PATH && \
   adduser --uid 1000 --system -G docker -D docker && \
   chown -R docker:docker $APP_HOME && \
   chown docker:docker $GEM_PATH
-
-RUN echo $GEM_PATH
-
-RUN chown docker $GEM_PATH
-
-RUN ls -al /
 
 RUN USER=docker && \
   GROUP=docker && \
