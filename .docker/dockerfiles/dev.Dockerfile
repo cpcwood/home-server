@@ -10,15 +10,6 @@ ENV RAILS_ENV=development \
   APP_HOME=/opt/app \
   PORT=5000
 
-ARG GEM_PATH=/gems
-ENV BUNDLE_PATH=$GEM_PATH \
-  GEM_PATH=$GEM_PATH \
-  GEM_HOME=$GEM_PATH \
-  BUNDLE_APP_CONFIG=$GEM_PATH
-
-RUN export GEM_BIN="$(ruby -e 'print Gem.user_dir')/bin"
-ENV PATH=$GEM_BIN:$APP_HOME/node_modules/.bin:$PATH
-
 RUN apk add \
   build-base \
   postgresql-dev postgresql-client \
@@ -36,11 +27,18 @@ RUN apk add \
   cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
   echo "Europe/London" > /etc/timezone
 
-RUN mkdir -p $APP_HOME $GEM_PATH && \
+# Ensure gems are owned by docker user
+ARG BUNDLE_PATH=/gems
+ENV BUNDLE_PATH=$BUNDLE_PATH \
+  BUNDLE_APP_CONFIG=$BUNDLE_PATH
+
+ENV PATH=$BUNDLE_PATH/bin:$APP_HOME/node_modules/.bin:$PATH
+
+# Create docker user with variable ID for dev
+RUN mkdir -p $APP_HOME /gems && \
   addgroup --gid 1000 --system docker && \
   adduser --uid 1000 --system -G docker -D docker && \
-  chown -R docker:docker $APP_HOME && \
-  chown docker:docker $GEM_PATH
+  chown -R docker:docker $APP_HOME /gems
 
 RUN USER=docker && \
   GROUP=docker && \
@@ -48,9 +46,9 @@ RUN USER=docker && \
   chown root:root /usr/local/bin/fixuid && \
   chmod 4755 /usr/local/bin/fixuid && \
   mkdir -p /etc/fixuid && \
-  printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
+  printf "user: $USER\ngroup: $GROUP\npaths:\n- /\n- /gems" > /etc/fixuid/config.yml
 
-USER docker
+USER docker:docker
 
 RUN pip3 install -U selenium
 
