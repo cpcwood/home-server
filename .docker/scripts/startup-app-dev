@@ -10,7 +10,6 @@ fi
 
 kill -INT "$(cat ./tmp/pids/server.pid 2>/dev/null)" >/dev/null 2>&1
 rm -f ./tmp/pids/server.pid >/dev/null 2>&1
-bundle exec rails tmp
 
 if bundle exec rails db:exists ; then
  	bundle exec rails db:migrate
@@ -19,5 +18,7 @@ else
 	bundle exec rails db:migrate
 	bundle exec rails db:seed
 fi
+
+bundle exec rails tmp
 
 bundle exec rails server -b 0.0.0.0 -p 5000
