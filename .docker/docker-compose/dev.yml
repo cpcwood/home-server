@@ -9,12 +9,13 @@ services:
     build:
       context: ../..
       dockerfile: .docker/dockerfiles/dev.Dockerfile
+      args:
+        BUNDLE_PATH: /gems
     environment:
       REDIS_HOST: redis
       DB_HOST: postgres
       DB_USERNAME: cpcwood
       CHROMEDRIVER: /usr/bin/chromedriver
-      GEM_PATH: /gems
       WEBPACKER_DEV_SERVER_HOST: "${DEV_SERVER_HOST:-0.0.0.0}"    
     env_file:
       - ../../config/env/.env
@@ -39,8 +40,9 @@ services:
     build:
       context: ../..
       dockerfile: .docker/dockerfiles/dev.Dockerfile
+      args:
+        BUNDLE_PATH: /gems
     environment:
-      GEM_PATH: /gems
       WEBPACKER_DEV_SERVER_PUBLIC: "${DEV_SERVER_HOST:-0.0.0.0}:3035"
     command: .docker/scripts/startup-client-dev
     entrypoint: .docker/scripts/entrypoint-dev
@@ -61,11 +63,12 @@ services:
     build: 
       context: ../../
       dockerfile: .docker/dockerfiles/dev.Dockerfile
+      args:
+        BUNDLE_PATH: /gems
     environment:
       REDIS_HOST: redis
       DB_HOST: postgres
       DB_USERNAME: cpcwood
-      GEM_PATH: /gems
     env_file:
       - ../../config/env/.env
     volumes:

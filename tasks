@@ -5,6 +5,10 @@ COMPOSE_PROJECT_NAME=home-server-development
 APP_SERVICE_NAME=app
 APP_HEALTHCHECK_URL=http://0.0.0.0:5000
 
+# Set container user ID
+export FIXUID="$(id -u)" 
+export FIXGID="$(id -g)"
+
 function build {
   docker-compose \
     -p $COMPOSE_PROJECT_NAME \
@@ -13,7 +17,6 @@ function build {
 }
 
 function up {
-  FIXUID="$(id -u)" FIXGID="$(id -g)" \
   docker-compose \
     -p $COMPOSE_PROJECT_NAME \
     -f ./.docker/docker-compose/dev.yml \
