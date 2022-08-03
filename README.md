@@ -78,7 +78,7 @@ Notes:
 
 #### Setup Database
 
-The container image [startup script](./.docker/scripts/startup-worker.dev.sh) will automatically create and seed the database on start.
+The container image [startup script](./.docker/scripts/startup-worker-dev) will automatically create and seed the database on start.
 
 #### Start the Development Server
 
