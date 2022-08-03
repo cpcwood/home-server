@@ -41,6 +41,7 @@ module Admin
       begin
         @code_snippet = find_model
         return redirect_to(code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
+        
         update_model(model: @code_snippet, success_message: 'Code snippet updated')
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
