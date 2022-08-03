@@ -1,9 +1,11 @@
-<%= form_with(model: gallery_image, url: {action: 'create', controller: 'admin/gallery_images'}, class: 'section-form', id: 'admin-gallery-images-new-form') do |f| %>
+<%= turbo_frame_tag 'admin_gallery_images_new_form' do %>
+  <%= form_with(model: gallery_image, url: {action: 'create', controller: 'admin/gallery_images'}, class: 'section-form', id: 'admin-gallery-images-new-form', data: { turbo_frame: '_top' }) do |f| %>
 
-  <%= render partial: 'admin/gallery_images/form_components', locals: { f: f } %>
+    <%= render partial: 'admin/gallery_images/form_components', locals: { f: f } %>
 
+  <% end %>
+
+  <div class="embedded-form-button-container">
+    <%= link_to('Return', admin_gallery_images_path, class: 'standard-button input-submit') %>
+  </div>
 <% end %>
-
-<div class="embedded-form-button-container">
-  <%= link_to('Return', admin_gallery_images_path, class: 'standard-button input-submit') %>
-</div>
