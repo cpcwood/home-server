@@ -54,7 +54,10 @@ module Admin
           end
         end
       rescue StandardError => e
-        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
+        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE:")
+        e.backtrace.each do |loc|
+          logger.error(loc)
+        end
         flash[:alert].push('Sorry, something went wrong!')
         flash[:alert].push(e.message)
       end
@@ -145,7 +148,7 @@ module Admin
       return true unless snippet && extension
       return true unless snippet.length > 0 && extension.length > 0
 
-      if @project.render_code_snippet(snippet_params.to_h.symbolize_keys)
+      if @project.render_code_snippet(**snippet_params.to_h.symbolize_keys)
         @notices.push('Code snippet rendered')
         true
       else

@@ -55,7 +55,7 @@ module Admin
           status: :unprocessable_entity)
         flash[:alert] = nil
       else
-        redirect_to(code_snippets_path, notice: @notices)
+        redirect_to(code_snippet_path(@code_snippet), notice: @notices)
       end
     end
 
