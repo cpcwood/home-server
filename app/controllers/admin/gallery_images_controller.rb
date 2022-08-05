@@ -96,7 +96,6 @@ module Admin
     end
 
     def update_model(model:, success_message:)
-      ap model.valid?
       if model.update(permitted_params)
         @notices.push(success_message)
       else
