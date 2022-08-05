@@ -43,7 +43,8 @@ module Admin
       flash[:alert] = []
 
       begin
-        @project = find_model.assign_attributes(project_params)
+        @project = find_model
+        @project.assign_attributes(project_params)
         return redirect_to(projects_path, alert: 'Project not found') unless @project
 
         Project.transaction do
@@ -131,7 +132,7 @@ module Admin
     def create_project_images(project:)
       return unless params.dig(:new_project_images, :image_files)
 
-      new_project_images_params[:image_files].reject(&:empty?).each do |image_param|
+      new_project_images_params[:image_files].reject(&:blank?).each do |image_param|
         next if ProjectImage.create(image_file: image_param, project: project)
         flash[:alert].push('Image upload error')
         raise(ActiveRecord::Rollback, 'Image upload error')
