@@ -21,8 +21,8 @@ module Admin
 
       if flash[:alert].any?
         render(:new,
-          layout: 'layouts/admin_dashboard',
-          status: :unprocessable_entity)
+               layout: 'layouts/admin_dashboard',
+               status: :unprocessable_entity)
         flash[:alert] = nil
       else
         redirect_to(post_path(@post), notice: @notices)
@@ -52,8 +52,8 @@ module Admin
 
       if flash[:alert].any?
         render(:edit,
-          layout: 'layouts/admin_dashboard',
-          status: :unprocessable_entity)
+               layout: 'layouts/admin_dashboard',
+               status: :unprocessable_entity)
         flash[:alert] = nil
       else
         redirect_to(post_path(@post), notice: @notices)
@@ -74,7 +74,7 @@ module Admin
         flash[:alert].push('Sorry, something went wrong!')
         flash[:alert].push(e.message)
       end
-      
+
       redirect_to(posts_path, notice: @notices, alert: flash[:alert])
     end
 
@@ -91,20 +91,20 @@ module Admin
 
     def post_section_params
       permitted_params = params
-        .require(:post)
-        .permit(
-          post_sections_attributes: [
-            :id,
-            :_destroy,
-            :text,
-            :order,
-            { post_section_image_attributes: [
-              :id,
-              :_destroy,
-              :image_file,
-              :title
-            ] }
-          ])
+                         .require(:post)
+                         .permit(
+                           post_sections_attributes: [
+                             :id,
+                             :_destroy,
+                             :text,
+                             :order,
+                             { post_section_image_attributes: [
+                               :id,
+                               :_destroy,
+                               :image_file,
+                               :title
+                             ] }
+                           ])
       permitted_params[:post_sections_attributes].each do |_key, post_section|
         post_section.delete(:post_section_image_attributes) if post_section[:post_section_image_attributes]&.values&.all?(&:blank?)
       end

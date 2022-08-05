@@ -24,8 +24,8 @@ module Admin
 
       if flash[:alert].any?
         render(:new,
-          layout: 'layouts/admin_dashboard',
-          status: :unprocessable_entity)
+               layout: 'layouts/admin_dashboard',
+               status: :unprocessable_entity)
         flash[:alert] = nil
       else
         redirect_to(projects_path, notice: @notices)
@@ -64,8 +64,8 @@ module Admin
       if flash[:alert].any?
         @project = Project.new(project_params)
         render(:edit,
-          layout: 'layouts/admin_dashboard',
-          status: :unprocessable_entity)
+               layout: 'layouts/admin_dashboard',
+               status: :unprocessable_entity)
         flash[:alert] = nil
       else
         redirect_to(projects_path, notice: @notices)
@@ -79,7 +79,7 @@ module Admin
       begin
         @project = find_model
         return redirect_to(projects_path, alert: 'Project not found') unless @project
-        
+
         @project.destroy
         @notices.push('Project removed')
       rescue StandardError => e
@@ -135,7 +135,7 @@ module Admin
     def create_project_images(project:)
       return unless params.dig(:new_project_images, :image_files)
 
-      new_project_images_params[:image_files].reject(&:blank?).each do |image_param|
+      new_project_images_params[:image_files].compact_blank.each do |image_param|
         next if ProjectImage.create(image_file: image_param, project: project)
         flash[:alert].push('Image upload error')
         raise(ActiveRecord::Rollback, 'Image upload error')

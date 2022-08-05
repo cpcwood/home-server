@@ -20,8 +20,8 @@ module Admin
 
       if flash[:alert].any?
         render(:new,
-          layout: 'layouts/admin_dashboard',
-          status: :unprocessable_entity)
+               layout: 'layouts/admin_dashboard',
+               status: :unprocessable_entity)
         flash[:alert] = nil
       else
         redirect_to(code_snippets_path, notice: @notices)
@@ -41,7 +41,7 @@ module Admin
       begin
         @code_snippet = find_model
         return redirect_to(code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
-        
+
         update_model(model: @code_snippet, success_message: 'Code snippet updated')
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
@@ -51,8 +51,8 @@ module Admin
 
       if flash[:alert].any?
         render(:edit,
-          layout: 'layouts/admin_dashboard',
-          status: :unprocessable_entity)
+               layout: 'layouts/admin_dashboard',
+               status: :unprocessable_entity)
         flash[:alert] = nil
       else
         redirect_to(code_snippet_path(@code_snippet), notice: @notices)
@@ -73,7 +73,7 @@ module Admin
         flash[:alert].push('Sorry, something went wrong!')
         flash[:alert].push(e.message)
       end
-      
+
       redirect_to(code_snippets_path, notice: @notices, alert: flash[:alert])
     end
 
