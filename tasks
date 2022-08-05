@@ -69,6 +69,10 @@ function rubocop {
 	exec bundle exec rubocop "$@"
 }
 
+function attach {
+  docker attach --detach-keys="ctrl-c" home-server-app-dev
+}
+
 function rspec {
 	ensure_app_container_running
   docker-compose \

@@ -1,9 +1,11 @@
-<%= form_with(model: [:admin, project], class: 'section-form', id: 'admin-projects-new-form', multipart: true) do |f| %>
+<%= turbo_frame_tag 'admin_projects_new_form' do %>
+  <%= form_with(model: [:admin, project], class: 'section-form', id: 'admin-projects-new-form', multipart: true, data: { turbo_frame: '_top' }) do |f| %>
 
-  <%= render partial: 'admin/projects/form_components', locals: { f: f, project: project } %>
+    <%= render partial: 'admin/projects/form_components', locals: { f: f, project: project } %>
 
+  <% end %>
+
+  <div class="embedded-form-button-container">
+    <%= link_to('Return', projects_path, class: 'standard-button input-submit') %>
+  </div>
 <% end %>
-
-<div class="embedded-form-button-container">
-  <%= link_to('Return', projects_path, class: 'standard-button input-submit') %>
-</div>

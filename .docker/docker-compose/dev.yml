@@ -58,6 +58,8 @@ services:
       - data-home-server-dev-client-gems:/gems
 
   worker:
+    tty: true
+    stdin_open: true
     image: cpcwood/home-server-worker-dev
     container_name: home-server-worker-dev
     build: 
