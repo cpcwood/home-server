@@ -1,9 +1,11 @@
-<%= form_with(model: post, url: {action: 'create', controller: 'admin/posts'}, class: 'section-form', id: 'admin-post-new-form') do |f| %>
+<%= turbo_frame_tag 'admin_posts_new_form' do %>
+  <%= form_with(model: post, url: {action: 'create', controller: 'admin/posts'}, class: 'section-form', id: 'admin-post-new-form', data: { turbo_frame: '_top' }) do |f| %>
 
-  <%= render partial: 'admin/posts/form_components', locals: { f: f } %>
+    <%= render partial: 'admin/posts/form_components', locals: { f: f } %>
 
+  <% end %>
+
+  <div class="embedded-form-button-container">
+    <%= link_to('Return', posts_path, class: 'standard-button input-submit') %>
+  </div>
 <% end %>
-
-<div class="embedded-form-button-container">
-  <%= link_to('Return', posts_path, class: 'standard-button input-submit') %>
-</div>

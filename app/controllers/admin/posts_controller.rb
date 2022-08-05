@@ -7,26 +7,22 @@ module Admin
 
     def create
       @notices = []
-      @alerts = []
+      flash[:alert] = []
+
       begin
         @post = @user.posts.new
         update_post(post: @post, success_message: 'Blog post created')
         update_post_sections(post: @post)
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-        @alerts.push('Sorry, something went wrong!')
-        @alerts.push(e.message)
+        flash[:alert].push('Sorry, something went wrong!')
+        flash[:alert].push(e.message)
       end
-      if @alerts.any?
-        flash[:alert] = @alerts
-        render(
-          partial: 'partials/form_replacement',
-          locals: {
-            selector_id: 'admin-post-new-form',
-            form_partial: 'admin/posts/new_form',
-            model: { post: @post }
-          },
-          formats: [:js])
+
+      if flash[:alert].any?
+        render(:new,
+          layout: 'layouts/admin_dashboard',
+          status: :unprocessable_entity)
         flash[:alert] = nil
       else
         redirect_to(post_path(@post), notice: @notices)
@@ -41,7 +37,8 @@ module Admin
 
     def update
       @notices = []
-      @alerts = []
+      flash[:alert] = []
+
       begin
         @post = find_post
         return redirect_to(posts_path, alert: 'Post not found') unless @post
@@ -49,19 +46,14 @@ module Admin
         update_post_sections(post: @post)
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-        @alerts.push('Sorry, something went wrong!')
-        @alerts.push(e.message)
+        flash[:alert].push('Sorry, something went wrong!')
+        flash[:alert].push(e.message)
       end
-      if @alerts.any?
-        flash[:alert] = @alerts
-        render(
-          partial: 'partials/form_replacement',
-          locals: {
-            selector_id: 'admin-post-edit-form',
-            form_partial: 'admin/posts/edit_form',
-            model: { post: @post }
-          },
-          formats: [:js])
+
+      if flash[:alert].any?
+        render(:edit,
+          layout: 'layouts/admin_dashboard',
+          status: :unprocessable_entity)
         flash[:alert] = nil
       else
         redirect_to(post_path(@post), notice: @notices)
@@ -70,7 +62,8 @@ module Admin
 
     def destroy
       @notices = []
-      @alerts = []
+      flash[:alert] = []
+
       begin
         @post = find_post
         return redirect_to(posts_path, alert: 'Post not found') unless @post
@@ -78,10 +71,11 @@ module Admin
         @notices.push('Blog post removed')
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-        @alerts.push('Sorry, something went wrong!')
-        @alerts.push(e.message)
+        flash[:alert].push('Sorry, something went wrong!')
+        flash[:alert].push(e.message)
       end
-      redirect_to(posts_path, notice: @notices, alert: @alerts)
+      
+      redirect_to(posts_path, notice: @notices, alert: flash[:alert])
     end
 
     private
@@ -97,20 +91,20 @@ module Admin
 
     def post_section_params
       permitted_params = params
-                         .require(:post)
-                         .permit(
-                           post_sections_attributes: [
-                             :id,
-                             :_destroy,
-                             :text,
-                             :order,
-                             { post_section_image_attributes: [
-                               :id,
-                               :_destroy,
-                               :image_file,
-                               :title
-                             ] }
-                           ])
+        .require(:post)
+        .permit(
+          post_sections_attributes: [
+            :id,
+            :_destroy,
+            :text,
+            :order,
+            { post_section_image_attributes: [
+              :id,
+              :_destroy,
+              :image_file,
+              :title
+            ] }
+          ])
       permitted_params[:post_sections_attributes].each do |_key, post_section|
         post_section.delete(:post_section_image_attributes) if post_section[:post_section_image_attributes]&.values&.all?(&:blank?)
       end
@@ -125,7 +119,7 @@ module Admin
       if post.update(post_params)
         @notices.push(success_message)
       else
-        @alerts.push(post.errors.messages.to_a.flatten.last)
+        flash[:alert].push(post.errors.messages.to_a.flatten.last)
       end
     end
 
