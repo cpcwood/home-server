@@ -44,7 +44,6 @@ module Admin
 
       begin
         @project = find_model
-        @project.assign_attributes(project_params)
         return redirect_to(projects_path, alert: 'Project not found') unless @project
 
         Project.transaction do
@@ -63,6 +62,7 @@ module Admin
       end
 
       if flash[:alert].any?
+        @project = Project.new(project_params)
         render(:edit,
           layout: 'layouts/admin_dashboard',
           status: :unprocessable_entity)
