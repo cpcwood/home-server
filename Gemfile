@@ -1,19 +1,22 @@
 source 'https://rubygems.org'
 
-ruby '2.7.6'
+ruby '3.1.2'
 
 # Bundler for running commands in containers
-gem 'bundler', '2.1.4'
+gem 'bundler', '~> 2.3.18'
+
 # Rails
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.0'
+# Ensure assets pipeline from v6 still works
+gem 'sprockets-rails'
+# Turbo rails
+gem 'turbo-rails'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 5'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 5'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3'
 # Throttle excessive requests
@@ -33,7 +36,7 @@ gem 'rouge'
 # Validate urls in model
 gem 'validate_url'
 # Validate dates in model
-gem 'validates_timeliness', '~> 5.0.0.beta1'
+gem 'date_validator'
 # Timezone
 gem 'tzinfo-data'
 # JSON API serializer
@@ -74,13 +77,8 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
   # Annotate models for quick reference
   gem 'annotate'
-  # Catch and check mail in real time
-  gem 'letter_opener'
   # Static security testing
   gem 'brakeman'
   # Lint erb
@@ -89,10 +87,10 @@ end
 
 group :test do
   # Testing backend with RSpec
-  gem 'rspec-rails', '~> 4', require: false
+  gem 'rspec-rails', '~> 5', require: false
   gem 'rails-controller-testing'
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15', require: false
+  gem 'capybara', '~> 3', require: false
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers', require: false
   # Coverage with simplecov

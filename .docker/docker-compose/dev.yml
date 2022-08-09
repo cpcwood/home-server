@@ -2,48 +2,80 @@ version: "3.8"
 
 services:
   app:
-    stdin_open: true
     tty: true
+    stdin_open: true
     image: cpcwood/home-server-app-dev
     container_name: home-server-app-dev
     build:
       context: ../..
       dockerfile: .docker/dockerfiles/dev.Dockerfile
+      args:
+        BUNDLE_PATH: /gems
     environment:
       REDIS_HOST: redis
       DB_HOST: postgres
       DB_USERNAME: cpcwood
       CHROMEDRIVER: /usr/bin/chromedriver
-      GEM_PATH: /usr/local/bundle
+      WEBPACKER_DEV_SERVER_HOST: "${DEV_SERVER_HOST:-0.0.0.0}"    
     env_file:
       - ../../config/env/.env
     volumes:
       - ../..:/opt/app/
-      - data-home-server-dev-app-gems:/usr/local/bundle
+      - data-home-server-dev-app-gems:/gems
+      - ~/.bash_history:/root/.bash_history
     user: "${FIXUID:-1000}:${FIXGID:-1000}"
     depends_on:
       - postgres
       - redis
+      - mailcatcher
     command: './.docker/scripts/startup-app-dev'
     ports:
       - 5000:5000
 
+  client:
+    tty: true
+    stdin_open: true
+    image: cpcwood/home-server-client-dev
+    container_name: home-server-client-dev
+    build:
+      context: ../..
+      dockerfile: .docker/dockerfiles/dev.Dockerfile
+      args:
+        BUNDLE_PATH: /gems
+    environment:
+      WEBPACKER_DEV_SERVER_PUBLIC: "${DEV_SERVER_HOST:-0.0.0.0}:3035"
+    command: .docker/scripts/startup-client-dev
+    entrypoint: .docker/scripts/entrypoint-dev
+    env_file:
+      - ../../config/env/.env
+    depends_on:
+      - app
+    ports:
+      - 3035:3035
+    user: "${FIXUID:-1000}:${FIXGID:-1000}"
+    volumes:
+      - ../..:/opt/app/
+      - data-home-server-dev-client-gems:/gems
+
   worker:
+    tty: true
+    stdin_open: true
     image: cpcwood/home-server-worker-dev
     container_name: home-server-worker-dev
     build: 
       context: ../../
       dockerfile: .docker/dockerfiles/dev.Dockerfile
+      args:
+        BUNDLE_PATH: /gems
     environment:
       REDIS_HOST: redis
       DB_HOST: postgres
       DB_USERNAME: cpcwood
-      GEM_PATH: /gems
     env_file:
       - ../../config/env/.env
     volumes:
       - ../..:/opt/app/
-      - data-home-server-dev-worker-gems:/usr/local/bundle
+      - data-home-server-dev-worker-gems:/gems
     user: "${FIXUID:-1000}:${FIXGID:-1000}"
     depends_on:
       - postgres
@@ -52,6 +84,12 @@ services:
     command: './.docker/scripts/startup-worker-dev'
     security_opt:
       - seccomp:"./.docker/config/chrome.json"
+
+  mailcatcher:
+    image: sj26/mailcatcher
+    ports:
+      - 1025:1025
+      - 1080:1080
 
   postgres:
     image: postgres:13
@@ -84,4 +122,5 @@ volumes:
   data-home-server-dev-postgres:
   data-home-server-dev-redis:
   data-home-server-dev-app-gems:
+  data-home-server-dev-client-gems:
   data-home-server-dev-worker-gems:

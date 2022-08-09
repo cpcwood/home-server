@@ -1,12 +1,14 @@
-<%= form_with(model: [:admin, project], method: 'put', class: 'section-form', id: 'admin-projects-edit-form', multipart: true) do |f| %>
+<%= turbo_frame_tag 'admin_projects_edit_form' do %>
+  <%= form_with(model: [:admin, project], method: 'put', class: 'section-form', id: 'admin-projects-edit-form', multipart: true, data: { turbo_frame: '_top' }) do |f| %>
 
-  <%= render partial: 'admin/projects/form_components', locals: { f: f, project: project } %>
+    <%= render partial: 'admin/projects/form_components', locals: { f: f, project: project } %>
 
-<% end %>
-
-<div class="embedded-form-button-container">
-  <%= link_to('Return', projects_path, class: 'standard-button input-submit') %>
-  <%= form_with(model: [:admin, project], method: :delete) do |r| %>
-    <%= r.submit("Remove", class: 'input-submit destroy-button', data: {confirm: "Are you sure?"}) %>
   <% end %>
-</div>
+
+  <div class="embedded-form-button-container">
+    <%= link_to('Return', projects_path, class: 'standard-button input-submit') %>
+    <%= form_with(model: [:admin, project], method: :delete) do |r| %>
+      <%= r.submit("Remove", class: 'input-submit destroy-button', data: {confirm: "Are you sure?"}) %>
+    <% end %>
+  </div>
+<% end %>

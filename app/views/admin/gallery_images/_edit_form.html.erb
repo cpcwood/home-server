@@ -11,15 +11,17 @@
   <%= image_tag(image_path_helper(image_model: gallery_image), class: 'embedded-full-width embedded-cover-image') %>
 </div>
 
-<%= form_with(model: [:admin, gallery_image], class: 'section-form', id: 'admin-gallery-images-edit-form') do |f| %>
+<%= turbo_frame_tag 'admin_gallery_images_edit_form' do %>
+  <%= form_with(model: [:admin, gallery_image], class: 'section-form', id: 'admin-gallery-images-edit-form', data: { turbo_frame: '_top' }) do |f| %>
 
-  <%= render partial: 'admin/gallery_images/form_components', locals: { f: f } %>
+    <%= render partial: 'admin/gallery_images/form_components', locals: { f: f } %>
 
-<% end %>
-
-<div class="embedded-form-button-container">
-  <%= link_to('Return', admin_gallery_images_path, class: 'standard-button input-submit') %>
-  <%= form_with(model: [:admin, gallery_image], method: :delete) do |r| %>
-    <%= r.submit("Remove", class: 'input-submit destroy-button', data: {confirm: "Are you sure?"}) %>
   <% end %>
-</div>
+
+  <div class="embedded-form-button-container">
+    <%= link_to('Return', admin_gallery_images_path, class: 'standard-button input-submit') %>
+    <%= form_with(model: [:admin, gallery_image], method: :delete) do |r| %>
+      <%= r.submit("Remove", class: 'input-submit destroy-button', data: {confirm: "Are you sure?"}) %>
+    <% end %>
+  </div>
+<% end %>

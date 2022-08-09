@@ -1,49 +1,51 @@
-<%= form_with(model: [:admin, about], method: "put", class: 'section-form', id: 'admin-abouts-edit-form') do |f| %>
 
-  <%= render partial: 'partials/system_messages' %>
+<%= turbo_frame_tag 'admin_abouts_edit_form' do %>
+  <%= form_with(model: [:admin, about], method: "put", class: 'section-form', id: 'admin-abouts-edit-form') do |f| %>
 
-  <%= render partial: 'layouts/images/profile_image_upload', locals: {image: about.profile_image, form: f} %>
+    <%= render partial: 'layouts/images/profile_image_upload', locals: {image: about.profile_image, form: f} %>
 
-  <div class="embedded-form-entry-container">
-    <%= f.label(:section_title, 'Section title', class: 'input-label embedded-label') %>
-    <%= f.text_field(:section_title, class: 'input-box embedded-input-box', placeholder: 'Enter about section title') %>
-  </div>
+    <div class="embedded-form-entry-container">
+      <%= f.label(:section_title, 'Section title', class: 'input-label embedded-label') %>
+      <%= f.text_field(:section_title, class: 'input-box embedded-input-box', placeholder: 'Enter about section title') %>
+    </div>
 
-  <div class="embedded-form-entry-container">
-    <%= f.label(:name, 'Contact name', class: 'input-label embedded-label') %>
-    <%= f.text_field(:name, class: 'input-box embedded-input-box', placeholder: 'Enter contact name') %>
-  </div>
+    <div class="embedded-form-entry-container">
+      <%= f.label(:name, 'Contact name', class: 'input-label embedded-label') %>
+      <%= f.text_field(:name, class: 'input-box embedded-input-box', placeholder: 'Enter contact name') %>
+    </div>
 
-  <div class="embedded-form-entry-container">
-    <%= f.label(:location, 'Location', class: 'input-label embedded-label') %>
-    <%= f.text_field(:location, class: 'input-box embedded-input-box', placeholder: 'Enter location (this is public)') %>
-  </div>
+    <div class="embedded-form-entry-container">
+      <%= f.label(:location, 'Location', class: 'input-label embedded-label') %>
+      <%= f.text_field(:location, class: 'input-box embedded-input-box', placeholder: 'Enter location (this is public)') %>
+    </div>
 
-  <div class="embedded-form-entry-container">
-    <%= f.label(:contact_email, 'Contact email', class: 'input-label embedded-label') %>
-    <%= f.text_field(:contact_email, class: 'input-box embedded-input-box', placeholder: 'Enter contact email') %>
-  </div>
+    <div class="embedded-form-entry-container">
+      <%= f.label(:contact_email, 'Contact email', class: 'input-label embedded-label') %>
+      <%= f.text_field(:contact_email, class: 'input-box embedded-input-box', placeholder: 'Enter contact email') %>
+    </div>
 
-  <div class="embedded-form-entry-container">
-    <%= f.label(:linkedin_link, 'LinkedIn Link', class: 'input-label embedded-label') %>
-    <%= f.text_field(:linkedin_link, class: 'input-box embedded-input-box', placeholder: 'Enter valid link') %>
-  </div>
+    <div class="embedded-form-entry-container">
+      <%= f.label(:linkedin_link, 'LinkedIn Link', class: 'input-label embedded-label') %>
+      <%= f.text_field(:linkedin_link, class: 'input-box embedded-input-box', placeholder: 'Enter valid link') %>
+    </div>
 
-  <div class="embedded-form-entry-container">
-    <%= f.label(:github_link, 'Github Link', class: 'input-label embedded-label') %>
-    <%= f.text_field(:github_link, class: 'input-box embedded-input-box', placeholder: 'Enter valid link') %>
-  </div>
+    <div class="embedded-form-entry-container">
+      <%= f.label(:github_link, 'Github Link', class: 'input-label embedded-label') %>
+      <%= f.text_field(:github_link, class: 'input-box embedded-input-box', placeholder: 'Enter valid link') %>
+    </div>
 
-  <div class="embedded-form-entry-container">
-    <%= f.label(:about_me, 'About me', class: 'input-label embedded-label') %>
-  </div>
+    <div class="embedded-form-entry-container">
+      <%= f.label(:about_me, 'About me', class: 'input-label embedded-label') %>
+    </div>
 
-  <div class="embedded-form-entry-container">
-    <%= f.text_area(:about_me, class: 'input-box embedded-text-area', placeholder: 'Add about me text (you can use markdown)...') %>
-  </div>
+    <div class="embedded-form-entry-container">
+      <%= f.text_area(:about_me, class: 'input-box embedded-text-area', placeholder: 'Add about me text (you can use markdown)...') %>
+    </div>
 
-  <div class="embedded-form-entry-container">
-    <%= render partial: "partials/submit_right", locals: {form: f, button_text: 'Update About'} %>
-  </div>
+    <div class="embedded-form-entry-container">
+      <%= render partial: "partials/submit_right", locals: {form: f, button_text: 'Update About'} %>
+    </div>
 
+    <%= render partial: 'partials/system_messages' %>
+  <% end %>
 <% end %>

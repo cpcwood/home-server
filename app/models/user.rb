@@ -106,6 +106,6 @@ class User < ApplicationRecord
       token = SecureRandom.urlsafe_base64(32)
       break token unless User.exists?(password_reset_token: token)
     end
-    update(password_reset_token: unique_token, password_reset_expiry: Time.zone.now + 1.hour)
+    update(password_reset_token: unique_token, password_reset_expiry: 1.hour.from_now)
   end
 end

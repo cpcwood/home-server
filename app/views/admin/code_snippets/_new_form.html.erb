@@ -1,9 +1,12 @@
-<%= form_with(model: [:admin, code_snippet], class: 'section-form', id: 'admin-code-snippets-new-form') do |f| %>
+<%= turbo_frame_tag 'admin_code_snippets_new_form' do %>
+  <%= form_with(model: [:admin, code_snippet], class: 'section-form', id: 'admin-code-snippets-new-form', data: { turbo_frame: '_top' } ) do |f| %>
 
-  <%= render partial: 'admin/code_snippets/form_components', locals: { f: f } %>
+    <%= render partial: 'admin/code_snippets/form_components', locals: { f: f } %>
 
+  <% end %>
+
+  <div class="embedded-form-button-container">
+    <%= link_to('Return', code_snippets_path, class: 'standard-button input-submit') %>
+  </div>
 <% end %>
 
-<div class="embedded-form-button-container">
-  <%= link_to('Return', code_snippets_path, class: 'standard-button input-submit') %>
-</div>
