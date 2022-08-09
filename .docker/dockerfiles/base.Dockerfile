@@ -55,8 +55,8 @@ RUN bundle exec rails assets:precompile && \
   rm -rf $APP_HOME/spec && \
   rm -rf $APP_HOME/storage/* && \
   rm -rf $APP_HOME/tmp/* && \
-  rm -rf $APP_HOME/vendor/bundle/ruby/2.7.0/cache/ && \
-  find $APP_HOME/vendor/bundle/ruby/2.7.0/gems/ -name "*.c" -delete && \
-  find $APP_HOME/vendor/bundle/ruby/2.7.0/gems/ -name "*.o" -delete
+  rm -rf $APP_HOME/vendor/bundle/ruby/3.1.0/cache/ && \
+  find $APP_HOME/vendor/bundle/ruby/3.1.0/gems/ -name "*.c" -delete && \
+  find $APP_HOME/vendor/bundle/ruby/3.1.0/gems/ -name "*.o" -delete
 
 USER docker
