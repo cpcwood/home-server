@@ -1,7 +1,7 @@
 RSpec.describe SiteImage, type: :model do
   subject { create(:cover_image) }
   let(:image_jpg_path) { Rails.root.join('spec/files/sample_image.jpg') }
-  let(:image_file_upload) { fixture_file_upload(image_jpg_path, 'image/jpg') }
+  let(:image_file_upload) { fixture_file_upload(image_jpg_path, 'image/jpeg') }
 
   describe 'validations' do
     describe 'x_loc' do

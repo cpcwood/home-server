@@ -24,7 +24,7 @@
 RSpec.describe GalleryImage, type: :model do
   subject { create(:gallery_image) }
 
-  let(:image_file_upload) { fixture_file_upload(Rails.root.join('spec/files/sample_image.jpg'), 'image/jpg') }
+  let(:image_file_upload) { fixture_file_upload(Rails.root.join('spec/files/sample_image.jpg'), 'image/jpeg') }
 
   context 'validations' do
     describe 'date_taken' do

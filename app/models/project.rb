@@ -20,7 +20,7 @@ class Project < ApplicationRecord
             length: { minimum: 1, message: 'Title cannot be empty' }
 
   validates :date,
-            timeliness: { message: 'Date format invalid' }
+            date: { message: 'Date format invalid' }
 
   validates :github_link,
             url: { allow_blank: true, message: 'Github link is not valid' }
@@ -30,6 +30,7 @@ class Project < ApplicationRecord
 
   def render_code_snippet(**kwargs)
     return false unless code_snippet_valid?(**kwargs)
+
     RenderCodeSnippetJob.set(wait: 5.seconds).perform_later(model: project_images.create, **kwargs)
     true
   end

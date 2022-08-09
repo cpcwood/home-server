@@ -1,7 +1,7 @@
 RSpec.describe Image, type: :model do
   subject { create(:gallery_image) }
   let(:image_jpg_path) { Rails.root.join('spec/files/sample_image.jpg') }
-  let(:image_file_upload) { fixture_file_upload(image_jpg_path, 'image/jpg') }
+  let(:image_file_upload) { fixture_file_upload(image_jpg_path, 'image/jpeg') }
 
   describe 'validations' do
     subject { create(:cover_image) }

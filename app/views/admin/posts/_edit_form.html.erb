@@ -1,12 +1,14 @@
-<%= form_with(model: [:admin, post], method: 'put', class: 'section-form', id: 'admin-post-update-form') do |f| %>
+<%= turbo_frame_tag 'admin_posts_edit_form' do %>
+  <%= form_with(model: [:admin, post], method: 'put', class: 'section-form', id: 'admin-post-update-form', data: { turbo_frame: '_top' }) do |f| %>
 
-  <%= render partial: 'admin/posts/form_components', locals: { f: f } %>
+    <%= render partial: 'admin/posts/form_components', locals: { f: f } %>
 
-<% end %>
-
-<div class="embedded-form-button-container">
-  <%= link_to('Return', post_path(post), class: 'standard-button input-submit') %>
-  <%= form_with(model: [:admin, post], method: :delete) do |r| %>
-    <%= r.submit("Remove", class: 'input-submit destroy-button', data: {confirm: "Are you sure?"}) %>
   <% end %>
-</div>
+
+  <div class="embedded-form-button-container">
+    <%= link_to('Return', post_path(post), class: 'standard-button input-submit') %>
+    <%= form_with(model: [:admin, post], method: :delete) do |r| %>
+      <%= r.submit("Remove", class: 'input-submit destroy-button', data: {confirm: "Are you sure?"}) %>
+    <% end %>
+  </div>
+<% end %>

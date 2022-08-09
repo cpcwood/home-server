@@ -32,7 +32,7 @@ class GalleryImage < Image
   belongs_to :user
 
   validates :date_taken,
-            timeliness: {
+            date: {
               message: 'Date taken must be date'
             }
 

@@ -1,7 +1,7 @@
 # home-server-dev-image
 # ================
 
-FROM ruby:2.7.6-alpine3.15
+FROM ruby:3.1.2-alpine3.15
 
 ENV RAILS_ENV=development \
   NODE_ENV=development \
@@ -9,13 +9,6 @@ ENV RAILS_ENV=development \
   PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
   APP_HOME=/opt/app \
   PORT=5000
-
-ARG GEM_PATH=/gems
-ENV BUNDLE_PATH=$GEM_PATH \
-  GEM_PATH=$GEM_PATH \
-  GEM_HOME=$GEM_PATH \
-  BUNDLE_APP_CONFIG=$GEM_PATH \
-  PATH=$GEM_PATH/bin:$APP_HOME/node_modules/.bin:$PATH
 
 RUN apk add \
   build-base \
@@ -34,11 +27,18 @@ RUN apk add \
   cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
   echo "Europe/London" > /etc/timezone
 
-RUN mkdir -p $APP_HOME $GEM_PATH && \
+# Ensure gems are owned by docker user
+ARG BUNDLE_PATH=/gems
+ENV BUNDLE_PATH=$BUNDLE_PATH \
+  BUNDLE_APP_CONFIG=$BUNDLE_PATH
+
+ENV PATH=$BUNDLE_PATH/bin:$APP_HOME/node_modules/.bin:$PATH
+
+# Create docker user with variable ID for dev
+RUN mkdir -p $APP_HOME /gems && \
   addgroup --gid 1000 --system docker && \
-  adduser --uid 1000  --home /home/docker --system -G docker -D docker && \
-  chown -R docker:docker $APP_HOME && \
-  chown docker:docker $GEM_PATH
+  adduser --uid 1000 --system -G docker -D docker && \
+  chown -R docker:docker $APP_HOME /gems
 
 RUN USER=docker && \
   GROUP=docker && \
@@ -46,9 +46,9 @@ RUN USER=docker && \
   chown root:root /usr/local/bin/fixuid && \
   chmod 4755 /usr/local/bin/fixuid && \
   mkdir -p /etc/fixuid && \
-  printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
+  printf "user: $USER\ngroup: $GROUP\npaths:\n- /\n- /gems" > /etc/fixuid/config.yml
 
-USER docker
+USER docker:docker
 
 RUN pip3 install -U selenium
 

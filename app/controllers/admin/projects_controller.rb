@@ -7,29 +7,25 @@ module Admin
 
     def create
       @notices = []
-      @alerts = []
+      flash[:alert] = []
+
       begin
         Project.transaction do
-          @project = Project.new
+          @project = Project.new(project_params)
+
           update_model(model: @project, success_message: 'Project created')
           create_project_images(project: @project)
         end
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-        @alerts.push('Sorry, something went wrong!')
-        @alerts.push(e.message)
+        flash[:alert].push('Sorry, something went wrong!')
+        flash[:alert].push(e.message)
       end
-      if @alerts.any?
-        flash[:alert] = @alerts
-        @project = Project.new(project_params)
-        render(
-          partial: 'partials/form_replacement',
-          locals: {
-            selector_id: 'admin-projects-new-form',
-            form_partial: 'admin/projects/new_form',
-            model: { project: @project }
-          },
-          formats: [:js])
+
+      if flash[:alert].any?
+        render(:new,
+               layout: 'layouts/admin_dashboard',
+               status: :unprocessable_entity)
         flash[:alert] = nil
       else
         redirect_to(projects_path, notice: @notices)
@@ -44,33 +40,32 @@ module Admin
 
     def update
       @notices = []
-      @alerts = []
+      flash[:alert] = []
+
       begin
+        @project = find_model
+        return redirect_to(projects_path, alert: 'Project not found') unless @project
+
         Project.transaction do
-          @project = find_model
-          return redirect_to(projects_path, alert: 'Project not found') unless @project
           if render_code_snippet
             update_model(model: @project, success_message: 'Project updated')
             create_project_images(project: @project)
           end
         end
       rescue StandardError => e
-        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-        @alerts.push('Sorry, something went wrong!')
-        @alerts.push(e.message)
+        logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE:")
+        e.backtrace.each do |loc|
+          logger.error(loc)
+        end
+        flash[:alert].push('Sorry, something went wrong!')
+        flash[:alert].push(e.message)
       end
-      if @alerts.any?
-        flash[:alert] = @alerts
-        @project = find_model
-        @project.assign_attributes(project_params)
-        render(
-          partial: 'partials/form_replacement',
-          locals: {
-            selector_id: 'admin-projects-edit-form',
-            form_partial: 'admin/projects/edit_form',
-            model: { project: @project }
-          },
-          formats: [:js])
+
+      if flash[:alert].any?
+        @project = Project.new(project_params)
+        render(:edit,
+               layout: 'layouts/admin_dashboard',
+               status: :unprocessable_entity)
         flash[:alert] = nil
       else
         redirect_to(projects_path, notice: @notices)
@@ -79,18 +74,21 @@ module Admin
 
     def destroy
       @notices = []
-      @alerts = []
+      flash[:alert] = []
+
       begin
         @project = find_model
         return redirect_to(projects_path, alert: 'Project not found') unless @project
+
         @project.destroy
         @notices.push('Project removed')
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-        @alerts.push('Sorry, something went wrong!')
-        @alerts.push(e.message)
+        flash[:alert].push('Sorry, something went wrong!')
+        flash[:alert].push(e.message)
       end
-      redirect_to(projects_path, notice: @notices, alert: @alerts)
+
+      redirect_to(projects_path, notice: @notices, alert: flash[:alert])
     end
 
     private
@@ -130,15 +128,16 @@ module Admin
       if model.update(project_params)
         @notices.push(success_message)
       else
-        @alerts.push(model.errors.messages.to_a.flatten.last)
+        flash[:alert].push(model.errors.messages.to_a.flatten.last)
       end
     end
 
     def create_project_images(project:)
       return unless params.dig(:new_project_images, :image_files)
-      new_project_images_params[:image_files].each do |image_param|
+
+      new_project_images_params[:image_files].compact_blank.each do |image_param|
         next if ProjectImage.create(image_file: image_param, project: project)
-        @alerts.push('Image upload error')
+        flash[:alert].push('Image upload error')
         raise(ActiveRecord::Rollback, 'Image upload error')
       end
     end
@@ -148,11 +147,12 @@ module Admin
       extension = params.dig(:snippet, :extension)
       return true unless snippet && extension
       return true unless snippet.length > 0 && extension.length > 0
-      if @project.render_code_snippet(snippet_params.to_h.symbolize_keys)
+
+      if @project.render_code_snippet(**snippet_params.to_h.symbolize_keys)
         @notices.push('Code snippet rendered')
         true
       else
-        @alerts.push('Code snippet invalid')
+        flash[:alert].push('Code snippet invalid')
         false
       end
     end

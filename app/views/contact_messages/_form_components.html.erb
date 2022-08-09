@@ -1,6 +1,3 @@
-
-<%= render partial: 'partials/system_messages' %>
-
 <div class="embedded-form-entry-container">
   <%= f.label(:from, 'From', class: 'input-label embedded-label') %>
   <%= f.text_field(:from, class: 'input-box embedded-input-box', placeholder: 'Enter your name...', required: true) %>
@@ -29,3 +26,5 @@
 <div class="embedded-form-entry-container">
   <%= render partial: "partials/submit_right", locals: {form: f, button_text: 'Send'} %>
 </div>
+
+<%= render partial: 'partials/system_messages' %>

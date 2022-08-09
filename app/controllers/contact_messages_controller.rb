@@ -6,17 +6,22 @@ class ContactMessagesController < ApplicationController
 
   def create
     @notices = []
-    @alerts = []
+    flash[:alert] = []
+
     begin
-      @contact_message = User.first.contact_messages.new
-      return unless recaptcha_valid?
-      update_model(model: @contact_message, success_message: 'Message sent! You should receive a confirmation email shortly.')
+      create_message!
     rescue StandardError => e
       logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-      @alerts.push('Sorry, something went wrong!')
+      flash[:alert].push('Sorry, something went wrong!')
     end
-    if @alerts.any?
-      render_form_alerts
+
+    if flash[:alert].any?
+      render(partial: 'contact_messages/new_form',
+             status: :unprocessable_entity,
+             locals: {
+               contact_message: @contact_message
+             })
+      flash[:alert] = nil
     else
       redirect_to(contact_path, notice: @notices)
     end
@@ -34,32 +39,20 @@ class ContactMessagesController < ApplicationController
         :content)
   end
 
-  def recaptcha_valid?
-    return true if ReCaptchaService.recaptcha_valid?(params['g-recaptcha-response'])
-    @alerts.push('reCaptcha failed, please try again')
-    @contact_message.assign_attributes(permitted_params)
-    render_form_alerts
-    false
-  end
+  def create_message!
+    @contact_message = User.first.contact_messages.new(permitted_params)
+    return unless recaptcha_valid?
 
-  def update_model(model:, success_message:)
-    if model.update(permitted_params)
-      @notices.push(success_message)
+    if @contact_message.save
+      @notices.push('Message sent! You should receive a confirmation email shortly.')
     else
-      @alerts.push(model.errors.messages.to_a.flatten.last)
+      flash[:alert].push(@contact_message.errors.messages.to_a.flatten.last)
     end
   end
 
-  def render_form_alerts
-    flash[:alert] = @alerts
-    render(
-      partial: 'partials/form_replacement',
-      locals: {
-        selector_id: 'contact-messages-new-form',
-        form_partial: 'contact_messages/new_form',
-        model: { contact_message: @contact_message }
-      },
-      formats: [:js])
-    flash[:alert] = nil
+  def recaptcha_valid?
+    return true if ReCaptchaService.recaptcha_valid?(params['g-recaptcha-response'])
+    flash[:alert].push('reCaptcha failed, please try again')
+    false
   end
 end

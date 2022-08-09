@@ -7,25 +7,21 @@ module Admin
 
     def create
       @notices = []
-      @alerts = []
+      flash[:alert] = []
+
       begin
         @code_snippet = @user.code_snippets.new
         update_model(model: @code_snippet, success_message: 'Code snippet created')
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-        @alerts.push('Sorry, something went wrong!')
-        @alerts.push(e.message)
+        flash[:alert].push('Sorry, something went wrong!')
+        flash[:alert].push(e.message)
       end
-      if @alerts.any?
-        flash[:alert] = @alerts
-        render(
-          partial: 'partials/form_replacement',
-          locals: {
-            selector_id: 'admin-code-snippets-new-form',
-            form_partial: 'admin/code_snippets/new_form',
-            model: { code_snippet: @code_snippet }
-          },
-          formats: [:js])
+
+      if flash[:alert].any?
+        render(:new,
+               layout: 'layouts/admin_dashboard',
+               status: :unprocessable_entity)
         flash[:alert] = nil
       else
         redirect_to(code_snippets_path, notice: @notices)
@@ -40,26 +36,23 @@ module Admin
 
     def update
       @notices = []
-      @alerts = []
+      flash[:alert] = []
+
       begin
         @code_snippet = find_model
         return redirect_to(code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
+
         update_model(model: @code_snippet, success_message: 'Code snippet updated')
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-        @alerts.push('Sorry, something went wrong!')
-        @alerts.push(e.message)
+        flash[:alert].push('Sorry, something went wrong!')
+        flash[:alert].push(e.message)
       end
-      if @alerts.any?
-        flash[:alert] = @alerts
-        render(
-          partial: 'partials/form_replacement',
-          locals: {
-            selector_id: 'admin-code-snippets-edit-form',
-            form_partial: 'admin/code_snippets/edit_form',
-            model: { code_snippet: @code_snippet }
-          },
-          formats: [:js])
+
+      if flash[:alert].any?
+        render(:edit,
+               layout: 'layouts/admin_dashboard',
+               status: :unprocessable_entity)
         flash[:alert] = nil
       else
         redirect_to(code_snippet_path(@code_snippet), notice: @notices)
@@ -68,7 +61,8 @@ module Admin
 
     def destroy
       @notices = []
-      @alerts = []
+      flash[:alert] = []
+
       begin
         @code_snippet = find_model
         return redirect_to(code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
@@ -76,10 +70,11 @@ module Admin
         @notices.push('Code snippet removed')
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-        @alerts.push('Sorry, something went wrong!')
-        @alerts.push(e.message)
+        flash[:alert].push('Sorry, something went wrong!')
+        flash[:alert].push(e.message)
       end
-      redirect_to(code_snippets_path, notice: @notices, alert: @alerts)
+
+      redirect_to(code_snippets_path, notice: @notices, alert: flash[:alert])
     end
 
     private
@@ -103,7 +98,7 @@ module Admin
       if model.update(permitted_params)
         @notices.push(success_message)
       else
-        @alerts.push(model.errors.messages.to_a.flatten.last)
+        flash[:alert].push(model.errors.messages.to_a.flatten.last)
       end
     end
   end

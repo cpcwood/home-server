@@ -12,25 +12,21 @@ module Admin
 
     def create
       @notices = []
-      @alerts = []
+      flash[:alert] = []
+
       begin
         @gallery_image = @user.gallery_images.new
         update_model(model: @gallery_image, success_message: 'Gallery image created')
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-        @alerts.push('Sorry, something went wrong!')
-        @alerts.push(e.message)
+        flash[:alert].push('Sorry, something went wrong!')
+        flash[:alert].push(e.message)
       end
-      if @alerts.any?
-        flash[:alert] = @alerts
-        render(
-          partial: 'partials/form_replacement',
-          locals: {
-            selector_id: 'admin-gallery-images-new-form',
-            form_partial: 'admin/gallery_images/new_form',
-            model: { gallery_image: @gallery_image }
-          },
-          formats: [:js])
+
+      if flash[:alert].any?
+        render(:new,
+               layout: 'layouts/admin_dashboard',
+               status: :unprocessable_entity)
         flash[:alert] = nil
       else
         redirect_to(admin_gallery_images_path, notice: @notices)
@@ -40,31 +36,29 @@ module Admin
     def edit
       @gallery_image = find_model
       return redirect_to(admin_gallery_images_path, alert: 'Gallery image not found') unless @gallery_image
+
       render layout: 'layouts/admin_dashboard'
     end
 
     def update
       @notices = []
-      @alerts = []
+      flash[:alert] = []
+
       begin
         @gallery_image = find_model
         return redirect_to(admin_gallery_images_path, alert: 'Gallery image not found') unless @gallery_image
+
         update_model(model: @gallery_image, success_message: 'Gallery image updated')
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-        @alerts.push('Sorry, something went wrong!')
-        @alerts.push(e.message)
+        flash[:alert].push('Sorry, something went wrong!')
+        flash[:alert].push(e.message)
       end
-      if @alerts.any?
-        flash[:alert] = @alerts
-        render(
-          partial: 'partials/form_replacement',
-          locals: {
-            selector_id: 'admin-gallery-images-edit-form',
-            form_partial: 'admin/gallery_images/edit_form',
-            model: { gallery_image: @gallery_image }
-          },
-          formats: [:js])
+
+      if flash[:alert].any?
+        render(:edit,
+               layout: 'layouts/admin_dashboard',
+               status: :unprocessable_entity)
         flash[:alert] = nil
       else
         redirect_to(admin_gallery_images_path, notice: @notices)
@@ -73,18 +67,21 @@ module Admin
 
     def destroy
       @notices = []
-      @alerts = []
+      flash[:alert] = []
+
       begin
         @gallery_image = find_model
         return redirect_to(admin_gallery_images_path, alert: 'Gallery image not found') unless @gallery_image
+
         @gallery_image.destroy
         @notices.push('Gallery image removed')
       rescue StandardError => e
         logger.error("RESCUE: #{caller_locations.first}\nERROR: #{e}\nTRACE: #{e.backtrace.first}")
-        @alerts.push('Sorry, something went wrong!')
-        @alerts.push(e.message)
+        flash[:alert].push('Sorry, something went wrong!')
+        flash[:alert].push(e.message)
       end
-      redirect_to(admin_gallery_images_path, notice: @notices, alert: @alerts)
+
+      redirect_to(admin_gallery_images_path, notice: @notices, alert: flash[:alert])
     end
 
     private
@@ -102,7 +99,7 @@ module Admin
       if model.update(permitted_params)
         @notices.push(success_message)
       else
-        @alerts.push(model.errors.messages.to_a.flatten.last)
+        flash[:alert].push(model.errors.messages.to_a.flatten.last)
       end
     end
 
