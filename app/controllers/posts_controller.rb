@@ -1,6 +1,10 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.order(date_published: :desc)
+    @posts = if @user
+               Post.all.order(date_published: :desc)
+             else
+               Post.where(visible: true).order(date_published: :desc)
+             end
   end
 
   def show

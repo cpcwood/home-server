@@ -83,7 +83,7 @@ services:
       - app
     command: './.docker/scripts/startup-worker-dev'
     security_opt:
-      - seccomp:"./.docker/config/chrome.json"
+      - seccomp:../config/chrome.json
 
   mailcatcher:
     image: sj26/mailcatcher
