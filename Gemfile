@@ -2,9 +2,6 @@ source 'https://rubygems.org'
 
 ruby '3.1.2'
 
-# Bundler for running commands in containers
-gem 'bundler', '~> 2.3.18'
-
 # Rails
 gem 'rails', '~> 7.0'
 # Ensure assets pipeline from v6 still works

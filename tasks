@@ -10,28 +10,28 @@ export FIXUID="$(id -u)"
 export FIXGID="$(id -g)"
 
 function build {
-  docker-compose \
+  docker compose \
     -p $COMPOSE_PROJECT_NAME \
     -f ./.docker/docker-compose/dev.yml \
     build
 }
 
 function up {
-  docker-compose \
+  docker compose \
     -p $COMPOSE_PROJECT_NAME \
     -f ./.docker/docker-compose/dev.yml \
     up "$@"
 }
 
 function down {
-	docker-compose \
+	docker compose \
     -p $COMPOSE_PROJECT_NAME \
     -f ./.docker/docker-compose/dev.yml \
     down "$@"
 }
 
 function run {
-	docker-compose \
+	docker compose \
 		-p $COMPOSE_PROJECT_NAME \
 		-f ./.docker/docker-compose/dev.yml \
 		run $APP_SERVICE_NAME /bin/bash -c "source ./.docker/scripts/entrypoint-dev && $*"
@@ -39,7 +39,7 @@ function run {
 
 function exec {
 	ensure_app_container_running
-	docker-compose \
+	docker compose \
 		-p $COMPOSE_PROJECT_NAME \
 		-f ./.docker/docker-compose/dev.yml \
 		exec $APP_SERVICE_NAME /bin/bash -c "source ./.docker/scripts/entrypoint-dev && $*"
@@ -47,7 +47,7 @@ function exec {
 
 function bash {
 	ensure_app_container_running
-	docker-compose \
+	docker compose \
 		-p $COMPOSE_PROJECT_NAME \
 		-f ./.docker/docker-compose/dev.yml \
 		exec $APP_SERVICE_NAME /bin/bash --init-file ./.docker/scripts/entrypoint-dev
@@ -75,7 +75,7 @@ function attach {
 
 function rspec {
 	ensure_app_container_running
-  docker-compose \
+  docker compose \
 		-p $COMPOSE_PROJECT_NAME \
 		-f ./.docker/docker-compose/dev.yml \
 		exec -e RAILS_ENV=test $APP_SERVICE_NAME \
@@ -136,6 +136,11 @@ function build-images-worker {
     -f ./.docker/dockerfiles/worker.Dockerfile \
     .
 }
+
+if [[ ! $(type -t "$1") == function ]]; then
+  echo "Invalid command entered"
+  exit 1
+fi
 
 TIMEFORMAT="Task completed in %3lR"
 time "${@:-default}"
