@@ -6,7 +6,7 @@ class ContactMessagesController < ApplicationController
 
   def create
     @notices = []
-    flash[:alert] = []
+    flash.now[:alert] = []
 
     begin
       create_message!
@@ -21,7 +21,7 @@ class ContactMessagesController < ApplicationController
              locals: {
                contact_message: @contact_message
              })
-      flash[:alert] = nil
+      flash.now[:alert] = nil
     else
       redirect_to(contact_path, notice: @notices)
     end

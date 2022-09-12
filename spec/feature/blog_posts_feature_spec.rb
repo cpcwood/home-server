@@ -89,5 +89,25 @@ feature 'blog posts feature', feature: true do
       expect(page).to have_content('Blog post removed')
       expect(page).to have_content('There are no posts here...')
     end
+
+    scenario 'hide blog post' do
+      visit('/blog')
+      first('.show-blog-post-button').click
+      click_on('Edit')
+      expect(page).to have_content(@blog_post_section.text)
+      find(:css, 'input[name="post[visible]"]').set(false)
+      click_button('Submit')
+      expect(page).to have_content('Blog post updated')
+      expect(page).to have_content(@blog_post.title)
+      expect(page).to have_content('(hidden)')
+
+      visit('/blog')
+      expect(page).to have_content(@blog_post.title)
+      expect(page).to have_content('(hidden)')
+
+      logout_feature
+      visit('/blog')
+      expect(page).to have_content('There are no posts here...')
+    end
   end
 end

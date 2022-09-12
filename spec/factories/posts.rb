@@ -6,6 +6,7 @@
 #  date_published :datetime         not null
 #  overview       :string           not null
 #  title          :string           not null
+#  visible        :boolean          default(TRUE), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  user_id        :bigint           not null
@@ -23,6 +24,7 @@ FactoryBot.define do
     date_published { DateTime.new(2020, 04, 19, 0, 0, 0) }
     overview { 'test blog post overview' }
     title { 'test blog post title' }
+    visible { true }
     user
   end
 end

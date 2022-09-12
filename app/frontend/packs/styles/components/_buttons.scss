@@ -133,3 +133,13 @@
 .post-editor-toolbar-button {
   margin-left: 30px;
 }
+
+.section-title-link {
+  border: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+  user-select: none;
+  color: inherit;
+}

@@ -16,6 +16,10 @@ def login_feature
   sleep(0.1)
 end
 
+def logout_feature
+  page.driver.delete('/login')
+end
+
 def js_true?
   RSpec.current_example.metadata[:js]
 end
