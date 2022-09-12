@@ -86,7 +86,8 @@ module Admin
         .permit(
           :title,
           :overview,
-          :date_published)
+          :date_published,
+          :visible)
     end
 
     def post_section_params

@@ -1,5 +1,5 @@
 <% content_for :section_title do %>
-  Blog
+  <a href='<%= posts_path %>' class='section-title-link'>Blog</a>
 <% end %>
 
 <% content_for :meta_title do %>
@@ -17,7 +17,7 @@
   <%= render partial: 'partials/system_messages' %>
 
   <article itemscope itemtype="https://schema.org/BlogPosting">
-    <h1 itemprop='headline'><%= @post.title %></h1>
+    <h1 itemprop='headline'><%= @post.title %> <%= @post.visible ? "" : "(hidden)" %></h1>
     <div class='reading-pane-subtitle'>
       <span itemprop='author'> <%= @post.user.username %> </span> | <time datetime="<%= @post.date_published.strftime("%Y-%m-%d")%>" itemprop='dateModified'> <%= full_date(@post.date_published) %> </time>
     </div>

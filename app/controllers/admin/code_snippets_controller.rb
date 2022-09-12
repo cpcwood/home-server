@@ -7,7 +7,7 @@ module Admin
 
     def create
       @notices = []
-      flash[:alert] = []
+      flash.now[:alert] = []
 
       begin
         @code_snippet = @user.code_snippets.new
@@ -22,7 +22,7 @@ module Admin
         render(:new,
                layout: 'layouts/admin_dashboard',
                status: :unprocessable_entity)
-        flash[:alert] = nil
+        flash.now[:alert] = nil
       else
         redirect_to(code_snippets_path, notice: @notices)
       end
@@ -36,7 +36,7 @@ module Admin
 
     def update
       @notices = []
-      flash[:alert] = []
+      flash.now[:alert] = []
 
       begin
         @code_snippet = find_model
@@ -53,7 +53,7 @@ module Admin
         render(:edit,
                layout: 'layouts/admin_dashboard',
                status: :unprocessable_entity)
-        flash[:alert] = nil
+        flash.now[:alert] = nil
       else
         redirect_to(code_snippet_path(@code_snippet), notice: @notices)
       end

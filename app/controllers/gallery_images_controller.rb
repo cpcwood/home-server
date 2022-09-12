@@ -13,6 +13,6 @@ class GalleryImagesController < ApplicationController
 
   def calc_offset
     page_number = params['page'].to_i
-    page_number > 0 ? ((page_number - 1) * PAGE_SIZE) : 0
+    (page_number > 0) ? ((page_number - 1) * PAGE_SIZE) : 0
   end
 end

@@ -6,6 +6,7 @@
 #  date_published :datetime         not null
 #  overview       :string           not null
 #  title          :string           not null
+#  visible        :boolean          default(TRUE), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  user_id        :bigint           not null
@@ -33,6 +34,8 @@ class Post < ApplicationRecord
 
   validates :title,
             length: { minimum: 1, message: 'Blog post title cannot be empty' }
+
+  validates :visible, inclusion: { in: [true, false] }
 
   def to_param
     parameterized_title = "-#{title.parameterize}" if title&.present?
