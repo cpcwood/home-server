@@ -8,7 +8,7 @@ General portfolio style website and a place to prototype new rails features I fi
 
 ### Technology
 
-- Ruby v2.7 \w Ruby on Rails v6 & PostgreSQL
+- Ruby on Rails & PostgreSQL
 - Stimulus
 - Google reCaptcha
 - Twilio SMS Verification
