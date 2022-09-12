@@ -6,6 +6,7 @@
 #  date_published :datetime         not null
 #  overview       :string           not null
 #  title          :string           not null
+#  visible        :boolean          default(TRUE), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  user_id        :bigint           not null
@@ -63,6 +64,13 @@ RSpec.describe Post, type: :model do
     describe 'user associtation' do
       it 'presence' do
         subject.user = nil
+        expect(subject).to_not be_valid
+      end
+    end
+
+    describe 'visibile' do
+      it 'presence' do
+        subject.visible = nil
         expect(subject).to_not be_valid
       end
     end

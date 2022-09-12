@@ -2,7 +2,7 @@
   <section class='post-overview'>
     <a href='<%= post_path(post) %>' class='post-overview-container show-blog-post-button' itemprop="url">
       <time class='post-date' datetime="<%= post.date_published.strftime("%Y-%m-%d")%>">
-        <%= full_date(post.date_published) %>
+        <%= full_date(post.date_published) %> <%= post.visible ? "" : "(hidden)" %>
       </time>
       <h1 class='post-overview-title' class='headline'>
         <%= post.title %>

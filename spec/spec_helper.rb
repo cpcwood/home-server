@@ -18,7 +18,7 @@ require 'webdrivers'
 Webdrivers.install_dir = './vendor'
 
 require 'rails_helper'
-require 'capybara'
+require 'capybara/rspec'
 require 'sidekiq/testing'
 require 'database_cleaner/active_record'
 
