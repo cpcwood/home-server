@@ -7,13 +7,14 @@
 if Rails.env.production?
   Rails.application.configure do
     config.content_security_policy do |policy|
-      policy.default_src :self, :https
-      policy.font_src    :self, :https, :data
-      policy.img_src     :self, :https, :data
+      policy.default_src :self
+      policy.font_src    :self, :data
+      policy.img_src     :self, :data
       policy.object_src  :none
-      policy.script_src  :self, :https, :unsafe_eval
-      policy.style_src   :self, :https, :unsafe_inline
-      policy.connect_src :self, :https 
+      policy.base_uri    :self
+      policy.script_src  :self, :unsafe_eval, :unsafe_inline
+      policy.style_src   :self, :unsafe_inline
+      policy.connect_src :self 
       # Specify URI for violation reports
       # policy.report_uri "/csp-violation-report-endpoint"
     end
