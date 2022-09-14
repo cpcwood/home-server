@@ -11,7 +11,7 @@ services:
       dockerfile: .docker/dockerfiles/dev.Dockerfile
       args:
         BUNDLE_PATH: /gems
-        MAX_MIND_LICENSE: "${MAX_MIND_LICENSE}"
+        MAX_MIND_LICENSE: "${MAX_MIND_LICENSE:-''}"
     environment:
       REDIS_HOST: redis
       DB_HOST: postgres
@@ -43,7 +43,7 @@ services:
       dockerfile: .docker/dockerfiles/dev.Dockerfile
       args:
         BUNDLE_PATH: /gems
-        MAX_MIND_LICENSE: "${MAX_MIND_LICENSE}"
+        MAX_MIND_LICENSE: "${MAX_MIND_LICENSE:-''}"
     environment:
       WEBPACKER_DEV_SERVER_PUBLIC: "${DEV_SERVER_HOST:-0.0.0.0}:3035"
     command: .docker/scripts/startup-client-dev
@@ -69,7 +69,7 @@ services:
       dockerfile: .docker/dockerfiles/dev.Dockerfile
       args:
         BUNDLE_PATH: /gems
-        MAX_MIND_LICENSE: "${MAX_MIND_LICENSE}"
+        MAX_MIND_LICENSE: "${MAX_MIND_LICENSE:-''}"
     environment:
       REDIS_HOST: redis
       DB_HOST: postgres
