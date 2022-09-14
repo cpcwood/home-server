@@ -54,5 +54,8 @@ module HomeServer
 
     # Image processing
     config.active_storage.variant_processor = :mini_magick
+
+    # Active storage
+    config.active_storage.service_urls_expire_in = 1.week
   end
 end
