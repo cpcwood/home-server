@@ -29,7 +29,7 @@ describe('header_scroll_controller', () => {
 
     beforeEach(() => {
       document.body.innerHTML = `
-        <div data-controller='header-scroll' data-action='turbolinks:before-cache@window->header-scroll#teardown scroll@window->header-scroll#scrollHeaderImage' data-header-scroll-image-height='${imageHeight}' data-header-scroll-header-height='${headerHeight}'>
+        <div data-controller='header-scroll' data-action='turbolinks:before-cache@window->header-scroll#teardown scroll@window->header-scroll#scrollHeaderImage:passive' data-header-scroll-image-height='${imageHeight}' data-header-scroll-header-height='${headerHeight}'>
           <div class='header-image' data-header-scroll-target='headerImage'></div>
           <div class='nav-image' data-header-scroll-target='navImage'></div>
         </div>
