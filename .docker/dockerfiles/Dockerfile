@@ -34,6 +34,7 @@ RUN addgroup -S docker && \
 USER docker
 
 COPY --chown=docker:docker --from=cpcwood/home-server-base $APP_HOME $APP_HOME
+COPY --chown=docker:docker --from=cpcwood/home-server-base /var/opt/maxmind/GeoLite2-City.mmdb /var/opt/maxmind/GeoLite2-City.mmdb
 
 EXPOSE 5000
 CMD ["./.docker/scripts/startup-app"]
