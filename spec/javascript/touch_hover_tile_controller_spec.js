@@ -16,7 +16,7 @@ describe('touch_hover_tile_controller', () => {
 
   beforeEach(() => {
     document.body.innerHTML = `
-      <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#touchStart touchend->touch-hover-tile#touchEnd mouseenter->touch-hover-tile#applyHoverToTarget mouseleave->touch-hover-tile#teardown turbolinks:before-cache@window->touch-hover-tile#teardown">
+      <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#touchStart:passive touchend->touch-hover-tile#touchEnd:passive mouseenter->touch-hover-tile#applyHoverToTarget mouseleave->touch-hover-tile#teardown turbolinks:before-cache@window->touch-hover-tile#teardown">
         <img class="cover-image">
         <a href="/one">
           <span class="cover-title" data-touch-hover-tile-target="coverTitle">
@@ -24,7 +24,7 @@ describe('touch_hover_tile_controller', () => {
           </span>
         </a>
       </div>
-      <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#touchStart touchend->touch-hover-tile#touchEnd mouseenter->touch-hover-tile#applyHoverToTarget mouseleave->touch-hover-tile#teardown turbolinks:before-cache@window->touch-hover-tile#teardown">
+      <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#touchStart:passive touchend->touch-hover-tile#touchEnd:passive mouseenter->touch-hover-tile#applyHoverToTarget mouseleave->touch-hover-tile#teardown turbolinks:before-cache@window->touch-hover-tile#teardown">
         <img class="cover-image">
         <a href="/two">
           <span class="cover-title" data-touch-hover-tile-target="coverTitle">

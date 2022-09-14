@@ -8,7 +8,7 @@ export default class extends Controller {
 
   connect () {
     this.handleScrollBind = this.handleScroll.bind(this)
-    document.addEventListener('scroll', this.handleScrollBind, true)
+    document.addEventListener('scroll', this.handleScrollBind, {capture: true, passive: true})
   }
 
   handleScroll () {
