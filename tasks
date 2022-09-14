@@ -10,10 +10,11 @@ export FIXUID="$(id -u)"
 export FIXGID="$(id -g)"
 
 function build {
+  source ./config/env/build_args.env
   docker compose \
     -p $COMPOSE_PROJECT_NAME \
     -f ./.docker/docker-compose/dev.yml \
-    build
+    build "$@"
 }
 
 function up {

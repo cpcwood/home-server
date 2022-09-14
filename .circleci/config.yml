@@ -102,6 +102,7 @@ jobs:
                 -t "$DOCKER_USERNAME/home-server-base:$(echo $CIRCLE_SHA1 | head -c8)" \
                 -t $DOCKER_USERNAME/home-server-base:latest \
                 --build-arg grecaptcha_site_key=$GRECAPTCHA_SITE_KEY \
+                --build-arg MAX_MIND_LICENSE=$MAX_MIND_LICENSE \
                 -f ./.docker/dockerfiles/base.Dockerfile \
                 .
       - run:

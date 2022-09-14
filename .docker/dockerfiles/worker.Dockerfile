@@ -37,6 +37,7 @@ RUN addgroup -S docker && \
 USER docker
 
 COPY --chown=docker:docker --from=cpcwood/home-server-base $APP_HOME $APP_HOME
+COPY --chown=docker:docker --from=cpcwood/home-server-base /var/opt/maxmind/GeoLite2-City.mmdb /var/opt/maxmind/GeoLite2-City.mmdb
 COPY --chown=docker:docker --from=cpcwood/home-server-worker-dependencies $APP_HOME/node_modules $APP_HOME/node_modules
 
 CMD ["./.docker/scripts/startup-worker"]
