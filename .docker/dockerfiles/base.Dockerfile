@@ -39,6 +39,13 @@ COPY package.json yarn.lock $APP_HOME/
 RUN yarn install --production=true && \
   rm -rf /usr/local/share/.cache/yarn
 
+ARG MAX_MIND_LICENSE
+RUN curl "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAX_MIND_LICENSE&suffix=tar.gz" -o ./GeoLite2-City.tar.gz && \
+  gzip -d GeoLite2-City.tar.gz && \
+  tar -xvf GeoLite2-City.tar && \
+  mkdir -p /var/opt/maxmind/ && \
+  mv GeoLite2-City_*/GeoLite2-City.mmdb /var/opt/maxmind/GeoLite2-City.mmdb
+
 RUN addgroup -S docker && \
   adduser -S -G docker docker
 

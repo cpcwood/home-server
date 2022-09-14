@@ -42,6 +42,10 @@ gem 'jsonapi-serializer'
 gem 'mimemagic'
 # Tasks
 gem 'rake'
+# Pageviews
+gem 'ahoy_matey'
+gem 'geocoder'
+gem 'maxminddb'
 
 group :production do
   # AWS S3 for production storage

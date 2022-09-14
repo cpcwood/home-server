@@ -18,6 +18,8 @@ RUN apk add \
   yarn \
   curl \
   git \
+  gzip \
+  tar \
   libffi-dev zlib-dev libxml2-dev libxslt-dev readline-dev \
   rust cargo python3 python3-dev py3-pip \
   chromium-chromedriver chromium libnotify-dev \
@@ -33,6 +35,13 @@ ENV BUNDLE_PATH=$BUNDLE_PATH \
   BUNDLE_APP_CONFIG=$BUNDLE_PATH
 
 ENV PATH=$BUNDLE_PATH/bin:$APP_HOME/node_modules/.bin:$PATH
+
+ARG MAX_MIND_LICENSE
+RUN curl "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAX_MIND_LICENSE&suffix=tar.gz" -o ./GeoLite2-City.tar.gz && \
+  gzip -d GeoLite2-City.tar.gz && \
+  tar -xvf GeoLite2-City.tar && \
+  mkdir -p /var/opt/maxmind/ && \
+  mv GeoLite2-City_*/GeoLite2-City.mmdb /var/opt/maxmind/GeoLite2-City.mmdb
 
 # Create docker user with variable ID for dev
 RUN mkdir -p $APP_HOME /gems && \
