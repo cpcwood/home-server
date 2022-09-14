@@ -20,3 +20,7 @@
 .simple-lightbox:focus {
   outline: none;
 }
+
+.simple-lightbox {
+  backdrop-filter: blur(2px);
+}
