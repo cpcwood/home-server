@@ -9,7 +9,8 @@ if Rails.env.production?
     config.content_security_policy do |policy|
       policy.default_src :self
       policy.font_src    :self, :data
-      policy.img_src     :self, :data, "https://#{ENV.fetch('AWS_BUCKET')}.#{ENV.fetch('AWS_REGION')}.amazonaws.com/*"
+      policy.img_src     :self, :data, "https://#{ENV.fetch('AWS_BUCKET')}.#{ENV.fetch('AWS_REGION')}.amazonaws.com"
+      policy.media_src   :self, :data, "https://#{ENV.fetch('AWS_BUCKET')}.#{ENV.fetch('AWS_REGION')}.amazonaws.com"
       policy.object_src  :none
       policy.base_uri    :self
       policy.script_src  :self, :unsafe_eval, :unsafe_inline
