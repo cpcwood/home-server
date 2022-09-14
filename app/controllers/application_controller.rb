@@ -6,6 +6,14 @@ class ApplicationController < ActionController::Base
   before_action :assign_user,
                 :assign_site_setings
 
+  after_action :track_action
+
+  protected
+
+  def track_action
+    ahoy.track("Ran action", request.path_parameters)
+  end
+
   private
 
   def assign_site_setings
