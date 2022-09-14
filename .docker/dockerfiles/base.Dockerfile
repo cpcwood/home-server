@@ -24,6 +24,9 @@ RUN apk add --update --no-cache \
   nodejs \
   yarn \
   git \
+  curl \
+  gzip \
+  tar \
   shared-mime-info
 
 RUN mkdir -p $APP_HOME $APP_HOME/vendor/bundle $APP_HOME/tmp
