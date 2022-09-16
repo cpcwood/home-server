@@ -58,16 +58,16 @@ Development environment variables are loaded from ```config/env/.env``` by docke
 Build the development container images, using ```./tasks build```
 
 In order for commands to run inside the application containers scripts are used instead of calling the commands directly. Scripts are run from the [`tasks`](./tasks) file and the following scripts are current provided:
-- ```./tasks/up``` - start the application
-- ```./tasks/down``` - stop the application
-- ```./tasks/build``` - build the application containers
-- ```./tasks/exec``` - run command in application container
-- ```./tasks/bash``` - enter shell in application container
-- ```./tasks/rspec``` - rspec test suite
-- ```./tasks/yarn``` - yarn
-- ```./tasks/rails``` - rails
-- ```./tasks/bundle``` - bundler
-- ```./tasks/rubocop``` - run ruby code linter
+- ```./tasks up``` - start the application
+- ```./tasks down``` - stop the application
+- ```./tasks build``` - build the application containers
+- ```./tasks exec``` - run command in application container
+- ```./tasks bash``` - enter shell in application container
+- ```./tasks rspec``` - rspec test suite
+- ```./tasks yarn``` - yarn
+- ```./tasks rails``` - rails
+- ```./tasks bundle``` - bundler
+- ```./tasks rubocop``` - run ruby code linter
 
 Then container start up scripts will install the application dependencies automatically on the first run. Updates to dependencies, such as adding a new gem, should be performed manually.
 
