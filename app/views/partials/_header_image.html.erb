@@ -1,3 +1,6 @@
 <div class='header-image' style='height: <%= header_height %>px'>
-  <%= image_tag(image_path_helper(image_model: @header_image), id: 'header-image', style: @header_image.custom_style, alt: 'header image', data: {'header-scroll-target': scrollTarget}) %>
+  <%= image_tag(image_path_helper(image_model: @header_image),
+                                  id: "#{scrollTarget}",
+                                  style: @header_image.custom_style,
+                                  alt: 'header image') %>
 </div>

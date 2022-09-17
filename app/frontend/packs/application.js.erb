@@ -3,6 +3,7 @@ import "@hotwired/turbo-rails"
 // StimulusJS
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
+import headerScroll from "./listeners/headerScroll"
 
 const application = Application.start()
 const context = require.context("./controllers", true, /\.js(?:.erb)?$/)
@@ -17,3 +18,5 @@ console.log(`Welcome to
 
 Created by Chris Wood - cpcwood.com                                           
 `)
+
+window.addEventListener('scroll', headerScroll, { passive:  true })
