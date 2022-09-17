@@ -11,7 +11,6 @@ describe('recaptcha_controller', () => {
   let createElementSpy
   let appendChildSpy
   let removeChildSpyHead
-  let container
   let mockGrecaptcha
 
   beforeAll(() => {
@@ -31,7 +30,7 @@ describe('recaptcha_controller', () => {
       mock = { src: null, className: null }
       createElementSpy = jest.spyOn(document, 'createElement').mockReturnValue(mock)
       document.body.innerHTML = `
-        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
+        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container'></div>
       `
     })
 
@@ -52,7 +51,7 @@ describe('recaptcha_controller', () => {
       }
       window.grecaptcha = mockGrecaptcha
       document.body.innerHTML = `
-        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
+        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container'></div>
       `
     })
 
@@ -62,27 +61,11 @@ describe('recaptcha_controller', () => {
     })
   })
 
-  describe('#teardown', () => {
-    beforeEach(() => {
-      document.body.innerHTML = `
-        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
-      `
-      container = document.querySelector('#recaptcha')
-      removeChildSpyHead = jest.spyOn(document.head, 'removeChild').mockReturnValue(null)
-    })
-
-    it('turbolinks:before-cache', () => {
-      window.dispatchEvent(new Event('turbolinks:before-cache'))
-      expect(removeChildSpyHead).toHaveBeenCalled()
-      expect(container.innerHTML).toBe('')
-    })
-  })
-
   describe('#disconnect', () => {
     beforeEach(() => {
       removeChildSpyHead = jest.spyOn(document.head, 'removeChild').mockReturnValue(null)
       document.body.innerHTML = `
-        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container' data-action='turbolinks:before-cache@window->recaptcha#teardown'></div>
+        <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container'></div>
       `
     })
 

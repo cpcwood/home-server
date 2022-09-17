@@ -27,7 +27,7 @@ describe('image_loader_controller', () => {
   describe('images present', () => {
     beforeEach(() => {
       document.body.innerHTML = `
-        <div data-controller="image-loader" data-image-loader-target="container" data-action='turbolinks:before-cache@window->image-loader#teardown'>
+        <div data-controller="image-loader" data-image-loader-target="container">
           <img class="fade-target" data-action="load->image-loader#imageLoaded" data-image-loader-target="fade">
           <img class="fade-target" data-action="load->image-loader#imageLoaded" data-image-loader-target="fade">
         </div>
@@ -61,19 +61,6 @@ describe('image_loader_controller', () => {
         expect(fadeTargetTwo.style.transitionDelay).toBe('0.1s')
       })
     })
-
-    describe('#teardown', () => {
-      it('reset to cache safe state', () => {
-        fadeTargetOne.dispatchEvent(new Event('load'))
-        fadeTargetTwo.dispatchEvent(new Event('load'))
-        jest.runOnlyPendingTimers()
-        window.dispatchEvent(new Event('turbolinks:before-cache'))
-        expect(fadeTargetOne.classList).not.toContain('fade-in')
-        expect(fadeTargetTwo.classList).not.toContain('fade-in')
-        expect(fadeTargetOne.style.transitionDelay).toBe('')
-        expect(fadeTargetTwo.style.transitionDelay).toBe('')
-      })
-    })
   })
 
   describe('no images', () => {
@@ -81,7 +68,7 @@ describe('image_loader_controller', () => {
 
     beforeEach(() => {
       document.body.innerHTML = `
-        <div data-controller="image-loader" data-image-loader-target="container" data-action='turbolinks:before-cache@window->image-loader#teardown'>
+        <div data-controller="image-loader" data-image-loader-target="container">
           <div id="fade-target" data-image-loader-target="fade">
             I still need fading in
           </div>

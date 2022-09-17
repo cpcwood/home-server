@@ -10,7 +10,7 @@ export default class extends Controller {
 
   evaluateLoadProgress () {
     const allImagesLoaded = this.galleryItemTargets.every(img => img.complete && img.naturalHeight !== 0)
-    if (allImagesLoaded && !this.isPreview) {
+    if (allImagesLoaded) {
       this.displayGalleryItemTargets()
     }
   }
@@ -75,9 +75,5 @@ export default class extends Controller {
 
   disconnect () {
     this.teardown()
-  }
-
-  get isPreview () {
-    return document.documentElement.hasAttribute('data-turbolinks-preview')
   }
 }

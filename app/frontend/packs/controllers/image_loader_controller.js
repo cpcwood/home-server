@@ -19,7 +19,7 @@ export default class extends Controller {
       }
       return image.complete && image.naturalHeight !== 0
     })
-    if (allImagesLoaded && !this.isPreview) {
+    if (allImagesLoaded) {
       this.fadeInTargets()
     }
   }
@@ -51,9 +51,5 @@ export default class extends Controller {
 
   disconnect () {
     this.teardown()
-  }
-
-  get isPreview () {
-    return document.documentElement.hasAttribute('data-turbolinks-preview')
   }
 }

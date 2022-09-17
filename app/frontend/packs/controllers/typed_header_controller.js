@@ -37,7 +37,7 @@ export default class extends Controller {
 
     const isHeaderTyped = Cookies.get('header-typed')
 
-    if (!this.isPreview && !isHeaderTyped) {
+    if (!isHeaderTyped) {
       this.typedHeader = new Typed('#typed-header', headerOptions)
     } else {
       this.setHeader()
@@ -55,10 +55,6 @@ export default class extends Controller {
       this.typedHeader.destroy()
       this.typedHeaderTarget.classList.remove('typed-cursor')
     }
-  }
-
-  get isPreview () {
-    return document.documentElement.hasAttribute('data-turbolinks-preview')
   }
 
   setHeader () {
