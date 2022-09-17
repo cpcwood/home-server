@@ -52,7 +52,7 @@ describe('typed_header_controller', () => {
     describe('#connect', () => {
       it('typed object initialized', () => {
         expect(Typed).toHaveBeenCalledTimes(1)
-        expect(Cookies.set).toHaveBeenCalledTimes(2)
+        expect(Cookies.set).toHaveBeenCalledTimes(1)
       })
     })
 
@@ -77,7 +77,7 @@ describe('typed_header_controller', () => {
 
     it('strings filled if already typed', () => {
       expect(Typed).toHaveBeenCalledTimes(0)
-      expect(Cookies.set).toHaveBeenCalledTimes(2)
+      expect(Cookies.set).toHaveBeenCalledTimes(1)
     })
   })
 })

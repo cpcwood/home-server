@@ -40,7 +40,7 @@ describe('justified_gallery_controller', () => {
       }
     })
     document.body.innerHTML = `
-      <div class='gallery-container' data-controller="justified-gallery" data-justified-gallery-target="container" data-justified-gallery-margin="${margin}" data-action='turbolinks:before-cache@window->justified-gallery#teardown'>
+      <div class='gallery-container' data-controller="justified-gallery" data-justified-gallery-target="container" data-justified-gallery-margin="${margin}">
         <img class="gallery-item" data-action="load->justified-gallery#imageLoaded" data-justified-gallery-target="galleryItem" width=${galleryItemOneDimensions.width} height=${galleryItemOneDimensions.height}>
         <img class="gallery-item" data-action="load->justified-gallery#imageLoaded" data-justified-gallery-target="galleryItem" width=${galleryItemTwoDimensions.width} height=${galleryItemTwoDimensions.height}>
       </div>
@@ -119,17 +119,6 @@ describe('justified_gallery_controller', () => {
         expect(galleryItemTargetTwo.width).toEqual(40)
         expect(galleryItemTargetTwo.height).toEqual(50)
       })
-    })
-  })
-
-  describe('#teardown', () => {
-    it('reset to cache safe state', () => {
-      galleryItemTargetOne.dispatchEvent(new Event('load'))
-      galleryItemTargetTwo.dispatchEvent(new Event('load'))
-      jest.runOnlyPendingTimers()
-      window.dispatchEvent(new Event('turbolinks:before-cache'))
-      const galleryItemTargets = document.getElementsByClassName('gallery-item')
-      expect(galleryItemTargets).toHaveLength(0)
     })
   })
 })

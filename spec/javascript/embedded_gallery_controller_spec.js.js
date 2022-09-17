@@ -17,7 +17,7 @@ describe('embedded_gallery_controller', () => {
 
   const assignHTML = () => {
     document.body.innerHTML = `
-      <div id="container" data-controller="embedded-gallery" data-embedded-gallery-position="${startPosition}" data-action='turbolinks:before-cache@window->embedded-gallery#teardown'>
+      <div id="container" data-controller="embedded-gallery" data-embedded-gallery-position="${startPosition}">
         <img id='image1' data-embedded-gallery-target="image">
         <img id='image2' data-embedded-gallery-target="image">
         <img id='image3' data-embedded-gallery-target="image">
@@ -339,29 +339,10 @@ describe('embedded_gallery_controller', () => {
     })
   })
 
-  describe('#teardown', () => {
-    describe('reset position', () => {
-      beforeEach(() => {
-        startPosition = 2
-        assignHTML()
-      })
-
-      it('image styles', () => {
-        window.dispatchEvent(new Event('turbolinks:before-cache'))
-        expect(image1.style.opacity).toEqual('1')
-        expect(image2.style.opacity).toEqual('0')
-        expect(image3.style.opacity).toEqual('0')
-        expect(image1.style.zIndex).toEqual('1')
-        expect(image2.style.zIndex).toEqual('')
-        expect(image3.style.zIndex).toEqual('')
-      })
-    })
-  })
-
   describe('one image', () => {
     beforeEach(() => {
       document.body.innerHTML = `
-        <div id="container" data-controller="embedded-gallery" data-embedded-gallery-position="${startPosition}" data-action='turbolinks:before-cache@window->embedded-gallery#teardown'>
+        <div id="container" data-controller="embedded-gallery" data-embedded-gallery-position="${startPosition}">
           <img id='image1' data-embedded-gallery-target="image">
           <button id='prev-button' data-action="click->embedded-gallery#prev" data-embedded-gallery-target="navButton">‹</button>
           <button id='next-button' data-action="click->embedded-gallery#next" data-embedded-gallery-target="navButton">›</button>
@@ -374,31 +355,6 @@ describe('embedded_gallery_controller', () => {
     it('navButton styles', () => {
       expect(nextButton.style.display).toEqual('')
       expect(prevButton.style.display).toEqual('')
-    })
-  })
-
-  describe('#teardown', () => {
-    describe('reset position', () => {
-      beforeEach(() => {
-        startPosition = 2
-        assignHTML()
-      })
-
-      it('image styles', () => {
-        window.dispatchEvent(new Event('turbolinks:before-cache'))
-        expect(image1.style.opacity).toEqual('1')
-        expect(image2.style.opacity).toEqual('0')
-        expect(image3.style.opacity).toEqual('0')
-        expect(image1.style.zIndex).toEqual('1')
-        expect(image2.style.zIndex).toEqual('')
-        expect(image3.style.zIndex).toEqual('')
-      })
-
-      it('navButton styles', () => {
-        window.dispatchEvent(new Event('turbolinks:before-cache'))
-        expect(nextButton.style.display).toEqual('none')
-        expect(prevButton.style.display).toEqual('none')
-      })
     })
   })
 })

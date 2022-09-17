@@ -13,7 +13,7 @@ export default class extends Controller {
 
   handleScroll () {
     const isBottomVisible = (this.element.getBoundingClientRect().bottom <= window.innerHeight)
-    if (isBottomVisible && !this.isLoading && !this.isPreview && this.isRemainingPages && this.data.get('isGalleryRendered')) {
+    if (isBottomVisible && !this.isLoading && this.isRemainingPages && this.data.get('isGalleryRendered')) {
       this.loadNextPage()
     }
   }
@@ -122,9 +122,5 @@ export default class extends Controller {
       this.fetchController.abort()
     }
     this.removeLoadingIcon()
-  }
-
-  get isPreview () {
-    return document.documentElement.hasAttribute('data-turbolinks-preview')
   }
 }

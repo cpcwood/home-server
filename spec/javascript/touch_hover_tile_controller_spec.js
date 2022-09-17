@@ -16,7 +16,7 @@ describe('touch_hover_tile_controller', () => {
 
   beforeEach(() => {
     document.body.innerHTML = `
-      <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#touchStart:passive touchend->touch-hover-tile#touchEnd:passive mouseenter->touch-hover-tile#applyHoverToTarget mouseleave->touch-hover-tile#teardown turbolinks:before-cache@window->touch-hover-tile#teardown">
+      <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#touchStart:passive touchend->touch-hover-tile#touchEnd:passive mouseenter->touch-hover-tile#applyHoverToTarget mouseleave->touch-hover-tile#teardown">
         <img class="cover-image">
         <a href="/one">
           <span class="cover-title" data-touch-hover-tile-target="coverTitle">
@@ -24,7 +24,7 @@ describe('touch_hover_tile_controller', () => {
           </span>
         </a>
       </div>
-      <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#touchStart:passive touchend->touch-hover-tile#touchEnd:passive mouseenter->touch-hover-tile#applyHoverToTarget mouseleave->touch-hover-tile#teardown turbolinks:before-cache@window->touch-hover-tile#teardown">
+      <div class="flex-image-tile" data-controller="touch-hover-tile" data-action="touchstart->touch-hover-tile#touchStart:passive touchend->touch-hover-tile#touchEnd:passive mouseenter->touch-hover-tile#applyHoverToTarget mouseleave->touch-hover-tile#teardown">
         <img class="cover-image">
         <a href="/two">
           <span class="cover-title" data-touch-hover-tile-target="coverTitle">
@@ -93,14 +93,6 @@ describe('touch_hover_tile_controller', () => {
       flexImageTileTwo.dispatchEvent(new Event('mouseenter'))
       expect(flexImageTileOne.querySelector('.cover-title').classList).not.toContain('hover')
       expect(flexImageTileTwo.querySelector('.cover-title').classList).toContain('hover')
-    })
-  })
-
-  describe('#teardown', () => {
-    it('tile being hovered on', () => {
-      flexImageTileOne.dispatchEvent(new Event('mouseenter'))
-      window.dispatchEvent(new Event('turbolinks:before-cache'))
-      expect(flexImageTileOne.querySelector('.cover-title').classList).not.toContain('hover')
     })
   })
 })
