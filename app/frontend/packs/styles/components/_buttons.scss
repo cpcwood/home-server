@@ -19,24 +19,83 @@
   user-select: none;
   width: 100%;
 }
-
-.standard-button {
-  background-image: linear-gradient(to bottom right, colors.$dark, colors.$medium-dark);
+@keyframes animatedBackground {
+	0% {
+		background-position: 100% 0%
+	}
+	100% {
+		background-position: 0% 100%
+	}
+}
+@mixin standard-button {
   border: unset;
   box-sizing: border-box;
-  color: colors.$light;
   cursor: pointer;
   font-family: typography.$general-font;
   font-size: inherit;
   font-weight: 300;
   line-height: 1em;
-  padding: 15px 30px;
+  padding: 5px 2px;
+  letter-spacing: 0.05em;
   position: relative;
   text-align: center;
   text-decoration: none;
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
+  overflow: hidden;
+  z-index: 2;
+  color: colors.$darker-font;
+  transition: color 0.4s;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100%;
+    top: calc(100% - 1px);
+    background-image: linear-gradient(to right, #41295a 0%, #2F0743  51%, #41295a  100%);
+    background-size: 200% auto;
+    z-index: -1;
+  }
+}
+
+.standard-button-container {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 0 10px;
+  width: fit-content;
+  z-index: 2;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100%;
+    top: 101%;
+    background-image: linear-gradient(to right, #41295a 0%, #2F0743  51%, #41295a  100%);
+    background-size: 200% auto;
+    transition: all 0.4s, background-position 1s;
+    z-index: -1;
+  }
+
+  &:hover {
+    > * {
+      transition: color 0.2s;
+      color: colors.$inverse-font;
+    }
+    &:after {
+      top: 0%;
+      background-position: right center;
+    }
+  }
+}
+
+.standard-button {
+  @include standard-button()
 }
 
 .input-submit {

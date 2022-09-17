@@ -52,7 +52,10 @@
 }
 
 .contact-form-container .embedded-label {
-  width: 26%;
+  width: 100%;
+  @include respond-to(tablet) {
+    width: 26%;
+  }
 }
 
 #contact-messages-new-form {
