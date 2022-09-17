@@ -32,10 +32,10 @@
     <%= yield(:head) %>
   </head>
 
-  <body data-controller='header-scroll' data-action='scroll@window->header-scroll#scrollHeaderImage:passive' data-header-scroll-image-height='<%= header_height %>' data-header-scroll-header-height='60'>
+  <body id='header-scroll' data-header-scroll-image-height='<%= header_height %>' data-header-scroll-header-height='60'>
     <div class='page-container'>
       <%= render partial: 'partials/navigation' %>
-      <%= render partial: 'partials/header_image', locals: { scrollTarget: 'headerImage' } %>
+      <%= render partial: 'partials/header_image', locals: { scrollTarget: 'header-image' } %>
       <div class='content-container'>
         <main class='content'>
           <%= render partial: 'partials/section_title' %>
