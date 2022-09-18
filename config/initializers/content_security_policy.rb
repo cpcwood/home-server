@@ -16,6 +16,7 @@ if Rails.env.production?
       policy.script_src  :self, :unsafe_eval, :unsafe_inline, 'https://www.google.com/recaptcha/api.js', 'https://www.gstatic.com/recaptcha/'
       policy.style_src   :self, :unsafe_inline
       policy.connect_src :self 
+      policy.frame_src   :self, 'https://www.google.com/'
       # Specify URI for violation reports
       # policy.report_uri "/csp-violation-report-endpoint"
     end
