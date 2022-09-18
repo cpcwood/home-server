@@ -13,7 +13,7 @@ if Rails.env.production?
       policy.media_src   :self, :data, "https://#{ENV.fetch('AWS_BUCKET', '')}.s3.#{ENV.fetch('AWS_REGION', '')}.amazonaws.com"
       policy.object_src  :none
       policy.base_uri    :self
-      policy.script_src  :self, :unsafe_eval, :unsafe_inline, 'https://www.google.com/recaptcha/api.js'
+      policy.script_src  :self, :unsafe_eval, :unsafe_inline, 'https://www.google.com/recaptcha/api.js', 'https://www.gstatic.com/recaptcha'
       policy.style_src   :self, :unsafe_inline
       policy.connect_src :self 
       # Specify URI for violation reports
