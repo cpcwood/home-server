@@ -87,7 +87,7 @@ header h1 {
     @include sub-header;
     font-size: 1.5em;
     font-weight: 700;
-    margin: 3em 0 0;
+    margin: 2.5em 0 0;
   
     @include respond-to(tablet) {
       font-size: 1.6em;
