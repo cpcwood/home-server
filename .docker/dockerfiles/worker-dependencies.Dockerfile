@@ -8,7 +8,8 @@ FROM alpine:3.17 as server-nodejs-assets
 ENV RAILS_ENV=production \
   NODE_ENV=production \
   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-  APP_HOME=/opt/app
+  APP_HOME=/opt/app \
+  NODE_OPTIONS="--openssl-legacy-provider"
 
 RUN apk add --no-cache \
   nodejs \
