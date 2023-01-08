@@ -21,6 +21,7 @@ RUN apk add --no-cache \
   tzdata \
   imagemagick \
   postgresql-client \
+  openssl1.1-compat \
   shared-mime-info && \
   cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
   echo "Europe/London" > /etc/timezone

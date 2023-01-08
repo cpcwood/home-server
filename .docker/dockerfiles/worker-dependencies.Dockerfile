@@ -3,7 +3,7 @@
 
 # Create Server NodeJS Assets
 # ================
-FROM alpine:3.15 as server-nodejs-assets
+FROM alpine:3.17 as server-nodejs-assets
 
 ENV RAILS_ENV=production \
   NODE_ENV=production \
@@ -13,7 +13,8 @@ ENV RAILS_ENV=production \
 RUN apk add --no-cache \
   nodejs \
   yarn \
-  git
+  git \
+  openssl1.1-compat
 
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
