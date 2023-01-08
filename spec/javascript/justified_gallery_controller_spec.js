@@ -111,7 +111,7 @@ describe('justified_gallery_controller', () => {
             horizontal: margin,
             vertical: 0
           },
-          containerWidth: containerWidth,
+          containerWidth,
           targetRowHeight: 295
         })
         expect(galleryItemTargetOne.width).toEqual(20)
