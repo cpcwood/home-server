@@ -28,7 +28,8 @@ RUN apk add --update --no-cache \
   gzip \
   tar \
   shared-mime-info \
-  xz
+  xz \
+  openssl1.1-compat
 
 RUN mkdir -p $APP_HOME $APP_HOME/vendor/bundle $APP_HOME/tmp
 WORKDIR $APP_HOME

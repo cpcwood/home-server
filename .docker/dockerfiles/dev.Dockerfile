@@ -25,6 +25,7 @@ RUN apk add \
   chromium-chromedriver chromium libnotify-dev \
   shared-mime-info \
   bash \
+  openssl1.1-compat \
   tzdata && \
   cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
   echo "Europe/London" > /etc/timezone
