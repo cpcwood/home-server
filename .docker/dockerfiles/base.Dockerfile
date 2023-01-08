@@ -16,7 +16,8 @@ ENV RAILS_ENV=production \
 ENV BUNDLE_PATH=$APP_HOME/vendor/bundle \
   GEM_PATH=$APP_HOME/vendor/bundle \
   GEM_HOME=$APP_HOME/vendor/bundle \
-  BUNDLE_APP_CONFIG=$APP_HOME/vendor/bundle
+  BUNDLE_APP_CONFIG=$APP_HOME/vendor/bundle \
+  NODE_OPTIONS="--openssl-legacy-provider"
 
 RUN apk add --update --no-cache \
   build-base \

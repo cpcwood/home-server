@@ -8,7 +8,8 @@ ENV RAILS_ENV=development \
   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
   PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
   APP_HOME=/opt/app \
-  PORT=5000
+  PORT=5000 \
+  NODE_OPTIONS="--openssl-legacy-provider"
 
 RUN apk add \
   build-base \
