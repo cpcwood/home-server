@@ -6,7 +6,7 @@
 # Compile Assets
 # ================
 
-FROM ruby:3.1.2-alpine3.15
+FROM ruby:3.2.0-alpine3.17
 
 ENV RAILS_ENV=production \
   NODE_ENV=production \
@@ -27,7 +27,8 @@ RUN apk add --update --no-cache \
   curl \
   gzip \
   tar \
-  shared-mime-info
+  shared-mime-info \
+  xz
 
 RUN mkdir -p $APP_HOME $APP_HOME/vendor/bundle $APP_HOME/tmp
 WORKDIR $APP_HOME
