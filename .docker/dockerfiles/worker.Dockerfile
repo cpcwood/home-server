@@ -4,7 +4,7 @@
 
 # Create Worker App
 # ================
-FROM ruby:3.1.2-alpine3.15
+FROM ruby:3.2.0-alpine3.17
 
 ENV RAILS_ENV=production \
   NODE_ENV=production \
