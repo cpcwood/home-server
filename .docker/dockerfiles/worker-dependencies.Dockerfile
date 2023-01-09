@@ -3,17 +3,19 @@
 
 # Create Server NodeJS Assets
 # ================
-FROM alpine:3.15 as server-nodejs-assets
+FROM alpine:3.17 as server-nodejs-assets
 
 ENV RAILS_ENV=production \
   NODE_ENV=production \
   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-  APP_HOME=/opt/app
+  APP_HOME=/opt/app \
+  NODE_OPTIONS="--openssl-legacy-provider"
 
 RUN apk add --no-cache \
   nodejs \
   yarn \
-  git
+  git \
+  openssl1.1-compat
 
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME

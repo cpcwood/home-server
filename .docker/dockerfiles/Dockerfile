@@ -4,7 +4,7 @@
 
 # Create App
 # ================
-FROM ruby:3.1.2-alpine3.15
+FROM ruby:3.2.0-alpine3.17
 
 ENV RAILS_ENV=production \
   NODE_ENV=production \
@@ -21,6 +21,7 @@ RUN apk add --no-cache \
   tzdata \
   imagemagick \
   postgresql-client \
+  openssl1.1-compat \
   shared-mime-info && \
   cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
   echo "Europe/London" > /etc/timezone

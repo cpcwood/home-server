@@ -4,7 +4,7 @@
 
 # Create Worker App
 # ================
-FROM ruby:3.1.2-alpine3.15
+FROM ruby:3.2.0-alpine3.17
 
 ENV RAILS_ENV=production \
   NODE_ENV=production \
@@ -15,7 +15,8 @@ ENV BUNDLE_PATH=$APP_HOME/vendor/bundle \
   GEM_PATH=$APP_HOME/vendor/bundle \
   GEM_HOME=$APP_HOME/vendor/bundle \
   BUNDLE_APP_CONFIG=$APP_HOME/vendor/bundle \
-  PATH=$APP_HOME/vendor/bundle/bin:$APP_HOME/vendor/bundle:$APP_HOME/node_modules/.bin:$PATH
+  PATH=$APP_HOME/vendor/bundle/bin:$APP_HOME/vendor/bundle:$APP_HOME/node_modules/.bin:$PATH \
+  NODE_OPTIONS="--openssl-legacy-provider"
 
 RUN apk add --no-cache \
   bash \
@@ -24,6 +25,7 @@ RUN apk add --no-cache \
   nodejs \
   imagemagick \
   chromium \
+  openssl1.1-compat \
   shared-mime-info && \
   cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
   echo "Europe/London" > /etc/timezone
