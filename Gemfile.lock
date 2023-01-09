@@ -219,7 +219,7 @@ GEM
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     parallel (1.22.1)
-    parser (3.1.2.1)
+    parser (3.2.0.0)
       ast (~> 2.4.1)
     pg (1.4.3)
     public_suffix (5.0.0)
@@ -229,7 +229,7 @@ GEM
     rack (2.2.4)
     rack-attack (6.6.1)
       rack (>= 1.0, < 3)
-    rack-proxy (0.7.2)
+    rack-proxy (0.7.4)
       rack
     rack-test (2.0.2)
       rack (>= 1.3)
@@ -329,6 +329,11 @@ GEM
       sentry-ruby (~> 5.4.2)
     sentry-ruby (5.4.2)
       concurrent-ruby (~> 1.0, >= 1.0.2)
+    shakapacker (6.5.5)
+      activesupport (>= 5.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
     sidekiq (6.5.6)
       connection_pool (>= 2.2.5)
       rack (~> 2.0)
@@ -394,11 +399,6 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    webpacker (5.4.3)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
     webrick (1.7.0)
     websocket (1.2.9)
     websocket-driver (0.7.5)
@@ -411,63 +411,63 @@ GEM
     zeitwerk (2.6.0)
 
 PLATFORMS
-  ruby
+  x86_64-linux-musl
 
 DEPENDENCIES
-  ahoy_matey
-  amazing_print
-  annotate
-  aws-sdk-s3
-  bcrypt (~> 3)
-  brakeman
-  byebug
-  capybara (~> 3)
-  capybara-screenshot
-  coveralls (~> 0.8.23)
-  database_cleaner-active_record (>= 1.8.0)
-  date_validator
-  dotenv
-  erb_lint (~> 0.0.35)
-  factory_bot_rails
-  faraday
-  geocoder
-  image_processing
-  jsonapi-serializer
-  listen (>= 3.0.5, < 3.2)
-  maxminddb
-  mimemagic
-  pg (>= 0.18, < 2.0)
-  puma (~> 5)
-  rack-attack (~> 6)
+  ahoy_matey (~> 4.1)
+  amazing_print (~> 1.4)
+  annotate (~> 3.2)
+  aws-sdk-s3 (~> 1.114)
+  bcrypt (~> 3.1)
+  brakeman (~> 5.3)
+  byebug (~> 11.1)
+  capybara (~> 3.37)
+  capybara-screenshot (~> 1.0)
+  coveralls (~> 0.8)
+  database_cleaner-active_record (~> 2.0)
+  date_validator (~> 0.12)
+  dotenv (~> 2.8)
+  erb_lint (~> 0.0)
+  factory_bot_rails (~> 6.2)
+  faraday (~> 2.5)
+  geocoder (~> 1.8)
+  image_processing (~> 1.12)
+  jsonapi-serializer (~> 2.2)
+  listen (~> 3.0, < 3.2)
+  maxminddb (~> 0.1)
+  mimemagic (~> 0.4)
+  pg (~> 1.4, < 2.0)
+  puma (~> 5.6)
+  rack-attack (~> 6.6)
   rails (~> 7.0)
-  rails-controller-testing
-  rake
-  redcarpet
-  rouge
-  rspec-rails (~> 5)
-  rspec_junit_formatter
-  rubocop-performance (~> 1)
-  rubocop-rails (~> 2)
-  sentry-rails
-  sentry-ruby
-  sidekiq (~> 6)
-  sidekiq_alive
-  simplecov
-  simplecov-console
-  sitemap_generator
-  sprockets-rails
-  turbo-rails
-  twilio-ruby (~> 5)
-  tzinfo-data
-  validate_url
-  web-console (>= 3.3.0)
-  webdrivers
-  webmock
-  webpacker (~> 5)
-  whenever
+  rails-controller-testing (~> 1.0)
+  rake (~> 13.0)
+  redcarpet (~> 3.5)
+  rouge (~> 4.0)
+  rspec-rails (~> 5.1)
+  rspec_junit_formatter (~> 0.5)
+  rubocop-performance (~> 1.15)
+  rubocop-rails (~> 2.16)
+  sentry-rails (~> 5.4)
+  sentry-ruby (~> 5.4)
+  shakapacker (~> 6.5)
+  sidekiq (~> 6.5)
+  sidekiq_alive (~> 2.1)
+  simplecov (~> 0.16)
+  simplecov-console (~> 0.9)
+  sitemap_generator (~> 6.3)
+  sprockets-rails (~> 3.4)
+  turbo-rails (~> 1.1)
+  twilio-ruby (~> 5.72)
+  tzinfo-data (~> 1.2022)
+  validate_url (~> 1.0)
+  web-console (~> 4.2)
+  webdrivers (~> 5.0)
+  webmock (~> 3.18)
+  whenever (~> 1.0)
 
 RUBY VERSION
-   ruby 3.1.2p20
+   ruby 3.2.0p185
 
 BUNDLED WITH
-   2.3.7
+   2.3.26

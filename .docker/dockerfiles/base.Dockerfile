@@ -6,7 +6,7 @@
 # Compile Assets
 # ================
 
-FROM ruby:3.1.2-alpine3.15
+FROM ruby:3.2.0-alpine3.17
 
 ENV RAILS_ENV=production \
   NODE_ENV=production \
@@ -16,7 +16,8 @@ ENV RAILS_ENV=production \
 ENV BUNDLE_PATH=$APP_HOME/vendor/bundle \
   GEM_PATH=$APP_HOME/vendor/bundle \
   GEM_HOME=$APP_HOME/vendor/bundle \
-  BUNDLE_APP_CONFIG=$APP_HOME/vendor/bundle
+  BUNDLE_APP_CONFIG=$APP_HOME/vendor/bundle \
+  NODE_OPTIONS="--openssl-legacy-provider"
 
 RUN apk add --update --no-cache \
   build-base \
@@ -27,7 +28,9 @@ RUN apk add --update --no-cache \
   curl \
   gzip \
   tar \
-  shared-mime-info
+  shared-mime-info \
+  xz \
+  openssl1.1-compat
 
 RUN mkdir -p $APP_HOME $APP_HOME/vendor/bundle $APP_HOME/tmp
 WORKDIR $APP_HOME

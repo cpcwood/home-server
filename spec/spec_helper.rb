@@ -65,7 +65,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.before(:suite) do
-    `bin/webpack`
+    `bin/webpacker`
     DatabaseCleaner.clean_with(:truncation)
   end
 

@@ -3,7 +3,7 @@ import { Controller } from 'stimulus'
 export default class extends Controller {
   static values = { page: Number, apiUrl: String }
 
-  isLoading = false;
+  isLoading = false
   isRemainingPages = true
 
   connect () {
