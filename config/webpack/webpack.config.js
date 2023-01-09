@@ -21,5 +21,7 @@ const sassLoaderConfig = sassLoader.use.find( e => e.loader && e.loader.includes
 sassLoaderConfig.options.implementation = require('sass')
 
 
-webpackConfig.performance.maxEntrypointSize = 512000
+webpackConfig.performance = {
+  maxEntrypointSize: 512000
+}
 module.exports = webpackConfig
