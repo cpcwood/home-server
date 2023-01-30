@@ -69,12 +69,15 @@ jobs:
       - run:
           name: 'Automerge PR'
           command: |
-            set +e
-            ./scripts/circle-ci/circle-ci-auto-merge
-            if [ $? = 0 ]; then
+            if [ -z "$CIRCLE_PULL_REQUEST" ]; then
+              echo 'Not in pull request, skipping automerge'
+              exit 0
+            fi
+            if ./scripts/circle-ci/circle-ci-auto-merge ; then
                 echo 'Merge successful'
             else
-                echo 'No merge'
+                echo 'Merge failed'
+                exit 1
             fi
   build:
     docker:
