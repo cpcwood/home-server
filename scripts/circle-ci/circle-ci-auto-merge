@@ -42,11 +42,16 @@ Pull Request: $github_pr_number
 Merging: $CIRCLE_BRANCH >> $target_branch 
 "
 
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer <YOUR-TOKEN>"\
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  
 # Merge PR via GitHub API
 curl \
   --fail-with-body \
   --request PUT \
-  --header "Accept: application/vnd.github.v3+json" \
-  --header "Authorization: token $GITHUB_SECRET_TOKEN" \
+  --header "Accept: application/vnd.github+json" \
+  --header "Authorization: Bearer $GITHUB_SECRET_TOKEN" \
+  --header "X-GitHub-Api-Version: 2022-11-28" \
   --data '{"commit_title":"CircleCI automerge '"$CIRCLE_BRANCH >> $target_branch"'", "sha": "'"$CIRCLE_SHA1"'"}' \
    "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/$github_pr_number/merge"
