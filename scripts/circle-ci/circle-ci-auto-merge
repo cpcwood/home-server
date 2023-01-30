@@ -45,13 +45,8 @@ Merging: $CIRCLE_BRANCH >> $target_branch
 # Merge PR via GitHub API
 curl \
   --fail-with-body \
-  -X PUT \
-  -H "Accept: application/vnd.github.v3+json" \
-  -H "Authorization: token $GITHUB_SECRET_TOKEN" \
-  "https://api.github.com/repos/1/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/$github_pr_number/merge" \
-  -d '{"commit_title":"CircleCI automerge '"$CIRCLE_BRANCH >> $target_branch"'", "sha": "'"$CIRCLE_SHA1"'"}'
-
-
-a=$?
-echo $a
-return $a
+  --request PUT \
+  --header "Accept: application/vnd.github.v3+json" \
+  --header "Authorization: token $GITHUB_SECRET_TOKEN" \
+  --data '{"commit_title":"CircleCI automerge '"$CIRCLE_BRANCH >> $target_branch"'", "sha": "'"$CIRCLE_SHA1"'"}' \
+   "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/$github_pr_number/merge"
