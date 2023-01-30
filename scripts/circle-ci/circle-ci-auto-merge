@@ -50,3 +50,8 @@ curl \
   -H "Authorization: token $GITHUB_SECRET_TOKEN" \
   "https://api.github.com/repos/1/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/$github_pr_number/merge" \
   -d '{"commit_title":"CircleCI automerge '"$CIRCLE_BRANCH >> $target_branch"'", "sha": "'"$CIRCLE_SHA1"'"}'
+
+
+a=$?
+echo $a
+return $a
