@@ -44,6 +44,7 @@ Merging: $CIRCLE_BRANCH >> $target_branch
 
 # Merge PR via GitHub API
 curl \
+  --fail-with-body \
   -X PUT \
   -H "Accept: application/vnd.github.v3+json" \
   -H "Authorization: token $GITHUB_SECRET_TOKEN" \
