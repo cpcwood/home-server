@@ -10,6 +10,13 @@ module Admin
       render layout: 'layouts/admin_dashboard'
     end
 
+    def edit
+      @gallery_image = find_model
+      return redirect_to(admin_gallery_images_path, alert: 'Gallery image not found') unless @gallery_image
+
+      render layout: 'layouts/admin_dashboard'
+    end
+
     def create
       @notices = []
       flash[:alert] = []
@@ -31,13 +38,6 @@ module Admin
       else
         redirect_to(admin_gallery_images_path, notice: @notices)
       end
-    end
-
-    def edit
-      @gallery_image = find_model
-      return redirect_to(admin_gallery_images_path, alert: 'Gallery image not found') unless @gallery_image
-
-      render layout: 'layouts/admin_dashboard'
     end
 
     def update
