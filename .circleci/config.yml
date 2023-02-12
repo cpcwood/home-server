@@ -1,11 +1,11 @@
 version: 2.1
 
 orbs:
-  ruby: circleci/ruby@1.0
-  node: circleci/node@2
-  docker: circleci/docker@1.7.0
-  kubernetes: circleci/kubernetes@0.11.2
-  browser-tools: circleci/browser-tools@1.4.0
+  ruby: circleci/ruby@2.0.0
+  node: circleci/node@5.1.0
+  docker: circleci/docker@2.2.0
+  kubernetes: circleci/kubernetes@1.3.1
+  browser-tools: circleci/browser-tools@1.4.1
 
 workflows:
   version: 2
@@ -29,7 +29,7 @@ workflows:
 jobs:     
   test:
     docker:
-      - image: cimg/ruby:3.2.0-browsers 
+      - image: cimg/ruby:3.2.1-browsers 
       - image: cimg/postgres:13.7
         environment:
           POSTGRES_USER: cpcwood-circleci
@@ -44,12 +44,13 @@ jobs:
       DB_NAME_TEST: home_server_test
       RAILS_ENV: test
     steps:
-      - browser-tools/install-browser-tools
       - checkout
-      - ruby/install-deps
+      - browser-tools/install-browser-tools
+      - ruby/install-deps:
+          include-branch-in-cache-key: false
       - node/install-packages:
           pkg-manager: yarn
-          cache-key: "yarn.lock"
+          include-branch-in-cache-key: false
       - run:
           name: 'Wait for DB'
           command: dockerize -wait tcp://localhost:5432 -timeout 1m

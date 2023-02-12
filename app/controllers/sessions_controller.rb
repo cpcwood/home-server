@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
     if TwoFactorAuthService.send_auth_code(session)
       flash[:notice] = 'Please enter the 6 digit code sent to mobile number assoicated with this account' unless flash[:notice]
     else
-      flash[:alert] = 'Sorry something went wrong'
+      flash.now[:alert] = 'Sorry something went wrong'
     end
     render(:two_factor_auth)
   end
