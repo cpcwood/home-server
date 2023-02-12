@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '3.2.0'
+ruby '3.2.1'
 
 # Rails
 gem 'rails', '~> 7.0'
@@ -13,7 +13,7 @@ gem 'pg', '~> 1.4', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 5.6'
 # Transpile app-like JavaScript. Read more: https://github.com/shakacode/shakapacker
-gem 'shakapacker', '~> 6.5'
+gem 'shakapacker', '6.5.6'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1'
 # Throttle excessive requests
