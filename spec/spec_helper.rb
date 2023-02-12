@@ -26,7 +26,7 @@ Selenium::WebDriver::Chrome::Service.driver_path = ENV['CHROMEDRIVER'] if ENV['C
 
 Capybara.register_driver :headless_chrome_driver do |app|
   options = ::Selenium::WebDriver::Chrome::Options.new(args: ['--headless', '--no-sandbox', '--window-size=1920,1080'])
-  Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: [options])
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
 Capybara.default_max_wait_time = 0.5
