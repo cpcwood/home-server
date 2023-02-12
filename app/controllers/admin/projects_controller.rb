@@ -5,6 +5,12 @@ module Admin
       render layout: 'layouts/admin_dashboard'
     end
 
+    def edit
+      @project = find_model
+      return redirect_to(projects_path, alert: 'Project not found') unless @project
+      render layout: 'layouts/admin_dashboard'
+    end
+
     def create
       @notices = []
       flash[:alert] = []
@@ -30,12 +36,6 @@ module Admin
       else
         redirect_to(projects_path, notice: @notices)
       end
-    end
-
-    def edit
-      @project = find_model
-      return redirect_to(projects_path, alert: 'Project not found') unless @project
-      render layout: 'layouts/admin_dashboard'
     end
 
     def update

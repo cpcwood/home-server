@@ -46,9 +46,11 @@ jobs:
     steps:
       - checkout
       - browser-tools/install-browser-tools
-      - ruby/install-deps
+      - ruby/install-deps:
+          include-branch-in-cache-key: false
       - node/install-packages:
           pkg-manager: yarn
+          include-branch-in-cache-key: false
       - run:
           name: 'Wait for DB'
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
