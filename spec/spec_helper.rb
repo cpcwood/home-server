@@ -25,7 +25,7 @@ require 'database_cleaner/active_record'
 Selenium::WebDriver::Chrome::Service.driver_path = ENV['CHROMEDRIVER'] if ENV['CHROMEDRIVER']
 
 Capybara.register_driver :headless_chrome_driver do |app|
-  options = ::Selenium::WebDriver::Chrome::Options.new(args: ['--headless', '--no-sandbox', '--window-size=1920,1080'])
+  options = Selenium::WebDriver::Chrome::Options.new(args: ['--headless', '--no-sandbox', '--window-size=1920,1080'])
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 

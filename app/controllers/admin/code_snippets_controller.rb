@@ -5,6 +5,12 @@ module Admin
       render layout: 'layouts/admin_dashboard'
     end
 
+    def edit
+      @code_snippet = find_model
+      return redirect_to(code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
+      render layout: 'layouts/admin_dashboard'
+    end
+
     def create
       @notices = []
       flash.now[:alert] = []
@@ -26,12 +32,6 @@ module Admin
       else
         redirect_to(code_snippets_path, notice: @notices)
       end
-    end
-
-    def edit
-      @code_snippet = find_model
-      return redirect_to(code_snippets_path, alert: 'Code snippet not found') unless @code_snippet
-      render layout: 'layouts/admin_dashboard'
     end
 
     def update

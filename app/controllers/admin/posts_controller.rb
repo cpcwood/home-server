@@ -5,6 +5,12 @@ module Admin
       render layout: 'layouts/admin_dashboard'
     end
 
+    def edit
+      @post = find_post
+      return redirect_to(posts_path, alert: 'Post not found') unless @post
+      render layout: 'layouts/admin_dashboard'
+    end
+
     def create
       @notices = []
       flash[:alert] = []
@@ -27,12 +33,6 @@ module Admin
       else
         redirect_to(post_path(@post), notice: @notices)
       end
-    end
-
-    def edit
-      @post = find_post
-      return redirect_to(posts_path, alert: 'Post not found') unless @post
-      render layout: 'layouts/admin_dashboard'
     end
 
     def update
