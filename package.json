@@ -34,7 +34,7 @@
     "style-loader": "^3.3",
     "terser-webpack-plugin": "^5.3",
     "typed.js": "2.0.12",
-    "webpack": "^5.75",
+    "webpack": "^5.76",
     "webpack-assets-manifest": "^5.1",
     "webpack-cli": "4",
     "webpack-dev-server": "^4.11",
