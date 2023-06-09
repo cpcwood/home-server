@@ -1,7 +1,7 @@
 # home-server-dev-image
 # ================
 
-FROM ruby:3.2.1-alpine3.17
+FROM ruby:3.2.2-alpine3.17
 
 ENV RAILS_ENV=development \
     NODE_ENV=development \
