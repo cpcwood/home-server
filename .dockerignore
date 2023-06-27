@@ -31,6 +31,9 @@ tmp/
 *.pid
 *.env
 
+# terraform
+infrastructure/*
+
 # others
 .kube/
 .git

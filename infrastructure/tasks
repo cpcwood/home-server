@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+terraform_version=1.5
+
+user_id="$(id -u)" 
+group_id="$(id -g)"
+
+remote_state_aws_profile="${REMOTE_STATE_AWS_PROFILE:-default}"
+remote_state_bucket_region="${REMOTE_STATE_BUCKET_REGION:-eu-west-2}"
+remote_state_bucket="${REMOTE_STATE_BUCKET:-cpcwood-terraform-remote-state}"
+remote_state_lock_table="${REMOTE_STATE_LOCK_TABLE:-cpcwood-terraform-remote-state-lock-table}"
+remote_state_key="${REMOTE_STATE_KEY:-home-server/production/terraform.tfstate}"
+
+function tf {
+  docker run -it --rm \
+    --workdir /opt \
+    -v ./terraform/:/opt \
+    -v ~/.aws:/.aws \
+    -e AWS_CONFIG_FILE=/.aws/config \
+    -e AWS_SHARED_CREDENTIALS_FILE=/.aws/credentials \
+    --user "$user_id:$group_id" \
+    "hashicorp/terraform:$terraform_version" "$@"
+}
+
+function init {
+  tf init \
+    -backend-config "region=$remote_state_bucket_region" \
+    -backend-config "bucket=$remote_state_bucket" \
+    -backend-config "dynamodb_table=$remote_state_lock_table" \
+    -backend-config "profile=$remote_state_aws_profile" \
+    -backend-config "key=$remote_state_key" \
+    "$@"
+}
+
+function plan {
+  tf plan "$@"
+}
+
+function apply {
+  tf apply "$@"
+}
+
+function plan-ci {
+  tf plan -out=.terraform.plan.cache
+  tf show -json .terraform.plan.cache > plan.json
+}
+
+function apply-ci {
+  tf apply -input=false .terraform.plan.cache
+}
+
+function sh {
+  docker run -it --rm \
+    --workdir /opt \
+    -v ./terraform/:/opt \
+    -v ~/.aws:/.aws \
+    -e AWS_CONFIG_FILE=/.aws/config \
+    -e AWS_SHARED_CREDENTIALS_FILE=/.aws/credentials \
+    --user "$user_id:$group_id" \
+    --entrypoint=/bin/sh \
+    "hashicorp/terraform:$terraform_version"
+}
+
+if [[ ! $(type -t "$1") == function ]]; then
+  echo "Invalid command entered"
+  exit 1
+fi
+
+TIMEFORMAT="Task completed in %3lR"
+time "${@:-default}"
