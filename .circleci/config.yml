@@ -17,14 +17,14 @@ workflows:
             - test
           filters:
              branches:
-               only: master
+               only: main
       - deploy:
           requires:
             - test
             - build
           filters:
              branches:
-               only: master
+               only: main
 
 jobs:     
   test:
