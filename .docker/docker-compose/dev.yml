@@ -24,7 +24,7 @@ services:
     volumes:
       - ../..:/opt/app/
       - data-home-server-dev-app-gems:/gems
-      - ~/.bash_history:/root/.bash_history
+      - ~/.bash_history:/home/docker/.bash_history
     user: '${FIXUID:-1000}:${FIXGID:-1000}'
     command: './.docker/scripts/startup-app-dev'
     depends_on:
