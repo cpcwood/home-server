@@ -3,7 +3,6 @@
 @use '../base/mixins' as *;
 @use '../base/typography';
 
-
 // Styles
 .dashboard-container {
   background-color: colors.$light;
@@ -63,7 +62,7 @@
     max-width: 300px;
     min-width: 150px;
     z-index: 2;
-  
+
     h2 {
       display: block;
     }
@@ -210,5 +209,3 @@
   margin: 30px 0;
   width: 100%;
 }
-
-

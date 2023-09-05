@@ -46,7 +46,10 @@ describe('touch_hover_tile_controller', () => {
     const touchTime = 249
 
     it('touch < touchTime', () => {
-      jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2020-04-19T00:00:00.000')).mockReturnValue(new Date(`2020-04-19T00:00:00.${touchTime}`))
+      jest
+        .spyOn(Date, 'now')
+        .mockReturnValueOnce(new Date('2020-04-19T00:00:00.000'))
+        .mockReturnValue(new Date(`2020-04-19T00:00:00.${touchTime}`))
       flexImageTileOne.dispatchEvent(new Event('touchstart'))
       flexImageTileOne.dispatchEvent(new Event('touchend'))
 
@@ -54,7 +57,10 @@ describe('touch_hover_tile_controller', () => {
     })
 
     it('touch >= touchTime', () => {
-      jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2020-04-19T00:00:00.000')).mockReturnValue(new Date(`2020-04-19T00:00:00.${touchTime + 1}`))
+      jest
+        .spyOn(Date, 'now')
+        .mockReturnValueOnce(new Date('2020-04-19T00:00:00.000'))
+        .mockReturnValue(new Date(`2020-04-19T00:00:00.${touchTime + 1}`))
       flexImageTileOne.dispatchEvent(new Event('touchstart'))
       flexImageTileOne.dispatchEvent(new Event('touchend'))
 
@@ -62,12 +68,18 @@ describe('touch_hover_tile_controller', () => {
     })
 
     it('other tile already being hovered on', () => {
-      let dateMock = jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2020-04-19T00:00:00.000')).mockReturnValue(new Date(`2020-04-19T00:00:00.${touchTime}`))
+      let dateMock = jest
+        .spyOn(Date, 'now')
+        .mockReturnValueOnce(new Date('2020-04-19T00:00:00.000'))
+        .mockReturnValue(new Date(`2020-04-19T00:00:00.${touchTime}`))
       flexImageTileOne.dispatchEvent(new Event('touchstart'))
       flexImageTileOne.dispatchEvent(new Event('touchend'))
 
       dateMock.mockRestore()
-      dateMock = jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2020-04-19T00:00:00.000')).mockReturnValue(new Date(`2020-04-19T00:00:00.${touchTime}`))
+      dateMock = jest
+        .spyOn(Date, 'now')
+        .mockReturnValueOnce(new Date('2020-04-19T00:00:00.000'))
+        .mockReturnValue(new Date(`2020-04-19T00:00:00.${touchTime}`))
       flexImageTileTwo.dispatchEvent(new Event('touchstart'))
       flexImageTileTwo.dispatchEvent(new Event('touchend'))
 

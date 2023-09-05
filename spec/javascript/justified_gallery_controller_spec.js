@@ -30,7 +30,7 @@ describe('justified_gallery_controller', () => {
   })
 
   beforeEach(() => {
-    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => cb())
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => cb())
     justifiedLayout.mockImplementation(() => {
       return {
         boxes: [
@@ -96,24 +96,22 @@ describe('justified_gallery_controller', () => {
       it('images justified', () => {
         const containerWidth = 15
         const galleryContainer = document.querySelector('.gallery-container')
-        jest
-          .spyOn(galleryContainer, 'clientWidth', 'get')
-          .mockImplementation(() => containerWidth)
+        jest.spyOn(galleryContainer, 'clientWidth', 'get').mockImplementation(() => containerWidth)
         galleryItemTargetOne.dispatchEvent(new Event('load'))
         galleryItemTargetTwo.dispatchEvent(new Event('load'))
         jest.runOnlyPendingTimers()
 
-        expect(justifiedLayout).toHaveBeenCalledWith([
-          galleryItemOneDimensions,
-          galleryItemTwoDimensions
-        ], {
-          boxSpacing: {
-            horizontal: margin,
-            vertical: 0
-          },
-          containerWidth,
-          targetRowHeight: 295
-        })
+        expect(justifiedLayout).toHaveBeenCalledWith(
+          [galleryItemOneDimensions, galleryItemTwoDimensions],
+          {
+            boxSpacing: {
+              horizontal: margin,
+              vertical: 0
+            },
+            containerWidth,
+            targetRowHeight: 295
+          }
+        )
         expect(galleryItemTargetOne.width).toEqual(20)
         expect(galleryItemTargetOne.height).toEqual(30)
         expect(galleryItemTargetTwo.width).toEqual(40)

@@ -36,7 +36,9 @@ describe('recaptcha_controller', () => {
 
     it('grecaptcha not loaded', () => {
       expect(createElementSpy).toHaveBeenCalledWith('script')
-      expect(mock.src).toEqual('https://www.google.com/recaptcha/api.js?onload=reCaptchaOnload&render=explicit')
+      expect(mock.src).toEqual(
+        'https://www.google.com/recaptcha/api.js?onload=reCaptchaOnload&render=explicit'
+      )
       expect(mock.className).toEqual('recaptcha-script')
       expect(appendChildSpy).toHaveBeenCalled()
     })

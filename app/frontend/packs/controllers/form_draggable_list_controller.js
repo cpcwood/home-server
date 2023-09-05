@@ -3,14 +3,14 @@ import { Controller } from 'stimulus'
 export default class extends Controller {
   static targets = ['dragItem']
 
-  dragStart (e) {
+  dragStart(e) {
     // save dragItem to state since dataTransfer not available in dragOver event and DOM manipulation temporary
     this.dragItem = e.currentTarget
     e.dataTransfer.effectAllowed = 'move'
     this.dragItem.classList.add('dragging')
   }
 
-  dragOver (e) {
+  dragOver(e) {
     e.preventDefault()
     const dropZone = e.currentTarget
     if (dropZone !== this.dragItem && dropZone !== this.dragItem.nextElementSibling) {
@@ -19,14 +19,14 @@ export default class extends Controller {
     e.dataTransfer.dropEffect = 'move'
   }
 
-  dragLeave (e) {
+  dragLeave(e) {
     const dropZone = e.currentTarget
     if (dropZone !== this.dragItem && dropZone !== this.dragItem.nextElementSibling) {
       dropZone.classList.remove('drag-over')
     }
   }
 
-  drop (e) {
+  drop(e) {
     e.stopPropagation()
     const dropZone = e.currentTarget
     if (dropZone !== this.dragItem && dropZone !== this.dragItem.nextElementSibling) {
@@ -40,7 +40,7 @@ export default class extends Controller {
     this.applyOrderToItems()
   }
 
-  moveUp (e) {
+  moveUp(e) {
     e.preventDefault()
     const targetItemSelector = e.currentTarget.getAttribute('data-item-container-selector')
     const targetItem = document.body.querySelector(targetItemSelector)
@@ -53,7 +53,7 @@ export default class extends Controller {
     this.applyOrderToItems()
   }
 
-  moveDown (e) {
+  moveDown(e) {
     e.preventDefault()
     const targetItemSelector = e.currentTarget.getAttribute('data-item-container-selector')
     const targetItem = document.body.querySelector(targetItemSelector)
@@ -71,7 +71,7 @@ export default class extends Controller {
     this.applyOrderToItems()
   }
 
-  applyOrderToItems () {
+  applyOrderToItems() {
     for (let i = 0; i < this.dragItemTargets.length; i += 1) {
       this.dragItemTargets[i].querySelector('.item-order-position').value = i
     }

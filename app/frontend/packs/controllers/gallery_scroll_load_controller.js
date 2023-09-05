@@ -6,24 +6,31 @@ export default class extends Controller {
   isLoading = false
   isRemainingPages = true
 
-  connect () {
+  connect() {
     this.handleScrollBind = this.handleScroll.bind(this)
     document.addEventListener('scroll', this.handleScrollBind, { capture: true, passive: true })
   }
 
-  handleScroll () {
-    const isBottomVisible = (this.element.getBoundingClientRect().bottom <= window.innerHeight)
-    if (isBottomVisible && !this.isLoading && this.isRemainingPages && this.data.get('isGalleryRendered')) {
+  handleScroll() {
+    const isBottomVisible = this.element.getBoundingClientRect().bottom <= window.innerHeight
+    if (
+      isBottomVisible &&
+      !this.isLoading &&
+      this.isRemainingPages &&
+      this.data.get('isGalleryRendered')
+    ) {
       this.loadNextPage()
     }
   }
 
-  async loadNextPage () {
+  async loadNextPage() {
     this.isLoading = true
     try {
       this.injectLoadingIcon()
       this.fetchController = new AbortController()
-      const response = await fetch(`${this.apiUrlValue}.json?page=${this.pageValue + 1}`, { signal: this.fetchController.signal })
+      const response = await fetch(`${this.apiUrlValue}.json?page=${this.pageValue + 1}`, {
+        signal: this.fetchController.signal
+      })
       this.fetchController = null
       this.pageValue = this.pageValue + 1
       const imagesData = await response.json()
@@ -42,7 +49,7 @@ export default class extends Controller {
     }
   }
 
-  injectImages (imagesData) {
+  injectImages(imagesData) {
     this.imageLoadedCounter = 0
     this.imageLoadedTargetNumber = imagesData.data.length
     this.newImageElements = []
@@ -64,7 +71,7 @@ export default class extends Controller {
     }
   }
 
-  imageLoaded () {
+  imageLoaded() {
     this.imageLoadedCounter += 1
     if (this.imageLoadedCounter === this.imageLoadedTargetNumber) {
       this.displayGalleryItemTargets()
@@ -72,7 +79,7 @@ export default class extends Controller {
     }
   }
 
-  displayGalleryItemTargets () {
+  displayGalleryItemTargets() {
     this.removeLoadingIcon()
     this.element.dispatchEvent(new Event('renderGallery'))
     this.element.dispatchEvent(new Event('reConnectLightbox'))
@@ -84,7 +91,7 @@ export default class extends Controller {
     }
   }
 
-  injectLoadingIcon () {
+  injectLoadingIcon() {
     this.loadingIcon = document.createElement('div')
     this.loadingIcon.classList.add('gallery-loading-icon-container')
     this.loadingIcon.innerHTML = `
@@ -106,17 +113,17 @@ export default class extends Controller {
     this.element.insertAdjacentElement('afterend', this.loadingIcon)
   }
 
-  initializeScrollLoad () {
+  initializeScrollLoad() {
     this.data.set('isGalleryRendered', true)
   }
 
-  removeLoadingIcon () {
+  removeLoadingIcon() {
     if (this.loadingIcon) {
       this.loadingIcon.remove()
     }
   }
 
-  disconnect () {
+  disconnect() {
     document.removeEventListener('scroll', this.handleScrollBind, true)
     if (this.fetchController) {
       this.fetchController.abort()

@@ -5,23 +5,28 @@
 // Desktop 1100px => ~
 
 $breakpoints: (
-  'tablet' : ( min-width: 767px ),
-  'desktop': ( min-width: 1100px ),
-  'extra-wide': ( min-width: 2560px )
+  'tablet': (
+    min-width: 767px
+  ),
+  'desktop': (
+    min-width: 1100px
+  ),
+  'extra-wide': (
+    min-width: 2560px
+  )
 );
 
 $reading-width: 767px;
 $header-height: 60px;
 $footer-height: 150px;
 $footer-offset: 60px;
- 
+
 @mixin respond-to($name) {
   @if map-has-key($breakpoints, $name) {
     @media #{inspect(map-get($breakpoints, $name))} {
       @content;
     }
-  }
-  @else {
+  } @else {
     @warn 'Unfortunately, no value could be retrieved from `#{$breakpoints}`. '
       + 'Please make sure it is defined in `$breakpoints` map.';
   }

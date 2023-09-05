@@ -4,18 +4,20 @@ import justifiedLayout from 'justified-layout'
 export default class extends Controller {
   static targets = ['galleryItem']
 
-  connect () {
+  connect() {
     this.evaluateLoadProgress()
   }
 
-  evaluateLoadProgress () {
-    const allImagesLoaded = this.galleryItemTargets.every(img => img.complete && img.naturalHeight !== 0)
+  evaluateLoadProgress() {
+    const allImagesLoaded = this.galleryItemTargets.every(
+      (img) => img.complete && img.naturalHeight !== 0
+    )
     if (allImagesLoaded) {
       this.displayGalleryItemTargets()
     }
   }
 
-  displayGalleryItemTargets () {
+  displayGalleryItemTargets() {
     const fadeIn = () => {
       this.resizeObserver = new ResizeObserver(this.renderGallery.bind(this))
       this.resizeObserver.observe(this.element)
@@ -29,7 +31,7 @@ export default class extends Controller {
     this.fadeInTimeout = setTimeout(fadeIn, 1)
   }
 
-  renderGallery () {
+  renderGallery() {
     try {
       const geometryInput = []
       for (let i = 0; i < this.galleryItemTargets.length; i++) {
@@ -58,22 +60,24 @@ export default class extends Controller {
     }
   }
 
-  imageLoaded () {
+  imageLoaded() {
     this.imagesLoadedCounter += 1
     this.evaluateLoadProgress()
   }
 
-  teardown () {
+  teardown() {
     if (this.fadeInTimeout) {
       clearTimeout(this.fadeInTimeout)
     }
     if (this.resizeObserver) {
       this.resizeObserver.disconnect()
     }
-    while (this.element.firstChild) { this.element.removeChild(this.element.firstChild) }
+    while (this.element.firstChild) {
+      this.element.removeChild(this.element.firstChild)
+    }
   }
 
-  disconnect () {
+  disconnect() {
     this.teardown()
   }
 }

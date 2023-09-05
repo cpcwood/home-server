@@ -16,31 +16,31 @@ workflows:
           requires:
             - test
           filters:
-             branches:
-               only: main
+            branches:
+              only: main
       - deploy:
           requires:
             - test
             - build
           filters:
-             branches:
-               only: main
+            branches:
+              only: main
 
-jobs:     
+jobs:
   test:
     docker:
-      - image: cimg/ruby:3.2.2-browsers 
+      - image: cimg/ruby:3.2.2-browsers
       - image: cimg/postgres:13.7
         environment:
           POSTGRES_USER: cpcwood-circleci
-          POSTGRES_PASSWORD: "test"
+          POSTGRES_PASSWORD: 'test'
           POSTGRES_DB: home_server_test
     environment:
-      BUNDLE_JOBS: "3"
-      BUNDLE_RETRY: "3"
+      BUNDLE_JOBS: '3'
+      BUNDLE_RETRY: '3'
       PGHOST: 127.0.0.1
       PGUSER: cpcwood-circleci
-      PGPASSWORD: "test"
+      PGPASSWORD: 'test'
       DB_NAME_TEST: home_server_test
       RAILS_ENV: test
     steps:
@@ -64,7 +64,7 @@ jobs:
       - run:
           name: 'JavaScript testing'
           command: yarn test
-      - run: 
+      - run:
           name: 'JavaScript linting'
           command: yarn lint
       - run:

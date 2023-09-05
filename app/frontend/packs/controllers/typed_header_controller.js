@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 export default class extends Controller {
   static targets = ['typedHeader', 'typedSubtitle', 'typedHeaderText', 'typedSubtitleText']
 
-  connect () {
+  connect() {
     const subtitleOptions = {
       stringsElement: '#typed-strings-subtitle',
       showCursor: false,
@@ -46,7 +46,7 @@ export default class extends Controller {
     Cookies.set('header-typed', 'true', { expires: 0.02 })
   }
 
-  disconnect () {
+  disconnect() {
     if (this.typedSubtitle) {
       this.typedSubtitle.destroy()
       this.typedSubtitleTarget.classList.remove('typed-cursor')
@@ -57,7 +57,7 @@ export default class extends Controller {
     }
   }
 
-  setHeader () {
+  setHeader() {
     this.typedHeaderTarget.textContent = this.typedHeaderTextTarget.textContent
     this.typedSubtitleTarget.textContent = this.typedSubtitleTextTarget.textContent
   }

@@ -27,7 +27,7 @@ $drag-transition: 0.2s;
   box-sizing: border-box;
   cursor: pointer;
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     'drag image'
     'drag text';
   grid-template-columns: 22px 1fr;
@@ -40,7 +40,7 @@ $drag-transition: 0.2s;
   @include respond-to(tablet) {
     grid-template-areas: 'drag image text';
     grid-template-columns: 35px fit-content(220px) auto;
-  }  
+  }
 }
 
 .drag-icon-container {

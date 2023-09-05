@@ -3,16 +3,16 @@ import { Controller } from 'stimulus'
 export default class extends Controller {
   static targets = ['fade', 'container']
 
-  connect () {
+  connect() {
     this.evaluateLoadProgress()
   }
 
-  imageLoaded () {
+  imageLoaded() {
     this.evaluateLoadProgress()
   }
 
-  evaluateLoadProgress () {
-    const allImagesLoaded = this.fadeTargets.every(target => {
+  evaluateLoadProgress() {
+    const allImagesLoaded = this.fadeTargets.every((target) => {
       const image = target.tagName === 'IMG' ? target : target.querySelector('img')
       if (!image) {
         return true
@@ -24,7 +24,7 @@ export default class extends Controller {
     }
   }
 
-  fadeInTargets () {
+  fadeInTargets() {
     const fadeIn = () => {
       window.requestAnimationFrame(() => {
         for (let i = 0; i < this.fadeTargets.length; i++) {
@@ -38,7 +38,7 @@ export default class extends Controller {
     this.fadeInTimeout = setTimeout(fadeIn, 1)
   }
 
-  teardown () {
+  teardown() {
     if (this.fadeInTimeout) {
       clearTimeout(this.fadeInTimeout)
     }
@@ -49,7 +49,7 @@ export default class extends Controller {
     }
   }
 
-  disconnect () {
+  disconnect() {
     this.teardown()
   }
 }

@@ -1,19 +1,17 @@
 class ResizeObserver {
-  constructor (callback) {
+  constructor(callback) {
     this.callback = callback
   }
 
-  observe () {
+  observe() {
     this.callback()
   }
 
-  unobserve () {
+  unobserve() {
     // do nothing
   }
 
-  disconnect () {
-
-  }
+  disconnect() {}
 }
 
 window.ResizeObserver = ResizeObserver

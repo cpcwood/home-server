@@ -17,7 +17,7 @@ describe('image_loader_controller', () => {
   })
 
   beforeEach(() => {
-    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => cb())
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => cb())
   })
 
   afterEach(() => {

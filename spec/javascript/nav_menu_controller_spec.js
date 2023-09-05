@@ -13,7 +13,7 @@ describe('nav_menu_controller', () => {
   let navMenu
   let applicationHTML
 
-  beforeAll(done => {
+  beforeAll((done) => {
     const application = Application.start()
     application.register('nav-menu', navMenuController)
     fs.readFile('app/views/partials/_navigation.html.erb', 'utf8', (err, data) => {

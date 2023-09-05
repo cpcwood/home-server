@@ -14,4 +14,4 @@ else
 	bundle exec rails db:setup
 fi
 
-exec rdbg --nonstop --command -- bundle exec rails server -b 0.0.0.0 -p 5000
+exec rdbg --open --host=0.0.0.0 --nonstop --command -- bundle exec rails server -b 0.0.0.0 -p 5000

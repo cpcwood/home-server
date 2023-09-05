@@ -14,7 +14,6 @@ amazon:
   bucket: <%= ENV.fetch('AWS_BUCKET') { 'example' } %>
   upload:
     cache_control: 'private, max-age=31536000'
-
 # Remember not to checkin your GCS keyfile to a repository
 # google:
 #   service: GCS

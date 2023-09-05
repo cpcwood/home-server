@@ -12,7 +12,7 @@
     color: colors.$link-color;
     text-decoration: underline;
   }
-  
+
   ul {
     margin-bottom: 1.75em;
     margin-top: 0;
@@ -20,7 +20,7 @@
 
     @include respond-to(tablet) {
       padding-inline-start: 50px;
-    }  
+    }
   }
 
   li {
@@ -31,7 +31,7 @@
       background: #f3f3f3;
       border-radius: 0.2em;
       padding: 0.25em 0.4em;
-    }  
+    }
   }
 
   p {
@@ -41,7 +41,7 @@
       background: #f3f3f3;
       border-radius: 0.2em;
       padding: 0.25em 0.4em;
-    }  
+    }
   }
 
   ol {

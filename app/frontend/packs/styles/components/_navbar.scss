@@ -9,20 +9,20 @@ $sidebar-transition: 0.3s;
 $btn-hover-animation: 0.2s;
 
 // Vendor
-@use '../vendor/hamburger' with(
-  $container-position: relative,
-  $container-height: 55px,
-  $container-width: 55px,
-  $container-z-index: 7,
-  $container-color: none,
-  $hamburger-padding: 6px 6px,
-  $bar-height: 5px,
-  $bar-color-normal: colors.$inverse-font,
-  $bar-color-clicked: colors.$general-font,
-  $animation-duration: $sidebar-transition,
-  $length-scale: 0.96,
-);
-
+@use '../vendor/hamburger'
+  with(
+    $container-position: relative,
+    $container-height: 55px,
+    $container-width: 55px,
+    $container-z-index: 7,
+    $container-color: none,
+    $hamburger-padding: 6px 6px,
+    $bar-height: 5px,
+    $bar-color-normal: colors.$inverse-font,
+    $bar-color-clicked: colors.$general-font,
+    $animation-duration: $sidebar-transition,
+    $length-scale: 0.96
+  );
 
 // Top Navbar Styles
 .navbar {
@@ -60,7 +60,7 @@ $btn-hover-animation: 0.2s;
   a:hover,
   a:active {
     color: colors.$inverse-font;
-    text-decoration: none; 
+    text-decoration: none;
   }
 
   a:hover {
@@ -109,7 +109,9 @@ $btn-hover-animation: 0.2s;
   position: fixed;
   right: 0;
   top: 0;
-  transition: width $sidebar-transition ease 0s, height 0s ease $sidebar-transition;
+  transition:
+    width $sidebar-transition ease 0s,
+    height 0s ease $sidebar-transition;
   width: 0;
   z-index: 5;
 
@@ -124,7 +126,7 @@ $btn-hover-animation: 0.2s;
   }
 }
 
-.nav-item { 
+.nav-item {
   border: unset;
   box-sizing: border-box;
   color: colors.$dark;
@@ -137,7 +139,8 @@ $btn-hover-animation: 0.2s;
   position: relative;
   text-align: center;
   text-decoration: none;
-  transition: visibility math.div($sidebar-transition, 2) step-end,
+  transition:
+    visibility math.div($sidebar-transition, 2) step-end,
     height $sidebar-transition step-end;
   user-select: none;
   vertical-align: middle;
@@ -165,7 +168,9 @@ $btn-hover-animation: 0.2s;
   position: fixed;
   right: 0;
   top: 0;
-  transition: opacity $sidebar-transition ease, visibility $sidebar-transition step-end;
+  transition:
+    opacity $sidebar-transition ease,
+    visibility $sidebar-transition step-end;
   visibility: hidden;
 }
 
@@ -185,7 +190,8 @@ $btn-hover-animation: 0.2s;
     height: calc(1em + 30px);
     line-height: 1em;
     padding: 15px 0;
-    transition: color $btn-hover-animation ease,
+    transition:
+      color $btn-hover-animation ease,
       background-color $btn-hover-animation ease;
     visibility: visible;
 
@@ -195,11 +201,10 @@ $btn-hover-animation: 0.2s;
     }
   }
 
-  +.nav-screen-cover {
+  + .nav-screen-cover {
     opacity: 0.5;
     transition: opacity $sidebar-transition ease 0s;
     visibility: visible;
     z-index: 4;
   }
 }
-

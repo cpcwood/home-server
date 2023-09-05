@@ -19,16 +19,16 @@ $background: rgb(41, 42, 43);
   table td {
     padding: 5px;
   }
-  
+
   table pre {
     margin: 0;
   }
-  
+
   .w {
     background-color: $background;
     color: $text;
   }
-  
+
   .c,
   .ch,
   .cd,
@@ -38,39 +38,36 @@ $background: rgb(41, 42, 43);
   .cs {
     color: #848383;
   }
-  
+
   .cp,
   .nt {
     color: #f4bf75;
   }
-  
+
   .o,
   .ow {
     color: #d0d0d0;
   }
-  
+
   .p,
   .pi {
     color: #d0d0d0;
-    
   }
-  
+
   .gi {
     color: #90a959;
-    
   }
-  
+
   .gd {
     color: #ac4142;
-    
   }
-  
+
   .gh {
     background-color: #151515;
     color: #6a9fb5;
     font-weight: bold;
   }
-  
+
   .k,
   .kn,
   .kp,
@@ -78,22 +75,19 @@ $background: rgb(41, 42, 43);
   .kv {
     color: rgb(255, 106, 172);
   }
-  
+
   .kc {
     color: #d28445;
-    
   }
-  
+
   .kt {
     color: #d28445;
-    
   }
-  
+
   .kd {
     color: #d28445;
-    
   }
-  
+
   .s,
   .sa,
   .sb,
@@ -108,20 +102,19 @@ $background: rgb(41, 42, 43);
   .err {
     color: #18f8d3;
   }
-  
+
   .sr {
     color: #75b5aa;
   }
-  
+
   .se {
     color: #8f5536;
-    
   }
-  
+
   .nn {
     color: #f4bf75;
   }
-  
+
   .no,
   .ss,
   .nc {
@@ -139,7 +132,7 @@ $background: rgb(41, 42, 43);
   .nf {
     color: $text;
   }
-  
+
   .m,
   .mb,
   .mf,

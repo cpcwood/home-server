@@ -11,7 +11,7 @@ describe('dashboard_sidebar_controller', () => {
   let dashboardSidebarToggle
   let applicationHTML
 
-  beforeAll(done => {
+  beforeAll((done) => {
     const application = Application.start()
     application.register('dashboard-sidebar', dashboardSidebarController)
     fs.readFile('app/views/partials/_dashboard_sidebar.html.erb', 'utf8', (err, data) => {

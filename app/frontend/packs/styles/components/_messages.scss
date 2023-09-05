@@ -3,7 +3,6 @@
 @use '../base/mixins' as *;
 @use '../base/typography';
 
-
 // Notice and Alerts
 .system-messages {
   box-sizing: border-box;
@@ -28,4 +27,3 @@
 .notice {
   color: colors.$notices;
 }
-

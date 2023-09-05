@@ -9,7 +9,7 @@ describe('header_scroll_controller', () => {
   let navImage
 
   beforeEach(() => {
-    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => cb())
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => cb())
     window.addEventListener('scroll', headerScroll, { passive: true })
   })
 

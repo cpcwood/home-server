@@ -3,7 +3,7 @@ import { Controller } from 'stimulus'
 export default class extends Controller {
   static targets = ['sidebar', 'sidebarToggle']
 
-  sidebarToggle () {
+  sidebarToggle() {
     if (this.data.get('open') === 'false') {
       this.openMenu()
     } else {
@@ -11,19 +11,19 @@ export default class extends Controller {
     }
   }
 
-  openMenu () {
+  openMenu() {
     this.data.set('open', 'true')
     this.sidebarToggleTarget.classList.add('open')
     this.sidebarTarget.classList.add('open')
   }
 
-  closeMenu () {
+  closeMenu() {
     this.data.set('open', 'false')
     this.sidebarToggleTarget.classList.remove('open')
     this.sidebarTarget.classList.remove('open')
   }
 
-  disconnect () {
+  disconnect() {
     this.closeMenu()
   }
 }

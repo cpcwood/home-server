@@ -88,29 +88,29 @@ header h1 {
     font-size: 1.5em;
     font-weight: 700;
     margin: 2.5em 0 0;
-  
+
     @include respond-to(tablet) {
       font-size: 1.6em;
     }
-  
+
     + h3 {
       margin-top: 1em;
     }
   }
-  
+
   h3 {
     @include sub-header;
     font-size: 1.25em;
     margin: 2em 0 0;
   }
-  
+
   h4 {
     @include sub-header;
     color: colors.$general-font;
     font-size: 1em;
     margin: 1.25em 0 0;
   }
-  
+
   h5 {
     @include sub-header;
     font-size: 1em;

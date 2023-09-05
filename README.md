@@ -18,23 +18,21 @@ General portfolio style website and a place to prototype new rails features I fi
 
 ### Design
 
-| Public sections | Admin sections              |
-|-                |-                            |
-| Homepage        | Login, 2FA, Password Reset  |
-| About me        | Edit sections               |
-| Projects        | Add resources               |
-| Blog            | Notifications               |
-| Code Snippets   | Website analytics           |
-| Gallery         | Contact messages            |
-| Contact         |                             |
-
-
+| Public sections | Admin sections             |
+| --------------- | -------------------------- |
+| Homepage        | Login, 2FA, Password Reset |
+| About me        | Edit sections              |
+| Projects        | Add resources              |
+| Blog            | Notifications              |
+| Code Snippets   | Website analytics          |
+| Gallery         | Contact messages           |
+| Contact         |                            |
 
 ## Setup
 
 ### Prerequisites
 
-The application is designed to run in a containerized workflow to allow for good runtime consistency across environments. 
+The application is designed to run in a containerized workflow to allow for good runtime consistency across environments.
 
 Make sure [docker](https://www.docker.com/) v20.10+ is installed, clone or download the git repository, then move to the project root directory.
 
@@ -46,34 +44,35 @@ The application is set up to have three different environments: production, deve
 
 #### Configuration
 
-
 ##### Application
 
-Since the application is designed to be containerized, its configuration is passed through environment variables. 
+Since the application is designed to be containerized, its configuration is passed through environment variables.
 
-Development environment variables are loaded from ```config/env/.env``` by docker-compose. Create the ```config/env/.env``` file from the template of required variables in [```config/env/.env.template```](/config/env/.env.template).
+Development environment variables are loaded from `config/env/.env` by docker-compose. Create the `config/env/.env` file from the template of required variables in [`config/env/.env.template`](/config/env/.env.template).
 
 #### Install Dependencies
 
-Build the development container images, using ```./tasks build```
+Build the development container images, using `./tasks build`
 
 In order for commands to run inside the application containers scripts are used instead of calling the commands directly. Scripts are run from the [`tasks`](./tasks) file and the following scripts are current provided:
-- ```./tasks up``` - start the application
-- ```./tasks down``` - stop the application
-- ```./tasks build``` - build the application containers
-- ```./tasks exec``` - run command in application container
-- ```./tasks bash``` - enter shell in application container
-- ```./tasks rspec``` - rspec test suite
-- ```./tasks yarn``` - yarn
-- ```./tasks rails``` - rails
-- ```./tasks bundle``` - bundler
-- ```./tasks rubocop``` - run ruby code linter
+
+- `./tasks up` - start the application
+- `./tasks down` - stop the application
+- `./tasks build` - build the application containers
+- `./tasks exec` - run command in application container
+- `./tasks bash` - enter shell in application container
+- `./tasks rspec` - rspec test suite
+- `./tasks yarn` - yarn
+- `./tasks rails` - rails
+- `./tasks bundle` - bundler
+- `./tasks rubocop` - run ruby code linter
 
 Then container start up scripts will install the application dependencies automatically on the first run. Updates to dependencies, such as adding a new gem, should be performed manually.
 
 Notes:
+
 - Arguments added to the scripts are passed through.
-- To run other commands use the ```docker-compose run``` syntax.
+- To run other commands use the `docker-compose run` syntax.
 
 #### Setup Database
 
@@ -81,22 +80,24 @@ The container image [startup script](./.docker/scripts/startup-worker-dev) will 
 
 #### Start the Development Server
 
-To start the development server using docker-compose, run: ```./tasks up```
+To start the development server using docker-compose, run: `./tasks up`
 
-The server should now be running on ```http://0.0.0.0:5000```
+The server should now be running on `http://0.0.0.0:5000`
 
 ### Production
+
 #### Build the Application Containers
 
 The application requires four containers to run:
+
 - application - runs puma application server
 - worker - runs sidekiq worker container
 - redis - job storage
 - psql - database storage
 
-Production containers are expected to be built and pushed to a container repository through CI, see the [CircleCI config file](./.circleci/config.yml). The [`tasks`](./tasks) file also has commands which can be used to build the production containers. 
+Production containers are expected to be built and pushed to a container repository through CI, see the [CircleCI config file](./.circleci/config.yml). The [`tasks`](./tasks) file also has commands which can be used to build the production containers.
 
-Note: Make sure to replace the ```cpcwood``` in the container tags with your container repository username and ensure mounted paths are correct for your machine.
+Note: Make sure to replace the `cpcwood` in the container tags with your container repository username and ensure mounted paths are correct for your machine.
 
 #### Deploy
 
@@ -104,23 +105,21 @@ Deploy the application using your container orchestration software, such as [kub
 
 Since the application is designed to be containerized, its configuration is passed through environment variables. Production environment variables should be injected into the container on creation by your container orchestrator.
 
-Sample kubernetes configuration files can be found in [```.kube/```](.kube/).
-
+Sample kubernetes configuration files can be found in [`.kube/`](.kube/).
 
 ## Tests
 
 #### Server Tests
 
-RSpec and Capybara are used to run unit and feature tests on the application. 
+RSpec and Capybara are used to run unit and feature tests on the application.
 
-To run test suite, run ```./tasks rspec``` in the command line.
+To run test suite, run `./tasks rspec` in the command line.
 
 #### Frontend Tests
 
 Jest is used to test the client frontend JavaScript.
 
-To run the test suite run ```./tasks yarn test``` in the command line.
-
+To run the test suite run `./tasks yarn test` in the command line.
 
 ## Usage
 
@@ -131,15 +130,14 @@ Once the application is running, head to the homepage, click on the hamburger ic
 Login with your seeded admin credentials.
 
 Click on the site settings tab and add the values or upload:
-- website name
-- images for the homepage tiles 
-- images for the header
 
+- website name
+- images for the homepage tiles
+- images for the header
 
 ## Contributing
 
 Any pull requests are welcome. If you have a question or find a bug, create a GitHub issue.
-
 
 ## LICENSE
 

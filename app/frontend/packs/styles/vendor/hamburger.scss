@@ -61,34 +61,64 @@ $length-scale: 0.96 !default;
 // Crown Animation
 
 @keyframes hamburger-crown-rotate {
-  0% {transform: rotate(0deg) scaleX(1);}
-  100% {transform: rotate(45deg) scaleX($length-scale);}
+  0% {
+    transform: rotate(0deg) scaleX(1);
+  }
+
+  100% {
+    transform: rotate(45deg) scaleX($length-scale);
+  }
 }
 @keyframes hamburger-crown-rotate-reverse {
-  0% {transform: rotate(45deg) scaleX($length-scale);}
-  100% {transform: rotate(0deg) scaleX(1);}
+  0% {
+    transform: rotate(45deg) scaleX($length-scale);
+  }
+
+  100% {
+    transform: rotate(0deg) scaleX(1);
+  }
 }
 
 // Patty Animation
 
 @keyframes hamburger-patty-hide {
-  0% {transform: scale(1, 1);}
-  100% {transform: scale(0, 0);}
+  0% {
+    transform: scale(1, 1);
+  }
+
+  100% {
+    transform: scale(0, 0);
+  }
 }
 @keyframes hamburger-patty-show {
-  0% {transform: scale(0, 0);}
-  100% {transform: scale(1, 1);}
+  0% {
+    transform: scale(0, 0);
+  }
+
+  100% {
+    transform: scale(1, 1);
+  }
 }
 
 // Heel Animation
 
 @keyframes hamburger-heel-rotate {
-  0% {transform: rotate(0deg) scaleX(1);}
-  100% {transform: rotate(-45deg) scaleX($length-scale);}
+  0% {
+    transform: rotate(0deg) scaleX(1);
+  }
+
+  100% {
+    transform: rotate(-45deg) scaleX($length-scale);
+  }
 }
 @keyframes hamburger-heel-rotate-reverse {
-  0% {transform: rotate(-45deg) scaleX($length-scale);}
-  100% {transform: rotate(0deg) scaleX(1);}
+  0% {
+    transform: rotate(-45deg) scaleX($length-scale);
+  }
+
+  100% {
+    transform: rotate(0deg) scaleX(1);
+  }
 }
 
 // Hover Event

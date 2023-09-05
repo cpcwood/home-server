@@ -11,15 +11,16 @@ const fonts = require('./loaders/fonts')
 webpackConfig.module.rules.unshift(fonts)
 
 // resolve-url-loader must be used before sass-loader
-webpackConfig.module.rules.find(rule => rule.test.test('.sass')).use.splice(-1, 0, {
-  loader: 'resolve-url-loader'
-})
+webpackConfig.module.rules
+  .find((rule) => rule.test.test('.sass'))
+  .use.splice(-1, 0, {
+    loader: 'resolve-url-loader'
+  })
 
 // Get the actual sass-loader config and set loader to dart sass
-const sassLoader = webpackConfig.module.rules.find(rule => rule.test.test('.sass'))
-const sassLoaderConfig = sassLoader.use.find( e => e.loader && e.loader.includes('sass-loader'))
+const sassLoader = webpackConfig.module.rules.find((rule) => rule.test.test('.sass'))
+const sassLoaderConfig = sassLoader.use.find((e) => e.loader && e.loader.includes('sass-loader'))
 sassLoaderConfig.options.implementation = require('sass')
-
 
 webpackConfig.performance = {
   maxEntrypointSize: 512000

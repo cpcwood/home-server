@@ -1,5 +1,3 @@
 {
-  "recommendations": [
-    "koichisasada.vscode-rdbg"
-  ]
+  "recommendations": ["koichisasada.vscode-rdbg", "esbenp.prettier-vscode"]
 }

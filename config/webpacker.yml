@@ -99,8 +99,6 @@ development:
     static:
       watch:
         ignored: '**/node_modules/**'
-      
-
 
 test:
   <<: *default

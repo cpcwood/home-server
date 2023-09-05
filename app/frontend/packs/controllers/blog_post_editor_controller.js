@@ -5,14 +5,16 @@ export default class extends Controller {
 
   static targets = ['postSection']
 
-  applyOrderToItems () {
-    const currentPostSectionTargets = this.postSectionTargets.filter(postSection => !postSection.dataset.isDestroyed)
+  applyOrderToItems() {
+    const currentPostSectionTargets = this.postSectionTargets.filter(
+      (postSection) => !postSection.dataset.isDestroyed
+    )
     for (let i = 0; i < currentPostSectionTargets.length; i += 1) {
       currentPostSectionTargets[i].querySelector('.item-order-position').value = i
     }
   }
 
-  newPostSection (event) {
+  newPostSection(event) {
     const postSectionContainer = event.target.closest('.blog-post-section')
     const clonedContainer = postSectionContainer.cloneNode()
     const clonedForm = postSectionContainer.querySelector('.form-fields').cloneNode(true)
@@ -70,7 +72,7 @@ export default class extends Controller {
     this.currentSectionsCountValue += 1
   }
 
-  destroyPostSection (event) {
+  destroyPostSection(event) {
     const postSectionContainer = event.target.closest('.blog-post-section')
     postSectionContainer.classList.add('destroy')
     postSectionContainer.dataset.isDestroyed = true
@@ -82,14 +84,14 @@ export default class extends Controller {
     this.applyOrderToItems()
   }
 
-  restorePostSection (event) {
+  restorePostSection(event) {
     const postSectionContainer = event.target.closest('.blog-post-section')
     this._restorePostSectionElement(postSectionContainer)
 
     this.applyOrderToItems()
   }
 
-  _restorePostSectionElement (postSectionContainer, formFields = postSectionContainer) {
+  _restorePostSectionElement(postSectionContainer, formFields = postSectionContainer) {
     postSectionContainer.classList.remove('destroy')
     postSectionContainer.removeAttribute('data-is-destroyed')
     formFields.querySelector('.destroy-post-section').value = 0

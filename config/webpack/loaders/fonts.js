@@ -5,7 +5,7 @@ module.exports = {
     options: {
       name: '[name]-[contenthash].[ext]',
       outputPath: 'css/fonts/',
-      publicPath: (url) => `fonts/${url}`,
+      publicPath: (url) => `fonts/${url}`
     }
   }
 }

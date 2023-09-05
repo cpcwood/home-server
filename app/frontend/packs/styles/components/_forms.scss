@@ -16,7 +16,9 @@
 .floating-form-container {
   background-color: colors.$light;
   border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 4px 8px 0 rgba(0, 0, 0, 0.5),
+    0 6px 20px 0 rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   padding: 20px;
   width: 350px;
@@ -35,12 +37,10 @@
   }
 }
 
-
 // Forms
 .floating-form {
   color: colors.$dark;
 }
-
 
 // Input types
 .input-label {
@@ -350,7 +350,6 @@
 }
 
 .input-submit:active,
- 
 .input-submit:focus {
   .loader-container {
     display: flex;
@@ -406,7 +405,7 @@
     height: 20px;
     width: 20px;
   }
-  
+
   &::-moz-range-thumb {
     background: colors.$form-slider-thumb;
     border-radius: 50%;

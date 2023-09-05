@@ -106,16 +106,30 @@
     padding: 0 15px 0 11px;
 
     .background {
-      background: linear-gradient(to right, rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0.02) 75%, rgba(0, 0, 0, 0.005) 90%, rgba(0, 0, 0, 0));
+      background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.125),
+        rgba(0, 0, 0, 0.05) 50%,
+        rgba(0, 0, 0, 0.02) 75%,
+        rgba(0, 0, 0, 0.005) 90%,
+        rgba(0, 0, 0, 0)
+      );
     }
   }
-  
+
   &.next {
     padding: 0 11px 0 15px;
     right: 0;
 
     .background {
-      background: linear-gradient(to left, rgba(0, 0, 0, 0.125), rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0.02) 75%, rgba(0, 0, 0, 0.005) 90%, rgba(0, 0, 0, 0));
+      background: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0.125),
+        rgba(0, 0, 0, 0.05) 50%,
+        rgba(0, 0, 0, 0.02) 75%,
+        rgba(0, 0, 0, 0.005) 90%,
+        rgba(0, 0, 0, 0)
+      );
     }
   }
 
