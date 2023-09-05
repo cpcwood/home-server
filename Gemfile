@@ -11,9 +11,9 @@ gem 'turbo-rails', '~> 1.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.4', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 5.6'
+gem 'puma', '~> 6.3'
 # Transpile app-like JavaScript. Read more: https://github.com/shakacode/shakapacker
-gem 'shakapacker', '6.5.6'
+gem 'shakapacker', '6.6'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1'
 # Throttle excessive requests
@@ -23,7 +23,7 @@ gem 'faraday', '~> 2.5', require: false
 # Verify 2FA using twilio
 gem 'twilio-ruby', '~> 5.72', require: false
 # Action Mailer and Action Job Backend - Sidekiq (Requires redis and start upon server launch)
-gem 'sidekiq', '~> 7.0'
+gem 'sidekiq', '~> 7.1'
 # Transform uploaded images
 gem 'image_processing', '~> 1.12'
 # Process markdown
@@ -62,8 +62,8 @@ group :production do
 end
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', '~> 11.1', platforms: [:mri, :mingw, :x64_mingw]
+  # Call 'debugger' anywhere in the code to stop execution and get a debugger console
+  gem 'debug', '>= 1'
   # Code policing with rubocop
   gem 'rubocop-rails', '~> 2.16', require: false
   gem 'rubocop-performance', '~> 1.15', require: false
@@ -110,5 +110,3 @@ group :test do
   # Screenshot failed feature specs
   gem 'capybara-screenshot', '~> 1.0'
 end
-
-

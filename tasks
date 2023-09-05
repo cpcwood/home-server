@@ -6,7 +6,7 @@ APP_SERVICE_NAME=app
 APP_HEALTHCHECK_URL=http://0.0.0.0:5000
 
 # Set container user ID
-export FIXUID="$(id -u)" 
+export FIXUID="$(id -u)"
 export FIXGID="$(id -g)"
 
 function build {
@@ -25,49 +25,49 @@ function up {
 }
 
 function down {
-	docker compose \
+  docker compose \
     -p $COMPOSE_PROJECT_NAME \
     -f ./.docker/docker-compose/dev.yml \
     down "$@"
 }
 
 function run {
-	docker compose \
-		-p $COMPOSE_PROJECT_NAME \
-		-f ./.docker/docker-compose/dev.yml \
-		run $APP_SERVICE_NAME /bin/bash -c "source ./.docker/scripts/entrypoint-dev && $*"
+  docker compose \
+    -p $COMPOSE_PROJECT_NAME \
+    -f ./.docker/docker-compose/dev.yml \
+    run $APP_SERVICE_NAME /bin/bash -c "./.docker/scripts/entrypoint-dev $*"
 }
 
 function exec {
-	ensure_app_container_running
-	docker compose \
-		-p $COMPOSE_PROJECT_NAME \
-		-f ./.docker/docker-compose/dev.yml \
-		exec $APP_SERVICE_NAME /bin/bash -c "source ./.docker/scripts/entrypoint-dev && $*"
+  ensure_app_container_running
+  docker compose \
+    -p $COMPOSE_PROJECT_NAME \
+    -f ./.docker/docker-compose/dev.yml \
+    exec $APP_SERVICE_NAME /bin/bash -c "./.docker/scripts/entrypoint-dev $*"
 }
 
 function bash {
-	ensure_app_container_running
-	docker compose \
-		-p $COMPOSE_PROJECT_NAME \
-		-f ./.docker/docker-compose/dev.yml \
-		exec $APP_SERVICE_NAME /bin/bash --init-file ./.docker/scripts/entrypoint-dev
+  ensure_app_container_running
+  docker compose \
+    -p $COMPOSE_PROJECT_NAME \
+    -f ./.docker/docker-compose/dev.yml \
+    exec $APP_SERVICE_NAME /bin/bash --init-file ./.docker/scripts/entrypoint-dev
 }
 
 function rails {
-	exec bundle exec rails "$@"
+  exec bundle exec rails "$@"
 }
 
 function yarn {
-	exec yarn "$@"
+  exec yarn "$@"
 }
 
 function bundle {
-	exec bundle "$@"
+  exec bundle "$@"
 }
 
 function rubocop {
-	exec bundle exec rubocop "$@"
+  exec bundle exec rubocop "$@"
 }
 
 function attach {
@@ -75,17 +75,17 @@ function attach {
 }
 
 function rspec {
-	ensure_app_container_running
+  ensure_app_container_running
   docker compose \
-		-p $COMPOSE_PROJECT_NAME \
-		-f ./.docker/docker-compose/dev.yml \
-		exec -e RAILS_ENV=test $APP_SERVICE_NAME \
+    -p $COMPOSE_PROJECT_NAME \
+    -f ./.docker/docker-compose/dev.yml \
+    exec -e RAILS_ENV=test $APP_SERVICE_NAME \
     /bin/bash -c "source ./.docker/scripts/entrypoint-dev && bundle exec rspec $*"
 }
 
 function ensure_app_container_running {
-	(! (docker ps | grep -q $COMPOSE_PROJECT_NAME)) && up -d
-  until curl --output /dev/null --silent --head "$APP_HEALTHCHECK_URL" ; do
+  ( ! (docker ps | grep -q $COMPOSE_PROJECT_NAME)) && up -d
+  until curl --output /dev/null --silent --head "$APP_HEALTHCHECK_URL"; do
     echo 'waiting for app...'
     sleep 2.5
   done

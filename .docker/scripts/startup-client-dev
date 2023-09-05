@@ -1,8 +1,4 @@
 #!/bin/bash
 
-if ! bundle check >/dev/null ; then
-  bundle install
-fi
-
 echo 'starting client build server'
-./bin/webpacker-dev-server
+exec ./bin/webpacker-dev-server

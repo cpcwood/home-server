@@ -17,7 +17,10 @@ services:
       DB_HOST: postgres
       DB_USERNAME: cpcwood
       CHROMEDRIVER: /usr/bin/chromedriver
-      WEBPACKER_DEV_SERVER_HOST: "${DEV_SERVER_HOST:-0.0.0.0}"    
+      WEBPACKER_DEV_SERVER_HOST: "${DEV_SERVER_HOST:-0.0.0.0}"
+      RUBY_DEBUG_PORT: '15000'
+      RUBY_DEBUG_OPEN: 'true'
+      RUBY_DEBUG_HOST: '0.0.0.0'
     env_file:
       - ../../config/env/.env
     volumes:
@@ -25,13 +28,14 @@ services:
       - data-home-server-dev-app-gems:/gems
       - ~/.bash_history:/root/.bash_history
     user: "${FIXUID:-1000}:${FIXGID:-1000}"
+    command: './.docker/scripts/startup-app-dev'
     depends_on:
       - postgres
       - redis
       - mailcatcher
-    command: './.docker/scripts/startup-app-dev'
     ports:
       - 5000:5000
+      - 15000:15000
 
   client:
     tty: true
@@ -46,8 +50,7 @@ services:
         MAX_MIND_LICENSE: "${MAX_MIND_LICENSE:-''}"
     environment:
       WEBPACKER_DEV_SERVER_PUBLIC: "${DEV_SERVER_HOST:-0.0.0.0}:3035"
-    command: .docker/scripts/startup-client-dev
-    entrypoint: .docker/scripts/entrypoint-dev
+    command: ['.docker/scripts/startup-client-dev']
     env_file:
       - ../../config/env/.env
     depends_on:
@@ -109,7 +112,7 @@ services:
       interval: 5s
 
   redis:
-    image: redis:5-alpine
+    image: redis:6-alpine
     command: redis-server
     volumes:
       - data-home-server-dev-redis:/data

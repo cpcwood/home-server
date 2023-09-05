@@ -1,11 +1,11 @@
 #!/bin/bash
 
-until pg_isready -U "$DB_USERNAME" -h "$DB_HOST" ; do
+until pg_isready -U "$DB_USERNAME" -h "$DB_HOST"; do
 	echo 'waiting for database...'
 	sleep 1
 done
 
-if bundle exec rails db:exists ; then
+if bundle exec rails db:exists; then
 	bundle exec rails db:migrate
 else
 	bundle exec rails db:create
@@ -16,4 +16,4 @@ fi
 bundle exec rails sitemap:refresh:no_ping
 bundle exec rails whenever --update-crontab
 
-bundle exec rails server -b 0.0.0.0 -p 5000
+exec bundle exec rails server -b 0.0.0.0 -p 5000

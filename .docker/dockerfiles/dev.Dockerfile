@@ -34,7 +34,9 @@ RUN apk add \
 # Ensure gems are owned by docker user
 ARG BUNDLE_PATH=/gems
 ENV BUNDLE_PATH=$BUNDLE_PATH \
-    BUNDLE_APP_CONFIG=$BUNDLE_PATH
+    BUNDLE_APP_CONFIG=$BUNDLE_PATH \
+    BUNDLE_BIN=$BUNDLE_PATH/bin
+ENV PATH="$BUNDLE_BIN/bin:$PATH"
 
 ENV PATH=$BUNDLE_PATH/bin:$APP_HOME/node_modules/.bin:$PATH
 

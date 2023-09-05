@@ -15,7 +15,7 @@ pidfile "#{shared_dir}/pids/puma.pid"
 state_path "#{shared_dir}/pids/puma.state"
 
 # Threads for serving requests
-threads ENV.fetch('PUMA_STARTING_THREADS') { 1 }, ENV.fetch('PUMA_MAX_THREADS') { 1 }
+threads ENV.fetch('PUMA_STARTING_THREADS') { 1 }, ENV.fetch('PUMA_MAX_THREADS') { 5 }
 
 # Workers (cpu cores)
 workers ENV.fetch('PUMA_WEB_CONCURRENCY') { 0 }
@@ -23,7 +23,7 @@ preload_app!
 
 # Unix socket to for reverse proxy
 # bind "unix://#{shared_dir}/sockets/puma.sock"
-port  ENV.fetch("PORT") { 5000 }
+port ENV.fetch("PORT") { 5000 }
 
 # Debugging
 debug

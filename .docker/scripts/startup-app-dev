@@ -1,21 +1,17 @@
 #!/bin/bash
 
-while ! pg_isready -U "$DB_USERNAME" -h "$DB_HOST" ; do
+while ! pg_isready -U "$DB_USERNAME" -h "$DB_HOST"; do
 	sleep 1
 done
-
-if ! bundle check >/dev/null ; then
-  bundle install
-fi
 
 kill -INT "$(cat ./tmp/pids/server.pid 2>/dev/null)" >/dev/null 2>&1
 rm -f ./tmp/pids/server.pid >/dev/null 2>&1
 bundle exec rails tmp
 
-if bundle exec rails db:exists ; then
- 	bundle exec rails db:migrate
+if bundle exec rails db:exists; then
+	bundle exec rails db:migrate
 else
 	bundle exec rails db:setup
 fi
 
-bundle exec rails server -b 0.0.0.0 -p 5000
+exec rdbg --nonstop --command -- bundle exec rails server -b 0.0.0.0 -p 5000

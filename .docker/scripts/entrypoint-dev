@@ -1,3 +1,10 @@
 #!/bin/bash
-fixuid 2>/dev/null
-"$@"
+set -euo pipefail
+
+eval "$(fixuid -q)"
+
+if ! bundle check >/dev/null; then
+  bundle install --jobs=4 --retry=3
+fi
+
+exec "$@"

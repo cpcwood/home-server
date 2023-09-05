@@ -1,5 +1,8 @@
 {
   "git.ignoreLimitWarning": true,
+  "debug.allowBreakpointsEverywhere": false,
+  "debug.showBreakpointsInOverviewRuler": true,
+  "editor.glyphMargin": true,
   "cSpell.words": [
     "Pikaday",
     "grecaptcha",
