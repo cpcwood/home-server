@@ -3,7 +3,7 @@
 
 # Create Server NodeJS Assets
 # ================
-FROM alpine:3.17 as server-nodejs-assets
+FROM alpine:3.18 as server-nodejs-assets
 
 ENV RAILS_ENV=production \
     NODE_ENV=production \
