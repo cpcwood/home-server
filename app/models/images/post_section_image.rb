@@ -41,6 +41,6 @@ class PostSectionImage < Image
   end
 
   def assign_description_from_title
-    self.description = title unless title.nil? || title&.blank?
+    self.description = title unless title.nil? || title.blank?
   end
 end

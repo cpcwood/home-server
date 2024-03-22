@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   def index
     @posts = if @user
-               Post.all.order(date_published: :desc)
+               Post.order(date_published: :desc)
              else
                Post.where(visible: true).order(date_published: :desc)
              end

@@ -38,7 +38,7 @@ class Post < ApplicationRecord
   validates :visible, inclusion: { in: [true, false] }
 
   def to_param
-    parameterized_title = "-#{title.parameterize}" if title&.present?
+    parameterized_title = "-#{title.parameterize}" if title.present?
     "#{id}#{parameterized_title}"
   end
 end
