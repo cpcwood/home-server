@@ -9,7 +9,8 @@ ENV RAILS_ENV=production \
     NODE_ENV=production \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     APP_HOME=/opt/app \
-    NODE_OPTIONS="--openssl-legacy-provider"
+    NODE_OPTIONS="--openssl-legacy-provider" \
+    COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
 RUN apk add --no-cache \
     nodejs \
