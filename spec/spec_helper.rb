@@ -52,7 +52,7 @@ SimpleCov.add_filter '/spec/'
 
 require 'webmock/rspec'
 
-whitelist = ['chromedriver.storage.googleapis.com', 'github.com', 'amazonaws.com']
+whitelist = ['chromedriver.storage.googleapis.com', 'github.com', 'amazonaws.com', 'googlechromelabs.github.io']
 allowed_sites = ->(uri){ uri.host.match?(Regexp.union(whitelist)) }
 WebMock.disable_net_connect!(
   allow_localhost: true,
