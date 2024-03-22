@@ -9,14 +9,14 @@ ENV RAILS_ENV=development \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
     APP_HOME=/opt/app \
     PORT=5000 \
-    NODE_OPTIONS="--openssl-legacy-provider"
+    NODE_OPTIONS="--openssl-legacy-provider" \
+    COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
 RUN apk add \
     build-base \
     postgresql-dev postgresql-client \
     imagemagick \
-    nodejs \
-    yarn \
+    npm \
     curl \
     git \
     gzip \
@@ -35,6 +35,14 @@ RUN apk add \
 ARG BUNDLE_PATH=/gems
 ENV BUNDLE_PATH=$BUNDLE_PATH \
     BUNDLE_APP_CONFIG=$BUNDLE_PATH
+
+ENV NODE_VERSION=16
+ENV N_NODE_MIRROR=https://npmmirror.com/mirrors/node
+RUN npm install n -g && \
+    n $NODE_VERSION && \
+    npm install -g corepack && \
+    corepack enable && \
+    corepack prepare yarn@1.22.19 --activate
 
 ENV PATH=$BUNDLE_PATH/bin:$APP_HOME/node_modules/.bin:$PATH
 

@@ -107,7 +107,7 @@ services:
       interval: 5s
 
   redis:
-    image: redis:5-alpine
+    image: redis:6-alpine
     command: redis-server
     volumes:
       - data-home-server-dev-redis:/data
