@@ -11,15 +11,15 @@ gem 'turbo-rails', '~> 1.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.4', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 5.6'
+gem 'puma', '~> 6'
 # Transpile app-like JavaScript. Read more: https://github.com/shakacode/shakapacker
-gem 'shakapacker', '6.5.6'
+gem 'shakapacker', '6.6.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1'
 # Throttle excessive requests
-gem 'rack-attack', '~> 6.6'
+gem 'rack-attack', '~> 6.7'
 # Send HTTP Requests
-gem 'faraday', '~> 2.5', require: false
+gem 'faraday', '~> 2.9', require: false
 # Verify 2FA using twilio
 gem 'twilio-ruby', '~> 5.72', require: false
 # Action Mailer and Action Job Backend - Sidekiq (Requires redis and start upon server launch)
@@ -27,15 +27,15 @@ gem 'sidekiq', '~> 7.0'
 # Transform uploaded images
 gem 'image_processing', '~> 1.12'
 # Process markdown
-gem 'redcarpet', '~> 3.5'
+gem 'redcarpet', '~> 3.6'
 # Markdown syntax highlighing
-gem 'rouge', '~> 4.0'
+gem 'rouge', '~> 4.2'
 # Validate urls in model
 gem 'validate_url', '~> 1.0'
 # Validate dates in model
 gem 'date_validator', '~> 0.12'
 # Timezone
-gem 'tzinfo-data', '~> 1.2022'
+gem 'tzinfo-data', '~> 1.2024'
 # JSON API serializer
 gem 'jsonapi-serializer', '~> 2.2'
 # mime types
@@ -49,16 +49,16 @@ gem 'maxminddb', '~> 0.1'
 
 group :production do
   # AWS S3 for production storage
-  gem 'aws-sdk-s3', '~> 1.114', require: false
+  gem 'aws-sdk-s3', '~> 1.146', require: false
   # Ensure sidekiq stays alive in k8s
-  gem 'sidekiq_alive', '~> 2.1'
+  gem 'sidekiq_alive', '~> 2.4'
   # Dynamically generate sitemaps
   gem 'sitemap_generator', '~> 6.3'
   # Manage cron
   gem 'whenever', '~> 1.0', require: false
   # Error Reporting
-  gem 'sentry-ruby', '~> 5.4'
-  gem 'sentry-rails', '~> 5.4'
+  gem 'sentry-ruby', '~> 5.17'
+  gem 'sentry-rails', '~> 5.17'
 end
 
 group :development, :test do
