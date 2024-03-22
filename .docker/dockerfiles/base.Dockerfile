@@ -17,13 +17,13 @@ ENV BUNDLE_PATH=$APP_HOME/vendor/bundle \
     GEM_PATH=$APP_HOME/vendor/bundle \
     GEM_HOME=$APP_HOME/vendor/bundle \
     BUNDLE_APP_CONFIG=$APP_HOME/vendor/bundle \
-    NODE_OPTIONS="--openssl-legacy-provider" \
-    COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+    NODE_OPTIONS="--openssl-legacy-provider"
 
 RUN apk add --update --no-cache \
     build-base \
     postgresql-dev \
-    npm \
+    nodejs \
+    yarn \
     git \
     curl \
     gzip \
@@ -34,14 +34,6 @@ RUN apk add --update --no-cache \
 
 RUN mkdir -p $APP_HOME $APP_HOME/vendor/bundle $APP_HOME/tmp
 WORKDIR $APP_HOME
-
-ENV NODE_VERSION=16
-ENV N_NODE_MIRROR=https://npmmirror.com/mirrors/node
-RUN npm install n -g && \
-    n $NODE_VERSION && \
-    npm install -g corepack && \
-    corepack enable && \
-    corepack prepare yarn@1.22.19 --activate
 
 COPY Gemfile* $APP_HOME/
 RUN bundle config set without development:test:assets && \
