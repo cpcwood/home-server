@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '3.2.2'
+ruby '3.2.3'
 
 # Rails
-gem 'rails', '~> 7.0'
+gem 'rails', '~> 7.1'
 # Ensure assets pipeline from v6 still works
 gem 'sprockets-rails', '~> 3.4'
 # Turbo rails
@@ -88,12 +88,12 @@ end
 
 group :test do
   # Testing backend with RSpec
-  gem 'rspec-rails', '~> 5.1', require: false
+  gem 'rspec-rails', '~> 6.1', require: false
   gem 'rails-controller-testing', '~> 1.0'
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 3.37', require: false
   # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers', '~> 5.0', require: false
+  gem 'webdrivers', '~> 5.3.1', require: false
   # Coverage with simplecov
   gem 'simplecov', '~> 0.16', require: false
   gem 'simplecov-console', '~> 0.9', require: false
@@ -110,5 +110,3 @@ group :test do
   # Screenshot failed feature specs
   gem 'capybara-screenshot', '~> 1.0'
 end
-
-

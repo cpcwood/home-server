@@ -105,7 +105,7 @@ RSpec.describe 'Admin::GalleryImagesController', type: :request do
 
     it 'general error' do
       gallery_image = create(:gallery_image, user: @user)
-      allow_any_instance_of(GalleryImage).to receive(:save).and_raise('general error')
+      allow_any_instance_of(GalleryImage).to receive(:update).and_raise('general error')
       put("/admin/gallery-images/#{gallery_image.id}", params: valid_attributes)
       expect(response).not_to redirect_to(admin_gallery_images_path)
       expect(response.body).to include('general error')
