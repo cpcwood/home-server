@@ -106,7 +106,7 @@ module Admin
                                :title
                              ] }
                            ])
-      permitted_params[:post_sections_attributes].each do |_key, post_section|
+      permitted_params[:post_sections_attributes].each_value do |post_section|
         post_section.delete(:post_section_image_attributes) if post_section[:post_section_image_attributes]&.values&.all?(&:blank?)
       end
       permitted_params
