@@ -16,8 +16,7 @@ ENV BUNDLE_PATH=$APP_HOME/vendor/bundle \
     GEM_HOME=$APP_HOME/vendor/bundle \
     BUNDLE_APP_CONFIG=$APP_HOME/vendor/bundle \
     PATH=$APP_HOME/vendor/bundle/bin:$APP_HOME/vendor/bundle:$APP_HOME/node_modules/.bin:$PATH \
-    NODE_OPTIONS="--openssl-legacy-provider" \
-    COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+    NODE_OPTIONS="--openssl-legacy-provider"
 
 RUN apk add --no-cache \
     bash \
