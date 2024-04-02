@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { Application } from 'stimulus'
+import { Application } from '@hotwired/stimulus'
 import reCaptchaController from 'controllers/recaptcha_controller'
 
 describe('recaptcha_controller', () => {

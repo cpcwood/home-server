@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 // asd
 export default class extends Controller {
   static targets = ['fade', 'container']

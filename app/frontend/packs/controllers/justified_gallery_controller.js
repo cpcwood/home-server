@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 import justifiedLayout from 'justified-layout'
 
 export default class extends Controller {
