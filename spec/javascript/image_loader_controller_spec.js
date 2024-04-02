@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { Application } from 'stimulus'
+import { Application } from '@hotwired/stimulus'
 import imageLoaderController from 'controllers/image_loader_controller'
 
 jest.useFakeTimers()

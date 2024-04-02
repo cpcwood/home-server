@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { Application } from 'stimulus'
+import { Application } from '@hotwired/stimulus'
 import galleryLightboxController from 'controllers/gallery_lightbox_controller'
 import SimpleLightbox from 'simplelightbox'
 

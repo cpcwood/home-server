@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { Application } from 'stimulus'
+import { Application } from '@hotwired/stimulus'
 import embeddedGalleryController from 'controllers/embedded_gallery_controller'
 
 jest.useFakeTimers()

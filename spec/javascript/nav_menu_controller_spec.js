@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { Application } from 'stimulus'
+import { Application } from '@hotwired/stimulus'
 import navMenuController from 'controllers/nav_menu_controller'
 const fs = require('fs')
 

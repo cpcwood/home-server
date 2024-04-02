@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { Application } from 'stimulus'
+import { Application } from '@hotwired/stimulus'
 import Typed from 'typed.js'
 import Cookies from 'js-cookie'
 import typedHeaderController from 'controllers/typed_header_controller'
