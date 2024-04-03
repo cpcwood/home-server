@@ -1,7 +1,7 @@
 module Admin
   class GalleryImagesController < AdminBaseController
     def index
-      @gallery_images = GalleryImage.order(created_at: :desc)
+      @gallery_images = GalleryImage.order(date_taken: :desc, id: :desc)
       render layout: 'layouts/admin_dashboard'
     end
 
