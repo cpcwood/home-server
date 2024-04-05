@@ -3,10 +3,10 @@
 @use '../base/mixins' as *;
 @use '../base/typography';
 
-.about-contact-container {
+.profile-image-container {
   display: flex;
   flex-wrap: wrap;
-  max-width: 550px;
+  justify-content: center;
   position: relative;
   width: 100%;
 
@@ -19,7 +19,10 @@
   }
 
   .profile-image {
-    width: 50%;
+    margin-bottom: 0.5em;
+    margin-top: 1.4em;
+    max-width: 300px;
+    width: 100%;
 
     @include respond-to(tablet) {
       width: 100%;
@@ -27,68 +30,16 @@
   }
 }
 
-.about-contact-details-container {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-left: 20px;
-  position: relative;
-  width: 50%;
-
-  @include respond-to(tablet) {
-    margin-top: 10px;
-    padding-left: 0;
-    width: 100%;
-
-    .name {
-      font-size: 1.3em;
-    }
-
-    .location {
-      font-size: 1.1em;
-    }
+.about-about-me-container {
+  @include respond-to(mobile) {
+    display: flex;
+    justify-content: center;
   }
 
-  .name {
-    font-size: 1.3em;
-    font-weight: 400;
-    margin-bottom: 10px;
-  }
-
-  .location {
-    font-size: 1em;
-  }
-
-}
-
-
-.about-contact-links-section {
-  align-items: center;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  margin-top: 10px;
-  position: relative;
-  width: 100%;
-
-  a {
-    display: inline;
-    line-height: 1em;
-    padding: 5px;
-    
-    + * {
-      margin-left: 10px;
-    }
-  }
-
-  .about-contact-link {
-    flex: 0 1 50%;
-    height: fit-content;
-    padding: 15px 0;
-
-    + * {
-      margin-left: 20px;
+  .markdown {
+    @include respond-to(mobile) {
+      max-width: 50ch;
+      text-align: justify;
     }
   }
 }

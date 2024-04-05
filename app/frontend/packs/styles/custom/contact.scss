@@ -3,6 +3,11 @@
 @use '../base/mixins' as *;
 @use '../base/typography';
 
+.item-content.contact-messages-container {
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
 .contact-details-container {
   margin-top: 10px;
@@ -19,6 +24,11 @@
 
 .contact-form-container {
   flex: 0 1 600px;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    width: 450px;
+  }
 }
 
 .embedded-text-area.contact {
@@ -57,7 +67,10 @@
 
 #contact-messages-new-form {
   padding: 0;
-  @include respond-to(tablet) {
-    padding-left: 20px;
+
+  .embedded-input-box {
+    @include respond-to(tablet) {
+      width: 75%;
+    }
   }
 }

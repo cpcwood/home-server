@@ -13,9 +13,9 @@
 <section class='reading-pane' itemscope itemtype="http://schema.org/AboutPage">
   <%= render partial: 'partials/admin_toolbar', locals: { model: @about, singular: true } %>
 
-  <%= render partial: 'partials/contact_details', locals: { model: @about, contact_link: true } %>
+  <%= render partial: 'partials/profile_image', locals: { model: @about, contact_link: true } %>
 
-  <div itemprop="mainContentOfPage">
+  <div class='about-about-me-container' itemprop="mainContentOfPage">
     <%= markdown_admin(@about.about_me) %>
   </div>
 </section>
