@@ -17,11 +17,6 @@ describe 'Views' do
         expect(rendered).to match('contact_message_content')
         expect(rendered).to match(contact_messages_path)
       end
-
-      it 'it renders about details' do
-        expect(rendered).to match(about.name)
-        expect(rendered).to match(about.location)
-      end
     end
   end
 end

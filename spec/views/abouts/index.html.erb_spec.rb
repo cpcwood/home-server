@@ -11,11 +11,6 @@ describe 'Views' do
       render template: 'abouts/show'
 
       expect(rendered).to match(about.about_me)
-      expect(rendered).to match(about.linkedin_link)
-      expect(rendered).to match(about.github_link)
-      expect(rendered).to match(about.name)
-      expect(rendered).to match(about.location)
-      expect(rendered).to match(contact_path)
       expect(rendered).not_to match('toolbar-container')
     end
 

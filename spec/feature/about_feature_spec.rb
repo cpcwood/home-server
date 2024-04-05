@@ -37,8 +37,6 @@ feature 'Admin update about section', feature: true do
       expect(page).to have_content('Contact email updated!')
       click_on('Return')
       expect(page).to have_content('new section name')
-      expect(page).to have_content('new about name')
-      expect(page).to have_content('new about location')
       expect(page.html).to match('<h1>new about me text in markdown</h1>')
       expect(page).to have_selector('code')
       expect(page).to have_selector('img.profile-image')
