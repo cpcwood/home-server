@@ -57,7 +57,7 @@ class Image < ApplicationRecord
     processed_image_file = process_image(image_attachment)
     image_file.attach(
       io: File.open(processed_image_file),
-      filename: image_attachment.original_filename,
+      filename: 'image.jpg',
       content_type: image_attachment.content_type)
   end
 
