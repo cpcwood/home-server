@@ -17,14 +17,14 @@ function build {
     build "$@"
 }
 
-function up {
+function start {
   docker compose \
     -p $COMPOSE_PROJECT_NAME \
     -f ./.docker/docker-compose/dev.yml \
     up "$@"
 }
 
-function down {
+function stop {
 	docker compose \
     -p $COMPOSE_PROJECT_NAME \
     -f ./.docker/docker-compose/dev.yml \
@@ -46,7 +46,7 @@ function exec {
 		exec $APP_SERVICE_NAME /bin/bash -c "source ./.docker/scripts/entrypoint-dev && $*"
 }
 
-function bash {
+function sh {
 	ensure_app_container_running
 	docker compose \
 		-p $COMPOSE_PROJECT_NAME \
