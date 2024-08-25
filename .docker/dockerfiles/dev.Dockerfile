@@ -39,7 +39,7 @@ ENV BUNDLE_PATH=$BUNDLE_PATH \
 ENV PATH=$BUNDLE_PATH/bin:$APP_HOME/node_modules/.bin:$PATH
 
 ARG MAX_MIND_LICENSE
-RUN curl "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAX_MIND_LICENSE&suffix=tar.gz" -o ./GeoLite2-City.tar.gz && \
+RUN curl -L "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAX_MIND_LICENSE&suffix=tar.gz" -o ./GeoLite2-City.tar.gz && \
     gzip -d GeoLite2-City.tar.gz && \
     tar -xvf GeoLite2-City.tar && \
     mkdir -p /var/opt/maxmind/ && \

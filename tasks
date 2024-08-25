@@ -101,10 +101,12 @@ function build-all-images {
 function build-images-base {
   source ./config/env/build_args.env
   [ -z "$GRECAPTCHA_SITE_KEY" ] && echo "GRECAPTCHA_SITE_KEY empty, set in config/env/build_args.env" && exit 1
+  [ -z "$MAX_MIND_LICENSE" ] && echo "MAX_MIND_LICENSE empty, set in config/env/build_args.env" && exit 1
 
   GIT_SHA="$(git rev-parse HEAD | head -c8)"
 
   docker build \
+    --build-arg MAX_MIND_LICENSE="$MAX_MIND_LICENSE" \
     --build-arg grecaptcha_site_key="$GRECAPTCHA_SITE_KEY" \
     -t cpcwood/home-server-base:latest \
     -t cpcwood/home-server-base:"$GIT_SHA" \
