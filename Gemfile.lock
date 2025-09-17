@@ -302,7 +302,7 @@ GEM
     regexp_parser (2.9.0)
     reline (0.4.3)
       io-console (~> 0.5)
-    rexml (3.3.9)
+    rexml (3.4.2)
     rouge (4.2.1)
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
