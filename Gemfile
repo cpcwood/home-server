@@ -49,7 +49,7 @@ gem 'maxminddb', '~> 0.1'
 
 group :production do
   # AWS S3 for production storage
-  gem 'aws-sdk-s3', '~> 1.146', require: false
+  gem 'aws-sdk-s3', '~> 1.208', require: false
   # Ensure sidekiq stays alive in k8s
   gem 'sidekiq_alive', '~> 2.4'
   # Dynamically generate sitemaps
