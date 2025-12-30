@@ -415,7 +415,7 @@ GEM
     tzinfo-data (1.2024.1)
       tzinfo (>= 1.0.0)
     unicode-display_width (2.5.0)
-    uri (0.13.0)
+    uri (0.13.3)
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
