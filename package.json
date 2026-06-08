@@ -62,7 +62,7 @@
     "jest-environment-jsdom": "^29.3.1",
     "jest-erb-transformer": "^1.2.10",
     "stylelint": "^15.10.1",
-    "stylelint-config-sass-guidelines": "^9.0.1",
+    "stylelint-config-sass-guidelines": "^13.0.0",
     "stylelint-config-standard": "^29.0.0"
   },
   "jest": {
