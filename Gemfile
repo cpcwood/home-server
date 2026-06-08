@@ -63,7 +63,7 @@ end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', '~> 11.1', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', '~> 13.0', platforms: [:mri, :mingw, :x64_mingw]
   # Code policing with rubocop
   gem 'rubocop-rails', '~> 2.16', require: false
   gem 'rubocop-performance', '~> 1.15', require: false
