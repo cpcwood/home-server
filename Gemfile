@@ -5,7 +5,7 @@ ruby '3.2.3'
 # Rails
 gem 'rails', '~> 7.1'
 # Ensure assets pipeline from v6 still works
-gem 'sprockets-rails', '~> 3.4'
+gem 'sprockets-rails', '~> 3.5'
 # Turbo rails
 gem 'turbo-rails', '~> 1.1'
 # Use postgresql as the database for Active Record
