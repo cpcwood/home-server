@@ -54,9 +54,9 @@ yarn-debug.log*
 logfile
 
 
-# Local .terraform directories
+# Local .terraform directories (but keep the committed dependency lock)
 **/.terraform/*
-.terraform*
+.terraform.tfstate.lock.info
 
 # .tfstate files
 *.tfstate
@@ -89,3 +89,21 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# Helm working files
+infrastructure/helm/charts/*.tgz
+
+# direnv / Nix
+.direnv/
+infrastructure/.direnv/
+result
+infrastructure/result
+
+# cClaude Code
+.claude/settings.local.json
+
+# macOS
+.DS_Store
+
+# local secret handoff (not committed)
+/coveralls

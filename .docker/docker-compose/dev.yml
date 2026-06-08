@@ -4,6 +4,7 @@ services:
     stdin_open: true
     image: cpcwood/home-server-app-dev
     container_name: home-server-app-dev
+    init: true
     build:
       context: ../..
       dockerfile: .docker/dockerfiles/dev.Dockerfile
@@ -36,6 +37,7 @@ services:
     stdin_open: true
     image: cpcwood/home-server-client-dev
     container_name: home-server-client-dev
+    init: true
     build:
       context: ../..
       dockerfile: .docker/dockerfiles/dev.Dockerfile
@@ -62,6 +64,7 @@ services:
     stdin_open: true
     image: cpcwood/home-server-worker-dev
     container_name: home-server-worker-dev
+    init: true
     build: 
       context: ../../
       dockerfile: .docker/dockerfiles/dev.Dockerfile

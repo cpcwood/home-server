@@ -1,0 +1,23 @@
+directory:
+  - infrastructure/terraform
+framework:
+  - terraform
+quiet: true
+compact: true
+
+# Skips are deliberate risk/cost acceptances for a personal single-region site,
+# reviewed 2026-06-01. Each is here because it conflicts with an intentional
+# design choice, not because the finding is wrong in general.
+skip-check:
+  # k3s has no IRSA, so the backup + storage service identities must be IAM
+  # users with inline policies. SSO / roles-only don't apply to them.
+  - CKV_AWS_273  # access via SSO, not IAM users
+  - CKV_AWS_40   # policies attached to roles/groups, not users
+  # Encryption stays on the free AWS-managed keys (SSE-S3 + alias/aws/ssm) — a
+  # CMK's ~$1/mo would eat the saving that motivated the Parameter Store move.
+  - CKV_AWS_337  # SSM params using KMS CMK
+  - CKV_AWS_145  # S3 buckets encrypted with KMS CMK
+  # Overkill for a single-region personal site.
+  - CKV_AWS_18   # S3 access logging
+  - CKV_AWS_144  # S3 cross-region replication
+  - CKV2_AWS_62  # S3 event notifications

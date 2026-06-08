@@ -1,0 +1,15 @@
+{{- if .Values.grafanaDashboard.enabled }}
+# Auto-discovered by the platform's kube-prometheus-stack Grafana sidecar, which
+# watches every namespace for ConfigMaps labelled grafana_dashboard: "1". Built
+# on cAdvisor + kube-state-metrics — no app /metrics endpoint required.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: home-server-dashboard
+  labels:
+    grafana_dashboard: "1"
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+  home-server.json: |
+{{ .Files.Get "dashboards/home-server.json" | indent 4 }}
+{{- end }}

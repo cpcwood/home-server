@@ -1,0 +1,44 @@
+replicaCount: 1
+
+image:
+  repository: postgres
+  pullPolicy: IfNotPresent
+  tag: "13-alpine"
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 5432
+
+persistence:
+  storageClassName: local-path
+  size: 2Gi
+  accessModes:
+    - ReadWriteOnce
+
+config:
+  POSTGRES_DB: home_server_production
+  PGDATA: /var/lib/postgresql/data/pgdata
+
+externalSecrets:
+  dbBundle: db
+
+volumeMountPath: /var/lib/postgresql/data
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    memory: 1Gi
+
+podSecurityContext:
+  fsGroup: 999
+  seccompProfile:
+    type: RuntimeDefault
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

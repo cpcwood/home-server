@@ -1,0 +1,52 @@
+{{- if .Values.gateway.enabled -}}
+{{- if .Values.gateway.httpsRedirect }}
+# HTTP → HTTPS redirect, attached to the :80 listener only.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ include "app.fullname" . }}-redirect
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+spec:
+  parentRefs:
+    - name: {{ include "app.fullname" . }}
+      sectionName: http
+  hostnames:
+    {{- range $host := .Values.gateway.hostnames }}
+    - {{ $host | quote }}
+    {{- end }}
+  rules:
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            statusCode: 301
+            port: 443
+---
+{{- end }}
+# Application traffic, attached to the per-hostname HTTPS listeners.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ include "app.fullname" . }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+spec:
+  parentRefs:
+    {{- range $host := .Values.gateway.hostnames }}
+    - name: {{ include "app.fullname" $ }}
+      sectionName: https-{{ $host | replace "." "-" }}
+    {{- end }}
+  hostnames:
+    {{- range $host := .Values.gateway.hostnames }}
+    - {{ $host | quote }}
+    {{- end }}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: {{ include "app.fullname" . }}
+          port: {{ .Values.service.port }}
+{{- end }}

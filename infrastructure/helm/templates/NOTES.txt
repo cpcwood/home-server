@@ -1,0 +1,22 @@
+{{- $name := .Release.Name -}}
+{{- $ns := .Release.Namespace -}}
+home-server {{ .Chart.Version }} released as {{ $name }} into namespace {{ $ns }}.
+
+Synced External Secrets (External Secrets Operator must be installed):
+  kubectl -n {{ $ns }} get externalsecrets
+
+Application hostnames (from app.gateway.hostnames):
+{{- range (index .Values "app" "gateway" "hostnames") }}
+  - https://{{ . }}
+{{- end }}
+
+Gateway + HTTPRoute status:
+  kubectl -n {{ $ns }} get gateway,httproute
+
+If the Gateway stays in `Programmed: False`, check that the platform's
+`traefik` GatewayClass exists and supports Gateway API:
+  kubectl get gatewayclass traefik
+
+If the TLS Certificate stays `Pending`, check the ClusterIssuer is using the
+gatewayHTTPRoute solver (legacy `ingress` solver no longer works here):
+  kubectl describe clusterissuer letsencrypt-prod

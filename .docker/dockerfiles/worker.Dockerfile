@@ -20,6 +20,7 @@ ENV BUNDLE_PATH=$APP_HOME/vendor/bundle \
 
 RUN apk add --no-cache \
     bash \
+    tini \
     tzdata \
     postgresql-client \
     nodejs \
@@ -42,4 +43,6 @@ COPY --chown=docker:docker --from=cpcwood/home-server-base $APP_HOME $APP_HOME
 COPY --chown=docker:docker --from=cpcwood/home-server-base /var/opt/maxmind/GeoLite2-City.mmdb /var/opt/maxmind/GeoLite2-City.mmdb
 COPY --chown=docker:docker --from=cpcwood/home-server-worker-dependencies $APP_HOME/node_modules $APP_HOME/node_modules
 
+# Sidekiq jobs shell out to chromium/imagemagick; tini reaps the subprocesses they orphan
+ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["./.docker/scripts/startup-worker"]

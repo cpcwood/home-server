@@ -1,0 +1,90 @@
+replicaCount: 1
+
+# CPU-based scaling for traffic spikes. The app averages ~13m CPU on a near-idle
+# node with ~18Gi free, so resources aren't the limit — 3 is just the chosen cap.
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 75
+
+# maxUnavailable (not minAvailable) so a single-node drain is never blocked;
+# once the cluster has >1 node it caps voluntary disruption to one pod at a time.
+podDisruptionBudget:
+  enabled: true
+  maxUnavailable: 1
+
+image:
+  repository: ghcr.io/cpcwood/home-server-app
+  pullPolicy: IfNotPresent
+  tag: latest
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 5000
+
+gateway:
+  enabled: true
+  className: traefik
+  clusterIssuer: letsencrypt-prod
+  hostnames:
+    - cpcwood.com
+    - www.cpcwood.com
+  tlsSecretName: cpcwood-com-tls
+  httpsRedirect: true
+
+# AWS_BUCKET is intentionally absent — its name has a random suffix only
+# Terraform knows, so it's synced in via the app-storage bundle, not set here.
+config:
+  AWS_REGION: "eu-west-2"
+  DB_HOST: "home-server-db.home-server-production.svc.cluster.local."
+  EMAIL_ASSET_HOST: "https://cpcwood.com"
+  EMAIL_COMPANY_NAME: "Chris Wood"
+  EMAIL_DEFAULT_ADDRESS: "contact@cpcwood.com"
+  EMAIL_DEFAULT_NAME: "Chris Wood"
+  EMAIL_HELO_DOMAIN: "cpcwood.com"
+  EMAIL_NO_REPLY_ADDRESS: "contact@cpcwood.com"
+  EMAIL_SMTP_SERVER_ADDRESS: "smtppro.zoho.eu"
+  EMAIL_SMTP_SERVER_PORT: "465"
+  PUMA_MAX_THREADS: "16"
+  PUMA_STARTING_THREADS: "1"
+  REDIS_HOST: "home-server-cache.home-server-production.svc.cluster.local."
+  SITE_HOST: "cpcwood.com"
+
+# Each bundle resolves to the parameter `<global.secretPrefix>/<bundle>`.
+externalSecrets:
+  appBundle: app
+  dbBundle: db
+  storageBundle: app-storage
+
+# Pre-upgrade Helm hook that runs db:migrate once, before the new pods roll.
+migrateJob:
+  enabled: true
+  backoffLimit: 2
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    memory: 512Mi
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+  readOnlyRootFilesystem: false
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
