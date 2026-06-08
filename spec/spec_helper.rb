@@ -44,7 +44,11 @@ end
 require 'simplecov'
 require 'simplecov-console'
 
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::Console, Coveralls::SimpleCov::Formatter])
+# Upload to Coveralls only with a token configured; otherwise the old coveralls
+# gem SSL-crashes at_exit on newer OpenSSL and fails the build.
+coverage_formatters = [SimpleCov::Formatter::Console]
+coverage_formatters << Coveralls::SimpleCov::Formatter if ENV['COVERALLS_REPO_TOKEN']
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(coverage_formatters)
 SimpleCov::Formatter::Console.max_rows = 4
 SimpleCov::Formatter::Console.missing_len = 50
 SimpleCov.add_filter 'app/channels'

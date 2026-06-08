@@ -1,0 +1,62 @@
+{{- if .Values.networkPolicy.enabled }}
+# Egress isolation for the whole app namespace. Pods may reach each
+# other, cluster DNS, and the public internet (Postgres/Redis are in-namespace;
+# S3, SMTP, Sentry are external), but NOT pods in any other namespace.
+#
+# Ingress is deliberately left open: a default-deny ingress here would also drop
+# kubelet probes, because k3s' kube-router SNATs them to the node IP rather than
+# the pod's. Namespace ingress isolation belongs on the platform side — see
+# docs/platform-contract.md.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-egress
+  labels:
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-egress-internal
+  labels:
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector: {}
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ .Values.networkPolicy.dnsNamespace }}
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-egress-external
+  labels:
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              {{- range .Values.networkPolicy.clusterCIDRs }}
+              - {{ . }}
+              {{- end }}
+{{- end }}

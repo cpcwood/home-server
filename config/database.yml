@@ -5,7 +5,8 @@ default: &default
   password: <%= ENV['DB_PASSWORD']  %>
   host: <%= ENV.fetch('DB_HOST') { 'localhost' } %>
   port: <%= ENV.fetch('DB_PORT') { 5432 } %>
-  pool: 5
+  # must cover Puma's max threads or requests block on connection checkout
+  pool: <%= ENV.fetch('PUMA_MAX_THREADS') { 5 } %>
   timeout: 5000
 
 production:

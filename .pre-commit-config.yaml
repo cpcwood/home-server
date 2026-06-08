@@ -1,0 +1,49 @@
+files: ^infrastructure/
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+        # Helm templates are Go-templated, not valid standalone YAML.
+        exclude: '^infrastructure/helm/(.*/)?templates/.*\.ya?ml$'
+      - id: check-merge-conflict
+      - id: check-added-large-files
+
+  - repo: local
+    hooks:
+      - id: shellcheck
+        name: shellcheck
+        entry: shellcheck
+        language: system
+        types: [shell]
+        exclude: '^infrastructure/\.envrc$'
+
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.105.0
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_validate
+      - id: terraform_tflint
+        args:
+          - --args=--config=__GIT_WORKING_DIR__/infrastructure/.tflint.hcl
+
+  # Local hooks, not the stock terraform_trivy/checkov wrappers: those auto-scan
+  # the Helm charts too and emit false k8s/secret findings.
+  - repo: local
+    hooks:
+      - id: trivy-terraform
+        name: trivy config (terraform)
+        entry: trivy config --severity=HIGH,CRITICAL infrastructure/terraform
+        language: system
+        pass_filenames: false
+        files: ^infrastructure/terraform/.*\.tf$
+
+      - id: checkov-terraform
+        name: checkov (terraform)
+        entry: checkov --config-file infrastructure/.checkov.yaml
+        language: system
+        pass_filenames: false
+        files: ^infrastructure/terraform/.*\.tf$

@@ -1,0 +1,57 @@
+{{- if .Values.migrateJob.enabled }}
+# Runs `rails db:migrate` once per upgrade, before the new pods roll, so
+# migrations happen serialized in one place instead of racing across replicas
+# (HPA + maxSurge can start several new pods at once, each of which would
+# otherwise migrate on boot).
+#
+# pre-upgrade only (not pre-install): on a fresh install the ExternalSecret-
+# synced DB credentials don't exist yet, and the single first pod migrates via
+# its entrypoint. On upgrades this Job owns the migration; the pods' entrypoint
+# migrate is then a no-op.
+#
+# Migrations MUST be backwards-compatible with the previously-deployed app
+# version: during the rolling update, old pods keep serving traffic against the
+# newly-migrated schema. Use expand/contract — add nullable columns, deploy,
+# backfill, drop in a later release; never rename/drop a column in one deploy.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "app.fullname" . }}-migrate
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: {{ .Values.migrateJob.backoffLimit }}
+  template:
+    metadata:
+      labels:
+        {{- include "app.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: migrate
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          command: ["bundle", "exec", "rails", "db:migrate"]
+          envFrom:
+            - configMapRef:
+                name: {{ include "app.fullname" . }}-config
+            - secretRef:
+                name: {{ include "app.fullname" . }}-secret
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}

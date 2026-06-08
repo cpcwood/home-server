@@ -1,20 +1,494 @@
-name: CI
+name: CI/CD
 
 on:
   pull_request:
-    types: [opened,reopened]
+    branches: [main]
+  push:
+    branches: [main]
 
+# AWS auth uses GitHub OIDC. The role ARN is a non-sensitive repo variable
+# (Settings → Secrets and variables → Actions → Variables) — Terraform creates
+# the role and exposes its ARN via the `github_actions_role_arn` output.
+env:
+  AWS_REGION: eu-west-2
+  AWS_OIDC_ROLE: ${{ vars.AWS_OIDC_ROLE_ARN }}
+  # Mirrors local.secret_prefix in infrastructure/terraform/secrets.tf (leading
+  # slash is the Parameter Store convention).
+  AWS_SECRET_PREFIX: /cpcwood-k8s/home-server/production
+  # Always re-evaluate the flake rather than trust a cached drv path — guards
+  # against the dangling-drv error (NixOS/nix#4236) if a restored store is stale.
+  NIX_CONFIG: "eval-cache = false"
+
+permissions:
+  contents: read
+
+# Actions are pinned to a full-length commit SHA (tag in a trailing comment)
+# because the SHA is the only immutable reference — a tag can be re-pointed by
+# the action author. Dependabot (.github/dependabot.yml) bumps the SHA and the
+# comment together when a new release ships.
 jobs:
-  build:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: cpcwood
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: home_server_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      BUNDLE_JOBS: "3"
+      BUNDLE_RETRY: "3"
+      PGHOST: localhost
+      PGUSER: cpcwood
+      PGPASSWORD: test
+      DB_NAME_TEST: home_server_test
+      RAILS_ENV: test
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: ruby/setup-ruby@afeafc3d1ab54a631816aba4c914a0081c12ff2f # v1
+        with:
+          ruby-version: 3.2.3
+          bundler-cache: true
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '18'
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+      - uses: browser-actions/setup-chrome@c785b87e244131f27c9f19c1a33e2ead956ab7ce # v1
+      # mini_magick (config.active_storage.variant_processor) shells out to it.
+      - run: sudo apt-get update && sudo apt-get install -y imagemagick
+      - run: bundle exec rails db:schema:load --trace
+      - run: bundle exec rspec
+      - run: bundle exec rubocop
+      - run: yarn test
+      - run: yarn lint
+      - name: Upload coverage to Coveralls
+        if: ${{ !cancelled() }}
+        uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b # v2.3.6
+        with:
+          # github-token here is the Coveralls repo token, not GITHUB_TOKEN — the
+          # action forwards it to the reporter as COVERALLS_REPO_TOKEN. Empty on
+          # Dependabot PRs (Actions secrets are withheld there); fail-on-error
+          # keeps that from breaking the build.
+          github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          file: coverage/.resultset.json
+          format: simplecov
+          fail-on-error: false
+          allow-empty: true
+
+  helm-validate:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Trigger CircleCI PR Build'
-        env:
-          CIRCLECI_API_TOKEN: ${{ secrets.CIRCLECI_API_TOKEN }}
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+        with:
+          determinate: false
+          # cache-nix-action tars and restores /nix/store verbatim; auto-optimise
+          # hardlinks (/nix/store/.links) hit the tar's skip-list and fail to
+          # relink on restore → partial store → missing-drv in nix-develop.
+          extra-conf: |
+            auto-optimise-store = false
+      # Exact-key restore; saves (uploads) only on a miss — i.e. only when the
+      # flake changes. Unchanged-flake runs restore and skip the upload entirely.
+      - uses: nix-community/cache-nix-action@7df957e333c1e5da7721f60227dbba6d06080569 # v7
+        with:
+          primary-key: nix6-${{ runner.os }}-${{ hashFiles('infrastructure/flake.nix', 'infrastructure/flake.lock') }}
+          purge: true
+          purge-prefixes: nix6-${{ runner.os }}-
+          purge-created: 0
+          purge-last-accessed: 604800
+          purge-primary-key: never
+      - uses: nicknovitski/nix-develop@9be7cfb4b10451d3390a75dc18ad0465bed4932a # v1
+        with:
+          arguments: ./infrastructure
+      - name: Helm dependency build
+        working-directory: ./infrastructure/helm
+        run: helm dependency build
+      - name: Helm lint
+        run: helm lint ./infrastructure/helm
+      - name: Helm template (umbrella renders cleanly)
+        run: helm template home-server ./infrastructure/helm --namespace home-server-production > /tmp/rendered.yaml
+      - name: Assert no plaintext secrets leak into rendered manifests
         run: |
-          curl -X POST \
-            -H "Circle-Token: $CIRCLECI_API_TOKEN" \
-            -H 'Content-Type: application/json' \
-            -H 'Accept: application/json' \
-            -d "{\"branch\":\"$GITHUB_HEAD_REF\"}" \
-            "https://circleci.com/api/v2/project/gh/$GITHUB_REPOSITORY/pipeline"
+          if grep -E -i '(SECRET_KEY_BASE|TWILIO_AUTH_TOKEN|AWS_SECRET_ACCESS_KEY|POSTGRES_PASSWORD)\s*:\s*["'\''][^"'\'']+' /tmp/rendered.yaml; then
+            echo "::error::Plaintext secret detected in rendered chart"
+            exit 1
+          fi
+
+  # pre-commit covers terraform fmt/validate/tflint/trivy/checkov + shellcheck +
+  # the generic file hooks, using the same config and tool versions developers
+  # run locally (.pre-commit-config.yaml + infrastructure/flake.nix).
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+        with:
+          determinate: false
+          # cache-nix-action tars and restores /nix/store verbatim; auto-optimise
+          # hardlinks (/nix/store/.links) hit the tar's skip-list and fail to
+          # relink on restore → partial store → missing-drv in nix-develop.
+          extra-conf: |
+            auto-optimise-store = false
+      # Exact-key restore; saves (uploads) only on a miss — i.e. only when the
+      # flake changes. Unchanged-flake runs restore and skip the upload entirely.
+      - uses: nix-community/cache-nix-action@7df957e333c1e5da7721f60227dbba6d06080569 # v7
+        with:
+          primary-key: nix6-${{ runner.os }}-${{ hashFiles('infrastructure/flake.nix', 'infrastructure/flake.lock') }}
+          purge: true
+          purge-prefixes: nix6-${{ runner.os }}-
+          purge-created: 0
+          purge-last-accessed: 604800
+          purge-primary-key: never
+      - uses: nicknovitski/nix-develop@9be7cfb4b10451d3390a75dc18ad0465bed4932a # v1
+        with:
+          arguments: ./infrastructure
+      - run: pre-commit run --all-files --show-diff-on-failure
+
+  # Run `terraform plan` against real state and post the diff as a PR comment.
+  # Gated to same-repo PRs because the OIDC role can read SSM SecureString
+  # values; a fork PR could craft a `nonsensitive()` output to exfiltrate.
+  terraform-plan:
+    needs: [lint]
+    if: |
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+    defaults:
+      run:
+        working-directory: ./infrastructure/terraform
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+        with:
+          determinate: false
+          # cache-nix-action tars and restores /nix/store verbatim; auto-optimise
+          # hardlinks (/nix/store/.links) hit the tar's skip-list and fail to
+          # relink on restore → partial store → missing-drv in nix-develop.
+          extra-conf: |
+            auto-optimise-store = false
+      # Exact-key restore; saves (uploads) only on a miss — i.e. only when the
+      # flake changes. Unchanged-flake runs restore and skip the upload entirely.
+      - uses: nix-community/cache-nix-action@7df957e333c1e5da7721f60227dbba6d06080569 # v7
+        with:
+          primary-key: nix6-${{ runner.os }}-${{ hashFiles('infrastructure/flake.nix', 'infrastructure/flake.lock') }}
+          purge: true
+          purge-prefixes: nix6-${{ runner.os }}-
+          purge-created: 0
+          purge-last-accessed: 604800
+          purge-primary-key: never
+      - uses: nicknovitski/nix-develop@9be7cfb4b10451d3390a75dc18ad0465bed4932a # v1
+        with:
+          arguments: ./infrastructure
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+      # The kubernetes provider (ci.tf) needs the cluster reachable at plan time.
+      - name: Configure kubeconfig
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        run: |
+          mkdir -p ~/.kube
+          printf '%s' "$KUBE_CONFIG_DATA" | base64 -d > ~/.kube/config
+          chmod 600 ~/.kube/config
+      - name: terraform init
+        run: terraform init -input=false
+      - id: plan
+        run: |
+          set +e
+          terraform plan -no-color -input=false -detailed-exitcode -out=tfplan > plan.txt 2>&1
+          ec=$?
+          cat plan.txt
+          if [[ $ec -eq 1 ]]; then
+            echo "::error::terraform plan failed"
+            exit 1
+          fi
+          echo "exitcode=$ec" >> "$GITHUB_OUTPUT"
+      - uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const marker = '<!-- terraform-plan -->';
+            const exitcode = '${{ steps.plan.outputs.exitcode }}';
+            const planPath = path.join(
+              process.env.GITHUB_WORKSPACE,
+              'infrastructure', 'terraform', 'plan.txt'
+            );
+            let plan = fs.readFileSync(planPath, 'utf8');
+            // GitHub comment hard limit is 65536 chars. Keep headroom.
+            if (plan.length > 60000) {
+              plan = plan.substring(0, 60000) + '\n... (truncated)';
+            }
+            const header = exitcode === '0'
+              ? 'No changes. Infrastructure matches configuration.'
+              : 'Plan has pending changes — review before merging.';
+            const body = `${marker}\n### Terraform plan\n\n${header}\n\n<details><summary>Plan output</summary>\n\n\`\`\`hcl\n${plan}\n\`\`\`\n\n</details>`;
+            const { data: comments } = await github.rest.issues.listComments({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            const existing = comments.find(c => c.body.startsWith(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                comment_id: existing.id,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body,
+              });
+            }
+
+  # The single required status check for branch protection. Aggregates every PR
+  # job so the rule needn't enumerate each — matrix builds have fragile,
+  # path-derived names and GitHub required checks don't support wildcards.
+  # always() so it runs (and reports) even when a needed job fails; skipped
+  # needs (e.g. fork PRs) don't count as failures.
+  ci-gate:
+    needs: [test, helm-validate, lint, terraform-plan, build]
+    if: always() && github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: |
+          echo "Not all required jobs passed:"
+          echo '${{ toJSON(needs) }}'
+          exit 1
+      - run: echo "All required jobs passed."
+
+  automerge:
+    needs: [test, helm-validate, lint]
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          # PAT (a Dependabot secret), not GITHUB_TOKEN: an auto-merge enabled
+          # via GITHUB_TOKEN does not trigger the push→deploy workflow (Actions
+          # anti-recursion), so a bump would merge but never deploy.
+          GH_TOKEN: ${{ secrets.DEPENDABOT_AUTOMERGE_TOKEN }}
+
+  terraform:
+    needs: [test, helm-validate, lint]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    defaults:
+      run:
+        working-directory: ./infrastructure/terraform
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+        with:
+          determinate: false
+          # cache-nix-action tars and restores /nix/store verbatim; auto-optimise
+          # hardlinks (/nix/store/.links) hit the tar's skip-list and fail to
+          # relink on restore → partial store → missing-drv in nix-develop.
+          extra-conf: |
+            auto-optimise-store = false
+      # Exact-key restore; saves (uploads) only on a miss — i.e. only when the
+      # flake changes. Unchanged-flake runs restore and skip the upload entirely.
+      - uses: nix-community/cache-nix-action@7df957e333c1e5da7721f60227dbba6d06080569 # v7
+        with:
+          primary-key: nix6-${{ runner.os }}-${{ hashFiles('infrastructure/flake.nix', 'infrastructure/flake.lock') }}
+          purge: true
+          purge-prefixes: nix6-${{ runner.os }}-
+          purge-created: 0
+          purge-last-accessed: 604800
+          purge-primary-key: never
+      - uses: nicknovitski/nix-develop@9be7cfb4b10451d3390a75dc18ad0465bed4932a # v1
+        with:
+          arguments: ./infrastructure
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        with:
+          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+      # The kubernetes provider (ci.tf) needs the cluster reachable at apply time.
+      - name: Configure kubeconfig
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        run: |
+          mkdir -p ~/.kube
+          printf '%s' "$KUBE_CONFIG_DATA" | base64 -d > ~/.kube/config
+          chmod 600 ~/.kube/config
+      - name: terraform init
+        run: terraform init -input=false
+      - run: terraform plan -out=tfplan
+      - run: terraform apply -auto-approve tfplan
+
+  # Builds all four images. On push to main it pushes them to GHCR; on a
+  # same-repo PR it builds without pushing, to catch Dockerfile breakage before
+  # merge. Fork PRs are excluded (they can't assume the OIDC role the base image
+  # needs for build secrets).
+  build:
+    needs: [test, helm-validate, lint]
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        image:
+          - name: base
+            dockerfile: ./.docker/dockerfiles/base.Dockerfile
+            needs_build_secrets: true
+          - name: app
+            dockerfile: ./.docker/dockerfiles/Dockerfile
+            needs_build_secrets: false
+          - name: worker
+            dockerfile: ./.docker/dockerfiles/worker.Dockerfile
+            needs_build_secrets: false
+          - name: worker-dependencies
+            dockerfile: ./.docker/dockerfiles/worker-dependencies.Dockerfile
+            needs_build_secrets: false
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+        if: matrix.image.needs_build_secrets
+        with:
+          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+      # Only the `base` image fetches build-time secrets, so only that matrix
+      # entry pays the nix-install cost. The other three skip straight to docker.
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+        if: matrix.image.needs_build_secrets
+        with:
+          determinate: false
+          extra-conf: |
+            auto-optimise-store = false
+      - uses: nix-community/cache-nix-action@7df957e333c1e5da7721f60227dbba6d06080569 # v7
+        if: matrix.image.needs_build_secrets
+        with:
+          primary-key: nix6-${{ runner.os }}-${{ hashFiles('infrastructure/flake.nix', 'infrastructure/flake.lock') }}
+          purge: true
+          purge-prefixes: nix6-${{ runner.os }}-
+          purge-created: 0
+          purge-last-accessed: 604800
+          purge-primary-key: never
+      - uses: nicknovitski/nix-develop@9be7cfb4b10451d3390a75dc18ad0465bed4932a # v1
+        if: matrix.image.needs_build_secrets
+        with:
+          arguments: ./infrastructure
+      - id: build_secrets
+        if: matrix.image.needs_build_secrets
+        run: |
+          set -euo pipefail
+          json=$(aws ssm get-parameter \
+            --name "${AWS_SECRET_PREFIX}/build" \
+            --with-decryption \
+            --query Parameter.Value \
+            --output text)
+          mml=$(jq -r .MAX_MIND_LICENSE <<<"$json")
+          grck=$(jq -r .GRECAPTCHA_SITE_KEY <<<"$json")
+          echo "::add-mask::$mml"
+          echo "::add-mask::$grck"
+          echo "BUILD_MAX_MIND_LICENSE=$mml" >> "$GITHUB_ENV"
+          echo "BUILD_GRECAPTCHA_SITE_KEY=$grck" >> "$GITHUB_ENV"
+      - id: args
+        run: |
+          if [[ "${{ matrix.image.needs_build_secrets }}" == "true" ]]; then
+            cat >>"$GITHUB_OUTPUT" <<EOF
+          build_args<<ARGS_EOF
+          MAX_MIND_LICENSE=$BUILD_MAX_MIND_LICENSE
+          grecaptcha_site_key=$BUILD_GRECAPTCHA_SITE_KEY
+          ARGS_EOF
+          EOF
+          else
+            echo "build_args=" >>"$GITHUB_OUTPUT"
+          fi
+      # Pull buildkit + the Dockerfiles' base images through Google's public
+      # docker.io mirror to dodge Docker Hub anonymous rate limits / timeouts.
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+        with:
+          driver-opts: image=mirror.gcr.io/moby/buildkit:buildx-stable-1
+          buildkitd-config-inline: |
+            [registry."docker.io"]
+              mirrors = ["mirror.gcr.io"]
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        if: github.event_name == 'push'
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25 # v5
+        with:
+          context: .
+          file: ${{ matrix.image.dockerfile }}
+          # Push only on main; PR runs build-validate without pushing to GHCR.
+          push: ${{ github.event_name == 'push' }}
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/home-server-${{ matrix.image.name }}:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/home-server-${{ matrix.image.name }}:latest
+          build-args: ${{ steps.args.outputs.build_args }}
+          cache-from: type=gha,scope=${{ matrix.image.name }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.image.name }}
+
+  deploy:
+    needs: [terraform, build]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+        with:
+          determinate: false
+          # cache-nix-action tars and restores /nix/store verbatim; auto-optimise
+          # hardlinks (/nix/store/.links) hit the tar's skip-list and fail to
+          # relink on restore → partial store → missing-drv in nix-develop.
+          extra-conf: |
+            auto-optimise-store = false
+      # Exact-key restore; saves (uploads) only on a miss — i.e. only when the
+      # flake changes. Unchanged-flake runs restore and skip the upload entirely.
+      - uses: nix-community/cache-nix-action@7df957e333c1e5da7721f60227dbba6d06080569 # v7
+        with:
+          primary-key: nix6-${{ runner.os }}-${{ hashFiles('infrastructure/flake.nix', 'infrastructure/flake.lock') }}
+          purge: true
+          purge-prefixes: nix6-${{ runner.os }}-
+          purge-created: 0
+          purge-last-accessed: 604800
+          purge-primary-key: never
+      - uses: nicknovitski/nix-develop@9be7cfb4b10451d3390a75dc18ad0465bed4932a # v1
+        with:
+          arguments: ./infrastructure
+      - name: Configure kubeconfig
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        run: |
+          mkdir -p ~/.kube
+          printf '%s' "$KUBE_CONFIG_DATA" | base64 -d > ~/.kube/config
+          chmod 600 ~/.kube/config
+      - run: helm dependency build ./infrastructure/helm
+      - name: Helm upgrade
+        run: |
+          helm upgrade --install home-server ./infrastructure/helm \
+            --namespace home-server-production \
+            --atomic --timeout 5m \
+            --set app.image.tag=${{ github.sha }} \
+            --set worker.image.tag=${{ github.sha }}
