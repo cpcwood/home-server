@@ -81,7 +81,7 @@ group :development do
   # Annotate models for quick reference
   gem 'annotate', '~> 3.2'
   # Static security testing
-  gem 'brakeman', '~> 5.3'
+  gem 'brakeman', '~> 8.0'
   # Lint erb
   gem 'erb_lint', '~> 0.0'
 end
