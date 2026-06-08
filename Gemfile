@@ -7,7 +7,7 @@ gem 'rails', '~> 7.1'
 # Ensure assets pipeline from v6 still works
 gem 'sprockets-rails', '~> 3.4'
 # Turbo rails
-gem 'turbo-rails', '~> 1.1'
+gem 'turbo-rails', '~> 2.0'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.4', '< 2.0'
 # Use Puma as the app server
