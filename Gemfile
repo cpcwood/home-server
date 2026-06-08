@@ -51,7 +51,7 @@ group :production do
   # AWS S3 for production storage
   gem 'aws-sdk-s3', '~> 1.146', require: false
   # Ensure sidekiq stays alive in k8s
-  gem 'sidekiq_alive', '~> 2.4'
+  gem 'sidekiq_alive', '~> 2.5'
   # Dynamically generate sitemaps
   gem 'sitemap_generator', '~> 6.3'
   # Manage cron
