@@ -72,7 +72,7 @@ group :development, :test do
   # Manage models in spec
   gem 'factory_bot_rails', '~> 6.2'
   # Listen - required for rails dev environment
-  gem 'listen', '~> 3.0', '< 3.2'
+  gem 'listen', '~> 3.10'
 end
 
 group :development do
