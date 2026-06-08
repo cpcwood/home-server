@@ -9270,10 +9270,10 @@ typed-array-length@^1.0.6:
     is-typed-array "^1.1.13"
     possible-typed-array-names "^1.0.0"
 
-typed.js@2.0.12:
-  version "2.0.12"
-  resolved "https://registry.yarnpkg.com/typed.js/-/typed.js-2.0.12.tgz#246aff074c8e18d32ec27acb7be15094ac0bc0e1"
-  integrity sha512-lyACZh1cu+vpfYY3DG/bvsGLXXbdoDDpWxmqta10IQUdMXisMXOEyl+jos+YT9uBbzK4QaKYBjT3R0kTJO0Slw==
+typed.js@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/typed.js/-/typed.js-3.0.0.tgz#952085c82d8f4c2abd69491cb96d2dc0b1fa2c88"
+  integrity sha512-X4pjf0E7riZBo6j3NS21/7cJJ20osSOtD1OxlRoKfFU3GsdPuSpWlFcIKWf0k8uoKwBBrPuHGx+fKeU6GzRcKg==
 
 typedarray@^0.0.6:
   version "0.0.6"
