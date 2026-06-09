@@ -151,10 +151,16 @@ jobs:
       - uses: nicknovitski/nix-develop@9be7cfb4b10451d3390a75dc18ad0465bed4932a # v1
         with:
           arguments: ./infrastructure
+      # Cache tflint's AWS ruleset so `tflint --init` makes zero GitHub API calls
+      # on a hit; it only re-fetches when the pinned version in .tflint.hcl changes.
+      - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: ~/.tflint.d/plugins
+          key: tflint-${{ runner.os }}-${{ hashFiles('infrastructure/.tflint.hcl') }}
       - run: pre-commit run --all-files --show-diff-on-failure
         env:
-          # tflint_init downloads the AWS ruleset from the GitHub API; authenticating
-          # lifts the anonymous 60/hr limit that flakes on shared runner IPs.
+          # Fallback for a cache miss (version bump): authenticate tflint's plugin
+          # download so it isn't capped by the anonymous 60/hr per-IP limit.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # Run `terraform plan` against real state and post the diff as a PR comment.
@@ -269,7 +275,7 @@ jobs:
   # always() so it runs (and reports) even when a needed job fails; skipped
   # needs (e.g. fork PRs) don't count as failures.
   ci-gate:
-    needs: [test, helm-validate, lint, terraform-plan, build]
+    needs: [test, helm-validate, lint, terraform-plan, build-base, build-app]
     if: always() && github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
@@ -343,11 +349,14 @@ jobs:
       - run: terraform plan -out=tfplan
       - run: terraform apply -auto-approve tfplan
 
-  # Builds all four images. On push to main it pushes them to GHCR; on a
-  # same-repo PR it builds without pushing, to catch Dockerfile breakage before
-  # merge. Fork PRs are excluded (they can't assume the OIDC role the base image
-  # needs for build secrets).
-  build:
+  # Images build in two phases so app/worker are assembled from the base built
+  # THIS run, not a stale registry copy. Phase 1 (build-base) builds + pushes
+  # base and worker-dependencies to GHCR by commit SHA; phase 2 (build-app)
+  # remaps the Dockerfiles' `COPY --from=cpcwood/home-server-*` to those fresh
+  # images via build-contexts. Same-repo PRs run both (base is pushed by SHA so
+  # phase 2 can pull it; app/worker are built but not published). Fork PRs are
+  # excluded — no OIDC for the base build secrets.
+  build-base:
     needs: [test, helm-validate, lint]
     if: |
       (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
@@ -363,12 +372,6 @@ jobs:
           - name: base
             dockerfile: ./.docker/dockerfiles/base.Dockerfile
             needs_build_secrets: true
-          - name: app
-            dockerfile: ./.docker/dockerfiles/Dockerfile
-            needs_build_secrets: false
-          - name: worker
-            dockerfile: ./.docker/dockerfiles/worker.Dockerfile
-            needs_build_secrets: false
           - name: worker-dependencies
             dockerfile: ./.docker/dockerfiles/worker-dependencies.Dockerfile
             needs_build_secrets: false
@@ -379,8 +382,7 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
-      # Only the `base` image fetches build-time secrets, so only that matrix
-      # entry pays the nix-install cost. The other three skip straight to docker.
+      # Only `base` fetches build-time secrets, so only it pays the nix-install cost.
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         if: matrix.image.needs_build_secrets
         with:
@@ -435,8 +437,8 @@ jobs:
           buildkitd-config-inline: |
             [registry."docker.io"]
               mirrors = ["mirror.gcr.io"]
+      # Always log in: base is pushed by SHA on PRs too, so phase 2 can pull it.
       - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
-        if: github.event_name == 'push'
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -445,17 +447,74 @@ jobs:
         with:
           context: .
           file: ${{ matrix.image.dockerfile }}
-          # Push only on main; PR runs build-validate without pushing to GHCR.
-          push: ${{ github.event_name == 'push' }}
+          push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/home-server-${{ matrix.image.name }}:${{ github.sha }}
-            ghcr.io/${{ github.repository_owner }}/home-server-${{ matrix.image.name }}:latest
+            ${{ github.event_name == 'push' && format('ghcr.io/{0}/home-server-{1}:latest', github.repository_owner, matrix.image.name) || '' }}
           build-args: ${{ steps.args.outputs.build_args }}
           cache-from: type=gha,scope=${{ matrix.image.name }}
           cache-to: type=gha,mode=max,scope=${{ matrix.image.name }}
 
+  build-app:
+    needs: [build-base]
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        image:
+          - name: app
+            dockerfile: ./.docker/dockerfiles/Dockerfile
+          - name: worker
+            dockerfile: ./.docker/dockerfiles/worker.Dockerfile
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+        with:
+          driver-opts: image=mirror.gcr.io/moby/buildkit:buildx-stable-1
+          buildkitd-config-inline: |
+            [registry."docker.io"]
+              mirrors = ["mirror.gcr.io"]
+      # Log in to pull the freshly-pushed (private) base/worker-deps, and to push
+      # app/worker on main.
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      # Remap each Dockerfile's `COPY --from=cpcwood/home-server-*` to the image
+      # built this run, so app/worker carry current code rather than a stale copy.
+      - id: ctx
+        run: |
+          repo="ghcr.io/${{ github.repository_owner }}"
+          sha="${{ github.sha }}"
+          {
+            echo "contexts<<CTX_EOF"
+            echo "cpcwood/home-server-base=docker-image://${repo}/home-server-base:${sha}"
+            if [[ "${{ matrix.image.name }}" == "worker" ]]; then
+              echo "cpcwood/home-server-worker-dependencies=docker-image://${repo}/home-server-worker-dependencies:${sha}"
+            fi
+            echo "CTX_EOF"
+          } >> "$GITHUB_OUTPUT"
+      - uses: docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25 # v5
+        with:
+          context: .
+          file: ${{ matrix.image.dockerfile }}
+          build-contexts: ${{ steps.ctx.outputs.contexts }}
+          # Push only on main; PR runs build-validate without publishing.
+          push: ${{ github.event_name == 'push' }}
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/home-server-${{ matrix.image.name }}:${{ github.sha }}
+            ${{ github.event_name == 'push' && format('ghcr.io/{0}/home-server-{1}:latest', github.repository_owner, matrix.image.name) || '' }}
+          cache-from: type=gha,scope=${{ matrix.image.name }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.image.name }}
+
   deploy:
-    needs: [terraform, build]
+    needs: [terraform, build-app]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
