@@ -11,17 +11,21 @@ metadata:
     cert-manager.io/cluster-issuer: {{ .Values.gateway.clusterIssuer }}
 spec:
   gatewayClassName: {{ .Values.gateway.className }}
+  # Listener ports must equal the platform's Traefik entrypoint ports, NOT the
+  # public 80/443 — Traefik's Gateway provider matches listeners to entrypoints
+  # by port (k3s: web=8000, websecure=8443). The router forwards public 80/443
+  # to those. A listener on 80/443 has no matching entrypoint → PortUnavailable.
   listeners:
     - name: http
       protocol: HTTP
-      port: 80
+      port: {{ .Values.gateway.httpPort }}
       allowedRoutes:
         namespaces:
           from: Same
     {{- range $host := .Values.gateway.hostnames }}
     - name: https-{{ $host | replace "." "-" }}
       protocol: HTTPS
-      port: 443
+      port: {{ $.Values.gateway.httpsPort }}
       hostname: {{ $host | quote }}
       tls:
         mode: Terminate

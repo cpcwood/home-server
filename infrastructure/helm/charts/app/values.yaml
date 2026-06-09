@@ -29,6 +29,10 @@ service:
 gateway:
   enabled: true
   className: traefik
+  # Match the platform's k3s Traefik entrypoints (web=8000, websecure=8443);
+  # the router forwards public 80/443 to these. See gateway.yaml.
+  httpPort: 8000
+  httpsPort: 8443
   clusterIssuer: letsencrypt-prod
   hostnames:
     - cpcwood.com
