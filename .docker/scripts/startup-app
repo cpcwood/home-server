@@ -13,6 +13,4 @@ else
 	bundle exec rails db:seed
 fi
 
-bundle exec rails sitemap:refresh:no_ping
-
 exec bundle exec rails server -b 0.0.0.0 -p 5000

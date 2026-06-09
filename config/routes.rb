@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   root to: 'homepages#index'
 
   get '/up', to: 'rails/health#show', as: :rails_health_check
+
+  get '/sitemap', to: 'sitemaps#show', defaults: { format: 'xml' }
   
   get '/login', to: 'sessions#login'
   post '/login', to: 'sessions#new'
