@@ -152,6 +152,10 @@ jobs:
         with:
           arguments: ./infrastructure
       - run: pre-commit run --all-files --show-diff-on-failure
+        env:
+          # tflint_init downloads the AWS ruleset from the GitHub API; authenticating
+          # lifts the anonymous 60/hr limit that flakes on shared runner IPs.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # Run `terraform plan` against real state and post the diff as a PR comment.
   # Gated to same-repo PRs because the OIDC role can read SSM SecureString
