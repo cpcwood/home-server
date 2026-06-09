@@ -11,7 +11,7 @@ gem 'turbo-rails', '~> 1.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.4', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 6'
+gem 'puma', '~> 7'
 # Transpile app-like JavaScript. Read more: https://github.com/shakacode/shakapacker
 gem 'shakapacker', '6.6.0'
 # Use Active Model has_secure_password
