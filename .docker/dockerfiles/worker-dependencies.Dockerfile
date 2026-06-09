@@ -22,8 +22,8 @@ WORKDIR $APP_HOME
 
 COPY package.json yarn.lock ./
 
-RUN addgroup -S docker && \
-    adduser -S -G docker docker && \
+RUN addgroup -g 1000 -S docker && \
+    adduser -u 1000 -S -G docker docker && \
     chown -R docker:docker $APP_HOME
 
 USER docker

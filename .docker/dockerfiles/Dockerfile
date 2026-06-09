@@ -29,8 +29,8 @@ RUN apk add --no-cache \
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
-RUN addgroup -S docker && \
-    adduser -S -G docker docker
+RUN addgroup -g 1000 -S docker && \
+    adduser -u 1000 -S -G docker docker
 
 USER docker
 

@@ -52,8 +52,8 @@ RUN curl -L "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2
     mkdir -p /var/opt/maxmind/ && \
     mv GeoLite2-City_*/GeoLite2-City.mmdb /var/opt/maxmind/GeoLite2-City.mmdb
 
-RUN addgroup -S docker && \
-    adduser -S -G docker docker
+RUN addgroup -g 1000 -S docker && \
+    adduser -u 1000 -S -G docker docker
 
 COPY --chown=docker:docker . $APP_HOME
 
