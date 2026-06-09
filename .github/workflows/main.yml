@@ -489,6 +489,6 @@ jobs:
         run: |
           helm upgrade --install home-server ./infrastructure/helm \
             --namespace home-server-production \
-            --atomic --timeout 5m \
+            --wait --timeout 5m \
             --set app.image.tag=${{ github.sha }} \
             --set worker.image.tag=${{ github.sha }}
