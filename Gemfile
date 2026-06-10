@@ -102,7 +102,7 @@ group :test do
   # Mock HTTP Requests
   gem 'webmock', '~> 3.18', require: false
   # Clean up the messy database during tests
-  gem 'database_cleaner-active_record', '~> 2.0', require: false
+  gem 'database_cleaner-active_record', '~> 2.2', require: false
   # Format tests for circleci
   gem 'rspec_junit_formatter', '~> 0.5'
   # Load spec env
