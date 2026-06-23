@@ -19,7 +19,7 @@ gem 'bcrypt', '~> 3.1'
 # Throttle excessive requests
 gem 'rack-attack', '~> 6.7'
 # Send HTTP Requests
-gem 'faraday', '~> 2.9', require: false
+gem 'faraday', '~> 2.14', require: false
 # Verify 2FA using twilio
 gem 'twilio-ruby', '~> 5.72', require: false
 # Action Mailer and Action Job Backend - Sidekiq (Requires redis and start upon server launch)
