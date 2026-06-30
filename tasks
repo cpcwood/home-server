@@ -3,7 +3,7 @@ set -euo pipefail
 
 COMPOSE_PROJECT_NAME=home-server-development
 APP_SERVICE_NAME=app
-APP_HEALTHCHECK_URL=http://0.0.0.0:5000
+APP_HEALTHCHECK_URL=http://0.0.0.0:3000
 
 # Set container user ID
 export FIXUID="$(id -u)" 

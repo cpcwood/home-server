@@ -21,7 +21,9 @@
   <%= f.text_area(:content, class: 'input-box embedded-text-area contact', placeholder: 'Enter message...', required: true) %>
 </div>
 
-<div class='recaptcha contact' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container'></div>
+<% if recaptcha_enabled? %>
+  <div class='recaptcha contact' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container'></div>
+<% end %>
 
 <div class="embedded-form-entry-container">
   <%= render partial: "partials/submit_right", locals: {form: f, button_text: 'Send'} %>

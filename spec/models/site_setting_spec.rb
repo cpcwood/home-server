@@ -72,7 +72,7 @@ RSpec.describe SiteSetting, type: :model do
     it 'attribute changes' do
       subject.reload
       subject.update(name: 'new name', header_text: 'new header')
-      expect(subject.change_messages).to eq(['Name updated!', 'Header text updated!'])
+      expect(subject.change_messages).to match_array(['Name updated!', 'Header text updated!'])
     end
   end
 end

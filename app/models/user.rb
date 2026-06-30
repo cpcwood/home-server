@@ -30,9 +30,9 @@ class User < ApplicationRecord
   has_many :contact_messages, dependent: :destroy
   has_many :code_snippets, dependent: :destroy
 
-  has_secure_password validations: false
+  has_secure_password validations: false, reset_token: false
   after_initialize :add_defaults
-  after_validation :convert_mobile_number, if: -> { :mobile_number_changed? && !mobile_number.nil? }
+  after_validation :convert_mobile_number, if: -> { !mobile_number.nil? }
   after_save :remove_password_reset
 
   validates :password,

@@ -20,7 +20,7 @@ module Admin
 
       if flash[:alert].any?
         render(partial: 'admin/abouts/edit_form',
-               status: :unprocessable_entity,
+               status: :unprocessable_content,
                locals: {
                  about: @about
                })

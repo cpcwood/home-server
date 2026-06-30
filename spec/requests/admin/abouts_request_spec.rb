@@ -41,7 +41,7 @@ RSpec.describe 'Admin::AboutsController', type: :request, slow: true do
 
     it 'Save failure' do
       allow_any_instance_of(About).to receive(:save).and_return(false)
-      allow_any_instance_of(About).to receive(:errors).and_return({ error: 'save failure' })
+      allow_any_instance_of(About).to receive(:errors).and_return(double(messages: { error: ['save failure'] }))
       put '/admin/about', params: {
         about: attribute_update
       }

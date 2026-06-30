@@ -25,6 +25,8 @@ describe('image_loader_controller', () => {
   })
 
   describe('images present', () => {
+    let container
+
     beforeEach(() => {
       document.body.innerHTML = `
         <div data-controller="image-loader" data-image-loader-target="container">
@@ -32,6 +34,7 @@ describe('image_loader_controller', () => {
           <img class="fade-target" data-action="load->image-loader#imageLoaded" data-image-loader-target="fade">
         </div>
       `
+      container = document.querySelector('[data-controller="image-loader"]')
       const fadeTargets = document.getElementsByClassName('fade-target')
       fadeTargetOne = fadeTargets[0]
       fadeTargetTwo = fadeTargets[1]
@@ -46,7 +49,7 @@ describe('image_loader_controller', () => {
     describe('#imageLoaded', () => {
       it('not all images loaded', () => {
         fadeTargetOne.dispatchEvent(new Event('load'))
-        jest.runOnlyPendingTimers()
+        jest.advanceTimersByTime(1)
         expect(fadeTargetOne.classList).not.toContain('fade-in')
         expect(fadeTargetTwo.classList).not.toContain('fade-in')
       })
@@ -54,11 +57,26 @@ describe('image_loader_controller', () => {
       it('all images loaded', () => {
         fadeTargetOne.dispatchEvent(new Event('load'))
         fadeTargetTwo.dispatchEvent(new Event('load'))
-        jest.runOnlyPendingTimers()
+        jest.advanceTimersByTime(1)
         expect(fadeTargetOne.classList).toContain('fade-in')
         expect(fadeTargetTwo.classList).toContain('fade-in')
         expect(fadeTargetOne.style.transitionDelay).toBe('0s')
         expect(fadeTargetTwo.style.transitionDelay).toBe('0.1s')
+      })
+    })
+
+    describe('load timeout', () => {
+      it('flags the container once the timeout elapses with images still loading', () => {
+        fadeTargetOne.dispatchEvent(new Event('load'))
+        jest.advanceTimersByTime(10000)
+        expect(container.classList).toContain('load-timed-out')
+      })
+
+      it('does not flag the container when all images load first', () => {
+        fadeTargetOne.dispatchEvent(new Event('load'))
+        fadeTargetTwo.dispatchEvent(new Event('load'))
+        jest.advanceTimersByTime(10000)
+        expect(container.classList).not.toContain('load-timed-out')
       })
     })
   })

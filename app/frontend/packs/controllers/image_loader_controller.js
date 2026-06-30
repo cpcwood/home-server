@@ -2,8 +2,12 @@ import { Controller } from '@hotwired/stimulus'
 // asd
 export default class extends Controller {
   static targets = ['fade', 'container']
+  static values = { loadTimeout: { type: Number, default: 10000 } }
 
   connect () {
+    this.loadTimeoutId = setTimeout(() => {
+      this.element.classList.add('load-timed-out')
+    }, this.loadTimeoutValue)
     this.evaluateLoadProgress()
   }
 
@@ -20,6 +24,7 @@ export default class extends Controller {
       return image.complete && image.naturalHeight !== 0
     })
     if (allImagesLoaded) {
+      this.clearLoadTimeout()
       this.fadeInTargets()
     }
   }
@@ -38,6 +43,13 @@ export default class extends Controller {
     this.fadeInTimeout = setTimeout(fadeIn, 1)
   }
 
+  clearLoadTimeout () {
+    if (this.loadTimeoutId) {
+      clearTimeout(this.loadTimeoutId)
+      this.loadTimeoutId = null
+    }
+  }
+
   teardown () {
     if (this.fadeInTimeout) {
       clearTimeout(this.fadeInTimeout)
@@ -50,6 +62,7 @@ export default class extends Controller {
   }
 
   disconnect () {
+    this.clearLoadTimeout()
     this.teardown()
   }
 }

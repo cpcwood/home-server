@@ -20,7 +20,7 @@
   height: 300px;
   min-width: 100%;
   position: relative;
-  
+
   @include respond-to(tablet) {
     height: 350px;
     max-width: 50%;

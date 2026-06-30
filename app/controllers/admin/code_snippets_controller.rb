@@ -27,7 +27,7 @@ module Admin
       if flash[:alert].any?
         render(:new,
                layout: 'layouts/admin_dashboard',
-               status: :unprocessable_entity)
+               status: :unprocessable_content)
         flash.now[:alert] = nil
       else
         redirect_to(code_snippets_path, notice: @notices)
@@ -52,7 +52,7 @@ module Admin
       if flash[:alert].any?
         render(:edit,
                layout: 'layouts/admin_dashboard',
-               status: :unprocessable_entity)
+               status: :unprocessable_content)
         flash.now[:alert] = nil
       else
         redirect_to(code_snippet_path(@code_snippet), notice: @notices)

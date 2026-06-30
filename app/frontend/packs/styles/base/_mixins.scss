@@ -1,3 +1,5 @@
+@use 'sass:map';
+@use 'sass:meta';
 @use './colors';
 
 // Mobile => 766px
@@ -17,8 +19,8 @@ $footer-height: 150px;
 $footer-offset: 60px;
  
 @mixin respond-to($name) {
-  @if map-has-key($breakpoints, $name) {
-    @media #{inspect(map-get($breakpoints, $name))} {
+  @if map.has-key($breakpoints, $name) {
+    @media #{meta.inspect(map.get($breakpoints, $name))} {
       @content;
     }
   }

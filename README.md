@@ -85,7 +85,7 @@ The container image [startup script](./.docker/scripts/startup-worker-dev) will 
 
 To start the development server using docker-compose, run: ```./tasks up```
 
-The server should now be running on ```http://0.0.0.0:5000```
+The server should now be running on ```http://0.0.0.0:3000```
 
 ### Production
 
