@@ -420,14 +420,14 @@ jobs:
       - id: args
         run: |
           if [[ "${{ matrix.image.needs_build_secrets }}" == "true" ]]; then
-            cat >>"$GITHUB_OUTPUT" <<EOF
-          build_args<<ARGS_EOF
-          MAX_MIND_LICENSE=$BUILD_MAX_MIND_LICENSE
-          grecaptcha_site_key=$BUILD_GRECAPTCHA_SITE_KEY
-          ARGS_EOF
+            cat >>"$GITHUB_OUTPUT" <<'EOF'
+          secret_envs<<SE_EOF
+          max_mind_license=BUILD_MAX_MIND_LICENSE
+          grecaptcha_site_key=BUILD_GRECAPTCHA_SITE_KEY
+          SE_EOF
           EOF
           else
-            echo "build_args=" >>"$GITHUB_OUTPUT"
+            echo "secret_envs=" >>"$GITHUB_OUTPUT"
           fi
       # Pull buildkit + the Dockerfiles' base images through Google's public
       # docker.io mirror to dodge Docker Hub anonymous rate limits / timeouts.
@@ -451,7 +451,7 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/home-server-${{ matrix.image.name }}:${{ github.sha }}
             ${{ github.event_name == 'push' && format('ghcr.io/{0}/home-server-{1}:latest', github.repository_owner, matrix.image.name) || '' }}
-          build-args: ${{ steps.args.outputs.build_args }}
+          secret-envs: ${{ steps.args.outputs.secret_envs }}
           cache-from: type=gha,scope=${{ matrix.image.name }}
           cache-to: type=gha,mode=max,scope=${{ matrix.image.name }}
 

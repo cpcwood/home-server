@@ -105,9 +105,9 @@ function build-images-base {
 
   GIT_SHA="$(git rev-parse HEAD | head -c8)"
 
-  docker build \
-    --build-arg MAX_MIND_LICENSE="$MAX_MIND_LICENSE" \
-    --build-arg grecaptcha_site_key="$GRECAPTCHA_SITE_KEY" \
+  DOCKER_BUILDKIT=1 docker build \
+    --secret id=max_mind_license,env=MAX_MIND_LICENSE \
+    --secret id=grecaptcha_site_key,env=GRECAPTCHA_SITE_KEY \
     -t cpcwood/home-server-base:latest \
     -t cpcwood/home-server-base:"$GIT_SHA" \
     -f ./.docker/dockerfiles/base.Dockerfile \
