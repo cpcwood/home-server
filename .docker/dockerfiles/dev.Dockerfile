@@ -1,15 +1,14 @@
 # home-server-dev-image
 # ================
 
-FROM ruby:3.2.3-alpine3.18
+FROM ruby:3.4.9-alpine3.22
 
 ENV RAILS_ENV=development \
     NODE_ENV=development \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
     APP_HOME=/opt/app \
-    PORT=5000 \
-    NODE_OPTIONS="--openssl-legacy-provider"
+    PORT=5000
 
 RUN apk add \
     build-base \
@@ -26,7 +25,6 @@ RUN apk add \
     chromium-chromedriver chromium libnotify-dev \
     shared-mime-info \
     bash \
-    openssl1.1-compat \
     tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
     echo "Europe/London" > /etc/timezone
@@ -62,8 +60,6 @@ RUN USER=docker && \
 USER docker:docker
 
 ENV PATH="$PATH:$HOME/bin"
-
-RUN pip3 install -U selenium
 
 WORKDIR $APP_HOME
 

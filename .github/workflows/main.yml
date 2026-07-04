@@ -52,17 +52,17 @@ jobs:
       DB_NAME_TEST: home_server_test
       RAILS_ENV: test
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-      - uses: ruby/setup-ruby@afeafc3d1ab54a631816aba4c914a0081c12ff2f # v1
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: ruby/setup-ruby@9eb537ca036ebaed86729dcb9309076e4c5c3b74 # v1.314.0
         with:
-          ruby-version: 3.2.3
+          ruby-version: 3.4.9
           bundler-cache: true
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
-          node-version: '18'
+          node-version: '22'
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-      - uses: browser-actions/setup-chrome@c785b87e244131f27c9f19c1a33e2ead956ab7ce # v1
+      - uses: browser-actions/setup-chrome@2e1d749697dd1612b833dba4a722266286fbefcd # v2.1.2
       # mini_magick (config.active_storage.variant_processor) shells out to it.
       - run: sudo apt-get update && sudo apt-get install -y imagemagick
       - run: bundle exec rails db:schema:load --trace
@@ -87,7 +87,7 @@ jobs:
   helm-validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           determinate: false
@@ -129,7 +129,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           determinate: false
@@ -153,7 +153,7 @@ jobs:
           arguments: ./infrastructure
       # Cache tflint's AWS ruleset so `tflint --init` makes zero GitHub API calls
       # on a hit; it only re-fetches when the pinned version in .tflint.hcl changes.
-      - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.tflint.d/plugins
           key: tflint-${{ runner.os }}-${{ hashFiles('infrastructure/.tflint.hcl') }}
@@ -180,7 +180,7 @@ jobs:
       run:
         working-directory: ./infrastructure/terraform
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           determinate: false
@@ -202,7 +202,7 @@ jobs:
       - uses: nicknovitski/nix-develop@9be7cfb4b10451d3390a75dc18ad0465bed4932a # v1
         with:
           arguments: ./infrastructure
-      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+      - uses: aws-actions/configure-aws-credentials@254c19bd240aabef8777f48595e9d2d7b972184b # v6.2.1
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
@@ -227,7 +227,7 @@ jobs:
             exit 1
           fi
           echo "exitcode=$ec" >> "$GITHUB_OUTPUT"
-      - uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const fs = require('fs');
@@ -310,7 +310,7 @@ jobs:
       run:
         working-directory: ./infrastructure/terraform
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           determinate: false
@@ -332,7 +332,7 @@ jobs:
       - uses: nicknovitski/nix-develop@9be7cfb4b10451d3390a75dc18ad0465bed4932a # v1
         with:
           arguments: ./infrastructure
-      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+      - uses: aws-actions/configure-aws-credentials@254c19bd240aabef8777f48595e9d2d7b972184b # v6.2.1
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
@@ -376,8 +376,8 @@ jobs:
             dockerfile: ./.docker/dockerfiles/worker-dependencies.Dockerfile
             needs_build_secrets: false
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: aws-actions/configure-aws-credentials@254c19bd240aabef8777f48595e9d2d7b972184b # v6.2.1
         if: matrix.image.needs_build_secrets
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
@@ -420,30 +420,30 @@ jobs:
       - id: args
         run: |
           if [[ "${{ matrix.image.needs_build_secrets }}" == "true" ]]; then
-            cat >>"$GITHUB_OUTPUT" <<EOF
-          build_args<<ARGS_EOF
-          MAX_MIND_LICENSE=$BUILD_MAX_MIND_LICENSE
-          grecaptcha_site_key=$BUILD_GRECAPTCHA_SITE_KEY
-          ARGS_EOF
+            cat >>"$GITHUB_OUTPUT" <<'EOF'
+          secret_envs<<SE_EOF
+          max_mind_license=BUILD_MAX_MIND_LICENSE
+          grecaptcha_site_key=BUILD_GRECAPTCHA_SITE_KEY
+          SE_EOF
           EOF
           else
-            echo "build_args=" >>"$GITHUB_OUTPUT"
+            echo "secret_envs=" >>"$GITHUB_OUTPUT"
           fi
       # Pull buildkit + the Dockerfiles' base images through Google's public
       # docker.io mirror to dodge Docker Hub anonymous rate limits / timeouts.
-      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0
         with:
           driver-opts: image=mirror.gcr.io/moby/buildkit:buildx-stable-1
           buildkitd-config-inline: |
             [registry."docker.io"]
               mirrors = ["mirror.gcr.io"]
       # Always log in: base is pushed by SHA on PRs too, so phase 2 can pull it.
-      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+      - uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25 # v5
+      - uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
         with:
           context: .
           file: ${{ matrix.image.dockerfile }}
@@ -451,7 +451,7 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/home-server-${{ matrix.image.name }}:${{ github.sha }}
             ${{ github.event_name == 'push' && format('ghcr.io/{0}/home-server-{1}:latest', github.repository_owner, matrix.image.name) || '' }}
-          build-args: ${{ steps.args.outputs.build_args }}
+          secret-envs: ${{ steps.args.outputs.secret_envs }}
           cache-from: type=gha,scope=${{ matrix.image.name }}
           cache-to: type=gha,mode=max,scope=${{ matrix.image.name }}
 
@@ -472,8 +472,8 @@ jobs:
           - name: worker
             dockerfile: ./.docker/dockerfiles/worker.Dockerfile
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0
         with:
           driver-opts: image=mirror.gcr.io/moby/buildkit:buildx-stable-1
           buildkitd-config-inline: |
@@ -481,7 +481,7 @@ jobs:
               mirrors = ["mirror.gcr.io"]
       # Log in to pull the freshly-pushed (private) base/worker-deps, and to push
       # app/worker on main.
-      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+      - uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -500,7 +500,7 @@ jobs:
             fi
             echo "CTX_EOF"
           } >> "$GITHUB_OUTPUT"
-      - uses: docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25 # v5
+      - uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
         with:
           context: .
           file: ${{ matrix.image.dockerfile }}
@@ -518,7 +518,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
           determinate: false

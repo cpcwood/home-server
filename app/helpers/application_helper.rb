@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def recaptcha_enabled?
+    ReCaptchaService.enabled?
+  end
+
   def header_height
     controllers = [/\Ahomepages\z/, /\Aadmins?/]
     return 300 if controllers.any? { |pattern| pattern.match?(params[:controller]) }

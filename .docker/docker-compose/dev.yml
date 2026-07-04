@@ -16,7 +16,7 @@ services:
       DB_HOST: postgres
       DB_USERNAME: cpcwood
       CHROMEDRIVER: /usr/bin/chromedriver
-      WEBPACKER_DEV_SERVER_HOST: "${DEV_SERVER_HOST:-0.0.0.0}"    
+      SHAKAPACKER_DEV_SERVER_HOST: "${DEV_SERVER_HOST:-0.0.0.0}"
     env_file:
       - ../../config/env/.env
     volumes:
@@ -30,7 +30,7 @@ services:
       - mailcatcher
     command: './.docker/scripts/startup-app-dev'
     ports:
-      - 5000:5000
+      - 3000:5000
 
   client:
     tty: true
@@ -44,8 +44,6 @@ services:
       args:
         BUNDLE_PATH: /gems
         MAX_MIND_LICENSE: "${MAX_MIND_LICENSE:-''}"
-    environment:
-      WEBPACKER_DEV_SERVER_PUBLIC: "${DEV_SERVER_HOST:-0.0.0.0}:3035"
     command: .docker/scripts/startup-client-dev
     entrypoint: .docker/scripts/entrypoint-dev
     env_file:
@@ -110,7 +108,7 @@ services:
       interval: 5s
 
   redis:
-    image: redis:6-alpine
+    image: redis:7-alpine
     command: redis-server
     volumes:
       - data-home-server-dev-redis:/data

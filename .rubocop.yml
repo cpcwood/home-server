@@ -3,7 +3,7 @@ require:
   - rubocop-performance
 
 AllCops:
-  TargetRubyVersion: 2.7.3
+  TargetRubyVersion: 3.4
   Exclude:
     - 'bin/**/*'
     - 'config/**/*'
@@ -78,4 +78,16 @@ Performance/Caller:
   Enabled: false
 
 Rails/I18nLocaleTexts:
+  Enabled: false
+
+# Cops introduced by the rubocop/rubocop-rails upgrade that flag existing code.
+# Adopting them means behaviour/API migrations (params.expect, method renames)
+# out of scope for the dependency bump — left for a separate cleanup.
+Rails/StrongParametersExpect:
+  Enabled: false
+Rails/FindByOrAssignmentMemoization:
+  Enabled: false
+Naming/PredicateMethod:
+  Enabled: false
+Style/SafeNavigationChainLength:
   Enabled: false

@@ -14,18 +14,16 @@ fi
 require 'coveralls'
 Coveralls.wear!('rails')
 
-require 'webdrivers'
-Webdrivers.install_dir = './vendor'
-
 require 'rails_helper'
 require 'capybara/rspec'
+require 'selenium-webdriver'
 require 'sidekiq/testing'
 require 'database_cleaner/active_record'
 
 Selenium::WebDriver::Chrome::Service.driver_path = ENV['CHROMEDRIVER'] if ENV['CHROMEDRIVER']
 
 Capybara.register_driver :headless_chrome_driver do |app|
-  options = Selenium::WebDriver::Chrome::Options.new(args: ['--headless', '--no-sandbox', '--window-size=1920,1080'])
+  options = Selenium::WebDriver::Chrome::Options.new(args: ['--headless', '--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu', '--window-size=1920,1080'])
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
@@ -63,13 +61,13 @@ WebMock.disable_net_connect!(
   allow: allowed_sites)
 
 # require helper methods
-Dir[Rails.root.join('spec/spec_helpers/**/*.rb')].sort.each { |f| require f }
+Rails.root.glob('spec/spec_helpers/**/*.rb').each { |f| require f }
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.before(:suite) do
-    `bin/webpacker`
+    `bin/shakapacker`
     DatabaseCleaner.clean_with(:truncation)
   end
 

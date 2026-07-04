@@ -18,7 +18,7 @@ module Admin
 
       if flash[:alert].any?
         render(partial: 'admin/site_settings/edit_form',
-               status: :unprocessable_entity,
+               status: :unprocessable_content,
                locals: { site_settings: @site_settings })
         flash[:alert] = nil
       else

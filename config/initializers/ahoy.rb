@@ -17,4 +17,4 @@ Ahoy.api = false
 Ahoy.geocode = true
 
 Ahoy.mask_ips = true
-Ahoy.cookies = false
+Ahoy.cookies = :none

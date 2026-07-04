@@ -16,7 +16,9 @@
     <div class='options login'>
       <%= link_to "Forgotten Password", "/forgotten-password", class: 'option right' %>
     </div>
-    <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container'></div>
+    <% if recaptcha_enabled? %>
+      <div class='recaptcha' id='recaptcha' data-controller='recaptcha' data-recaptcha-target='container'></div>
+    <% end %>
     <div class='form-entry-container'>
       <%= render partial: "partials/submit_right", locals: {form: f, button_text: 'Login'} %>
     </div>
