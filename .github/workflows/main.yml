@@ -438,7 +438,7 @@ jobs:
             [registry."docker.io"]
               mirrors = ["mirror.gcr.io"]
       # Always log in: base is pushed by SHA on PRs too, so phase 2 can pull it.
-      - uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
+      - uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -481,7 +481,7 @@ jobs:
               mirrors = ["mirror.gcr.io"]
       # Log in to pull the freshly-pushed (private) base/worker-deps, and to push
       # app/worker on main.
-      - uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
+      - uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
