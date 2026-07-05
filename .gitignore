@@ -107,3 +107,4 @@ infrastructure/result
 
 # local secret handoff (not committed)
 /coveralls
+.superpowers/
