@@ -163,7 +163,7 @@ Pre-flight check: `kubectl get clustersecretstore aws-parameter-store` should be
 
 One-time clicks that can't (sensibly) be scripted:
 
-- **GHCR package access** — after the first `build` run, packages `home-server-base`, `home-server-app`, `home-server-worker`, `home-server-worker-dependencies` appear at https://github.com/cpcwood?tab=packages. For each: *Package settings → Manage Actions access → Add Repository* → `home-server` with **Write**. To let the cluster pull without auth, also set visibility to **Public**.
+- **GHCR package access** — after the first `main` build, packages `home-server-app` and `home-server-worker` appear at https://github.com/cpcwood?tab=packages (base and worker-dependencies are built in a job-local registry and never published). For each: *Package settings → Manage Actions access → Add Repository* → `home-server` with **Write**. To let the cluster pull without auth, also set visibility to **Public**.
 - **Auto-merge for Dependabot** — *Settings → General → Pull Requests* → enable **Allow auto-merge**. Then *Settings → Branches → Branch protection rules* for `main`: require a PR, require status checks (`test`, `helm-validate`, `terraform-validate`), require up-to-date branches. Without these the `automerge` job has no gate to wait on.
 
 

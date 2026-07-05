@@ -12,9 +12,6 @@ on:
 env:
   AWS_REGION: eu-west-2
   AWS_OIDC_ROLE: ${{ vars.AWS_OIDC_ROLE_ARN }}
-  # Mirrors local.secret_prefix in infrastructure/terraform/secrets.tf (leading
-  # slash is the Parameter Store convention).
-  AWS_SECRET_PREFIX: /cpcwood-k8s/home-server/production
   # Always re-evaluate the flake rather than trust a cached drv path — guards
   # against the dangling-drv error (NixOS/nix#4236) if a restored store is stale.
   NIX_CONFIG: "eval-cache = false"
@@ -168,9 +165,13 @@ jobs:
   # values; a fork PR could craft a `nonsensitive()` output to exfiltrate.
   terraform-plan:
     needs: [lint]
+    # Skip Dependabot: its PRs are denied Actions secrets, so KUBE_CONFIG_DATA
+    # is empty and the plan can't reach the cluster. Don't grant a Dependabot
+    # secret to fix it — it carries prod-namespace admin, and bumps never touch terraform.
     if: |
       github.event_name == 'pull_request' &&
-      github.event.pull_request.head.repo.full_name == github.repository
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -275,7 +276,7 @@ jobs:
   # always() so it runs (and reports) even when a needed job fails; skipped
   # needs (e.g. fork PRs) don't count as failures.
   ci-gate:
-    needs: [test, helm-validate, lint, terraform-plan, build-base, build-app]
+    needs: [test, helm-validate, lint, terraform-plan, build-pr]
     if: always() && github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
@@ -349,172 +350,34 @@ jobs:
       - run: terraform plan -out=tfplan
       - run: terraform apply -auto-approve tfplan
 
-  # Images build in two phases so app/worker are assembled from the base built
-  # THIS run, not a stale registry copy. Phase 1 (build-base) builds + pushes
-  # base and worker-dependencies to GHCR by commit SHA; phase 2 (build-app)
-  # remaps the Dockerfiles' `COPY --from=cpcwood/home-server-*` to those fresh
-  # images via build-contexts. Same-repo PRs run both (base is pushed by SHA so
-  # phase 2 can pull it; app/worker are built but not published). Fork PRs are
-  # excluded — no OIDC for the base build secrets.
-  build-base:
+  # Build + publish app and worker to GHCR by SHA (base/worker-deps stay
+  # job-local). See build.yml — main and PR share the same build via workflow_call.
+  build-main:
     needs: [test, helm-validate, lint]
-    if: |
-      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
-    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     permissions:
       id-token: write
       contents: read
       packages: write
-    strategy:
-      matrix:
-        image:
-          - name: base
-            dockerfile: ./.docker/dockerfiles/base.Dockerfile
-            needs_build_secrets: true
-          - name: worker-dependencies
-            dockerfile: ./.docker/dockerfiles/worker-dependencies.Dockerfile
-            needs_build_secrets: false
-    steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - uses: aws-actions/configure-aws-credentials@254c19bd240aabef8777f48595e9d2d7b972184b # v6.2.1
-        if: matrix.image.needs_build_secrets
-        with:
-          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
-          aws-region: ${{ env.AWS_REGION }}
-      # Only `base` fetches build-time secrets, so only it pays the nix-install cost.
-      - uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
-        if: matrix.image.needs_build_secrets
-        with:
-          determinate: false
-          extra-conf: |
-            auto-optimise-store = false
-      - uses: nix-community/cache-nix-action@7df957e333c1e5da7721f60227dbba6d06080569 # v7
-        if: matrix.image.needs_build_secrets
-        with:
-          primary-key: nix6-${{ runner.os }}-${{ hashFiles('infrastructure/flake.nix', 'infrastructure/flake.lock') }}
-          purge: true
-          purge-prefixes: nix6-${{ runner.os }}-
-          purge-created: 0
-          purge-last-accessed: 604800
-          purge-primary-key: never
-      - uses: nicknovitski/nix-develop@9be7cfb4b10451d3390a75dc18ad0465bed4932a # v1
-        if: matrix.image.needs_build_secrets
-        with:
-          arguments: ./infrastructure
-      - id: build_secrets
-        if: matrix.image.needs_build_secrets
-        run: |
-          set -euo pipefail
-          json=$(aws ssm get-parameter \
-            --name "${AWS_SECRET_PREFIX}/build" \
-            --with-decryption \
-            --query Parameter.Value \
-            --output text)
-          mml=$(jq -r .MAX_MIND_LICENSE <<<"$json")
-          grck=$(jq -r .GRECAPTCHA_SITE_KEY <<<"$json")
-          echo "::add-mask::$mml"
-          echo "::add-mask::$grck"
-          echo "BUILD_MAX_MIND_LICENSE=$mml" >> "$GITHUB_ENV"
-          echo "BUILD_GRECAPTCHA_SITE_KEY=$grck" >> "$GITHUB_ENV"
-      - id: args
-        run: |
-          if [[ "${{ matrix.image.needs_build_secrets }}" == "true" ]]; then
-            cat >>"$GITHUB_OUTPUT" <<'EOF'
-          secret_envs<<SE_EOF
-          max_mind_license=BUILD_MAX_MIND_LICENSE
-          grecaptcha_site_key=BUILD_GRECAPTCHA_SITE_KEY
-          SE_EOF
-          EOF
-          else
-            echo "secret_envs=" >>"$GITHUB_OUTPUT"
-          fi
-      # Pull buildkit + the Dockerfiles' base images through Google's public
-      # docker.io mirror to dodge Docker Hub anonymous rate limits / timeouts.
-      - uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0
-        with:
-          driver-opts: image=mirror.gcr.io/moby/buildkit:buildx-stable-1
-          buildkitd-config-inline: |
-            [registry."docker.io"]
-              mirrors = ["mirror.gcr.io"]
-      # Always log in: base is pushed by SHA on PRs too, so phase 2 can pull it.
-      - uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
-        with:
-          context: .
-          file: ${{ matrix.image.dockerfile }}
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/home-server-${{ matrix.image.name }}:${{ github.sha }}
-            ${{ github.event_name == 'push' && format('ghcr.io/{0}/home-server-{1}:latest', github.repository_owner, matrix.image.name) || '' }}
-          secret-envs: ${{ steps.args.outputs.secret_envs }}
-          cache-from: type=gha,scope=${{ matrix.image.name }}
-          cache-to: type=gha,mode=max,scope=${{ matrix.image.name }}
+    uses: ./.github/workflows/build.yml
+    with:
+      push: true
 
-  build-app:
-    needs: [build-base]
+  # PR build-validate: same build, no push, no AWS OIDC, no GHCR write, no
+  # secrets. A dependency bump that breaks the image build fails the PR.
+  build-pr:
+    needs: [test, helm-validate, lint]
     if: |
-      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
-    runs-on: ubuntu-latest
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository
     permissions:
       contents: read
-      packages: write
-    strategy:
-      matrix:
-        image:
-          - name: app
-            dockerfile: ./.docker/dockerfiles/Dockerfile
-          - name: worker
-            dockerfile: ./.docker/dockerfiles/worker.Dockerfile
-    steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0
-        with:
-          driver-opts: image=mirror.gcr.io/moby/buildkit:buildx-stable-1
-          buildkitd-config-inline: |
-            [registry."docker.io"]
-              mirrors = ["mirror.gcr.io"]
-      # Log in to pull the freshly-pushed (private) base/worker-deps, and to push
-      # app/worker on main.
-      - uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      # Remap each Dockerfile's `COPY --from=cpcwood/home-server-*` to the image
-      # built this run, so app/worker carry current code rather than a stale copy.
-      - id: ctx
-        run: |
-          repo="ghcr.io/${{ github.repository_owner }}"
-          sha="${{ github.sha }}"
-          {
-            echo "contexts<<CTX_EOF"
-            echo "cpcwood/home-server-base=docker-image://${repo}/home-server-base:${sha}"
-            if [[ "${{ matrix.image.name }}" == "worker" ]]; then
-              echo "cpcwood/home-server-worker-dependencies=docker-image://${repo}/home-server-worker-dependencies:${sha}"
-            fi
-            echo "CTX_EOF"
-          } >> "$GITHUB_OUTPUT"
-      - uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
-        with:
-          context: .
-          file: ${{ matrix.image.dockerfile }}
-          build-contexts: ${{ steps.ctx.outputs.contexts }}
-          # Push only on main; PR runs build-validate without publishing.
-          push: ${{ github.event_name == 'push' }}
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/home-server-${{ matrix.image.name }}:${{ github.sha }}
-            ${{ github.event_name == 'push' && format('ghcr.io/{0}/home-server-{1}:latest', github.repository_owner, matrix.image.name) || '' }}
-          cache-from: type=gha,scope=${{ matrix.image.name }}
-          cache-to: type=gha,mode=max,scope=${{ matrix.image.name }}
+    uses: ./.github/workflows/build.yml
+    with:
+      push: false
 
   deploy:
-    needs: [terraform, build-app]
+    needs: [terraform, build-main]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:

@@ -1,0 +1,6 @@
+# Paths that can execute code or reach secrets/prod in CI. Changes here require
+# an explicit code-owner review, so a compromised Dependabot PR can't auto-merge
+# a CI/infra takeover. CODEOWNERS lives under .github/, so it guards itself.
+/.github/          @cpcwood
+/infrastructure/   @cpcwood
+/.docker/          @cpcwood
