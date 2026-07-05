@@ -168,9 +168,13 @@ jobs:
   # values; a fork PR could craft a `nonsensitive()` output to exfiltrate.
   terraform-plan:
     needs: [lint]
+    # Skip Dependabot: its PRs are denied Actions secrets, so KUBE_CONFIG_DATA
+    # is empty and the plan can't reach the cluster. Don't grant a Dependabot
+    # secret to fix it — it carries prod-namespace admin, and bumps never touch terraform.
     if: |
       github.event_name == 'pull_request' &&
-      github.event.pull_request.head.repo.full_name == github.repository
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -275,7 +279,7 @@ jobs:
   # always() so it runs (and reports) even when a needed job fails; skipped
   # needs (e.g. fork PRs) don't count as failures.
   ci-gate:
-    needs: [test, helm-validate, lint, terraform-plan, build-base, build-app]
+    needs: [test, helm-validate, lint, terraform-plan, build-pr]
     if: always() && github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
@@ -349,18 +353,15 @@ jobs:
       - run: terraform plan -out=tfplan
       - run: terraform apply -auto-approve tfplan
 
-  # Images build in two phases so app/worker are assembled from the base built
-  # THIS run, not a stale registry copy. Phase 1 (build-base) builds + pushes
-  # base and worker-dependencies to GHCR by commit SHA; phase 2 (build-app)
+  # main only. Images build in two phases so app/worker are assembled from the
+  # base built THIS run, not a stale registry copy. Phase 1 (build-base) builds +
+  # pushes base and worker-dependencies to GHCR by commit SHA; phase 2 (build-app)
   # remaps the Dockerfiles' `COPY --from=cpcwood/home-server-*` to those fresh
-  # images via build-contexts. Same-repo PRs run both (base is pushed by SHA so
-  # phase 2 can pull it; app/worker are built but not published). Fork PRs are
-  # excluded — no OIDC for the base build secrets.
+  # images via build-contexts. PRs don't run these — they validate the same
+  # builds locally in build-pr, with no GHCR/AWS credentials.
   build-base:
     needs: [test, helm-validate, lint]
-    if: |
-      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -412,18 +413,17 @@ jobs:
             --query Parameter.Value \
             --output text)
           mml=$(jq -r .MAX_MIND_LICENSE <<<"$json")
-          grck=$(jq -r .GRECAPTCHA_SITE_KEY <<<"$json")
           echo "::add-mask::$mml"
-          echo "::add-mask::$grck"
           echo "BUILD_MAX_MIND_LICENSE=$mml" >> "$GITHUB_ENV"
-          echo "BUILD_GRECAPTCHA_SITE_KEY=$grck" >> "$GITHUB_ENV"
+          # Public (ships in the client JS bundle) — passed as a build arg below,
+          # not a secret; sourced here only because it already lives in the param.
+          echo "BUILD_GRECAPTCHA_SITE_KEY=$(jq -r .GRECAPTCHA_SITE_KEY <<<"$json")" >> "$GITHUB_ENV"
       - id: args
         run: |
           if [[ "${{ matrix.image.needs_build_secrets }}" == "true" ]]; then
             cat >>"$GITHUB_OUTPUT" <<'EOF'
           secret_envs<<SE_EOF
           max_mind_license=BUILD_MAX_MIND_LICENSE
-          grecaptcha_site_key=BUILD_GRECAPTCHA_SITE_KEY
           SE_EOF
           EOF
           else
@@ -437,7 +437,6 @@ jobs:
           buildkitd-config-inline: |
             [registry."docker.io"]
               mirrors = ["mirror.gcr.io"]
-      # Always log in: base is pushed by SHA on PRs too, so phase 2 can pull it.
       - uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
         with:
           registry: ghcr.io
@@ -450,16 +449,17 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/home-server-${{ matrix.image.name }}:${{ github.sha }}
-            ${{ github.event_name == 'push' && format('ghcr.io/{0}/home-server-{1}:latest', github.repository_owner, matrix.image.name) || '' }}
+            ghcr.io/${{ github.repository_owner }}/home-server-${{ matrix.image.name }}:latest
           secret-envs: ${{ steps.args.outputs.secret_envs }}
+          # Unused by worker-dependencies (empty there — harmless).
+          build-args: |
+            GRECAPTCHA_SITE_KEY=${{ env.BUILD_GRECAPTCHA_SITE_KEY }}
           cache-from: type=gha,scope=${{ matrix.image.name }}
           cache-to: type=gha,mode=max,scope=${{ matrix.image.name }}
 
   build-app:
     needs: [build-base]
-    if: |
-      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -505,13 +505,83 @@ jobs:
           context: .
           file: ${{ matrix.image.dockerfile }}
           build-contexts: ${{ steps.ctx.outputs.contexts }}
-          # Push only on main; PR runs build-validate without publishing.
-          push: ${{ github.event_name == 'push' }}
+          push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/home-server-${{ matrix.image.name }}:${{ github.sha }}
-            ${{ github.event_name == 'push' && format('ghcr.io/{0}/home-server-{1}:latest', github.repository_owner, matrix.image.name) || '' }}
+            ghcr.io/${{ github.repository_owner }}/home-server-${{ matrix.image.name }}:latest
           cache-from: type=gha,scope=${{ matrix.image.name }}
           cache-to: type=gha,mode=max,scope=${{ matrix.image.name }}
+
+  # PR image build-validate. Builds every production image from THIS run's base
+  # via a job-local registry, so a dependency bump that breaks the image build
+  # fails the PR — without pushing anything, and without AWS OIDC or GHCR write
+  # credentials. No secrets needed: the MaxMind download is skipped (no license
+  # mounted) and the reCAPTCHA site key is a public build arg.
+  build-pr:
+    needs: [test, helm-validate, lint]
+    if: |
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      # network=host lets the builder reach the job-local registry:2 on
+      # localhost:5000, which it talks to over plain HTTP.
+      - uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0
+        with:
+          driver-opts: |
+            image=mirror.gcr.io/moby/buildkit:buildx-stable-1
+            network=host
+          buildkitd-config-inline: |
+            [registry."docker.io"]
+              mirrors = ["mirror.gcr.io"]
+            [registry."localhost:5000"]
+              http = true
+      - name: Build base (validate; geo DB skipped, not published)
+        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
+        with:
+          context: .
+          file: ./.docker/dockerfiles/base.Dockerfile
+          push: true
+          tags: localhost:5000/home-server-base:pr
+          # Validate-only build; the real (public) site key is injected on main.
+          build-args: |
+            GRECAPTCHA_SITE_KEY=pr-validate-placeholder
+          cache-from: type=gha,scope=base
+      - name: Build worker-dependencies (validate)
+        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
+        with:
+          context: .
+          file: ./.docker/dockerfiles/worker-dependencies.Dockerfile
+          push: true
+          tags: localhost:5000/home-server-worker-dependencies:pr
+          cache-from: type=gha,scope=worker-dependencies
+      - name: Build app (validate; not pushed)
+        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
+        with:
+          context: .
+          file: ./.docker/dockerfiles/Dockerfile
+          push: false
+          build-contexts: |
+            cpcwood/home-server-base=docker-image://localhost:5000/home-server-base:pr
+          cache-from: type=gha,scope=app
+      - name: Build worker (validate; not pushed)
+        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
+        with:
+          context: .
+          file: ./.docker/dockerfiles/worker.Dockerfile
+          push: false
+          build-contexts: |
+            cpcwood/home-server-base=docker-image://localhost:5000/home-server-base:pr
+            cpcwood/home-server-worker-dependencies=docker-image://localhost:5000/home-server-worker-dependencies:pr
+          cache-from: type=gha,scope=worker
 
   deploy:
     needs: [terraform, build-app]

@@ -43,13 +43,18 @@ COPY package.json yarn.lock $APP_HOME/
 RUN yarn install --production=true && \
     rm -rf /usr/local/share/.cache/yarn
 
+# Absent secret (no license mounted) → skip the download and ship without the
+# GeoLite2 DB. Only PR build-validate does this; published main builds mount the
+# real license and bake the DB.
 RUN --mount=type=secret,id=max_mind_license \
-    MAX_MIND_LICENSE="$(cat /run/secrets/max_mind_license)" && \
-    curl -L "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAX_MIND_LICENSE&suffix=tar.gz" -o ./GeoLite2-City.tar.gz && \
-    gzip -d GeoLite2-City.tar.gz && \
-    tar -xvf GeoLite2-City.tar && \
     mkdir -p /var/opt/maxmind/ && \
-    mv GeoLite2-City_*/GeoLite2-City.mmdb /var/opt/maxmind/GeoLite2-City.mmdb
+    if [ -s /run/secrets/max_mind_license ]; then \
+      MAX_MIND_LICENSE="$(cat /run/secrets/max_mind_license)" && \
+      curl -L "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAX_MIND_LICENSE&suffix=tar.gz" -o ./GeoLite2-City.tar.gz && \
+      gzip -d GeoLite2-City.tar.gz && \
+      tar -xvf GeoLite2-City.tar && \
+      mv GeoLite2-City_*/GeoLite2-City.mmdb /var/opt/maxmind/GeoLite2-City.mmdb; \
+    fi
 
 RUN addgroup -g 1000 -S docker && \
     adduser -u 1000 -S -G docker docker
@@ -59,8 +64,8 @@ COPY --chown=docker:docker . $APP_HOME
 # SITE_HOST: placeholder so the production env boots for assets:precompile —
 # sitemap_generator 7's railtie calls full_url_for on default_url_options at init.
 # The real host comes from SITE_HOST at runtime.
-RUN --mount=type=secret,id=grecaptcha_site_key \
-    export GRECAPTCHA_SITE_KEY="$(cat /run/secrets/grecaptcha_site_key)" && \
+ARG GRECAPTCHA_SITE_KEY=""
+RUN export GRECAPTCHA_SITE_KEY="$GRECAPTCHA_SITE_KEY" && \
     export SECRET_KEY_BASE=1234567890 && \
     export SITE_HOST=localhost && \
     bundle exec rails assets:precompile && \
