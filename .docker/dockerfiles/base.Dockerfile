@@ -43,9 +43,10 @@ COPY package.json yarn.lock $APP_HOME/
 RUN yarn install --production=true && \
     rm -rf /usr/local/share/.cache/yarn
 
-# Absent secret (no license mounted) → skip the download and ship without the
-# GeoLite2 DB. Only PR build-validate does this; published main builds mount the
-# real license and bake the DB.
+# Absent secret (no license mounted) → skip the download and leave an empty
+# placeholder so the app/worker `COPY --from` of this path still resolves. Only
+# PR build-validate does this; published main builds mount the real license and
+# bake the DB.
 RUN --mount=type=secret,id=max_mind_license \
     mkdir -p /var/opt/maxmind/ && \
     if [ -s /run/secrets/max_mind_license ]; then \
@@ -54,6 +55,8 @@ RUN --mount=type=secret,id=max_mind_license \
       gzip -d GeoLite2-City.tar.gz && \
       tar -xvf GeoLite2-City.tar && \
       mv GeoLite2-City_*/GeoLite2-City.mmdb /var/opt/maxmind/GeoLite2-City.mmdb; \
+    else \
+      touch /var/opt/maxmind/GeoLite2-City.mmdb; \
     fi
 
 RUN addgroup -g 1000 -S docker && \
