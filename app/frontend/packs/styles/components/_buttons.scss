@@ -55,6 +55,10 @@
   &.secondary {
     background: colors.$background-color;
     color: colors.$darker-font;
+
+    [data-theme='dark'] & {
+      border: 1px solid colors.$box-border-color;
+    }
   }
 }
 
@@ -75,6 +79,10 @@
   background: colors.$background-color;
   color: colors.$destructive;
   margin-top: 10px;
+
+  [data-theme='dark'] & {
+    border: 1px solid colors.$box-border-color;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
