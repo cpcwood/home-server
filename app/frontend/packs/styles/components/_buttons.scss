@@ -54,11 +54,8 @@
 
   &.secondary {
     background: colors.$background-color;
+    border: colors.$button-secondary-border;
     color: colors.$darker-font;
-
-    [data-theme='dark'] & {
-      border: 1px solid colors.$box-border-color;
-    }
   }
 }
 
@@ -77,12 +74,9 @@
 
 .destroy-button {
   background: colors.$background-color;
+  border: colors.$button-secondary-border;
   color: colors.$destructive;
   margin-top: 10px;
-
-  [data-theme='dark'] & {
-    border: 1px solid colors.$box-border-color;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
