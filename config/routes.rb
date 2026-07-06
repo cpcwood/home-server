@@ -18,8 +18,8 @@ Rails.application.routes.draw do
   post '/reset-password', to: 'passwords#update_password'
 
   get '/admin', to: 'admins#general'
-  get '/admin/notifications', to: 'admins#notifications'
-  get '/admin/analytics', to: 'admins#analytics'
+  get '/admin/notifications', to: 'admins#notifications', as: :admin_notifications
+  get '/admin/analytics', to: 'admins#analytics', as: :admin_analytics
 
   namespace :admin do
     resources :site_settings, only: [:index, :update]
