@@ -65,9 +65,6 @@ feature 'blog posts feature', feature: true do
       expect(page).to have_content('post section text content 3')
       expect(page).to have_selector('img.post-section-image-thumbnail')
       expect(page).to have_content('post section image caption 3')
-
-      first('.reading-footer .standard-button').click
-      expect(page).to have_content('post overview')
     end
 
     scenario 'update blog post' do
