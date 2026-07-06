@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  MAX_2FA_ATTEMPTS = 5
+
   before_action :already_logged_in
   skip_before_action :already_logged_in, only: [:destroy]
 
@@ -22,9 +24,10 @@ class SessionsController < ApplicationController
 
   def verify_2fa
     return redirect_to(:login) unless TwoFactorAuthService.started?(session)
+    return lock_out_2fa if two_factor_attempts_exceeded?
     auth_code = sanitize(params[:auth_code])
     return redirect_to('/2fa', alert: 'Verification code must be 6 digits long') unless TwoFactorAuthService.auth_code_format_valid?(auth_code)
-    return redirect_to('/2fa', alert: '2fa code incorrect, please try again') unless TwoFactorAuthService.auth_code_valid?(session: session, auth_code: auth_code)
+    return record_failed_2fa_attempt unless TwoFactorAuthService.auth_code_valid?(session: session, auth_code: auth_code)
     log_user_in
   end
 
@@ -37,6 +40,20 @@ class SessionsController < ApplicationController
 
   def already_logged_in
     redirect_to(:admin) if session[:user_id]
+  end
+
+  def two_factor_attempts_exceeded?
+    session[:two_factor_auth_attempts].to_i >= MAX_2FA_ATTEMPTS
+  end
+
+  def record_failed_2fa_attempt
+    session[:two_factor_auth_attempts] = session[:two_factor_auth_attempts].to_i + 1
+    redirect_to('/2fa', alert: '2fa code incorrect, please try again')
+  end
+
+  def lock_out_2fa
+    reset_session
+    redirect_to(:login, alert: 'Too many attempts, please log in again')
   end
 
   def sanitize(string)

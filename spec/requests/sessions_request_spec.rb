@@ -117,6 +117,26 @@ RSpec.describe 'SessionsController', type: :request do
       post '/2fa', params: { auth_code: '123456' }
       expect(response).to redirect_to('/login')
     end
+
+    context 'after too many failed attempts' do
+      it 'locks out and forces a fresh login, even with a valid code' do
+        password_athenticate_admin(user: @user.username, password: @user_password)
+        5.times { post '/2fa', params: { auth_code: '000000' } }
+        post '/2fa', params: { auth_code: ROTP::TOTP.new(@user.otp_secret).now }
+        expect(response).to redirect_to('/login')
+        expect(flash[:alert]).to include('Too many attempts, please log in again')
+        expect(session[:two_factor_auth_id]).to eq(nil)
+        expect(session[:user_id]).to eq(nil)
+      end
+
+      it 'clears the failure count once a valid code logs the user in' do
+        password_athenticate_admin(user: @user.username, password: @user_password)
+        4.times { post '/2fa', params: { auth_code: '000000' } }
+        post '/2fa', params: { auth_code: ROTP::TOTP.new(@user.otp_secret).now }
+        expect(response).to redirect_to(:admin)
+        expect(session[:user_id]).to eq(@user.id)
+      end
+    end
   end
 
   describe 'Session expiry' do
