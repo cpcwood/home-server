@@ -1,4 +1,5 @@
 @mixin dark-tokens {
+  color-scheme: dark;
   --color-dark: rgb(240, 240, 240);
   --color-light: rgb(24, 27, 32);
   --color-dark-dark: rgb(170, 175, 182);
@@ -33,6 +34,7 @@
 }
 
 :root {
+  color-scheme: light;
   --color-dark: rgb(0, 0, 0);
   --color-light: rgb(255, 255, 255);
   --color-dark-dark: rgb(89, 89, 89);
