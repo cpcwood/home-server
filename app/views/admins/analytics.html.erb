@@ -3,8 +3,67 @@
 <% end %>
 
 <div class='dashboard-item-container'>
-  <h3>
-    Website hits
-  </h3>
-  Placeholder
+  <div class='analytics-period-selector'>
+    <% AnalyticsService::PERIODS.each_key do |key| %>
+      <%= link_to(key.upcase, admin_analytics_path(period: key), class: "standard-button #{key == @period ? '' : 'secondary'}") %>
+    <% end %>
+  </div>
+</div>
+<div class='dashboard-item-separator'></div>
+
+<div class='dashboard-item-container'>
+  <h3>Visits</h3>
+  <%= line_chart([
+        { name: 'Visits', data: @metrics[:visits_per_day] },
+        { name: 'Unique visitors', data: @metrics[:unique_visitors_per_day] }
+      ], colors: ['#4b9598', '#6e6e6e']) %>
+</div>
+<div class='dashboard-item-separator'></div>
+
+<div class='dashboard-item-container'>
+  <h3>Locations</h3>
+  <div class='analytics-columns'>
+    <div>
+      <h4>Countries</h4>
+      <%= render partial: 'admins/analytics_table', locals: { rows: @metrics[:top_countries] } %>
+    </div>
+    <div>
+      <h4>Cities</h4>
+      <%= render partial: 'admins/analytics_table', locals: { rows: @metrics[:top_cities] } %>
+    </div>
+  </div>
+</div>
+<div class='dashboard-item-separator'></div>
+
+<div class='dashboard-item-container'>
+  <h3>Pages &amp; Referrers</h3>
+  <div class='analytics-columns'>
+    <div>
+      <h4>Top landing pages</h4>
+      <%= render partial: 'admins/analytics_table', locals: { rows: @metrics[:top_landing_pages] } %>
+    </div>
+    <div>
+      <h4>Top referrers</h4>
+      <%= render partial: 'admins/analytics_table', locals: { rows: @metrics[:top_referrers] } %>
+    </div>
+  </div>
+</div>
+<div class='dashboard-item-separator'></div>
+
+<div class='dashboard-item-container'>
+  <h3>Technology</h3>
+  <div class='analytics-columns'>
+    <div>
+      <h4>Devices</h4>
+      <%= pie_chart @metrics[:device_breakdown], donut: true %>
+    </div>
+    <div>
+      <h4>Browsers</h4>
+      <%= pie_chart @metrics[:browser_breakdown], donut: true %>
+    </div>
+    <div>
+      <h4>Operating systems</h4>
+      <%= pie_chart @metrics[:os_breakdown], donut: true %>
+    </div>
+  </div>
 </div>

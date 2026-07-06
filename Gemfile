@@ -50,6 +50,10 @@ gem 'ahoy_matey', '~> 5.5'
 gem 'geocoder', '~> 1.8'
 gem 'maxminddb', '~> 0.1'
 
+# Admin analytics charts
+gem 'chartkick', '~> 5.2'
+gem 'groupdate', '~> 6.8'
+
 group :production do
   # AWS S3 for production storage
   gem 'aws-sdk-s3', '~> 1.226', require: false

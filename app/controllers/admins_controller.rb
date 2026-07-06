@@ -10,6 +10,8 @@ class AdminsController < ApplicationController
   end
 
   def analytics
+    @period = params[:period].presence_in(AnalyticsService::PERIODS.keys) || AnalyticsService::DEFAULT_PERIOD
+    @metrics = AnalyticsService.metrics(@period)
     render_dashboard
   end
 

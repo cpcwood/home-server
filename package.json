@@ -17,6 +17,8 @@
     "babel-loader": "^10.1.1",
     "babel-plugin-macros": "^3.1.0",
     "carbon-now-cli": "1.4.0",
+    "chart.js": "4.5.1",
+    "chartkick": "5.0.1",
     "compression-webpack-plugin": "^12.0.0",
     "core-js": "^3.49.0",
     "css-loader": "^7.1.4",

@@ -211,4 +211,35 @@
   width: 100%;
 }
 
+.analytics-period-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.analytics-columns {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.analytics-table {
+  border-collapse: collapse;
+  width: 100%;
+
+  td {
+    border-bottom: 1px solid colors.$box-border-light;
+    padding: 6px 4px;
+  }
+
+  .analytics-table-label {
+    overflow-wrap: anywhere;
+  }
+
+  .analytics-table-count {
+    text-align: right;
+    white-space: nowrap;
+  }
+}
+
 
