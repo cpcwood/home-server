@@ -26,7 +26,9 @@ RSpec.describe 'Admin::TwoFactorAuths', type: :request do
     it 'rejects an invalid code' do
       get '/admin/2fa-setup/new'
       post '/admin/2fa-setup', params: { auth_code: '000000' }
-      expect(User.first.reload.otp_enabled?).to eq(false)
+      expect(response).to redirect_to(new_admin_two_factor_auth_path)
+      expect(flash[:alert]).to include('Code incorrect')
+      expect(User.first.reload.otp_secret).to eq(nil)
     end
   end
 end

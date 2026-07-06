@@ -12,7 +12,7 @@ module Admin
       pending_secret = session[:pending_otp_secret]
       return redirect_to(new_admin_two_factor_auth_path, alert: 'Two factor setup expired, scan again') unless pending_secret
       auth_code = params[:auth_code].to_s
-      timestamp = ROTP::TOTP.new(pending_secret).verify(auth_code, drift_behind: 15)
+      timestamp = ROTP::TOTP.new(pending_secret).verify(auth_code, drift_behind: 1, drift_ahead: 1)
       return redirect_to(new_admin_two_factor_auth_path, alert: 'Code incorrect, please try again') unless timestamp
       @user.update(otp_secret: pending_secret, otp_consumed_timestep: timestamp)
       session.delete(:pending_otp_secret)

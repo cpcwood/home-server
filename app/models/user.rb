@@ -61,7 +61,7 @@ class User < ApplicationRecord
 
   def verify_totp!(code)
     return false unless otp_enabled?
-    timestamp = totp.verify(code, drift_behind: 15, after: otp_consumed_timestep)
+    timestamp = totp.verify(code, drift_behind: 1, drift_ahead: 1, after: otp_consumed_timestep)
     return false unless timestamp
     update(otp_consumed_timestep: timestamp)
     true

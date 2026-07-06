@@ -10,7 +10,7 @@ module TwoFactorAuthService
     end
 
     def auth_code_format_valid?(auth_code)
-      auth_code.match?(/^\d{6}$/)
+      auth_code.match?(/\A\d{6}\z/)
     end
 
     def auth_code_valid?(session:, auth_code:)
