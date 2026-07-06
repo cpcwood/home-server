@@ -11,7 +11,14 @@
   <% if @gallery_images.empty? %>
     <%= render partial: 'partials/no_items', locals: {item: 'images'} %>
   <% else %>
-    <ul class='gallery-container' data-controller='justified-gallery' data-justified-gallery-target='container' data-justified-gallery-margin='2'>
+    <ul class='gallery-container'
+        data-controller='justified-gallery gallery-scroll-load'
+        data-justified-gallery-target='container'
+        data-justified-gallery-margin='2'
+        data-gallery-scroll-load-page-value='1'
+        data-gallery-scroll-load-api-url-value='<%= admin_gallery_images_path %>'
+        data-gallery-scroll-load-link-attribute-value='link_url'
+        data-action='renderGallery->justified-gallery#renderGallery galleryRendered->gallery-scroll-load#initializeScrollLoad'>
       <%= render partial: 'admin/gallery_images/image_container', collection: @gallery_images, as: :gallery_image %>
     </ul>
   <% end %>

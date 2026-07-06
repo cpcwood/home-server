@@ -1,8 +1,17 @@
 module Admin
   class GalleryImagesController < AdminBaseController
+    PAGE_SIZE = 12
+
     def index
-      @gallery_images = GalleryImage.order(date_taken: :desc, id: :desc)
-      render layout: 'layouts/admin_dashboard'
+      @gallery_images = GalleryImage
+                        .order(date_taken: :desc, id: :desc)
+                        .includes(image_file_attachment: :blob)
+                        .limit(PAGE_SIZE)
+                        .offset(calc_offset)
+      respond_to do |format|
+        format.html { render layout: 'layouts/admin_dashboard' }
+        format.json { render json: Admin::GalleryImageSerializer.new(@gallery_images, {}).serializable_hash }
+      end
     end
 
     def new
@@ -85,6 +94,11 @@ module Admin
     end
 
     private
+
+    def calc_offset
+      page_number = params['page'].to_i
+      (page_number > 0) ? ((page_number - 1) * PAGE_SIZE) : 0
+    end
 
     def permitted_params
       params.require(:gallery_image).permit(
