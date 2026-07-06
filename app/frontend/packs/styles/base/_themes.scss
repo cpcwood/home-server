@@ -30,6 +30,7 @@
   --color-destructive: rgb(224, 108, 100);
   --button-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.55);
   --button-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.5), 0 10px 26px rgba(0, 0, 0, 0.65);
+  --button-secondary-border: 1px solid var(--color-box-border);
   --link-highlight: rgba(95, 175, 178, 0.5);
 }
 
@@ -65,6 +66,7 @@
   --color-destructive: rgb(160, 40, 40);
   --button-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 4px 14px rgba(0, 0, 0, 0.1);
   --button-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.1), 0 10px 24px rgba(0, 0, 0, 0.16);
+  --button-secondary-border: 0 solid transparent;
   --link-highlight: rgba(75, 149, 152, 0.65);
 }
 
