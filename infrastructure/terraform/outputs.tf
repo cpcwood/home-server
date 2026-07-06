@@ -44,5 +44,16 @@ output "parameter_arns" {
     app_storage = aws_ssm_parameter.app_storage.arn
     db          = aws_ssm_parameter.db.arn
     build       = aws_ssm_parameter.build.arn
+    email       = aws_ssm_parameter.email.arn
   }
+}
+
+output "ses_domain_verification_token" {
+  description = "TXT record value for _amazonses.<domain> — add manually at the DNS host"
+  value       = aws_ses_domain_identity.email.verification_token
+}
+
+output "ses_dkim_tokens" {
+  description = "Three CNAMEs: <token>._domainkey.<domain> -> <token>.dkim.amazonses.com"
+  value       = aws_ses_domain_dkim.email.dkim_tokens
 }

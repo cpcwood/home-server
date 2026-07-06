@@ -51,7 +51,7 @@ config:
   EMAIL_DEFAULT_NAME: "Chris Wood"
   EMAIL_HELO_DOMAIN: "cpcwood.com"
   EMAIL_NO_REPLY_ADDRESS: "contact@cpcwood.com"
-  EMAIL_SMTP_SERVER_ADDRESS: "smtppro.zoho.eu"
+  EMAIL_SMTP_SERVER_ADDRESS: "email-smtp.eu-west-2.amazonaws.com"
   EMAIL_SMTP_SERVER_PORT: "465"
   PUMA_MAX_THREADS: "16"
   PUMA_STARTING_THREADS: "1"
@@ -63,6 +63,7 @@ externalSecrets:
   appBundle: app
   dbBundle: db
   storageBundle: app-storage
+  emailBundle: email
 
 # Pre-upgrade Helm hook that runs db:migrate once, before the new pods roll.
 migrateJob:
