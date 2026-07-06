@@ -28,7 +28,6 @@ describe 'Views' do
 
       expect(rendered).to match(Regexp.escape("Username</strong> #{user.username}"))
       expect(rendered).to match(Regexp.escape("Email Address</strong> #{user.email}"))
-      expect(rendered).to match(Regexp.escape("Mobile Number</strong> #{user.mobile_number}"))
     end
 
     it 'Displays overview of notifications' do

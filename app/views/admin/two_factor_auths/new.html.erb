@@ -1,0 +1,23 @@
+<% content_for :section_subtitle do %>
+  Two Factor Authentication Setup
+<% end %>
+
+<%= render partial: 'partials/system_messages' %>
+
+<div class='dashboard-item-container'>
+  <h3>Scan with your authenticator app</h3>
+  <div class='two-factor-qr'>
+    <%= @qr_code_svg.html_safe %>
+  </div>
+  <div class='small-font'>
+    Manual key: <code><%= @pending_otp_secret %></code>
+  </div>
+</div>
+<div class='dashboard-item-separator'></div>
+<div class='dashboard-item-container'>
+  <%= form_with(url: admin_two_factor_auth_path, method: :post) do |f| %>
+    <%= f.text_field(:auth_code, required: true, autocomplete: 'one-time-code', class: 'input-box', placeholder: '6 digit code') %>
+    <div class='input-seperator'></div>
+    <%= f.submit('Confirm and enable', class: 'input-submit') %>
+  <% end %>
+</div>

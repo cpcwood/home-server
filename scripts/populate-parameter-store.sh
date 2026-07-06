@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Sets the actual values for the Parameter Store entries that hold credentials
-# issued by third parties — Rails app secrets (Twilio, Sentry, SMTP, …) and the
+# issued by third parties — Rails app secrets (Sentry, SMTP, …) and the
 # Docker build-time keys. Terraform creates these entries empty and ignores
 # their value, so this script fills them in (and re-runs to rotate) without
 # Terraform seeing a change.
@@ -76,11 +76,11 @@ populate_app() {
   # POSTGRES_USER/PASSWORD from <prefix>/db and the AWS storage creds + bucket
   # from <prefix>/app-storage.
   local keys=(
-    ADMIN_EMAIL ADMIN_MOBILE_NUMBER ADMIN_PASSWORD ADMIN_USERNAME
+    ADMIN_EMAIL ADMIN_PASSWORD ADMIN_USERNAME
+    AR_ENCRYPTION_DETERMINISTIC_KEY AR_ENCRYPTION_KEY_DERIVATION_SALT AR_ENCRYPTION_PRIMARY_KEY
     EMAIL_SMTP_PASSWORD EMAIL_SMTP_USERNAME
     GRECAPTCHA_SITE_KEY GRECAPTCHA_SITE_SECRET
     SECRET_KEY_BASE SENTRY_DSN
-    TWILIO_ACCOUNT_SID TWILIO_AUTH_TOKEN TWILIO_VERIFY_SERVICE_SID
   )
   local payload="{}"
   for k in "${keys[@]}"; do

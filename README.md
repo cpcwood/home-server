@@ -11,7 +11,7 @@ General portfolio style website and a place to prototype new rails features I fi
 - Ruby on Rails & PostgreSQL
 - Stimulus
 - Google reCaptcha
-- Twilio SMS Verification
+- TOTP two factor authentication (authenticator app)
 - Email client
 - Docker
 - Kubernetes + Helm + Gateway API (Traefik)
@@ -194,6 +194,17 @@ Click on the site settings tab and add the values or upload:
 - website name
 - images for the homepage tiles 
 - images for the header
+
+#### Two Factor Authentication
+
+Enrol from *User Settings → Set up 2FA*: scan the QR code with an authenticator app and confirm with a generated code. Until enrolled, login proceeds without a second factor.
+
+#### 2FA reset
+
+If the authenticator device is lost, clear the secret from a Rails console and re-enroll:
+```ruby
+User.first.update(otp_secret: nil, otp_consumed_timestep: nil)
+```
 
 
 ## Contributing

@@ -2,6 +2,14 @@
   General
 <% end %>
 
+<% unless @user.otp_enabled? %>
+  <div class='dashboard-item-container'>
+    <strong>Two factor authentication is not enabled.</strong>
+    <%= link_to('Set it up now', new_admin_two_factor_auth_path) %>
+  </div>
+  <div class='dashboard-item-separator'></div>
+<% end %>
+
 <div class='dashboard-item-container'>
   <h3>
     System Messages
