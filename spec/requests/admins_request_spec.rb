@@ -24,6 +24,27 @@ RSpec.describe 'AdminsController', type: :request do
     end
   end
 
+  describe 'GET /admin/notifications contact messages' do
+    before do
+      login
+      create_list(:contact_message, 26, user: User.first)
+      ContactMessage.first.update(subject: 'Oldest message subject')
+      ContactMessage.last.update(subject: 'Newest message subject')
+    end
+
+    it 'lists the newest 25 contact messages' do
+      get '/admin/notifications'
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('Newest message subject')
+      expect(response.body).not_to include('Oldest message subject')
+    end
+
+    it 'pages older messages' do
+      get '/admin/notifications?page=2'
+      expect(response.body).to include('Oldest message subject')
+    end
+  end
+
   describe 'GET /admin/analytics #analytics' do
     before do
       login
