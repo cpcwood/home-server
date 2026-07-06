@@ -18,6 +18,8 @@
   <%= form_with(url: admin_two_factor_auth_path, method: :post) do |f| %>
     <%= f.text_field(:auth_code, required: true, autocomplete: 'one-time-code', class: 'input-box', placeholder: '6 digit code') %>
     <div class='input-seperator'></div>
+    <%= password_field(:current_password, :password, required: true, autocomplete: 'current-password', class: 'input-box', placeholder: 'current password') %>
+    <div class='input-seperator'></div>
     <%= f.submit('Confirm and enable', class: 'input-submit') %>
   <% end %>
 </div>
