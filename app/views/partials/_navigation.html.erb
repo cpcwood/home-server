@@ -43,6 +43,9 @@
         </a>
       </div>
       <div class='lower'>
+        <button class='nav-item' data-controller='theme' data-action='click->theme#toggle' aria-label='Toggle dark mode'>
+          DARK MODE
+        </button>
         <% if @user %>
           <a href='<%= admin_path %>' class='nav-item'>
             ADMIN
