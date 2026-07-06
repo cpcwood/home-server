@@ -74,10 +74,12 @@ export default class extends Controller {
 
   displayGalleryItemTargets () {
     this.removeLoadingIcon()
+    for (let i = 0; i < this.newImageElements.length; i++) {
+      this.newImageElements[i].classList.remove('hidden')
+    }
     this.element.dispatchEvent(new Event('renderGallery'))
     this.element.dispatchEvent(new Event('reConnectLightbox'))
     for (let i = 0; i < this.newImageElements.length; i++) {
-      this.newImageElements[i].classList.remove('hidden')
       const imgTarget = this.newImageElements[i].querySelector('img')
       imgTarget.style.transitionDelay = `${i * 0.1}s`
       imgTarget.classList.add('fade-in')

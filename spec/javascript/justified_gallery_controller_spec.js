@@ -93,6 +93,14 @@ describe('justified_gallery_controller', () => {
         expect(eventTriggered).toBe(true)
       })
 
+      it('skips layout when an item is not yet measurable', () => {
+        galleryItemTargetOne.width = 0
+        galleryItemTargetOne.dispatchEvent(new Event('load'))
+        galleryItemTargetTwo.dispatchEvent(new Event('load'))
+        jest.runOnlyPendingTimers()
+        expect(justifiedLayout).not.toHaveBeenCalled()
+      })
+
       it('images justified', () => {
         const containerWidth = 15
         const galleryContainer = document.querySelector('.gallery-container')
