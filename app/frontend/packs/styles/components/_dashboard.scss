@@ -245,6 +245,9 @@
 .two-factor-qr {
   margin: 10px 0;
   max-width: 240px;
+  background: #fff;
+  padding: 12px;
+  border-radius: 8px;
 
   svg {
     height: auto;
