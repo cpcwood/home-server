@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static values = { page: Number, apiUrl: String }
+  static values = { page: Number, apiUrl: String, linkAttribute: { type: String, default: 'url' } }
 
   isLoading = false
   isRemainingPages = true
@@ -55,7 +55,7 @@ export default class extends Controller {
       imageElement.setAttribute('itemscope', '')
       imageElement.setAttribute('itemtype', 'https://schema.org/ImageObject')
       imageElement.innerHTML = `
-        <a href='${imageData.url}' class='view-gallery-image'>
+        <a href='${imageData[this.linkAttributeValue]}' class='view-gallery-image'>
           <img src='${imageData.thumbnail_url}' class='gallery-image-thumbnail' title='${imageData.title}' alt='${imageData.description}' data-action='load->gallery-scroll-load#imageLoaded' data-justified-gallery-target='galleryItem' itemprop='contentUrl'>
         </a>
       `
