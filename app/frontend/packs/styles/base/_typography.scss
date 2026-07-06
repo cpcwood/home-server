@@ -116,6 +116,36 @@ header h1 {
     font-size: 1em;
     margin: 0.5em 0 0.25em;
   }
+
+  a {
+    color: inherit;
+    position: relative;
+    text-decoration: none;
+    z-index: 1;
+
+    &::before {
+      background: colors.$link-highlight;
+      bottom: 0;
+      content: '';
+      height: 1.5px;
+      left: -2px;
+      position: absolute;
+      right: -2px;
+      transition: height 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: -1;
+    }
+
+    &:hover::before,
+    &:focus-visible::before {
+      height: calc(100% + 4px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    a::before {
+      transition: none;
+    }
+  }
 }
 
 b,
