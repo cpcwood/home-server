@@ -168,6 +168,14 @@ RSpec.describe User, type: :model do
         expect(user.otp_provisioning_uri).to include(CGI.escape(user.email))
       end
     end
+
+    describe 'encryption at rest' do
+      it 'persists otp_secret as ciphertext, not plaintext' do
+        raw = User.connection.select_value("SELECT otp_secret FROM users WHERE id = #{user.id}")
+        expect(raw).to be_present
+        expect(raw).not_to include(user.otp_secret)
+      end
+    end
   end
 
   describe 'after_save: #remove_password_reset' do
