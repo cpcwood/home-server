@@ -15,6 +15,7 @@ describe('ThemeController', () => {
     document.querySelector('button').click()
     expect(document.documentElement.dataset.theme).toEqual('dark')
     expect(localStorage.getItem('theme')).toEqual('dark')
+    expect(document.querySelector('button').getAttribute('aria-pressed')).toEqual('true')
   })
 
   it('switches back to light on second toggle', () => {
@@ -22,6 +23,7 @@ describe('ThemeController', () => {
     document.querySelector('button').click()
     expect(document.documentElement.dataset.theme).toEqual('light')
     expect(localStorage.getItem('theme')).toEqual('light')
+    expect(document.querySelector('button').getAttribute('aria-pressed')).toEqual('false')
   })
 
   it('starts from the OS preference when unset', () => {
