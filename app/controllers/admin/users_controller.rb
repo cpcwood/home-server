@@ -11,7 +11,6 @@ module Admin
       update_section(username_update_params, 'Username')
       update_section(email_update_params, 'Email address')
       update_section(password_update_params, 'Password')
-      update_section(mobile_number_update_params, 'Mobile number')
       redirect_to(edit_admin_user_path(@user), notice: @notices, alert: @alerts)
     end
 
@@ -53,10 +52,6 @@ module Admin
 
     def password_update_params
       params.require(:password).permit(:password, :password_confirmation)
-    end
-
-    def mobile_number_update_params
-      params.require(:mobile_number).permit(:mobile_number, :mobile_number_confirmation)
     end
   end
 end

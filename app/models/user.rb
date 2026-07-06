@@ -8,7 +8,8 @@
 #  email                 :text
 #  last_login_ip         :string
 #  last_login_time       :datetime
-#  mobile_number         :text
+#  otp_consumed_timestep :integer
+#  otp_secret            :text
 #  password_digest       :text
 #  password_reset_expiry :datetime
 #  password_reset_token  :string
@@ -18,9 +19,8 @@
 #
 # Indexes
 #
-#  index_users_on_email          (email) UNIQUE
-#  index_users_on_mobile_number  (mobile_number) UNIQUE
-#  index_users_on_username       (username) UNIQUE
+#  index_users_on_email     (email) UNIQUE
+#  index_users_on_username  (username) UNIQUE
 #
 class User < ApplicationRecord
   DEFAULT_REMOTE_IP = '127.0.0.1'.freeze
@@ -31,8 +31,8 @@ class User < ApplicationRecord
   has_many :code_snippets, dependent: :destroy
 
   has_secure_password validations: false, reset_token: false
+  encrypts :otp_secret
   after_initialize :add_defaults
-  after_validation :convert_mobile_number, if: -> { !mobile_number.nil? }
   after_save :remove_password_reset
 
   validates :password,
@@ -55,11 +55,21 @@ class User < ApplicationRecord
             confirmation: { message: 'Emails do not match' },
             if: -> { new_record? || !email.nil? }
 
-  validates :mobile_number,
-            uniqueness: { message: 'Mobile phone numbers already taken' },
-            format: { with: /\A(\+44|0)7\d{9}\z/, message: 'Please enter valid UK mobile phone number' },
-            confirmation: { message: 'Mobile phone numbers do not match' },
-            if: -> { !mobile_number.nil? }
+  def otp_enabled?
+    otp_secret.present?
+  end
+
+  def verify_totp!(code)
+    return false unless otp_enabled?
+    timestamp = totp.verify(code, drift_behind: 15, after: otp_consumed_timestep)
+    return false unless timestamp
+    update(otp_consumed_timestep: timestamp)
+    true
+  end
+
+  def otp_provisioning_uri
+    totp.provisioning_uri(email)
+  end
 
   def send_password_reset_email!
     generate_hashed_token
@@ -76,11 +86,6 @@ class User < ApplicationRecord
     PasswordMailer.with(user: self).password_updated_email.deliver_now
   end
 
-  def convert_mobile_number
-    self.mobile_number = mobile_number.sub(/\A(0)(7\d{9})\z/, '+44\2')
-    self.mobile_number_confirmation = mobile_number_confirmation.sub(/\A(0)(7\d{9})\z/, '+44\2') if mobile_number_confirmation
-  end
-
   def record_ip(request)
     update({
              last_login_time: current_login_time,
@@ -91,6 +96,10 @@ class User < ApplicationRecord
   end
 
   private
+
+  def totp
+    ROTP::TOTP.new(otp_secret, issuer: ENV.fetch('SITE_HOST', 'home-server'))
+  end
 
   def add_defaults
     self.last_login_time ||= Time.zone.now

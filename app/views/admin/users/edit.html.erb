@@ -9,3 +9,14 @@
 <div class='dashboard-item-container'>
   <%= render partial: 'admin/users/edit_form' %>
 </div>
+<div class='dashboard-item-separator'></div>
+<div class='dashboard-item-container'>
+  <h3>Two Factor Authentication</h3>
+  <% if @user.otp_enabled? %>
+    <p>Enabled — codes come from your authenticator app.</p>
+    <%= link_to('Re-enroll a new device', new_admin_two_factor_auth_path, class: 'standard-button secondary') %>
+  <% else %>
+    <p>Not enabled.</p>
+    <%= link_to('Set up 2FA', new_admin_two_factor_auth_path, class: 'standard-button') %>
+  <% end %>
+</div>

@@ -8,7 +8,8 @@
 #  email                 :text
 #  last_login_ip         :string
 #  last_login_time       :datetime
-#  mobile_number         :text
+#  otp_consumed_timestep :integer
+#  otp_secret            :text
 #  password_digest       :text
 #  password_reset_expiry :datetime
 #  password_reset_token  :string
@@ -18,9 +19,8 @@
 #
 # Indexes
 #
-#  index_users_on_email          (email) UNIQUE
-#  index_users_on_mobile_number  (mobile_number) UNIQUE
-#  index_users_on_username       (username) UNIQUE
+#  index_users_on_email     (email) UNIQUE
+#  index_users_on_username  (username) UNIQUE
 #
 
 RSpec.describe User, type: :model do
@@ -132,34 +132,41 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'Mobile number validations' do
-    it 'Rejects non-unique mobile numbers' do
-      user2 = build(:user2, mobile_number: subject.mobile_number)
-      expect(user2).to_not be_valid
+  describe 'totp' do
+    subject(:user) { create(:user, :with_totp) }
+
+    let(:totp) { ROTP::TOTP.new(user.otp_secret) }
+
+    describe '#otp_enabled?' do
+      it 'is true with a secret' do
+        expect(user.otp_enabled?).to eq(true)
+      end
+
+      it 'is false without a secret' do
+        expect(create(:user).otp_enabled?).to eq(false)
+      end
     end
 
-    it 'Rejects invalid UK mobile numbers with message' do
-      subject.mobile_number = '01234567'
-      expect(subject).to_not be_valid
-      expect(subject.errors.messages[:mobile_number]).to eq ['Please enter valid UK mobile phone number']
+    describe '#verify_totp!' do
+      it 'accepts the current code once' do
+        code = totp.now
+        expect(user.verify_totp!(code)).to eq(true)
+        expect(user.verify_totp!(code)).to eq(false)
+      end
+
+      it 'rejects a wrong code' do
+        expect(user.verify_totp!('000000')).to eq(false)
+      end
+
+      it 'is false when no secret is set' do
+        expect(create(:user).verify_totp!('123456')).to eq(false)
+      end
     end
 
-    it 'Requires confirmation for change' do
-      subject.mobile_number = '+447345678901'
-      subject.mobile_number_confirmation = ''
-      expect(subject).to_not be_valid
-      expect(subject.errors.messages[:mobile_number_confirmation]).to eq ['Mobile phone numbers do not match']
-      subject.mobile_number_confirmation = '+447345678901'
-      expect(subject).to be_valid
-    end
-  end
-
-  describe 'Before_validation: mobile_number' do
-    it 'Adds area code to standard UK mobile number' do
-      subject.mobile_number = '07345678902'
-      subject.mobile_number_confirmation = '07345678902'
-      subject.save
-      expect(subject.mobile_number).to eq('+447345678902')
+    describe '#otp_provisioning_uri' do
+      it 'embeds the user email' do
+        expect(user.otp_provisioning_uri).to include(CGI.escape(user.email))
+      end
     end
   end
 

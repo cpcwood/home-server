@@ -3,6 +3,10 @@ RSpec.describe 'SessionsController', type: :request do
     seed_user_and_settings
   end
 
+  def enroll_user
+    @user.update(otp_secret: ROTP::Base32.random)
+  end
+
   describe 'GET /login #login ' do
     it 'Renders login page' do
       get '/login'
@@ -17,15 +21,30 @@ RSpec.describe 'SessionsController', type: :request do
   end
 
   describe 'POST /login #new' do
-    it 'Allows inital login with username' do
-      password_athenticate_admin(user: @user.username, password: @user_password)
-      expect(response).to redirect_to('/2fa')
-      expect(session[:two_factor_auth_id]).not_to eq(nil)
+    context 'when the user has enrolled in 2fa' do
+      before(:each) { enroll_user }
+
+      it 'Redirects to 2fa page when logging in with username' do
+        password_athenticate_admin(user: @user.username, password: @user_password)
+        expect(response).to redirect_to('/2fa')
+        expect(session[:two_factor_auth_id]).to eq(@user.id)
+        expect(session[:user_id]).to eq(nil)
+      end
+
+      it 'Redirects to 2fa page when logging in with email' do
+        password_athenticate_admin(user: @user.email, password: @user_password)
+        expect(response).to redirect_to('/2fa')
+      end
     end
 
-    it 'Allows inital login with email' do
-      password_athenticate_admin(user: @user.email, password: @user_password)
-      expect(response).to redirect_to('/2fa')
+    context 'when the user has not enrolled in 2fa' do
+      it 'Logs straight in with an enrollment nudge' do
+        password_athenticate_admin(user: @user.username, password: @user_password)
+        expect(response).to redirect_to(:admin)
+        expect(session[:user_id]).to eq(@user.id)
+        follow_redirect!
+        expect(flash[:notice]).to include('Two factor authentication is not set up')
+      end
     end
 
     it 'Blocks login if user not found' do
@@ -42,7 +61,7 @@ RSpec.describe 'SessionsController', type: :request do
     end
   end
 
-  describe 'GET /2fa #send_2fa' do
+  describe 'GET /2fa #show_2fa' do
     it 'blocks unauthorised access' do
       get '/2fa'
       expect(response).to redirect_to('/login')
@@ -54,50 +73,53 @@ RSpec.describe 'SessionsController', type: :request do
       expect(response).to redirect_to(:admin)
     end
 
-    it 'Sends verify request to twilio' do
+    it 'Prompts for the authenticator code' do
+      enroll_user
       password_athenticate_admin(user: @user.username, password: @user_password)
-      expect(TwoFactorAuthService).to receive(:send_auth_code).and_return(true)
       get '/2fa'
       expect(response).to render_template(:two_factor_auth)
-      expect(flash[:notice]).to eq('Please enter the 6 digit code sent to mobile number assoicated with this account')
-    end
-
-    it 'error sending auth code' do
-      allow(TwoFactorAuthService).to receive(:send_auth_code).and_return(false)
-      password_athenticate_admin(user: @user.username, password: @user_password)
-      get '/2fa'
-      expect(response.body).to include('Sorry something went wrong')
+      expect(flash[:notice]).to eq('Enter the 6 digit code from your authenticator app')
     end
   end
 
   describe 'POST /2fa #verify_2fa' do
-    let(:auth_code) { '123456' }
-
-    before(:each) do
-      allow(TwoFactorAuthService).to receive(:auth_code_format_valid?).and_return(true)
-    end
+    before(:each) { enroll_user }
 
     it 'invalid auth code format' do
       password_athenticate_admin(user: @user.username, password: @user_password)
-      allow(TwoFactorAuthService).to receive(:auth_code_format_valid?).and_return(false)
-      post '/2fa', params: { auth_code: auth_code }
+      post '/2fa', params: { auth_code: '12345' }
       expect(response).to redirect_to('/2fa')
       expect(flash[:alert]).to include('Verification code must be 6 digits long')
     end
 
     it 'invalid auth code' do
       password_athenticate_admin(user: @user.username, password: @user_password)
-      allow(TwoFactorAuthService).to receive(:auth_code_valid?).and_return(false)
-      post '/2fa', params: { auth_code: auth_code }
+      post '/2fa', params: { auth_code: '000000' }
       expect(flash[:alert]).to include('2fa code incorrect, please try again')
     end
 
     it 'successful login' do
-      expect_any_instance_of(User).to receive(:record_ip)
-      login
+      password_athenticate_admin(user: @user.username, password: @user_password)
+      post '/2fa', params: { auth_code: ROTP::TOTP.new(@user.otp_secret).now }
+      expect(response).to redirect_to(:admin)
+      expect(session[:user_id]).to eq(@user.id)
+      follow_redirect!
       expect(response.body).to include("#{@user.username} welcome back to your home-server!")
     end
 
+    it 'records the login ip' do
+      expect_any_instance_of(User).to receive(:record_ip)
+      password_athenticate_admin(user: @user.username, password: @user_password)
+      post '/2fa', params: { auth_code: ROTP::TOTP.new(@user.otp_secret).now }
+    end
+
+    it 'Block unauthorised access' do
+      post '/2fa', params: { auth_code: '123456' }
+      expect(response).to redirect_to('/login')
+    end
+  end
+
+  describe 'Session expiry' do
     it 'Resets session after 7 days of inactivity' do
       travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
       login
@@ -108,23 +130,6 @@ RSpec.describe 'SessionsController', type: :request do
       travel_to Time.zone.local(2020, 05, 03, 00, 00, 00)
       get '/'
       expect(session[:user_id]).to eq(nil)
-    end
-
-    it 'Block unauthorised access' do
-      post '/2fa', params: { auth_code: auth_code }
-      expect(response).to redirect_to('/login')
-    end
-  end
-
-  describe 'PUT /2fa #reset_2fa' do
-    it 'Resends 2fa code' do
-      password_athenticate_admin(user: @user.username, password: @user_password)
-      allow(TwoFactorAuthService).to receive(:send_auth_code).and_return(true)
-      get '/2fa'
-      put '/2fa'
-      expect(session[:auth_code_sent]).to eq(nil)
-      expect(response).to redirect_to('/2fa')
-      expect(flash[:notice]).to eq('Two factor authentication code resent')
     end
   end
 
@@ -138,5 +143,3 @@ RSpec.describe 'SessionsController', type: :request do
     end
   end
 end
-
-

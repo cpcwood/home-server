@@ -5,7 +5,7 @@ locals {
 
 resource "aws_ssm_parameter" "app" {
   name        = "${local.secret_prefix}/app"
-  description = "Rails / Sidekiq runtime secrets (SECRET_KEY_BASE, SMTP, Twilio, Sentry, reCAPTCHA) — value set by scripts/populate-parameter-store.sh, not Terraform"
+  description = "Rails / Sidekiq runtime secrets (SECRET_KEY_BASE, SMTP, Sentry, reCAPTCHA, AR encryption) — value set by scripts/populate-parameter-store.sh, not Terraform"
   type        = "SecureString"
   value       = local.secret_placeholder
 
