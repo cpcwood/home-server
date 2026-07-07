@@ -181,8 +181,9 @@ data "aws_iam_policy_document" "github_actions_permissions" {
       "iam:ListAttachedUserPolicies",
       "iam:CreateAccessKey",
       "iam:DeleteAccessKey",
+      "iam:UpdateAccessKey",
       "iam:ListAccessKeys",
-      "iam:ListGroupsForUser",
+      "iam:GetAccessKeyLastUsed",
     ]
     resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/home-server-${var.environment}-ses-smtp"]
   }
