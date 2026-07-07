@@ -18,9 +18,9 @@ module AnalyticsService
         top_referrers: top(scope, :referring_domain),
         top_countries: top(scope, :country),
         top_cities: top(scope, :city),
-        device_breakdown: scope.group(:device_type).count.sort_by { |_, count| -count },
-        browser_breakdown: scope.group(:browser).count.sort_by { |_, count| -count },
-        os_breakdown: scope.group(:os).count.sort_by { |_, count| -count }
+        device_breakdown: top(scope, :device_type),
+        browser_breakdown: top(scope, :browser),
+        os_breakdown: top(scope, :os)
       }
     end
 

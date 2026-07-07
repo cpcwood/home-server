@@ -8,7 +8,8 @@ class AdminsController < ApplicationController
   end
 
   def notifications
-    @page = [params[:page].to_i, 1].max
+    last_page = [(ContactMessage.count.to_f / MESSAGES_PAGE_SIZE).ceil, 1].max
+    @page = params[:page].to_i.clamp(1, last_page)
     @contact_messages = ContactMessage
                         .order(created_at: :desc, id: :desc)
                         .limit(MESSAGES_PAGE_SIZE)
