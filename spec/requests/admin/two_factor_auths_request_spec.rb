@@ -46,5 +46,15 @@ RSpec.describe 'Admin::TwoFactorAuths', type: :request do
       expect(response).to redirect_to(new_admin_two_factor_auth_path)
       expect(User.first.reload.otp_secret).to eq(nil)
     end
+
+    it 'rejects a rebind by an already-enrolled user with a wrong current password, leaving the secret unchanged' do
+      original_secret = ROTP::Base32.random
+      User.first.update(otp_secret: original_secret)
+      get '/admin/2fa-setup/new'
+      pending_secret = session[:pending_otp_secret]
+      post '/admin/2fa-setup', params: { auth_code: ROTP::TOTP.new(pending_secret).now, current_password: { password: 'wrongpassword' }}
+      expect(response).to redirect_to(new_admin_two_factor_auth_path)
+      expect(User.first.reload.otp_secret).to eq(original_secret)
+    end
   end
 end
