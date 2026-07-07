@@ -51,6 +51,11 @@ RSpec.describe 'Admin::GalleryImagesController', type: :request do
       get '/admin/gallery.json?page=2'
       expect(response.parsed_body['data'].length).to eq(3)
     end
+
+    it 'returns an empty page past the last' do
+      get '/admin/gallery.json?page=3'
+      expect(response.parsed_body['data']).to eq([])
+    end
   end
 
   describe 'GET /admin/gallery-images/new #new' do

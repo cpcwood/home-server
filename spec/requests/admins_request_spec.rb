@@ -74,4 +74,13 @@ RSpec.describe 'AdminsController', type: :request do
       expect(response).to have_http_status(:ok)
     end
   end
+
+  describe 'GET /admin/analytics with no visits in period' do
+    it 'renders the empty state without error' do
+      login
+      get '/admin/analytics'
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('No data for this period')
+    end
+  end
 end

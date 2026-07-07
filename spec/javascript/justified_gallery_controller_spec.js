@@ -101,6 +101,14 @@ describe('justified_gallery_controller', () => {
         expect(justifiedLayout).not.toHaveBeenCalled()
       })
 
+      it('skips layout when an item has zero height', () => {
+        galleryItemTargetOne.height = 0
+        galleryItemTargetOne.dispatchEvent(new Event('load'))
+        galleryItemTargetTwo.dispatchEvent(new Event('load'))
+        jest.runOnlyPendingTimers()
+        expect(justifiedLayout).not.toHaveBeenCalled()
+      })
+
       it('images justified', () => {
         const containerWidth = 15
         const galleryContainer = document.querySelector('.gallery-container')

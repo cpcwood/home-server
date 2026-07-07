@@ -96,6 +96,7 @@ RSpec.describe 'SessionsController', type: :request do
       password_athenticate_admin(user: @user.username, password: @user_password)
       post '/2fa', params: { auth_code: '000000' }
       expect(flash[:alert]).to include('2fa code incorrect, please try again')
+      expect(session[:user_id]).to eq(nil)
     end
 
     it 'successful login' do

@@ -44,6 +44,36 @@ describe('gallery_scroll_load_controller', () => {
     await flush()
   })
 
+  describe('#loadNextPage', () => {
+    afterEach(() => {
+      delete global.fetch
+    })
+
+    it('fetches the next page, appends its images, and advances pageValue', async () => {
+      global.fetch = jest.fn(() => Promise.resolve({ json: () => Promise.resolve(imagesData) }))
+
+      await controller.loadNextPage()
+      await flush()
+
+      expect(global.fetch).toHaveBeenCalledTimes(1)
+      expect(global.fetch.mock.calls[0][0]).toBe('/gallery_images.json?page=2')
+      expect(controller.pageValue).toBe(2)
+      expect(container.querySelectorAll('li.gallery-image-container').length).toBe(2)
+    })
+
+    it('stops loading further pages once a page returns no data', async () => {
+      global.fetch = jest.fn(() => Promise.resolve({ json: () => Promise.resolve({ data: [] }) }))
+
+      await controller.loadNextPage()
+      await flush()
+
+      expect(global.fetch).toHaveBeenCalledTimes(1)
+      expect(controller.isRemainingPages).toBe(false)
+      expect(controller.isLoading).toBe(false)
+      expect(container.querySelectorAll('li.gallery-image-container').length).toBe(0)
+    })
+  })
+
   describe('#displayGalleryItemTargets', () => {
     it('un-hides new items before dispatching renderGallery so they have measurable dimensions', async () => {
       let hiddenItemsWhenRendered = null
