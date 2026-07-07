@@ -34,5 +34,13 @@ RSpec.describe AnalyticsService do
       expect(metrics[:os_breakdown].first.first).to eq('GNU/Linux')
       expect(metrics[:top_cities].first.first).to eq('London')
     end
+
+    it 'excludes visits with blank technology fields from the breakdowns' do
+      create(:visit, started_at: 2.days.ago, device_type: nil, browser: nil, os: nil)
+      metrics = described_class.metrics('30d')
+      expect(metrics[:device_breakdown].map(&:first)).not_to include(nil, '')
+      expect(metrics[:browser_breakdown].map(&:first)).not_to include(nil, '')
+      expect(metrics[:os_breakdown].map(&:first)).not_to include(nil, '')
+    end
   end
 end

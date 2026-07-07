@@ -43,6 +43,12 @@ RSpec.describe 'AdminsController', type: :request do
       get '/admin/notifications?page=2'
       expect(response.body).to include('Oldest message subject')
     end
+
+    it 'clamps a page past the last to the final page' do
+      get '/admin/notifications?page=99'
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('Oldest message subject')
+    end
   end
 
   describe 'GET /admin/analytics #analytics' do
