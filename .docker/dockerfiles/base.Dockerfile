@@ -6,7 +6,7 @@
 # Compile Assets
 # ================
 
-FROM ruby:3.4.9-alpine3.22
+FROM ruby:4.0.5-alpine3.22
 
 ENV RAILS_ENV=production \
     NODE_ENV=production \
