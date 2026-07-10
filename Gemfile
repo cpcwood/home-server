@@ -28,7 +28,7 @@ gem 'sidekiq', '~> 8.1'
 gem 'image_processing', '~> 2.0'
 # ImageMagick wrapper for variant processing + EXIF (image_processing 2 no longer depends on it).
 # Held at 4.x: mini_magick 5 removed Image#mime_type and Image#exif, which Image/GalleryImage rely on.
-gem 'mini_magick', '~> 4.13'
+gem 'mini_magick', '~> 5.3'
 # Process markdown
 gem 'redcarpet', '~> 3.6'
 # Markdown syntax highlighing
