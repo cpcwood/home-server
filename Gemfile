@@ -56,7 +56,7 @@ group :production do
   # Ensure sidekiq stays alive in k8s
   gem 'sidekiq_alive', '~> 2.5'
   # Dynamically generate sitemaps
-  gem 'sitemap_generator', '~> 7.0'
+  gem 'sitemap_generator', '~> 7.1'
   # Manage cron
   gem 'whenever', '~> 1.1', require: false
   # Error Reporting
