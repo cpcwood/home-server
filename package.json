@@ -28,7 +28,7 @@
     "rails-erb-loader": "5.5.2",
     "resolve-url-loader": "5.0.0",
     "sass": "1.101.0",
-    "sass-loader": "16.0.8",
+    "sass-loader": "17.0.0",
     "shakapacker": "10.1.0",
     "simplelightbox": "2.14.3",
     "style-loader": "^4.0.0",
