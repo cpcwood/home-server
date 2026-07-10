@@ -13,7 +13,7 @@ gem 'pg', '~> 1.5', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 8'
 # Transpile app-like JavaScript. Read more: https://github.com/shakacode/shakapacker
-gem 'shakapacker', '~> 10.1'
+gem 'shakapacker', '~> 10.3'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1'
 # Throttle excessive requests
