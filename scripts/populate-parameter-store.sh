@@ -82,7 +82,9 @@ populate_app() {
     GRECAPTCHA_SITE_KEY GRECAPTCHA_SITE_SECRET
     SECRET_KEY_BASE SENTRY_DSN
   )
-  local payload="{}"
+  # Seed from the existing bundle so keys not prompted here (e.g. EMAIL_SMTP_*
+  # during the SES cutover window) are preserved rather than dropped.
+  local payload="${current}"
   for k in "${keys[@]}"; do
     local existing v
     existing=$(jq -r --arg k "$k" '.[$k] // ""' <<<"${current}")

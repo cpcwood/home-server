@@ -118,7 +118,7 @@ jobs:
         run: helm template home-server ./infrastructure/helm --namespace home-server-production > /tmp/rendered.yaml
       - name: Assert no plaintext secrets leak into rendered manifests
         run: |
-          if grep -E -i '(SECRET_KEY_BASE|TWILIO_AUTH_TOKEN|AWS_SECRET_ACCESS_KEY|POSTGRES_PASSWORD)\s*:\s*["'\''][^"'\'']+' /tmp/rendered.yaml; then
+          if grep -E -i '(SECRET_KEY_BASE|AWS_SECRET_ACCESS_KEY|POSTGRES_PASSWORD|AR_ENCRYPTION_PRIMARY_KEY|AR_ENCRYPTION_DETERMINISTIC_KEY|AR_ENCRYPTION_KEY_DERIVATION_SALT|EMAIL_SMTP_PASSWORD)\s*:\s*["'\''][^"'\'']+' /tmp/rendered.yaml; then
             echo "::error::Plaintext secret detected in rendered chart"
             exit 1
           fi

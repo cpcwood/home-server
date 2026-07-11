@@ -2,7 +2,7 @@
   Analytics
 <% end %>
 
-<div class='dashboard-item-container'>
+<div class='dashboard-item-container' data-controller='charts'>
   <div class='analytics-period-selector'>
     <% AnalyticsService::PERIODS.each_key do |key| %>
       <%= link_to(key.upcase, admin_analytics_path(period: key), class: "standard-button #{key == @period ? '' : 'secondary'}") %>

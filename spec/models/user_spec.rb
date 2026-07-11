@@ -163,9 +163,10 @@ RSpec.describe User, type: :model do
       end
     end
 
-    describe '#otp_provisioning_uri' do
-      it 'embeds the user email' do
-        expect(user.otp_provisioning_uri).to include(CGI.escape(user.email))
+    describe '.totp_for' do
+      it 'builds a provisioning uri embedding the user email' do
+        uri = User.totp_for(user.otp_secret).provisioning_uri(user.email)
+        expect(uri).to include(CGI.escape(user.email))
       end
     end
 

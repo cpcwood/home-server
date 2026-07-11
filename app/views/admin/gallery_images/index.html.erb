@@ -15,7 +15,7 @@
         data-controller='justified-gallery gallery-scroll-load'
         data-justified-gallery-target='container'
         data-justified-gallery-margin='2'
-        data-gallery-scroll-load-page-value='1'
+        data-gallery-scroll-load-page-value='<%= [params[:page].to_i, 1].max %>'
         data-gallery-scroll-load-api-url-value='<%= admin_gallery_images_path %>'
         data-gallery-scroll-load-link-attribute-value='link_url'
         data-action='renderGallery->justified-gallery#renderGallery galleryRendered->gallery-scroll-load#initializeScrollLoad'>

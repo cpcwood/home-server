@@ -137,6 +137,15 @@ RSpec.describe 'SessionsController', type: :request do
         expect(response).to redirect_to(:admin)
         expect(session[:user_id]).to eq(@user.id)
       end
+
+      it 'resets the failure count when a fresh password login starts a new flow' do
+        password_athenticate_admin(user: @user.username, password: @user_password)
+        5.times { post '/2fa', params: { auth_code: '000000' } }
+        password_athenticate_admin(user: @user.username, password: @user_password)
+        post '/2fa', params: { auth_code: ROTP::TOTP.new(@user.otp_secret).now }
+        expect(response).to redirect_to(:admin)
+        expect(session[:user_id]).to eq(@user.id)
+      end
     end
   end
 

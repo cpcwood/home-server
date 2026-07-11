@@ -24,6 +24,8 @@
 #
 class User < ApplicationRecord
   DEFAULT_REMOTE_IP = '127.0.0.1'.freeze
+  # rotp drift is measured in seconds; one 30s step covers the adjacent code.
+  TOTP_DRIFT = 30
 
   has_many :posts, dependent: :destroy
   has_many :gallery_images, dependent: :destroy
@@ -55,20 +57,20 @@ class User < ApplicationRecord
             confirmation: { message: 'Emails do not match' },
             if: -> { new_record? || !email.nil? }
 
+  def self.totp_for(secret)
+    ROTP::TOTP.new(secret, issuer: ENV.fetch('SITE_HOST', 'home-server'))
+  end
+
   def otp_enabled?
     otp_secret.present?
   end
 
   def verify_totp!(code)
     return false unless otp_enabled?
-    timestamp = totp.verify(code, drift_behind: 1, drift_ahead: 1, after: otp_consumed_timestep)
+    timestamp = totp.verify(code, drift_behind: TOTP_DRIFT, drift_ahead: TOTP_DRIFT, after: otp_consumed_timestep)
     return false unless timestamp
     update(otp_consumed_timestep: timestamp)
     true
-  end
-
-  def otp_provisioning_uri
-    totp.provisioning_uri(email)
   end
 
   def send_password_reset_email!
@@ -98,7 +100,7 @@ class User < ApplicationRecord
   private
 
   def totp
-    ROTP::TOTP.new(otp_secret, issuer: ENV.fetch('SITE_HOST', 'home-server'))
+    self.class.totp_for(otp_secret)
   end
 
   def add_defaults
