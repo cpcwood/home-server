@@ -1,8 +1,7 @@
 User.create(
   username: ENV['ADMIN_USERNAME'],
   email: ENV['ADMIN_EMAIL'],
-  password: ENV['ADMIN_PASSWORD'],
-  mobile_number: ENV['ADMIN_MOBILE_NUMBER'])
+  password: ENV['ADMIN_PASSWORD'])
 
 site_settings = SiteSetting.create(
   name: 'home-server',

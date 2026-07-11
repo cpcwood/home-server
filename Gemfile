@@ -20,8 +20,9 @@ gem 'bcrypt', '~> 3.1'
 gem 'rack-attack', '~> 6.8'
 # Send HTTP Requests
 gem 'faraday', '~> 2.14', require: false
-# Verify 2FA using twilio
-gem 'twilio-ruby', '~> 7.10', require: false
+# TOTP two factor auth
+gem 'rotp', '~> 6.3'
+gem 'rqrcode', '~> 3.2'
 # Action Mailer and Action Job Backend - Sidekiq (Requires redis and start upon server launch)
 gem 'sidekiq', '~> 8.1'
 # Transform uploaded images
@@ -49,6 +50,10 @@ gem 'rake', '~> 13.4'
 gem 'ahoy_matey', '~> 5.5'
 gem 'geocoder', '~> 1.8'
 gem 'maxminddb', '~> 0.1'
+
+# Admin analytics charts
+gem 'chartkick', '~> 5.2'
+gem 'groupdate', '~> 6.8'
 
 group :production do
   # AWS S3 for production storage

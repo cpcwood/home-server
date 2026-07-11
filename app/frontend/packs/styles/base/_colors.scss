@@ -1,37 +1,42 @@
-// site
-$dark: rgb(0, 0, 0);
-$light: rgb(255, 255, 255);
-$dark-dark: rgb(89, 89, 89);
-$medium-dark: rgb(110, 110, 110);
-$light-dark: rgb(150, 150, 150);
-$medium-light: rgb(211, 211, 211);
+// Values resolve at runtime via base/_themes.scss so the palette can switch
+// per [data-theme] without touching component modules.
+$dark: var(--color-dark);
+$light: var(--color-light);
+$dark-dark: var(--color-dark-dark);
+$medium-dark: var(--color-medium-dark);
+$light-dark: var(--color-light-dark);
+$medium-light: var(--color-medium-light);
 
-// font
-$general-font: $dark;
-$darker-font: rgb(17, 23, 50);
-$heading-font: rgb(50, 55, 60);
-$inverse-font: rgb(240, 240, 240);
-$link-color: rgb(0, 69, 139);
+$general-font: var(--color-general-font);
+$darker-font: var(--color-darker-font);
+$heading-font: var(--color-heading-font);
+$inverse-font: var(--color-inverse-font);
+$link-color: var(--color-link);
 
-$alerts: rgb(255, 0, 0);
-$notices: rgb(0, 90, 0);
+$alerts: var(--color-alerts);
+$notices: var(--color-notices);
 
-$background-color: $light;
-$background-dark: rgb(8, 8, 8);
+$background-color: var(--color-background);
+$background-dark: var(--color-background-dark);
 
-$box-border-color: rgb(204, 204, 204);
-$box-border-light: rgb(230, 230, 230);
-$box-highlight: $box-border-light;
+$box-border-color: var(--color-box-border);
+$box-border-light: var(--color-box-border-light);
+$box-highlight: var(--color-box-highlight);
 
-$sidebar-background: rgb(34, 37, 42);
-$sidebar-highlight: rgb(15, 16, 19);
-$sidebar-text-unselected: rgb(151, 156, 172);
-$sidebar-text: $medium-light;
+$sidebar-background: var(--color-sidebar-background);
+$sidebar-highlight: var(--color-sidebar-highlight);
+$sidebar-text-unselected: var(--color-sidebar-text-unselected);
+$sidebar-text: var(--color-sidebar-text);
 
-$form-separator: rgb(160, 160, 160);
-$form-slider: $medium-light;
-$form-slider-thumb: rgb(76, 175, 80);
+$form-separator: var(--color-form-separator);
+$form-slider: var(--color-form-slider);
+$form-slider-thumb: var(--color-form-slider-thumb);
 
-$nav-button-hover: rgb(94, 94, 94);
+$nav-button-hover: var(--color-nav-button-hover);
 
-$theme-color: rgb(75, 149, 152);
+$theme-color: var(--color-theme);
+$destructive: var(--color-destructive);
+$button-shadow: var(--button-shadow);
+$button-shadow-hover: var(--button-shadow-hover);
+$button-secondary-border: var(--button-secondary-border);
+$link-highlight: var(--link-highlight);

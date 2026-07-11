@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static values = { page: Number, apiUrl: String }
+  static values = { page: Number, apiUrl: String, linkAttribute: { type: String, default: 'url' } }
 
   isLoading = false
   isRemainingPages = true
@@ -55,7 +55,7 @@ export default class extends Controller {
       imageElement.setAttribute('itemscope', '')
       imageElement.setAttribute('itemtype', 'https://schema.org/ImageObject')
       imageElement.innerHTML = `
-        <a href='${imageData.url}' class='view-gallery-image'>
+        <a href='${imageData[this.linkAttributeValue]}' class='view-gallery-image'>
           <img src='${imageData.thumbnail_url}' class='gallery-image-thumbnail' title='${imageData.title}' alt='${imageData.description}' data-action='load->gallery-scroll-load#imageLoaded' data-justified-gallery-target='galleryItem' itemprop='contentUrl'>
         </a>
       `
@@ -74,10 +74,12 @@ export default class extends Controller {
 
   displayGalleryItemTargets () {
     this.removeLoadingIcon()
+    for (let i = 0; i < this.newImageElements.length; i++) {
+      this.newImageElements[i].classList.remove('hidden')
+    }
     this.element.dispatchEvent(new Event('renderGallery'))
     this.element.dispatchEvent(new Event('reConnectLightbox'))
     for (let i = 0; i < this.newImageElements.length; i++) {
-      this.newImageElements[i].classList.remove('hidden')
       const imgTarget = this.newImageElements[i].querySelector('img')
       imgTarget.style.transitionDelay = `${i * 0.1}s`
       imgTarget.classList.add('fade-in')

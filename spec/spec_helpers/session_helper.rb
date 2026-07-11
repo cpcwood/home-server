@@ -4,19 +4,12 @@ def password_athenticate_admin(user:, password:)
 end
 
 def login
-  stub_two_factor_auth_service
   password_athenticate_admin(user: @user.username, password: @user_password)
-  post('/2fa', params: { auth_code: '123456' })
   follow_redirect!
 end
 
 def logout
   delete('/login')
-end
-
-def stub_two_factor_auth_service
-  allow(TwoFactorAuthService).to receive(:send_auth_code).and_return(true)
-  allow(TwoFactorAuthService).to receive(:auth_code_valid?).and_return(true)
 end
 
 def stub_recaptcha_service

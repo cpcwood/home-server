@@ -33,9 +33,13 @@ export default class extends Controller {
     try {
       const geometryInput = []
       for (let i = 0; i < this.galleryItemTargets.length; i++) {
+        const target = this.galleryItemTargets[i]
+        if (target.width === 0 || target.height === 0) {
+          return
+        }
         geometryInput.push({
-          width: this.galleryItemTargets[i].width,
-          height: this.galleryItemTargets[i].height
+          width: target.width,
+          height: target.height
         })
       }
       const config = {

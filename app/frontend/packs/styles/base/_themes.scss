@@ -1,0 +1,74 @@
+// Only the tokens that differ from the light :root defaults; the rest cascade.
+@mixin dark-tokens {
+  color-scheme: dark;
+  --color-dark: rgb(240, 240, 240);
+  --color-light: rgb(24, 27, 32);
+  --color-dark-dark: rgb(170, 175, 182);
+  --color-medium-dark: rgb(140, 146, 154);
+  --color-light-dark: rgb(110, 116, 124);
+  --color-medium-light: rgb(58, 63, 70);
+  --color-general-font: rgb(206, 210, 218);
+  --color-darker-font: rgb(222, 226, 232);
+  --color-heading-font: rgb(228, 231, 235);
+  --color-link: rgb(120, 170, 220);
+  --color-alerts: rgb(255, 105, 97);
+  --color-notices: rgb(120, 200, 120);
+  --color-background: rgb(24, 27, 32);
+  --color-box-border: rgb(60, 65, 72);
+  --color-box-border-light: rgb(48, 53, 60);
+  --color-box-highlight: rgb(48, 53, 60);
+  --color-form-separator: rgb(90, 96, 104);
+  --color-form-slider: rgb(58, 63, 70);
+  --color-theme: rgb(95, 175, 178);
+  --color-destructive: rgb(224, 108, 100);
+  --button-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.55);
+  --button-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.5), 0 10px 26px rgba(0, 0, 0, 0.65);
+  --button-secondary-border: 1px solid var(--color-box-border);
+  --link-highlight: rgba(95, 175, 178, 0.5);
+}
+
+:root {
+  color-scheme: light;
+  --color-dark: rgb(0, 0, 0);
+  --color-light: rgb(255, 255, 255);
+  --color-dark-dark: rgb(89, 89, 89);
+  --color-medium-dark: rgb(110, 110, 110);
+  --color-light-dark: rgb(150, 150, 150);
+  --color-medium-light: rgb(211, 211, 211);
+  --color-general-font: rgb(0, 0, 0);
+  --color-darker-font: rgb(17, 23, 50);
+  --color-heading-font: rgb(50, 55, 60);
+  --color-inverse-font: rgb(240, 240, 240);
+  --color-link: rgb(0, 69, 139);
+  --color-alerts: rgb(255, 0, 0);
+  --color-notices: rgb(0, 90, 0);
+  --color-background: rgb(255, 255, 255);
+  --color-background-dark: rgb(8, 8, 8);
+  --color-box-border: rgb(204, 204, 204);
+  --color-box-border-light: rgb(230, 230, 230);
+  --color-box-highlight: rgb(230, 230, 230);
+  --color-sidebar-background: rgb(34, 37, 42);
+  --color-sidebar-highlight: rgb(15, 16, 19);
+  --color-sidebar-text-unselected: rgb(151, 156, 172);
+  --color-sidebar-text: rgb(211, 211, 211);
+  --color-form-separator: rgb(160, 160, 160);
+  --color-form-slider: rgb(211, 211, 211);
+  --color-form-slider-thumb: rgb(76, 175, 80);
+  --color-nav-button-hover: rgb(94, 94, 94);
+  --color-theme: rgb(75, 149, 152);
+  --color-destructive: rgb(160, 40, 40);
+  --button-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 4px 14px rgba(0, 0, 0, 0.1);
+  --button-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.1), 0 10px 24px rgba(0, 0, 0, 0.16);
+  --button-secondary-border: 0 solid transparent;
+  --link-highlight: rgba(75, 149, 152, 0.65);
+}
+
+[data-theme='dark'] {
+  @include dark-tokens;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include dark-tokens;
+  }
+}

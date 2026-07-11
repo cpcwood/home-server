@@ -4,21 +4,29 @@
 
 <div class='dashboard-item-container'>
   <h3>
-    Contact Emails
+    Contact Messages
   </h3>
-  Placeholder
+  <% if @contact_messages.empty? %>
+    <%= render partial: 'partials/no_items', locals: { item: 'contact messages' } %>
+  <% end %>
 </div>
-<div class='dashboard-item-separator'></div>
+
+<% @contact_messages.each do |message| %>
+  <div class='dashboard-item-container contact-message'>
+    <h4><%= message.subject %></h4>
+    <div class='small-font'>
+      From <%= message.from %> &lt;<%= message.email %>&gt; — <%= full_date_and_time(message.created_at) %>
+    </div>
+    <p><%= message.content %></p>
+  </div>
+  <div class='dashboard-item-separator'></div>
+<% end %>
+
 <div class='dashboard-item-container'>
-  <h3>
-    Blog Comments
-  </h3>
-  Placeholder
-</div>
-<div class='dashboard-item-separator'></div>
-<div class='dashboard-item-container'>
-  <h3>
-    Say Hellos
-  </h3>
-  Placeholder
+  <% if @page > 1 %>
+    <%= link_to('Newer', admin_notifications_path(page: @page - 1), class: 'standard-button secondary') %>
+  <% end %>
+  <% if @more_pages %>
+    <%= link_to('Older', admin_notifications_path(page: @page + 1), class: 'standard-button secondary') %>
+  <% end %>
 </div>

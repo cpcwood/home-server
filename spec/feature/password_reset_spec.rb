@@ -31,11 +31,8 @@ feature 'Password reset', feature: true do
     expect(page).to have_content('Password reset token expired')
 
     # Login with new password
-    stub_two_factor_auth_service
     fill_in('user', with: @user.username)
     fill_in('password', with: 'new_password')
-    click_button('Login')
-    fill_in('auth_code', with: '123456')
     click_button('Login')
     expect(page).to have_content("#{@user.username} welcome back to your home-server!")
   end

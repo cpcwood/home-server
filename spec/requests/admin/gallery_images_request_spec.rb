@@ -34,6 +34,30 @@ RSpec.describe 'Admin::GalleryImagesController', type: :request do
     end
   end
 
+  describe 'GET /admin/gallery.json' do
+    before do
+      create_list(:gallery_image, 15, user: @user)
+    end
+
+    it 'returns the first page of 12 with admin edit links' do
+      get '/admin/gallery.json'
+      data = response.parsed_body['data']
+      expect(data.length).to eq(12)
+      expect(data.first['attributes']['link_url']).to match(%r{/admin/gallery-images/\d+/edit})
+      expect(data.first['attributes']['thumbnail_url']).to be_present
+    end
+
+    it 'returns the remainder for page 2' do
+      get '/admin/gallery.json?page=2'
+      expect(response.parsed_body['data'].length).to eq(3)
+    end
+
+    it 'returns an empty page past the last' do
+      get '/admin/gallery.json?page=3'
+      expect(response.parsed_body['data']).to eq([])
+    end
+  end
+
   describe 'GET /admin/gallery-images/new #new' do
     it 'template render' do
       get('/admin/gallery-images/new')

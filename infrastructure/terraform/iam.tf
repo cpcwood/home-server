@@ -149,6 +149,45 @@ data "aws_iam_policy_document" "github_actions_permissions" {
     ]
   }
 
+  # SES identity actions don't support resource-level scoping — `*` is required.
+  statement {
+    sid    = "SesManagement"
+    effect = "Allow"
+    actions = [
+      "ses:VerifyDomainIdentity",
+      "ses:VerifyDomainDkim",
+      "ses:DeleteIdentity",
+      "ses:GetIdentityVerificationAttributes",
+      "ses:GetIdentityDkimAttributes",
+      "ses:ListIdentities",
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "SesSmtpUser"
+    effect = "Allow"
+    actions = [
+      "iam:CreateUser",
+      "iam:DeleteUser",
+      "iam:GetUser",
+      "iam:TagUser",
+      "iam:UntagUser",
+      "iam:ListUserTags",
+      "iam:PutUserPolicy",
+      "iam:GetUserPolicy",
+      "iam:DeleteUserPolicy",
+      "iam:ListUserPolicies",
+      "iam:ListAttachedUserPolicies",
+      "iam:CreateAccessKey",
+      "iam:DeleteAccessKey",
+      "iam:UpdateAccessKey",
+      "iam:ListAccessKeys",
+      "iam:GetAccessKeyLastUsed",
+    ]
+    resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/home-server-${var.environment}-ses-smtp"]
+  }
+
   # Read-only on the OIDC provider so plan can refresh the data source.
   statement {
     sid       = "ReadOIDCProvider"
