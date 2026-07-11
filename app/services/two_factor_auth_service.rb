@@ -2,6 +2,7 @@ module TwoFactorAuthService
   class << self
     def start(session, user)
       session[:two_factor_auth_id] = user.id
+      session.delete(:two_factor_auth_attempts)
       true
     end
 

@@ -16,11 +16,6 @@ module Admin
 
     private
 
-    def verify_current_password
-      current_password = current_password_params[:password]
-      @user.authenticate(current_password)
-    end
-
     def update_section(permitted_params, section_name)
       update_message(@user.update(permitted_params), section_name) if update_required?(permitted_params)
     end
@@ -36,10 +31,6 @@ module Admin
         @alerts.push(@user.errors.messages.to_a.flatten.last)
         @user.reload
       end
-    end
-
-    def current_password_params
-      params.require(:current_password).permit(:password)
     end
 
     def username_update_params
