@@ -96,7 +96,7 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 3.40', require: false
   # Selenium 4 bundles selenium-manager for driver resolution (replaces webdrivers)
-  gem 'selenium-webdriver', '~> 4.45', require: false
+  gem 'selenium-webdriver', '~> 4.46', require: false
   # Coverage with simplecov
   gem 'simplecov', '~> 0.22', require: false
   gem 'simplecov-console', '~> 0.9', require: false
