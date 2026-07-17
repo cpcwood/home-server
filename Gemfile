@@ -68,7 +68,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 13.0', platforms: [:mri, :mingw, :x64_mingw]
   # Code policing with rubocop
-  gem 'rubocop-rails', '~> 2.35', require: false
+  gem 'rubocop-rails', '~> 2.36', require: false
   gem 'rubocop-performance', '~> 1.26', require: false
   # Some real nice printing
   gem 'amazing_print', '~> 2.0'
