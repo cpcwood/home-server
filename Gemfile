@@ -82,7 +82,7 @@ group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '~> 4.3'
   # Annotate models for quick reference (maintained fork of the abandoned annotate gem)
-  gem 'annotaterb', '~> 4.23'
+  gem 'annotaterb', '~> 4.24'
   # Static security testing
   gem 'brakeman', '~> 8.0'
   # Lint erb
