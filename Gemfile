@@ -98,10 +98,10 @@ group :test do
   # Selenium 4 bundles selenium-manager for driver resolution (replaces webdrivers)
   gem 'selenium-webdriver', '~> 4.46', require: false
   # Coverage with simplecov
-  gem 'simplecov', '~> 0.22', require: false
+  gem 'simplecov', '~> 1.0', require: false
   gem 'simplecov-console', '~> 0.9', require: false
   # Coverage badge with coveralls (maintained fork of the abandoned coveralls gem)
-  gem 'coveralls_reborn', '~> 0.29', require: false
+  gem 'coveralls_reborn', '~> 1.0', require: false
   # Mock HTTP Requests
   gem 'webmock', '~> 3.26', require: false
   # Clean up the messy database during tests
