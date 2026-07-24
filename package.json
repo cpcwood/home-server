@@ -24,7 +24,7 @@
     "js-cookie": "3.0.8",
     "justified-layout": "4.1.0",
     "mini-css-extract-plugin": "^2.10.2",
-    "postcss": "^8.5.19",
+    "postcss": "^8.5.22",
     "rails-erb-loader": "5.5.2",
     "resolve-url-loader": "5.0.0",
     "sass": "1.101.0",
