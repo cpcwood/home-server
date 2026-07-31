@@ -421,7 +421,7 @@ GEM
     sidekiq_alive (2.5.0)
       gserver (~> 0.0.1)
       sidekiq (>= 5, < 9)
-    simplecov (1.0.2)
+    simplecov (1.0.3)
     simplecov-console (0.9.5)
       ansi
       simplecov
