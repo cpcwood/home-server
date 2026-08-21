@@ -69,7 +69,7 @@ group :development, :test do
   gem 'byebug', '~> 13.0', platforms: [:mri, :mingw, :x64_mingw]
   # Code policing with rubocop
   gem 'rubocop-rails', '~> 2.37', require: false
-  gem 'rubocop-performance', '~> 1.26', require: false
+  gem 'rubocop-performance', '~> 1.27', require: false
   # Some real nice printing
   gem 'amazing_print', '~> 2.0'
   # Manage models in spec
