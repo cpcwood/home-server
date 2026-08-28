@@ -61,7 +61,7 @@ group :production do
   gem 'whenever', '~> 1.1', require: false
   # Error Reporting
   gem 'sentry-ruby', '~> 6.6'
-  gem 'sentry-rails', '~> 6.6'
+  gem 'sentry-rails', '~> 6.7'
 end
 
 group :development, :test do
