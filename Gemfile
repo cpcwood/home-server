@@ -32,7 +32,7 @@ gem 'mini_magick', '~> 4.13'
 # Process markdown
 gem 'redcarpet', '~> 3.6'
 # Markdown syntax highlighing
-gem 'rouge', '~> 5.0'
+gem 'rouge', '~> 5.1'
 # Validate urls in model
 gem 'validate_url', '~> 1.0'
 # Validate dates in model
