@@ -21,7 +21,7 @@ gem 'rack-attack', '~> 6.8'
 # Send HTTP Requests
 gem 'faraday', '~> 2.14', require: false
 # Verify 2FA using twilio
-gem 'twilio-ruby', '~> 7.10', require: false
+gem 'twilio-ruby', '~> 7.11', require: false
 # Action Mailer and Action Job Backend - Sidekiq (Requires redis and start upon server launch)
 gem 'sidekiq', '~> 8.1'
 # Transform uploaded images
