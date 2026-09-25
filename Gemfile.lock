@@ -83,7 +83,7 @@ GEM
       device_detector (>= 1)
       safely_block (>= 0.4)
     amazing_print (2.0.0)
-    annotaterb (4.24.0)
+    annotaterb (4.25.0)
       activerecord (>= 6.0.0)
       activesupport (>= 6.0.0)
     ansi (1.6.0)
@@ -498,7 +498,7 @@ PLATFORMS
 DEPENDENCIES
   ahoy_matey (~> 5.5)
   amazing_print (~> 2.0)
-  annotaterb (~> 4.24)
+  annotaterb (~> 4.25)
   aws-sdk-s3 (~> 1.232)
   bcrypt (~> 3.1)
   brakeman (~> 8.0)
