@@ -71,7 +71,7 @@ group :development, :test do
   gem 'rubocop-rails', '~> 2.37', require: false
   gem 'rubocop-performance', '~> 1.27', require: false
   # Some real nice printing
-  gem 'amazing_print', '~> 2.0'
+  gem 'amazing_print', '~> 3.0'
   # Manage models in spec
   gem 'factory_bot_rails', '~> 6.5'
   # Listen - required for rails dev environment
