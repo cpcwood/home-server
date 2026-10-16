@@ -60,7 +60,7 @@ group :production do
   # Manage cron
   gem 'whenever', '~> 1.1', require: false
   # Error Reporting
-  gem 'sentry-ruby', '~> 7.0'
+  gem 'sentry-ruby', '~> 7.1'
   gem 'sentry-rails', '~> 7.0'
 end
 
