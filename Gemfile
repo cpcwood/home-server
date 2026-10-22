@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '3.4.9'
+ruby '4.0.8'
 
 # Rails
 gem 'rails', '~> 8.1'
@@ -29,6 +29,8 @@ gem 'image_processing', '~> 2.2'
 # ImageMagick wrapper for variant processing + EXIF (image_processing 2 no longer depends on it).
 # Held at 4.x: mini_magick 5 removed Image#mime_type and Image#exif, which Image/GalleryImage rely on.
 gem 'mini_magick', '~> 4.13'
+# mini_magick 4.x requires benchmark, which Ruby 4.0 no longer ships as a default gem
+gem 'benchmark', '~> 0.5'
 # Process markdown
 gem 'redcarpet', '~> 3.6'
 # Markdown syntax highlighing
@@ -66,7 +68,7 @@ end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', '~> 13.0', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', '~> 13.0', platforms: [:mri, :windows]
   # Code policing with rubocop
   gem 'rubocop-rails', '~> 2.37', require: false
   gem 'rubocop-performance', '~> 1.27', require: false
