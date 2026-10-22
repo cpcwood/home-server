@@ -6,7 +6,7 @@ describe('ThemeController', () => {
     document.documentElement.removeAttribute('data-theme')
     localStorage.clear()
     document.body.innerHTML = "<button data-controller='theme' data-action='click->theme#toggle'>THEME</button>"
-    window.matchMedia = jest.fn().mockReturnValue({ matches: false })
+    window.matchMedia = jest.fn().mockReturnValue({ matches: false, addEventListener: jest.fn(), removeEventListener: jest.fn() })
     const application = Application.start()
     application.register('theme', ThemeController)
   })
@@ -27,7 +27,7 @@ describe('ThemeController', () => {
   })
 
   it('starts from the OS preference when unset', () => {
-    window.matchMedia = jest.fn().mockReturnValue({ matches: true })
+    window.matchMedia = jest.fn().mockReturnValue({ matches: true, addEventListener: jest.fn(), removeEventListener: jest.fn() })
     document.querySelector('button').click()
     expect(document.documentElement.dataset.theme).toEqual('light')
   })

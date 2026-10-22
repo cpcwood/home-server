@@ -7,10 +7,16 @@ import imageLoaderController from 'controllers/image_loader_controller'
 
 jest.useFakeTimers()
 
-describe('image_loader_controller', () => {
-  let fadeTargetOne
-  let fadeTargetTwo
+// jsdom images report complete === true with no src, so model the browser
+// states we care about explicitly: loading, loaded, and broken.
+function defineImageState (image) {
+  const state = { complete: false, naturalHeight: 0 }
+  Object.defineProperty(image, 'complete', { configurable: true, get: () => state.complete })
+  Object.defineProperty(image, 'naturalHeight', { configurable: true, get: () => state.naturalHeight })
+  return state
+}
 
+describe('image_loader_controller', () => {
   beforeAll(() => {
     const application = Application.start()
     application.register('image-loader', imageLoaderController)
@@ -26,55 +32,102 @@ describe('image_loader_controller', () => {
 
   describe('images present', () => {
     let container
+    let tileTwo
+    let imageOne
+    let imageTwo
+    let stateOne
+    let stateTwo
 
     beforeEach(() => {
       document.body.innerHTML = `
-        <div data-controller="image-loader" data-image-loader-target="container">
-          <img class="fade-target" data-action="load->image-loader#imageLoaded" data-image-loader-target="fade">
-          <img class="fade-target" data-action="load->image-loader#imageLoaded" data-image-loader-target="fade">
+        <div data-controller="image-loader" data-image-loader-target="container" data-image-loader-tile-selector-value=".flex-image-tile">
+          <div class="flex-image-tile">
+            <img class="cover-image" data-action="load->image-loader#imageLoaded error->image-loader#imageError" data-image-loader-target="fade">
+          </div>
+          <div class="flex-image-tile">
+            <img class="cover-image" data-action="load->image-loader#imageLoaded error->image-loader#imageError" data-image-loader-target="fade">
+          </div>
         </div>
       `
       container = document.querySelector('[data-controller="image-loader"]')
-      const fadeTargets = document.getElementsByClassName('fade-target')
-      fadeTargetOne = fadeTargets[0]
-      fadeTargetTwo = fadeTargets[1]
-      fadeTargetOne.addEventListener('load', () => {
-        jest.spyOn(fadeTargetOne, 'naturalHeight', 'get').mockReturnValue(1)
+      tileTwo = document.getElementsByClassName('flex-image-tile')[1]
+      const images = document.getElementsByClassName('cover-image')
+      imageOne = images[0]
+      imageTwo = images[1]
+      stateOne = defineImageState(imageOne)
+      stateTwo = defineImageState(imageTwo)
+    })
+
+    function markLoaded (state) {
+      state.complete = true
+      state.naturalHeight = 1
+    }
+
+    function markBroken (state) {
+      state.complete = true
+      state.naturalHeight = 0
+    }
+
+    describe('#imageLoaded', () => {
+      it('waits while an image is still loading', () => {
+        markLoaded(stateOne)
+        imageOne.dispatchEvent(new Event('load'))
+        jest.advanceTimersByTime(1)
+        expect(imageOne.classList).not.toContain('fade-in')
+        expect(imageTwo.classList).not.toContain('fade-in')
       })
-      fadeTargetTwo.addEventListener('load', () => {
-        jest.spyOn(fadeTargetTwo, 'naturalHeight', 'get').mockReturnValue(1)
+
+      it('fades in once every image has resolved', () => {
+        markLoaded(stateOne)
+        markLoaded(stateTwo)
+        imageOne.dispatchEvent(new Event('load'))
+        imageTwo.dispatchEvent(new Event('load'))
+        jest.advanceTimersByTime(1)
+        expect(imageOne.classList).toContain('fade-in')
+        expect(imageTwo.classList).toContain('fade-in')
+        expect(imageOne.style.transitionDelay).toBe('0s')
+        expect(imageTwo.style.transitionDelay).toBe('0.1s')
       })
     })
 
-    describe('#imageLoaded', () => {
-      it('not all images loaded', () => {
-        fadeTargetOne.dispatchEvent(new Event('load'))
+    describe('#imageError', () => {
+      it('flags the broken tile but still fades the grid in', () => {
+        markLoaded(stateOne)
+        markBroken(stateTwo)
+        imageOne.dispatchEvent(new Event('load'))
+        imageTwo.dispatchEvent(new Event('error'))
         jest.advanceTimersByTime(1)
-        expect(fadeTargetOne.classList).not.toContain('fade-in')
-        expect(fadeTargetTwo.classList).not.toContain('fade-in')
-      })
-
-      it('all images loaded', () => {
-        fadeTargetOne.dispatchEvent(new Event('load'))
-        fadeTargetTwo.dispatchEvent(new Event('load'))
-        jest.advanceTimersByTime(1)
-        expect(fadeTargetOne.classList).toContain('fade-in')
-        expect(fadeTargetTwo.classList).toContain('fade-in')
-        expect(fadeTargetOne.style.transitionDelay).toBe('0s')
-        expect(fadeTargetTwo.style.transitionDelay).toBe('0.1s')
+        expect(tileTwo.classList).toContain('load-failed')
+        expect(imageOne.classList).toContain('fade-in')
+        expect(imageTwo.classList).toContain('fade-in')
       })
     })
 
     describe('load timeout', () => {
-      it('flags the container once the timeout elapses with images still loading', () => {
-        fadeTargetOne.dispatchEvent(new Event('load'))
+      it('flags the container and the straggling tile once the timeout elapses', () => {
+        markLoaded(stateOne)
+        imageOne.dispatchEvent(new Event('load'))
         jest.advanceTimersByTime(10000)
         expect(container.classList).toContain('load-timed-out')
+        expect(tileTwo.classList).toContain('load-failed')
+      })
+
+      it('unflags a tile whose image arrives after the timeout', () => {
+        markLoaded(stateOne)
+        imageOne.dispatchEvent(new Event('load'))
+        jest.advanceTimersByTime(10000)
+        expect(tileTwo.classList).toContain('load-failed')
+        markLoaded(stateTwo)
+        imageTwo.dispatchEvent(new Event('load'))
+        jest.advanceTimersByTime(1)
+        expect(tileTwo.classList).not.toContain('load-failed')
       })
 
       it('does not flag the container when all images load first', () => {
-        fadeTargetOne.dispatchEvent(new Event('load'))
-        fadeTargetTwo.dispatchEvent(new Event('load'))
+        markLoaded(stateOne)
+        markLoaded(stateTwo)
+        imageOne.dispatchEvent(new Event('load'))
+        imageTwo.dispatchEvent(new Event('load'))
         jest.advanceTimersByTime(10000)
         expect(container.classList).not.toContain('load-timed-out')
       })

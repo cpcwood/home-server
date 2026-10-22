@@ -13,7 +13,7 @@
   --color-link: rgb(120, 170, 220);
   --color-alerts: rgb(255, 105, 97);
   --color-notices: rgb(120, 200, 120);
-  --color-background: rgb(24, 27, 32);
+  --color-background: rgb(18, 20, 24);
   --color-box-border: rgb(60, 65, 72);
   --color-box-border-light: rgb(48, 53, 60);
   --color-box-highlight: rgb(48, 53, 60);
@@ -25,6 +25,9 @@
   --button-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.5), 0 10px 26px rgba(0, 0, 0, 0.65);
   --button-secondary-border: 1px solid var(--color-box-border);
   --link-highlight: rgba(95, 175, 178, 0.5);
+  --icon-invert: invert(1);
+  --theme-icon-moon: none;
+  --theme-icon-sun: block;
 }
 
 :root {
@@ -61,6 +64,9 @@
   --button-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.1), 0 10px 24px rgba(0, 0, 0, 0.16);
   --button-secondary-border: 0 solid transparent;
   --link-highlight: rgba(75, 149, 152, 0.65);
+  --icon-invert: none;
+  --theme-icon-moon: block;
+  --theme-icon-sun: none;
 }
 
 [data-theme='dark'] {

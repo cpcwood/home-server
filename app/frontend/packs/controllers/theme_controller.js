@@ -2,7 +2,14 @@ import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   connect () {
+    this.schemeQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    this.schemeListener = () => this.reflect()
+    this.schemeQuery.addEventListener('change', this.schemeListener)
     this.reflect()
+  }
+
+  disconnect () {
+    this.schemeQuery.removeEventListener('change', this.schemeListener)
   }
 
   toggle () {
@@ -20,6 +27,6 @@ export default class extends Controller {
   reflect () {
     const isDark = this.currentTheme() === 'dark'
     this.element.setAttribute('aria-pressed', isDark)
-    this.element.textContent = isDark ? 'LIGHT MODE' : 'DARK MODE'
+    this.element.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode')
   }
 }
