@@ -24,8 +24,8 @@ locally:
 - [ ] From this branch: `./scripts/bootstrap.sh` — applies the CI role policy and
       creates the SES identity, DKIM, SMTP user and `…/email` SSM param
 - [ ] Add DNS at the host: TXT `_amazonses.cpcwood.com` = `ses_domain_verification_token`;
-      three DKIM CNAMEs from `ses_dkim_tokens` (`<token>._domainkey.cpcwood.com` → `<token>.dkim.amazonses.com`);
-      DMARC TXT `_dmarc.cpcwood.com` (value in the README runbook)
+      three DKIM CNAMEs from `ses_dkim_tokens` (`<token>._domainkey.cpcwood.com` → `<token>.dkim.amazonses.com`).
+      Leave the existing `_dmarc` record (`p=reject`) as it is — SES mail passes it via DKIM
 - [ ] Wait until the identity shows **Verified** in the SES console (async, lags DNS)
 - [ ] Request SES **production access** and wait for approval (~24h). Until then SES
       only delivers to verified addresses, so password-reset and 2FA-enrollment
