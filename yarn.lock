@@ -7502,10 +7502,10 @@ negotiator@~0.6.4:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.4.tgz#777948e2452651c570b712dd01c23e262713fff7"
   integrity sha512-myRT3DiWPHqho5PrJaIRyaMv2kgYf0mUVgBNOYMuCH5Ki1yEiQaf/ZJuQ62nvpc44wL5WDbTX7yGJi1Neevw8w==
 
-neostandard@^0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/neostandard/-/neostandard-0.14.0.tgz#371c274057a73bbbd94d3c88163d734b6caf22fc"
-  integrity sha512-11ZZgQdQrzdMqAo494FJzrSh5/lNtUyrx1mz7BVXcA9EpXCEBOz4WhVz5sG79VvoBG/4L5lZ8xjfHxng95CtFQ==
+neostandard@^0.14.1:
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/neostandard/-/neostandard-0.14.1.tgz#881c1910b354157ec80860da63a82c9ac1720509"
+  integrity sha512-cEGi7ADMWJRTcdsZeDXCyA1ZeJLQPBq6HP9z9CE1ysu+CJOKYt59ADG0BT6ETonuF6xNXZbMiNc8S8prYys4aQ==
   dependencies:
     "@humanwhocodes/gitignore-to-minimatch" "^1.0.2"
     "@stylistic/eslint-plugin" "5.10.0"
