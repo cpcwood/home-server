@@ -48,7 +48,7 @@
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
     "jest-erb-transformer": "^1.2.12",
-    "neostandard": "^0.14.0",
+    "neostandard": "^0.14.1",
     "stylelint": "^17.16.0",
     "stylelint-config-sass-guidelines": "^13.0.0",
     "stylelint-config-standard": "^40.0.0"
