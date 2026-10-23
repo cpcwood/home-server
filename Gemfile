@@ -74,7 +74,7 @@ group :development, :test do
   # Manage models in spec
   gem 'factory_bot_rails', '~> 6.5'
   # Listen - required for rails dev environment
-  gem 'listen', '~> 3.9'
+  gem 'listen', '~> 3.10'
 end
 
 group :development do
@@ -83,7 +83,7 @@ group :development do
   # Annotate models for quick reference (maintained fork of the abandoned annotate gem)
   gem 'annotaterb', '~> 4.25'
   # Static security testing
-  gem 'brakeman', '~> 8.0'
+  gem 'brakeman', '~> 8.1'
   # Lint erb
   gem 'erb_lint', '~> 0.9'
 end
