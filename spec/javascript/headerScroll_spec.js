@@ -18,6 +18,11 @@ describe('header_scroll_controller', () => {
     window.removeEventListener('scroll', headerScroll)
   })
 
+  it('does nothing on pages without a header image', () => {
+    document.body.innerHTML = '<div></div>'
+    expect(() => headerScroll()).not.toThrow()
+  })
+
   describe('#scrollHeaderImage', () => {
     const imageHeight = 300
     const headerHeight = 60
