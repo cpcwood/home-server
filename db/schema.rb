@@ -235,16 +235,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_23_120000) do
     t.text "email"
     t.string "last_login_ip"
     t.datetime "last_login_time", precision: nil
-    t.integer "otp_consumed_timestep"
-    t.text "otp_secret"
+    t.text "mobile_number"
     t.text "password_digest"
     t.datetime "password_reset_expiry", precision: nil
     t.string "password_reset_token"
     t.datetime "updated_at", null: false
     t.text "username"
+    t.text "otp_secret"
+    t.bigint "otp_consumed_timestep"
     t.integer "failed_otp_attempts", default: 0, null: false
     t.datetime "otp_locked_until"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["mobile_number"], name: "index_users_on_mobile_number", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 

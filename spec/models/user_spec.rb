@@ -8,7 +8,8 @@
 #  email                 :text
 #  last_login_ip         :string
 #  last_login_time       :datetime
-#  otp_consumed_timestep :integer
+#  mobile_number         :text
+#  otp_consumed_timestep :bigint
 #  otp_secret            :text
 #  password_digest       :text
 #  password_reset_expiry :datetime
@@ -19,8 +20,9 @@
 #
 # Indexes
 #
-#  index_users_on_email     (email) UNIQUE
-#  index_users_on_username  (username) UNIQUE
+#  index_users_on_email          (email) UNIQUE
+#  index_users_on_mobile_number  (mobile_number) UNIQUE
+#  index_users_on_username       (username) UNIQUE
 #
 
 RSpec.describe User, type: :model do
@@ -182,6 +184,20 @@ RSpec.describe User, type: :model do
         travel 16.minutes
         expect(user.verify_totp!(totp.now)).to eq(true)
         expect(user.reload.otp_locked_until).to eq(nil)
+      end
+
+      it 'counts failures made through separately loaded copies of the user' do
+        other_copy = User.find(user.id)
+        3.times { user.verify_totp!('000000') }
+        2.times { other_copy.verify_totp!('000000') }
+        expect(user.reload.otp_locked?).to eq(true)
+      end
+
+      it 'rejects a code already used through another copy of the user' do
+        other_copy = User.find(user.id)
+        code = totp.now
+        expect(user.verify_totp!(code)).to eq(true)
+        expect(other_copy.verify_totp!(code)).to eq(false)
       end
 
       it 'resets the failure count after a valid code' do

@@ -18,7 +18,7 @@ module Admin
       auth_code = params[:auth_code].to_s
       timestamp = User.totp_for(pending_secret).verify(auth_code, drift_behind: User::TOTP_DRIFT, drift_ahead: User::TOTP_DRIFT)
       return redirect_to(new_admin_two_factor_auth_path, alert: 'Code incorrect, please try again') unless timestamp
-      @user.update(otp_secret: pending_secret, otp_consumed_timestep: timestamp)
+      @user.update!(otp_secret: pending_secret, otp_consumed_timestep: timestamp)
       session.delete(:pending_otp_secret)
       TwoFactorAuthUpdatedJob.perform_later(user: @user)
       redirect_to(edit_admin_user_path(@user), notice: 'Two factor authentication enabled!')

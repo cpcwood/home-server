@@ -88,6 +88,18 @@ describe('gallery_scroll_load_controller', () => {
 
       expect(hiddenItemsWhenRendered).toBe(0)
     })
+
+    it('still shows the page and resumes loading when an image fails to load', async () => {
+      controller.injectImages(imagesData)
+      await flush()
+      const images = container.querySelectorAll('img')
+      images[0].dispatchEvent(new Event('error'))
+      images.forEach((img, index) => { if (index > 0) img.dispatchEvent(new Event('load')) })
+      await flush()
+
+      expect(container.querySelectorAll('.gallery-image-container.hidden').length).toBe(0)
+      expect(controller.isLoading).toBe(false)
+    })
   })
 
   describe('#injectImages', () => {

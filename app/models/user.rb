@@ -9,7 +9,8 @@
 #  failed_otp_attempts   :integer          default(0), not null
 #  last_login_ip         :string
 #  last_login_time       :datetime
-#  otp_consumed_timestep :integer
+#  mobile_number         :text
+#  otp_consumed_timestep :bigint
 #  otp_locked_until      :datetime
 #  otp_secret            :text
 #  password_digest       :text
@@ -21,8 +22,9 @@
 #
 # Indexes
 #
-#  index_users_on_email     (email) UNIQUE
-#  index_users_on_username  (username) UNIQUE
+#  index_users_on_email          (email) UNIQUE
+#  index_users_on_mobile_number  (mobile_number) UNIQUE
+#  index_users_on_username       (username) UNIQUE
 #
 class User < ApplicationRecord
   DEFAULT_REMOTE_IP = '127.0.0.1'.freeze
@@ -35,6 +37,9 @@ class User < ApplicationRecord
   has_many :gallery_images, dependent: :destroy
   has_many :contact_messages, dependent: :destroy
   has_many :code_snippets, dependent: :destroy
+
+  # Dropped in a later release so rolling back to the SMS 2FA code still finds it
+  self.ignored_columns += ['mobile_number']
 
   has_secure_password validations: false, reset_token: false
   encrypts :otp_secret
@@ -73,13 +78,16 @@ class User < ApplicationRecord
     otp_locked_until.present? && otp_locked_until > Time.zone.now
   end
 
+  # Row lock so concurrent attempts can't all read a stale failure count or reuse the same code
   def verify_totp!(code)
     return false unless otp_enabled?
-    return false if otp_locked?
-    timestamp = totp.verify(code, drift_behind: TOTP_DRIFT, drift_ahead: TOTP_DRIFT, after: otp_consumed_timestep)
-    return record_failed_otp_attempt unless timestamp
-    update(otp_consumed_timestep: timestamp, failed_otp_attempts: 0, otp_locked_until: nil)
-    true
+    with_lock do
+      next false if otp_locked?
+      timestamp = totp.verify(code, drift_behind: TOTP_DRIFT, drift_ahead: TOTP_DRIFT, after: otp_consumed_timestep)
+      next record_failed_otp_attempt unless timestamp
+      update_columns(otp_consumed_timestep: timestamp, failed_otp_attempts: 0, otp_locked_until: nil)
+      true
+    end
   end
 
   def send_password_reset_email!
@@ -121,8 +129,12 @@ class User < ApplicationRecord
   end
 
   def record_failed_otp_attempt
-    increment!(:failed_otp_attempts)
-    update(failed_otp_attempts: 0, otp_locked_until: OTP_LOCKOUT_PERIOD.from_now) if failed_otp_attempts >= MAX_FAILED_OTP_ATTEMPTS
+    attempts = failed_otp_attempts + 1
+    if attempts >= MAX_FAILED_OTP_ATTEMPTS
+      update_columns(failed_otp_attempts: 0, otp_locked_until: OTP_LOCKOUT_PERIOD.from_now)
+    else
+      update_columns(failed_otp_attempts: attempts)
+    end
     false
   end
 

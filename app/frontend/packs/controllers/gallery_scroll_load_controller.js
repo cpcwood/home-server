@@ -56,7 +56,7 @@ export default class extends Controller {
       imageElement.setAttribute('itemtype', 'https://schema.org/ImageObject')
       imageElement.innerHTML = `
         <a href='${imageData[this.linkAttributeValue]}' class='view-gallery-image'>
-          <img src='${imageData.thumbnail_url}' class='gallery-image-thumbnail' title='${imageData.title}' alt='${imageData.description}' data-action='load->gallery-scroll-load#imageLoaded' data-justified-gallery-target='galleryItem' itemprop='contentUrl'>
+          <img src='${imageData.thumbnail_url}' class='gallery-image-thumbnail' title='${imageData.title}' alt='${imageData.description}' data-action='load->gallery-scroll-load#imageLoaded error->gallery-scroll-load#imageLoaded' data-justified-gallery-target='galleryItem' itemprop='contentUrl'>
         </a>
       `
       this.newImageElements.push(imageElement)
