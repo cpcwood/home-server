@@ -4,7 +4,7 @@
 
 # Create App
 # ================
-FROM ruby:4.0.8-alpine3.24
+FROM ruby:4.0.8-alpine3.23
 
 ENV RAILS_ENV=production \
     NODE_ENV=production \

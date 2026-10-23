@@ -27,10 +27,7 @@ gem 'sidekiq', '~> 8.1'
 # Transform uploaded images
 gem 'image_processing', '~> 2.2'
 # ImageMagick wrapper for variant processing + EXIF (image_processing 2 no longer depends on it).
-# Held at 4.x: mini_magick 5 removed Image#mime_type and Image#exif, which Image/GalleryImage rely on.
-gem 'mini_magick', '~> 4.13'
-# mini_magick 4.x requires benchmark, which Ruby 4.0 no longer ships as a default gem
-gem 'benchmark', '~> 0.5'
+gem 'mini_magick', '~> 5.4'
 # Process markdown
 gem 'redcarpet', '~> 3.6'
 # Markdown syntax highlighing

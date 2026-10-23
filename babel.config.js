@@ -29,9 +29,7 @@ module.exports = function (api) {
         '@babel/preset-env',
         {
           forceAllTransforms: true,
-          useBuiltIns: 'entry',
           modules: false,
-          corejs: 3,
           exclude: ['transform-typeof-symbol']
         }
       ]
@@ -40,13 +38,7 @@ module.exports = function (api) {
       'babel-plugin-macros',
       isTestEnv && 'babel-plugin-dynamic-import-node',
       '@babel/plugin-transform-destructuring',
-      [
-        '@babel/plugin-transform-runtime',
-        {
-          helpers: false,
-          regenerator: true
-        }
-      ],
+      '@babel/plugin-transform-runtime',
       [
         '@babel/plugin-transform-regenerator',
         {

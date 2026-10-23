@@ -6,7 +6,7 @@
 # Compile Assets
 # ================
 
-FROM ruby:4.0.8-alpine3.24
+FROM ruby:4.0.8-alpine3.23
 
 ENV RAILS_ENV=production \
     NODE_ENV=production \
@@ -78,8 +78,8 @@ RUN export GRECAPTCHA_SITE_KEY="$GRECAPTCHA_SITE_KEY" && \
     rm -rf $APP_HOME/spec && \
     rm -rf $APP_HOME/storage/* && \
     rm -rf $APP_HOME/tmp/* && \
-    rm -rf $APP_HOME/vendor/bundle/ruby/3.4.0/cache/ && \
-    find $APP_HOME/vendor/bundle/ruby/3.4.0/gems/ -name "*.c" -delete && \
-    find $APP_HOME/vendor/bundle/ruby/3.4.0/gems/ -name "*.o" -delete
+    rm -rf $APP_HOME/vendor/bundle/ruby/4.0.0/cache/ && \
+    find $APP_HOME/vendor/bundle/ruby/4.0.0/gems/ -name "*.c" -delete && \
+    find $APP_HOME/vendor/bundle/ruby/4.0.0/gems/ -name "*.o" -delete
 
 USER docker
