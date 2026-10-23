@@ -174,17 +174,16 @@ RSpec.describe User, type: :model do
   end
 
   describe '#send_password_reset_email!' do
-    it 'Adds a password reset token to user' do
+    it 'Stores only a digest of the reset token' do
       allow(SecureRandom).to receive(:urlsafe_base64).and_return('testtoken')
       subject.send_password_reset_email!
-      expect(subject.password_reset_token).to eq('testtoken')
+      expect(subject.password_reset_token).to eq(OpenSSL::Digest::SHA256.hexdigest('testtoken'))
     end
 
-    it 'Password reset token is unique' do
-      create(:user2, password_reset_token: 'not_unique_token')
-      allow(SecureRandom).to receive(:urlsafe_base64).and_return('not_unique_token', 'unique_token')
+    it 'Emails the raw reset token' do
+      allow(SecureRandom).to receive(:urlsafe_base64).and_return('testtoken')
+      expect(PasswordMailer).to receive(:with).with(user: subject, reset_token: 'testtoken').and_return(double(password_reset_email: double(deliver_now: nil)))
       subject.send_password_reset_email!
-      expect(subject.password_reset_token).to eq('unique_token')
     end
 
     it 'Adds a password reset expiry to user' do
@@ -202,7 +201,7 @@ RSpec.describe User, type: :model do
   describe '.user_from_password_reset_token' do
     it 'Returns user if reset token matches and in date' do
       travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
-      subject.update_attribute(:password_reset_token, 'test-token')
+      subject.update_attribute(:password_reset_token, User.digest_password_reset_token('test-token'))
       subject.update_attribute(:password_reset_expiry, 1.hour.from_now)
       travel_to Time.zone.local(2020, 04, 19, 00, 59, 00)
       expect(User.user_from_password_reset_token('test-token')).to eq(subject)
@@ -210,14 +209,14 @@ RSpec.describe User, type: :model do
 
     it 'Returns nil if reset token matches and but not in date' do
       travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
-      subject.update_attribute(:password_reset_token, 'test-token')
+      subject.update_attribute(:password_reset_token, User.digest_password_reset_token('test-token'))
       subject.update_attribute(:password_reset_expiry, 1.hour.from_now)
       travel_to Time.zone.local(2020, 04, 19, 01, 01, 00)
       expect(User.user_from_password_reset_token('test-token')).to eq(nil)
     end
 
     it 'Returns nil if reset token invalid' do
-      subject.update_attribute(:password_reset_token, 'test-token')
+      subject.update_attribute(:password_reset_token, User.digest_password_reset_token('test-token'))
       expect(User.user_from_password_reset_token('not_valid')).to eq(nil)
     end
 

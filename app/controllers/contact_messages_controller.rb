@@ -43,7 +43,7 @@ class ContactMessagesController < ApplicationController
     return unless recaptcha_valid?
 
     if @contact_message.save
-      @notices.push('Message sent! You should receive a confirmation email shortly.')
+      @notices.push('Message sent!')
     else
       flash[:alert].push(@contact_message.errors.messages.to_a.flatten.last)
     end

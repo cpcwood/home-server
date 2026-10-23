@@ -16,7 +16,7 @@ feature 'send contact message', feature: true do
       expect{ click_on('Send') }.to change{ ContactMessage.all.length }.from(0).to(1)
       new_message = ContactMessage.first
       expect(NewContactMessageJob).to have_been_enqueued.with(contact_message: new_message)
-      expect(page).to have_content('Message sent! You should receive a confirmation email shortly.')
+      expect(page).to have_content('Message sent!')
     end
   end
 end

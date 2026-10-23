@@ -54,41 +54,4 @@ RSpec.describe ContactMessageMailer, type: :mailer do
       expect(mail.body.encoded).to match(image_name)
     end
   end
-
-  describe '#confirmation' do
-    let(:mail) { ContactMessageMailer.with(contact_message: contact_message).confirmation }
-
-    it 'renders the receivers email' do
-      expect(mail.to).to eql([contact_message.email])
-    end
-
-    it 'renders the sender email correctly' do
-      expect(mail.from).to eql([Rails.configuration.email_no_reply_address])
-    end
-
-    it 'renders the subject' do
-      expect(mail.subject).to eql("Contact message sent: #{contact_message.subject}")
-    end
-
-    it 'renders greeting in email' do
-      expect(mail.body.encoded).to match(/Hi[\w\W]+#{contact_message.from}/)
-    end
-
-    it 'renders intro message' do
-      expect(mail.body.encoded).to match(about.name)
-    end
-
-    it 'renders message timestamp' do
-      expect(mail.body.encoded).to match(full_date_and_time(contact_message.created_at))
-    end
-
-    it 'renders message content' do
-      expect(mail.body.encoded).to match(contact_message.content)
-    end
-
-    it 'Renders attached header image path' do
-      header_image.image_file.attach(image_attachment)
-      expect(mail.body.encoded).to match(image_name)
-    end
-  end
 end

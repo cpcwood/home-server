@@ -15,16 +15,6 @@ class ContactMessageMailer < ApplicationMailer
     end
   end
 
-  def confirmation
-    assign_default_variables
-    @to_email = @contact_message.email
-    @to_name = @contact_message.from
-    @user_name = @about.name
-    mail(to: @to_email, subject: "Contact message sent: #{@subject}") do |format|
-      format.html { render layout: 'default_email' }
-    end
-  end
-
   private
 
   def assign_default_variables

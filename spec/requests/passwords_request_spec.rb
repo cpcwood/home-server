@@ -46,16 +46,21 @@ RSpec.describe 'PasswordsController', type: :request do
     end
 
     it 'valid reset_token' do
-      allow(PasswordMailer).to receive_message_chain(:with, :password_reset_email, :deliver_now).and_return(nil)
-      @user.send_password_reset_email!
-      get '/reset-password', params: { reset_token: @user.password_reset_token }
+      reset_token = request_password_reset(@user)
+      get '/reset-password', params: { reset_token: reset_token }
       expect(response).to render_template(:reset_password)
-      expect(session[:reset_token] = @user.password_reset_token)
+      expect(session[:reset_token]).to eq(reset_token)
+    end
+
+    it 'rejects the stored token digest' do
+      request_password_reset(@user)
+      get '/reset-password', params: { reset_token: @user.reload.password_reset_token }
+      expect(response).to redirect_to(:login)
     end
 
     it 'reset token in session' do
-      @user.send_password_reset_email!
-      get '/reset-password', params: { reset_token: @user.password_reset_token }
+      reset_token = request_password_reset(@user)
+      get '/reset-password', params: { reset_token: reset_token }
       get '/reset-password'
       expect(response).to render_template(:reset_password)
     end
@@ -69,16 +74,16 @@ RSpec.describe 'PasswordsController', type: :request do
     end
 
     it 'password confirmations do not match' do
-      @user.send_password_reset_email!
-      get '/reset-password', params: { reset_token: @user.password_reset_token }
+      reset_token = request_password_reset(@user)
+      get '/reset-password', params: { reset_token: reset_token }
       post '/reset-password', params: { password: 'Securepassword1', password_confirmation: 'not-the-same-password' }
       expect(response).to redirect_to(:reset_password)
       expect(flash[:alert]).to include('Passwords do not match')
     end
 
     it 'invalid password' do
-      @user.send_password_reset_email!
-      get '/reset-password', params: { reset_token: @user.password_reset_token }
+      reset_token = request_password_reset(@user)
+      get '/reset-password', params: { reset_token: reset_token }
       post '/reset-password', params: { password: 'passwor', password_confirmation: 'passwor' }
       expect(response).to redirect_to(:reset_password)
       expect(flash[:alert]).to include('The password must have at least 8 characters')
@@ -86,8 +91,8 @@ RSpec.describe 'PasswordsController', type: :request do
 
     it 'valid password reset request' do
       expect(PasswordUpdatedJob).to receive(:perform_later).with(user: @user)
-      @user.send_password_reset_email!
-      get '/reset-password', params: { reset_token: @user.password_reset_token }
+      reset_token = request_password_reset(@user)
+      get '/reset-password', params: { reset_token: reset_token }
       post '/reset-password', params: { password: 'Securepassword2', password_confirmation: 'Securepassword2' }
       expect(response).to redirect_to(:login)
       expect(flash[:notice]).to eq('Password updated')
