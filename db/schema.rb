@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_06_133235) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_23_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -242,6 +242,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_06_133235) do
     t.string "password_reset_token"
     t.datetime "updated_at", null: false
     t.text "username"
+    t.integer "failed_otp_attempts", default: 0, null: false
+    t.datetime "otp_locked_until"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end

@@ -1,5 +1,6 @@
 class AdminsController < ApplicationController
   before_action :check_admin_logged_in
+  before_action :require_two_factor_enrollment
 
   MESSAGES_PAGE_SIZE = 25
 

@@ -2,7 +2,6 @@ module TwoFactorAuthService
   class << self
     def start(session, user)
       session[:two_factor_auth_id] = user.id
-      session.delete(:two_factor_auth_attempts)
       true
     end
 
@@ -12,6 +11,10 @@ module TwoFactorAuthService
 
     def auth_code_format_valid?(auth_code)
       auth_code.match?(/\A\d{6}\z/)
+    end
+
+    def locked_out?(session)
+      !!get_user(session)&.otp_locked?
     end
 
     def auth_code_valid?(session:, auth_code:)

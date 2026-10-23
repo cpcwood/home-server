@@ -38,12 +38,20 @@ RSpec.describe 'SessionsController', type: :request do
     end
 
     context 'when the user has not enrolled in 2fa' do
-      it 'Logs straight in with an enrollment nudge' do
+      it 'Sends the user to 2fa setup' do
         password_athenticate_admin(user: @user.username, password: @user_password)
-        expect(response).to redirect_to(:admin)
+        expect(response).to redirect_to(new_admin_two_factor_auth_path)
         expect(session[:user_id]).to eq(@user.id)
         follow_redirect!
-        expect(flash[:notice]).to include('Two factor authentication is not set up')
+        expect(flash[:notice]).to include('Set up two factor authentication to continue')
+      end
+
+      it 'Keeps the user out of the rest of the admin until enrolled' do
+        password_athenticate_admin(user: @user.username, password: @user_password)
+        ['/admin', '/admin/analytics', edit_admin_user_path(@user), new_admin_post_path].each do |path|
+          get path
+          expect(response).to redirect_to(new_admin_two_factor_auth_path)
+        end
       end
     end
 
@@ -132,27 +140,52 @@ RSpec.describe 'SessionsController', type: :request do
     end
 
     context 'after too many failed attempts' do
-      it 'locks out and forces a fresh login, even with a valid code' do
+      def fail_2fa(times)
+        times.times { post '/2fa', params: { auth_code: '000000' } }
+      end
+
+      it 'locks 2fa for 15 minutes, even for a valid code' do
         password_athenticate_admin(user: @user.username, password: @user_password)
-        5.times { post '/2fa', params: { auth_code: '000000' } }
+        fail_2fa(5)
         post '/2fa', params: { auth_code: ROTP::TOTP.new(@user.otp_secret).now }
         expect(response).to redirect_to('/login')
-        expect(flash[:alert]).to include('Too many attempts, please log in again')
+        expect(flash[:alert]).to include('Too many attempts, please try again in 15 minutes')
         expect(session[:two_factor_auth_id]).to eq(nil)
+        expect(session[:user_id]).to eq(nil)
+        expect(@user.reload.otp_locked?).to eq(true)
+      end
+
+      it 'keeps the lockout when an earlier session cookie is replayed' do
+        password_athenticate_admin(user: @user.username, password: @user_password)
+        fresh_session_cookie = cookies['_my_session']
+        fail_2fa(5)
+        cookies['_my_session'] = fresh_session_cookie
+        post '/2fa', params: { auth_code: ROTP::TOTP.new(@user.otp_secret).now }
+        expect(response).to redirect_to('/login')
+        expect(session[:user_id]).to eq(nil)
+      end
+
+      it 'keeps the lockout across a fresh password login' do
+        password_athenticate_admin(user: @user.username, password: @user_password)
+        fail_2fa(5)
+        password_athenticate_admin(user: @user.username, password: @user_password)
+        post '/2fa', params: { auth_code: ROTP::TOTP.new(@user.otp_secret).now }
+        expect(response).to redirect_to('/login')
         expect(session[:user_id]).to eq(nil)
       end
 
       it 'clears the failure count once a valid code logs the user in' do
         password_athenticate_admin(user: @user.username, password: @user_password)
-        4.times { post '/2fa', params: { auth_code: '000000' } }
+        fail_2fa(4)
         post '/2fa', params: { auth_code: ROTP::TOTP.new(@user.otp_secret).now }
         expect(response).to redirect_to(:admin)
-        expect(session[:user_id]).to eq(@user.id)
+        expect(@user.reload.failed_otp_attempts).to eq(0)
       end
 
-      it 'resets the failure count when a fresh password login starts a new flow' do
+      it 'allows login again once the lockout expires' do
         password_athenticate_admin(user: @user.username, password: @user_password)
-        5.times { post '/2fa', params: { auth_code: '000000' } }
+        fail_2fa(5)
+        travel 16.minutes
         password_athenticate_admin(user: @user.username, password: @user_password)
         post '/2fa', params: { auth_code: ROTP::TOTP.new(@user.otp_secret).now }
         expect(response).to redirect_to(:admin)

@@ -1,5 +1,7 @@
 module Admin
   class TwoFactorAuthsController < AdminBaseController
+    skip_before_action :require_two_factor_enrollment
+
     def new
       session[:pending_otp_secret] ||= ROTP::Base32.random
       @pending_otp_secret = session[:pending_otp_secret]
@@ -12,11 +14,13 @@ module Admin
       pending_secret = session[:pending_otp_secret]
       return redirect_to(new_admin_two_factor_auth_path, alert: 'Two factor setup expired, scan again') unless pending_secret
       return redirect_to(new_admin_two_factor_auth_path, alert: 'Current password incorrect') unless verify_current_password
+      return redirect_to(new_admin_two_factor_auth_path, alert: 'Current authenticator code incorrect') if @user.otp_enabled? && !@user.verify_totp!(params[:current_auth_code].to_s)
       auth_code = params[:auth_code].to_s
       timestamp = User.totp_for(pending_secret).verify(auth_code, drift_behind: User::TOTP_DRIFT, drift_ahead: User::TOTP_DRIFT)
       return redirect_to(new_admin_two_factor_auth_path, alert: 'Code incorrect, please try again') unless timestamp
       @user.update(otp_secret: pending_secret, otp_consumed_timestep: timestamp)
       session.delete(:pending_otp_secret)
+      TwoFactorAuthUpdatedJob.perform_later(user: @user)
       redirect_to(edit_admin_user_path(@user), notice: 'Two factor authentication enabled!')
     end
   end

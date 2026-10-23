@@ -1,6 +1,4 @@
 class SessionsController < ApplicationController
-  MAX_2FA_ATTEMPTS = 5
-
   before_action :already_logged_in
   skip_before_action :already_logged_in, only: [:destroy]
 
@@ -25,10 +23,10 @@ class SessionsController < ApplicationController
 
   def verify_2fa
     return redirect_to(:login) unless TwoFactorAuthService.started?(session)
-    return lock_out_2fa if two_factor_attempts_exceeded?
+    return lock_out_2fa if TwoFactorAuthService.locked_out?(session)
     auth_code = sanitize(params[:auth_code])
     return redirect_to('/2fa', alert: 'Verification code must be 6 digits long') unless TwoFactorAuthService.auth_code_format_valid?(auth_code)
-    return record_failed_2fa_attempt unless TwoFactorAuthService.auth_code_valid?(session: session, auth_code: auth_code)
+    return reject_2fa_code unless TwoFactorAuthService.auth_code_valid?(session: session, auth_code: auth_code)
     log_user_in
   end
 
@@ -43,18 +41,14 @@ class SessionsController < ApplicationController
     redirect_to(:admin) if session[:user_id]
   end
 
-  def two_factor_attempts_exceeded?
-    session[:two_factor_auth_attempts].to_i >= MAX_2FA_ATTEMPTS
-  end
-
-  def record_failed_2fa_attempt
-    session[:two_factor_auth_attempts] = session[:two_factor_auth_attempts].to_i + 1
+  def reject_2fa_code
+    return lock_out_2fa if TwoFactorAuthService.locked_out?(session)
     redirect_to('/2fa', alert: '2fa code incorrect, please try again')
   end
 
   def lock_out_2fa
     reset_session
-    redirect_to(:login, alert: 'Too many attempts, please log in again')
+    redirect_to(:login, alert: 'Too many attempts, please try again in 15 minutes')
   end
 
   def sanitize(string)
@@ -66,8 +60,7 @@ class SessionsController < ApplicationController
     reset_session
     session[:user_id] = @user.id
     @user.record_ip(request)
-    notice = "#{@user.username} welcome back to your home-server!"
-    notice += ' Two factor authentication is not set up — enable it in User Settings.' unless @user.otp_enabled?
-    redirect_to(:admin, notice: notice)
+    return redirect_to(new_admin_two_factor_auth_path, notice: 'Set up two factor authentication to continue') unless @user.otp_enabled?
+    redirect_to(:admin, notice: "#{@user.username} welcome back to your home-server!")
   end
 end

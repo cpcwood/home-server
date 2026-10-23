@@ -33,6 +33,7 @@ feature 'Password reset', feature: true do
     fill_in('user', with: @user.username)
     fill_in('password', with: 'new_password')
     click_button('Login')
-    expect(page).to have_content("#{@user.username} welcome back to your home-server!")
+    expect(current_path).to eq(new_admin_two_factor_auth_path)
+    expect(page).to have_content('Set up two factor authentication to continue')
   end
 end

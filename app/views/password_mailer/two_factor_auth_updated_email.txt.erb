@@ -1,0 +1,9 @@
+Hi <%= @user.username %>,
+
+Two factor authentication was set up on your account on: <%= @user.updated_at.strftime("%H:%M %d-%m-%Y") %>
+
+If you did not set this up, please contact <%= Rails.configuration.email_default_address %>
+
+Thanks,
+
+<%= ENV['EMAIL_COMPANY_NAME'] %>

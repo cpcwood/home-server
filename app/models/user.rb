@@ -6,9 +6,11 @@
 #  current_login_ip      :string
 #  current_login_time    :datetime
 #  email                 :text
+#  failed_otp_attempts   :integer          default(0), not null
 #  last_login_ip         :string
 #  last_login_time       :datetime
 #  otp_consumed_timestep :integer
+#  otp_locked_until      :datetime
 #  otp_secret            :text
 #  password_digest       :text
 #  password_reset_expiry :datetime
@@ -26,6 +28,8 @@ class User < ApplicationRecord
   DEFAULT_REMOTE_IP = '127.0.0.1'.freeze
   # rotp drift is measured in seconds; one 30s step covers the adjacent code.
   TOTP_DRIFT = 30
+  MAX_FAILED_OTP_ATTEMPTS = 5
+  OTP_LOCKOUT_PERIOD = 15.minutes
 
   has_many :posts, dependent: :destroy
   has_many :gallery_images, dependent: :destroy
@@ -65,11 +69,16 @@ class User < ApplicationRecord
     otp_secret.present?
   end
 
+  def otp_locked?
+    otp_locked_until.present? && otp_locked_until > Time.zone.now
+  end
+
   def verify_totp!(code)
     return false unless otp_enabled?
+    return false if otp_locked?
     timestamp = totp.verify(code, drift_behind: TOTP_DRIFT, drift_ahead: TOTP_DRIFT, after: otp_consumed_timestep)
-    return false unless timestamp
-    update(otp_consumed_timestep: timestamp)
+    return record_failed_otp_attempt unless timestamp
+    update(otp_consumed_timestep: timestamp, failed_otp_attempts: 0, otp_locked_until: nil)
     true
   end
 
@@ -92,6 +101,10 @@ class User < ApplicationRecord
     PasswordMailer.with(user: self).password_updated_email.deliver_now
   end
 
+  def send_two_factor_auth_updated_email!
+    PasswordMailer.with(user: self).two_factor_auth_updated_email.deliver_now
+  end
+
   def record_ip(request)
     update({
              last_login_time: current_login_time,
@@ -105,6 +118,12 @@ class User < ApplicationRecord
 
   def totp
     self.class.totp_for(otp_secret)
+  end
+
+  def record_failed_otp_attempt
+    increment!(:failed_otp_attempts)
+    update(failed_otp_attempts: 0, otp_locked_until: OTP_LOCKOUT_PERIOD.from_now) if failed_otp_attempts >= MAX_FAILED_OTP_ATTEMPTS
+    false
   end
 
   def add_defaults

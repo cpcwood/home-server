@@ -1,6 +1,7 @@
 module Admin
   class AdminBaseController < ApplicationController
     before_action :check_admin_logged_in
+    before_action :require_two_factor_enrollment
 
     private
 

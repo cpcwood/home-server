@@ -35,12 +35,14 @@ switch must be last:
 - [ ] Verify: contact-form mail works once Verified; run the external password-reset test only after Verified **and** production access granted
 
 ## 4. Migrations (automatic)
-The pre-upgrade migrate job adds `otp_secret` / `otp_consumed_timestep` and drops
-`mobile_number`. No manual step (the Postgres volume is covered by Velero backups).
+The pre-upgrade migrate job adds `otp_secret` / `otp_consumed_timestep` /
+`failed_otp_attempts` / `otp_locked_until` and drops `mobile_number`. No manual step (the Postgres volume is covered by Velero backups).
 
 ## 5. Post-deploy
-- [ ] Log in — 2FA is not enforced yet (password-only, with an "enable 2FA" nudge)
-- [ ] Enroll 2FA: User Settings → Set up 2FA (scan QR, enter current password + code)
+- [ ] Log in **immediately after deploy** — until 2FA is enrolled, a password login
+      can only reach the 2FA setup page
+- [ ] Enroll 2FA on the setup page (scan QR, enter current password + code); confirm
+      the "Two Factor Authentication Updated" email arrives
 - [ ] Smoke test: dark-mode toggle, `/admin/analytics`, `/admin/notifications`, gallery scroll-load
 
 ## 6. Deferred follow-ups (non-blocking)
@@ -50,7 +52,9 @@ The pre-upgrade migrate job adds `otp_secret` / `otp_consumed_timestep` and drop
 - Optional: theme-reactive / dark-tuned chart palette on the analytics dashboard.
 
 ## Safety notes
-- An admin who hasn't enrolled 2FA can still log in — deploy does not lock anyone out.
+- An admin who hasn't enrolled 2FA can still log in, but only to enroll — deploy does
+  not lock anyone out. Whoever holds the password can enroll first, so enroll straight
+  after deploy; the enrollment email flags it if someone else does.
 - A missing `…/email` SSM param does not crashloop pods: `EMAIL_*` env vars are
   read lazily and nil-safe, and External Secrets fails closed (the existing
   secret is retained). Worst case from an out-of-order deploy is email silently

@@ -11,6 +11,12 @@ data "aws_iam_policy_document" "ses_send" {
     effect    = "Allow"
     actions   = ["ses:SendRawEmail", "ses:SendEmail"]
     resources = [aws_ses_domain_identity.email.arn]
+
+    condition {
+      test     = "StringEquals"
+      variable = "ses:FromAddress"
+      values   = var.email_from_addresses
+    }
   }
 }
 

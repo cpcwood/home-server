@@ -163,6 +163,34 @@ RSpec.describe User, type: :model do
       end
     end
 
+    describe 'failed attempt lockout' do
+      it 'locks for 15 minutes after 5 wrong codes' do
+        travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
+        5.times { user.verify_totp!('000000') }
+        expect(user.reload.otp_locked?).to eq(true)
+        expect(user.otp_locked_until).to eq(15.minutes.from_now)
+        expect(user.failed_otp_attempts).to eq(0)
+      end
+
+      it 'rejects a valid code while locked' do
+        5.times { user.verify_totp!('000000') }
+        expect(user.verify_totp!(totp.now)).to eq(false)
+      end
+
+      it 'accepts a valid code once the lockout expires' do
+        5.times { user.verify_totp!('000000') }
+        travel 16.minutes
+        expect(user.verify_totp!(totp.now)).to eq(true)
+        expect(user.reload.otp_locked_until).to eq(nil)
+      end
+
+      it 'resets the failure count after a valid code' do
+        4.times { user.verify_totp!('000000') }
+        user.verify_totp!(totp.now)
+        expect(user.reload.failed_otp_attempts).to eq(0)
+      end
+    end
+
     describe '.totp_for' do
       it 'builds a provisioning uri embedding the user email' do
         uri = User.totp_for(user.otp_secret).provisioning_uri(user.email)
@@ -238,6 +266,13 @@ RSpec.describe User, type: :model do
 
     it 'Returns nil if reset token no present' do
       expect(User.user_from_password_reset_token(nil)).to eq(nil)
+    end
+  end
+
+  describe '#send_two_factor_auth_updated_email!' do
+    it 'Two factor auth updated email sent to user' do
+      expect(PasswordMailer).to receive_message_chain(:with, :two_factor_auth_updated_email, :deliver_now)
+      subject.send_two_factor_auth_updated_email!
     end
   end
 

@@ -147,6 +147,7 @@ The script reads existing values (if any), prompts per key, and writes via `aws 
 
 1. `terraform apply` — creates the SES identity, SMTP user, and `/…/email` SSM parameter.
 2. Add DNS records at the DNS host: TXT `_amazonses.cpcwood.com` = `ses_domain_verification_token` output; three DKIM CNAMEs from `ses_dkim_tokens` (`<token>._domainkey.cpcwood.com` → `<token>.dkim.amazonses.com`).
+   Also add a DMARC policy: TXT `_dmarc.cpcwood.com` = `v=DMARC1; p=quarantine; rua=mailto:contact@cpcwood.com`, so receivers reject or quarantine mail that spoofs the domain. Move to `p=reject` once the aggregate reports show only SES sending.
 3. Wait for the identity to show **Verified** in the SES console. Domain identity (TXT) and DKIM verification are async and lag DNS propagation — don't rely on SES until it flips to Verified.
 4. Request SES production access in the AWS console (new accounts start sandboxed — sandbox delivers only to verified addresses). This is a separate async AWS approval, typically ~24h.
 5. Deploy the Helm change. Contact-form email works as soon as the identity is Verified (recipient is `contact@cpcwood.com` on the verified domain). Only run the external password-reset test AFTER the identity is Verified **and** production access is granted — while sandboxed, external password-reset recipients bounce.
@@ -207,7 +208,7 @@ Click on the site settings tab and add the values or upload:
 
 #### Two Factor Authentication
 
-Enrol from *User Settings → Set up 2FA*: scan the QR code with an authenticator app and confirm with a generated code. Until enrolled, login proceeds without a second factor.
+Enrol from *User Settings → Set up 2FA*: scan the QR code with an authenticator app and confirm with a generated code. Until enrolled, a password login can only reach the 2FA setup page. Five wrong codes lock 2FA for 15 minutes. Replacing an enrolled authenticator needs a code from the current one, and every enrollment emails the account address.
 
 #### 2FA reset
 
