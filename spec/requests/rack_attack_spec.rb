@@ -26,6 +26,13 @@ RSpec.describe 'Rack::Attack throttles', type: :request do
       expect(response).to have_http_status(503)
     end
 
+    it 'counts paths with repeated slashes' do
+      10.times { post 'http://www.example.com//login', params: { user: 'unknown', password: 'wrong' } }
+      10.times { post '/2fa///', params: { auth_code: '000000' } }
+      post '/login', params: { user: 'unknown', password: 'wrong' }
+      expect(response).to have_http_status(503)
+    end
+
     it 'does not throttle viewing the login page' do
       21.times { get '/login' }
       expect(response).to have_http_status(200)

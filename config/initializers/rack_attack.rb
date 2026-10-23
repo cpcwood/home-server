@@ -2,8 +2,9 @@ Rack::Attack.throttle("requests by ip", limit: 60, period: 1) do |request|
   request.ip
 end
 
-# Routes also match a format suffix or trailing slash (/login.json, /2fa/), so compare the bare path
-throttle_path = ->(request) { request.path.chomp('/').sub(%r{\.[^/.]+\z}, '') }
+# The router squeezes repeated slashes and ignores a trailing slash or format suffix
+# (//login, /2fa/, /login.json), so compare the bare path
+throttle_path = ->(request) { request.path.squeeze('/').sub(%r{/+\z}, '').sub(%r{\.[^/.]+\z}, '') }
 
 Rack::Attack.throttle("auth attempts by ip", limit: 20, period: 60) do |request|
   request.ip if !request.get? && ['/login', '/2fa'].include?(throttle_path.call(request))
