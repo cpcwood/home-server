@@ -215,7 +215,7 @@ GEM
       childprocess (~> 5.0)
       logger (~> 1.6)
     lint_roller (1.1.0)
-    listen (3.10.0)
+    listen (3.10.1)
       logger
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -514,7 +514,7 @@ DEPENDENCIES
   geocoder (~> 1.8)
   image_processing (~> 2.2)
   jsonapi-serializer (~> 2.2)
-  listen (~> 3.9)
+  listen (~> 3.10)
   maxminddb (~> 0.1)
   mimemagic (~> 0.4)
   mini_magick (~> 4.13)
