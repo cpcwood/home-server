@@ -6,9 +6,10 @@ class SessionsController < ApplicationController
 
   def new
     return redirect_to(:login, alert: 'reCaptcha failed, please try again') unless ReCaptchaService.recaptcha_valid?(sanitize(params['g-recaptcha-response']))
-    @user = User.find_by(email: sanitize(params[:user]))
-    @user ||= User.find_by(username: sanitize(params[:user]))
-    return redirect_to(:login, alert: 'User not found') unless @user&.authenticate(sanitize(params[:password]))
+    login_name = sanitize(params[:user]).to_s
+    login_attribute = login_name.include?('@') ? :email : :username
+    @user = User.authenticate_by(login_attribute => login_name, password: sanitize(params[:password]).to_s)
+    return redirect_to(:login, alert: 'User not found') unless @user
     TwoFactorAuthService.start(session, @user)
     return log_user_in if Rails.env.development?
     redirect_to('/2fa')
@@ -33,7 +34,7 @@ class SessionsController < ApplicationController
   end
 
   def reset_2fa
-    session[:auth_code_sent] = nil
+    session[:two_factor_auth_code_sent] = nil
     redirect_to '/2fa', notice: 'Two factor authentication code resent'
   end
 

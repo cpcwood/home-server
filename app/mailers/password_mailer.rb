@@ -5,6 +5,7 @@ class PasswordMailer < ApplicationMailer
 
   def password_reset_email
     assign_default_variables
+    @reset_token = params[:reset_token]
     mail(to: @user.email, subject: "Password Reset: #{@user.email}") do |format|
       format.html { render layout: 'default_email' }
     end

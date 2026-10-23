@@ -34,6 +34,18 @@ RSpec.describe 'SessionsController', type: :request do
       expect(flash[:alert]).to include('User not found')
     end
 
+    it 'Blocks login for unknown user with the same message' do
+      password_athenticate_admin(user: 'unknown-user', password: @user_password)
+      expect(response).to redirect_to login_path
+      expect(flash[:alert]).to include('User not found')
+    end
+
+    it 'Hashes a password even when the user does not exist' do
+      expect(BCrypt::Password).to receive(:create).at_least(:once).and_call_original
+      password_athenticate_admin(user: 'unknown@example.com', password: @user_password)
+      expect(response).to redirect_to login_path
+    end
+
     it 'Blocks login if captcha incorrect' do
       allow(ReCaptchaService).to receive(:recaptcha_valid?).and_return(false)
       post '/login', params: { user: @user.username, password: @user_password, 'g-recaptcha-response': 'test' }
@@ -118,13 +130,17 @@ RSpec.describe 'SessionsController', type: :request do
 
   describe 'PUT /2fa #reset_2fa' do
     it 'Resends 2fa code' do
+      verifications = double(:verifications)
+      allow(TwoFactorAuthService).to receive(:twilio_client).and_return(double(:twilio_client, verifications: verifications))
+      expect(verifications).to receive(:create).twice
       password_athenticate_admin(user: @user.username, password: @user_password)
-      allow(TwoFactorAuthService).to receive(:send_auth_code).and_return(true)
       get '/2fa'
+      expect(session[:two_factor_auth_code_sent]).to eq(true)
       put '/2fa'
-      expect(session[:auth_code_sent]).to eq(nil)
+      expect(session[:two_factor_auth_code_sent]).to eq(nil)
       expect(response).to redirect_to('/2fa')
       expect(flash[:notice]).to eq('Two factor authentication code resent')
+      get '/2fa'
     end
   end
 

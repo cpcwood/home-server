@@ -16,8 +16,7 @@ feature 'Password reset', feature: true do
 
   scenario 'Submitting new password' do
     # Reset password
-    @user.send_password_reset_email!
-    reset_token = @user.password_reset_token
+    reset_token = request_password_reset(@user)
     visit("/reset-password?reset_token=#{reset_token}")
     fill_in('password', with: 'new_password')
     fill_in('password_confirmation', with: 'new_password')

@@ -62,14 +62,18 @@ class User < ApplicationRecord
             if: -> { !mobile_number.nil? }
 
   def send_password_reset_email!
-    generate_hashed_token
-    PasswordMailer.with(user: self).password_reset_email.deliver_now
+    reset_token = generate_password_reset_token
+    PasswordMailer.with(user: self, reset_token: reset_token).password_reset_email.deliver_now
   end
 
   def self.user_from_password_reset_token(token)
     return unless token
-    return unless (reset_user = User.find_by(password_reset_token: token))
+    return unless (reset_user = User.find_by(password_reset_token: digest_password_reset_token(token)))
     reset_user if reset_user.password_reset_expiry > Time.zone.now
+  end
+
+  def self.digest_password_reset_token(token)
+    OpenSSL::Digest::SHA256.hexdigest(token)
   end
 
   def send_password_updated_email!
@@ -101,11 +105,9 @@ class User < ApplicationRecord
     update(password_reset_token: nil, password_reset_expiry: nil) if previous_changes.key?('password_digest') && password_reset_token && password_reset_expiry
   end
 
-  def generate_hashed_token
-    unique_token = loop do
-      token = SecureRandom.urlsafe_base64(32)
-      break token unless User.exists?(password_reset_token: token)
-    end
-    update(password_reset_token: unique_token, password_reset_expiry: 1.hour.from_now)
+  def generate_password_reset_token
+    reset_token = SecureRandom.urlsafe_base64(32)
+    update(password_reset_token: self.class.digest_password_reset_token(reset_token), password_reset_expiry: 1.hour.from_now)
+    reset_token
   end
 end

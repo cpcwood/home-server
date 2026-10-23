@@ -28,8 +28,8 @@ RSpec.describe PasswordMailer, type: :mailer do
     end
 
     it 'Assigns adds password reset url' do
-      user.password_reset_token = 'hashed-token'
-      expect(mail.body.encoded).to include(reset_password_url(reset_token: 'hashed-token'))
+      mail = PasswordMailer.with(user: user, reset_token: 'raw-token').password_reset_email
+      expect(mail.body.encoded).to include(reset_password_url(reset_token: 'raw-token'))
     end
 
     it 'Provides contact email' do
