@@ -22,6 +22,8 @@
   box-sizing: border-box;
   flex-grow: 1;
   height: 300px;
+  // Keeps the tile's internal z-index layers below the fixed navbar and open menu
+  isolation: isolate;
   min-width: 100%;
   position: relative;
 

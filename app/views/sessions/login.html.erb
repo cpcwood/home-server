@@ -7,7 +7,7 @@
 <% end %>
 
 <% content_for :form do %>
-  <%= form_with(url: "/login", method: "post", class: 'floating-form') do |f| %>
+  <%= form_with(url: "/login", method: "post", class: 'floating-form', data: { turbo: false }) do |f| %>
     <%= render partial: 'partials/system_messages' %>
     <%= f.text_field(:user, required: true, class: 'input-box', placeholder: 'Username or Email', autocomplete: "on") %>
     <div class='input-seperator'></div>

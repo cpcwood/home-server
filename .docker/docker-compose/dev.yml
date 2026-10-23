@@ -16,7 +16,7 @@ services:
       DB_HOST: postgres
       DB_USERNAME: cpcwood
       CHROMEDRIVER: /usr/bin/chromedriver
-      SHAKAPACKER_DEV_SERVER_HOST: "${DEV_SERVER_HOST:-0.0.0.0}"
+      SHAKAPACKER_DEV_SERVER_HOST: "${DEV_SERVER_HOST:-client}"
     env_file:
       - ../../config/env/.env
     volumes:

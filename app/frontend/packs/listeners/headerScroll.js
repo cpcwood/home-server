@@ -2,6 +2,7 @@ const headerScroll = () => {
   const headerScrollContainer = document.getElementById('header-scroll')
   const headerImage = document.getElementById('header-image')
   const navImage = document.getElementById('nav-image')
+  if (!headerScrollContainer || !headerImage || !navImage) return
 
   const baseImageHeight = parseInt(headerScrollContainer.getAttribute('data-header-scroll-image-height'))
   const baseHeaderHeight = parseInt(headerScrollContainer.getAttribute('data-header-scroll-header-height'))

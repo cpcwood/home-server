@@ -7,14 +7,14 @@
 <% end %>
 
 <% content_for :form do %>
-  <%= form_with(url: "/2fa", method: :post, class: 'floating-form') do |f| %>
+  <%= form_with(url: "/2fa", method: :post, class: 'floating-form', data: { turbo: false }) do |f| %>
     <%= render partial: 'partials/system_messages' %>
     <%= f.text_field(:auth_code, required: true, class: 'input-box', placeholder: '2FA Code') %>
     <div class='input-seperator'></div>
     <%= render partial: "partials/submit_right", locals: {form: f, button_text: 'Login'} %>
   <% end %>
   <div class='options two-fa'>
-    <%= form_with(url: "/login", method: 'delete') do %>
+    <%= form_with(url: "/login", method: 'delete', data: { turbo: false }) do %>
       <%= submit_tag("Cancel Login", class: 'option right') %>
     <% end %>
   </div>
