@@ -27,7 +27,7 @@
         data-controller='justified-gallery gallery-lightbox gallery-scroll-load' 
         data-justified-gallery-margin='2' 
         data-gallery-lightbox-item-selector='.gallery-container a' 
-        data-gallery-scroll-load-page-value='1'
+        data-gallery-scroll-load-page-value='<%= [params[:page].to_i, 1].max %>'
         data-gallery-scroll-load-api-url-value='<%= gallery_images_path %>'
         data-action='renderGallery->justified-gallery#renderGallery reConnectLightbox->gallery-lightbox#reConnect galleryRendered->gallery-scroll-load#initializeScrollLoad'
         itemscope itemtype="https://schema.org/ImageGallery">

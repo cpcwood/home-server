@@ -7,9 +7,8 @@ Rails.application.routes.draw do
   
   get '/login', to: 'sessions#login'
   post '/login', to: 'sessions#new'
-  get '/2fa', to: 'sessions#send_2fa'
+  get '/2fa', to: 'sessions#show_2fa'
   post '/2fa', to: 'sessions#verify_2fa'
-  put '/2fa', to: 'sessions#reset_2fa'
   delete '/login', to: 'sessions#destroy'
 
   get '/forgotten-password', to: 'passwords#forgotten_password'
@@ -18,10 +17,11 @@ Rails.application.routes.draw do
   post '/reset-password', to: 'passwords#update_password'
 
   get '/admin', to: 'admins#general'
-  get '/admin/notifications', to: 'admins#notifications'
-  get '/admin/analytics', to: 'admins#analytics'
+  get '/admin/notifications', to: 'admins#notifications', as: :admin_notifications
+  get '/admin/analytics', to: 'admins#analytics', as: :admin_analytics
 
   namespace :admin do
+    resource :two_factor_auth, only: [:new, :create], path: '/2fa-setup'
     resources :site_settings, only: [:index, :update]
     resources :images, only: [:index]
     resources :users, only: [:edit, :update]

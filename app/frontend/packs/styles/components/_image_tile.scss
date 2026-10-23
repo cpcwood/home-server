@@ -14,6 +14,10 @@
 
 // Styles
 .flex-image-tile {
+  // padding-box keeps the plate out of the 5px transparent border, which is the
+  // only gutter between tiles.
+  background: linear-gradient(140deg, colors.$box-highlight, colors.$box-border-color);
+  background-clip: padding-box;
   border: 5px solid rgba(255, 255, 255, 0);
   box-sizing: border-box;
   flex-grow: 1;
@@ -33,9 +37,25 @@
   }
 }
 
-@keyframes display-item {
-  from {visibility: hidden;}
-  to {visibility: visible;}
+.flex-image-tile::before {
+  animation: tile-shimmer 1.6s ease-in-out infinite;
+  background: linear-gradient(100deg, transparent 25%, rgba(255, 255, 255, 0.12) 50%, transparent 75%);
+  background-size: 220% 100%;
+  content: '';
+  inset: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.flex-image-tile:has(.cover-image.fade-in)::before,
+.flex-image-tile.load-failed::before {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes tile-shimmer {
+  from { background-position: 160% 0; }
+  to { background-position: -60% 0; }
 }
 
 .cover-image {
@@ -45,8 +65,7 @@
   opacity: 0;
   position: relative;
   transition: opacity 0.7s cubic-bezier(0.76, 0.24, 0.26, 0.99),
-    box-shadow 0.7s cubic-bezier(0.76, 0.24, 0.26, 0.99),
-    z-index 0.7s step-end;
+    box-shadow 0.7s cubic-bezier(0.76, 0.24, 0.26, 0.99);
   width: 100%;
   z-index: 2;
 
@@ -61,17 +80,11 @@
   &.fade-in {
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.22);
   }
-
-  &.fade-in + a .cover-title {
-    animation: display-item 0.7s step-end;
-    animation-fill-mode: forwards;
-  }
 }
-
 
 .cover-title {
   align-items: center;
-  background: rgba(0, 0, 0, 0.6);
+  background: linear-gradient(to top, rgba(8, 10, 14, 0.82), rgba(8, 10, 14, 0.45));
   box-sizing: border-box;
   display: flex;
   height: 100%;
@@ -79,24 +92,93 @@
   left: 0;
   opacity: 0;
   padding: 20px;
+  // Inert until the tile resolves, so a click on a blank placeholder cannot
+  // navigate; the anchor stays keyboard-focusable throughout.
+  pointer-events: none;
   position: absolute;
   top: 0;
-  transition: opacity 0.2s ease-in-out 0s;
-  visibility: hidden;
+  transition: opacity 0.35s ease;
   width: 100%;
-  z-index: 1;
+  z-index: 3;
 
   span {
-    color: colors.$light;
-    font-family: typography.$general-font;
-    font-size: 45px;
+    // $inverse-font is declared only in :root and deliberately left out of the
+    // dark-tokens mixin, so it stays light on this scrim in both themes.
+    color: colors.$inverse-font;
+    font-family: typography.$header-font;
+    font-size: 42px;
     font-weight: 400;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.04em;
     margin: 0;
+    opacity: 0;
     text-align: center;
+    transform: translateY(14px);
+    transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  &.hover {
+  span::after {
+    background: colors.$theme-color;
+    content: '';
+    display: block;
+    height: 2px;
+    margin: 14px auto 0;
+    transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.08s;
+    width: 0;
+  }
+}
+
+.flex-image-tile:has(.cover-image.fade-in) .cover-title,
+.flex-image-tile.load-failed .cover-title {
+  pointer-events: auto;
+}
+
+.cover-title.hover {
+  opacity: 1;
+
+  span {
     opacity: 1;
+    transform: translateY(0);
+  }
+
+  span::after {
+    width: 46px;
+  }
+}
+
+.flex-image-tile.load-failed {
+  background:
+    radial-gradient(120% 130% at 78% 18%, rgba(95, 175, 178, 0.3), transparent 55%),
+    linear-gradient(150deg, #22585b, #12333a);
+  background-clip: padding-box;
+
+  .cover-image {
+    display: none;
+  }
+
+  .cover-title {
+    background: none;
+    opacity: 1;
+  }
+}
+
+.flex-image-tile.load-failed .cover-title span {
+  opacity: 1;
+  transform: none;
+}
+
+.flex-image-tile.load-failed .cover-title span::after {
+  width: 46px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flex-image-tile::before {
+    animation: none;
+  }
+
+  .cover-image,
+  .cover-title,
+  .cover-title span,
+  .cover-title span::after {
+    transition: none;
   }
 }

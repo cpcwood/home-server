@@ -47,10 +47,10 @@ module HomeServer
     # google recaptcha
     config.grecaptcha_site_secret = ENV['GRECAPTCHA_SITE_SECRET']
 
-    # twilio
-    config.twilio_account_sid = ENV['TWILIO_ACCOUNT_SID']
-    config.twilio_auth_token = ENV['TWILIO_AUTH_TOKEN']
-    config.twilio_verify_service_sid = ENV['TWILIO_VERIFY_SERVICE_SID']
+    # active record encryption
+    config.active_record.encryption.primary_key = ENV['AR_ENCRYPTION_PRIMARY_KEY']
+    config.active_record.encryption.deterministic_key = ENV['AR_ENCRYPTION_DETERMINISTIC_KEY']
+    config.active_record.encryption.key_derivation_salt = ENV['AR_ENCRYPTION_KEY_DERIVATION_SALT']
 
     # Image processing
     config.active_storage.variant_processor = :mini_magick

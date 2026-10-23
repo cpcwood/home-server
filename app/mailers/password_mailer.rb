@@ -18,6 +18,13 @@ class PasswordMailer < ApplicationMailer
     end
   end
 
+  def two_factor_auth_updated_email
+    assign_default_variables
+    mail(to: @user.email, subject: "Two Factor Authentication Updated: #{@user.email}") do |format|
+      format.html { render layout: 'default_email' }
+    end
+  end
+
   private
 
   def assign_default_variables

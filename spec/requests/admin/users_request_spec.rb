@@ -15,7 +15,6 @@ RSpec.describe 'Admin::UsersController', type: :request do
     let(:blank_username_params) { { username: '', username_confirmation: '' } }
     let(:blank_email_params) { { email: '', email_confirmation: '' } }
     let(:blank_password_params) { { password: '', password_confirmation: '' } }
-    let(:blank_mobile_number_params) { { mobile_number: '', mobile_number_confirmation: '' } }
     let(:default_current_password_params) { { password: @user_password } }
 
     it 'Redirects to homepage if user not logged in' do
@@ -32,7 +31,6 @@ RSpec.describe 'Admin::UsersController', type: :request do
             },
             email: blank_email_params,
             password: blank_password_params,
-            mobile_number: blank_mobile_number_params,
             current_password: {
               password: ''
             }
@@ -49,7 +47,6 @@ RSpec.describe 'Admin::UsersController', type: :request do
             },
             email: blank_email_params,
             password: blank_password_params,
-            mobile_number: blank_mobile_number_params,
             current_password: default_current_password_params
           })
       expect(flash[:notice]).to include('Username updated!')
@@ -67,7 +64,6 @@ RSpec.describe 'Admin::UsersController', type: :request do
             },
             email: blank_email_params,
             password: blank_password_params,
-            mobile_number: blank_mobile_number_params,
             current_password: default_current_password_params
           })
       expect(response).to redirect_to(edit_admin_user_path)
@@ -84,7 +80,6 @@ RSpec.describe 'Admin::UsersController', type: :request do
             },
             email: blank_email_params,
             password: blank_password_params,
-            mobile_number: blank_mobile_number_params,
             current_password: default_current_password_params
           })
       expect(flash[:alert]).to include('Usernames do not match')
@@ -99,7 +94,6 @@ RSpec.describe 'Admin::UsersController', type: :request do
             },
             username: blank_username_params,
             password: blank_password_params,
-            mobile_number: blank_mobile_number_params,
             current_password: default_current_password_params
           })
       expect(flash[:notice]).to include('Email address updated!')
@@ -116,7 +110,6 @@ RSpec.describe 'Admin::UsersController', type: :request do
             },
             username: blank_username_params,
             password: blank_password_params,
-            mobile_number: blank_mobile_number_params,
             current_password: default_current_password_params
           })
       expect(flash[:alert]).to include('Email must be valid format')
@@ -131,7 +124,6 @@ RSpec.describe 'Admin::UsersController', type: :request do
             },
             email: blank_email_params,
             username: blank_username_params,
-            mobile_number: blank_mobile_number_params,
             current_password: default_current_password_params
           })
       expect(flash[:notice]).to include('Password updated!')
@@ -148,27 +140,9 @@ RSpec.describe 'Admin::UsersController', type: :request do
             },
             email: blank_email_params,
             username: blank_username_params,
-            mobile_number: blank_mobile_number_params,
             current_password: default_current_password_params
           })
       expect(flash[:alert]).to include('Passwords do not match')
-    end
-
-    it 'Mobile number can be updated' do
-      login
-      put("/admin/users/#{@user.id}", params: {
-            mobile_number: {
-              mobile_number: '07123456789',
-              mobile_number_confirmation: '07123456789'
-            },
-            password: blank_password_params,
-            email: blank_email_params,
-            username: blank_username_params,
-            current_password: default_current_password_params
-          })
-      expect(flash[:notice]).to include('Mobile number updated!')
-      @user.reload
-      expect(@user.mobile_number).to eq('+447123456789')
     end
   end
 end

@@ -55,6 +55,7 @@ Sass Styles
 // Application Partials
 @use 'styles/base/normalize';
 @use 'styles/base/fonts';
+@use 'styles/base/themes';
 @use 'styles/base/colors';
 @use 'styles/base/mixins';
 @use 'styles/base/typography';

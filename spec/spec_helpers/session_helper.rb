@@ -4,19 +4,24 @@ def password_athenticate_admin(user:, password:)
 end
 
 def login
-  stub_two_factor_auth_service
+  enroll_two_factor_auth(@user)
+  allow(TwoFactorAuthService).to receive(:auth_code_valid?).and_return(true)
   password_athenticate_admin(user: @user.username, password: @user_password)
   post('/2fa', params: { auth_code: '123456' })
   follow_redirect!
 end
 
-def logout
-  delete('/login')
+def login_without_two_factor_enrollment
+  password_athenticate_admin(user: @user.username, password: @user_password)
+  follow_redirect!
 end
 
-def stub_two_factor_auth_service
-  allow(TwoFactorAuthService).to receive(:send_auth_code).and_return(true)
-  allow(TwoFactorAuthService).to receive(:auth_code_valid?).and_return(true)
+def enroll_two_factor_auth(user)
+  user.update(otp_secret: ROTP::Base32.random) unless user.otp_enabled?
+end
+
+def logout
+  delete('/login')
 end
 
 def stub_recaptcha_service

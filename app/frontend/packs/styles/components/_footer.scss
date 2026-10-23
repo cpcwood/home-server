@@ -32,6 +32,7 @@ footer {
 
     img {
       display: block;
+      filter: colors.$icon-invert;
       height: 100%;
       position: relative;
       width: 100%;

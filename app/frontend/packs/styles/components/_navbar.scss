@@ -96,6 +96,52 @@ $btn-hover-animation: 0.2s;
   padding: 5px 10px;
 }
 
+.nav-top-controls {
+  align-items: center;
+  display: flex;
+  gap: 2px;
+  z-index: 7;
+}
+
+.theme-toggle {
+  align-items: center;
+  background: none;
+  border: unset;
+  color: colors.$inverse-font;
+  cursor: pointer;
+  display: flex;
+  height: 44px;
+  justify-content: center;
+  padding: 0;
+  width: 44px;
+
+  .theme-icon {
+    height: 22px;
+    width: 22px;
+  }
+
+  // Driven by the theme tokens rather than aria-pressed, which Stimulus can
+  // only set after boot — the inline theme script has already set data-theme.
+  .theme-icon-moon {
+    display: colors.$theme-icon-moon;
+  }
+
+  .theme-icon-sun {
+    display: colors.$theme-icon-sun;
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentcolor;
+    outline-offset: 2px;
+  }
+}
+
+// The open sidebar paints its own background under this button, so the icon has
+// to swap the same way the hamburger bars do.
+.nav-menu[data-nav-menu-open='true'] .theme-toggle {
+  color: colors.$general-font;
+}
+
 .nav-sidebar {
   background-color: colors.$light;
   bottom: 0;
@@ -157,7 +203,9 @@ $btn-hover-animation: 0.2s;
 }
 
 .nav-screen-cover {
-  background-color: colors.$dark;
+  // Fixed black scrim; the theme token inverts to light in dark mode and would
+  // brighten the page instead of dimming it behind the open menu.
+  background-color: rgb(0, 0, 0);
   bottom: 0;
   left: 0;
   opacity: 0;
@@ -190,7 +238,7 @@ $btn-hover-animation: 0.2s;
 
     &:hover {
       background-color: colors.$nav-button-hover;
-      color: colors.$light;
+      color: colors.$inverse-font;
     }
   }
 

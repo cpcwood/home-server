@@ -22,6 +22,18 @@ variable "application_storage_s3_bucket_name" {
   default     = "home-server-application-storage"
 }
 
+variable "email_domain" {
+  description = "Domain SES sends mail from"
+  type        = string
+  default     = "cpcwood.com"
+}
+
+variable "email_from_addresses" {
+  description = "Only From addresses the SES SMTP user may send as; keep in sync with EMAIL_DEFAULT_ADDRESS / EMAIL_NO_REPLY_ADDRESS in the Helm values"
+  type        = list(string)
+  default     = ["contact@cpcwood.com"]
+}
+
 variable "github_repository" {
   description = "GitHub repository (owner/name) allowed to assume the CI role via OIDC"
   type        = string

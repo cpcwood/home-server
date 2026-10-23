@@ -7,6 +7,8 @@ RSpec.describe 'Rack::Attack throttles', type: :request do
   end
 
   before(:each) do
+    # Throttle counters are bucketed by fixed time windows; keep every request in one window
+    travel_to Time.zone.now.beginning_of_hour + 1.second
     seed_user_and_settings
     stub_recaptcha_service
   end

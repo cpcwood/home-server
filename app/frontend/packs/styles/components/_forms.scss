@@ -202,6 +202,11 @@
   &.right {
     flex-direction: row-reverse;
   }
+
+  // The submit button lifts on hover; let it overflow so its top isn't clipped.
+  &:has(.submit-right) {
+    overflow: visible;
+  }
 }
 
 .embedded-label {

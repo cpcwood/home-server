@@ -1,0 +1,18 @@
+<%= content_for :email_title do %>
+  Account Updated
+<% end %>
+
+<%= content_for :username do %>
+  <%= @user.username %>
+<% end %>
+
+<tr>
+  <td style='padding: 10px 0px;'>
+    Two factor authentication was set up on your account on: <%= @user.updated_at.strftime("%H:%M %d-%m-%Y") %>
+  </td>
+</tr>
+<tr>
+  <td style='padding: 10px 0px 0px 0px;'>
+    If you did not set this up, please contact <%= Rails.configuration.email_default_address %>
+  </td>
+</tr>

@@ -1,0 +1,11 @@
+<table class='analytics-table'>
+  <% rows.each do |label, count| %>
+    <tr>
+      <td class='analytics-table-label'><%= label %></td>
+      <td class='analytics-table-count'><%= count %></td>
+    </tr>
+  <% end %>
+  <% if rows.empty? %>
+    <tr><td>No data for this period</td></tr>
+  <% end %>
+</table>

@@ -9,6 +9,8 @@
 #  last_login_ip         :string
 #  last_login_time       :datetime
 #  mobile_number         :text
+#  otp_consumed_timestep :bigint
+#  otp_secret            :text
 #  password_digest       :text
 #  password_reset_expiry :datetime
 #  password_reset_token  :string
@@ -132,34 +134,92 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'Mobile number validations' do
-    it 'Rejects non-unique mobile numbers' do
-      user2 = build(:user2, mobile_number: subject.mobile_number)
-      expect(user2).to_not be_valid
+  describe 'totp' do
+    subject(:user) { create(:user, :with_totp) }
+
+    let(:totp) { ROTP::TOTP.new(user.otp_secret) }
+
+    describe '#otp_enabled?' do
+      it 'is true with a secret' do
+        expect(user.otp_enabled?).to eq(true)
+      end
+
+      it 'is false without a secret' do
+        expect(create(:user).otp_enabled?).to eq(false)
+      end
     end
 
-    it 'Rejects invalid UK mobile numbers with message' do
-      subject.mobile_number = '01234567'
-      expect(subject).to_not be_valid
-      expect(subject.errors.messages[:mobile_number]).to eq ['Please enter valid UK mobile phone number']
+    describe '#verify_totp!' do
+      it 'accepts the current code once' do
+        code = totp.now
+        expect(user.verify_totp!(code)).to eq(true)
+        expect(user.verify_totp!(code)).to eq(false)
+      end
+
+      it 'rejects a wrong code' do
+        expect(user.verify_totp!('000000')).to eq(false)
+      end
+
+      it 'is false when no secret is set' do
+        expect(create(:user).verify_totp!('123456')).to eq(false)
+      end
     end
 
-    it 'Requires confirmation for change' do
-      subject.mobile_number = '+447345678901'
-      subject.mobile_number_confirmation = ''
-      expect(subject).to_not be_valid
-      expect(subject.errors.messages[:mobile_number_confirmation]).to eq ['Mobile phone numbers do not match']
-      subject.mobile_number_confirmation = '+447345678901'
-      expect(subject).to be_valid
-    end
-  end
+    describe 'failed attempt lockout' do
+      it 'locks for 15 minutes after 5 wrong codes' do
+        travel_to Time.zone.local(2020, 04, 19, 00, 00, 00)
+        5.times { user.verify_totp!('000000') }
+        expect(user.reload.otp_locked?).to eq(true)
+        expect(user.otp_locked_until).to eq(15.minutes.from_now)
+        expect(user.failed_otp_attempts).to eq(0)
+      end
 
-  describe 'Before_validation: mobile_number' do
-    it 'Adds area code to standard UK mobile number' do
-      subject.mobile_number = '07345678902'
-      subject.mobile_number_confirmation = '07345678902'
-      subject.save
-      expect(subject.mobile_number).to eq('+447345678902')
+      it 'rejects a valid code while locked' do
+        5.times { user.verify_totp!('000000') }
+        expect(user.verify_totp!(totp.now)).to eq(false)
+      end
+
+      it 'accepts a valid code once the lockout expires' do
+        5.times { user.verify_totp!('000000') }
+        travel 16.minutes
+        expect(user.verify_totp!(totp.now)).to eq(true)
+        expect(user.reload.otp_locked_until).to eq(nil)
+      end
+
+      it 'counts failures made through separately loaded copies of the user' do
+        other_copy = User.find(user.id)
+        3.times { user.verify_totp!('000000') }
+        2.times { other_copy.verify_totp!('000000') }
+        expect(user.reload.otp_locked?).to eq(true)
+      end
+
+      it 'rejects a code already used through another copy of the user' do
+        other_copy = User.find(user.id)
+        code = totp.now
+        expect(user.verify_totp!(code)).to eq(true)
+        expect(other_copy.verify_totp!(code)).to eq(false)
+      end
+
+      it 'resets the failure count after a valid code' do
+        4.times { user.verify_totp!('000000') }
+        user.verify_totp!(totp.now)
+        expect(user.reload.failed_otp_attempts).to eq(0)
+      end
+    end
+
+    describe '.totp_for' do
+      it 'builds a provisioning uri embedding the user email' do
+        uri = User.totp_for(user.otp_secret).provisioning_uri(user.email)
+        expect(uri).to include(CGI.escape(user.email))
+      end
+    end
+
+    describe 'encryption at rest' do
+      it 'persists otp_secret as ciphertext, not plaintext' do
+        raw = User.connection.select_value("SELECT otp_secret FROM users WHERE id = #{user.id}")
+        expect(raw).to be_present
+        expect(raw).not_to include(user.otp_secret)
+      end
     end
   end
 
@@ -222,6 +282,13 @@ RSpec.describe User, type: :model do
 
     it 'Returns nil if reset token no present' do
       expect(User.user_from_password_reset_token(nil)).to eq(nil)
+    end
+  end
+
+  describe '#send_two_factor_auth_updated_email!' do
+    it 'Two factor auth updated email sent to user' do
+      expect(PasswordMailer).to receive_message_chain(:with, :two_factor_auth_updated_email, :deliver_now)
+      subject.send_two_factor_auth_updated_email!
     end
   end
 

@@ -93,4 +93,21 @@ RSpec.describe PasswordMailer, type: :mailer do
       expect(mail.body.encoded).to match(/default_header_image-\w+.jpg/)
     end
   end
+
+  describe '#two_factor_auth_updated_email' do
+    let(:mail) { PasswordMailer.with(user: user).two_factor_auth_updated_email }
+
+    it 'Renders the receivers email' do
+      expect(mail.to).to eql([user.email])
+    end
+
+    it 'Renders the subject' do
+      expect(mail.subject).to eql("Two Factor Authentication Updated: #{user.email}")
+    end
+
+    it 'Tells the user who to contact if they did not make the change' do
+      expect(mail.body.encoded).to match('If you did not set this up')
+      expect(mail.body.encoded).to match("please contact #{Rails.configuration.email_default_address}")
+    end
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_30_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_23_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -92,6 +92,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_30_000001) do
     t.string "utm_term"
     t.string "visit_token"
     t.string "visitor_token"
+    t.index ["started_at"], name: "index_ahoy_visits_on_started_at"
     t.index ["user_id"], name: "index_ahoy_visits_on_user_id"
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
     t.index ["visitor_token", "started_at"], name: "index_ahoy_visits_on_visitor_token_and_started_at"
@@ -240,6 +241,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_30_000001) do
     t.string "password_reset_token"
     t.datetime "updated_at", null: false
     t.text "username"
+    t.text "otp_secret"
+    t.bigint "otp_consumed_timestep"
+    t.integer "failed_otp_attempts", default: 0, null: false
+    t.datetime "otp_locked_until"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["mobile_number"], name: "index_users_on_mobile_number", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
