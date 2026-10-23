@@ -3,7 +3,7 @@ require:
   - rubocop-performance
 
 AllCops:
-  TargetRubyVersion: 3.4
+  TargetRubyVersion: 4.0
   Exclude:
     - 'bin/**/*'
     - 'config/**/*'

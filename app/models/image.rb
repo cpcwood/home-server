@@ -36,7 +36,7 @@ class Image < ApplicationRecord
 
   def self.valid?(image_path)
     image = MiniMagick::Image.new(image_path)
-    return false unless image.mime_type.match?(%r{\Aimage/(png|jpeg)\z}i)
+    return false unless %w[PNG JPEG].include?(image.type)
     image.valid?
   end
 

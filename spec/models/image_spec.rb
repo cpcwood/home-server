@@ -37,25 +37,25 @@ RSpec.describe Image, type: :model do
 
   describe '.valid?' do
     it 'jpg type' do
-      mock_jpg_image = double(:image, mime_type: 'image/jpeg', valid?: true)
+      mock_jpg_image = double(:image, type: 'JPEG', valid?: true)
       allow(MiniMagick::Image).to receive(:new).and_return(mock_jpg_image)
       expect(Image.valid?('jpg image path')).to eq(true)
     end
 
     it 'png type' do
-      mock_png_image = double(:image, mime_type: 'image/png', valid?: true)
+      mock_png_image = double(:image, type: 'PNG', valid?: true)
       allow(MiniMagick::Image).to receive(:new).and_return(mock_png_image)
       expect(Image.valid?('png image path')).to eq(true)
     end
 
     it 'invalid type' do
-      mock_gif_image = double(:image, mime_type: 'image/gif', valid?: true)
+      mock_gif_image = double(:image, type: 'GIF', valid?: true)
       allow(MiniMagick::Image).to receive(:new).and_return(mock_gif_image)
       expect(Image.valid?('invalid image path')).to eq(false)
     end
 
     it 'content' do
-      mock_invalid_image = double(:image, mime_type: 'image/jpeg', valid?: false)
+      mock_invalid_image = double(:image, type: 'JPEG', valid?: false)
       allow(MiniMagick::Image).to receive(:new).and_return(mock_invalid_image)
       expect(Image.valid?('invalid image path')).to eq(false)
     end
