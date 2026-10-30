@@ -180,7 +180,7 @@ GEM
     factory_bot_rails (6.5.1)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
-    faraday (2.15.0)
+    faraday (2.15.1)
       faraday-net_http (>= 2.0, < 3.6)
       json
       logger
@@ -517,7 +517,7 @@ DEPENDENCIES
   dotenv (~> 3.2)
   erb_lint (~> 0.9)
   factory_bot_rails (~> 6.5)
-  faraday (~> 2.14)
+  faraday (~> 2.15)
   geocoder (~> 1.8)
   groupdate (~> 6.8)
   image_processing (~> 2.2)

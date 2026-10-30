@@ -19,7 +19,7 @@ gem 'bcrypt', '~> 3.1'
 # Throttle excessive requests
 gem 'rack-attack', '~> 6.8'
 # Send HTTP Requests
-gem 'faraday', '~> 2.14', require: false
+gem 'faraday', '~> 2.15', require: false
 # TOTP two factor auth
 gem 'rotp', '~> 6.3'
 gem 'rqrcode', '~> 3.2'
