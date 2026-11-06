@@ -56,7 +56,7 @@ gem 'groupdate', '~> 6.8'
 
 group :production do
   # AWS S3 for production storage
-  gem 'aws-sdk-s3', '~> 1.232', require: false
+  gem 'aws-sdk-s3', '~> 1.237', require: false
   # Ensure sidekiq stays alive in k8s
   gem 'sidekiq_alive', '~> 2.5'
   # Dynamically generate sitemaps
