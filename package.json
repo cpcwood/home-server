@@ -30,7 +30,7 @@
     "rails-erb-loader": "5.5.2",
     "resolve-url-loader": "5.0.0",
     "sass": "1.106.1",
-    "sass-loader": "17.0.1",
+    "sass-loader": "17.1.0",
     "shakapacker": "10.3.2",
     "simplelightbox": "2.14.3",
     "style-loader": "^4.0.0",
