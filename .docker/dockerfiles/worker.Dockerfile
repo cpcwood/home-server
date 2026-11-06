@@ -5,7 +5,7 @@
 # Create Worker App
 # ================
 # Held at alpine3.23: carbon-now-cli 1.x's puppeteer can't drive alpine3.24's chromium 155 (Page.navigate: Target closed)
-FROM ruby:4.0.8-alpine3.23
+FROM ruby:4.0.9-alpine3.23
 
 ENV RAILS_ENV=production \
     NODE_ENV=production \
