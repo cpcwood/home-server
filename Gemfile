@@ -19,7 +19,7 @@ gem 'bcrypt', '~> 3.1'
 # Throttle excessive requests
 gem 'rack-attack', '~> 6.8'
 # Send HTTP Requests
-gem 'faraday', '~> 2.14', require: false
+gem 'faraday', '~> 2.15', require: false
 # TOTP two factor auth
 gem 'rotp', '~> 6.3'
 gem 'rqrcode', '~> 3.2'
@@ -56,7 +56,7 @@ gem 'groupdate', '~> 6.8'
 
 group :production do
   # AWS S3 for production storage
-  gem 'aws-sdk-s3', '~> 1.232', require: false
+  gem 'aws-sdk-s3', '~> 1.237', require: false
   # Ensure sidekiq stays alive in k8s
   gem 'sidekiq_alive', '~> 2.5'
   # Dynamically generate sitemaps
@@ -64,7 +64,7 @@ group :production do
   # Manage cron
   gem 'whenever', '~> 1.1', require: false
   # Error Reporting
-  gem 'sentry-ruby', '~> 7.1'
+  gem 'sentry-ruby', '~> 7.2'
   gem 'sentry-rails', '~> 7.0'
 end
 
@@ -100,7 +100,7 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 3.40', require: false
   # Selenium 4 bundles selenium-manager for driver resolution (replaces webdrivers)
-  gem 'selenium-webdriver', '~> 4.51', require: false
+  gem 'selenium-webdriver', '~> 4.52', require: false
   # Coverage with simplecov
   gem 'simplecov', '~> 1.3', require: false
   gem 'simplecov-console', '~> 0.9', require: false
