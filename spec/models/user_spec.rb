@@ -8,7 +8,6 @@
 #  email                 :text
 #  last_login_ip         :string
 #  last_login_time       :datetime
-#  mobile_number         :text
 #  otp_consumed_timestep :bigint
 #  otp_secret            :text
 #  password_digest       :text
@@ -21,7 +20,6 @@
 # Indexes
 #
 #  index_users_on_email          (email) UNIQUE
-#  index_users_on_mobile_number  (mobile_number) UNIQUE
 #  index_users_on_username       (username) UNIQUE
 #
 

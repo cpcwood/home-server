@@ -9,7 +9,6 @@
 #  failed_otp_attempts   :integer          default(0), not null
 #  last_login_ip         :string
 #  last_login_time       :datetime
-#  mobile_number         :text
 #  otp_consumed_timestep :bigint
 #  otp_locked_until      :datetime
 #  otp_secret            :text
@@ -23,7 +22,6 @@
 # Indexes
 #
 #  index_users_on_email          (email) UNIQUE
-#  index_users_on_mobile_number  (mobile_number) UNIQUE
 #  index_users_on_username       (username) UNIQUE
 #
 class User < ApplicationRecord
@@ -37,9 +35,6 @@ class User < ApplicationRecord
   has_many :gallery_images, dependent: :destroy
   has_many :contact_messages, dependent: :destroy
   has_many :code_snippets, dependent: :destroy
-
-  # Dropped in a later release so rolling back to the SMS 2FA code still finds it
-  self.ignored_columns += ['mobile_number']
 
   has_secure_password validations: false, reset_token: false
   encrypts :otp_secret
