@@ -95,7 +95,7 @@ end
 
 group :test do
   # Testing backend with RSpec
-  gem 'rspec-rails', '~> 8.0', require: false
+  gem 'rspec-rails', '~> 8.1', require: false
   gem 'rails-controller-testing', '~> 1.0'
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 3.40', require: false
