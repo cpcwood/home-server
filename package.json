@@ -6,7 +6,7 @@
     "lint": "eslint --fix . && stylelint --fix \"**/*.scss\""
   },
   "dependencies": {
-    "@babel/core": "^8.0.10",
+    "@babel/core": "^8.1.0",
     "@babel/plugin-transform-modules-commonjs": "^8.0.1",
     "@babel/plugin-transform-runtime": "^8.0.6",
     "@babel/preset-env": "^8.0.7",
