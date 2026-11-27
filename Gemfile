@@ -107,7 +107,7 @@ group :test do
   # Coverage badge with coveralls (maintained fork of the abandoned coveralls gem)
   gem 'coveralls_reborn', '~> 1.0', require: false
   # Mock HTTP Requests
-  gem 'webmock', '~> 3.26', require: false
+  gem 'webmock', '~> 3.40', require: false
   # Clean up the messy database during tests
   gem 'database_cleaner-active_record', '~> 2.2', require: false
   # Format tests for circleci
