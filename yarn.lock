@@ -8452,10 +8452,10 @@ saxes@^6.0.0:
   dependencies:
     xmlchars "^2.2.0"
 
-schema-utils@^4.0.0, schema-utils@^4.2.0, schema-utils@^4.3.0, schema-utils@^4.3.3, schema-utils@^4.6.0, schema-utils@^4.8.1:
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-4.8.2.tgz#c4504ea7492c58e1b8d1fcc7d3d202c078a6d700"
-  integrity sha512-iKlak3OFHF0dgD1nZRvgWQzG+P1TiEcMnLSBtIVBg937z5Jd6WE1c3SyZkXIyCfPHowL35yMsVvIjotm1c1qiw==
+schema-utils@^4.0.0, schema-utils@^4.2.0, schema-utils@^4.3.0, schema-utils@^4.3.3, schema-utils@^4.6.0, schema-utils@^4.8.1, schema-utils@^4.8.3:
+  version "4.8.5"
+  resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-4.8.5.tgz#aa5abf4653e45af6a4c7c0ab7ef11d6f18ffcf22"
+  integrity sha512-K1RRP7aTUAY2lGXNzPwjMK6AMMzbETdpF3pTPMEnH/RrpmPx6K1X47/gSebrV+1I9pRcgpwZwqpYBlyZAsliiw==
   dependencies:
     "@types/json-schema" "^7.0.15"
     ajv "^8.20.0"
@@ -9168,10 +9168,10 @@ table@^6.9.0:
     string-width "^4.2.3"
     strip-ansi "^6.0.1"
 
-tapable@^2.2.1, tapable@^2.3.0, tapable@^2.3.3:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/tapable/-/tapable-2.3.3.tgz#5da7c9992c46038221267985ab28421a8879f160"
-  integrity sha512-uxc/zpqFg6x7C8vOE7lh6Lbda8eEL9zmVm/PLeTPBRhh1xCgdWaQ+J1CUieGpIfm2HdtsUpRv+HshiasBMcc6A==
+tapable@^2.2.1, tapable@^2.3.0, tapable@^2.3.3, tapable@^2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/tapable/-/tapable-2.3.4.tgz#c05c277006ccba52e04e1bbddff2e189ee48fca8"
+  integrity sha512-NHFiWnAbMJxNNpBwiO7jJVGDuqMxT9/oV8v57RR+fgBQShkJil5inGD8/xWy0hjLyHQyX1tu27QANhlz3KBqCg==
 
 temp-dir@^1.0.0:
   version "1.0.0"
@@ -9655,15 +9655,15 @@ webidl-conversions@^7.0.0:
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-7.0.0.tgz#256b4e1882be7debbf01d05f0aa2039778ea080a"
   integrity sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==
 
-webpack-assets-manifest@^6.5.4:
-  version "6.5.5"
-  resolved "https://registry.yarnpkg.com/webpack-assets-manifest/-/webpack-assets-manifest-6.5.5.tgz#ee45df9112182c2969310ec49ed062687616dc2a"
-  integrity sha512-903fXlc3OljGFVwb7+67QvanQChsgVsRoIDDtKw1ioVjRi8C+vprl4lAHDVZ6nKbdO4oPobg0cvPcI8UdDDmHA==
+webpack-assets-manifest@^6.5.6:
+  version "6.5.6"
+  resolved "https://registry.yarnpkg.com/webpack-assets-manifest/-/webpack-assets-manifest-6.5.6.tgz#0f92fd1caef5a9e8fbfbfae0390e805efba3637a"
+  integrity sha512-SA5GaE6UUWyVKLm9TMou3Cn42Ij/yBpkHepVUQ0vdAQZVqXYkKolXXpwC1VGMpy1LttuEsyya08DxAsWQ/3MMg==
   dependencies:
     deepmerge "^4.3.1"
     proper-lockfile "^4.1.2"
-    schema-utils "^4.8.1"
-    tapable "^2.3.3"
+    schema-utils "^4.8.3"
+    tapable "^2.3.4"
 
 webpack-cli@^7.3.1:
   version "7.3.1"
